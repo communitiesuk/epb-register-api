@@ -465,7 +465,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
                          auth_data: {
                            scheme_ids: [scheme_id],
                          },
-                         override: true
+                         migrated: true
       end
 
       it "returns status 410 with the correct error message" do

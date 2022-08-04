@@ -23,7 +23,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
 
       lodge_assessment(
@@ -33,7 +33,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
           scheme_ids: [scheme_id],
         },
         schema_name: "RdSAP-Schema-NI-20.0.0",
-        override: true,
+        migrated: true,
       )
 
       lodge_assessment(
@@ -43,7 +43,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-        override: true,
+        migrated: true,
       )
     end
 

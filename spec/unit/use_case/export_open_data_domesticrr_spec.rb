@@ -61,7 +61,7 @@ describe UseCase::ExportOpenDataDomesticrr do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
 
         domestic_legacy_sap_assessment_date.children = "2018-05-02"
@@ -74,7 +74,6 @@ describe UseCase::ExportOpenDataDomesticrr do
           },
           schema_name: "SAP-Schema-17.0",
           migrated: true,
-          override: true,
         )
 
         domestic_sap_assessment_date.children = date_today
@@ -86,7 +85,7 @@ describe UseCase::ExportOpenDataDomesticrr do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-18.0.0",
-          override: true,
+          migrated: true,
         )
 
         domestic_ni_sap_assessment_date.children = date_today
@@ -98,7 +97,7 @@ describe UseCase::ExportOpenDataDomesticrr do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-NI-18.0.0",
-          override: true,
+          migrated: true,
         )
       end
 

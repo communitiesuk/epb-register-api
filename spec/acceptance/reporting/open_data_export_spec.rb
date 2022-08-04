@@ -32,7 +32,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
 
         domestic_rdsap_xml =
@@ -47,7 +47,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
 
         domestic_sap_xml =
@@ -65,7 +65,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
           schema_name: "SAP-Schema-18.0.0",
         )
       end

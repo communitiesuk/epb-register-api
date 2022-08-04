@@ -20,7 +20,7 @@ describe Gateway::RelatedAssessmentsGateway do
       address_id = xml.at("UPRN").children.to_s
       related_assessment_ids.each do |assessment_id|
         xml.at("RRN").children = assessment_id
-        call_lodge_assessment scheme_id:, schema_name: schema, xml_document: xml
+        call_lodge_assessment scheme_id:, schema_name: schema, xml_document: xml, migrated: true
       end
     end
 

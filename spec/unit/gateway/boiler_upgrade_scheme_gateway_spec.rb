@@ -17,7 +17,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
     end
 
@@ -112,7 +112,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
       }
 
@@ -147,7 +147,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
       }
 
@@ -198,7 +198,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-18.0.0",
-        override: true,
+        migrated: true,
       )
     end
 
@@ -253,7 +253,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-        override: true,
+        migrated: true,
       )
     end
 
@@ -311,7 +311,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
     end
 
@@ -407,7 +407,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
       }
 

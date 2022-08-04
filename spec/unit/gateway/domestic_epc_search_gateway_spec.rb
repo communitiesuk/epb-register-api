@@ -23,7 +23,7 @@ describe Gateway::DomesticEpcSearchGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
     end
 
@@ -59,7 +59,7 @@ describe Gateway::DomesticEpcSearchGateway do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
       }
       do_lodgement.call
@@ -93,7 +93,7 @@ describe Gateway::DomesticEpcSearchGateway do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
       }
       do_lodgement.call
@@ -111,7 +111,7 @@ describe Gateway::DomesticEpcSearchGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
         schema_name: "SAP-Schema-18.0.0",
       )
 
@@ -124,7 +124,7 @@ describe Gateway::DomesticEpcSearchGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
         schema_name: "CEPC-8.0.0",
       )
     end
@@ -183,7 +183,7 @@ describe Gateway::DomesticEpcSearchGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
     end
 
@@ -261,7 +261,7 @@ describe Gateway::DomesticEpcSearchGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET address_line2 = '1 Some Street', address_line1= '' ")
     end
@@ -289,7 +289,7 @@ describe Gateway::DomesticEpcSearchGateway do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
       }
 

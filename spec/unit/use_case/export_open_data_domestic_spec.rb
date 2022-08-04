@@ -286,7 +286,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
 
         domestic_rdsap_assessment_date.children = date_today
@@ -297,7 +297,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
 
         domestic_rdsap_assessment_date.children = date_today
@@ -310,7 +310,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          override: true,
+          migrated: true,
         )
 
         domestic_sap_assessment_date.children = date_today
@@ -324,7 +324,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-18.0.0",
-          override: true,
+          migrated: true,
         )
 
         domestic_sap_assessment_date.children = date_today
@@ -338,7 +338,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-18.0.0",
-          override: true,
+          migrated: true,
         )
 
         domestic_legacy_sap_assessment_date.children = "2017-05-04"
@@ -364,7 +364,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-NI-18.0.0",
-          override: true,
+          migrated: true,
         )
       end
 

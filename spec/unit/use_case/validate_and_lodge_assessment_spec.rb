@@ -273,7 +273,7 @@ describe UseCase::ValidateAndLodgeAssessment do
 
     it "rejects an NI schema without a BT postcode" do
       rdsap_ni.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "SW1 0AA" }
-      expect {
+      expect { \
         use_case.execute assessment_xml: rdsap_ni.to_s,
                          schema_name: "RdSAP-Schema-NI-20.0.0",
                          scheme_ids: "1",
@@ -291,6 +291,106 @@ describe UseCase::ValidateAndLodgeAssessment do
                          migrated: false,
                          overridden: false
       }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /must be lodged with a NI Schema/
+    end
+  end
+
+  context "when trying to override a rule that cannot be overridden" do
+    context "with dates in the future" do
+      let(:cepc) { Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc")) }
+
+      before do
+        Timecop.freeze(2019, 2, 22, 0, 0, 0)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "raises a NotOverridableLodgementRuleError error" do
+        expect {
+          use_case.execute assessment_xml: cepc.to_s,
+                           schema_name: "CEPC-8.0.0",
+                           scheme_ids: "1",
+                           migrated: false,
+                           overridden: true
+        }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+      end
+    end
+
+    context "with a completion date later than the registration date (breaking COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE rule)" do
+      let(:rdsap) do
+        xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+        xml.at("Completion-Date").content = "2020-06-04" # date after the registration date in the fixture document
+        xml
+      end
+
+      before do
+        Timecop.freeze(2021, 2, 22, 0, 0, 0)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "raises a NotOverridableLodgementRuleError error" do
+        expect {
+          use_case.execute assessment_xml: rdsap.to_s,
+                           schema_name: "RdSAP-Schema-20.0.0",
+                           scheme_ids: "1",
+                           migrated: false,
+                           overridden: true
+        }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+      end
+    end
+
+    context "with dates outside expected range (breaking DATES_IN_RANGE rule)" do
+      let(:rdsap) do
+        Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      end
+
+      before do
+        Timecop.freeze(2025, 2, 22, 0, 0, 0)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "raises a NotOverridableLodgementRuleError error" do
+        expect {
+          use_case.execute assessment_xml: rdsap.to_s,
+                           schema_name: "RdSAP-Schema-20.0.0",
+                           scheme_ids: "1",
+                           migrated: false,
+                           overridden: true
+        }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+      end
+    end
+
+    context "with inspection date later than the completion date (breaking INSPECTION_DATE_LATER_THAN_COMPLETION_DATE rule)" do
+      let(:rdsap) do
+        xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+        xml.at("Inspection-Date").content = "2020-06-04" # date after the registration date in the fixture document
+        xml
+      end
+
+      before do
+        Timecop.freeze(2021, 2, 22, 0, 0, 0)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "raises a NotOverridableLodgementRuleError error" do
+        expect {
+          use_case.execute assessment_xml: rdsap.to_s,
+                           schema_name: "RdSAP-Schema-20.0.0",
+                           scheme_ids: "1",
+                           migrated: false,
+                           overridden: true
+        }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+      end
     end
   end
 end

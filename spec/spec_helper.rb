@@ -218,6 +218,10 @@ def date_today
   Time.now.strftime("%F")
 end
 
+def date_a_year_ago
+  (Time.now - 31_536_000).strftime("%F")
+end
+
 def datetime_today
   Time.now.strftime("%F %H:%M:%S")
 end

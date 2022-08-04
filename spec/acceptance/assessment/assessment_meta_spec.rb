@@ -27,7 +27,7 @@ describe "Acceptance::AssessmentMeta" do
       auth_data: {
         scheme_ids: [scheme_id],
       },
-      override: true,
+      migrated: true,
     )
   end
 

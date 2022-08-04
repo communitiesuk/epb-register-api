@@ -37,8 +37,10 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource",
     end
 
     it "returns addresses from expired assessments" do
-      domestic_xml.at("Registration-Date").content =
-        Date.today.prev_year(11).strftime("%Y-%m-%d")
+      eleven_years_ago = Date.today.prev_year(11).strftime("%Y-%m-%d")
+      %w[Inspection-Date Completion-Date Registration-Date].each do |node|
+        domestic_xml.at(node).content = eleven_years_ago
+      end
 
       domestic_xml.at("UPRN").remove
 
@@ -48,7 +50,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource",
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        override: true,
+        migrated: true,
       )
 
       expect(response[:data][:addresses]).to eq(
