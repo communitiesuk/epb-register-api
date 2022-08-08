@@ -43,6 +43,7 @@ describe('when inserting a batch of data', () => {
       address_line3: null,
       address_line4: null,
       town: 'Anytown',
+      country_code: 'E',
       classification_code: 'RD06',
       address_type: 'Delivery point'
     }]
@@ -66,6 +67,7 @@ describe('when updating a batch of data', () => {
       address_line3: null,
       address_line4: null,
       town: 'Anytown',
+      country_code: 'E',
       classification_code: 'RD06',
       address_type: 'Delivery point'
     },
@@ -77,6 +79,7 @@ describe('when updating a batch of data', () => {
       address_line3: null,
       address_line4: null,
       town: 'Anytown',
+      country_code: 'E',
       classification_code: 'RD06',
       address_type: 'Delivery point'
     }
@@ -89,6 +92,7 @@ describe('when updating a batch of data', () => {
     address_line3: null,
     address_line4: null,
     town: 'Anytown',
+    country_code: 'E',
     classification_code: 'RD06',
     address_type: 'Delivery point'
   }
@@ -122,6 +126,7 @@ describe('when deleting a batch of data', () => {
       address_line3: null,
       address_line4: null,
       town: 'Anytown',
+      country_code: 'E',
       classification_code: 'RD06',
       address_type: 'Delivery point'
     },
@@ -133,6 +138,7 @@ describe('when deleting a batch of data', () => {
       address_line3: null,
       address_line4: null,
       town: 'Anytown',
+      country_code: 'E',
       classification_code: 'RD06',
       address_type: 'Delivery point'
     },
@@ -144,6 +150,7 @@ describe('when deleting a batch of data', () => {
       address_line3: null,
       address_line4: null,
       town: 'Anytown',
+      country_code: 'E',
       classification_code: 'RD06',
       address_type: 'Delivery point'
     }

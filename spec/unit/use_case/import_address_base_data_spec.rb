@@ -160,7 +160,7 @@ describe UseCase::ImportAddressBaseData do
   ]
   context "when importing the data for 10 downing street" do
     expected_query_clause =
-      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON', 'RD04', 'Delivery Point')"
+      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON', 'RD04', 'Delivery Point', 'E')"
     use_case = described_class.new
     it "creates a query clause in the expected form" do
       hashed_data = Hash[headers.zip(number_ten)]
@@ -267,6 +267,7 @@ describe UseCase::ImportAddressBaseData do
             postcode: "SW1A 2AA",
             lines: ["10 DOWNING STREET"],
             town: "LONDON",
+            country_code: "E",
           },
         )
       use_case = described_class.new
@@ -279,6 +280,7 @@ describe UseCase::ImportAddressBaseData do
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
       expect(imported_address.town).to eq expected.town
+      expect(imported_address.country_code).to eq expected.country_code
     end
   end
 
@@ -387,7 +389,7 @@ describe UseCase::ImportAddressBaseData do
     hashed_data = Hash[headers.zip(devon_house)]
     it "returns a geographic address" do
       expected =
-        "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE', 'RD06', 'Geographic')"
+        "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE', 'RD06', 'Geographic', 'E')"
       partial_clause = use_case.execute(hashed_data)
       expect(partial_clause).to eq expected
     end
@@ -489,6 +491,7 @@ describe UseCase::ImportAddressBaseData do
             postcode: "DY2 0NZ",
             lines: ["8A HILL STREET", "NETHERTON"],
             town: "DUDLEY",
+            country_code: "E",
           },
         )
       imported_address =
@@ -497,6 +500,7 @@ describe UseCase::ImportAddressBaseData do
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
       expect(imported_address.town).to eq expected.town
+      expect(imported_address.country_code).to eq expected.country_code
     end
   end
 
@@ -590,6 +594,7 @@ describe UseCase::ImportAddressBaseData do
             postcode: "LL18 1EW",
             lines: ["UNIT 10", "WHITE ROSE CENTRE", "HIGH STREET"],
             town: "RHYL",
+            country_code: "W",
           },
         )
       imported_address = use_case.send(:create_geographic_address, hashed_data)
@@ -597,6 +602,7 @@ describe UseCase::ImportAddressBaseData do
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
       expect(imported_address.town).to eq expected.town
+      expect(imported_address.country_code).to eq expected.country_code
     end
   end
 
@@ -694,6 +700,7 @@ describe UseCase::ImportAddressBaseData do
             "EWELL ROAD, CHEAM",
           ],
           town: "SUTTON",
+          country_code: "E",
         )
       imported_address =
         use_case.send(:create_delivery_point_address, hashed_data)
@@ -701,6 +708,7 @@ describe UseCase::ImportAddressBaseData do
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
       expect(imported_address.town).to eq expected.town
+      expect(imported_address.country_code).to eq expected.country_code
     end
   end
 end

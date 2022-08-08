@@ -171,6 +171,7 @@ test('when importing the data for 10 downing street', () => {
     address_line3: null,
     address_line4: null,
     town: 'LONDON',
+    country_code: 'E',
     classification_code: 'RD04',
     address_type: 'Delivery Point'
   }
@@ -353,6 +354,7 @@ test('when a residential house has no postal address, it uses a geographic addre
     address_line3: 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS',
     address_line4: null,
     town: 'BRIDGERULE',
+    country_code: 'E',
     classification_code: 'RD06',
     address_type: 'Geographic'
   }
@@ -448,6 +450,7 @@ test('it joins a lettered, numbered line onto the following non-empty line', () 
     address_line3: null,
     address_line4: null,
     town: 'DUDLEY',
+    country_code: 'E',
     classification_code: 'RD04',
     address_type: 'Delivery Point'
   })
@@ -542,6 +545,7 @@ test('it removes the duplicate locality line from a geographic address', () => {
     address_line3: 'HIGH STREET',
     address_line4: null,
     town: 'RHYL',
+    country_code: 'W',
     classification_code: 'CR02',
     address_type: 'Geographic'
   })
@@ -636,6 +640,7 @@ test('it compacts all lines after line 4 onto one line separated by commas', () 
     address_line3: 'KILLICK MEWS',
     address_line4: 'EWELL ROAD, CHEAM',
     town: 'SUTTON',
+    country_code: 'E',
     classification_code: 'RD06',
     address_type: 'Delivery Point'
   })

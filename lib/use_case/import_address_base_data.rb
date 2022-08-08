@@ -1,7 +1,7 @@
 module UseCase
   class ImportAddressBaseData
     ImportedAddress =
-      Struct.new(:uprn, :postcode, :lines, :town, keyword_init: true)
+      Struct.new(:uprn, :postcode, :lines, :town, :country_code, keyword_init: true)
 
     def execute(address_data_line)
       unless Helper::AddressBaseFilter.filter_certifiable_addresses(address_data_line)
@@ -29,7 +29,8 @@ module UseCase
         ActiveRecord::Base.connection.quote(imported_address.lines[3]),
         ActiveRecord::Base.connection.quote(imported_address.town),
         ActiveRecord::Base.connection.quote(address_data_line[:CLASS]),
-        "#{ActiveRecord::Base.connection.quote(address_type)})",
+        ActiveRecord::Base.connection.quote(address_type),
+        "#{ActiveRecord::Base.connection.quote(imported_address.country_code)})",
       ].join(", ")
     end
 
@@ -138,11 +139,14 @@ module UseCase
 
       lines.pop if lines[-1] == town
 
+      country_code = address_data_line[:COUNTRY]
+
       ImportedAddress.new(
         uprn:,
         postcode:,
         lines:,
         town:,
+        country_code:,
       )
     end
 
@@ -178,11 +182,14 @@ module UseCase
 
       town = address_data_line[:POST_TOWN]
 
+      country_code = address_data_line[:COUNTRY]
+
       ImportedAddress.new(
         uprn:,
         postcode:,
         lines:,
         town:,
+        country_code:,
       )
     end
 
