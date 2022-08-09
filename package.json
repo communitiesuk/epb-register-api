@@ -12,6 +12,7 @@
     "test": "jest --forceExit",
     "update-address-base": "node lib/tasks/maintenance/address-base.js update -i -v",
     "update-address-base-auto": "node lib/tasks/maintenance/address-base.js update -v",
+    "full-address-base-reload": "node lib/tasks/maintenance/address-base.js update -f -v",
     "specify-address-base-version": "node lib/tasks/maintenance/address-base.js specify-version"
   },
   "repository": {
