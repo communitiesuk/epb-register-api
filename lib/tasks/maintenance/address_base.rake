@@ -67,6 +67,7 @@ namespace :maintenance do
         t.string "town"
         t.string "classification_code", limit: 6
         t.string "address_type", limit: 15
+        t.string "country_code", limit: 1
       end
       puts "[#{Time.now}] Created empty address_base_tmp table"
 
