@@ -153,9 +153,15 @@ def add_uprns_to_address_base(*uprns)
   uprns.each { |uprn| add_address_base(uprn:) }
 end
 
-def add_address_base(uprn:)
+def add_address_base(uprn:, postcode: nil, country_code: nil)
   ActiveRecord::Base.connection.exec_query(
-    "INSERT INTO address_base (uprn) VALUES(#{ActiveRecord::Base.connection.quote(uprn)}) ON CONFLICT DO NOTHING",
+    "INSERT INTO address_base (uprn, postcode, country_code) VALUES($1, $2, $3) ON CONFLICT DO NOTHING",
+    "sql",
+    [
+      ActiveRecord::Relation::QueryAttribute.new("uprn", uprn, ActiveRecord::Type::String.new),
+      ActiveRecord::Relation::QueryAttribute.new("postcode", postcode, ActiveRecord::Type::String.new),
+      ActiveRecord::Relation::QueryAttribute.new("country_code", country_code, ActiveRecord::Type::String.new),
+    ],
   )
 end
 

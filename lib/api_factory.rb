@@ -29,6 +29,10 @@ class ApiFactory
     @address_base_search_gateway ||= Gateway::AddressBaseSearchGateway.new
   end
 
+  def self.address_base_country_gateway
+    @address_base_country_gateway ||= Gateway::AddressBaseCountryGateway.new
+  end
+
   def self.assessments_address_id_gateway
     @assessments_address_id_gateway ||= Gateway::AssessmentsAddressIdGateway.new
   end
