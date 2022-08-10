@@ -1,52 +1,5 @@
 module Gateway
   class AddressBaseSearchGateway
-    def search_by_postcode(postcode, building_name_number, _address_type)
-      postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
-
-      sql =
-        'SELECT
-            address_line1,
-            address_line2,
-            address_line3,
-            address_line4,
-            town,
-            postcode,
-            uprn
-          FROM address_base
-          WHERE
-            postcode = $1'
-
-      binds = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "postcode",
-          postcode,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
-
-      sql << " ORDER BY "
-
-      if building_name_number
-        sql <<
-          "#{levenshtein('address_line1', '$2')}, #{
-            levenshtein('address_line2', '$2')
-          }, "
-
-        binds <<
-          ActiveRecord::Relation::QueryAttribute.new(
-            "building_name_number",
-            building_name_number,
-            ActiveRecord::Type::String.new,
-          )
-      end
-
-      sql << "uprn"
-
-      parse_results(
-        ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).map { |address| title_case_address address },
-      )
-    end
-
     def search_by_uprn(uprn)
       sql =
         'SELECT
