@@ -154,13 +154,8 @@ def add_uprns_to_address_base(*uprns)
 end
 
 def add_address_base(uprn:)
-  count = ActiveRecord::Base.connection.exec_query(
-    sprintf("SELECT COUNT(*) AS address_count FROM address_base WHERE uprn=%s", ActiveRecord::Base.connection.quote(uprn.to_s)),
-  )[0]["address_count"].to_i
-  return if count > 0
-
   ActiveRecord::Base.connection.exec_query(
-    "INSERT INTO address_base (uprn) VALUES(#{ActiveRecord::Base.connection.quote(uprn)})",
+    "INSERT INTO address_base (uprn) VALUES(#{ActiveRecord::Base.connection.quote(uprn)}) ON CONFLICT DO NOTHING",
   )
 end
 
