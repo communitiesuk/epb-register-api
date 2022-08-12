@@ -507,16 +507,22 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
-    it "accepts an assessment with an NI schema and a BT postcode" do
-      xml_doc = Nokogiri.XML(valid_cepc_ni_xml)
-      lodge_assessment(
-        assessment_body: xml_doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-NI-8.0.0",
-      )
+    context "when given an assessment with an NI schema and a BT postcode" do
+      before do
+        map_lookups_to_country_codes { %w[N] } # 'N' for Northern Ireland
+      end
+
+      it "accepts the lodgement" do
+        xml_doc = Nokogiri.XML(valid_cepc_ni_xml)
+        lodge_assessment(
+          assessment_body: xml_doc.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-NI-8.0.0",
+        )
+      end
     end
 
     context "when validating and adjusting the addressId" do

@@ -214,6 +214,13 @@ def insert_into_address_base(rrn, post_code, address1, address2, town, country_c
   ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 end
 
+def map_lookups_to_country_codes
+  gateway = instance_double Gateway::AddressBaseCountryGateway
+  allow(gateway).to receive(:lookup_from_postcode) { |postcode| Domain::CountryLookup.new(country_codes: yield(postcode:)) }
+  allow(gateway).to receive(:lookup_from_uprn) { |uprn| Domain::CountryLookup.new(country_codes: yield(uprn:)) }
+  allow(Gateway::AddressBaseCountryGateway).to receive(:new).and_return(gateway)
+end
+
 def get_task(name)
   rake = Rake::Application.new
   Rake.application = rake

@@ -14,6 +14,21 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
+  before do
+    map_lookups_to_country_codes do |postcode:|
+      case postcode
+      when /^BT/
+        %w[N] # Northern Ireland
+      when /^LL11/
+        %w[E W] # a cross-border postcode, could map to England or Wales
+      when /^LL/
+        %w[W] # Wales
+      else
+        %w[E] # England
+      end
+    end
+  end
+
   context "when CEPC is lodged" do
     let!(:docs_under_test) do
       [

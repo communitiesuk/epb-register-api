@@ -129,15 +129,21 @@ describe "Acceptance::LodgeExamples", set_with_timecop: true do
       )
     end
 
-    it "can lodge the example CEPC+RR NI" do
-      lodge_assessment(
-        assessment_body: cepc_rr_ni_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-NI-8.0.0",
-      )
+    context "with an NI CEPC+RR NI" do
+      before do
+        map_lookups_to_country_codes { %w[N] } # 'N' for Northern Ireland
+      end
+
+      it "can lodge" do
+        lodge_assessment(
+          assessment_body: cepc_rr_ni_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-NI-8.0.0",
+        )
+      end
     end
 
     it "can lodge the example DEC NI" do

@@ -8,78 +8,6 @@ module LodgementRules
 
     CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1.b", northern_ireland: "SBEM, v4.1.h", wales: "SBEM, v5.6.b" }.freeze
 
-    WALES_ONLY_POSTCODE_PREFIXES = %w[CF SA LL3 LL4 LL5 LL6 LL7].freeze
-
-    WALES_ONLY_POSTCODE_OUTCODES = %w[CH5
-                                      CH6
-                                      CH7
-                                      CH8
-                                      LD1
-                                      LD2
-                                      LD3
-                                      LD4
-                                      LD5
-                                      LD6
-                                      LL15
-                                      LL16
-                                      LL17
-                                      LL18
-                                      LL19
-                                      LL21
-                                      LL22
-                                      LL23
-                                      LL24
-                                      LL25
-                                      LL26
-                                      LL27
-                                      LL28
-                                      LL29
-                                      NP4
-                                      NP8
-                                      NP10
-                                      NP11
-                                      NP12
-                                      NP13
-                                      NP15
-                                      NP18
-                                      NP19
-                                      NP20
-                                      NP22
-                                      NP23
-                                      NP24
-                                      NP26
-                                      NP44
-                                      SY16
-                                      SY17
-                                      SY18
-                                      SY19
-                                      SY20
-                                      SY22
-                                      SY23
-                                      SY24
-                                      SY25].freeze
-
-    CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES =
-      %w[CH1
-         CH4
-         HR2
-         HR3
-         HR5
-         LD7
-         LD8
-         LL11
-         LL12
-         LL13
-         LL14
-         LL20
-         NP7
-         NP16
-         NP25
-         SY5
-         SY10
-         SY15
-         SY21].freeze
-
     RULES = [
       {
         name: "DATES_CANT_BE_IN_FUTURE",
@@ -217,18 +145,17 @@ module LodgementRules
           lambda do |adapter|
             report_type = method_or_nil(adapter, :report_type)
             if %w[3 4].include? report_type # This is a CEPC or CEPC-RR
-              postcode = method_or_nil(adapter, :postcode)
-              outcode = postcode.split(" ")[0]
+              lookup = country_lookup_for_assessment adapter
               calc_tool = method_or_nil(adapter, :calculation_tool)
               building_level = method_or_nil(adapter, :building_level)
               if %w[3 4].include? building_level # Check SBEM software version for these
-                if (postcode.start_with? "BT") && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland])
+                if lookup.in_northern_ireland? && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland])
                   return false
-                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland]) && !(postcode.start_with? "BT")
+                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland]) && !lookup.in_northern_ireland?
                   return false
-                elsif (postcode.start_with?(*WALES_ONLY_POSTCODE_PREFIXES) || (WALES_ONLY_POSTCODE_OUTCODES.include? outcode)) && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:wales])
+                elsif (lookup.in_wales? && !lookup.in_england?) && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:wales])
                   return false
-                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) && !postcode.start_with?(*WALES_ONLY_POSTCODE_PREFIXES) && !(WALES_ONLY_POSTCODE_OUTCODES.include? outcode) && !(CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES.include? outcode)
+                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) && lookup.in_england? && !lookup.in_wales?
                   transaction_type = method_or_nil(adapter, :transaction_type)
                   return false unless transaction_type == "3"
                 end
@@ -247,5 +174,13 @@ module LodgementRules
 
       errors.map { |error| { code: error[:name], title: error[:title] } }
     end
+
+    def self.country_lookup_for_assessment(assessment)
+      ApiFactory.get_country_for_candidate_assessment_use_case.execute rrn: method_or_nil(assessment, :assessment_id),
+                                                                       postcode: method_or_nil(assessment, :postcode),
+                                                                       address_id: method_or_nil(assessment, :address_id)
+    end
+
+    private_class_method :country_lookup_for_assessment
   end
 end
