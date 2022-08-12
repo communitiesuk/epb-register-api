@@ -20,7 +20,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
                   address_line2,
                   address_line3,
                   address_line4,
-                  town
+                  town,
+                  country_code
                 )
             VALUES
               (
@@ -30,7 +31,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
                 'Skewit Road',
                 '',
                 '',
-                'London'
+                'London',
+                'E'
               ),
               (
                 '73546793',
@@ -39,7 +41,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
                 'Skewit Road',
                 '',
                 '',
-                'London'
+                'London',
+                'E'
               ),
               (
                 '73546795',
@@ -48,7 +51,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
                 '345 Skewit Road',
                 '',
                 '',
-                'London'
+                'London',
+                'E'
               ),
               (
                 '736042792',
@@ -57,7 +61,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
                 'Suggton Road',
                 '',
                 '',
-                'Newcastle'
+                'Newcastle',
+                'E'
               )",
       )
 
