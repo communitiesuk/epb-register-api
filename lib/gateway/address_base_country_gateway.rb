@@ -1,10 +1,18 @@
 module Gateway
   class AddressBaseCountryGateway
+    ##
+    # @param [String] uprn The UPRN to look up, either in "12345" or "UPRN-000000012345" format
+    #
+    # @return [Lookup]
     def lookup_from_uprn(uprn)
       do_lookup sql: "SELECT country_code FROM address_base WHERE uprn = $1",
                 param: normalise_uprn(uprn)
     end
 
+    ##
+    # @param [String] postcode A correctly-formatted postcode to lookup, i.e. "SW1A 1AA" not "sw1a1aa"
+    #
+    # @return [Lookup]
     def lookup_from_postcode(postcode)
       do_lookup sql: "SELECT DISTINCT country_code FROM address_base WHERE postcode = $1",
                 param: postcode
@@ -30,6 +38,16 @@ module Gateway
       uprn.match(/^(UPRN-0*)?(\d+)$/)[2]
     end
 
+    ##
+    # A lookup object provides information about countries that the lookup parameter
+    # is associated with.
+    #
+    # @example
+    #
+    #     lookup = gateway.lookup_from_postcode "HR3 6HW"
+    #     lookup.match? # true if lookup matches at least one country, false otherwise
+    #     lookup.in_england? # true if the parameter knowingly relates to a geographical area within england, false otherwise
+    #     lookup.in_wales? # true if parameter relates to area in wales, false otherwise
     class Lookup
       COUNTRIES = {
         E: "england",
