@@ -42,12 +42,16 @@ module Gateway
     # A lookup object provides information about countries that the lookup parameter
     # is associated with.
     #
+    # NB. A lookup can reference multiple countries - there are 115 individual postcodes that contain potentially EPC-able
+    # properties in both England and Wales (i.e. the postcode area crosses the border).
+    #
     # @example
     #
     #     lookup = gateway.lookup_from_postcode "HR3 6HW"
     #     lookup.match? # true if lookup matches at least one country, false otherwise
     #     lookup.in_england? # true if the parameter knowingly relates to a geographical area within england, false otherwise
     #     lookup.in_wales? # true if parameter relates to area in wales, false otherwise
+    #     lookup.country_code # ['E', 'W'] as an example (representing a postcode that covers area in both England and Wales)
     class Lookup
       COUNTRIES = {
         E: "england",
