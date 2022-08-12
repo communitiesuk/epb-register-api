@@ -60,7 +60,7 @@ module Gateway
         N: "northern_ireland",
         L: "channel_islands",
         M: "isle_of_man",
-        J: "in_assigned_location",
+        J: "in_unassigned_location",
       }.freeze
 
       attr_reader :country_codes
