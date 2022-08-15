@@ -35,5 +35,14 @@ module Helper
         type_of_assessment
       end
     end
+
+    def self.remove_line_breaks(data)
+      data.each do |assessment|
+        assessment.each do |_key, value|
+          value.delete!("\n")
+          value.delete!("\r")
+        end
+      end
+    end
   end
 end
