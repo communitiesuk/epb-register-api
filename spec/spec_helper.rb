@@ -165,7 +165,7 @@ def add_address_base(uprn:, postcode: nil, country_code: nil)
   )
 end
 
-def insert_into_address_base(rrn, post_code, address1, address2, town)
+def insert_into_address_base(rrn, post_code, address1, address2, town, country_code)
   sql = "INSERT INTO address_base (uprn,
             postcode,
             address_line1,
@@ -174,8 +174,9 @@ def insert_into_address_base(rrn, post_code, address1, address2, town)
             address_line4,
             town,
             classification_code,
-            address_type)
-            VALUES ($1, $2, $3, $4, '', '', $5, 'D', 'Delivery Point')"
+            address_type,
+            country_code)
+            VALUES ($1, $2, $3, $4, '', '', $5, 'D', 'Delivery Point', $6)"
 
   binds = [
     ActiveRecord::Relation::QueryAttribute.new(
@@ -201,6 +202,11 @@ def insert_into_address_base(rrn, post_code, address1, address2, town)
     ActiveRecord::Relation::QueryAttribute.new(
       "town",
       town,
+      ActiveRecord::Type::String.new,
+    ),
+    ActiveRecord::Relation::QueryAttribute.new(
+      "country_code",
+      country_code,
       ActiveRecord::Type::String.new,
     ),
   ]

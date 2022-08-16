@@ -33,7 +33,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury")
+      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
     end
 
     it "returns only one address for the relevant property" do
@@ -83,7 +83,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury")
+      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
     end
 
     it "returns only one address for the relevant property " do
@@ -98,7 +98,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
 
   context "when searching an address not found in the assessment but present in address base" do
     before do
-      insert_into_address_base("000000000001", "SW1V 2SS", "2 Some Street", "", "London")
+      insert_into_address_base("000000000001", "SW1V 2SS", "2 Some Street", "", "London", "E")
     end
 
     it "returns a single address line from address base " do
@@ -119,7 +119,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
 
   context "when there are the same addresses in both the assessments and address base" do
     before do
-      insert_into_address_base("000005689782", "SW1 2AA", "Flat 3", "1 Some Street", "London")
+      insert_into_address_base("000005689782", "SW1 2AA", "Flat 3", "1 Some Street", "London", "E")
 
       scheme_id = add_scheme_and_get_id
       add_assessor(

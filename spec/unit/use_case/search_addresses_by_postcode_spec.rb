@@ -45,8 +45,8 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury")
-      insert_into_address_base("000000000001", "S1 0AA", "31 Barry's Street", "", "London")
+      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
+      insert_into_address_base("000000000001", "S1 0AA", "31 Barry's Street", "", "London", "E")
     end
 
     context "when searching with a buildingNameNumber string prefixed by a valid, existing street number" do

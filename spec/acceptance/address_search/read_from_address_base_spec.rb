@@ -9,6 +9,7 @@ describe "reading out from address_base table" do
         "1 MCDONALD ROAD",
         "O'BRIENSTOWN",
         "ANYTOWN",
+        "E",
       )
     end
 
