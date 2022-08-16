@@ -39,8 +39,10 @@ module Helper
     def self.remove_line_breaks(data)
       data.each do |assessment|
         assessment.each do |_key, value|
-          value.delete!("\n")
-          value.delete!("\r")
+          if value.is_a?(String) && !value.frozen?
+            value.delete!("\n")
+            value.delete!("\r")
+          end
         end
       end
     end

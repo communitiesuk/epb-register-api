@@ -699,4 +699,50 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
   end
+
+  context "when an assessment is lodged with lines breaks in the xml" do
+    before do
+      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+      add_outcodes("A0", 51.5045, 0.4865, "London")
+
+      domestic_sap_xml =
+        get_assessment_xml(
+          "SAP-Schema-18.0.0",
+          "0000-0000-0000-0000-1100",
+          test_start_date,
+        )
+      updated_address_line_1 = domestic_sap_xml.at("Property Address Address-Line-1")
+      updated_address_line_1.children = "1 Kitten Street\n"
+
+      lodge_assessment(
+        assessment_body: domestic_sap_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        migrated: true,
+        schema_name: "SAP-Schema-18.0.0",
+      )
+    end
+
+    context "with the domestic assessments" do
+      let(:use_case) { UseCase::ExportOpenDataDomestic.new }
+      let(:data) do
+        use_case
+           .execute(test_start_date, 0, "2021-02-28")
+           .sort_by! { |item| item[:assessment_id] }
+      end
+      let(:cleaned_data) { Helper::ExportHelper.remove_line_breaks(data) }
+      let(:csv_data) { Helper::ExportHelper.to_csv(cleaned_data) }
+      let(:fixture_csv) { read_csv_fixture("domestic_remove_line_break") }
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+
+      it "returns the csv values with no line breaks" do
+        expect(
+          redact_lodgement_datetime(parsed_exported_data[0]) -
+            redact_lodgement_datetime(fixture_csv[0]),
+        ).to eq([])
+      end
+    end
+  end
 end

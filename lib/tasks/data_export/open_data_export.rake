@@ -35,6 +35,8 @@ namespace :open_data do
 
     raise Boundary::OpenDataEmpty if data.length.zero?
 
+    cleaned_data = Helper::ExportHelper.remove_line_breaks(data)
+
     transmit_file = lambda do |file_data|
       max_task_id = Gateway::OpenDataLogGateway.new.fetch_latest_task_id
 
@@ -53,7 +55,7 @@ namespace :open_data do
       storage_gateway.write_file(filename, file_data)
     end
 
-    csv_data = Helper::ExportHelper.to_csv(data)
+    csv_data = Helper::ExportHelper.to_csv(cleaned_data)
     transmit_file.call(csv_data)
 
   rescue Boundary::RecoverableError => e
