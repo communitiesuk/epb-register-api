@@ -3,12 +3,12 @@ describe UseCase::LodgeAssessment do
     described_class.new(
       assessments_gateway:,
       assessments_search_gateway: instance_double(Gateway::AssessmentsSearchGateway),
-      address_base_search_gateway: instance_spy(Gateway::AddressBaseSearchGateway),
       assessors_gateway:,
       assessments_xml_gateway:,
       assessments_address_id_gateway: instance_spy(Gateway::AssessmentsAddressIdGateway),
       related_assessments_gateway: instance_double(Gateway::RelatedAssessmentsGateway),
       green_deal_plans_gateway: instance_double(Gateway::GreenDealPlansGateway),
+      get_canonical_address_id_use_case:,
       event_broadcaster: Events::Broadcaster.new,
     )
   end
@@ -17,6 +17,11 @@ describe UseCase::LodgeAssessment do
   let(:assessors_gateway) { instance_spy(Gateway::AssessorsGateway) }
   let(:assessments_xml_gateway) { instance_spy(Gateway::AssessmentsXmlGateway) }
   let(:assessor) { instance_double(Domain::Assessor) }
+  let(:get_canonical_address_id_use_case) do
+    use_case = instance_double UseCase::GetCanonicalAddressId
+    allow(use_case).to receive(:execute)
+    use_case
+  end
 
   let(:data) do
     { type_of_assessment: "SAP",

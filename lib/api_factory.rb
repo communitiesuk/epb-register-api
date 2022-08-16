@@ -129,12 +129,12 @@ class ApiFactory
       UseCase::LodgeAssessment.new(
         assessments_gateway:,
         assessments_search_gateway:,
-        address_base_search_gateway:,
         assessors_gateway:,
         assessments_xml_gateway:,
         assessments_address_id_gateway:,
         related_assessments_gateway:,
         green_deal_plans_gateway:,
+        get_canonical_address_id_use_case:,
         event_broadcaster:,
       )
   end
@@ -168,6 +168,14 @@ class ApiFactory
   def self.import_green_deal_fuel_price_use_case
     @import_green_deal_fuel_price_use_case ||= UseCase::ImportGreenDealFuelPrice.new(
       green_deal_fuel_price_gateway,
+    )
+  end
+
+  def self.get_canonical_address_id_use_case
+    @get_canonical_address_id_use_case ||= UseCase::GetCanonicalAddressId.new(
+      address_base_search_gateway:,
+      assessments_address_id_gateway:,
+      assessments_search_gateway:,
     )
   end
 

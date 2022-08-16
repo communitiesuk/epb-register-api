@@ -14,22 +14,22 @@ module UseCase
     def initialize(
       assessments_gateway:,
       assessments_search_gateway:,
-      address_base_search_gateway:,
       assessors_gateway:,
       assessments_xml_gateway:,
       assessments_address_id_gateway:,
       related_assessments_gateway:,
       green_deal_plans_gateway:,
+      get_canonical_address_id_use_case:,
       event_broadcaster:
     )
       @assessments_gateway = assessments_gateway
       @assessments_search_gateway = assessments_search_gateway
-      @address_base_search_gateway = address_base_search_gateway
       @assessors_gateway = assessors_gateway
       @assessments_xml_gateway = assessments_xml_gateway
       @assessments_address_id_gateway = assessments_address_id_gateway
       @related_assessments_gateway = related_assessments_gateway
       @green_deal_plans_gateway = green_deal_plans_gateway
+      @get_canonical_address_id_use_case = get_canonical_address_id_use_case
       @event_broadcaster = event_broadcaster
     end
 
@@ -189,43 +189,11 @@ module UseCase
     end
 
     def get_canonical_address_id(assessment)
-      if assessment.address_id.nil?
-        return default_address_id(assessment)
-      elsif assessment.address_id.start_with?("UPRN-")
-        # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
-        uprn = assessment.address_id[5..]
-        return assessment.address_id if address_base_has_uprn?(uprn)
-      elsif assessment.address_id.start_with?("RRN-")
-        related_assessment_id = assessment.address_id[4..]
-        begin
-          related_assessment =
-            @assessments_address_id_gateway.fetch(related_assessment_id)
-        rescue ActiveRecord::RecordNotFound
-          related_assessment = nil
-        end
-
-        return related_assessment[:address_id] if related_assessment
-      end
-
-      default_address_id(assessment)
-    end
-
-    def default_address_id(assessment)
-      default_address_id = "RRN-#{assessment.assessment_id}"
-      if !assessment.related_rrn.nil? && is_related_report?(assessment)
-        default_address_id = "RRN-#{assessment.related_rrn}"
-      end
-      default_address_id
-    end
-
-    def address_base_has_uprn?(uprn)
-      @address_base_search_gateway.check_uprn_exists(uprn)
-    end
-
-    def is_related_report?(assessment)
-      (
-        assessment.type_of_assessment.include?("-RR") ||
-          assessment.type_of_assessment.include?("-REPORT")
+      @get_canonical_address_id_use_case.execute(
+        rrn: assessment.assessment_id,
+        related_rrn: assessment.related_rrn,
+        address_id: assessment.address_id,
+        type_of_assessment: assessment.type_of_assessment,
       )
     end
 
