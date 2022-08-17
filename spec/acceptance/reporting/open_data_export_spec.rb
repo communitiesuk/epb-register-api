@@ -744,5 +744,27 @@ describe "Acceptance::Reports::OpenDataExport" do
         ).to eq([])
       end
     end
+
+    context "when invoking the open data export rake" do
+      before do
+        EnvironmentStub
+          .all
+
+        HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
+      end
+
+      it "returns the data without line breaks in the body" do
+        assessment_type = "SAP-RDSAP"
+        date_from = test_start_date
+        get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+
+        expect(WebMock).not_to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
+        ).with(
+          body: Regexp.new("1 Kitten Street\n"),
+        )
+      end
+    end
   end
 end
