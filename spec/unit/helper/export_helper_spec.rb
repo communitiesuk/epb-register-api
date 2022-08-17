@@ -71,7 +71,51 @@ describe Helper::ExportHelper do
     end
 
     it "returns an object with line breaks removed" do
-      expect(expectation).to eq(helper.remove_line_breaks(test_data))
+      expect(helper.remove_line_breaks(test_data)).to eq(expectation)
+    end
+  end
+
+  context "when data includes frozen strings or non-string objects" do
+    let(:test_data) do
+      [
+        {
+          assessment_id: "0000-0000-0000-0000-0001",
+          address1: "28, Joicey Court\n".freeze,
+          address2: "\n",
+          address3: 4,
+          comma_test_values: "a,b,c,",
+          lodgement_date: "13-04-2009",
+        },
+        {
+          assessment_id: "0000-0000-0000-0000-0002",
+          comma_test_values: "1,2\r".freeze,
+          address1: "88\n Station Lane",
+          lodgement_date: "01-02-2020",
+        },
+      ]
+    end
+
+    let(:expectation) do
+      [
+        {
+          assessment_id: "0000-0000-0000-0000-0001",
+          address1: "28, Joicey Court",
+          address2: "",
+          address3: 4,
+          comma_test_values: "a,b,c,",
+          lodgement_date: "13-04-2009",
+        },
+        {
+          assessment_id: "0000-0000-0000-0000-0002",
+          comma_test_values: "1,2",
+          address1: "88 Station Lane",
+          lodgement_date: "01-02-2020",
+        },
+      ]
+    end
+
+    it "returns an object with line breaks removed" do
+      expect(helper.remove_line_breaks(test_data)).to eq(expectation)
     end
   end
 end

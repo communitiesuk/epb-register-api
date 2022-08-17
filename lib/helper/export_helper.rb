@@ -38,13 +38,22 @@ module Helper
 
     def self.remove_line_breaks(data)
       data.each do |assessment|
-        assessment.each do |_key, value|
-          if value.is_a?(String) && !value.frozen?
-            value.delete!("\n")
-            value.delete!("\r")
+        assessment.each do |key, value|
+          if !value.is_a?(String)
+            break
+          elsif !value.frozen?
+            remove_line_break(value)
+          elsif value.frozen?
+            assessment[key] = remove_line_break(value.dup)
           end
         end
       end
+    end
+
+    def self.remove_line_break(value)
+      value.delete!("\n")
+      value.delete!("\r")
+      value
     end
   end
 end
