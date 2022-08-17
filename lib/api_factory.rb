@@ -185,6 +185,14 @@ class ApiFactory
     )
   end
 
+  def self.get_country_for_candidate_assessment_use_case
+    @get_country_for_candidate_assessment_use_case = UseCase::GetCountryForCandidateLodgement.new(
+      get_canonical_address_id_use_case:,
+      get_country_for_postcode_use_case:,
+      address_base_country_gateway:,
+    )
+  end
+
   def self.green_deal_fuel_price_gateway
     @green_deal_fuel_price_gateway ||= Gateway::GreenDealFuelPriceGateway.new
   end
