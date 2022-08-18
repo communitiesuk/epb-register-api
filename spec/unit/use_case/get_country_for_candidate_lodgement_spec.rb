@@ -16,9 +16,7 @@ describe UseCase::GetCountryForCandidateLodgement do
     let(:params) do
       {
         rrn: "1234-5678-1234-1234-5678",
-        related_rrn: nil,
         address_id: nonexistent_uprn,
-        type_of_assessment: "RdSAP",
         postcode:,
       }
     end
@@ -42,9 +40,7 @@ describe UseCase::GetCountryForCandidateLodgement do
     let(:params) do
       {
         rrn: "3456-3456-3445-4556-5567",
-        related_rrn: nil,
         address_id: existent_uprn,
-        type_of_assessment: "SAP",
         postcode:,
       }
     end

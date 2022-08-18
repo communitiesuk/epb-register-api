@@ -10,11 +10,9 @@ module UseCase
       @address_base_country_gateway = address_base_country_gateway
     end
 
-    def execute(rrn:, address_id:, type_of_assessment:, postcode:, related_rrn: nil)
+    def execute(rrn:, address_id:, postcode:)
       canonical_address_id = @get_canonical_address_id_use_case.execute(rrn:,
-                                                                        related_rrn:,
-                                                                        address_id:,
-                                                                        type_of_assessment:)
+                                                                        address_id:)
 
       if canonical_address_id.start_with?("UPRN-")
         @address_base_country_gateway.lookup_from_uprn canonical_address_id
