@@ -31,7 +31,7 @@ module Gateway
             ActiveRecord::Type::String.new,
           ),
         ],
-      ).map { |row| row["country_code"] }
+      ).map { |row| row["country_code"] }.compact
     end
 
     def normalise_uprn(uprn)

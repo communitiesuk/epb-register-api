@@ -79,4 +79,16 @@ describe Gateway::AddressBaseCountryGateway do
       end
     end
   end
+
+  context "when looking up country with an address base table not populated by country codes" do
+    before do
+      add_address_base uprn: "13579", postcode: "HR3 6HW", country_code: nil
+      add_address_base uprn: "13580", postcode: "HR3 6HW", country_code: nil
+    end
+
+    it "gets a result that is not a match" do
+      lookup = gateway.lookup_from_postcode "HR3 6HW"
+      expect(lookup.match?).to be false
+    end
+  end
 end
