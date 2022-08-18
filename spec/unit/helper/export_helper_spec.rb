@@ -33,14 +33,14 @@ describe Helper::ExportHelper do
     end
   end
 
-  context "when data has line breaks" do
+  context "when data has line breaks and extra spaces" do
     let(:test_data) do
       [
         {
           assessment_id: "0000-0000-0000-0000-0001",
           address1: "28, Joicey Court\n",
           address2: "\n",
-          comma_test_values: "a,b,c,",
+          comma_test_values: "a,b,c,\n           ",
           lodgement_date: "13-04-2009",
         },
         {
@@ -58,7 +58,7 @@ describe Helper::ExportHelper do
           assessment_id: "0000-0000-0000-0000-0001",
           address1: "28, Joicey Court",
           address2: "",
-          comma_test_values: "a,b,c,",
+          comma_test_values: "a,b,c, ",
           lodgement_date: "13-04-2009",
         },
         {
@@ -70,7 +70,7 @@ describe Helper::ExportHelper do
       ]
     end
 
-    it "returns an object with line breaks removed" do
+    it "returns an object with line breaks, carriage returns and extra spaces removed" do
       expect(helper.remove_line_breaks(test_data)).to eq(expectation)
     end
   end

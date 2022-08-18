@@ -42,17 +42,18 @@ module Helper
           if !value.is_a?(String)
             break
           elsif !value.frozen?
-            remove_line_break(value)
+            remove_line_break_and_extra_spaces(value)
           elsif value.frozen?
-            assessment[key] = remove_line_break(value.dup)
+            assessment[key] = remove_line_break_and_extra_spaces(value.dup)
           end
         end
       end
     end
 
-    def self.remove_line_break(value)
+    def self.remove_line_break_and_extra_spaces(value)
       value.delete!("\n")
       value.delete!("\r")
+      value.squeeze!(" ")
       value
     end
   end

@@ -764,6 +764,13 @@ describe "Acceptance::Reports::OpenDataExport" do
         ).with(
           body: Regexp.new("1 Kitten Street\n"),
         )
+
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
+        ).with(
+          body: Regexp.new("1 Kitten Street"),
+        )
       end
     end
   end
