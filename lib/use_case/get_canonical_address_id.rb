@@ -12,7 +12,7 @@ module UseCase
       @assessments_search_gateway = assessments_search_gateway || Gateway::AssessmentsSearchGateway.new
     end
 
-    def execute(rrn:, address_id:, type_of_assessment:, related_rrn: nil)
+    def execute(rrn:, address_id:, type_of_assessment: nil, related_rrn: nil)
       if address_id.nil?
         return default_address_id(rrn:, related_rrn:, type_of_assessment:)
       elsif address_id.start_with?("UPRN-")
@@ -45,6 +45,8 @@ module UseCase
     end
 
     def is_related_report?(type_of_assessment:)
+      return false if type_of_assessment.nil?
+
       (
         type_of_assessment.include?("-RR") ||
           type_of_assessment.include?("-REPORT")

@@ -101,4 +101,21 @@ describe UseCase::GetCanonicalAddressId do
       end
     end
   end
+
+  context "when related RRN and type of assessment not provided" do
+    before do
+      allow(address_base_search_gateway).to receive(:check_uprn_exists).and_return(true)
+    end
+
+    let(:params) do
+      {
+        rrn: "0000-0000-0000-0009-9999",
+        address_id: "UPRN-000000000003",
+      }
+    end
+
+    it "is able to assign the address ID based on the UPRN given" do
+      expect(use_case.execute(**params)).to eq "UPRN-000000000003"
+    end
+  end
 end
