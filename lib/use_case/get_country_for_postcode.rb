@@ -71,8 +71,8 @@ module UseCase
          SY10
          SY15
          SY21].freeze
-    IN_WALES_ONLY_REGEX = Regexp.new("^#{(WALES_ONLY_POSTCODE_PREFIXES + WALES_ONLY_POSTCODE_OUTCODES).map { |fragment| "(#{fragment})" }.join('|')}").freeze
-    CROSS_BORDER_ENGLAND_AND_WALES_REGEX = Regexp.new("^#{CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES.map { |fragment| "(#{fragment})" }.join('|')}").freeze
+    IN_WALES_ONLY_REGEX = Regexp.new("^#{(WALES_ONLY_POSTCODE_PREFIXES.map { |fragment| "(#{fragment})" } + WALES_ONLY_POSTCODE_OUTCODES.map { |fragment| "(#{fragment}\s)" }).join('|')}").freeze
+    CROSS_BORDER_ENGLAND_AND_WALES_REGEX = Regexp.new("^#{CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES.map { |fragment| "(#{fragment}\s)" }.join('|')}").freeze
 
     def initialize(address_base_country_gateway: nil)
       @address_base_country_gateway = address_base_country_gateway || Gateway::AddressBaseCountryGateway.new

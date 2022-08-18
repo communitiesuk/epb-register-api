@@ -54,6 +54,17 @@ describe UseCase::GetCountryForPostcode do
     end
   end
 
+  context "when the postcode is in CH66" do
+    let(:postcode) { "CH66 4RT" }
+
+    it "recognises that the postcode is in england, rather than wales (i.e. not CH6)" do
+      lookup = use_case.execute(postcode:)
+      expect(lookup.match?).to be true
+      expect(lookup.in_wales?).to be false
+      expect(lookup.in_england?).to be true
+    end
+  end
+
   context "when the postcode given is in a cross-border area, a lookup is performed on the gateway" do
     context "with the gateway returning a location in england only" do
       let(:postcode) { "HR2 0PP" }
