@@ -233,12 +233,6 @@ module UseCase
       lodgement.fetch_data
     end
 
-    def ni_assessment_has_valid_postcode?(lodgement, schema_name)
-      return false if schema_name.include?("NI") && !lodgement[0][:address][:postcode].strip.upcase.starts_with?("BT")
-
-      true
-    end
-
     def as_parsed_document(xml)
       xml_doc = Nokogiri.XML xml
       xml_doc.remove_namespaces!
