@@ -33,6 +33,8 @@ module UseCase
       end
     end
 
+    class LodgementFailsCountryConstraintError < StandardError; end
+
     class LodgementRulesException < StandardError
       attr_reader :errors
 
@@ -58,6 +60,15 @@ module UseCase
       "SAP-Version" => %w[10.2],
       "SAP-Data-Version" => %w[10.2],
     } }.freeze
+    COUNTRY_CONSTRAINTS = [
+      {
+        constraint: :in_england?,
+        schema_types: %w[SAP],
+        nodes: {
+          "SAP-Version" => "10.2",
+        },
+      },
+    ].freeze
 
     def initialize(
       validate_assessment_use_case:,
@@ -102,10 +113,12 @@ module UseCase
         raise LodgementRulesException, e
       end
 
-      unless migrated
-        wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
-        schema_valid = UseCase::CheckSchemaVersion.new.execute(schema_name)
+      wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
+      schema_valid = UseCase::CheckSchemaVersion.new.execute(schema_name)
 
+      apply_country_constraints(assessment_view_model: wrapper.get_view_model, assessment_xml_doc: xml_doc, schema_name:)
+
+      unless migrated
         if schema_valid && !wrapper.nil?
           rules =
             if LATEST_COMMERCIAL.include? schema_name
@@ -227,6 +240,23 @@ module UseCase
           invalid_version_value: version_value,
         )
       end
+    end
+
+    def apply_country_constraints(assessment_view_model:, assessment_xml_doc:, schema_name:)
+      COUNTRY_CONSTRAINTS.each do |constraint|
+        next unless constraint[:schema_types].any? { |type| schema_name.start_with? type }
+        next unless constraint[:nodes].any? { |node_name, value| assessment_xml_doc.at(node_name).content == value }
+
+        raise LodgementFailsCountryConstraintError, message_for_country_constraint_error(**constraint) unless ApiFactory.get_country_for_candidate_assessment_use_case.execute(
+          rrn: assessment_view_model.assessment_id,
+          address_id: assessment_view_model.address_id,
+          postcode: assessment_view_model.postcode,
+        ).send(constraint[:constraint])
+      end
+    end
+
+    def message_for_country_constraint_error(constraint:, nodes:, schema_types:)
+      "Lodgements of schema type #{schema_types.map { |type| "'#{type}'" }.join(' or ')} and values #{nodes} must only be made for buildings #{constraint.to_s.delete_suffix('?').camelize(:lower).gsub(/([A-Z])/, ' \1')}"
     end
 
     def extract_data_from_lodgement_xml(lodgement)

@@ -249,6 +249,24 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
+  context "when given a SAP assessment with a 10.2 version and an assessment with a Welsh location" do
+    let(:welsh_sap_10_2_xml) do
+      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+      xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "CF10 1EP" }
+      xml.to_s
+    end
+
+    it "raises an error" do
+      expect {
+        use_case.execute assessment_xml: welsh_sap_10_2_xml,
+                         schema_name: "SAP-Schema-19.0.0",
+                         scheme_ids: "1",
+                         migrated: true,
+                         overridden: false
+      }.to raise_error described_class::LodgementFailsCountryConstraintError
+    end
+  end
+
   context "when validating Northern Ireland assessments" do
     let(:rdsap_ni) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")) }
     let(:rdsap) { Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")) }

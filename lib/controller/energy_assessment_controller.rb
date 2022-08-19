@@ -211,6 +211,12 @@ module Controller
           "INVALID_REQUEST",
           "The version number #{e.invalid_version_value} for the node #{e.failed_node} is invalid for the #{e.schema_name} schema",
         )
+      when UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          e.message,
+        )
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
