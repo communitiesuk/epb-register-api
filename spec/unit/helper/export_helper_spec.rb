@@ -71,7 +71,7 @@ describe Helper::ExportHelper do
     end
 
     it "returns an object with line breaks, carriage returns and extra spaces removed" do
-      expect(helper.remove_line_breaks(test_data)).to eq(expectation)
+      expect(helper.remove_line_breaks_from_hash_values(test_data)).to eq(expectation)
     end
   end
 
@@ -115,7 +115,7 @@ describe Helper::ExportHelper do
     end
 
     it "returns an object with line breaks removed" do
-      expect(helper.remove_line_breaks(test_data)).to eq(expectation)
+      expect(helper.remove_line_breaks_from_hash_values(test_data)).to eq(expectation)
     end
   end
 end

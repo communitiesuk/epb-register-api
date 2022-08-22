@@ -36,15 +36,15 @@ module Helper
       end
     end
 
-    def self.remove_line_breaks(data)
-      data.each do |assessment|
-        assessment.each do |key, value|
+    def self.remove_line_breaks_from_hash_values(data)
+      data.each do |assessment_hash|
+        assessment_hash.each do |key, value|
           if !value.is_a?(String)
             break
           elsif !value.frozen?
             remove_line_break_and_extra_spaces(value)
           elsif value.frozen?
-            assessment[key] = remove_line_break_and_extra_spaces(value.dup)
+            assessment_hash[key] = remove_line_break_and_extra_spaces(value.dup)
           end
         end
       end

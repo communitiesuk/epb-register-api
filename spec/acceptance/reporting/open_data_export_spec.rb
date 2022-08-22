@@ -732,7 +732,7 @@ describe "Acceptance::Reports::OpenDataExport" do
            .execute(test_start_date, 0, "2021-02-28")
            .sort_by! { |item| item[:assessment_id] }
       end
-      let(:cleaned_data) { Helper::ExportHelper.remove_line_breaks(data) }
+      let(:cleaned_data) { Helper::ExportHelper.remove_line_breaks_from_hash_values(data) }
       let(:csv_data) { Helper::ExportHelper.to_csv(cleaned_data) }
       let(:fixture_csv) { read_csv_fixture("domestic_remove_line_break") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }

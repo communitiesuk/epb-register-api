@@ -35,7 +35,7 @@ namespace :open_data do
 
     raise Boundary::OpenDataEmpty if data.length.zero?
 
-    data = Helper::ExportHelper.remove_line_breaks(data)
+    data = Helper::ExportHelper.remove_line_breaks_from_hash_values(data)
 
     transmit_file = lambda do |file_data|
       max_task_id = Gateway::OpenDataLogGateway.new.fetch_latest_task_id
