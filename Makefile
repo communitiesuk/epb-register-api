@@ -115,6 +115,10 @@ run:
 format:
 	@bundle exec rubocop --autocorrect || true
 
+.PHONY: lint-api-spec
+lint-api-spec:
+	@npx spectral lint api/apidoc.yml -r api/.spectral.yaml
+
 .PHONY: setup-hooks
 setup-hooks:
 	@scripts/setup-git-hooks.sh
