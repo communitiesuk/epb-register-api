@@ -10,13 +10,13 @@ end
 
 group :worker do
   gem "http"
-  gem "sidekiq", "~> 6.5.4"
+  gem "sidekiq", "~> 6.5.5"
   gem "sidekiq-cron", "~> 1.7.0"
 end
 
 group :test do
   gem "database_cleaner"
-  gem "mock_redis", "~> 0.32.0"
+  gem "mock_redis", "~> 0.33.0"
   gem "pry", "~> 0.14.1"
   gem "rack-test", "~> 2.0.2"
   gem "rspec", "~>3.11"
@@ -36,7 +36,7 @@ gem "ougai", "~> 2.0"
 gem "pg", "~> 1.4"
 gem "puma", "~> 5.6"
 gem "rake", "~> 13.0", ">= 13.0.6"
-gem "redis", "~> 4.7.1"
+gem "redis", "~> 4.8.0"
 gem "rubocop", "~> 1.35.0"
 gem "rubocop-govuk", "~> 4.7"
 gem "rubocop-performance", require: false
