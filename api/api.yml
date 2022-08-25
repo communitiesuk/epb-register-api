@@ -1465,7 +1465,7 @@ paths:
       summary: 'Get the Heat Pump Check details from the domestic EPC
                 with reference {assessmentId}'
       description: Get domestic EPC details for the supplied RRN
-      operationId: get-assessment-het-pump-check
+      operationId: get-assessment-heat-pump-check
       security:
         - oauth:
             - 'heat-pump-check:assessment:fetch'
