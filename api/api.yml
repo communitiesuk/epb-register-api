@@ -31,6 +31,8 @@ tags:
     description: Endpoints used by the Boiler Upgrade Scheme
   - name: Home Energy Retrofit Advice
     description: Endpoints used by the Home Energy Retrofit Advice service
+  - name: Heat Pump Check
+    description: Endpoints used by the Heat Pump Check service
   - name: Reports
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
@@ -603,6 +605,7 @@ paths:
       tags:
         - Search
         - Home Energy Retrofit Advice
+        - Heat Pump Check
       summary: Search for domestic EPCs by address
       description: 'Search for an assessment by postcode and optional building
                     name/number. If building name/number is not supplied then
@@ -1455,6 +1458,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /heat-pump-check/assessments/{assessmentId}:
+    get:
+      tags:
+        - Heat Pump Check
+      summary: 'Get the Heat Pump Check details from the domestic EPC
+                with reference {assessmentId}'
+      description: Get domestic EPC details for the supplied RRN
+      operationId: get-assessment-het-pump-check
+      security:
+        - oauth:
+            - 'heat-pump-check:assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID (RRN) of the assessment being requested'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Domestic EPC data for the Heat Pump Check service
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/HeatPumpCheckAssessmentDetails'
+        '400':
+          description: The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Domestic EPC with this RRN not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /greendeal/assessments/{assessmentId}:
     get:
       tags:
@@ -2116,6 +2177,7 @@ components:
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
             'retrofit-advice:assessment:fetch': Carry out Home Energy Retrofit Advice search for latest domestic EPC data
+            'heat-pump-check:assessment:fetch': Carry out Heat Pump Check search for latest domestic EPC data
 
   schemas:
     # Addresses
@@ -3024,6 +3086,57 @@ components:
           description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
           example: true
+
+    # Heat Pump Check
+    HeatPumpCheckAssessmentDetails:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        lodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        isLatestAssessmentForAddress:
+          type: boolean
+          example: true
+        propertyType:
+          type: string
+          example: 'Mid-floor flat'
+        builtForm:
+          type: string
+          example: 'End-Terrace'
+          description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+        propertyAgeBand:
+          type: string
+          example: '2007-2011'
+          nullable: true
+        totalFloorArea:
+          type: string
+          example: "171.0"
+          nullable: true
+        wallsDescription:
+          type: array
+          items:
+            type: string
+          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          description: "A list of free text descriptions associated with wall property features as documented in the assessment."
+        roofDescription:
+          type: array
+          items:
+            type: string
+          example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+          description: "A list of free text descriptions associated with roof property features as documented in the assessment."
+        windowsDescription:
+          type: array
+          items:
+            type: string
+          example: ["Fully double glazed"]
+          description: "A list of free text descriptions associated with window property features as documented in the assessment."
+        mainFuelType:
+          type: string
+          example: 'Natural Gas'
+          description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
 
     # Green Deal
     AssessmentGreenDealDetails:
