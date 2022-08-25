@@ -8,7 +8,7 @@ module UseCase
 
     def execute
       begin
-        price_data = get_data
+        price_data = @green_deal_gateway.get_data
       rescue StandardError
         raise NoDataException
       end
@@ -17,13 +17,6 @@ module UseCase
       raise NoDataException if price_data.empty?
 
       @green_deal_gateway.bulk_insert(price_data)
-    end
-
-  private
-
-    def get_data
-      string_response = Net::HTTP.get URI "http://www.boilers.org.uk/data1/pcdf2012.dat"
-      string_response.scan(/^\d,\d+,\d+,\d+\.\d+,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi)
     end
   end
 end

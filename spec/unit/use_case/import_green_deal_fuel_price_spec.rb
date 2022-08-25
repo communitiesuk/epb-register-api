@@ -6,6 +6,7 @@ describe UseCase::ImportGreenDealFuelPrice do
     context "when data can be downloaded from the http" do
       before do
         allow(gateway).to receive(:bulk_insert)
+        allow(gateway).to receive(:get_data).and_return(price_data)
       end
 
       let(:price_data) do
@@ -16,7 +17,6 @@ describe UseCase::ImportGreenDealFuelPrice do
       end
 
       it "calls the exec and passes the data to gateway" do
-        allow(use_case).to receive(:get_data).and_return(price_data)
         use_case.execute
         expect(gateway).to have_received(:bulk_insert).with(price_data).exactly(1).times
       end
@@ -43,6 +43,7 @@ describe UseCase::ImportGreenDealFuelPrice do
       before do
         WebMock.enable!
         allow(gateway).to receive(:bulk_insert)
+        allow(gateway).to receive(:get_data)
         stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat").to_raise(StandardError)
       end
 
@@ -58,8 +59,8 @@ describe UseCase::ImportGreenDealFuelPrice do
 
     context "when the HTTP request returns no data" do
       before do
-        allow(use_case).to receive(:get_data).and_return("<h1>no data</h1>")
         allow(gateway).to receive(:bulk_insert)
+        allow(gateway).to receive(:get_data).and_return("<h1>no data</h1>")
       end
 
       it "calls the exec that raises a custom error and returns before call the gateway",  aggregate_failures: true do
@@ -70,7 +71,7 @@ describe UseCase::ImportGreenDealFuelPrice do
 
     context "when the HTTP request returns empty array" do
       before do
-        allow(use_case).to receive(:get_data).and_return([])
+        allow(gateway).to receive(:get_data).and_return([])
         allow(gateway).to receive(:bulk_insert)
       end
 
