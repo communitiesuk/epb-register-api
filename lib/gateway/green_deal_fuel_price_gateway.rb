@@ -36,5 +36,10 @@ module Gateway
         end
       end
     end
+
+    def get_data
+      string_response = Net::HTTP.get URI "http://www.boilers.org.uk/data1/pcdf2012.dat"
+      string_response.scan(/^\d,\d+,\d+,\d+\.\d+,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi)
+    end
   end
 end
