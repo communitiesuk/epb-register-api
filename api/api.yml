@@ -3137,6 +3137,11 @@ components:
           type: string
           example: 'Natural Gas'
           description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
+        hasMainsGas:
+          type: boolean
+          example: true
+          nullable: true
+
 
     # Green Deal
     AssessmentGreenDealDetails:
