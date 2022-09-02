@@ -61,8 +61,8 @@ class ApiFactory
     @boiler_upgrade_scheme_gateway ||= Gateway::BoilerUpgradeSchemeGateway.new
   end
 
-  def self.home_energy_retrofit_advice_gateway
-    @home_energy_retrofit_advice_gateway ||= Gateway::HomeEnergyRetrofitAdviceGateway.new
+  def self.domestic_digest_gateway
+    @domestic_digest_gateway ||= Gateway::DomesticDigestGateway.new
   end
 
   def self.domestic_epc_search_gateway
@@ -250,7 +250,7 @@ class ApiFactory
   def self.fetch_assessment_for_hera_use_case
     @fetch_assessment_for_hera_use_case ||=
       UseCase::FetchAssessmentForHera.new(
-        hera_gateway: home_energy_retrofit_advice_gateway,
+        domestic_digest_gateway:,
         summary_use_case: assessment_summary_fetch_use_case,
       )
   end

@@ -1,4 +1,4 @@
-describe Gateway::HomeEnergyRetrofitAdviceGateway do
+describe Gateway::DomesticDigestGateway do
   include RSpecRegisterApiServiceMixin
 
   subject(:gateway) { described_class.new }

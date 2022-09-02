@@ -1,5 +1,5 @@
 module Gateway
-  class HomeEnergyRetrofitAdviceGateway
+  class DomesticDigestGateway
     def fetch_by_rrn(rrn)
       sql = <<-SQL
         SELECT

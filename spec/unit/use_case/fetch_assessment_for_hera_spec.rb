@@ -1,7 +1,7 @@
 describe UseCase::FetchAssessmentForHera do
-  subject(:use_case) { described_class.new(hera_gateway:, summary_use_case:) }
+  subject(:use_case) { described_class.new(domestic_digest_gateway:, summary_use_case:) }
 
-  let(:hera_gateway) { instance_double Gateway::HomeEnergyRetrofitAdviceGateway }
+  let(:domestic_digest_gateway) { instance_double Gateway::DomesticDigestGateway }
 
   let(:summary_use_case) { instance_double UseCase::AssessmentSummary::Fetch }
 
@@ -10,7 +10,7 @@ describe UseCase::FetchAssessmentForHera do
     xml = Samples.xml "RdSAP-Schema-20.0.0"
 
     before do
-      allow(hera_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
         "xml" => xml,
         "schema_type" => "RdSAP-Schema-20.0.0",
       })
@@ -93,7 +93,7 @@ describe UseCase::FetchAssessmentForHera do
     xml = Samples.xml "SAP-Schema-18.0.0"
 
     before do
-      allow(hera_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
         "xml" => xml,
         "schema_type" => "SAP-Schema-18.0.0",
       })
@@ -149,7 +149,7 @@ describe UseCase::FetchAssessmentForHera do
 
     sap_xml = Samples.xml "SAP-Schema-10.2", "rdsap"
     before do
-      allow(hera_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
         "xml" => sap_xml,
         "schema_type" => "SAP-Schema-10.2",
       })
@@ -193,7 +193,7 @@ describe UseCase::FetchAssessmentForHera do
     rrn = "5555-5555-5555-5555-5555"
 
     before do
-      allow(hera_gateway).to receive(:fetch_by_rrn).with(rrn).and_return(nil)
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return(nil)
     end
 
     it "returns nil" do
