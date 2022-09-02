@@ -33,6 +33,8 @@ tags:
     description: Endpoints used by the Home Energy Retrofit Advice service
   - name: Heat Pump Check
     description: Endpoints used by the Heat Pump Check service
+  - name: Warm Home Discount
+    description: Endpoints used by the Warm Home Discount service
   - name: Reports
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
@@ -606,6 +608,7 @@ paths:
         - Search
         - Home Energy Retrofit Advice
         - Heat Pump Check
+        - Warm Home Discount
       summary: Search for domestic EPCs by address
       description: 'Search for an assessment by postcode and optional building
                     name/number. If building name/number is not supplied then
@@ -644,6 +647,30 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/DomesticEPCsSearchResult'
+              example: [
+                {
+                  "epcRrn": "1111-1111-1111-1111-1111",
+                  "address": {
+                    "addressLine1": "11 Acacia Avenue",
+                    "addressLine2": "Upper Wellgood",
+                    "addressLine3": "",
+                    "addressLine4": "",
+                    "town": "Fulchester",
+                    "postcode": "FL23 4JA"
+                  }
+                },
+                {
+                  "epcRrn": "2222-2222-2222-2222-2222",
+                  "address": {
+                    "addressLine1": "22 Acacia Avenue",
+                    "addressLine2": "Upper Wellgood",
+                    "addressLine3": "",
+                    "addressLine4": "",
+                    "town": "Fulchester",
+                    "postcode": "FL23 4JA"
+                  }
+                }
+              ]
         '400':
           description: 'Bad request - most likely an invalid postcode'
           content:
@@ -676,6 +703,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+          example: 503
 
   /assessments:
     post:
@@ -1516,6 +1544,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /warm-home-discount/assessments/{assessmentId}:
+    get:
+      tags:
+        - Warm Home Discount
+      summary: 'Get the Warm Home Discount details from the domestic EPC
+                with reference {assessmentId}'
+      description: Get domestic EPC details for the supplied RRN
+      operationId: get-assessment-warm-home-discount
+      security:
+        - oauth:
+            - 'warm-home-discount:assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID (RRN) of the assessment being requested'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Domestic EPC data for the Warm Home Discount service
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/WarmHomeDiscountAssessmentDetails'
+        '400':
+          description: The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Domestic EPC with this RRN not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /greendeal/assessments/{assessmentId}:
     get:
       tags:
@@ -2176,8 +2262,9 @@ components:
             'report:assessor:status': Get a report of changes to assessors status for a given date
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
-            'retrofit-advice:assessment:fetch': Carry out Home Energy Retrofit Advice search for latest domestic EPC data
-            'heat-pump-check:assessment:fetch': Carry out Heat Pump Check search for latest domestic EPC data
+            'retrofit-advice:assessment:fetch': Carry out Home Energy Retrofit Advice lookup for latest domestic EPC data
+            'heat-pump-check:assessment:fetch': Carry out Heat Pump Check lookup for latest domestic EPC data
+            'warm-home-discount:assessment:fetch': Carry out Warm Home Discount lookup for latest domestic EPC data
 
   schemas:
     # Addresses
@@ -3142,6 +3229,34 @@ components:
           example: true
           nullable: true
 
+    # Warm Home Discount
+    WarmHomeDiscountAssessmentDetails:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        lodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        isLatestAssessmentForAddress:
+          type: boolean
+          example: true
+        propertyType:
+          type: string
+          example: 'Mid-floor flat'
+        builtForm:
+          type: string
+          example: 'End-Terrace'
+          description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+        propertyAgeBand:
+          type: string
+          example: '2007-2011'
+          nullable: true
+        totalFloorArea:
+          type: string
+          example: "171.0"
+          nullable: true
 
     # Green Deal
     AssessmentGreenDealDetails:
