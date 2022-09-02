@@ -1,11 +1,11 @@
-describe UseCase::FetchAssessmentForHera do
+describe UseCase::FetchAssessmentForHeatPumpCheck do
   subject(:use_case) { described_class.new(domestic_digest_gateway:, summary_use_case:) }
 
   let(:domestic_digest_gateway) { instance_double Gateway::DomesticDigestGateway }
 
   let(:summary_use_case) { instance_double UseCase::AssessmentSummary::Fetch }
 
-  context "when an RRN matches an RdSAP assessment for which HERA details can be provided" do
+  context "when an RRN matches an RdSAP assessment for which Heat Pump Check details can be provided" do
     rrn = "0000-1111-2222-3333-4444"
     xml = Samples.xml "RdSAP-Schema-20.0.0"
 
@@ -17,7 +17,6 @@ describe UseCase::FetchAssessmentForHera do
     end
 
     expected = {
-      type_of_assessment: "RdSAP",
       address: {
         address_line1: "1 Some Street",
         address_line2: "",
@@ -35,10 +34,6 @@ describe UseCase::FetchAssessmentForHera do
         "Solid brick, as built, no insulation (assumed)",
         "Cavity wall, as built, insulated (assumed)",
       ],
-      floor_description: [
-        "Suspended, no insulation (assumed)",
-        "Solid, insulated (assumed)",
-      ],
       roof_description: [
         "Pitched, 25 mm loft insulation",
         "Pitched, 250 mm loft insulation",
@@ -46,9 +41,9 @@ describe UseCase::FetchAssessmentForHera do
       windows_description: [
         "Fully double glazed",
       ],
-      main_heating_description: "boiler with radiators or underfloor heating",
       main_fuel_type: "mains gas (not community)",
-      has_hot_water_cylinder: false,
+      total_floor_area: 55,
+      has_mains_gas: true,
     }
 
     let(:expected_not_latest) { expected }
@@ -65,9 +60,9 @@ describe UseCase::FetchAssessmentForHera do
         })
       end
 
-      it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+      it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
         details = use_case.execute(rrn:)
-        expect(details).to be_a Domain::AssessmentHeraDetails
+        expect(details).to be_a Domain::AssessmentForHeatPumpCheck
         expect(details.to_hash).to eq expected_latest
       end
     end
@@ -79,15 +74,15 @@ describe UseCase::FetchAssessmentForHera do
         })
       end
 
-      it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+      it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
         details = use_case.execute(rrn:)
-        expect(details).to be_a Domain::AssessmentHeraDetails
+        expect(details).to be_a Domain::AssessmentForHeatPumpCheck
         expect(details.to_hash).to eq expected_not_latest
       end
     end
   end
 
-  context "when an RRN matches a SAP assessment for which HERA details can be provided" do
+  context "when an RRN matches a SAP assessment for which Heat Pump Check details can be provided" do
     rrn = "5555-6666-7777-8888-9999"
 
     xml = Samples.xml "SAP-Schema-18.0.0"
@@ -103,7 +98,6 @@ describe UseCase::FetchAssessmentForHera do
     end
 
     expected = {
-      type_of_assessment: "SAP",
       address: {
         address_line1: "1 Some Street",
         address_line2: "Some Area",
@@ -121,10 +115,6 @@ describe UseCase::FetchAssessmentForHera do
         "Brick walls",
         "Brick walls",
       ],
-      floor_description: [
-        "Tiled floor",
-        "Tiled floor",
-      ],
       roof_description: [
         "Slate roof",
         "slate roof",
@@ -132,19 +122,19 @@ describe UseCase::FetchAssessmentForHera do
       windows_description: [
         "Glass window",
       ],
-      main_heating_description: "heat pump with warm air distribution",
       main_fuel_type: "Electricity: electricity sold to grid",
-      has_hot_water_cylinder: true,
+      total_floor_area: 69,
+      has_mains_gas: nil,
     }
 
-    it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+    it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
       details = use_case.execute(rrn:)
-      expect(details).to be_a Domain::AssessmentHeraDetails
+      expect(details).to be_a Domain::AssessmentForHeatPumpCheck
       expect(details.to_hash).to eq expected
     end
   end
 
-  context "when an RRN matches an older SAP assessment for which HERA details can be provided" do
+  context "when an RRN matches an older SAP assessment for which Heat Pump Check details can be provided" do
     rrn = "5555-6666-7777-8888-9999"
 
     sap_xml = Samples.xml "SAP-Schema-10.2", "rdsap"
@@ -167,29 +157,26 @@ describe UseCase::FetchAssessmentForHera do
           town: "Whitbury",
           postcode: "A0 0AA" },
       built_form: "Detached",
-      floor_description: ["Tiled floor", "Tiled floor"],
-      has_hot_water_cylinder: false,
       is_latest_assessment_for_address: true,
       lodgement_date: "2020-05-04",
       main_fuel_type: "electricity",
-      main_heating_description: nil,
       property_age_band: nil,
       property_type: nil,
       roof_description: ["Slate roof", "slate roof"],
-      type_of_assessment: "RdSAP",
       walls_description: ["Brick walls", "Brick walls"],
       windows_description: ["Glass window"],
-
+      total_floor_area: 98,
+      has_mains_gas: nil,
     }
 
-    it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+    it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
       details = use_case.execute(rrn:)
-      expect(details).to be_a Domain::AssessmentHeraDetails
+      expect(details).to be_a Domain::AssessmentForHeatPumpCheck
       expect(details.to_hash).to eq expected
     end
   end
 
-  context "when an RRN does not match an assessment for which HERA details can be provided" do
+  context "when an RRN does not match an assessment for which Heat Pump Check details can be provided" do
     rrn = "5555-5555-5555-5555-5555"
 
     before do

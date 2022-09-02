@@ -3190,6 +3190,7 @@ components:
         propertyType:
           type: string
           example: 'Mid-floor flat'
+          nullable: true
         builtForm:
           type: string
           example: 'End-Terrace'
@@ -3199,8 +3200,8 @@ components:
           example: '2007-2011'
           nullable: true
         totalFloorArea:
-          type: string
-          example: "171.0"
+          type: integer
+          example: 171
           nullable: true
         wallsDescription:
           type: array
@@ -3228,6 +3229,7 @@ components:
           type: boolean
           example: true
           nullable: true
+          description: "Whether mains gas is available in the property. NB. a `null` value means that this data point is not available from this assessment."
 
     # Warm Home Discount
     WarmHomeDiscountAssessmentDetails:

@@ -596,6 +596,18 @@ def hera_details_by_rrn(
   )
 end
 
+def heat_pump_check_details_by_rrn(
+  rrn,
+  scopes: ["heat-pump-check:assessment:fetch"],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/heat-pump-check/assessments/#{rrn}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def find_domestic_epcs_with_params(
   params:,
   scopes: %w[assessment:domestic-epc:search],

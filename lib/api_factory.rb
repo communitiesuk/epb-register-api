@@ -255,6 +255,14 @@ class ApiFactory
       )
   end
 
+  def self.fetch_assessment_for_heat_pump_check_use_case
+    @fetch_assessment_for_heat_pump_check_use_case ||=
+      UseCase::FetchAssessmentForHeatPumpCheck.new(
+        domestic_digest_gateway:,
+        summary_use_case: assessment_summary_fetch_use_case,
+      )
+  end
+
   def self.assessment_summary_fetch_use_case
     @assessment_summary_fetch_use_case ||=
       UseCase::AssessmentSummary::Fetch.new(
