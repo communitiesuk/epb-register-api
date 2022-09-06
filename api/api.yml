@@ -3203,6 +3203,7 @@ components:
           type: integer
           example: 171
           nullable: true
+          description: 'The total floor area of the property in m².'
         wallsDescription:
           type: array
           items:
