@@ -308,6 +308,8 @@ RSpec.configure do |config|
 
   config.before { ApiFactory.clear! }
 
+  config.after { ApiFactory.clear! }
+
   config.after { DatabaseCleaner.clean }
 
   config.before(:all) { DatabaseCleaner.start }
