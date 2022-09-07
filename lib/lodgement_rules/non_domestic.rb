@@ -6,7 +6,7 @@ module LodgementRules
       nil
     end
 
-    CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1.b", northern_ireland: "SBEM, v4.1.h", wales: "SBEM, v5.6.b" }.freeze
+    CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1", northern_ireland: "SBEM, v4.1", wales: "SBEM, v5.6" }.freeze
 
     RULES = [
       {
