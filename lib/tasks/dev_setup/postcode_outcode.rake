@@ -14,9 +14,9 @@ namespace :dev_data do
 
     ActiveRecord::Base.logger = nil
 
-    data = open("https://www.freemaptools.com/download/uk-outcode-postcodes/postcode-outcodes.csv")
+    outcode_data = URI("https://data.freemaptools.com/download/uk-outcode-postcodes/postcode-outcodes.csv").open
 
-    CSV.foreach(data, headers: false) do |row|
+    CSV.foreach(outcode_data, headers: false) do |row|
       hash = {
         outcode: row[1],
         latitude: row[2],
