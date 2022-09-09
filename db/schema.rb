@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_135701) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_144140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_135701) do
     t.datetime "cancelled_at", precision: nil
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+    t.string "hashed_assessment_id"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
