@@ -65,6 +65,28 @@ describe UseCase::GetCountryForPostcode do
     end
   end
 
+  context "when an english postcode ends with SA" do
+    let(:postcode) { "PR25 2SA" }
+
+    it "recognises that the postcode is in england, rather than wales (i.e. does not match SA postal district)" do
+      lookup = use_case.execute(postcode:)
+      expect(lookup.match?).to be true
+      expect(lookup.in_wales?).to be false
+      expect(lookup.in_england?).to be true
+    end
+  end
+
+  context "when a welsh postcode starts with a wales only postcode prefix" do
+    let(:postcode) { "LL31 4RF" }
+
+    it "recognised that the postcode is in wales and not england" do
+      lookup = use_case.execute(postcode:)
+      expect(lookup.match?).to be true
+      expect(lookup.in_wales?).to be true
+      expect(lookup.in_england?).to be false
+    end
+  end
+
   context "when the postcode given is in a cross-border area, a lookup is performed on the gateway" do
     context "with the gateway returning a location in england only" do
       let(:postcode) { "HR2 0PP" }
