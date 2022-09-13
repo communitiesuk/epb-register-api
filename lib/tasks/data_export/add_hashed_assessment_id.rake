@@ -36,7 +36,6 @@ namespace :data_export do
       AND type_of_assessment = $3
     SQL
     assessment_ids = ActiveRecord::Base.connection.exec_query(select_sql, "SQL", select_bindings)
-    pp "#{assessment_ids.count} #{assessment_type} have been selected"
     assessment_ids.map do |assessment_id|
       hashed_assessment_id_data = Helper::RrnHelper.hash_rrn(assessment_id["assessment_id"])
 
@@ -60,6 +59,5 @@ namespace :data_export do
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
-    pp 'The add_hashed_assessment_id rake task has completed'
   end
 end
