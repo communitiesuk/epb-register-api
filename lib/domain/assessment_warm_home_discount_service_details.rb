@@ -1,5 +1,5 @@
 module Domain
-  class AssessmentWhdServiceDetails
+  class AssessmentWarmHomeDiscountServiceDetails
     def initialize(
       address:,
       lodgement_date:,

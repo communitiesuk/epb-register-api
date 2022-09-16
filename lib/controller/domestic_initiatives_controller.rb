@@ -63,7 +63,7 @@ module Controller
         auth_token_has_all: ["warm-home-discount:assessment:fetch"] do
       params_body SCHEMA
 
-      details = ApiFactory.fetch_assessment_for_whd_service_use_case.execute(rrn: params[:assessmentId])
+      details = ApiFactory.fetch_assessment_for_warm_home_discount_service_use_case.execute(rrn: params[:assessmentId])
       raise Sinatra::NotFound if details.nil?
 
       json_api_response(

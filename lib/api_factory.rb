@@ -263,9 +263,9 @@ class ApiFactory
       )
   end
 
-  def self.fetch_assessment_for_whd_service_use_case
-    @fetch_assessment_for_whd_service_use_case ||=
-      UseCase::FetchAssessmentForWhdService.new(
+  def self.fetch_assessment_for_warm_home_discount_service_use_case
+    @fetch_assessment_for_warm_home_discount_service_use_case ||=
+      UseCase::FetchAssessmentForWarmHomeDiscountService.new(
         domestic_digest_gateway:,
         summary_use_case: assessment_summary_fetch_use_case,
         )

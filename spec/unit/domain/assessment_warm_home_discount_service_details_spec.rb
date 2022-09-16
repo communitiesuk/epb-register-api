@@ -1,5 +1,5 @@
-describe Domain::AssessmentWhdServiceDetails do
-  subject(:whd_service_details) do
+describe Domain::AssessmentWarmHomeDiscountServiceDetails do
+  subject(:warm_home_discount_service_details) do
     described_class.new(**fields)
   end
 
@@ -23,6 +23,6 @@ describe Domain::AssessmentWhdServiceDetails do
   end
 
   it "represents the domain object as a hash" do
-    expect(whd_service_details.to_hash).to eq fields
+    expect(warm_home_discount_service_details.to_hash).to eq fields
   end
 end

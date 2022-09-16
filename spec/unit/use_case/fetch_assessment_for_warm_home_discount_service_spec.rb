@@ -1,4 +1,4 @@
-describe UseCase::FetchAssessmentForWhdService do
+describe UseCase::FetchAssessmentForWarmHomeDiscountService do
   subject(:use_case) { described_class.new(domestic_digest_gateway:, summary_use_case:) }
 
   let(:domestic_digest_gateway) { instance_double Gateway::DomesticDigestGateway }
@@ -49,7 +49,7 @@ describe UseCase::FetchAssessmentForWhdService do
 
       it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
         details = use_case.execute(rrn:)
-        expect(details).to be_a Domain::AssessmentWhdServiceDetails
+        expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
         expect(details.to_hash).to eq expected_latest
       end
     end
@@ -63,7 +63,7 @@ describe UseCase::FetchAssessmentForWhdService do
 
       it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
         details = use_case.execute(rrn:)
-        expect(details).to be_a Domain::AssessmentWhdServiceDetails
+        expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
         expect(details.to_hash).to eq expected_not_latest
       end
     end
@@ -103,7 +103,7 @@ describe UseCase::FetchAssessmentForWhdService do
 
     it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
       details = use_case.execute(rrn:)
-      expect(details).to be_a Domain::AssessmentWhdServiceDetails
+      expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
       expect(details.to_hash).to eq expected
     end
   end
@@ -141,7 +141,7 @@ describe UseCase::FetchAssessmentForWhdService do
 
     it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
       details = use_case.execute(rrn:)
-      expect(details).to be_a Domain::AssessmentWhdServiceDetails
+      expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
       expect(details.to_hash).to eq expected
     end
   end

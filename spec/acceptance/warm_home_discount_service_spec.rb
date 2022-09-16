@@ -1,4 +1,4 @@
-describe "fetching Warm Home Discount (WHD) Service details from the API", set_with_timecop: true do
+describe "fetching Warm Home Discount Service details from the API", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
@@ -61,8 +61,8 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
     }
   end
 
-  context "when getting WHD Service details with a RRN" do
-    context "when the RRN is associated with an RdSAP assessment that WHD Service details can be sent for" do
+  context "when getting Warm Home Discount service details with a RRN" do
+    context "when the RRN is associated with an RdSAP assessment that Warm Home Discount service details can be sent for" do
       before do
         lodge_assessment(
           assessment_body: rdsap_xml,
@@ -74,9 +74,9 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
         )
       end
 
-      it "returns the matching assessment WHD Service details in the expected format" do
+      it "returns the matching assessment Warm Home Discount service details in the expected format" do
         response = JSON.parse(
-          whd_details_by_rrn("0000-0000-0000-0000-0000").body,
+          warm_home_discount_details_by_rrn("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
 
@@ -84,7 +84,7 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
       end
     end
 
-    context "when the RRN is associated with a SAP assessment that WHD Service details can be sent for" do
+    context "when the RRN is associated with a SAP assessment that Warm Home Discount service details can be sent for" do
       before do
         lodge_assessment(
           assessment_body: sap_xml,
@@ -96,9 +96,9 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
         )
       end
 
-      it "returns the matching assessment WHD Service details in the expected format" do
+      it "returns the matching assessment Warm Home Discount service details in the expected format" do
         response = JSON.parse(
-          whd_details_by_rrn("0000-0000-0000-0000-0000").body,
+          warm_home_discount_details_by_rrn("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
 
@@ -106,10 +106,10 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
       end
     end
 
-    context "when the RRN provided is valid but that WHD Service details cannot be returned for" do
+    context "when the RRN provided is valid but that Warm Home Discount service details cannot be returned for" do
       it "returns a 404 response with an expected error message" do
         response = JSON.parse(
-          whd_details_by_rrn(
+          warm_home_discount_details_by_rrn(
             "5555-6666-7777-8888-9999",
             accepted_responses: [404],
           ).body,
@@ -123,7 +123,7 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
     context "when an RRN is provided in an invalid format" do
       it "receives an appropriate error with a 400" do
         response = JSON.parse(
-          whd_details_by_rrn(
+          warm_home_discount_details_by_rrn(
             "00001111222233334444",
             accepted_responses: [400],
           ).body,
@@ -137,7 +137,7 @@ describe "fetching Warm Home Discount (WHD) Service details from the API", set_w
     context "when a valid RRN is provided but the auth scope is not correct" do
       it "receives a 403 with appropriate error" do
         response = JSON.parse(
-          whd_details_by_rrn(
+          warm_home_discount_details_by_rrn(
             "2222-3333-4444-5555-6666",
             accepted_responses: [403],
             scopes: %w[wrong:scope],

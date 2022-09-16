@@ -608,7 +608,7 @@ def heat_pump_check_details_by_rrn(
   )
 end
 
-def whd_details_by_rrn(
+def warm_home_discount_details_by_rrn(
   rrn,
   scopes: %w[warm-home-discount:assessment:fetch],
   **assertive_kwargs
