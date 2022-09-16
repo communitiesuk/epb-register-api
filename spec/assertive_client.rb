@@ -608,6 +608,18 @@ def heat_pump_check_details_by_rrn(
   )
 end
 
+def whd_details_by_rrn(
+  rrn,
+  scopes: %w[warm-home-discount:assessment:fetch],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/warm-home-discount/assessments/#{rrn}",
+    scopes:,
+    **assertive_kwargs,
+    )
+end
+
 def find_domestic_epcs_with_params(
   params:,
   scopes: %w[assessment:domestic-epc:search],
