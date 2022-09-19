@@ -97,7 +97,7 @@ GEM
     method_source (1.0.0)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
-    mock_redis (0.33.0)
+    mock_redis (0.34.0)
       ruby2_keywords
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -242,7 +242,7 @@ DEPENDENCIES
   geocoder (~> 1.8.0)
   http
   json-schema (~> 3.0)
-  mock_redis (~> 0.33.0)
+  mock_redis (~> 0.34.0)
   namecase (~> 2.0)
   nokogiri (~> 1.13.8)
   ougai (~> 2.0)
