@@ -19,7 +19,7 @@ module UseCase
                                                            property_type: domestic_digest[:dwelling_type],
                                                            built_form: domestic_digest[:built_form],
                                                            property_age_band: strip_england_and_wales_prefix(domestic_digest[:main_dwelling_construction_age_band_or_year]),
-                                                           total_floor_area: domestic_digest[:total_floor_area]
+                                                           total_floor_area: !domestic_digest[:total_floor_area].nil? ? domestic_digest[:total_floor_area].to_i : nil
     end
 
   private
