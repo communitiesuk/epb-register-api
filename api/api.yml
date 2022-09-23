@@ -2005,7 +2005,7 @@ paths:
         - in: query
           name: startDate
           required: true
-          description: 'The start date of the range'
+          description: 'The start date of the range (inclusive)'
           schema:
             type: string
             format: date
@@ -2013,7 +2013,7 @@ paths:
         - in: query
           name: endDate
           required: true
-          description: 'The end date of the range'
+          description: 'The end date of the range (inclusive)'
           schema:
             type: string
             format: date
@@ -2054,7 +2054,7 @@ paths:
         - in: query
           name: startDate
           required: true
-          description: 'The start date of the range'
+          description: 'The start date of the range (inclusive)'
           schema:
             type: string
             format: date
@@ -2062,7 +2062,7 @@ paths:
         - in: query
           name: endDate
           required: true
-          description: 'The end date of the range'
+          description: 'The end date of the range (inclusive)'
           schema:
             type: string
             format: date
@@ -2115,7 +2115,7 @@ paths:
         - in: query
           name: start_date
           required: true
-          description: 'The start date of the range'
+          description: 'The start date of the range (inclusive)'
           schema:
             type: string
             format: date
@@ -2123,7 +2123,7 @@ paths:
         - in: query
           name: end_date
           required: true
-          description: 'The end date of the range'
+          description: 'The end date of the range (inclusive)'
           schema:
             type: string
             format: date
