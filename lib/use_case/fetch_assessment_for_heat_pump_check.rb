@@ -24,7 +24,8 @@ module UseCase
                                              windows_description: pluck_property_summary_descriptions(domestic_digest:, feature_type: "window"),
                                              main_fuel_type: domestic_digest[:main_fuel_type],
                                              total_floor_area: !domestic_digest[:total_floor_area].nil? ? domestic_digest[:total_floor_area].to_i : nil,
-                                             has_mains_gas: !domestic_digest[:has_mains_gas].nil? ? domestic_digest[:has_mains_gas] == "Y" : nil
+                                             has_mains_gas: !domestic_digest[:has_mains_gas].nil? ? domestic_digest[:has_mains_gas] == "Y" : nil,
+                                             current_energy_efficiency_rating: !domestic_digest[:current_energy_efficiency_rating].nil? ? domestic_digest[:current_energy_efficiency_rating] : nil
     end
 
   private

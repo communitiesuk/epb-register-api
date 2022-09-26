@@ -44,6 +44,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
       main_fuel_type: "mains gas (not community)",
       total_floor_area: 55,
       has_mains_gas: true,
+      current_energy_efficiency_rating: 50,
     }
 
     let(:expected_not_latest) { expected }
@@ -125,6 +126,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
       main_fuel_type: "Electricity: electricity sold to grid",
       total_floor_area: 69,
       has_mains_gas: nil,
+      current_energy_efficiency_rating: 50,
     }
 
     it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
@@ -167,6 +169,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
       windows_description: ["Glass window"],
       total_floor_area: 98,
       has_mains_gas: nil,
+      current_energy_efficiency_rating: 50,
     }
 
     it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do

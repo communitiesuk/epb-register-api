@@ -3231,6 +3231,12 @@ components:
           example: true
           nullable: true
           description: "Whether mains gas is available in the property. NB. a `null` value means that this data point is not available from this assessment."
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 62
+          description: "The current energy rating to be submitted to the Register"
 
     # Warm Home Discount
     WarmHomeDiscountAssessmentDetails:

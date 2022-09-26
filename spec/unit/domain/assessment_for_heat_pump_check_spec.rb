@@ -32,6 +32,7 @@ describe Domain::AssessmentForHeatPumpCheck do
       main_fuel_type: "Natural Gas",
       total_floor_area: 55,
       has_mains_gas: true,
+      current_energy_efficiency_rating: 70,
     }
   end
 

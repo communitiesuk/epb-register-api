@@ -12,7 +12,8 @@ module Domain
       windows_description:,
       main_fuel_type:,
       total_floor_area:,
-      has_mains_gas:
+      has_mains_gas:,
+      current_energy_efficiency_rating:
     )
       @address = address
       @lodgement_date = lodgement_date
@@ -26,6 +27,7 @@ module Domain
       @main_fuel_type = main_fuel_type
       @total_floor_area = total_floor_area
       @has_mains_gas = has_mains_gas
+      @current_energy_efficiency_rating = current_energy_efficiency_rating
     end
 
     def to_hash
@@ -42,6 +44,7 @@ module Domain
         main_fuel_type: @main_fuel_type,
         total_floor_area: @total_floor_area,
         has_mains_gas: @has_mains_gas,
+        current_energy_efficiency_rating: @current_energy_efficiency_rating,
       }
     end
   end
