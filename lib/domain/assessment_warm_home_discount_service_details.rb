@@ -26,7 +26,7 @@ module Domain
         property_type: @property_type,
         built_form: @built_form,
         property_age_band: @property_age_band,
-        total_floor_area: @total_floor_area
+        total_floor_area: @total_floor_area,
       }
     end
   end

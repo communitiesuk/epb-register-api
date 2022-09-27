@@ -35,7 +35,7 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         "propertyType": "Mid-terrace house",
         "builtForm": "Semi-Detached",
         "propertyAgeBand": "2007-2011",
-        "totalFloorArea": 55
+        "totalFloorArea": 55,
       },
     }
   end
@@ -56,7 +56,7 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         "propertyType": "Mid-terrace house",
         "builtForm": "Detached",
         "propertyAgeBand": "1750",
-        "totalFloorArea": 69
+        "totalFloorArea": 69,
       },
     }
   end

@@ -33,7 +33,7 @@ RSpec.describe Worker::SlackNotification do
       stub_request(:post, "https://example.com/webhook")
         .to_return(status: 400, headers: {})
 
-      expect { invoke_worker }.to raise_error(Worker::SlackNotification::SlackMessageError)
+      expect { invoke_worker }.to raise_error(Boundary::SlackMessageError)
     end
 
     it "includes a link if given" do

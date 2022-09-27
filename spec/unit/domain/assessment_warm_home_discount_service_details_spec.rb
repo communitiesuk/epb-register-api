@@ -18,7 +18,7 @@ describe Domain::AssessmentWarmHomeDiscountServiceDetails do
       property_type: "Mid-floor flat",
       built_form: "End-Terrace",
       property_age_band: "D",
-      total_floor_area: 171.0
+      total_floor_area: 171.0,
     }
   end
 

@@ -617,7 +617,7 @@ def warm_home_discount_details_by_rrn(
     "/api/warm-home-discount/assessments/#{rrn}",
     scopes:,
     **assertive_kwargs,
-    )
+  )
 end
 
 def find_domestic_epcs_with_params(

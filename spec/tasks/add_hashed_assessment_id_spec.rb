@@ -33,7 +33,7 @@ describe "add hashed assessment_id rake" do
           scheme_ids: [scheme_id],
         },
         migrated: true,
-        )
+      )
       rdsap_ni_xml = Nokogiri.XML valid_rdsap_ni_xml
       rdsap_ni_xml.at("RRN").children = "1234-5678-1234-2278-1234"
       rdsap_ni_xml.at("Registration-Date").children = "2022-09-11"
@@ -71,24 +71,25 @@ describe "add hashed assessment_id rake" do
         schema_name: "CEPC-8.0.0",
       )
     end
-    context "which are RdSAP and RdSAP NI" do
 
+    context "when they are RdSAP and RdSAP NI" do
       before do
         add_hashed_assessment_id_rake.invoke("2022-09-11", "2022-09-13", "RdSAP")
       end
 
-      let(:assessment_data) {(ActiveRecord::Base
-                                .connection.execute "SELECT assessment_id, hashed_assessment_id, date_registered FROM assessments WHERE hashed_assessment_id IS NOT NULL")}
-      let(:rdsap_hashed_assessment_id) {assessment_data.to_a.find { |h| break h["hashed_assessment_id"] if h["assessment_id"] == "0000-0000-0000-0000-0000" } }
-      let(:rdsap_ni_hashed_assessment_id) {assessment_data.to_a.find { |h| break h["hashed_assessment_id"] if h["assessment_id"] == "1234-5678-1234-2278-1234" }}
-      let(:rdsap_date_registered) {assessment_data.to_a.find { |h| break h["date_registered"] if h["assessment_id"] == "0000-0000-0000-0000-0000" } }
-      let(:rdsap_ni_date_registered) {assessment_data.to_a.find { |h| break h["date_registered"] if h["assessment_id"] == "1234-5678-1234-2278-1234" }}
+      let(:assessment_data) do
+        (ActiveRecord::Base
+                               .connection.execute "SELECT assessment_id, hashed_assessment_id, date_registered FROM assessments WHERE hashed_assessment_id IS NOT NULL")
+      end
+      let(:rdsap_hashed_assessment_id) { assessment_data.to_a.find { |h| break h["hashed_assessment_id"] if h["assessment_id"] == "0000-0000-0000-0000-0000" } }
+      let(:rdsap_ni_hashed_assessment_id) { assessment_data.to_a.find { |h| break h["hashed_assessment_id"] if h["assessment_id"] == "1234-5678-1234-2278-1234" } }
+      let(:rdsap_date_registered) { assessment_data.to_a.find { |h| break h["date_registered"] if h["assessment_id"] == "0000-0000-0000-0000-0000" } }
+      let(:rdsap_ni_date_registered) { assessment_data.to_a.find { |h| break h["date_registered"] if h["assessment_id"] == "1234-5678-1234-2278-1234" } }
 
       it "only updated RdSAP certificates in the date range" do
-
         expect(assessment_data.count).to eq 2
-        expect(rdsap_date_registered).to eq('2022-09-11 00:00:00.000000000 +0000')
-        expect(rdsap_ni_date_registered).to eq('2022-09-11 00:00:00.000000000 +0000')
+        expect(rdsap_date_registered).to eq("2022-09-11 00:00:00.000000000 +0000")
+        expect(rdsap_ni_date_registered).to eq("2022-09-11 00:00:00.000000000 +0000")
       end
 
       it "will always generate the same expected hash" do
@@ -141,7 +142,7 @@ describe "add hashed assessment_id rake" do
     end
 
     it "returns a no data to export error when date_from is later thank date_to" do
-      expect { add_hashed_assessment_id_rake.invoke("2022-09-13", "2022-09-11", 'DEC') }.to raise_error(Boundary::InvalidDates)
+      expect { add_hashed_assessment_id_rake.invoke("2022-09-13", "2022-09-11", "DEC") }.to raise_error(Boundary::InvalidDates)
     end
   end
 end

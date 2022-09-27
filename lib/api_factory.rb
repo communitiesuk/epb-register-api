@@ -268,7 +268,7 @@ class ApiFactory
       UseCase::FetchAssessmentForWarmHomeDiscountService.new(
         domestic_digest_gateway:,
         summary_use_case: assessment_summary_fetch_use_case,
-        )
+      )
   end
 
   def self.assessment_summary_fetch_use_case
@@ -282,6 +282,10 @@ class ApiFactory
   def self.find_domestic_epcs_by_address
     @find_domestic_epcs_by_address ||=
       UseCase::FindDomesticEpcByAddress.new(gateway: domestic_epc_search_gateway)
+  end
+
+  def self.get_assessment_count_by_scheme_name_type
+    UseCase::GetAssessmentCountBySchemeNameAndType.new
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)

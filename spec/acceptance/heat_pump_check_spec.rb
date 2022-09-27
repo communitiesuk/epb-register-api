@@ -84,7 +84,7 @@ describe "fetching Heat Pump Check details from the API", set_with_timecop: true
         "mainFuelType": "Electricity: electricity sold to grid",
         "totalFloorArea": 69,
         "hasMainsGas": nil,
-        "currentEnergyEfficiencyRating": 50
+        "currentEnergyEfficiencyRating": 50,
       },
     }
   end

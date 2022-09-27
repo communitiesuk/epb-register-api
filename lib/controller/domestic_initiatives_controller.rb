@@ -71,7 +71,7 @@ module Controller
         data: {
           assessment: details.to_hash,
         },
-        )
+      )
     rescue StandardError => e
       case e
       when Sinatra::NotFound
@@ -82,6 +82,5 @@ module Controller
         server_error e
       end
     end
-
   end
 end
