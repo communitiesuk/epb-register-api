@@ -17,12 +17,17 @@ describe "monthly invoice export" do
     end
 
     context "when there is data" do
+      let(:File) { class_double(File) }
+
       before do
         allow(use_case).to receive(:execute).and_return returned_data
         WebMock.enable!
         allow(ENV).to receive(:[])
         allow(ENV).to receive(:[]).with("STAGE").and_return("TEST")
-        allow(ENV).to receive(:[]).with("EPB_TEAM_SLACK_URL").and_return("https://example.com/webhook")
+        allow(ENV).to receive(:[]).with("SLACK_SUPPORT_URL").and_return("https://example.com/webhook")
+        allow(File).to receive(:write)
+        allow(File).to receive(:open)
+        allow(File).to receive(:delete)
         WebMock.stub_request(:post, "https://example.com/webhook").to_return(status: 200, headers: {})
       end
 
@@ -35,14 +40,23 @@ describe "monthly invoice export" do
         expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31") }.not_to raise_error
       end
 
-      it "sends a Slack notification" do
+      it "writes a csv to the disk" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31")
+        expect(File).to have_received(:write).with("assessment_count_by_scheme_name_type.csv", "type_of_assessment,scheme_name,number_of_assessments\nAC-CERT,Elmhurst Energy Systems Ltd,2\nAC-REPORT,Elmhurst Energy Systems Ltd,3\n")
+      end
+
+      it "posts the csv to slack" do
+        monthly_invoice_rake.invoke("22-08-01", "22-08-31")
+        expect(File).to have_received(:open).with("assessment_count_by_scheme_name_type.csv")
         expect(WebMock).to have_requested(
           :post,
           "https://example.com/webhook",
-        ).with(
-          body: /test posting to slack/,
-        )
+        ).with(headers: { "Content-Type" => %r{multipart/form-data} })
+      end
+
+      it "deletes the file" do
+        monthly_invoice_rake.invoke("22-08-01", "22-08-31")
+        expect(File).to have_received(:delete).with("assessment_count_by_scheme_name_type.csv")
       end
     end
   end
