@@ -366,9 +366,13 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
           schema_name: "SAP-Schema-NI-18.0.0",
           migrated: true,
         )
+
+        # created_at is now being used instead of date_registered for the date boundaries
+        ActiveRecord::Base
+          .connection.execute "UPDATE assessments SET created_at = '2017-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-1010', '0000-0000-0000-0000-0100')"
       end
 
-      it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 4" do
+      it "expects the number of non Northern Irish RdSAP and SAP lodgements within required create_at date range for ODC to be 5" do
         expect(exported_data.length).to eq(4)
       end
 

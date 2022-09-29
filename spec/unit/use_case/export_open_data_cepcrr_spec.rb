@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataCepcrr do
+describe UseCase::ExportOpenDataCepcrr, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do
@@ -131,6 +131,10 @@ describe UseCase::ExportOpenDataCepcrr do
           schema_name: "CEPC-8.0.0",
           migrated: true,
         )
+
+        # created_at is now being used instead of date_registered for the date boundaries
+        ActiveRecord::Base
+          .connection.execute "UPDATE assessments SET created_at = '2018-07-01 00:00:00.000000' WHERE  assessment_id IN ('1111-0000-0000-0000-0002', '1111-0000-0000-0000-0003')"
       end
 
       it "returns the correct number of recommendations excluding the cepc-rr, NI lodgements and any before the given date" do

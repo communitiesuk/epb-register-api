@@ -1,6 +1,6 @@
 require_relative "open_data_export_test_helper"
 
-describe "Acceptance::Reports::OpenDataExport" do
+describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   scheme_id = nil
@@ -68,6 +68,10 @@ describe "Acceptance::Reports::OpenDataExport" do
           migrated: true,
           schema_name: "SAP-Schema-18.0.0",
         )
+
+        # created_at is now being used instead of date_registered for the date boundaries
+        ActiveRecord::Base
+          .connection.execute "UPDATE assessments SET created_at = '2020-05-04 00:00:00.000000' WHERE  assessment_id = '0000-0000-0000-0000-1004'"
       end
 
       context "when it calls the use case to extract the data" do
@@ -76,7 +80,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
               use_case
-                .execute(test_start_date, 0, "2021-02-28")
+                .execute(test_start_date, 0, datetime_today)
                 .sort_by! { |item| item[:assessment_id] },
             )
           end
@@ -117,7 +121,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
               use_case
-                .execute(test_start_date, 0, "2021-02-28")
+                .execute(test_start_date, 0, datetime_today)
                 .sort_by! do |item|
                   [item[:assessment_id], item[:improvement_item]]
                 end,
@@ -298,6 +302,10 @@ describe "Acceptance::Reports::OpenDataExport" do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+
+        # created_at is now being used instead of date_registered for the date boundaries
+        ActiveRecord::Base
+          .connection.execute "UPDATE assessments SET created_at = '2019-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-0010', '1112-0000-0000-0000-0002', '1112-0000-0000-0000-0003')"
       end
 
       context "when it calls the use case to extract the data" do
@@ -306,7 +314,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
-              use_case.execute(test_start_date, 0, "2021-02-28"),
+              use_case.execute(test_start_date, 0, datetime_today),
             )
           end
 
@@ -352,13 +360,15 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
-              use_case.execute(test_start_date, 0, "2021-02-28"),
+              use_case.execute(test_start_date, 0, datetime_today),
             )
           end
           let(:fixture_csv) { read_csv_fixture("commercial_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
           it "returns the data exported to a csv object to match the .csv fixture" do
+            # parsed_exported_data.map {|it| pp it}
+            # fixture_csv.map {|it| pp it}
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
@@ -496,6 +506,9 @@ describe "Acceptance::Reports::OpenDataExport" do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+
+        ActiveRecord::Base
+          .connection.execute "UPDATE assessments SET created_at = '2019-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-0012', '1112-0000-0000-0000-0004', '1112-0000-0000-0000-0005')"
       end
 
       context "when it calls the use case to extract the data" do
@@ -515,7 +528,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
-              dec_use_case.execute(test_start_date, 0, "2021-02-28"),
+              dec_use_case.execute(test_start_date, 0, datetime_today),
             )
           end
 
@@ -548,7 +561,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
               use_case
-                .execute(test_start_date, 0, "2021-02-28")
+                .execute(test_start_date, 0, datetime_today)
                 .sort_by! { |key| key[:recommendation_item] },
             )
           end

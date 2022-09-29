@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDecrr do
+describe UseCase::ExportOpenDataDecrr, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do

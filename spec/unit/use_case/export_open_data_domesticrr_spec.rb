@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDomesticrr do
+describe UseCase::ExportOpenDataDomesticrr, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
   context "when creating the open data domestic recommendations report release" do
     describe "for the domestic recommendation report" do
@@ -99,6 +99,10 @@ describe UseCase::ExportOpenDataDomesticrr do
           schema_name: "SAP-Schema-NI-18.0.0",
           migrated: true,
         )
+
+        # created_at is now being used instead of date_registered for the date boundaries
+        ActiveRecord::Base
+          .connection.execute "UPDATE assessments SET created_at = '2018-05-02 00:00:00.000000' WHERE  assessment_id = '0000-0000-0000-0000-1010'"
       end
 
       it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do
@@ -107,7 +111,6 @@ describe UseCase::ExportOpenDataDomesticrr do
 
       it "returns the correct number of recommendations for each assessment when grouped" do
         expect(grouped_results.length).to eq(2)
-        # expect(exported_data.group_by{|item| item[:assessment_id]}[0].length).to eq(2)
       end
 
       it "returns recommendations in the following format" do
