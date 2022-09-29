@@ -109,6 +109,8 @@ GEM
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    notifications-ruby-client (5.3.0)
+      jwt (>= 1.5, < 3)
     oauth2 (2.0.7)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
@@ -245,6 +247,7 @@ DEPENDENCIES
   mock_redis (~> 0.34.0)
   namecase (~> 2.0)
   nokogiri (~> 1.13.8)
+  notifications-ruby-client
   ougai (~> 2.0)
   pg (~> 1.4)
   pry (~> 0.14.1)

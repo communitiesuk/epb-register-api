@@ -10,7 +10,6 @@ inherit_gem:
 AllCops:
   Exclude:
     - db/schema.rb
-    - spec/tasks/export_invoices_spec.rb
 
 Style/EmptyElse:
   EnforcedStyle: empty
