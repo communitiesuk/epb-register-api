@@ -71,9 +71,8 @@ describe "add hashed assessment_id rake" do
         schema_name: "CEPC-8.0.0",
       )
     end
-    
-    context "which are RdSAP and RdSAP NI" do
 
+    context "and are RdSAP and RdSAP NI" do
       before do
         add_hashed_assessment_id_rake.invoke("2022-09-11", "2022-09-13", "RdSAP")
       end
