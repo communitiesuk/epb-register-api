@@ -13,7 +13,7 @@ module Helper
       end
     end
 
-    def self.send_email(csv_file)
+    def self.send_email(csv_file, report_type)
       notify_client = ApiFactory.notify_client
 
       File.open(csv_file, "rb") do |f|
@@ -21,6 +21,7 @@ module Helper
           email_address: ENV["INVOICE_EMAIL_RECIPIENT"],
           template_id: ENV["INVOICE_TEMPLATE_ID"],
           personalisation: {
+            report_type:,
             link_to_file: Notifications.prepare_upload(f, true),
           },
         )
