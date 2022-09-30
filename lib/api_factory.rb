@@ -288,6 +288,14 @@ class ApiFactory
     UseCase::GetAssessmentCountBySchemeNameAndType.new
   end
 
+  def self.get_assessment_count_by_region_type
+    UseCase::GetAssessmentCountByRegionAndType.new
+  end
+
+  def self.get_assessment_rrns_by_scheme_type
+    UseCase::GetAssessmentRrnsBySchemeNameAndType.new
+  end
+
   def self.storage_configuration_reader(bucket_name:, instance_name:)
     Gateway::StorageConfigurationReader.new(
       bucket_name:,
