@@ -1,6 +1,8 @@
+require "archive/zip"
+
 module Helper
   class ExportInvoicesHelper
-    def self.save_csv_file(raw_data, csv_file)
+    def self.save_file(raw_data, csv_file)
       if raw_data.length.zero?
         raise Boundary::NoData, "get assessment count by scheme name and type"
 
@@ -10,20 +12,42 @@ module Helper
           headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
         File.write(csv_file, csv_data)
+
+        Archive::Zip.archive("invoice.zip", csv_file)
       end
     end
 
-    def self.send_email(csv_file)
-      notify_client = ApiFactory.notify_client
+    def self.send_to_slack(zip_file, _report_type)
+      uri = URI("https://slack.com/api/files.upload")
+      req = Net::HTTP::Post.new(uri)
+      req["Authorization"] = "Bearer #{ENV['SLACK_EPB_BOT_TOKEN']}"
+      form = [
+        [
+          "file",
+          File.open(zip_file),
+        ],
+        [
+          "initial comment",
+          "report",
+        ],
+        %w[
+          channels
+          team-epb-support
+        ],
+      ]
+      req.set_form(
+        form,
+        "multipart/form-data",
+      )
 
-      File.open(csv_file, "rb") do |f|
-        notify_client.send_email(
-          email_address: ENV["INVOICE_EMAIL_RECIPIENT"],
-          template_id: ENV["INVOICE_TEMPLATE_ID"],
-          personalisation: {
-            link_to_file: Notifications.prepare_upload(f, true),
-          },
-        )
+      req_options = {
+        use_ssl: uri.scheme == "https",
+      }
+      response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(req)
+      end
+      if !response.body.empty? && (!response.is_a?(Net::HTTPSuccess) || JSON.parse(response.body)["ok"] == false)
+        raise Boundary::SlackMessageError, "Slack error: #{response.body}"
       end
     end
   end
