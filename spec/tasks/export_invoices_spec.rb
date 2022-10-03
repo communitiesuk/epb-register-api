@@ -4,7 +4,7 @@ describe "monthly invoice export" do
   context "when two arguments are passed to the rake" do
     before do
       WebMock.enable!
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {})
+      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
     end
 
     context "when invalid date range is passed " do
@@ -122,6 +122,38 @@ describe "monthly invoice export" do
       it "deletes the generated zip file" do
         expect(File.exist?("invoice.zip")).to be false
       end
+    end
+  end
+
+  context "when posting to slack fails" do
+    let(:use_case) { instance_double(UseCase::GetAssessmentCountByRegionAndType) }
+    let(:returned_data) { [{ number_of_assessments: 122, type_of_assessment: "AC-CERT", region: "Eastern" }, { number_of_assessments: 153, type_of_assessment: "CEPC", region: "Northern Ireland " }] }
+
+    before do
+      allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
+      allow(use_case).to receive(:execute).and_return returned_data
+      WebMock.enable!
+    end
+
+    it "raises a boundary error message with bad json" do
+      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, body: { ok: false }.to_json)
+      expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type") }.to raise_error Boundary::SlackMessageError
+    end
+
+    it "raises a boundary error message with no data" do
+      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 500, body: {
+        ok: false,
+        error: "unknown_method",
+      }.to_json)
+      expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type") }.to raise_error Boundary::SlackMessageError
+    end
+
+    it "deletes the generated csv file" do
+      expect(File.exist?("invoice_report.csv")).to be false
+    end
+
+    it "deletes the generated zip file" do
+      expect(File.exist?("invoice.zip")).to be false
     end
   end
 end

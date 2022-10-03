@@ -14,10 +14,13 @@ module Helper
         File.write(csv_file, csv_data)
 
         Archive::Zip.archive("invoice.zip", csv_file)
+        File.delete(csv_file)
       end
     end
 
-    def self.send_to_slack(zip_file, _report_type)
+    def self.send_to_slack(zip_file, message)
+      channel = ENV["Stage"] == "production" ? "team-epb-support" : "team-epb-pre-production"
+
       uri = URI("https://slack.com/api/files.upload")
       req = Net::HTTP::Post.new(uri)
       req["Authorization"] = "Bearer #{ENV['SLACK_EPB_BOT_TOKEN']}"
@@ -28,11 +31,12 @@ module Helper
         ],
         [
           "initial comment",
-          "report",
+          message,
         ],
-        %w[
-          channels
-          team-epb-support
+        [
+          "channels",
+          channel,
+
         ],
       ]
       req.set_form(
@@ -46,7 +50,10 @@ module Helper
       response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
         http.request(req)
       end
-      if !response.body.empty? && (!response.is_a?(Net::HTTPSuccess) || JSON.parse(response.body)["ok"] == false)
+
+      File.delete(zip_file)
+
+      unless response.is_a?(Net::HTTPSuccess) && JSON.parse(response.body)["ok"] == true
         raise Boundary::SlackMessageError, "Slack error: #{response.body}"
       end
     end
