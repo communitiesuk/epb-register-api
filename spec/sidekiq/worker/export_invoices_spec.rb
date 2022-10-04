@@ -9,13 +9,20 @@ RSpec.describe Worker::ExportInvoices do
   end
 
   describe "#perform" do
-    let(:use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
+    let(:scheme_use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
+    let(:region_use_case) { instance_double(UseCase::GetAssessmentCountByRegionAndType) }
+    let(:rrn_use_case) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+
     let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
 
     before do
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
-      allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
-      allow(use_case).to receive(:execute).and_return returned_data
+      allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(scheme_use_case)
+      allow(ApiFactory).to receive(:get_assessment_count_by_region_type).and_return(region_use_case)
+      allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case)
+      allow(scheme_use_case).to receive(:execute).and_return returned_data
+      allow(region_use_case).to receive(:execute).and_return returned_data
+      allow(rrn_use_case).to receive(:execute).and_return returned_data
     end
 
     it "executes the rake which calls the use case" do
@@ -24,12 +31,17 @@ RSpec.describe Worker::ExportInvoices do
 
     it "executes the rake which calls the subsequent export code" do
       described_class.new.perform
-      expect(use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date).exactly(1).times
+      expect(scheme_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date).exactly(1).times
+      expect(region_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date).exactly(1).times
+    end
+
+    it "call the rake many tines for each scheme" do
+      described_class.new.perform
+      (1..6).each { |i| expect(rrn_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date, i).exactly(1).times }
     end
 
     context "when there is no data to send" do
       let(:use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
-      let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
 
       before do
         allow(Worker::SlackNotification).to receive(:perform_async)
@@ -40,23 +52,7 @@ RSpec.describe Worker::ExportInvoices do
       it "post the error to slack" do
         described_class.new.perform
         expect(Worker::SlackNotification).to have_received(:perform_async).with(/No data for invoice report: scheme_name_type /).exactly(1).times
-      end
-    end
-
-    context "when data cannot be posted to slack" do
-      let(:use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
-      let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
-
-      before do
-        allow(Worker::SlackNotification).to receive(:perform_async)
-        allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
-        allow(use_case).to receive(:execute).and_return returned_data
-        WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: false }.to_json)
-      end
-
-      it "post the error to slack" do
-        described_class.new.perform
-        expect(Worker::SlackNotification).to have_received(:perform_async).with(/Unable to post invoice report to slack: scheme_name_type/).exactly(1).times
+        expect(Worker::SlackNotification).to have_received(:perform_async).with(/No data for invoice report/).exactly(8).times
       end
     end
   end

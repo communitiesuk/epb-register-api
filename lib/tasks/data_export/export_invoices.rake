@@ -6,7 +6,6 @@ namespace :data_export do
   task :export_invoices, [:start_date, :end_date, :report_type, :scheme_id] do |_, args|
     start_date = args[:start_date]
     end_date = args[:end_date]
-
     assessment_use_case = case args[:report_type]
                           when "scheme_name_type"
                             ApiFactory.get_assessment_count_by_scheme_name_type
