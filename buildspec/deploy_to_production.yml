@@ -25,6 +25,7 @@ env:
     VALID_DOMESTIC_SCHEMAS: "epbr-schema-versions-domestic-production"
     VALID_NON_DOMESTIC_SCHEMAS: "epbr-schema-versions-non-domestic-production"
     EPB_TEAM_SLACK_URL: "epb-team-slack-url"
+    SLACK_EPB_BOT_TOKEN: "slack_epb_bot_outh_token"
 
 phases:
   install:
