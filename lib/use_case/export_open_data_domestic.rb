@@ -23,13 +23,8 @@ module UseCase
           date_to,
         )
 
-      assessments.each_with_index  do |assessment, index|
+      assessments.each_with_index do |assessment, _index|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
-
-        if (index % 100).zero?
-          GC.start
-        end
-
 
         next if xml_data[:schema_type].include?("NI")
 

@@ -9,11 +9,16 @@ case "$STAGE" in
  *) DATABASE="dluhc-epb-db-$STAGE" ;;
 esac
 
+case "$STAGE" in
+ production) MEMORY="3G" ;;
+ *) MEMORY="512M";;
+esac
+
 cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
-    memory: 512M
+    memory: $MEMORY
     instances: 1
     command: bundle exec sidekiq -r ./sidekiq/config.rb
     no-route: true
@@ -24,4 +29,5 @@ applications:
     services:
       - dluhc-epb-redis-sidekiq-$STAGE
       - $DATABASE
+      - mhclg-epb-s3-open-data-export
 EOF

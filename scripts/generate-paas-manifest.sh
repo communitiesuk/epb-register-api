@@ -5,7 +5,7 @@ APPLICATION_NAME=$1  # e.g. mhclg-epb-something-api-integration
 STAGE=$2 # i.e. [integration, staging, production]
 
 case "$STAGE" in
- production) MEMORY="2G" ;;
+ production) MEMORY="4G" ;;
  *) MEMORY="1G" ;;
 esac
 
@@ -30,5 +30,6 @@ applications:
       - $DATABASE
       - dluhc-epb-redis-data-warehouse-$STAGE
       - dluhc-scale-register-api-$STAGE
+      - mhclg-epb-s3-open-data-export
 
 EOF
