@@ -23,8 +23,14 @@ module UseCase
           date_to,
         )
 
-      assessments.each do |assessment|
+      assessments.each_with_index  do |assessment, index|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
+
+        if (index % 100).zero?
+          GC.start
+        end
+
+
         next if xml_data[:schema_type].include?("NI")
 
         updated_address_id = @assessments_address_id_gateway.fetch(assessment["assessment_id"])[:address_id]
