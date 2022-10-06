@@ -71,6 +71,7 @@ namespace :open_data do
     end
 
   rescue Boundary::TerminableError => e
-    warn e.message
+    e.message
+    raise
   end
 end

@@ -649,36 +649,19 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
   context "when invoking the Open Data Communities export rake directly" do
     context "when we invoke with incorrect arguments" do
       it "raises an error when type of export is not provided" do
-        expected_message =
-          "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
-
-        expect { get_task("open_data:export_assessments").invoke }.to output(
-          /#{expected_message}/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke }.to raise_error Boundary::ArgumentMissing
       end
 
       it "raises an error when a wrong type of export is provided" do
-        expected_message =
-          "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
-
-        expect { get_task("open_data:export_assessments").invoke("for_dean") }.to output(
-          /#{expected_message}/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke("for_dean") }.to raise_error Boundary::ArgumentMissing
       end
 
       it "raises an error when type of export is provided but assessment_type argument is not" do
-        expected_message =
-          "A required argument is missing: assessment_type, eg: 'SAP-RDSAP', 'DEC' etc"
-
-        expect { get_task("open_data:export_assessments").invoke("for_odc") }.to output(
-          /#{expected_message}/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke("for_odc") }.to raise_error Boundary::ArgumentMissing
       end
 
       it "returns an error when the wrong type of assessment type is provided" do
-        expect { get_task("open_data:export_assessments").invoke("for_odc", "TEST", Time.now.strftime("%F")) }.to output(
-          /Assessment type is not valid:/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke("for_odc", "TEST", Time.now.strftime("%F")) }.to raise_error Boundary::InvalidAssessment
       end
     end
 
@@ -686,18 +669,14 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
         date_from = Time.now.strftime("%F")
-        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from) }.to output(
-          /No data provided for export/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from) }.to raise_error Boundary::OpenDataEmpty
       end
 
       it "returns a date validation error when date_from is greater than date_to" do
         assessment_type = "SAP-RDSAP"
         date_from = Time.now.strftime("%F")
         date_to = (Time.now - 3600 * 24).strftime("%F")
-        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
-          /date_from cannot be greater than date_to/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to raise_error Boundary::InvalidDates
       end
     end
 
@@ -706,9 +685,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
         assessment_type = "SAP-RDSAP"
         date_from = "2018-12-01"
         date_to = "2019-12-07"
-        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
-          /No data provided for export/,
-        ).to_stderr
+        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to raise_error Boundary::OpenDataEmpty
       end
     end
   end
