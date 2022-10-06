@@ -28,7 +28,7 @@ export_invoice_data:
   queue: default
 
 domestic_open_data_export:
-  cron: "30 14 6 * *"
+  cron: "10 15 6 * *"
   class: "Worker:DomesticOpenDataExport"
-  name: "Test the domestic open data export at 11:45 UTC"
+  name: "Test the domestic open data export at 15:10 UTC"
   queue: default
