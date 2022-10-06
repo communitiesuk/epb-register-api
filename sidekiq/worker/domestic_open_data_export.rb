@@ -12,6 +12,7 @@ module Worker
       @end_date = Date.today.strftime("%Y-09-01")
       @start_date = Date.yesterday.strftime("%Y-%m-01")
       @monthly_rake = rake_task("open_data:export_assessments")
+      puts "<<< posting ODE to S3"
       @monthly_rake.invoke("not_for_odc", "SAP-RDSAP", @start_date, @end_date)
     rescue Boundary::OpenDataEmpty
       message = ":alert_slow No data for domestic ODC Export"

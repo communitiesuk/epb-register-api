@@ -9,6 +9,7 @@ RSpec.describe Worker::DomesticOpenDataExport do
       WebMock.enable!
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
       allow(Worker::SlackNotification).to receive(:perform_async)
+      allow($stdout).to receive(:puts)
     end
 
     after do
