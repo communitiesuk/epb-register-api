@@ -16,7 +16,6 @@ namespace :data_export do
                           end
 
     raw_data = if args[:report_type] == "rrn_scheme_type"
-
                  assessment_use_case.execute(
                    Date.parse(start_date),
                    Date.parse(end_date),
@@ -29,9 +28,12 @@ namespace :data_export do
                  )
                end
 
+
     csv_file = "invoice_report.csv"
     zip_file = "invoice.zip"
-    message = "Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{args[:report_type]}"
+
+    message = "#{ENV['STAGE']} - Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{args[:report_type]}"
+    message.concat(" - scheme_id = #{args[:scheme_id]}") unless args[:scheme_id].nil?
 
     Helper::ExportInvoicesHelper.save_file(raw_data, csv_file)
     Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
