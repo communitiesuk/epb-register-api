@@ -2,6 +2,7 @@ require "sidekiq"
 require "sidekiq-cron"
 require "zeitwerk"
 require "rake"
+require "sentry-ruby"
 
 class SidekiqLoader
   def self.setup
