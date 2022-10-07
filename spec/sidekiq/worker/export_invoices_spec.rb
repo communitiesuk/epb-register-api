@@ -1,3 +1,5 @@
+require "sentry-ruby"
+
 RSpec.describe Worker::ExportInvoices do
   before do
     Timecop.freeze(2022, 9, 1, 0, 0, 0)
@@ -23,6 +25,7 @@ RSpec.describe Worker::ExportInvoices do
       allow(scheme_use_case).to receive(:execute).and_return returned_data
       allow(region_use_case).to receive(:execute).and_return returned_data
       allow(rrn_use_case).to receive(:execute).and_return returned_data
+      allow(Sentry).to receive(:capture_exception)
     end
 
     it "executes the rake which calls the use case" do
@@ -49,10 +52,20 @@ RSpec.describe Worker::ExportInvoices do
         allow(use_case).to receive(:execute).and_return []
       end
 
-      it "post the error to slack" do
+      it "send the error to sentry" do
         described_class.new.perform
-        expect(Worker::SlackNotification).to have_received(:perform_async).with(/No data for invoice report: scheme_name_type /).exactly(1).times
-        expect(Worker::SlackNotification).to have_received(:perform_async).with(/No data for invoice report/).exactly(8).times
+        expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(8).times
+      end
+    end
+
+    context "when file cannot be uploaded to slack" do
+      before do
+        WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: false }.to_json)
+      end
+
+      it "send the errors to sentry" do
+        described_class.new.perform
+        expect(Sentry).to have_received(:capture_exception).with(Boundary::SlackMessageError).exactly(8).times
       end
     end
   end
