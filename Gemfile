@@ -10,6 +10,7 @@ end
 
 group :worker do
   gem "http"
+  gem "sentry-sidekiq", "~> 0.1.1"
   gem "sidekiq", "~> 6.5.6"
   gem "sidekiq-cron", "~> 1.7.0"
 end

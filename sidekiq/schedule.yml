@@ -22,13 +22,13 @@ import_green_deal_fuel_price_data:
   queue: default
 
 export_invoice_data:
-  cron: "00 15 6 10 *"
+  cron: "45 9 7 10 *"
   class: "Worker::ExportInvoices"
   name: "Export invoice data on the - 1st day of each month at 6:55am"
   queue: default
 
 domestic_open_data_export:
   cron: "10 15 6 * *"
-  class: "Worker:DomesticOpenDataExport"
+  class: "Worker::DomesticOpenDataExport"
   name: "Test the domestic open data export at 15:10 UTC"
   queue: default

@@ -19,7 +19,7 @@ module Helper
     end
 
     def self.send_to_slack(zip_file, message)
-      channel = ENV["Stage"] == "production" ? "team-epb-support" : "team-epb-pre-production"
+      channel = ENV["STAGE"] == "production" ? "team-epb-support" : "team-epb-pre-production"
 
       uri = URI("https://slack.com/api/files.upload")
       req = Net::HTTP::Post.new(uri)
