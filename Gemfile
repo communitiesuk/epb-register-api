@@ -12,7 +12,7 @@ group :worker do
   gem "http"
   gem "sentry-sidekiq", "~> 0.1.1"
   gem "sidekiq", "~> 6.5.6"
-  gem "sidekiq-cron", "~> 1.7.0"
+  gem "sidekiq-cron", "~> 1.8.0"
 end
 
 group :test do
@@ -43,10 +43,10 @@ gem "rubocop", "~> 1.35.0"
 gem "rubocop-govuk", "~> 4.7"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
-gem "sentry-ruby", "~> 5.4"
+gem "sentry-ruby", "~> 5.5"
 gem "sinatra", "~> 2.2"
 gem "sinatra-activerecord", "~> 2.0.25"
 gem "sinatra-cross_origin", "~> 0.4.0"
-gem "unleash", "~> 4.3.0"
+gem "unleash", "~> 4.4.0"
 gem "wisper", "~> 2.0.1", git: "https://github.com/jstoks/wisper.git", branch: "ruby-3-compat-drop-2-6"
-gem "zeitwerk", "~> 2.6.0"
+gem "zeitwerk", "~> 2.6.1"
