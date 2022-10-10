@@ -1,4 +1,5 @@
 require_relative "../../acceptance/reporting/open_data_export_test_helper"
+require "sentry-ruby"
 
 RSpec.describe Worker::DomesticOpenDataExport do
   include RSpecRegisterApiServiceMixin
@@ -7,9 +8,6 @@ RSpec.describe Worker::DomesticOpenDataExport do
     before do
       Timecop.freeze(2022, 9, 1, 0, 0, 0)
       WebMock.enable!
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
-      allow(Worker::SlackNotification).to receive(:perform_async)
-      allow($stdout).to receive(:puts)
     end
 
     after do
@@ -72,19 +70,12 @@ RSpec.describe Worker::DomesticOpenDataExport do
 
     context "when there is no data to send" do
       before do
-        allow(Worker::SlackNotification).to receive(:perform_async)
+        allow(Sentry).to receive(:capture_exception)
       end
 
-      it "runs the rake with the correct start and end date", :aggregate_failures do
-        my_class = described_class.new
-        my_class.perform
-        expect(my_class.start_date).to eq("2022-08-01")
-        expect(my_class.end_date).to eq("2022-09-01")
-      end
-
-      it "post the error to slack" do
+      it "send the error to sentry" do
         described_class.new.perform
-        expect(Worker::SlackNotification).to have_received(:perform_async).with(/No data for domestic ODC Export/).exactly(1).times
+        expect(Sentry).to have_received(:capture_exception).with(Boundary::OpenDataEmpty).exactly(1).times
       end
     end
   end

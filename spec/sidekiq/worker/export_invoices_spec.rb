@@ -47,7 +47,6 @@ RSpec.describe Worker::ExportInvoices do
       let(:use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
 
       before do
-        allow(Worker::SlackNotification).to receive(:perform_async)
         allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
         allow(use_case).to receive(:execute).and_return []
       end
