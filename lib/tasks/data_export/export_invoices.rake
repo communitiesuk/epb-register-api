@@ -28,7 +28,6 @@ namespace :data_export do
                  )
                end
 
-
     csv_file = "invoice_report.csv"
     zip_file = "invoice.zip"
 
