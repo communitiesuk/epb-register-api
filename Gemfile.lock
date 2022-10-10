@@ -41,7 +41,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
-    connection_pool (2.2.5)
+    connection_pool (2.3.0)
     crack (0.4.5)
       rexml
     database_cleaner (2.0.1)
@@ -72,7 +72,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    fugit (1.5.3)
+    fugit (1.7.1)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.0)
@@ -193,13 +193,14 @@ GEM
     rubyzip (2.3.2)
     sentry-ruby (5.4.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sentry-sidekiq (0.1.3)
-      sentry-ruby (>= 0.2.0)
+    sentry-sidekiq (5.4.2)
+      sentry-ruby (~> 5.4.2)
+      sidekiq (>= 3.0)
     sidekiq (6.5.6)
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.7.0)
+    sidekiq-cron (1.8.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     sinatra (2.2.2)
@@ -225,7 +226,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.2.0)
-    unleash (4.3.0)
+    unleash (4.4.0)
       murmurhash3 (~> 0.1.6)
     version_gem (1.1.0)
     webmock (3.18.1)
@@ -233,7 +234,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     wisper-rspec (1.1.0)
-    zeitwerk (2.6.0)
+    zeitwerk (2.6.1)
 
 PLATFORMS
   ruby
@@ -264,19 +265,19 @@ DEPENDENCIES
   rubocop-performance
   rubyzip (~> 2.3.2)
   sentry-ruby (~> 5.4)
-  sentry-sidekiq (~> 0.1.1)
+  sentry-sidekiq (~> 5.4.2)
   sidekiq (~> 6.5.6)
-  sidekiq-cron (~> 1.7.0)
+  sidekiq-cron (~> 1.8.0)
   sinatra (~> 2.2)
   sinatra-activerecord (~> 2.0.25)
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   timecop (~> 0.9.5)
-  unleash (~> 4.3.0)
+  unleash (~> 4.4.0)
   webmock (~> 3.18)
   wisper (~> 2.0.1)!
   wisper-rspec (~> 1.0, >= 1.0.1)
-  zeitwerk (~> 2.6.0)
+  zeitwerk (~> 2.6.1)
 
 RUBY VERSION
    ruby 3.1.2p20
