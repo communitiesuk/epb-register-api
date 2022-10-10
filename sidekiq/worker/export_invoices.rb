@@ -6,9 +6,11 @@ module Worker
     include Worker::Helpers
 
     def perform
-      @end_date = Date.today.strftime("%Y-%m-%d")
+      # @end_date = Date.today.strftime("%Y-%m-%d")
       # start_date is 1st of last month
-      @start_date = Date.yesterday.strftime("%Y-%m-01")
+      # @start_date = Date.yesterday.strftime("%Y-%m-01")
+      @end_date = '2022-09-01'
+      @start_date = '2022-08-01'
       @monthly_invoice_rake = rake_task("data_export:export_invoices")
       call_rake("scheme_name_type")
       call_rake("region_type")
