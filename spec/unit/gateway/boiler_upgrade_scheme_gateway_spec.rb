@@ -99,6 +99,56 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
   end
 
+  context "when there are null values in the XML" do
+    before do
+      add_super_assessor(scheme_id:)
+
+      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      do_lodgement = lambda {
+        lodge_assessment(
+          assessment_body: rdsap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          migrated: true,
+          )
+      }
+
+      do_lodgement.call
+
+      rdsap_xml.at("Dwelling-Type").children.remove
+      rdsap_xml.at("Secondary-Heating").at("Description").children.remove
+
+      do_lodgement.call
+    end
+
+    expected_nul_bus_details_hash = {
+      epc_rrn: "0000-0000-0000-0000-0000",
+      report_type: "RdSAP",
+      expiry_date: "2030-05-03",
+      cavity_wall_insulation_recommended: false,
+      loft_insulation_recommended: false,
+      secondary_heating: nil,
+      address: {
+        address_id: "UPRN-000000000000",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "Whitbury",
+        postcode: "A0 0AA",
+      },
+      dwelling_type: nil,
+    }
+
+    it "finds and returns the expected data", aggregate_failures: true do
+      result = gateway.search_by_rrn("0000-0000-0000-0000-0000")
+      expect(result).to be_a(Domain::AssessmentBusDetails)
+      expect(result.to_hash).to eq expected_nul_bus_details_hash
+    end
+  end
+
   context "when expecting to find two RdSAP assessments" do
     before do
       scheme_id = add_scheme_and_get_id

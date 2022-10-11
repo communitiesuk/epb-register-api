@@ -84,7 +84,7 @@ module Gateway
           :town,
           :postcode,
         ).transform_values { |v| v || "" },
-        dwelling_type: assessment_summary[:dwelling_type] || assessment_summary[:property_type],
+        dwelling_type: fetch_dwelling_type(summary: assessment_summary),
       )
     rescue UseCase::AssessmentSummary::Fetch::AssessmentUnavailable
       nil
@@ -175,11 +175,20 @@ module Gateway
     def fetch_property_description(node_name:, summary:)
       if summary[:property_summary]
         summary[:property_summary].each do |feature|
-          return feature[:description] if feature[:name] == node_name
+          return feature[:description] if feature[:name] == node_name && !feature[:description].empty?
         end
       end
 
       nil
+    end
+
+    def fetch_dwelling_type(summary:)
+      if summary[:dwelling_type] && !summary[:dwelling_type].empty?
+        summary[:dwelling_type]
+      else
+        summary[:property_type] && !summary[:property_type].empty?
+        summary[:property_type]
+      end
     end
 
     def has_domestic_recommendation?(type:, summary:)

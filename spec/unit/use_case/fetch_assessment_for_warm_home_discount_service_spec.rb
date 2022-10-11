@@ -39,6 +39,14 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       clone[:is_latest_assessment_for_address] = true
       clone
     end
+    let(:expected_with_nulls) do
+      clone = expected_latest.clone
+      clone[:property_type] = nil
+      clone[:built_form] = nil
+      clone[:property_age_band] = nil
+      clone[:total_floor_area] = nil
+      clone
+    end
 
     context "with an RRN that is the property's latest assessment" do
       before do
@@ -65,6 +73,30 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
         expect(details.to_hash).to eq expected_not_latest
+      end
+    end
+
+    context "when there are null values in the XML" do
+      before do
+        domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+        domestic_rdsap_xml.at("Dwelling-Type").children.remove
+        domestic_rdsap_xml.at("Built-Form").children.remove
+        domestic_rdsap_xml.at("Construction-Age-Band").children.remove
+        domestic_rdsap_xml.at("Total-Floor-Area").children.remove
+
+        allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+          "xml" => domestic_rdsap_xml.to_xml,
+          "schema_type" => "RdSAP-Schema-20.0.0",
+        })
+        allow(summary_use_case).to receive(:execute).with(rrn).and_return({
+          superseded_by: nil,
+        })
+      end
+
+      it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
+        details = use_case.execute(rrn:)
+        expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
+        expect(details.to_hash).to eq expected_with_nulls
       end
     end
   end
