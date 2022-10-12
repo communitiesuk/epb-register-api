@@ -114,7 +114,7 @@ module Gateway
     def send_to_db(assessment)
       ActiveRecord::Base.transaction do
         existing_assessment =
-          Assessment.find_by assessment_id: assessment.get(:assessment_id)
+          Assessment.exists? assessment_id: assessment.get(:assessment_id)
 
         if existing_assessment
           delete_xml = <<-SQL
