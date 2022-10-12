@@ -14,7 +14,7 @@ RSpec.describe Worker::DomesticOpenDataExport do
 
       it "calls rake with correct arguments" do
         described_class.new.perform
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("SAP-RDSAP")
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("SAP-RDSAP").exactly(1).times
       end
     end
 

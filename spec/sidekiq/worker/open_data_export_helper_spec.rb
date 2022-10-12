@@ -72,5 +72,12 @@ describe Worker::OpenDataExportHelper do
         "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_sap-rdsap_2022-09-01_1.csv",
       )
     end
+
+    context "when calling the call rake method twice" do
+      it "call two different rakes" do
+        described_class.call_rake("SAP-RDSAP")
+        expect { described_class.call_rake("DEC") }.to raise_error(Boundary::OpenDataEmpty)
+      end
+    end
   end
 end
