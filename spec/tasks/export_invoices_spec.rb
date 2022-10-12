@@ -41,11 +41,11 @@ describe "monthly invoice export" do
       end
 
       it "deletes the generated csv file" do
-        expect(File.exist?("invoice_report.csv")).to be false
+        expect(File.exist?("scheme_name_type_invoice_report.csv")).to be false
       end
 
       it "deletes the generated zip file" do
-        expect(File.exist?("invoice.zip")).to be false
+        expect(File.exist?("scheme_name_type_invoice.zip")).to be false
       end
     end
 
@@ -77,11 +77,11 @@ describe "monthly invoice export" do
       end
 
       it "deletes the generated csv file" do
-        expect(File.exist?("invoice_report.csv")).to be false
+        expect(File.exist?("region_type_invoice_report.csv")).to be false
       end
 
       it "deletes the generated zip file" do
-        expect(File.exist?("invoice.zip")).to be false
+        expect(File.exist?("region_type_invoice.zip")).to be false
       end
     end
 
@@ -116,11 +116,11 @@ describe "monthly invoice export" do
       end
 
       it "deletes the generated csv file" do
-        expect(File.exist?("invoice_report.csv")).to be false
+        expect(File.exist?("rrn_scheme_type_1_invoice_report.csv")).to be false
       end
 
       it "deletes the generated zip file" do
-        expect(File.exist?("invoice.zip")).to be false
+        expect(File.exist?("rrn_scheme_type_1_invoice.zip")).to be false
       end
     end
   end
@@ -149,11 +149,11 @@ describe "monthly invoice export" do
     end
 
     it "deletes the generated csv file" do
-      expect(File.exist?("invoice_report.csv")).to be false
+      expect(File.exist?("scheme_name_type_invoice_report.csv")).to be false
     end
 
     it "deletes the generated zip file" do
-      expect(File.exist?("invoice.zip")).to be false
+      expect(File.exist?("scheme_name_type_invoice.zip")).to be false
     end
   end
 end

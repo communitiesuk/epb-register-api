@@ -2,7 +2,7 @@ require "archive/zip"
 
 module Helper
   class ExportInvoicesHelper
-    def self.save_file(raw_data, csv_file)
+    def self.save_file(raw_data, csv_file, file_name)
       if raw_data.length.zero?
         raise Boundary::NoData, "get assessment count by scheme name and type"
 
@@ -13,7 +13,7 @@ module Helper
         ) { |csv| raw_data.each { |row| csv << row } }
         File.write(csv_file, csv_data)
 
-        Archive::Zip.archive("invoice.zip", csv_file)
+        Archive::Zip.archive("#{file_name}_invoice.zip", csv_file)
         File.delete(csv_file)
       end
     end

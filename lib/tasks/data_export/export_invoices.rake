@@ -6,7 +6,9 @@ namespace :data_export do
   task :export_invoices, [:start_date, :end_date, :report_type, :scheme_id] do |_, args|
     start_date = args[:start_date]
     end_date = args[:end_date]
-    assessment_use_case = case args[:report_type]
+    report_type = args[:report_type]
+    scheme_id = args[:scheme_id]
+    assessment_use_case = case report_type
                           when "scheme_name_type"
                             ApiFactory.get_assessment_count_by_scheme_name_type
                           when "region_type"
@@ -15,11 +17,11 @@ namespace :data_export do
                             ApiFactory.get_assessment_rrns_by_scheme_type
                           end
 
-    raw_data = if args[:report_type] == "rrn_scheme_type"
+    raw_data = if report_type == "rrn_scheme_type"
                  assessment_use_case.execute(
                    Date.parse(start_date),
                    Date.parse(end_date),
-                   args[:scheme_id],
+                   scheme_id,
                  )
                else
                  assessment_use_case.execute(
@@ -28,13 +30,14 @@ namespace :data_export do
                  )
                end
 
-    csv_file = "invoice_report.csv"
-    zip_file = "invoice.zip"
+    file_name = scheme_id.nil? ? report_type : "#{report_type}_#{scheme_id}"
+    csv_file = "#{file_name}_invoice_report.csv"
+    zip_file = "#{file_name}_invoice.zip"
 
-    message = "#{ENV['STAGE']} - Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{args[:report_type]}"
-    message.concat(" - scheme_id = #{args[:scheme_id]}") unless args[:scheme_id].nil?
+    message = "#{ENV['STAGE']} - Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{report_type}"
+    message.concat(" - scheme_id = #{scheme_id}") unless scheme_id.nil?
 
-    Helper::ExportInvoicesHelper.save_file(raw_data, csv_file)
+    Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
     Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
   end
 end
