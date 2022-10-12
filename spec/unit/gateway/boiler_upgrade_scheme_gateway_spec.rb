@@ -112,7 +112,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
             scheme_ids: [scheme_id],
           },
           migrated: true,
-          )
+        )
       }
 
       do_lodgement.call
