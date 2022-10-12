@@ -3133,6 +3133,7 @@ components:
           type: string
           example: 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+          nullable: true
         propertyAgeBand:
           type: string
           example: '2007-2011'
@@ -3165,10 +3166,12 @@ components:
           type: string
           example: "Boiler and radiators, mains gas"
           description: "A description of the main heating for the property as per the known descriptions for the SAP-MainHeatingCategoryCode node type in SAP/RdSAP schemas."
+          nullable: true
         mainFuelType:
           type: string
           example: 'Natural Gas'
           description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
+          nullable: true
         hasHotWaterCylinder:
           description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
@@ -3195,6 +3198,7 @@ components:
           type: string
           example: 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+          nullable: true
         propertyAgeBand:
           type: string
           example: '2007-2011'
@@ -3226,6 +3230,7 @@ components:
           type: string
           example: 'Natural Gas'
           description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
+          nullable: true
         hasMainsGas:
           type: boolean
           example: true
@@ -3258,6 +3263,7 @@ components:
           type: string
           example: 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+          nullable: true
         propertyAgeBand:
           type: string
           example: '2007-2011'
