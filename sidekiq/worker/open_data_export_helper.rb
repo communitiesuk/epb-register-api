@@ -9,10 +9,8 @@ module Worker
     end
 
     def self.get_last_months_dates
-      # end_date = Date.today.strftime("%Y-%m-01")
-      # start_date = Date.yesterday.strftime("%Y-%m-01")
-      end_date = "2022-09-01"
-      start_date = "2022-08-01"
+      end_date = Date.today.strftime("%Y-%m-01")
+      start_date = Date.yesterday.strftime("%Y-%m-01")
       { start_date:, end_date: }
     end
 
