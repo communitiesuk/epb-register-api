@@ -27,20 +27,20 @@ export_invoice_data:
   name: "Export invoice data on the - 1st day of each month at 6:55am"
   queue: default
 
-domestic_open_data_export:
-  cron: "26 13 12 * *"
-  class: "Worker::DomesticOpenDataExport"
-  name: "Test the domestic open data export at 15:10 UTC"
-  queue: default
+##domestic_open_data_export:
+##  cron: "15 * * * *"
+##  class: "Worker::DomesticOpenDataExport"
+##  name: "Test the domestic open data export at 15:10 UTC"
+#  queue: default
 
 commercial_open_data_export:
-  cron: "10 5 1 * *"
+  cron: "10 11 13 * *"
   class: "Worker::CommercialOpenDataExport"
   name: "Test the commercial open data export at 15:10 UTC"
   queue: default
 
 recommendations_open_data_export:
-  cron: "45 5 1 * *"
+  cron: "35 11 13 * *"
   class: "Worker::RecommendationsOpenDataExport"
   name: "Test the recommendations open data export at 15:10 UTC"
   queue: default

@@ -6,8 +6,6 @@ module Worker
     include Sidekiq::Worker
 
     def perform
-      ENV["INSTANCE_NAME"] = "mhclg-epb-s3-open-data-export"
-
       begin
         Worker::OpenDataExportHelper.call_rake("CEPC")
       rescue Boundary::OpenDataEmpty => e
