@@ -30,7 +30,7 @@ export_invoice_data:
 domestic_open_data_export:
   cron: "30 3 1 * *"
   class: "Worker::DomesticOpenDataExport"
-  name: "Run the open data export rake for domestic EPCs on 1st day of each month at 03:35 UTC"
+  name: "Run the open data export rake for domestic EPCs on 1st day of each month at 03:30 UTC"
   queue: default
 
 commercial_open_data_export:
