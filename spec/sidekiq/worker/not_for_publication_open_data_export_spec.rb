@@ -1,7 +1,7 @@
 require_relative "../../acceptance/reporting/open_data_export_test_helper"
 require "sentry-ruby"
 
-RSpec.describe Worker::DomesticOpenDataExport do
+RSpec.describe Worker::NotForPublicationOpenDataExport do
   describe "#perform" do
     context "when there is data to send" do
       before do
@@ -14,7 +14,7 @@ RSpec.describe Worker::DomesticOpenDataExport do
 
       it "calls rake with correct arguments" do
         described_class.new.perform
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(assessment_types: "SAP-RDSAP").exactly(1).times
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(rake_name: "open_data:export_not_for_publication").exactly(1).times
       end
     end
 

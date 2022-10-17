@@ -1,10 +1,10 @@
 module Worker
   class OpenDataExportHelper
-    def self.call_rake(assessment_types)
+    def self.call_rake(rake_name: "open_data:export_assessments", assessment_types: nil)
       ENV["INSTANCE_NAME"] = "mhclg-epb-s3-open-data-export"
-      monthly_rake = rake_task("open_data:export_assessments")
+      monthly_rake = rake_task(rake_name)
       last_month = get_last_months_dates
-      monthly_rake.invoke("for_odc", assessment_types, last_month[:start_date], last_month[:end_date])
+      rake_name == "open_data:export_assessments" ? monthly_rake.invoke(ENV["OPEN_DATA_REPORT_TYPE"], assessment_types, last_month[:start_date], last_month[:end_date]) : monthly_rake.invoke("for_odc")
       monthly_rake.reenable
     end
 

@@ -14,8 +14,8 @@ describe Worker::CommercialOpenDataExport do
 
       it "calls rake with the correct arguments" do
         described_class.new.perform
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("CEPC").exactly(1).times
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("DEC").exactly(1).times
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(assessment_types: "CEPC").exactly(1).times
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(assessment_types: "DEC").exactly(1).times
         expect(Worker::OpenDataExportHelper).to have_received(:call_rake).exactly(2).times
       end
     end

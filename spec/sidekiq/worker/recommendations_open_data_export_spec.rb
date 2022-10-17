@@ -14,9 +14,9 @@ describe Worker::RecommendationsOpenDataExport do
 
       it "calls rake with the correct arguments", :aggregate_failures do
         described_class.new.perform
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("CEPC-RR").exactly(1).times
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("DEC-RR").exactly(1).times
-        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with("SAP-RDSAP-RR").exactly(1).times
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(assessment_types: "CEPC-RR").exactly(1).times
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(assessment_types: "DEC-RR").exactly(1).times
+        expect(Worker::OpenDataExportHelper).to have_received(:call_rake).with(assessment_types: "SAP-RDSAP-RR").exactly(1).times
         expect(Worker::OpenDataExportHelper).to have_received(:call_rake).exactly(3).times
       end
     end
