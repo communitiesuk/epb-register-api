@@ -8,12 +8,12 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.3.1)
-      activesupport (= 7.0.3.1)
-    activerecord (7.0.3.1)
-      activemodel (= 7.0.3.1)
-      activesupport (= 7.0.3.1)
-    activesupport (7.0.3.1)
+    activemodel (7.0.4)
+      activesupport (= 7.0.4)
+    activerecord (7.0.4)
+      activemodel (= 7.0.4)
+      activesupport (= 7.0.4)
+    activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -208,7 +208,7 @@ GEM
       rack (~> 2.2)
       rack-protection (= 2.2.2)
       tilt (~> 2.0)
-    sinatra-activerecord (2.0.25)
+    sinatra-activerecord (2.0.26)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     sinatra-contrib (2.2.2)
@@ -269,7 +269,7 @@ DEPENDENCIES
   sidekiq (~> 6.5.6)
   sidekiq-cron (~> 1.8.0)
   sinatra (~> 2.2)
-  sinatra-activerecord (~> 2.0.25)
+  sinatra-activerecord (~> 2.0.26)
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   timecop (~> 0.9.5)
