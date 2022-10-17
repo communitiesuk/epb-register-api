@@ -57,7 +57,7 @@ describe Worker::OpenDataExportHelper do
       EnvironmentStub
         .all
 
-      stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_sap-rdsap_2022-09-01_1.csv")
+      stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/open_data_export_sap-rdsap_2022-09-01_1.csv")
         .to_return(status: 200, body: "", headers: {})
     end
 
@@ -69,7 +69,7 @@ describe Worker::OpenDataExportHelper do
       described_class.call_rake("SAP-RDSAP")
       expect(WebMock).to have_requested(
         :put,
-        "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_sap-rdsap_2022-09-01_1.csv",
+        "https://s3.eu-west-2.amazonaws.com/test_bucket/open_data_export_sap-rdsap_2022-09-01_1.csv",
       )
     end
 
