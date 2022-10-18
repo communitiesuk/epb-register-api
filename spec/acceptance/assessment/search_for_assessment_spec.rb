@@ -285,6 +285,65 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
   end
 
+  context "when using a comma-separated list for assessment types" do
+    it "will receive and sort the results" do
+      setup_scheme_and_lodge
+
+      second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+      second_xml.at("Property Address Address-Line-1").content = "2 Some Street"
+
+      lodge_assessment(
+        assessment_body: second_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
+
+      response =
+        assessments_search_by_postcode_comma_separated_assessment_types(
+          "A0 0AA",
+          assessment_types: %w[RdSAP SAP],
+        )
+      response_json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response_json[:data][:assessments][0][:assessmentId]).to eq(
+        "0000-0000-0000-0000-0000",
+      )
+      expect(response_json[:data][:assessments][1][:assessmentId]).to eq(
+        "0000-0000-0000-0000-0001",
+      )
+    end
+
+    context "when only requesting SAP assessments" do
+      it "does not fetch RdSAP assessments" do
+        setup_scheme_and_lodge
+
+        second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+        second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+        second_xml.at("Property Address Address-Line-1").content = "2 Some Street"
+
+        lodge_assessment(
+          assessment_body: second_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+        )
+
+        response =
+          assessments_search_by_postcode_comma_separated_assessment_types(
+            "A0 0AA",
+            assessment_types: %w[SAP],
+          )
+        response_json = JSON.parse(response.body, symbolize_names: true)
+
+        expect(response_json[:data][:assessments]).to be_empty
+      end
+    end
+  end
+
   context "when searching by ID" do
     it "returns an error for badly formed IDs" do
       response_body =
@@ -363,7 +422,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "rejects a missing town" do
       response_body =
-        assessments_search_by_street_name_and_town(street_name: "Palmtree Road", town: "", accepted_responses: [400])
+        assessments_search_by_street_and_town(street: "Palmtree Road", town: "", accepted_responses: [400])
           .body
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
@@ -376,7 +435,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "rejects a missing street name" do
       response_body =
-        assessments_search_by_street_name_and_town(street_name: "", town: "Brighton", accepted_responses: [400]).body
+        assessments_search_by_street_and_town(street: "", town: "Brighton", accepted_responses: [400]).body
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
           errors: [
@@ -387,15 +446,15 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "allows missing assessment types" do
-      assessments_search_by_street_name_and_town street_name: "Palmtree Road",
-                                                 town: "Brighton",
-                                                 assessment_types: []
+      assessments_search_by_street_and_town street: "Palmtree Road",
+                                            town: "Brighton",
+                                            assessment_types: []
     end
 
     it "returns matching assessments" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town(street_name: "1 Some Street", town: "Whitbury")
+        assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -405,7 +464,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     it "returns matching assessments with missing property number" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town(street_name: "Some Street", town: "Whitbury")
+        assessments_search_by_street_and_town(street: "Some Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -415,7 +474,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     it "returns matching assessments with missing letters in street" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town(street_name: "ome Street", town: "Whitbury")
+        assessments_search_by_street_and_town(street: "ome Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -427,7 +486,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
       response =
-        assessments_search_by_street_name_and_town(street_name: "1 Some Street", town: "Whitbury")
+        assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"].length).to eq(0)
@@ -436,8 +495,8 @@ describe "Acceptance::Assessment::SearchForAssessments",
     it "can filter for commercial assessments" do
       setup_scheme_and_lodge(non_domestic: true)
       response =
-        assessments_search_by_street_name_and_town(
-          street_name: "2 Lonely Street",
+        assessments_search_by_street_and_town(
+          street: "2 Lonely Street",
           town: "Whitbury",
           assessment_types: %w[CEPC],
         )
@@ -477,7 +536,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       )
 
       response =
-        assessments_search_by_street_name_and_town(street_name: "Some Street", town: "Whitbury")
+        assessments_search_by_street_and_town(street: "Some Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body, symbolize_names: true)
 
@@ -488,6 +547,29 @@ describe "Acceptance::Assessment::SearchForAssessments",
         0000-0000-0000-0000-0001
         0000-0000-0000-0000-0002
       ]
+    end
+
+    context "when opting into the new street param on the assessments endpoint" do
+      it "returns matching assessments" do
+        setup_scheme_and_lodge
+        response =
+          assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury", use_new_street_param: true)
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+      end
+
+      it "does not return opted out assessments" do
+        setup_scheme_and_lodge
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
+
+        response =
+          assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury", use_new_street_param: true)
+        response_json = JSON.parse(response.body)
+
+        expect(response_json["data"]["assessments"].length).to eq(0)
+      end
     end
   end
 end

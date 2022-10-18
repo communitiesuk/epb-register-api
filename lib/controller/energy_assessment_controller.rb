@@ -3,11 +3,14 @@
 module Controller
   class EnergyAssessmentController < Controller::BaseController
     get "/api/assessments/search", auth_token_has_all: %w[assessment:search] do
+      assessment_types = params[:assessmentTypes] ? params[:assessmentTypes].split(",") : params[:assessment_type]
+      street = params[:street] || params[:street_name]
+
       result =
         if params.key?(:postcode)
           UseCase::FindAssessmentsByPostcode.new.execute(
             params[:postcode],
-            params[:assessment_type],
+            assessment_types,
           )
         elsif params.key?(:assessment_id)
           UseCase::FindAssessmentsByAssessmentId.new.execute(
@@ -15,9 +18,9 @@ module Controller
           )
         else
           UseCase::FindAssessmentsByStreetNameAndTown.new.execute(
-            params[:street_name],
+            street,
             params[:town],
-            params[:assessment_type],
+            assessment_types,
           )
         end
 
