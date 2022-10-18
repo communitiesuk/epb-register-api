@@ -479,6 +479,20 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
+    it "contains the hashed assessment id in the hashed_assessment_id column" do
+      lodge_assessment assessment_body: valid_rdsap_xml,
+                       accepted_responses: [201],
+                       scopes: %w[assessment:lodge],
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       },
+                       migrated: "false"
+
+      hashed_assessment_id_column = ActiveRecord::Base.connection.exec_query("SELECT hashed_assessment_id FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'")
+
+      expect(hashed_assessment_id_column.entries.first["hashed_assessment_id"]).to eq("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a")
+    end
+
     it "accepts negative current energy rating values for CEPC" do
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-50"

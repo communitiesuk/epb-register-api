@@ -70,6 +70,7 @@ describe "add hashed assessment_id rake" do
         migrated: true,
         schema_name: "CEPC-8.0.0",
       )
+      ActiveRecord::Base.connection.execute "UPDATE assessments SET hashed_assessment_id = NULL"
     end
 
     context "and are RdSAP and RdSAP NI" do
