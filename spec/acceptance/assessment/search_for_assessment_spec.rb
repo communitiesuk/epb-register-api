@@ -571,5 +571,38 @@ describe "Acceptance::Assessment::SearchForAssessments",
         expect(response_json["data"]["assessments"].length).to eq(0)
       end
     end
+
+    context "when opting into the new assessmentId param on the assessments endpoint" do
+      it "returns the matching assessment" do
+        setup_scheme_and_lodge
+        response =
+          domestic_assessments_search_by_assessment_id("0000-0000-0000-0000-0000", use_camel_case_param: true)
+        response_json = JSON.parse(response.body)
+        expected_response =
+          JSON.parse(
+            {
+              assessmentId: "0000-0000-0000-0000-0000",
+              dateOfAssessment: "2020-05-04",
+              dateOfRegistration: "2020-05-04",
+              typeOfAssessment: "RdSAP",
+              currentEnergyEfficiencyRating: 50,
+              optOut: false,
+              currentEnergyEfficiencyBand: "e",
+              postcode: "A0 0AA",
+              dateOfExpiry: "2030-05-03",
+              town: "Whitbury",
+              addressId: "UPRN-000000000000",
+              addressLine1: "1 Some Street",
+              addressLine2: "",
+              addressLine3: "",
+              addressLine4: "",
+              status: "ENTERED",
+              createdAt: "2021-06-21T00:00:00Z",
+            }.to_json,
+          )
+
+        expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+      end
+    end
   end
 end

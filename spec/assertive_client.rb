@@ -499,10 +499,11 @@ end
 def domestic_assessments_search_by_assessment_id(
   assessment_id,
   scopes: %w[assessment:search],
+  use_camel_case_param: false,
   **assertive_kwargs
 )
   assertive_get(
-    "/api/assessments/search?assessment_id=#{assessment_id}",
+    "/api/assessments/search?#{use_camel_case_param ? 'assessmentId' : 'assessment_id'}=#{assessment_id}",
     scopes:,
     **assertive_kwargs,
   )
