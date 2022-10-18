@@ -285,65 +285,6 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
   end
 
-  context "when using a comma-separated list for assessment types" do
-    it "will receive and sort the results" do
-      setup_scheme_and_lodge
-
-      second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
-      second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
-      second_xml.at("Property Address Address-Line-1").content = "2 Some Street"
-
-      lodge_assessment(
-        assessment_body: second_xml.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-      )
-
-      response =
-        assessments_search_by_postcode_comma_separated_assessment_types(
-          "A0 0AA",
-          assessment_types: %w[RdSAP SAP],
-        )
-      response_json = JSON.parse(response.body, symbolize_names: true)
-
-      expect(response_json[:data][:assessments][0][:assessmentId]).to eq(
-        "0000-0000-0000-0000-0000",
-      )
-      expect(response_json[:data][:assessments][1][:assessmentId]).to eq(
-        "0000-0000-0000-0000-0001",
-      )
-    end
-
-    context "when only requesting SAP assessments" do
-      it "does not fetch RdSAP assessments" do
-        setup_scheme_and_lodge
-
-        second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
-        second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
-        second_xml.at("Property Address Address-Line-1").content = "2 Some Street"
-
-        lodge_assessment(
-          assessment_body: second_xml.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-        )
-
-        response =
-          assessments_search_by_postcode_comma_separated_assessment_types(
-            "A0 0AA",
-            assessment_types: %w[SAP],
-          )
-        response_json = JSON.parse(response.body, symbolize_names: true)
-
-        expect(response_json[:data][:assessments]).to be_empty
-      end
-    end
-  end
-
   context "when searching by ID" do
     it "returns an error for badly formed IDs" do
       response_body =
@@ -547,62 +488,6 @@ describe "Acceptance::Assessment::SearchForAssessments",
         0000-0000-0000-0000-0001
         0000-0000-0000-0000-0002
       ]
-    end
-
-    context "when opting into the new street param on the assessments endpoint" do
-      it "returns matching assessments" do
-        setup_scheme_and_lodge
-        response =
-          assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury", use_new_street_param: true)
-
-        response_json = JSON.parse(response.body)
-
-        expect(response_json["data"]["assessments"][0]).to eq(expected_response)
-      end
-
-      it "does not return opted out assessments" do
-        setup_scheme_and_lodge
-        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
-
-        response =
-          assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury", use_new_street_param: true)
-        response_json = JSON.parse(response.body)
-
-        expect(response_json["data"]["assessments"].length).to eq(0)
-      end
-    end
-
-    context "when opting into the new assessmentId param on the assessments endpoint" do
-      it "returns the matching assessment" do
-        setup_scheme_and_lodge
-        response =
-          domestic_assessments_search_by_assessment_id("0000-0000-0000-0000-0000", use_camel_case_param: true)
-        response_json = JSON.parse(response.body)
-        expected_response =
-          JSON.parse(
-            {
-              assessmentId: "0000-0000-0000-0000-0000",
-              dateOfAssessment: "2020-05-04",
-              dateOfRegistration: "2020-05-04",
-              typeOfAssessment: "RdSAP",
-              currentEnergyEfficiencyRating: 50,
-              optOut: false,
-              currentEnergyEfficiencyBand: "e",
-              postcode: "A0 0AA",
-              dateOfExpiry: "2030-05-03",
-              town: "Whitbury",
-              addressId: "UPRN-000000000000",
-              addressLine1: "1 Some Street",
-              addressLine2: "",
-              addressLine3: "",
-              addressLine4: "",
-              status: "ENTERED",
-              createdAt: "2021-06-21T00:00:00Z",
-            }.to_json,
-          )
-
-        expect(response_json["data"]["assessments"][0]).to eq(expected_response)
-      end
     end
   end
 end

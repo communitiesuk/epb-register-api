@@ -465,26 +465,6 @@ def assessments_search_by_postcode(
 )
   path = "/api/assessments/search?postcode=#{postcode}"
 
-  assessment_types.each do |assessment_type|
-    path <<
-      "#{path.include?('?') ? '&' : '?'}assessment_type[]=#{assessment_type}"
-  end
-
-  assertive_get(
-    path,
-    scopes:,
-    **assertive_kwargs,
-  )
-end
-
-def assessments_search_by_postcode_comma_separated_assessment_types(
-  postcode,
-  scopes: %w[assessment:search],
-  assessment_types: %w[RdSAP SAP],
-  **assertive_kwargs
-)
-  path = "/api/assessments/search?postcode=#{postcode}"
-
   unless assessment_types.empty?
     path << "&assessmentTypes=#{assessment_types.sort.join(',')}"
   end
@@ -499,11 +479,10 @@ end
 def domestic_assessments_search_by_assessment_id(
   assessment_id,
   scopes: %w[assessment:search],
-  use_camel_case_param: false,
   **assertive_kwargs
 )
   assertive_get(
-    "/api/assessments/search?#{use_camel_case_param ? 'assessmentId' : 'assessment_id'}=#{assessment_id}",
+    "/api/assessments/search?assessmentId=#{assessment_id}",
     scopes:,
     **assertive_kwargs,
   )
@@ -514,13 +493,12 @@ def assessments_search_by_street_and_town(
   town:,
   assessment_types: %w[RdSAP SAP],
   scopes: %w[assessment:search],
-  use_new_street_param: false,
   **assertive_kwargs
 )
-  path = "/api/assessments/search?street#{!use_new_street_param ? '_name' : ''}=#{street}&town=#{town}"
-  assessment_types.each do |assessment_type|
-    path <<
-      "#{path.include?('?') ? '&' : '?'}assessment_type[]=#{assessment_type}"
+  path = "/api/assessments/search?street=#{street}&town=#{town}"
+
+  unless assessment_types.empty?
+    path += "&assessmentTypes=#{assessment_types.sort.join(',')}"
   end
 
   assertive_get(

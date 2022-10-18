@@ -3,9 +3,9 @@
 module Controller
   class EnergyAssessmentController < Controller::BaseController
     get "/api/assessments/search", auth_token_has_all: %w[assessment:search] do
-      assessment_types = params[:assessmentTypes] ? params[:assessmentTypes].split(",") : params[:assessment_type]
-      assessment_id = params[:assessmentId] || params[:assessment_id]
-      street = params[:street] || params[:street_name]
+      assessment_types = params[:assessmentTypes] ? params[:assessmentTypes].split(",") : []
+      assessment_id = params[:assessmentId]
+      street = params[:street]
 
       result =
         if params.key?(:postcode)

@@ -545,13 +545,6 @@ paths:
             $ref: '#/components/schemas/AddressPostcode'
           example: 'FL23 4JA'
         - in: query
-          name: assessment_type[]
-          description: The type(s) of assessment being searched for
-          schema:
-            $ref: '#/components/schemas/AssessmentType'
-          example: 'RdSAP'
-          deprecated: true
-        - in: query
           name: assessmentTypes
           description: The types of assessment being searched for, separated by commas
           schema:
@@ -560,13 +553,6 @@ paths:
               $ref: '#/components/schemas/AssessmentType'
           explode: false
           example: 'RdSAP,SAP'
-        - in: query
-          name: street_name
-          description: The street of the assessment being searched for
-          schema:
-            type: string
-          example: 'High Road'
-          deprecated: true
         - in: query
           name: street
           description: The street of the assessment being searched for
@@ -579,13 +565,6 @@ paths:
           schema:
             $ref: '#/components/schemas/AddressTown'
           example: 'Woking'
-        - in: query
-          name: assessment_id
-          description: The RRN of the assessment being searched for
-          schema:
-            $ref: '#/components/schemas/AssessmentId'
-          example: '1234-2345-3456-4567-6789'
-          deprecated: true
         - in: query
           name: assessmentId
           description: The RRN of the assessment being searched for
