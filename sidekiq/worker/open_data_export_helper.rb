@@ -4,7 +4,7 @@ module Worker
       ENV["INSTANCE_NAME"] = "mhclg-epb-s3-open-data-export"
       monthly_rake = rake_task(rake_name)
       last_month = get_last_months_dates
-      rake_name == "open_data:export_assessments" ? monthly_rake.invoke(ENV["OPEN_DATA_REPORT_TYPE"], assessment_types, last_month[:start_date], last_month[:end_date]) : monthly_rake.invoke("for_odc")
+      rake_name == "open_data:export_assessments" ? monthly_rake.invoke(ENV["OPEN_DATA_REPORT_TYPE"], assessment_types, last_month[:start_date], last_month[:end_date]) : monthly_rake.invoke(ENV["OPEN_DATA_REPORT_TYPE"])
       monthly_rake.reenable
     end
 

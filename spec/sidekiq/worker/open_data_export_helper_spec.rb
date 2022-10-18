@@ -54,8 +54,6 @@ describe Worker::OpenDataExportHelper do
         migrated: true,
       )
 
-
-
       ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET created_at='2022-08-30 12:35:26'")
 
       EnvironmentStub
@@ -104,20 +102,32 @@ describe Worker::OpenDataExportHelper do
 
     context "when calling the rake to run not for publication" do
       before do
+        ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET cancelled_at= '2022-08-31' WHERE assessment_id='0000-0000-0000-0000-1004'")
+      end
+
+      it "sends the not for publication file to the live S3 bucket" do
         EnvironmentStub
-          .all.with("OPEN_DATA_REPORT_TYPE", "not_for_odc")
+          .all.with("OPEN_DATA_REPORT_TYPE", "for_odc")
 
         stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/open_data_export_not_for_publication_2022-09-01.csv")
           .to_return(status: 200, body: "", headers: {})
-
-        ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET cancelled_at= '2022-08-31' WHERE assessment_id='0000-0000-0000-0000-1004'")
         described_class.call_rake(rake_name: "open_data:export_not_for_publication")
-      end
-
-      it "sends the not for publication file to the S3 bucket" do
         expect(WebMock).to have_requested(
           :put,
           "https://s3.eu-west-2.amazonaws.com/test_bucket/open_data_export_not_for_publication_2022-09-01.csv",
+        )
+      end
+
+      it "sends the not for publication file to the test S3 bucket" do
+        EnvironmentStub
+          .all.with("OPEN_DATA_REPORT_TYPE", "not_for_odc")
+
+        stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_not_for_publication_2022-09-01.csv")
+          .to_return(status: 200, body: "", headers: {})
+        described_class.call_rake(rake_name: "open_data:export_not_for_publication")
+        expect(WebMock).to have_requested(
+          :put,
+          "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_not_for_publication_2022-09-01.csv",
         )
       end
     end

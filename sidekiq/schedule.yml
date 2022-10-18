@@ -46,8 +46,8 @@ recommendations_open_data_export:
   queue: default
 
 not_for_publication_open_data_export:
-  cron: "00 5 18 * *"
+  cron: "35 5 1 * *"
   class: "Worker::NotForPublicationOpenDataExport"
-  name: "Run the open data export not for publication rake on 1st day of each month at 05:30 UTC"
+  name: "Run the open data export not for publication rake on 1st day of each month at 05:35 UTC"
   queue: default
 
