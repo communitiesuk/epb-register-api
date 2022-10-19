@@ -102,7 +102,7 @@ describe Worker::OpenDataExportHelper do
 
     context "when calling the rake to run not for publication" do
       before do
-        ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET cancelled_at= '2022-08-31' WHERE assessment_id='0000-0000-0000-0000-1004'")
+        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at= '2022-08-31' WHERE assessment_id='0000-0000-0000-0000-1004'")
       end
 
       it "sends the not for publication file to the live S3 bucket" do
