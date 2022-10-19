@@ -24,10 +24,29 @@ unless %w[development test].include? environment
   end
 end
 
-schedule_file = "./sidekiq/schedule.yml"
+SCHEDULE_FILE = "./sidekiq/schedule.yml".freeze
+DEVELOPMENT_SCHEDULE_FILE = "./sidekiq/schedule_dev.yml".freeze
+
+if environment == "development"
+  schedule_file = DEVELOPMENT_SCHEDULE_FILE
+  unless File.exist? schedule_file
+    # generate a development schedule file based on existing schedule but commented out
+    File.open(SCHEDULE_FILE, "rb") do |original|
+      File.open(DEVELOPMENT_SCHEDULE_FILE, "wb") do |dev_template|
+        while (buffer = original.read(4096))
+          dev_template << buffer.split("\n").map { |line| "##{line}" }.join("\n")
+        end
+      end
+    end
+  end
+
+  puts "\e[33mNB. as Sidekiq is running in a development environment, it is using #{DEVELOPMENT_SCHEDULE_FILE} rather than the production schedule file!\e[0m"
+else
+  schedule_file = SCHEDULE_FILE
+end
 
 if File.exist?(schedule_file) && Sidekiq.server?
-  Sidekiq::Cron::Job.load_from_hash! YAML.load_file(schedule_file)
+  Sidekiq::Cron::Job.load_from_hash!(YAML.load_file(schedule_file) || {})
 end
 
 Sentry.init do |config|
