@@ -1,5 +1,5 @@
 module Worker
-  class OpenDataExportHelper
+  module OpenDataExportHelper
     def self.call_rake(rake_name: "open_data:export_assessments", assessment_types: nil)
       ENV["INSTANCE_NAME"] = "mhclg-epb-s3-open-data-export"
       monthly_rake = rake_task(rake_name)
