@@ -41,6 +41,9 @@ if environment == "development"
   end
 
   puts "\e[33mNB. as Sidekiq is running in a development environment, it is using #{DEVELOPMENT_SCHEDULE_FILE} rather than the production schedule file!\e[0m"
+  Sidekiq.configure_server do |config|
+    config.redis = { url: ENV["EPB_WORKER_REDIS_URI"] || nil }
+  end
 else
   schedule_file = SCHEDULE_FILE
 end
