@@ -6,6 +6,7 @@ describe Worker::OpenDataExportHelper do
   before do
     Timecop.freeze(2022, 9, 1, 7, 0, 0)
     WebMock.enable!
+    EnvironmentStub.all
   end
 
   after do
@@ -56,8 +57,7 @@ describe Worker::OpenDataExportHelper do
 
       ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET created_at='2022-08-30 12:35:26'")
 
-      EnvironmentStub
-        .all.with("OPEN_DATA_REPORT_TYPE", "not_for_odc")
+      allow(Helper::Toggles).to receive(:enabled?).with("register-api-write-ode-to-test-directory").and_return(true)
 
       stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_sap-rdsap_2022-09-01_1.csv")
         .to_return(status: 200, body: "", headers: {})
@@ -84,8 +84,7 @@ describe Worker::OpenDataExportHelper do
 
     context "when calling the rake to run data into the live folder" do
       before do
-        EnvironmentStub
-          .all.with("OPEN_DATA_REPORT_TYPE", "for_odc")
+        allow(Helper::Toggles).to receive(:enabled?).with("register-api-write-ode-to-test-directory").and_return(false)
         stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/open_data_export_sap-rdsap_2022-09-01_1.csv")
           .to_return(status: 200, body: "", headers: {})
 
@@ -106,8 +105,7 @@ describe Worker::OpenDataExportHelper do
       end
 
       it "sends the not for publication file to the live S3 bucket" do
-        EnvironmentStub
-          .all.with("OPEN_DATA_REPORT_TYPE", "for_odc")
+        allow(Helper::Toggles).to receive(:enabled?).with("register-api-write-ode-to-test-directory").and_return(false)
 
         stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/open_data_export_not_for_publication_2022-09-01.csv")
           .to_return(status: 200, body: "", headers: {})
@@ -119,8 +117,7 @@ describe Worker::OpenDataExportHelper do
       end
 
       it "sends the not for publication file to the test S3 bucket" do
-        EnvironmentStub
-          .all.with("OPEN_DATA_REPORT_TYPE", "not_for_odc")
+        allow(Helper::Toggles).to receive(:enabled?).with("register-api-write-ode-to-test-directory").and_return(true)
 
         stub_request(:put, "https://s3.eu-west-2.amazonaws.com/test_bucket/test/open_data_export_not_for_publication_2022-09-01.csv")
           .to_return(status: 200, body: "", headers: {})

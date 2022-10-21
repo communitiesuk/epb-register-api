@@ -77,7 +77,6 @@ deploy-worker:
 	cf set-env "${DEPLOY_WORKER}" OS_DATA_HUB_API_KEY "${OS_DATA_HUB_API_KEY}"
 	cf set-env "${DEPLOY_WORKER}" EPB_TEAM_SLACK_URL "${EPB_TEAM_SLACK_URL}"
 	cf set-env "${DEPLOY_WORKER}" SLACK_EPB_BOT_TOKEN "${SLACK_EPB_BOT_TOKEN}"
-	cf set-env "${DEPLOY_WORKER}" OPEN_DATA_REPORT_TYPE "for_odc"
 
 	cf push "${DEPLOY_WORKER}" -f worker_manifest.yml
 

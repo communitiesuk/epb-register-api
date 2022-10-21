@@ -4,7 +4,9 @@ module Worker
       ENV["INSTANCE_NAME"] = "mhclg-epb-s3-open-data-export"
       monthly_rake = rake_task(rake_name)
       last_month = get_last_months_dates
-      rake_name == "open_data:export_assessments" ? monthly_rake.invoke(ENV["OPEN_DATA_REPORT_TYPE"], assessment_types, last_month[:start_date], last_month[:end_date]) : monthly_rake.invoke(ENV["OPEN_DATA_REPORT_TYPE"])
+      whether_for_odc = output_to_test_dir? ? "not_for_odc" : "for_odc"
+      Logger.new($stdout, level: Logger::ERROR).error(whether_for_odc)
+      rake_name == "open_data:export_assessments" ? monthly_rake.invoke(whether_for_odc, assessment_types, last_month[:start_date], last_month[:end_date]) : monthly_rake.invoke(whether_for_odc)
       monthly_rake.reenable
     end
 
@@ -21,5 +23,11 @@ module Worker
       rake.load_rakefile
       rake.tasks.find { |task| task.to_s == name }
     end
+
+    def self.output_to_test_dir?
+      Helper::Toggles.enabled? "register-api-write-ode-to-test-directory"
+    end
+
+    private_class_method :rake_task, :output_to_test_dir?
   end
 end
