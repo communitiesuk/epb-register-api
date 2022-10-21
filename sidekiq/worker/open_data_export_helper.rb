@@ -5,7 +5,6 @@ module Worker
       monthly_rake = rake_task(rake_name)
       last_month = get_last_months_dates
       whether_for_odc = output_to_test_dir? ? "not_for_odc" : "for_odc"
-      Logger.new($stdout, level: Logger::ERROR).error(whether_for_odc)
       rake_name == "open_data:export_assessments" ? monthly_rake.invoke(whether_for_odc, assessment_types, last_month[:start_date], last_month[:end_date]) : monthly_rake.invoke(whether_for_odc)
       monthly_rake.reenable
     end
