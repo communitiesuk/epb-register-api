@@ -5,6 +5,9 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
 
   context "when arguments include non token characters" do
     before do
+      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
+      insert_into_address_base("000000000001", "S1 0AA", "31 Barry's Street", "", "London", "E")
+
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id:,
@@ -45,19 +48,43 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
-      insert_into_address_base("000000000001", "S1 0AA", "31 Barry's Street", "", "London", "E")
+      third_asessment = assessment
+      third_asessment.at("RRN").children = "0000-0000-0000-0000-0003"
+      third_asessment.at("UPRN").children = "UPRN-000000000003"
+      third_asessment.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Some Street" }
+
+      lodge_assessment(
+        assessment_body: third_asessment.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET address_id='UPRN-000000000003', source='os_lprn2uprn' WHERE assessment_id = '0000-0000-0000-0000-0003'")
     end
 
     context "when searching with a buildingNameNumber string prefixed by a valid, existing street number" do
       it "returns only one address for the relevant property" do
         result = use_case.execute(postcode: "A0 0AA", building_name_number: "1():*!&\\")
 
-        expect(result.length).to eq(1)
+        expect(result.length).to eq(2)
         expect(result.first.address_id).to eq("UPRN-000000000000")
         expect(result.first.line1).to eq("1 Some Street")
         expect(result.first.town).to eq("Whitbury")
         expect(result.first.postcode).to eq("A0 0AA")
+        expect(result.first.source).to eq("GAZETTEER")
+      end
+    end
+
+    context "when searching for an address lodged with a UPRN that doesn't exist in address base" do
+      it "returns previous assessment as the source" do
+        result = use_case.execute(postcode: "A0 0AA")
+
+        expect(result.length).to eq(2)
+        expect(result.last.address_id).to eq("UPRN-000000000003")
+        expect(result.last.source).to eq("PREVIOUS_ASSESSMENT")
       end
     end
 

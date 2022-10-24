@@ -434,12 +434,28 @@ module Gateway
                           town: row["town"],
                           postcode: row["postcode"],
                           source:
-                            if row["address_id"].include?("UPRN-")
+                            if row["address_id"].include?("UPRN-") && check_uprn_exists?(row["address_id"][5..].to_i.to_s)
                               "GAZETTEER"
                             else
                               "PREVIOUS_ASSESSMENT"
                             end,
                           existing_assessments: row["existing_assessments"]
+    end
+
+    def check_uprn_exists?(uprn)
+      sql = <<-SQL
+        SELECT EXISTS(SELECT * FROM address_base WHERE uprn = $1)
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "uprn",
+          uprn,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first["exists"]
     end
 
     def update_expiry_and_status(result)
