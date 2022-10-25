@@ -36,11 +36,11 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      second_asessment = assessment
-      second_asessment.at("RRN").children = "0000-0000-0000-0000-0001"
+      second_assessment = assessment
+      second_assessment.at("RRN").children = "0000-0000-0000-0000-0001"
 
       lodge_assessment(
-        assessment_body: second_asessment.to_xml,
+        assessment_body: second_assessment.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
@@ -48,13 +48,13 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      third_asessment = assessment
-      third_asessment.at("RRN").children = "0000-0000-0000-0000-0003"
-      third_asessment.at("UPRN").children = "UPRN-000000000003"
-      third_asessment.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Some Street" }
+      third_assessment = assessment
+      third_assessment.at("RRN").children = "0000-0000-0000-0000-0003"
+      third_assessment.at("UPRN").children = "UPRN-000000000003"
+      third_assessment.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Some Street" }
 
       lodge_assessment(
-        assessment_body: third_asessment.to_xml,
+        assessment_body: third_assessment.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
