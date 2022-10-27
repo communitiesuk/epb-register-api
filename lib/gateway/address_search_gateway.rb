@@ -45,6 +45,8 @@ module Gateway
                  LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
                  INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
         WHERE postcode = $1
+        AND cancelled_at IS NULL
+        AND not_for_issue_at IS NULL
       SQL
 
       if address_type

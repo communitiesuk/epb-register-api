@@ -129,8 +129,8 @@ describe "Acceptance::AddressSearch::ByPostcode::Status",
         )
       end
 
-      it "returns the expected amount of addresses" do
-        expect(response[:data][:addresses].length).to eq 5
+      it "returns the expected amount of addresses, which excludes the address with the cancelled certificate" do
+        expect(response[:data][:addresses].length).to eq 4
       end
 
       it "returns the address from address base" do
@@ -196,8 +196,8 @@ describe "Acceptance::AddressSearch::ByPostcode::Status",
         )
       end
 
-      it "returns the expected amount of addresses" do
-        expect(response[:data][:addresses].length).to eq 5
+      it "returns the expected amount of addresses, which excludes the certificate marked not for issue" do
+        expect(response[:data][:addresses].length).to eq 4
       end
 
       it "returns the address from address base" do
