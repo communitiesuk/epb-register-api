@@ -20,7 +20,7 @@ group :test do
   gem "mock_redis", "~> 0.34.0"
   gem "pry", "~> 0.14.1"
   gem "rack-test", "~> 2.0.2"
-  gem "rspec", "~>3.11"
+  gem "rspec", "~>3.12"
   gem "timecop", "~> 0.9.5"
   gem "webmock", "~> 3.18"
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
