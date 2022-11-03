@@ -233,6 +233,77 @@ module Gateway
       results.map { |result| result }
     end
 
+    def assessments_for_open_data_by_hashed_assessment_id(
+      hashed_assessment_ids = [],
+      type_of_assessment = "",
+      task_id = 0
+    )
+      report_type = Helper::ExportHelper.report_type_to_s(type_of_assessment)
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "task_id",
+          task_id,
+          ActiveRecord::Type::Integer.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "report_type",
+          report_type,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      sql = <<~SQL
+        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region
+        FROM assessments a
+          LEFT JOIN
+            postcode_geolocation b
+          ON(a.postcode = b.postcode)
+          LEFT JOIN
+            postcode_outcode_geolocations c
+          ON(
+            b.region IS NULL
+            AND
+            SUBSTRING(a.postcode FROM 1 FOR LENGTH(a.postcode) - 4) = c.outcode
+          )
+        WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        AND a.postcode NOT LIKE 'BT%'
+        AND NOT EXISTS (SELECT * FROM open_data_logs l
+                        WHERE l.assessment_id = a.assessment_id
+                        AND task_id = $1 AND report_type = $2
+                         )
+      SQL
+
+      list_of_hashed_assessment_ids = hashed_assessment_ids.map { |n| "'#{n}'" }
+      sql << <<~SQL_HASHED_ASSESSMENT_IDS
+        AND hashed_assessment_id IN(#{list_of_hashed_assessment_ids.join(',')})
+      SQL_HASHED_ASSESSMENT_IDS
+
+      if type_of_assessment.is_a?(Array)
+        valid_type = %w[RdSAP SAP]
+        invalid_types = type_of_assessment - valid_type
+        raise StandardError, "Invalid types" unless invalid_types.empty?
+
+        list_of_types = type_of_assessment.map { |n| "'#{n}'" }
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      else
+        valid_types = %w[CEPC DEC]
+        unless valid_types.include? type_of_assessment
+          raise StandardError, "Invalid types"
+        end
+
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment = '#{type_of_assessment}'
+        SQL_TYPE_OF_ASSESSMENT
+      end
+
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+
+      results.map { |result| result }
+    end
+
   private
 
     def assessments_for_open_data_defaults

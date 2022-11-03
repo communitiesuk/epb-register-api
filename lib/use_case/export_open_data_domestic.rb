@@ -11,8 +11,20 @@ module UseCase
       @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
+    def execute_using_hashed_assessment_id(hashed_assessment_ids, task_id = 0)
+      new_task_id = @log_gateway.fetch_new_task_id(task_id)
+
+      assessments =
+        @gateway.assessments_for_open_data_by_hashed_assessment_id(
+          hashed_assessment_ids,
+          ASSESSMENT_TYPE,
+          new_task_id,
+        )
+
+      fetch_and_format_data(assessments, new_task_id)
+    end
+
     def execute(date_from, task_id = 0, date_to = Time.now.utc)
-      reports = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
       assessments =
@@ -23,6 +35,11 @@ module UseCase
           date_to,
         )
 
+      fetch_and_format_data(assessments, new_task_id)
+    end
+
+    def fetch_and_format_data(assessments, new_task_id)
+      reports = []
       assessments.each_with_index do |assessment, _index|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
 
