@@ -161,9 +161,6 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
              "outcode_region" => nil,
              "postcode_region" => "Whitbury" }]
         end
-        # let(:returned_data) do
-        #   subject.assessments_for_open_data_by_hashed_assessment_id(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0000 0000-0000-0000-0000-0004], %w[RdSAP SAP])
-        # end
 
         assessment2 = %w[0000-0000-0000-0000-0002]
         assessment3 = %w[0000-0000-0000-0000-0003]

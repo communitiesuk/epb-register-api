@@ -89,7 +89,7 @@ namespace :open_data do
 
     data = open_data_use_case.execute_using_hashed_assessment_id(hashed_assessment_ids, task_id)
 
-    raise Boundary::OpenDataEmpty if data.length.zero?
+    raise Boundary::OpenDataEmpty, "split_hashed_assessments_id: #{hashed_assessment_ids}, hashed_assessment_id_args: #{args.hashed_assessment_ids}data: #{data}"if data.length.zero?
 
     data = Helper::ExportHelper.remove_line_breaks_from_hash_values(data)
 
