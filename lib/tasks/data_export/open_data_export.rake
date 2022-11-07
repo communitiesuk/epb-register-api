@@ -75,13 +75,15 @@ namespace :open_data do
     raise
   end
 
+  desc "Exporting assessments data for Open Data Communities by hashed assessment id"
   task :export_assessments_by_hashed_assessment_id, %i[hashed_assessment_ids type_of_export task_id] do |_, args|
-    hashed_assessment_ids = args.hashed_assessment_ids
+
+    raise Boundary::ArgumentMissing, "hashed_assessment_ids. You must include a list of hashed assessment ids" unless args.hashed_assessment_ids
+    raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if args.type_of_export.nil? || !%w[for_odc not_for_odc].include?(args.type_of_export)
+
+    hashed_assessment_ids = args.hashed_assessment_ids.split(' ')
     type_of_export = args.type_of_export
     task_id =  args.task_id
-
-    raise Boundary::ArgumentMissing, "hashed_assessment_ids. You must include a list of hashed assessment ids" unless hashed_assessment_ids.is_a?(Array)
-    raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if type_of_export.nil? || !%w[for_odc not_for_odc].include?(type_of_export)
 
     open_data_use_case = UseCase::ExportOpenDataDomestic.new
 

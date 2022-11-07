@@ -68,10 +68,6 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           migrated: true,
           schema_name: "SAP-Schema-18.0.0",
         )
-
-        # # created_at is now being used instead of date_registered for the date boundaries
-        # ActiveRecord::Base
-        #   .connection.execute "UPDATE assessments SET created_at = '2020-05-04 00:00:00.000000' WHERE  assessment_id = '0000-0000-0000-0000-1004'"
       end
 
       context "when it calls the use case to extract the data by hashed assessment id" do
@@ -129,7 +125,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           end
 
           it "transfers the file to the S3 bucket with the correct filename, body and headers " do
-            get_task("open_data:export_assessments_by_hashed_assessment_id").invoke(%w[71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6], "for_odc")
+            get_task("open_data:export_assessments_by_hashed_assessment_id").invoke('71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6', "for_odc")
 
             expect(WebMock).to have_requested(
               :put,
@@ -148,7 +144,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
                 "test/open_data_export_by_hashed_assessment_id_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
               )
 
-              get_task("open_data:export_assessments_by_hashed_assessment_id").invoke(%w[71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6], "not_for_odc")
+              get_task("open_data:export_assessments_by_hashed_assessment_id").invoke('71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6', "not_for_odc")
 
               expect(WebMock).to have_requested(
                 :put,
@@ -178,7 +174,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
     context "when we set the correct arguments and a date range with no assessments" do
       it "returns a no data to export error" do
-        hashed_assessment_id = %w[4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996]
+        hashed_assessment_id = '4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996'
         expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke(hashed_assessment_id, "for_odc") }.to raise_error Boundary::OpenDataEmpty
       end
     end
