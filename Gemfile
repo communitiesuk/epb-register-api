@@ -29,7 +29,7 @@ end
 gem "archive-zip"
 gem "aws-sdk-s3", "~> 1.117"
 gem "epb-auth-tools", "~> 1.0.11"
-gem "epb_view_models", "~> 1.0", ">= 1.0.26"
+gem "epb_view_models", "~> 1.0", ">= 1.0.27"
 gem "geocoder", "~> 1.8.0"
 gem "json-schema", "~> 3.0"
 gem "namecase", "~> 2.0"
