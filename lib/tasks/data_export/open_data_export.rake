@@ -77,19 +77,18 @@ namespace :open_data do
 
   desc "Exporting assessments data for Open Data Communities by hashed assessment id"
   task :export_assessments_by_hashed_assessment_id, %i[hashed_assessment_ids type_of_export task_id] do |_, args|
-
     raise Boundary::ArgumentMissing, "hashed_assessment_ids. You must include a list of hashed assessment ids" unless args.hashed_assessment_ids
     raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if args.type_of_export.nil? || !%w[for_odc not_for_odc].include?(args.type_of_export)
 
-    hashed_assessment_ids = args.hashed_assessment_ids.split(' ')
+    hashed_assessment_ids = args.hashed_assessment_ids.split(" ")
     type_of_export = args.type_of_export
-    task_id =  args.task_id
+    task_id = args.task_id
 
     open_data_use_case = UseCase::ExportOpenDataDomestic.new
 
     data = open_data_use_case.execute_using_hashed_assessment_id(hashed_assessment_ids, task_id)
 
-    raise Boundary::OpenDataEmpty, "split_hashed_assessments_id: #{hashed_assessment_ids}, hashed_assessment_id_args: #{args.hashed_assessment_ids}data: #{data}"if data.length.zero?
+    raise Boundary::OpenDataEmpty, "split_hashed_assessments_id: #{hashed_assessment_ids}, hashed_assessment_id_args: #{args.hashed_assessment_ids}data: #{data}" if data.length.zero?
 
     data = Helper::ExportHelper.remove_line_breaks_from_hash_values(data)
 

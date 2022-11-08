@@ -371,7 +371,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
         .connection.execute "UPDATE assessments SET created_at = '2017-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-1010', '0000-0000-0000-0000-0100')"
     end
 
-    context "for the domestic certificates and reports" do
+    context "when exporting domestic certificates and reports" do
       it "expects the number of non Northern Irish RdSAP and SAP lodgements within required create_at date range for ODC to be 5" do
         expect(exported_data.length).to eq(4)
       end
@@ -447,7 +447,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
       end
     end
 
-    context "for domestic certificates using hashed assessment ids" do
+    context "when exporting domestic certificates using hashed assessment ids" do
       let(:exported_data) do
         described_class.new.execute_using_hashed_assessment_id(%w[4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996])
       end

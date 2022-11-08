@@ -11,7 +11,7 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
   context "when extracting data from the reporting gateway" do
     subject(:gateway) { described_class.new }
 
-    context "which indicates certificates not for publication " do
+    context "with certificates indicated not for publication" do
       context "when inserting four RdSAP assessments, opting out one of them, cancelling one and marking one not for issue" do
         let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
         let(:expected_data) do
@@ -146,7 +146,7 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
       end
     end
 
-    context "which exports OD certificates by hashed assessment id" do
+    context "with OD certificates exported by hashed assessment id" do
       context "when inserting four RdSAP assessments and a CEPC, opting out one of them, cancelling one and marking one not for issue" do
         let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
         let(:expected_data) do
@@ -195,7 +195,7 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
         end
 
         it "returns the valid Domestic certificates only" do
-          returned_data = subject.assessments_for_open_data_by_hashed_assessment_id(%w[4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a 55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4 a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb9738dca5f60 427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6 77d064b382ba8a59bde1ad0ef786f4e0c03239ca43b9d983b3ede41fc2129d45], %w[RdSAP SAP])
+          returned_data = gateway.assessments_for_open_data_by_hashed_assessment_id(%w[4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a 55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4 a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb9738dca5f60 427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6 77d064b382ba8a59bde1ad0ef786f4e0c03239ca43b9d983b3ede41fc2129d45], %w[RdSAP SAP])
           expect(returned_data).to eq(expected_data)
         end
       end
