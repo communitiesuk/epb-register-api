@@ -154,11 +154,6 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
              "created_at" => Time.utc(2021, 6, 21),
              "date_registered" => Time.utc(2020, 5, 4),
              "outcode_region" => nil,
-             "postcode_region" => "Whitbury" },
-           { "assessment_id" => "0000-0000-0000-0000-0004",
-             "created_at" => Time.utc(2021, 6, 21),
-             "date_registered" => Time.utc(2020, 5, 4),
-             "outcode_region" => nil,
              "postcode_region" => "Whitbury" }]
         end
 
@@ -177,8 +172,6 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
           xml.at("RRN").children = "0000-0000-0000-0000-0002"
           call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
           xml.at("RRN").children = "0000-0000-0000-0000-0003"
-          call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
-          xml.at("RRN").children = "0000-0000-0000-0000-0004"
           call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
           opt_out_assessment(assessment_id: "0000-0000-0000-0000-0001")
 
