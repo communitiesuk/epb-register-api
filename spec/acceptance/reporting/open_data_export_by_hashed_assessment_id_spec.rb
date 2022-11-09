@@ -160,22 +160,26 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
   context "when invoking the Open Data Communities export by hashed assessment id rake directly" do
     context "when we invoke with incorrect arguments" do
       it "raises an error when no arguments are provided" do
-        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke }.to raise_error Boundary::ArgumentMissing
+        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke }.to raise_error(Boundary::ArgumentMissing, /A required argument is missing: hashed_assessment_ids./)
       end
 
       it "raises an error when a wrong type of hashed_assessment_ids is provided" do
-        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("for_dean") }.to raise_error Boundary::ArgumentMissing
+        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("not_a_hashed_id", "for_odc") }.to raise_error(Boundary::OpenDataEmpty, /split_hashed_assessments_id:/)
       end
 
-      it "raises an error when type of export is provided but hashed_assessment_ids argument is not" do
-        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("for_odc") }.to raise_error Boundary::ArgumentMissing
+      it "raises an error when hashed_assessment_ids is provided but type_of_export is not" do
+        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a") }.to raise_error(Boundary::ArgumentMissing, /You must specify 'for_odc' or 'not_for_odc'/)
+      end
+
+      it "raises an error when the type_of_export argument is not one of the accepted types" do
+        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" "for_dean") }.to raise_error(Boundary::ArgumentMissing, /You must specify 'for_odc' or 'not_for_odc'/)
       end
     end
 
-    context "when we set the correct arguments and a date range with no assessments" do
+    context "when there are no lodged assessments with those hashed assessment ids" do
       it "returns a no data to export error" do
         hashed_assessment_id = "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996"
-        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke(hashed_assessment_id, "for_odc") }.to raise_error Boundary::OpenDataEmpty
+        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke(hashed_assessment_id, "for_odc") }.to raise_error(Boundary::OpenDataEmpty, /split_hashed_assessments_id:/)
       end
     end
   end

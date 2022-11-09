@@ -353,7 +353,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
         override: true,
       )
 
-      domestic_ni_sap_assessment_id.children = "0000-0000-0040-0000-1010"
+      domestic_ni_sap_assessment_id.children = "0000-0000-0000-0000-1010"
       domestic_ni_sap_assessment_date.children = date_today
       domestic_ni_sap_postcode.children = "BT4 3NE"
       lodge_assessment(
@@ -372,7 +372,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
     end
 
     context "when exporting domestic certificates and reports" do
-      it "expects the number of non Northern Irish RdSAP and SAP lodgements within required create_at date range for ODC to be 5" do
+      it "expects the number of non Northern Irish RdSAP and SAP lodgements within required create_at date range for ODC to be 4" do
         expect(exported_data.length).to eq(4)
       end
 
