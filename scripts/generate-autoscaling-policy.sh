@@ -4,7 +4,7 @@
 STAGE=$1 # i.e. [integration, staging, production]
 
 case "$STAGE" in
- production) INSTANCE_MIN_COUNT="3"
+ production) INSTANCE_MIN_COUNT="5"
              INSTANCE_MAX_COUNT="10"
              ;;
  *) INSTANCE_MIN_COUNT="1"
