@@ -90,7 +90,7 @@ setup-db:
 	@bundle exec rake db:seed
 	@echo ">>>>> Populating Test DB"
 	@bundle exec rake db:test:prepare
-	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake green_deal_update_fuel_data'.\n"
+	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake maintenance:green_deal_update_fuel_data'.\n"
 
 .PHONY: migrate-db-and-wait-for-success
 migrate-db-and-wait-for-success:
