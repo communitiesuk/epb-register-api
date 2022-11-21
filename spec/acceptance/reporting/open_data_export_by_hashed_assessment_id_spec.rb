@@ -172,7 +172,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
       end
 
       it "raises an error when the type_of_export argument is not one of the accepted types" do
-        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" "for_dean") }.to raise_error(Boundary::ArgumentMissing, /You must specify 'for_odc' or 'not_for_odc'/)
+        expect { get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a", "for_dean") }.to raise_error(Boundary::ArgumentMissing, /You must specify 'for_odc' or 'not_for_odc'/)
       end
     end
 
