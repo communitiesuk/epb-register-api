@@ -256,14 +256,14 @@ describe UseCase::ValidateAndLodgeAssessment do
       xml.to_s
     end
 
-    it "raises an error" do
+    it "does not raise an error" do
       expect {
         use_case.execute assessment_xml: welsh_sap_10_2_xml,
                          schema_name: "SAP-Schema-19.0.0",
                          scheme_ids: "1",
                          migrated: true,
                          overridden: false
-      }.to raise_error described_class::LodgementFailsCountryConstraintError
+      }.not_to raise_error
     end
   end
 

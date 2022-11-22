@@ -178,28 +178,4 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
       end
     end
   end
-
-  context "when lodging SAP with SAP-Version of 10.2 for assessment with Welsh postcode" do
-    let(:xml) do
-      doc = Nokogiri.XML Samples.xml "SAP-Schema-19.0.0"
-      doc.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "CF10 9EL" }
-      doc.to_s
-    end
-
-    it "rejects the assessment" do
-      response = lodge_assessment(
-        assessment_body: xml,
-        accepted_responses: [400],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "SAP-Schema-19.0.0",
-      )
-
-      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq([
-        { code: "INVALID_REQUEST",
-          title: "Lodgements of schema type 'SAP' and values {\"SAP-Version\"=>\"10.2\"} must only be made for buildings in England" },
-      ])
-    end
-  end
 end

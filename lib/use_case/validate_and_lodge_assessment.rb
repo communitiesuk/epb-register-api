@@ -60,15 +60,6 @@ module UseCase
       "SAP-Version" => %w[10.2],
       "SAP-Data-Version" => %w[10.2],
     } }.freeze
-    COUNTRY_CONSTRAINTS = [
-      {
-        constraint: :in_england?,
-        schema_types: %w[SAP],
-        nodes: {
-          "SAP-Version" => "10.2",
-        },
-      },
-    ].freeze
 
     def initialize(
       validate_assessment_use_case:,
@@ -115,8 +106,6 @@ module UseCase
 
       wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
       schema_valid = UseCase::CheckSchemaVersion.new.execute(schema_name)
-
-      apply_country_constraints(assessment_view_model: wrapper.get_view_model, assessment_xml_doc: xml_doc, schema_name:)
 
       unless migrated
         if schema_valid && !wrapper.nil?
@@ -239,19 +228,6 @@ module UseCase
           failed_node: node,
           invalid_version_value: version_value,
         )
-      end
-    end
-
-    def apply_country_constraints(assessment_view_model:, assessment_xml_doc:, schema_name:)
-      COUNTRY_CONSTRAINTS.each do |constraint|
-        next unless constraint[:schema_types].any? { |type| schema_name.start_with? type }
-        next unless constraint[:nodes].any? { |node_name, value| assessment_xml_doc.at(node_name).content == value }
-
-        raise LodgementFailsCountryConstraintError, message_for_country_constraint_error(**constraint) unless ApiFactory.get_country_for_candidate_assessment_use_case.execute(
-          rrn: assessment_view_model.assessment_id,
-          address_id: assessment_view_model.address_id,
-          postcode: assessment_view_model.postcode,
-        ).send(constraint[:constraint])
       end
     end
 
