@@ -28,4 +28,3 @@ namespace :dev_data do
 end
 
 class PostcodeOutcodeGeolocation < ActiveRecord::Base; end
-

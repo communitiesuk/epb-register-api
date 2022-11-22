@@ -20,14 +20,13 @@ namespace :dev_data do
     outcodes.each do |row|
       hash = {
         postcode: "#{row['outcode']} #{rand(0..9)}#{('A'..'Z').to_a.sample(2).join}",
-        latitude: row['latitude'],
-        longitude: row['longitude'],
+        latitude: row["latitude"],
+        longitude: row["longitude"],
       }
       PostcodeGeolocation.create!(hash)
     end
   end
 end
-
 
 class PostcodeGeolocation < ActiveRecord::Base
   self.table_name = "postcode_geolocation"
