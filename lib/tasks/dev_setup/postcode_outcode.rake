@@ -3,7 +3,7 @@ require "open-uri"
 
 namespace :dev_data do
   # This has been superceded for use in production by postcode.rake, but remains a
-  # handy way to hack postcode data into local dev environment
+  # handy way to hack postcode outcode data into local dev environment
   desc "Import postcode_outcode geolocation data to local dev environment"
 
   task :import_postcode_outcode do
@@ -28,3 +28,4 @@ namespace :dev_data do
 end
 
 class PostcodeOutcodeGeolocation < ActiveRecord::Base; end
+
