@@ -231,10 +231,6 @@ module UseCase
       end
     end
 
-    def message_for_country_constraint_error(constraint:, nodes:, schema_types:)
-      "Lodgements of schema type #{schema_types.map { |type| "'#{type}'" }.join(' or ')} and values #{nodes} must only be made for buildings #{constraint.to_s.delete_suffix('?').camelize(:lower).gsub(/([A-Z])/, ' \1')}"
-    end
-
     def extract_data_from_lodgement_xml(lodgement)
       lodgement.fetch_data
     end
