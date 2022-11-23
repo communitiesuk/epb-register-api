@@ -20,7 +20,7 @@ class DevAssessmentsHelper
   end
 
   def self.read_xml(schema, type = "epc")
-    path = File.join Dir.pwd, "spec/fixtures/samples/#{schema}/#{type}.xml"
+    path = File.join Dir.pwd, "spec/fixtures/dev_data/#{schema}/#{type}.xml"
 
     unless File.exist? path
       raise ArgumentError,

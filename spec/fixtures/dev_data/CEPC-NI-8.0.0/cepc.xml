@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni ../../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2020-05-04</Issue-Date>
+      <Report-Type>3</Report-Type>
+      <Valid-Until>2026-05-04</Valid-Until>
+      <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>TEST NAME BOI</Name>
+        <Accreditation-Scheme-Name>TESTSCHEME</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>Information not available</Accreditation-Scheme-Website>
+        <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+        <Company-Name>Trillian Certificates Plc</Company-Name>
+        <Qualifications>NOS5</Qualifications>
+        <Status>Registered</Status>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>012345</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>UPRN-000000000013</UPRN>
+        <Property-Address>
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>3 Unit Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
+          <Post-Town>Belfast</Post-Town>
+          <Postcode>BT1 0AA</Postcode>
+        </Property-Address>
+        <Property-Type>B1 Offices and Workshop businesses</Property-Type>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>CEPC Compute v0.2; SBEM, v4.1.h.0</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2020-05-14</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2030-05-14</OR-Assessment-End-Date>
+      <Building-Category></Building-Category>
+      <OR-Building-Data>
+        <HVAC-System>Yes</HVAC-System>
+        <Other-HVAC-System>Yes</Other-HVAC-System>
+        <Internal-Environment>Yes</Internal-Environment>
+        <Assessment-Period-Alignment>Yes</Assessment-Period-Alignment>
+      </OR-Building-Data>
+      <OR-Usable-Floor-Area>
+        <UFA-1>
+          <Floor-Area>100</Floor-Area>
+        </UFA-1>
+      </OR-Usable-Floor-Area>
+      <OR-Previous-Data></OR-Previous-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark></Main-Benchmark>
+        <Benchmarks>
+          <Benchmark>
+            <Area-Metric></Area-Metric>
+            <Benchmark></Benchmark>
+            <Benchmark-ID>1</Benchmark-ID>
+            <Floor-Area>403</Floor-Area>
+            <Name></Name>
+            <Special-Uses-Area></Special-Uses-Area>
+            <Total-Equivalent></Total-Equivalent>
+            <TUFA></TUFA>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Anthracite>
+          <Consumption>12.6</Consumption>
+          <End-Date>2030-12-25</End-Date>
+          <Estimate>3</Estimate>
+          <Start-Date>2019-12-25</Start-Date>
+        </Anthracite>
+      </OR-Energy-Consumption>
+      <Renewable-Energy-Source>
+        <Energy-Source>
+          <Start-Date>2019-12-25</Start-Date>
+          <End-Date>2030-12-25</End-Date>
+          <Name>Solar panel</Name>
+          <Generation>20</Generation>
+          <Energy-Type>2</Energy-Type>
+        </Energy-Source>
+      </Renewable-Energy-Source>
+    </OR-Operational-Rating>
+    <Insurance-Details>
+      <Insurer>Insurer</Insurer>
+      <Policy-No>0001</Policy-No>
+      <Effective-Date>2020-01-05</Effective-Date>
+      <Expiry-Date>2021-01-05</Expiry-Date>
+      <PI-Limit>20.1</PI-Limit>
+    </Insurance-Details>
+    <Energy-Performance-Certificate>
+      <Transaction-Type>1</Transaction-Type>
+      <EPC-Related-Party-Disclosure>1</EPC-Related-Party-Disclosure>
+      <EPC-Rating-Scale>
+        <Upper-Number-A-Scale>0</Upper-Number-A-Scale>
+        <Lower-Number-B-Scale>0</Lower-Number-B-Scale>
+        <Upper-Number-B-Scale>0</Upper-Number-B-Scale>
+        <Lower-Number-C-Scale>0</Lower-Number-C-Scale>
+        <Upper-Number-C-Scale>0</Upper-Number-C-Scale>
+        <Lower-Number-D-Scale>0</Lower-Number-D-Scale>
+        <Upper-Number-D-Scale>0</Upper-Number-D-Scale>
+        <Lower-Number-E-Scale>0</Lower-Number-E-Scale>
+        <Upper-Number-E-Scale>0</Upper-Number-E-Scale>
+        <Lower-Number-F-Scale>0</Lower-Number-F-Scale>
+        <Upper-Number-F-Scale>0</Upper-Number-F-Scale>
+        <Lowest-Number-G-Scale>0</Lowest-Number-G-Scale>
+      </EPC-Rating-Scale>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Building-Environment>Air Conditioning</Building-Environment>
+        <Floor-Area>403</Floor-Area>
+        <Building-Level>3</Building-Level>
+        <OR-Availability-Date>2020-01-04</OR-Availability-Date>
+        <Other-Fuel-Description>Test</Other-Fuel-Description>
+        <Special-Energy-Uses>Test sp</Special-Energy-Uses>
+        <Renewable-Sources>Renewable sources test</Renewable-Sources>
+      </Technical-Information>
+      <EPC-Rating>
+        <Asset-Rating>80</Asset-Rating>
+        <New-Build-Benchmark>28</New-Build-Benchmark>
+        <Existing-Stock-Benchmark>81</Existing-Stock-Benchmark>
+        <SER>42.07</SER>
+        <BER>67.09</BER>
+        <TER>23.2</TER>
+        <TYR>67.98</TYR>
+      </EPC-Rating>
+      <Energy-Assessment>
+        <Energy-Use>
+          <Energy-Consumption-Current>413.22</Energy-Consumption-Current>
+        </Energy-Use>
+      </Energy-Assessment>
+      <AC-Questionnaire>
+        <AC-Present>No</AC-Present>
+        <AC-Rated-Output>
+          <AC-kW-Rating>100</AC-kW-Rating>
+        </AC-Rated-Output>
+        <AC-Estimated-Output>3</AC-Estimated-Output>
+        <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
+      </AC-Questionnaire>
+    </Energy-Performance-Certificate>
+  </Report>
+</Reports>

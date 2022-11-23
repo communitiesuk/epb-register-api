@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni ../../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2020-05-04</Issue-Date>
+      <Report-Type>4</Report-Type>
+      <Valid-Until>2021-05-03</Valid-Until>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-05</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Mrs Report Writer</Name>
+        <Accreditation-Scheme-Name>EPC Scheme</Accreditation-Scheme-Name>
+        <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+        <Company-Name>Trillian Certificates Plc</Company-Name>
+        <Related-Party-Disclosure>Related to the owner</Related-Party-Disclosure>
+        <Qualifications>NOS5</Qualifications>
+        <Status>Registered</Status>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>012345</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>UPRN-000000000013</UPRN>
+        <Property-Address>
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>3 Unit Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
+          <Post-Town>Belfast</Post-Town>
+          <Postcode>BT1 0AA</Postcode>
+        </Property-Address>
+        <Property-Type>B1 Offices and Workshop businesses</Property-Type>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>CEPC Compute v0.2; SBEM, v4.1.h.0</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <Recommendations-Report>
+      <RR-Recommendations>
+        <Short-Payback>
+          <Recommendation-Code>ECP-L5</Recommendation-Code>
+          <Recommendation>Consider replacing T8 lamps with retrofit T5 conversion kit.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-L7</Recommendation-Code>
+          <Recommendation>Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-H7</Recommendation-Code>
+          <Recommendation>Add optimum start/stop to the heating system.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Long-Payback>
+          <Recommendation-Code>EPC-R5</Recommendation-Code>
+          <Recommendation>Consider installing an air source heat pump.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Long-Payback>
+        <Other-Payback>
+          <Recommendation-Code>EPC-R4</Recommendation-Code>
+          <Recommendation>Consider installing PV.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Other-Payback>
+      </RR-Recommendations>
+      <Technical-Information>
+        <Floor-Area>10</Floor-Area>
+        <Building-Environment>Natural Ventilation Only</Building-Environment>
+      </Technical-Information>
+    </Recommendations-Report>
+  </Report>
+</Reports>
