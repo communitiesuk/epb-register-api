@@ -70,12 +70,19 @@ class DevAssessmentsHelper
     result.first["id"].to_s.empty? ? "0000-0000-0000-0000-0000" : result.first["id"].to_s
   end
 
-  def self.update_xml(xml_doc, _type, id, assessor)
+  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, date_of_registration)
     xml = xml_doc.to_s
     xml.sub!("0000-0000-0000-0000-0000", id)
     xml.sub!("SPEC000000", assessor["scheme_assessor_id"])
     xml.sub!("111222333", assessor["telephone_number"])
     xml.sub!("a@b.c", assessor["email"])
+
+    if %w[rdsap sap dec].include?(type_of_assessment)
+      xml.sub!("2020-05-04", date_of_registration)
+    else
+      xml.sub!("2024-05-04", date_of_expiry)
+    end
+
     Nokogiri.XML(xml)
   end
 
@@ -83,11 +90,14 @@ class DevAssessmentsHelper
     lodgement.fetch_data
   end
 
+  def self.lodgement_validity
+    %w[valid superseded expired]
+  end
+
   def self.lodge_assessments(file_array)
     use_case = ApiFactory.lodge_assessment_use_case
-    id = get_latest_assessment_id
+    assessment_id = get_latest_assessment_id
     file_array.each_with_index do |hash, _index|
-      id = id.next
       assessor = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id, telephone_number, email FROM assessors ORDER BY random() LIMIT 1")[0]
 
       if commercial_fixtures.include? hash[:schema].to_s.downcase
@@ -98,30 +108,48 @@ class DevAssessmentsHelper
         type_of_assessment = schema_type.split("-").first
       end
 
-      xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id, assessor)
+      lodgement_validity.each do |validity|
+        assessment_id = assessment_id.next
+        case validity
+        when "valid"
+          date_of_registration = Time.now.utc - 3600 * 24
+          date_of_assessment = Time.now
+          date_of_expiry = Time.now + 10.years
+        when "superseded"
+          date_of_registration = Time.now.utc - 5.years
+          date_of_assessment = Time.now - 5.years
+          date_of_expiry = Time.now + 5.years
+        else
+          date_of_registration = Time.now.utc - 15.years
+          date_of_assessment = Time.now - 15.years
+          date_of_expiry = Time.now - 5.years
+        end
 
-      data = { assessment_id: id,
-               assessor_id: assessor["scheme_assessor_id"],
-               raw_data: xml_doc.to_s,
-               date_of_registration: Time.now.utc - 3600 * 24,
-               type_of_assessment:,
-               date_of_assessment: Time.now,
-               date_of_expiry: Time.now + 10.years,
-               current_energy_efficiency_rating: 1,
-               potential_energy_efficiency_rating: 1,
-               address: { address_id: "UPRN-000000000001",
-                          address_line1: "Some Unit",
-                          address_line2: "2 Lonely Street",
-                          address_line3: "Some Area",
-                          address_line4: "",
-                          town: "London",
-                          postcode: "SW1A 2AA" } }
+        xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"))
 
-      begin
-        use_case.execute(data, false, schema_type)
-        pp "Lodged assessment ID:#{id}, Type: '#{type_of_assessment}', Schema: '#{schema_type}'"
-      rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
-        pp "skipped lodged assessment ID:#{id}"
+        data = { assessment_id:,
+                 assessor_id: assessor["scheme_assessor_id"],
+                 raw_data: xml_doc.to_s,
+                 date_of_registration:,
+                 type_of_assessment:,
+                 date_of_assessment:,
+                 date_of_expiry:,
+                 current_energy_efficiency_rating: 1,
+                 potential_energy_efficiency_rating: 1,
+                 address: { address_id: "UPRN-000000000001",
+                            address_line1: "Some Unit",
+                            address_line2: "2 Lonely Street",
+                            address_line3: "Some Area",
+                            address_line4: "",
+                            town: "London",
+                            postcode: "SW1A 2AA" } }
+
+        begin
+          use_case.execute(data, false, schema_type)
+          pp "Lodged assessment ID:#{assessment_id}, Type: '#{type_of_assessment}', Schema: '#{schema_type}'"
+        rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
+          pp "skipped lodged assessment ID:#{assessment_id}"
+        end
       end
     end
   end

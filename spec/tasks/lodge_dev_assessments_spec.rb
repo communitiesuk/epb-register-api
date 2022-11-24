@@ -41,11 +41,26 @@ describe "linked_dev_assessments rake" do
     end
 
     it "loads the seed data into the database" do
-      expect(exported_data.rows.length).to eq(17)
+      expect(exported_data.rows.length).to eq(51)
       first_result = exported_data.first
       expect(first_result["type_of_assessment"]).to eq("CEPC")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
       expect(first_result["scheme_assessor_id"]).to eq("RAKE000001")
+    end
+
+    it "provides linked certificates with different expiry dates" do
+      first_result = exported_data.first
+      second_result = exported_data[1]
+      expect(first_result["type_of_assessment"]).to eq("CEPC")
+      expect(second_result["type_of_assessment"]).to eq("CEPC")
+      expect(first_result["address_id"]).to eq second_result["address_id"]
+      expect(first_result["date_of_expiry"]).to be > second_result["date_of_expiry"]
+    end
+
+    it "provides expired certificates" do
+      third_result = exported_data[2]
+      expect(third_result["type_of_assessment"]).to eq("CEPC")
+      expect(third_result["date_of_expiry"]).to be < Time.now
     end
 
     it "loads the xml from the factory" do
