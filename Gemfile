@@ -39,7 +39,7 @@ gem "pg", "~> 1.4"
 gem "puma", "~> 6.0"
 gem "rake", "~> 13.0", ">= 13.0.6"
 gem "redis", "~> 4.8.0"
-gem "rubocop", "~> 1.37.1"
+gem "rubocop", "~> 1.39.0"
 gem "rubocop-govuk", "~> 4.7"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
