@@ -102,11 +102,18 @@ class DevAssessmentsHelper
 
       if commercial_fixtures.include? hash[:schema].to_s.downcase
         schema_type = "CEPC-8.0.0"
-        type_of_assessment =  hash[:schema]
+        type_of_assessment = hash[:schema]
       else
         schema_type = hash[:schema]
         type_of_assessment = schema_type.split("-").first
       end
+
+      lodgement_data =
+        extract_data_from_lodgement_xml Domain::Lodgement.new(hash[:xml].to_xml, schema_type)
+
+      address = lodgement_data[0][:address]
+      current_energy_efficiency_rating = lodgement_data[0][:current_energy_efficiency_rating]
+      potential_energy_efficiency_rating = lodgement_data[0][:potential_energy_efficiency_rating]
 
       lodgement_validity.each do |validity|
         assessment_id = assessment_id.next
@@ -134,15 +141,9 @@ class DevAssessmentsHelper
                  type_of_assessment:,
                  date_of_assessment:,
                  date_of_expiry:,
-                 current_energy_efficiency_rating: 1,
-                 potential_energy_efficiency_rating: 1,
-                 address: { address_id: "UPRN-000000000001",
-                            address_line1: "Some Unit",
-                            address_line2: "2 Lonely Street",
-                            address_line3: "Some Area",
-                            address_line4: "",
-                            town: "London",
-                            postcode: "SW1A 2AA" } }
+                 current_energy_efficiency_rating:,
+                 potential_energy_efficiency_rating:,
+                 address: }
 
         begin
           use_case.execute(data, false, schema_type)

@@ -46,6 +46,12 @@ describe "linked_dev_assessments rake" do
       expect(first_result["type_of_assessment"]).to eq("CEPC")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
       expect(first_result["scheme_assessor_id"]).to eq("RAKE000001")
+      expect(first_result["address_line1"]).to eq("Some Unit")
+      expect(first_result["address_line2"]).to eq("3 Unit Road")
+      expect(first_result["address_line3"]).to eq("Some Area")
+      expect(first_result["address_line4"]).to eq("Some County")
+      expect(first_result["town"]).to eq("Townplace")
+      expect(first_result["postcode"]).to eq("A0 0AA")
     end
 
     it "provides linked certificates with different expiry dates" do
@@ -61,6 +67,12 @@ describe "linked_dev_assessments rake" do
       third_result = exported_data[2]
       expect(third_result["type_of_assessment"]).to eq("CEPC")
       expect(third_result["date_of_expiry"]).to be < Time.now
+    end
+
+    it "loads RdSAPs into the database" do
+      seventh_result = exported_data[6]
+      expect(seventh_result["type_of_assessment"]).to eq("RdSAP")
+      expect(seventh_result["current_energy_efficiency_rating"]).to eq(92)
     end
 
     it "loads the xml from the factory" do
