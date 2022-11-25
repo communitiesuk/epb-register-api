@@ -93,7 +93,7 @@ class DevAssessmentsHelper
   end
 
   def self.lodgement_validity
-    %w[valid superseded expired]
+    %w[superseded valid expired]
   end
 
   def self.lodge_assessments(file_array)
@@ -119,16 +119,19 @@ class DevAssessmentsHelper
       potential_energy_efficiency_rating = lodgement_data[0][:potential_energy_efficiency_rating]
 
       lodgement_validity.each do |validity|
+        previous_assessment_id = assessment_id.dup
         assessment_id = assessment_id.next
         case validity
-        when "valid"
-          date_of_registration = Time.now.utc - 3600 * 24
-          date_of_assessment = Time.now
-          date_of_expiry = Time.now + 10.years
         when "superseded"
           date_of_registration = Time.now.utc - 5.years
           date_of_assessment = Time.now - 5.years
           date_of_expiry = Time.now + 5.years
+          address[:address_id] = "RRN-#{assessment_id}"
+        when "valid"
+          date_of_registration = Time.now.utc - 3600 * 24
+          date_of_assessment = Time.now
+          date_of_expiry = Time.now + 10.years
+          address[:address_id] = "RRN-#{previous_assessment_id}"
         else
           date_of_registration = Time.now.utc - 15.years
           date_of_assessment = Time.now - 15.years

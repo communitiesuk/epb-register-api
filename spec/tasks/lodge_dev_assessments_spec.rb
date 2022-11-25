@@ -44,6 +44,10 @@ describe "linked_dev_assessments rake" do
       ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_xml ORDER BY assessment_id")
     end
 
+    let!(:exported_assessments_address_id) do
+      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_address_id ORDER BY assessment_id")
+    end
+
     it "loads the seed data into the database" do
       expect(exported_data.rows.length).to eq(51)
       first_result = exported_data.first
@@ -58,13 +62,30 @@ describe "linked_dev_assessments rake" do
       expect(first_result["postcode"]).to eq("A0 0AA")
     end
 
-    it "provides linked certificates with different expiry dates" do
-      first_result = exported_data.first
-      second_result = exported_data[1]
-      expect(first_result["type_of_assessment"]).to eq("CEPC")
-      expect(second_result["type_of_assessment"]).to eq("CEPC")
-      expect(first_result["address_id"]).to eq second_result["address_id"]
-      expect(first_result["date_of_expiry"]).to be > second_result["date_of_expiry"]
+    context "when creating a superseded and valid certificate pair" do
+      let(:superseded_cert) do
+        exported_data.first
+      end
+      let(:valid_cert) do
+        exported_data[1]
+      end
+      let(:superseded_address_id) do
+        exported_assessments_address_id.first
+      end
+      let(:valid_address_id) do
+        exported_assessments_address_id[1]
+      end
+
+      it "provides linked certificates with different expiry dates" do
+        expect(superseded_cert["type_of_assessment"]).to eq("CEPC")
+        expect(valid_cert["type_of_assessment"]).to eq("CEPC")
+        expect(superseded_cert["address_id"]).to eq valid_cert["address_id"]
+        expect(superseded_cert["date_of_expiry"]).to be < valid_cert["date_of_expiry"]
+      end
+
+      it "links the address ids in the assessments_address_id table" do
+        expect(superseded_address_id["address_id"]).to eq(valid_address_id["address_id"])
+      end
     end
 
     context "when creating an expired certificate" do
@@ -74,10 +95,10 @@ describe "linked_dev_assessments rake" do
       let(:expired_result) do
         exported_data[2]
       end
-      let(:first_result_xml) do
+      let(:parent_result_xml) do
         Nokogiri.XML exported_xml[0]["xml"]
       end
-      let(:third_result_xml) do
+      let(:expired_result_xml) do
         Nokogiri.XML exported_xml[2]["xml"]
       end
 
@@ -88,10 +109,10 @@ describe "linked_dev_assessments rake" do
       it "sets the address in both the assessments and xml data to be different to its parent record" do
         expect(expired_result["address_line1"]).not_to eq(parent_result["address_line1"])
         expect(expired_result["address_id"]).not_to eq(parent_result["address_id"])
-        expect(third_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text).not_to eq(first_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text)
+        expect(expired_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text).not_to eq(parent_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text)
         expect(expired_result["address_line1"]).to eq("11 Some Unit")
-        expect(expired_result["address_id"]).to eq("UPRN-100000000008")
-        expect(third_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text).to eq("11 Some Unit")
+        expect(expired_result["address_id"]).to eq("RRN-1000-0000-0000-0000-0001")
+        expect(expired_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text).to eq("11 Some Unit")
       end
     end
 
