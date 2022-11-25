@@ -130,6 +130,8 @@ class DevAssessmentsHelper
           date_of_registration = Time.now.utc - 15.years
           date_of_assessment = Time.now - 15.years
           date_of_expiry = Time.now - 5.years
+          address[:address_id] = address[:address_id].sub!("0", "1")
+          address[:address_line2] = "1#{address[:address_line2]}"
         end
 
         xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"))

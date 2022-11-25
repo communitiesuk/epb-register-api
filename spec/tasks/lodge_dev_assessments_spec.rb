@@ -67,6 +67,8 @@ describe "linked_dev_assessments rake" do
       third_result = exported_data[2]
       expect(third_result["type_of_assessment"]).to eq("CEPC")
       expect(third_result["date_of_expiry"]).to be < Time.now
+      expect(third_result["address_line2"]).to eq("13 Unit Road")
+      expect(third_result["address_id"]).to eq("UPRN-100000000008")
     end
 
     it "loads RdSAPs into the database" do
