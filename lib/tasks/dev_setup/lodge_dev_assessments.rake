@@ -70,17 +70,19 @@ class DevAssessmentsHelper
     result.first["id"].to_s.empty? ? "0000-0000-0000-0000-0000" : result.first["id"].to_s
   end
 
-  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, date_of_registration)
+  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, date_of_registration, new_address, old_address)
     xml = xml_doc.to_s
     xml.sub!("0000-0000-0000-0000-0000", id)
     xml.sub!("SPEC000000", assessor["scheme_assessor_id"])
     xml.sub!("111222333", assessor["telephone_number"])
     xml.sub!("a@b.c", assessor["email"])
+    xml.sub!(old_address[:address_id], new_address[:address_id])
+    xml.sub!(old_address[:address_line1], new_address[:address_line1])
 
     if %w[rdsap sap dec].include?(type_of_assessment)
-      xml.sub!("2020-05-04", date_of_registration)
+      xml.gsub!("2020-05-04", date_of_registration)
     else
-      xml.sub!("2024-05-04", date_of_expiry)
+      xml.gsub!("2024-05-04", date_of_expiry)
     end
 
     Nokogiri.XML(xml)
@@ -112,6 +114,7 @@ class DevAssessmentsHelper
         extract_data_from_lodgement_xml Domain::Lodgement.new(hash[:xml].to_xml, schema_type)
 
       address = lodgement_data[0][:address]
+      old_address = address.dup
       current_energy_efficiency_rating = lodgement_data[0][:current_energy_efficiency_rating]
       potential_energy_efficiency_rating = lodgement_data[0][:potential_energy_efficiency_rating]
 
@@ -131,10 +134,10 @@ class DevAssessmentsHelper
           date_of_assessment = Time.now - 15.years
           date_of_expiry = Time.now - 5.years
           address[:address_id] = address[:address_id].sub!("0", "1")
-          address[:address_line2] = "1#{address[:address_line2]}"
+          address[:address_line1] = "1#{address[:address_line1]}"
         end
 
-        xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"))
+        xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"), address, old_address)
 
         data = { assessment_id:,
                  assessor_id: assessor["scheme_assessor_id"],
