@@ -49,17 +49,15 @@ describe "linked_dev_assessments rake" do
     end
 
     it "loads the seed data into the database" do
-      expect(exported_data.rows.length).to eq(51)
+      expect(exported_data.rows.length).to eq(45)
       first_result = exported_data.first
-      expect(first_result["type_of_assessment"]).to eq("CEPC")
+      expect(first_result["type_of_assessment"]).to eq("RdSAP")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
       expect(first_result["scheme_assessor_id"]).to eq("RAKE000001")
-      expect(first_result["address_line1"]).to eq("1 Some Unit")
-      expect(first_result["address_line2"]).to eq("3 Unit Road")
-      expect(first_result["address_line3"]).to eq("Some Area")
-      expect(first_result["address_line4"]).to eq("Some County")
+      expect(first_result["address_line1"]).to eq("1a Some Street")
       expect(first_result["town"]).to eq("Townplace")
-      expect(first_result["postcode"]).to eq("A0 0AA")
+      expect(first_result["postcode"]).to eq("SW1A 2AA")
+      expect(first_result["current_energy_efficiency_rating"]).to eq(92)
     end
 
     context "when creating a superseded and valid certificate pair" do
@@ -77,8 +75,8 @@ describe "linked_dev_assessments rake" do
       end
 
       it "provides linked certificates with different expiry dates" do
-        expect(superseded_cert["type_of_assessment"]).to eq("CEPC")
-        expect(valid_cert["type_of_assessment"]).to eq("CEPC")
+        expect(superseded_cert["type_of_assessment"]).to eq("RdSAP")
+        expect(valid_cert["type_of_assessment"]).to eq("RdSAP")
         expect(superseded_cert["address_id"]).to eq valid_cert["address_id"]
         expect(superseded_cert["date_of_expiry"]).to be < valid_cert["date_of_expiry"]
       end
@@ -109,17 +107,37 @@ describe "linked_dev_assessments rake" do
       it "sets the address in both the assessments and xml data to be different to its parent record" do
         expect(expired_result["address_line1"]).not_to eq(parent_result["address_line1"])
         expect(expired_result["address_id"]).not_to eq(parent_result["address_id"])
-        expect(expired_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text).not_to eq(parent_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text)
-        expect(expired_result["address_line1"]).to eq("11 Some Unit")
+        expect(expired_result_xml.at("Address//Address-Line-1").text).not_to eq(parent_result_xml.at("Address//Address-Line-1").text)
+        expect(expired_result["address_line1"]).to eq("11a Some Street")
         expect(expired_result["address_id"]).to eq("RRN-1000-0000-0000-0000-0001")
-        expect(expired_result_xml.at("//CEPC:Property-Address//CEPC:Address-Line-1").text).to eq("11 Some Unit")
+        expect(expired_result_xml.at("Address//Address-Line-1").text).to eq("11a Some Street")
       end
     end
 
-    it "loads RdSAPs into the database" do
-      seventh_result = exported_data[6]
-      expect(seventh_result["type_of_assessment"]).to eq("RdSAP")
-      expect(seventh_result["current_energy_efficiency_rating"]).to eq(92)
+    context "when lodging dual assessments" do
+      let(:ac_cert) do
+        exported_data[27]
+      end
+
+      let(:ac_report) do
+        exported_data[28]
+      end
+
+      let(:ac_cert_xml) do
+        Nokogiri.XML exported_xml[27]["xml"]
+      end
+
+      let(:ac_report_xml) do
+        Nokogiri.XML exported_xml[28]["xml"]
+      end
+
+      it "lodges the AC-CERT with the Report" do
+        expect(ac_cert["type_of_assessment"]).to eq("AC-CERT")
+        expect(ac_report["type_of_assessment"]).to eq("AC-REPORT")
+
+        expect(ac_cert_xml.at("RRN").text).to eq(ac_report_xml.at("Related-RRN").text)
+        expect(ac_report_xml.at("RRN").text).to eq(ac_cert_xml.at("Related-RRN").text)
+      end
     end
 
     it "loads the xml from the factory" do

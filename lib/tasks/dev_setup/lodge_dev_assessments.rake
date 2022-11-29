@@ -16,7 +16,7 @@ class DevAssessmentsHelper
   end
 
   def self.commercial_fixtures
-    %w[ac-cert ac-report cepc cepc-rr dec dec-rr]
+    %w[ac-cert+ac-report cepc+rr dec+rr]
   end
 
   def self.read_xml(schema, type = "epc")
@@ -35,7 +35,7 @@ class DevAssessmentsHelper
     file_array = []
     schema_array.each do |schema|
       if schema.include?("CEPC")
-        file_content = read_xml(schema, "cepc")
+        next
       elsif schema == "SAP-Schema-10.2"
         file_content = read_xml(schema, "rdsap")
       elsif split_sap_versions.include?(schema)
@@ -70,9 +70,10 @@ class DevAssessmentsHelper
     result.first["id"].to_s.empty? ? "0000-0000-0000-0000-0000" : result.first["id"].to_s
   end
 
-  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, date_of_registration, new_address, old_address)
+  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, date_of_registration, new_address, old_address, linked_id)
     xml = xml_doc.to_s
-    xml.sub!("0000-0000-0000-0000-0000", id)
+    xml.gsub!("0000-0000-0000-0000-0000", id)
+    xml.gsub!("0000-0000-0000-0000-0001", linked_id)
     xml.sub!("SPEC000000", assessor["scheme_assessor_id"])
     xml.sub!("111222333", assessor["telephone_number"])
     xml.sub!("a@b.c", assessor["email"])
@@ -113,51 +114,65 @@ class DevAssessmentsHelper
       lodgement_data =
         extract_data_from_lodgement_xml Domain::Lodgement.new(hash[:xml].to_xml, schema_type)
 
-      address = lodgement_data[0][:address]
-      old_address = address.dup
-      current_energy_efficiency_rating = lodgement_data[0][:current_energy_efficiency_rating]
-      potential_energy_efficiency_rating = lodgement_data[0][:potential_energy_efficiency_rating]
+      dual_lodgement = lodgement_data.size > 1
 
       lodgement_validity.each do |validity|
-        previous_assessment_id = assessment_id.dup
-        assessment_id = assessment_id.next
-        case validity
-        when "superseded"
-          date_of_registration = Time.now.utc - 5.years
-          date_of_assessment = Time.now - 5.years
-          date_of_expiry = Time.now + 5.years
-          address[:address_id] = "RRN-#{assessment_id}"
-        when "valid"
-          date_of_registration = Time.now.utc - 3600 * 24
-          date_of_assessment = Time.now
-          date_of_expiry = Time.now + 10.years
-          address[:address_id] = "RRN-#{previous_assessment_id}"
-        else
-          date_of_registration = Time.now.utc - 15.years
-          date_of_assessment = Time.now - 15.years
-          date_of_expiry = Time.now - 5.years
-          address[:address_id] = address[:address_id].sub!("0", "1")
-          address[:address_line1] = "1#{address[:address_line1]}"
-        end
+        lodgement_data.each_with_index do |assessment_data, index|
+          address = assessment_data[:address]
+          old_address = address.dup
+          current_energy_efficiency_rating = assessment_data[:current_energy_efficiency_rating]
+          potential_energy_efficiency_rating = assessment_data[:potential_energy_efficiency_rating]
 
-        xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"), address, old_address)
+          previous_assessment_id = assessment_id.dup
+          assessment_id = assessment_id.next
 
-        data = { assessment_id:,
-                 assessor_id: assessor["scheme_assessor_id"],
-                 raw_data: xml_doc.to_s,
-                 date_of_registration:,
-                 type_of_assessment:,
-                 date_of_assessment:,
-                 date_of_expiry:,
-                 current_energy_efficiency_rating:,
-                 potential_energy_efficiency_rating:,
-                 address: }
+          if dual_lodgement && index == 1
+            linked_assessment_id = previous_assessment_id
+          elsif dual_lodgement && index.zero?
+            linked_assessment_id = assessment_id.dup
+            linked_assessment_id.next!
+          else
+            linked_assessment_id = ""
+          end
 
-        begin
-          use_case.execute(data, false, schema_type)
-          pp "Lodged assessment ID:#{assessment_id}, Type: '#{type_of_assessment}', Schema: '#{schema_type}'"
-        rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
-          pp "skipped lodged assessment ID:#{assessment_id}"
+          case validity
+          when "superseded"
+            date_of_registration = Time.now.utc - 5.years
+            date_of_assessment = Time.now - 5.years
+            date_of_expiry = Time.now + 5.years
+            address[:address_id] = "RRN-#{assessment_id}"
+          when "valid"
+            date_of_registration = Time.now.utc - 3600 * 24
+            date_of_assessment = Time.now
+            date_of_expiry = Time.now + 10.years
+            address[:address_id] = "RRN-#{previous_assessment_id}"
+          else
+            date_of_registration = Time.now.utc - 15.years
+            date_of_assessment = Time.now - 15.years
+            date_of_expiry = Time.now - 5.years
+            address[:address_id] = address[:address_id].sub!("0", "1")
+            address[:address_line1] = "1#{address[:address_line1]}"
+          end
+
+          xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"), address, old_address, linked_assessment_id)
+
+          data = { assessment_id:,
+                   assessor_id: assessor["scheme_assessor_id"],
+                   raw_data: xml_doc.to_s,
+                   date_of_registration:,
+                   type_of_assessment: assessment_data[:type_of_assessment],
+                   date_of_assessment:,
+                   date_of_expiry:,
+                   current_energy_efficiency_rating:,
+                   potential_energy_efficiency_rating:,
+                   address: }
+
+          begin
+            use_case.execute(data, false, schema_type)
+            pp "Lodged assessment ID:#{assessment_id}, Type: '#{type_of_assessment}', Schema: '#{schema_type}, Validity: '#{validity}'"
+          rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
+            pp "skipped lodged assessment ID:#{assessment_id}"
+          end
         end
       end
     end
