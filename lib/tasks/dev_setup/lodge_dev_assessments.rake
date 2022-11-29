@@ -45,6 +45,7 @@ class DevAssessmentsHelper
       else
         file_content = read_xml(schema, "epc")
       end
+
       file_array << { xml: Nokogiri.XML(file_content), schema: }
     end
     file_array + read_commercial_fixtures
@@ -70,10 +71,10 @@ class DevAssessmentsHelper
     result.first["id"].to_s.empty? ? "0000-0000-0000-0000-0000" : result.first["id"].to_s
   end
 
-  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, date_of_registration, new_address, old_address, linked_id)
+  def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, old_date_of_expiry, date_of_registration, old_date_of_registration, new_address, old_address, linked_id, _old_assessment_id)
     xml = xml_doc.to_s
-    xml.gsub!("0000-0000-0000-0000-0000", id)
-    xml.gsub!("0000-0000-0000-0000-0001", linked_id)
+    xml.sub!("0000-0000-0000-0000-0000", id)
+    xml.sub!("0000-0000-0000-0000-0001", linked_id)
     xml.sub!("SPEC000000", assessor["scheme_assessor_id"])
     xml.sub!("111222333", assessor["telephone_number"])
     xml.sub!("a@b.c", assessor["email"])
@@ -81,12 +82,10 @@ class DevAssessmentsHelper
     xml.sub!(old_address[:address_line1], new_address[:address_line1])
 
     if %w[rdsap sap dec].include?(type_of_assessment)
-      xml.gsub!("2020-05-04", date_of_registration)
+      xml.gsub!(old_date_of_registration, date_of_registration)
     else
-      xml.gsub!("2024-05-04", date_of_expiry)
+      xml.gsub!(old_date_of_expiry, date_of_expiry)
     end
-
-    Nokogiri.XML(xml)
   end
 
   def self.extract_data_from_lodgement_xml(lodgement)
@@ -103,25 +102,23 @@ class DevAssessmentsHelper
     file_array.each_with_index do |hash, _index|
       assessor = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id, telephone_number, email FROM assessors ORDER BY random() LIMIT 1")[0]
 
-      if commercial_fixtures.include? hash[:schema].to_s.downcase
-        schema_type = "CEPC-8.0.0"
-        type_of_assessment = hash[:schema]
-      else
-        schema_type = hash[:schema]
-        type_of_assessment = schema_type.split("-").first
-      end
+      schema_type = if commercial_fixtures.include? hash[:schema].to_s.downcase
+                      "CEPC-8.0.0"
+                    else
+                      hash[:schema]
+                    end
 
-      lodgement_data =
-        extract_data_from_lodgement_xml Domain::Lodgement.new(hash[:xml].to_xml, schema_type)
-
-      dual_lodgement = lodgement_data.size > 1
+      first_id_in_file_group = assessment_id.dup.next
 
       lodgement_validity.each do |validity|
+        lodgement_data =
+          extract_data_from_lodgement_xml Domain::Lodgement.new(hash[:xml].to_xml, schema_type)
+
+        dual_lodgement = lodgement_data.size > 1
+
         lodgement_data.each_with_index do |assessment_data, index|
           address = assessment_data[:address]
           old_address = address.dup
-          current_energy_efficiency_rating = assessment_data[:current_energy_efficiency_rating]
-          potential_energy_efficiency_rating = assessment_data[:potential_energy_efficiency_rating]
 
           previous_assessment_id = assessment_id.dup
           assessment_id = assessment_id.next
@@ -135,17 +132,21 @@ class DevAssessmentsHelper
             linked_assessment_id = ""
           end
 
+          old_assessment_id = assessment_data[:assessment_id].dup
+          old_date_of_registration = assessment_data[:date_of_registration].dup
+          old_date_of_expiry = assessment_data[:date_of_expiry].dup
+
           case validity
           when "superseded"
             date_of_registration = Time.now.utc - 5.years
             date_of_assessment = Time.now - 5.years
             date_of_expiry = Time.now + 5.years
-            address[:address_id] = "RRN-#{assessment_id}"
+            address[:address_id] = "RRN-#{first_id_in_file_group}"
           when "valid"
             date_of_registration = Time.now.utc - 3600 * 24
             date_of_assessment = Time.now
             date_of_expiry = Time.now + 10.years
-            address[:address_id] = "RRN-#{previous_assessment_id}"
+            address[:address_id] = "RRN-#{first_id_in_file_group}"
           else
             date_of_registration = Time.now.utc - 15.years
             date_of_assessment = Time.now - 15.years
@@ -154,22 +155,22 @@ class DevAssessmentsHelper
             address[:address_line1] = "1#{address[:address_line1]}"
           end
 
-          xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), date_of_registration.strftime("%F"), address, old_address, linked_assessment_id)
+          xml_doc = update_xml(hash[:xml], assessment_data[:type_of_assessment].downcase, assessment_id, assessor, date_of_expiry.strftime("%F"), old_date_of_expiry, date_of_registration.strftime("%F"), old_date_of_registration, address, old_address, linked_assessment_id, old_assessment_id)
 
           data = { assessment_id:,
                    assessor_id: assessor["scheme_assessor_id"],
-                   raw_data: xml_doc.to_s,
+                   raw_data: xml_doc,
                    date_of_registration:,
                    type_of_assessment: assessment_data[:type_of_assessment],
                    date_of_assessment:,
                    date_of_expiry:,
-                   current_energy_efficiency_rating:,
-                   potential_energy_efficiency_rating:,
+                   current_energy_efficiency_rating: assessment_data[:current_energy_efficiency_rating],
+                   potential_energy_efficiency_rating: assessment_data[:potential_energy_efficiency_rating],
                    address: }
 
           begin
             use_case.execute(data, false, schema_type)
-            pp "Lodged assessment ID:#{assessment_id}, Type: '#{type_of_assessment}', Schema: '#{schema_type}, Validity: '#{validity}'"
+            pp "Lodged assessment ID:#{assessment_id}, Type: '#{assessment_data[:type_of_assessment]}', Schema: '#{schema_type}, Validity: '#{validity}'"
           rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
             pp "skipped lodged assessment ID:#{assessment_id}"
           end

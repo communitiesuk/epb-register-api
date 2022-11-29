@@ -11,8 +11,8 @@
       <CEPC:Report-Type>3</CEPC:Report-Type>
       <CEPC:Valid-Until>2024-05-04</CEPC:Valid-Until>
       <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
-      <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
-      <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
+      <CEPC:Inspection-Date>2020-05-14</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-05-14</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
@@ -350,8 +350,8 @@
       <CEPC:Report-Type>4</CEPC:Report-Type>
       <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
       <CEPC:Related-RRN>0000-0000-0000-0000-0000</CEPC:Related-RRN>
-      <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
-      <CEPC:Registration-Date>2020-05-05</CEPC:Registration-Date>
+      <CEPC:Inspection-Date>2020-05-14</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-05-14</CEPC:Registration-Date>
       <CEPC:Status>cancelled</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>

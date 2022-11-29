@@ -1,4 +1,4 @@
-describe "linked_dev_assessments rake" do
+describe "lodge_dev_assessments rake" do
   include RSpecRegisterApiServiceMixin
 
   context "when calling the rake task in production" do
@@ -73,6 +73,12 @@ describe "linked_dev_assessments rake" do
       let(:valid_address_id) do
         exported_assessments_address_id[1]
       end
+      let(:superseded_xml) do
+        Nokogiri.XML exported_xml[0]["xml"]
+      end
+      let(:valid_xml) do
+        Nokogiri.XML exported_xml[1]["xml"]
+      end
 
       it "provides linked certificates with different expiry dates" do
         expect(superseded_cert["type_of_assessment"]).to eq("RdSAP")
@@ -83,6 +89,11 @@ describe "linked_dev_assessments rake" do
 
       it "links the address ids in the assessments_address_id table" do
         expect(superseded_address_id["address_id"]).to eq(valid_address_id["address_id"])
+      end
+
+      it "has the same address in the assessments table as in the xml" do
+        expect(superseded_cert["address_id"]).to eq(superseded_xml.at("UPRN").text)
+        expect(valid_cert["address_id"]).to eq(valid_xml.at("UPRN").text)
       end
     end
 
@@ -108,9 +119,6 @@ describe "linked_dev_assessments rake" do
         expect(expired_result["address_line1"]).not_to eq(parent_result["address_line1"])
         expect(expired_result["address_id"]).not_to eq(parent_result["address_id"])
         expect(expired_result_xml.at("Address//Address-Line-1").text).not_to eq(parent_result_xml.at("Address//Address-Line-1").text)
-        expect(expired_result["address_line1"]).to eq("11a Some Street")
-        expect(expired_result["address_id"]).to eq("RRN-1000-0000-0000-0000-0001")
-        expect(expired_result_xml.at("Address//Address-Line-1").text).to eq("11a Some Street")
       end
     end
 
