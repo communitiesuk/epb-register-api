@@ -139,12 +139,36 @@ describe "lodge_dev_assessments rake" do
         Nokogiri.XML exported_xml[28]["xml"]
       end
 
+      let(:dec) do
+        exported_data[43]
+      end
+
+      let(:dec_rr) do
+        exported_data[44]
+      end
+
+      let(:dec_xml) do
+        Nokogiri.XML exported_xml[43]["xml"]
+      end
+
+      let(:dec_rr_xml) do
+        Nokogiri.XML exported_xml[44]["xml"]
+      end
+
       it "lodges the AC-CERT with the Report" do
         expect(ac_cert["type_of_assessment"]).to eq("AC-CERT")
         expect(ac_report["type_of_assessment"]).to eq("AC-REPORT")
 
         expect(ac_cert_xml.at("RRN").text).to eq(ac_report_xml.at("Related-RRN").text)
         expect(ac_report_xml.at("RRN").text).to eq(ac_cert_xml.at("Related-RRN").text)
+      end
+
+      it "lodges the DEC with the Report" do
+        expect(dec["type_of_assessment"]).to eq("DEC")
+        expect(dec_rr["type_of_assessment"]).to eq("DEC-RR")
+
+        expect(dec_xml.at("RRN").text).to eq(dec_rr_xml.at("Related-RRN").text)
+        expect(dec_rr_xml.at("RRN").text).to eq(dec_xml.at("Related-RRN").text)
       end
     end
 
