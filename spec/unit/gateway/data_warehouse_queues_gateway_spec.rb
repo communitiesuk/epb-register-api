@@ -1,4 +1,4 @@
-describe Gateway::RedisGateway do
+describe Gateway::DataWarehouseQueuesGateway do
   subject(:gateway) { described_class.new(redis_client: redis) }
 
   let(:redis) { MockRedis.new }
@@ -23,7 +23,7 @@ describe Gateway::RedisGateway do
 
     it "raises an error for an invalid queue name" do
       expect { gateway.push_to_queue(:none_exisitng_queue, ids) }.to raise_error(
-        Gateway::RedisGateway::InvalidRedisQueueNameError,
+        Gateway::DataWarehouseQueuesGateway::InvalidRedisQueueNameError,
       )
     end
 
@@ -42,7 +42,7 @@ describe Gateway::RedisGateway do
       end
 
       it "raises a PushFailedError" do
-        expect { erroring_gateway.push_to_queue(:assessments, ids) }.to raise_error Gateway::RedisGateway::PushFailedError
+        expect { erroring_gateway.push_to_queue(:assessments, ids) }.to raise_error Gateway::DataWarehouseQueuesGateway::PushFailedError
       end
     end
   end

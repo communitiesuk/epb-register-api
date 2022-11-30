@@ -1,7 +1,7 @@
 describe "syncing to data warehouse on various assessment data changes", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
-  let(:redis_gateway) { instance_spy(Gateway::RedisGateway) }
+  let(:data_warehouse_queues_gateway) { instance_spy(Gateway::DataWarehouseQueuesGateway) }
 
   assessment_id = nil
 
@@ -22,7 +22,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
 
   context "when an assessment is lodged" do
     before do
-      allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
+      allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
 
       scheme_id = add_scheme_and_get_id
       assessor =
@@ -43,13 +43,13 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
     end
 
     it "pushes the assessment ID to the assessments queue through the gateway" do
-      expect(redis_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
     end
   end
 
   context "when an assessment is opted out" do
     before do
-      allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
+      allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
 
       Events::Broadcaster.accept_only! :assessment_opt_out_status_changed
 
@@ -74,7 +74,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
     end
 
     it "pushes the assessment ID to the opt outs queue through the gateway" do
-      expect(redis_gateway).to have_received(:push_to_queue).with(:opt_outs, assessment_id)
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:opt_outs, assessment_id)
     end
   end
 
@@ -82,7 +82,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
     let(:new_address_id) { "UPRN-000000000123" }
 
     before do
-      allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
+      allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
 
       Events::Broadcaster.accept_only! :assessment_address_id_updated
 
@@ -109,13 +109,13 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
     end
 
     it "pushes the assessment ID to the assessments queue through the gateway" do
-      expect(redis_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
     end
   end
 
   context "when an assessment is cancelled" do
     before do
-      allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
+      allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
 
       Events::Broadcaster.accept_only! :assessment_cancelled, :assessment_marked_not_for_issue
 
@@ -146,7 +146,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
     end
 
     it "pushes the assessment ID to the cancelled queue through the gateway" do
-      expect(redis_gateway).to have_received(:push_to_queue).with(:cancelled, assessment_id)
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:cancelled, assessment_id)
     end
   end
 end

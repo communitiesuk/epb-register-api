@@ -295,7 +295,8 @@ RSpec.configure do |config|
 
     Events::Broadcaster.disable!
 
-    Gateway::RedisGateway.redis_client_class = MockRedis
+    Gateway::DataWarehouseQueuesGateway.redis_client_class = MockRedis
+    Gateway::DataWarehouseReportsGateway.redis_client_class = MockRedis
   end
 
   config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 6, 21)) }

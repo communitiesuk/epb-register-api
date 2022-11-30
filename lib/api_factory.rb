@@ -279,6 +279,14 @@ class ApiFactory
       )
   end
 
+  def self.trigger_data_warehouse_report_use_case
+    @trigger_data_warehouse_report_use_case ||= UseCase::TriggerDataWarehouseReport.new reports_gateway: data_warehouse_reports_gateway
+  end
+
+  def self.trigger_all_data_warehouse_reports_use_case
+    @trigger_all_data_warehouse_reports_use_case ||= UseCase::TriggerAllDataWarehouseReports.new individual_use_case: trigger_data_warehouse_report_use_case
+  end
+
   def self.find_domestic_epcs_by_address
     @find_domestic_epcs_by_address ||=
       UseCase::FindDomesticEpcByAddress.new(gateway: domestic_epc_search_gateway)
@@ -322,8 +330,12 @@ class ApiFactory
     )
   end
 
-  def self.redis_gateway
-    @redis_gateway ||= Gateway::RedisGateway.new
+  def self.data_warehouse_queues_gateway
+    @data_warehouse_queues_gateway ||= Gateway::DataWarehouseQueuesGateway.new
+  end
+
+  def self.data_warehouse_reports_gateway
+    @data_warehouse_reports_gateway ||= Gateway::DataWarehouseReportsGateway.new
   end
 
   def self.logger

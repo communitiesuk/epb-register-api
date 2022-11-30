@@ -70,7 +70,7 @@ namespace :oneoff do
     raw_connection.send_query get_assessment_ids_sql
     raw_connection.set_single_row_mode
 
-    queues = ApiFactory.redis_gateway
+    queues = ApiFactory.data_warehouse_queues_gateway
 
     raw_connection.get_result.stream_each.map { |row| row["assessment_id"] }.each_slice(500) do |assessment_ids|
       queues.push_to_queue(:assessments, assessment_ids)

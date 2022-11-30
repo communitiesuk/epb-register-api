@@ -3,24 +3,15 @@
 require "redis"
 
 module Gateway
-  class RedisGateway
-    class PushFailedError < StandardError; end
-
-    class InvalidRedisQueueNameError < StandardError; end
-
-    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt_outs].freeze
-
+  class DataWarehouseReportsGateway
     @redis_client_class = Redis
 
     def initialize(redis_client: nil)
       @redis = redis_client
     end
 
-    def push_to_queue(queue_name, assessment_ids)
-      validate_queue_name(queue_name.to_sym)
-      redis.lpush(queue_name.to_s, assessment_ids)
-    rescue Redis::BaseError => e
-      raise PushFailedError, "Got Redis error #{e.class} when pushing to the queue: #{e.message}"
+    def write_trigger(report:)
+      redis.sadd? :report_triggers, report
     end
 
     class << self
@@ -44,14 +35,6 @@ module Gateway
       end
 
       @redis = self.class.redis_client_class.new(url: redis_url)
-    end
-
-    def validate_queue_name(name)
-      raise InvalidRedisQueueNameError, "You can only access #{DATA_WAREHOUSE_QUEUES}" unless valid_queue_name?(name)
-    end
-
-    def valid_queue_name?(name)
-      DATA_WAREHOUSE_QUEUES.include?(name)
     end
   end
 end
