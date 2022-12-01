@@ -12,9 +12,7 @@ describe "lodge_dev_assessments rake" do
       ENV["STAGE"] = "test"
     end
 
-    let!(:exported_data) do
-      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments")
-    end
+    let!(:exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments") }
 
     it "raises an error and does not add anything to the database" do
       expect { get_task("dev_data:lodge_dev_assessments").invoke }.to raise_error(
@@ -36,20 +34,31 @@ describe "lodge_dev_assessments rake" do
       get_task("dev_data:lodge_dev_assessments").invoke
     end
 
-    let!(:exported_data) do
-      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments ORDER BY assessment_id")
+    let!(:exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments ORDER BY assessment_id") }
+    let!(:exported_xml) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_xml ORDER BY assessment_id") }
+    let!(:exported_assessments_address_id) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_address_id ORDER BY assessment_id") }
+    let!(:cepc_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'CEPC' ORDER BY assessment_id") }
+    let!(:dec_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'DEC' ORDER BY assessment_id") }
+    let!(:ac_cert_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'AC-CERT' ORDER BY assessment_id") }
+    let!(:cepc_rr_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'CEPC-RR' ORDER BY assessment_id") }
+    let!(:dec_rr_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'DEC-RR' ORDER BY assessment_id") }
+    let!(:ac_report_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'AC-REPORT' ORDER BY assessment_id") }
+    let!(:rdsap_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'RdSAP' ORDER BY assessment_id") }
+    let!(:sap_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'SAP' ORDER BY assessment_id") }
+
+    it "lodges different types of seed data into the database", aggregate_failures: true do
+      expect(exported_data.rows.length).to eq(63)
+      expect(rdsap_exported_data.rows.length).to eq(15)
+      expect(sap_exported_data.rows.length).to eq(12)
+      expect(cepc_exported_data.rows.length).to eq(6)
+      expect(dec_exported_data.rows.length).to eq(6)
+      expect(ac_cert_exported_data.rows.length).to eq(6)
+      expect(cepc_rr_exported_data.rows.length).to eq(6)
+      expect(dec_rr_exported_data.rows.length).to eq(6)
+      expect(ac_report_exported_data.rows.length).to eq(6)
     end
 
-    let!(:exported_xml) do
-      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_xml ORDER BY assessment_id")
-    end
-
-    let!(:exported_assessments_address_id) do
-      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_address_id ORDER BY assessment_id")
-    end
-
-    it "loads the seed data into the database" do
-      expect(exported_data.rows.length).to eq(45)
+    it "lodges the seed data correctly" do
       first_result = exported_data.first
       expect(first_result["type_of_assessment"]).to eq("RdSAP")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
@@ -60,30 +69,21 @@ describe "lodge_dev_assessments rake" do
       expect(first_result["current_energy_efficiency_rating"]).to eq(92)
     end
 
-    context "when creating a superseded and valid certificate pair" do
-      let(:superseded_cert) do
-        exported_data.first
-      end
-      let(:valid_cert) do
-        exported_data[1]
-      end
-      let(:superseded_address_id) do
-        exported_assessments_address_id.first
-      end
-      let(:valid_address_id) do
-        exported_assessments_address_id[1]
-      end
-      let(:superseded_xml) do
-        Nokogiri.XML exported_xml[0]["xml"]
-      end
-      let(:valid_xml) do
-        Nokogiri.XML exported_xml[1]["xml"]
-      end
+    context "when lodging superseded, valid and expired certificates" do
+      let(:superseded_cert) { exported_data.first }
+      let(:valid_cert) { exported_data[1] }
+      let(:superseded_address_id) { exported_assessments_address_id.first }
+      let(:valid_address_id) { exported_assessments_address_id[1] }
+      let(:superseded_xml) { Nokogiri.XML exported_xml[0]["xml"] }
+      let(:valid_xml) { Nokogiri.XML exported_xml[1]["xml"] }
 
-      it "provides linked certificates with different expiry dates" do
+      it "create a superseded and valid pair that are linked" do
         expect(superseded_cert["type_of_assessment"]).to eq("RdSAP")
         expect(valid_cert["type_of_assessment"]).to eq("RdSAP")
         expect(superseded_cert["address_id"]).to eq valid_cert["address_id"]
+      end
+
+      it "creates a superseded and valid pair with different expiry dates " do
         expect(superseded_cert["date_of_expiry"]).to be < valid_cert["date_of_expiry"]
       end
 
@@ -92,7 +92,7 @@ describe "lodge_dev_assessments rake" do
       end
 
       it "has the same address in the assessments table as in the xml" do
-        expect(superseded_cert["address_id"]).to eq(superseded_xml.at("UPRN").text)
+        expect(superseded_cert["address_id"]).to eq(valid_xml.at("UPRN").text)
         expect(valid_cert["address_id"]).to eq(valid_xml.at("UPRN").text)
       end
     end
@@ -123,36 +123,27 @@ describe "lodge_dev_assessments rake" do
     end
 
     context "when lodging dual assessments" do
-      let(:ac_cert) do
-        exported_data[27]
-      end
+      let(:ac_cert) { exported_data[27] }
+      let(:ac_report) { exported_data[28] }
+      let(:ac_cert_xml) { Nokogiri.XML exported_xml[27]["xml"] }
+      let(:ac_report_xml) { Nokogiri.XML exported_xml[28]["xml"] }
 
-      let(:ac_report) do
-        exported_data[28]
-      end
+      let(:dec) { exported_data[51] }
+      let(:dec_rr) { exported_data[52] }
+      let(:dec_xml) { Nokogiri.XML exported_xml[51]["xml"] }
+      let(:dec_rr_xml) { Nokogiri.XML exported_xml[52]["xml"] }
 
-      let(:ac_cert_xml) do
-        Nokogiri.XML exported_xml[27]["xml"]
+      let(:cepc_ni) { exported_data[45] }
+      let(:cepc_ni_rr) { exported_data[46] }
+      let(:cepc_ni_xml) do
+        xml = Nokogiri.XML exported_xml[45]["xml"]
+        xml.remove_namespaces!
+        xml
       end
-
-      let(:ac_report_xml) do
-        Nokogiri.XML exported_xml[28]["xml"]
-      end
-
-      let(:dec) do
-        exported_data[43]
-      end
-
-      let(:dec_rr) do
-        exported_data[44]
-      end
-
-      let(:dec_xml) do
-        Nokogiri.XML exported_xml[43]["xml"]
-      end
-
-      let(:dec_rr_xml) do
-        Nokogiri.XML exported_xml[44]["xml"]
+      let(:cepc_ni_rr_xml) do
+        xml = Nokogiri.XML exported_xml[46]["xml"]
+        xml.remove_namespaces!
+        xml
       end
 
       it "lodges the AC-CERT with the Report" do
@@ -169,6 +160,13 @@ describe "lodge_dev_assessments rake" do
 
         expect(dec_xml.at("RRN").text).to eq(dec_rr_xml.at("Related-RRN").text)
         expect(dec_rr_xml.at("RRN").text).to eq(dec_xml.at("Related-RRN").text)
+      end
+
+      it "lodges NI CEPCs with the Report" do
+        expect(cepc_ni["type_of_assessment"]).to eq("CEPC")
+        expect(cepc_ni_rr["type_of_assessment"]).to eq("CEPC-RR")
+        expect(cepc_ni_xml.at("RRN").text).to eq(cepc_ni_rr_xml.at("Related-RRN").text)
+        expect(cepc_ni_rr_xml.at("RRN").text).to eq(cepc_ni_xml.at("Related-RRN").text)
       end
     end
 

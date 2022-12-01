@@ -56,7 +56,10 @@ class DevAssessmentsHelper
 
     commercial_fixtures.each do |item|
       file_content = read_xml("CEPC-8.0.0", item)
-      file_array << { xml: Nokogiri.XML(file_content), schema: item.upcase }
+      file_array << { xml: Nokogiri.XML(file_content), type: item.upcase, schema: "CEPC-8.0.0" }
+
+      file_content = read_xml("CEPC-NI-8.0.0", item)
+      file_array << { xml: Nokogiri.XML(file_content), type: item.upcase, schema: "CEPC-NI-8.0.0" }
     end
     file_array
   end
@@ -73,13 +76,13 @@ class DevAssessmentsHelper
 
   def self.update_xml(xml_doc, type_of_assessment, id, assessor, date_of_expiry, old_date_of_expiry, date_of_registration, old_date_of_registration, new_address, old_address, linked_id, _old_assessment_id)
     xml = xml_doc.to_s
-    xml.sub!("0000-0000-0000-0000-0000", id)
-    xml.sub!("0000-0000-0000-0000-0001", linked_id)
-    xml.sub!("SPEC000000", assessor["scheme_assessor_id"])
-    xml.sub!("111222333", assessor["telephone_number"])
-    xml.sub!("a@b.c", assessor["email"])
-    xml.sub!(old_address[:address_id], new_address[:address_id])
-    xml.sub!(old_address[:address_line1], new_address[:address_line1])
+    xml.gsub!("0000-0000-0000-0000-0001", linked_id)
+    xml.gsub!("SPEC000000", assessor["scheme_assessor_id"])
+    xml.gsub!("111222333", assessor["telephone_number"])
+    xml.gsub!("a@b.c", assessor["email"])
+    xml.gsub!(old_address[:address_id], new_address[:address_id])
+    xml.gsub!(old_address[:address_line1], new_address[:address_line1])
+    xml.gsub!("0000-0000-0000-0000-0000", id)
 
     if %w[rdsap sap dec].include?(type_of_assessment)
       xml.gsub!(old_date_of_registration, date_of_registration)
@@ -103,11 +106,7 @@ class DevAssessmentsHelper
     file_array.each_with_index do |hash, _index|
       assessor = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id, telephone_number, email FROM assessors ORDER BY random() LIMIT 1")[0]
 
-      schema_type = if commercial_fixtures.include? hash[:schema].to_s.downcase
-                      "CEPC-8.0.0"
-                    else
-                      hash[:schema]
-                    end
+      schema_type = hash[:schema]
 
       first_id_in_file_group = assessment_id.dup.next
 

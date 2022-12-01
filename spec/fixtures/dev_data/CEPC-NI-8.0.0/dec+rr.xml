@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Reports
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd"
 >
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0000</RRN>
-      <Issue-Date>2020-01-01</Issue-Date>
+      <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>1</Report-Type>
-      <Valid-Until>2028-05-03</Valid-Until>
+      <Valid-Until>2026-05-04</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
-      <Inspection-Date>2020-01-01</Inspection-Date>
-      <Registration-Date>2020-01-01</Registration-Date>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
@@ -29,18 +29,18 @@
       <Property-Details>
         <UPRN>UPRN-000000000009</UPRN>
         <Property-Address>
-          <Address-Line-1>4 Some Unit</Address-Line-1>
-          <Address-Line-2>4 Unit Road</Address-Line-2>
+          <Address-Line-1>4 Belfast Unit</Address-Line-1>
+          <Address-Line-2>4 Unit Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Whitbury</Post-Town>
-          <Postcode>A0 0AA</Postcode>
+          <Post-Town>Belfast</Post-Town>
+          <Postcode>BT1 0AA</Postcode>
         </Property-Address>
         <Property-Type>B1 Offices and Workshop businesses</Property-Type>
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
-        <Calculation-Tool>DCLG, ORCalc, v3.6.3</Calculation-Tool>
+        <Calculation-Tool>Casio fx-39</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Summary-Of-Performance>
@@ -238,8 +238,8 @@
       </Building-Data>
     </Summary-Of-Performance>
     <OR-Operational-Rating>
-      <OR-Assessment-Start-Date>2020-05-01</OR-Assessment-Start-Date>
-      <OR-Assessment-End-Date>2020-05-01</OR-Assessment-End-Date>
+      <OR-Assessment-Start-Date>2020-05-04</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2020-05-04</OR-Assessment-End-Date>
       <Building-Category></Building-Category>
       <OR-Building-Data>
         <HVAC-System></HVAC-System>
@@ -297,58 +297,52 @@
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
       </AC-Questionnaire>
       <This-Assessment>
-        <Nominated-Date>2020-01-01</Nominated-Date>
+        <Nominated-Date>2020-05-04</Nominated-Date>
         <Energy-Rating>1</Energy-Rating>
-        <Electricity-CO2>7</Electricity-CO2>
-        <Heating-CO2>3</Heating-CO2>
-        <Renewables-CO2>0</Renewables-CO2>
+        <Electricity-CO2>1</Electricity-CO2>
+        <Heating-CO2>1</Heating-CO2>
       </This-Assessment>
       <Year1-Assessment>
-        <Nominated-Date>2019-01-01</Nominated-Date>
-        <Energy-Rating>24</Energy-Rating>
-        <Electricity-CO2>10</Electricity-CO2>
-        <Heating-CO2>5</Heating-CO2>
-        <Renewables-CO2>1</Renewables-CO2>
+        <Nominated-Date>2019-05-04</Nominated-Date>
+        <Energy-Rating>0</Energy-Rating>
+        <Electricity-CO2>0</Electricity-CO2>
+        <Heating-CO2>0</Heating-CO2>
       </Year1-Assessment>
       <Year2-Assessment>
-        <Nominated-Date>2018-01-01</Nominated-Date>
-        <Energy-Rating>40</Energy-Rating>
-        <Electricity-CO2>15</Electricity-CO2>
-        <Heating-CO2>10</Heating-CO2>
-        <Renewables-CO2>2</Renewables-CO2>
+        <Nominated-Date>2019-05-04</Nominated-Date>
+        <Energy-Rating>0</Energy-Rating>
+        <Electricity-CO2>0</Electricity-CO2>
+        <Heating-CO2>0</Heating-CO2>
       </Year2-Assessment>
     </Display-Certificate>
   </Report>
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0001</RRN>
-      <Issue-Date>2020-01-01</Issue-Date>
+      <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>2</Report-Type>
+      <Valid-Until>2026-05-04</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
-      <Valid-Until>2028-05-03</Valid-Until>
-      <Inspection-Date>2020-01-01</Inspection-Date>
-      <Registration-Date>2020-01-01</Registration-Date>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
         <Name>Testa Sessor</Name>
         <Accreditation-Scheme-Name>Test Energy Scheme</Accreditation-Scheme-Name>
-        <E-Mail>a@b.c</E-Mail>
-        <Telephone-Number>0555 497 2848</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>UPRN-000000000009</UPRN>
         <Property-Address>
-          <Address-Line-1>4 Some Unit</Address-Line-1>
-          <Address-Line-2>4 Unit Road</Address-Line-2>
+          <Address-Line-1>4 Belfast Unit</Address-Line-1>
+          <Address-Line-2>4 Unit Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Whitbury</Post-Town>
-          <Postcode>A0 0AA</Postcode>
+          <Post-Town>Belfast</Post-Town>
+          <Postcode>BT1 0AA</Postcode>
         </Property-Address>
         <Property-Type>B1 Offices and Workshop businesses</Property-Type>
-        <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
         <Calculation-Tool>CEPC Compute v0.2</Calculation-Tool>
