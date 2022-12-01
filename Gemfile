@@ -10,7 +10,7 @@ end
 
 group :worker do
   gem "http"
-  gem "sentry-sidekiq", "~> 5.6.0"
+  gem "sentry-sidekiq", "~> 5.7.0"
   gem "sidekiq", "~> 6.5.6", "< 7"
   gem "sidekiq-cron", "~> 1.8.0"
 end
@@ -43,7 +43,7 @@ gem "rubocop", "~> 1.39.0"
 gem "rubocop-govuk", "~> 4.7"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
-gem "sentry-ruby", "~> 5.6"
+gem "sentry-ruby", "~> 5.7"
 gem "sinatra", "~> 3.0"
 gem "sinatra-activerecord", "~> 2.0.26"
 gem "sinatra-cross_origin", "~> 0.4.0"
