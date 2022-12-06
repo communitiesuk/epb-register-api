@@ -36,6 +36,7 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         "builtForm": "Semi-Detached",
         "propertyAgeBand": "2007-2011",
         "totalFloorArea": 55,
+        "typeOfProperty": "House",
       },
     }
   end
@@ -57,6 +58,7 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         "builtForm": "Detached",
         "propertyAgeBand": "1750",
         "totalFloorArea": 69,
+        "typeOfProperty": "House",
       },
     }
   end

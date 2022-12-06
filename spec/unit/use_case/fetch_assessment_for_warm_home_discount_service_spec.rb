@@ -31,6 +31,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       built_form: "Semi-Detached",
       property_age_band: "2007-2011",
       total_floor_area: 55,
+      type_of_property: "House",
     }
 
     let(:expected_not_latest) { expected }
@@ -131,6 +132,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       built_form: "Detached",
       property_age_band: "1750",
       total_floor_area: 69,
+      type_of_property: "House",
     }
 
     it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
@@ -168,6 +170,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       lodgement_date: "2020-05-04",
       property_age_band: nil,
       total_floor_area: 98,
+      type_of_property: "House",
 
     }
 
