@@ -1565,6 +1565,13 @@ paths:
           description: 'The ID (RRN) of the assessment being requested'
           schema:
             $ref: '#/components/schemas/AssessmentId'
+        - in: query
+          name: includeTypeOfProperty
+          required: false
+          description: 'Whether the response should include the additional typeOfProperty key'
+          schema:
+            type: boolean
+            example: true
       responses:
         '200':
           description: Domestic EPC data for the Warm Home Discount service
