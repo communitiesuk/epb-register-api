@@ -66,10 +66,15 @@ module Controller
       details = ApiFactory.fetch_assessment_for_warm_home_discount_service_use_case.execute(rrn: params[:assessmentId])
       raise Sinatra::NotFound if details.nil?
 
+      details_hash = details.to_hash
+      unless params[:includeTypeOfProperty] == "true"
+        details_hash.delete(:type_of_property)
+      end
+
       json_api_response(
         code: 200,
         data: {
-          assessment: details.to_hash,
+          assessment: details_hash,
         },
       )
     rescue StandardError => e

@@ -619,6 +619,19 @@ def warm_home_discount_details_by_rrn(
   )
 end
 
+def warm_home_discount_details_by_rrn_with_property_type(
+  rrn,
+  scopes: %w[warm-home-discount:assessment:fetch],
+  param_value: "true",
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/warm-home-discount/assessments/#{rrn}?includeTypeOfProperty=#{param_value}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def find_domestic_epcs_with_params(
   params:,
   scopes: %w[assessment:domestic-epc:search],

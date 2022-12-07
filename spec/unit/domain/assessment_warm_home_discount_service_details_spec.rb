@@ -19,6 +19,7 @@ describe Domain::AssessmentWarmHomeDiscountServiceDetails do
       built_form: "End-Terrace",
       property_age_band: "D",
       total_floor_area: 171.0,
+      type_of_property: "House",
     }
   end
 

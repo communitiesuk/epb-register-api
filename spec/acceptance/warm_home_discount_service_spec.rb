@@ -84,6 +84,51 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
       end
     end
 
+    context "when passing in the includeTypeOfProperty parameter set to true" do
+      before do
+        lodge_assessment(
+          assessment_body: rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+        )
+        expected_rdsap_details[:assessment][:typeOfProperty] = "House"
+      end
+
+      it "returns the matching assessment Warm Home Discount service details with the additional key typeOfProperty" do
+        response = JSON.parse(
+          warm_home_discount_details_by_rrn_with_property_type("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+
+        expect(response[:data]).to eq expected_rdsap_details
+      end
+    end
+
+    context "when passing in the includeTypeOfProperty parameter set to false" do
+      before do
+        lodge_assessment(
+          assessment_body: rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+        )
+      end
+
+      it "returns the matching assessment Warm Home Discount service details without the additional key typeOfProperty" do
+        response = JSON.parse(
+          warm_home_discount_details_by_rrn_with_property_type("0000-0000-0000-0000-0000", param_value: "false").body,
+          symbolize_names: true,
+        )
+
+        expect(response[:data]).to eq expected_rdsap_details
+      end
+    end
+
     context "when the RRN is associated with a SAP assessment that Warm Home Discount service details can be sent for" do
       before do
         lodge_assessment(
