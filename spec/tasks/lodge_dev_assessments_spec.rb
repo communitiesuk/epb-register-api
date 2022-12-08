@@ -22,6 +22,27 @@ describe "lodge_dev_assessments rake" do
     end
   end
 
+  context "when setting up the rake task in test (not production)" do
+    before do
+      allow($stdout).to receive(:puts)
+      allow($stdout).to receive(:write)
+      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes(scheme_id,name,active) VALUES (1, 'emck', true)")
+      insert_sql = "INSERT INTO assessors(scheme_assessor_id, first_name,last_name,date_of_birth,registered_by,telephone_number,email,domestic_rd_sap_qualification,non_domestic_sp3_qualification,non_domestic_cc4_qualification,
+      non_domestic_dec_qualification,non_domestic_nos3_qualification,non_domestic_nos5_qualification,non_domestic_nos4_qualification,domestic_sap_qualification,gda_qualification)
+                  VALUES ('RAKE000001', 'test_forename', 'test_surname', '1970-01-05', '1', '0202207459', 'test@barr.com', 'ACTIVE', 'ACTIVE', 'ACTIVE', 'ACTIVE', 'ACTIVE','ACTIVE','ACTIVE','ACTIVE','ACTIVE')"
+      ActiveRecord::Base.connection.exec_query(insert_sql)
+    end
+
+    let!(:assessors_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessors ORDER BY scheme_assessor_id") }
+    let!(:schemes_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM schemes ORDER BY scheme_id") }
+
+    it "lodges the assessors into the data base" do
+      expect(schemes_data[0]["scheme_id"].to_s).to eq(assessors_data[0]["registered_by"].to_s)
+      expect(assessors_data.rows.length).to eq 1
+      expect(schemes_data.rows.length).to eq 1
+    end
+  end
+
   context "when calling the rake task in test (not production)" do
     before do
       allow($stdout).to receive(:puts)
@@ -45,6 +66,7 @@ describe "lodge_dev_assessments rake" do
     let!(:ac_report_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'AC-REPORT' ORDER BY assessment_id") }
     let!(:rdsap_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'RdSAP' ORDER BY assessment_id") }
     let!(:sap_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'SAP' ORDER BY assessment_id") }
+    let!(:linked_assessment_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM linked_assessments ORDER BY assessment_id") }
 
     it "lodges different types of seed data into the database", aggregate_failures: true do
       expect(exported_data.rows.length).to eq(63)
@@ -123,50 +145,47 @@ describe "lodge_dev_assessments rake" do
     end
 
     context "when lodging dual assessments" do
-      let(:ac_cert) { exported_data[27] }
-      let(:ac_report) { exported_data[28] }
-      let(:ac_cert_xml) { Nokogiri.XML exported_xml[27]["xml"] }
-      let(:ac_report_xml) { Nokogiri.XML exported_xml[28]["xml"] }
+      let(:ac_cert) { ac_cert_exported_data[0] }
+      let(:ac_report) { ac_report_exported_data[0] }
 
-      let(:dec) { exported_data[51] }
-      let(:dec_rr) { exported_data[52] }
-      let(:dec_xml) { Nokogiri.XML exported_xml[51]["xml"] }
-      let(:dec_rr_xml) { Nokogiri.XML exported_xml[52]["xml"] }
+      let(:dec) { dec_exported_data[0] }
+      let(:dec_rr) { dec_rr_exported_data[0] }
 
-      let(:cepc_ni) { exported_data[45] }
-      let(:cepc_ni_rr) { exported_data[46] }
-      let(:cepc_ni_xml) do
-        xml = Nokogiri.XML exported_xml[45]["xml"]
-        xml.remove_namespaces!
-        xml
-      end
-      let(:cepc_ni_rr_xml) do
-        xml = Nokogiri.XML exported_xml[46]["xml"]
-        xml.remove_namespaces!
-        xml
-      end
+      let(:cepc_ni) { cepc_exported_data[3] }
+      let(:cepc_ni_rr) { cepc_rr_exported_data[3] }
 
       it "lodges the AC-CERT with the Report" do
         expect(ac_cert["type_of_assessment"]).to eq("AC-CERT")
+        expect(ac_cert["type_of_assessment"]).to eq("AC-CERT")
         expect(ac_report["type_of_assessment"]).to eq("AC-REPORT")
-
-        expect(ac_cert_xml.at("RRN").text).to eq(ac_report_xml.at("Related-RRN").text)
-        expect(ac_report_xml.at("RRN").text).to eq(ac_cert_xml.at("Related-RRN").text)
+        expect(ac_cert["assessment_id"]).to eq("0000-0000-0000-0000-0028")
+        expect(ac_report["assessment_id"]).to eq("0000-0000-0000-0000-0029")
+        expect(linked_assessment_data[0]["assessment_id"]).to eq("0000-0000-0000-0000-0028")
+        expect(linked_assessment_data[0]["linked_assessment_id"]).to eq("0000-0000-0000-0000-0029")
+        expect(linked_assessment_data[1]["assessment_id"]).to eq("0000-0000-0000-0000-0029")
+        expect(linked_assessment_data[1]["linked_assessment_id"]).to eq("0000-0000-0000-0000-0028")
       end
 
       it "lodges the DEC with the Report" do
         expect(dec["type_of_assessment"]).to eq("DEC")
         expect(dec_rr["type_of_assessment"]).to eq("DEC-RR")
-
-        expect(dec_xml.at("RRN").text).to eq(dec_rr_xml.at("Related-RRN").text)
-        expect(dec_rr_xml.at("RRN").text).to eq(dec_xml.at("Related-RRN").text)
+        expect(dec["assessment_id"]).to eq("0000-0000-0000-0000-0052")
+        expect(dec_rr["assessment_id"]).to eq("0000-0000-0000-0000-0053")
+        expect(linked_assessment_data[24]["assessment_id"]).to eq("0000-0000-0000-0000-0052")
+        expect(linked_assessment_data[24]["linked_assessment_id"]).to eq("0000-0000-0000-0000-0053")
+        expect(linked_assessment_data[25]["assessment_id"]).to eq("0000-0000-0000-0000-0053")
+        expect(linked_assessment_data[25]["linked_assessment_id"]).to eq("0000-0000-0000-0000-0052")
       end
 
       it "lodges NI CEPCs with the Report" do
         expect(cepc_ni["type_of_assessment"]).to eq("CEPC")
         expect(cepc_ni_rr["type_of_assessment"]).to eq("CEPC-RR")
-        expect(cepc_ni_xml.at("RRN").text).to eq(cepc_ni_rr_xml.at("Related-RRN").text)
-        expect(cepc_ni_rr_xml.at("RRN").text).to eq(cepc_ni_xml.at("Related-RRN").text)
+        expect(cepc_ni["assessment_id"]).to eq("0000-0000-0000-0000-0046")
+        expect(cepc_ni_rr["assessment_id"]).to eq("0000-0000-0000-0000-0047")
+        expect(linked_assessment_data[18]["assessment_id"]).to eq("0000-0000-0000-0000-0046")
+        expect(linked_assessment_data[18]["linked_assessment_id"]).to eq("0000-0000-0000-0000-0047")
+        expect(linked_assessment_data[19]["assessment_id"]).to eq("0000-0000-0000-0000-0047")
+        expect(linked_assessment_data[19]["linked_assessment_id"]).to eq("0000-0000-0000-0000-0046")
       end
     end
 
