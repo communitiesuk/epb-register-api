@@ -11,7 +11,7 @@ module Gateway
     end
 
     def write_trigger(report:)
-      redis.sadd? :report_triggers, report
+      redis.sadd :report_triggers, report
     end
 
     class << self
