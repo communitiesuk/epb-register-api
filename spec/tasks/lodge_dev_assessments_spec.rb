@@ -1,5 +1,8 @@
 describe "lodge_dev_assessments rake" do
   include RSpecRegisterApiServiceMixin
+  before do
+    Timecop.freeze(2022, 12, 12, 7, 0, 0)
+  end
 
   context "when calling the rake task in production" do
     before do
@@ -89,6 +92,30 @@ describe "lodge_dev_assessments rake" do
       expect(first_result["town"]).to eq("Townplace")
       expect(first_result["postcode"]).to eq("SW1A 2AA")
       expect(first_result["current_energy_efficiency_rating"]).to eq(92)
+      expect(first_result["date_of_assessment"]).to eq("2017-12-12")
+      expect(first_result["date_registered"]).to eq("2017-12-12")
+      expect(first_result["date_of_expiry"]).to eq("2027-12-11")
+    end
+
+    it "lodges an ac-cert with the correct dates" do
+      ac_cert = ac_cert_exported_data.first
+      expect(ac_cert["date_of_assessment"]).to eq("2017-12-12")
+      expect(ac_cert["date_registered"]).to eq("2017-12-12")
+      expect(ac_cert["date_of_expiry"]).to eq("2027-12-11")
+    end
+
+    it "lodges a dec with the correct dates" do
+      dec = dec_exported_data.first
+      expect(dec["date_of_assessment"]).to eq("2017-12-12")
+      expect(dec["date_registered"]).to eq("2017-12-12")
+      expect(dec["date_of_expiry"]).to eq("2027-12-11")
+    end
+
+    it "lodges a dec-rr with BT postcode with expiry date 7 years after issue date" do
+      dec_rr_ni = dec_rr_exported_data[3]
+      expect(dec_rr_ni["date_of_assessment"]).to eq("2017-12-12")
+      expect(dec_rr_ni["date_registered"]).to eq("2017-12-12")
+      expect(dec_rr_ni["date_of_expiry"]).to eq("2024-12-11")
     end
 
     context "when lodging superseded, valid and expired certificates" do

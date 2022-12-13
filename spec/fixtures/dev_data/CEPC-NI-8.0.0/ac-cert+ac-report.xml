@@ -106,7 +106,7 @@
       <Report-Type>5</Report-Type>
       <Valid-Until>2022-05-19</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
-      <Inspection-Date>2020-05-20</Inspection-Date>
+      <Inspection-Date>2020-05-19</Inspection-Date>
       <Registration-Date>2020-05-20</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
@@ -252,7 +252,7 @@
           <Sub-System-Description>This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers.</Sub-System-Description>
           <Sub-System-Cooling-Output>40</Sub-System-Cooling-Output>
           <Sub-System-Area-Served-Description>Sales Area</Sub-System-Area-Served-Description>
-          <Sub-System-Inspection-Date>2019-05-20</Sub-System-Inspection-Date>
+          <Sub-System-Inspection-Date>2019-05-19</Sub-System-Inspection-Date>
           <Sub-System-Cooling-Plant-Count>4</Sub-System-Cooling-Plant-Count>
           <Sub-System-AHU-Count>0</Sub-System-AHU-Count>
           <Sub-System-Terminal-Units-Count>4</Sub-System-Terminal-Units-Count>

@@ -7,12 +7,12 @@
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0000</RRN>
-      <Issue-Date>2020-01-01</Issue-Date>
+      <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>1</Report-Type>
-      <Valid-Until>2028-05-03</Valid-Until>
+      <Valid-Until>2030-05-03</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
-      <Inspection-Date>2020-01-01</Inspection-Date>
-      <Registration-Date>2020-01-01</Registration-Date>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
@@ -297,7 +297,7 @@
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
       </AC-Questionnaire>
       <This-Assessment>
-        <Nominated-Date>2020-01-01</Nominated-Date>
+        <Nominated-Date>2020-05-04</Nominated-Date>
         <Energy-Rating>1</Energy-Rating>
         <Electricity-CO2>7</Electricity-CO2>
         <Heating-CO2>3</Heating-CO2>
@@ -322,12 +322,12 @@
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0001</RRN>
-      <Issue-Date>2020-01-01</Issue-Date>
+      <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>2</Report-Type>
       <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
-      <Valid-Until>2028-05-03</Valid-Until>
-      <Inspection-Date>2020-01-01</Inspection-Date>
-      <Registration-Date>2020-01-01</Registration-Date>
+      <Valid-Until>2030-05-03</Valid-Until>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
