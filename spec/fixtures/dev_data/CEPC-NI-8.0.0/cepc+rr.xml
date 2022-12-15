@@ -248,7 +248,7 @@
       <CEPC:Transaction-Type>1</CEPC:Transaction-Type>
       <CEPC:EPC-Related-Party-Disclosure>1</CEPC:EPC-Related-Party-Disclosure>
       <CEPC:EPC-Rating>
-        <CEPC:Asset-Rating>80</CEPC:Asset-Rating>
+        <CEPC:Asset-Rating>30</CEPC:Asset-Rating>
         <CEPC:New-Build-Benchmark>28</CEPC:New-Build-Benchmark>
         <CEPC:Existing-Stock-Benchmark>81</CEPC:Existing-Stock-Benchmark>
         <CEPC:SER>42.07</CEPC:SER>

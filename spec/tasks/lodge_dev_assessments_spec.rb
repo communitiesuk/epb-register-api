@@ -233,6 +233,21 @@ describe "lodge_dev_assessments rake" do
       end
     end
 
+    context "when lodging non-domestic assessments with different energy ratings", aggregate_failures: true do
+      let(:cepc_cert) { cepc_exported_data.first }
+      let(:cepc_ni_cert) { cepc_exported_data[3] }
+
+      it "gives a energy rating of 'b' for DECs and CEPCs lodged with CEPC-NI-8.0 schema" do
+        expect(cepc_ni_cert["assessment_id"]).to eq("0000-0000-0000-0000-0046")
+        expect(cepc_ni_cert["current_energy_efficiency_rating"]).to eq(30)
+      end
+
+      it "gives a energy rating of 'f' for DECs and CEPCs lodged with CEPC-8.0.0 schema" do
+        expect(cepc_cert["assessment_id"]).to eq("0000-0000-0000-0000-0040")
+        expect(cepc_cert["current_energy_efficiency_rating"]).to eq(140)
+      end
+    end
+
     it "loads the xml from the factory" do
       expect { UseCase::AssessmentSummary::Fetch.new.execute("0000-0000-0000-0000-0001") }.not_to raise_error
     end

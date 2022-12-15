@@ -74,7 +74,7 @@ class DevAssessmentsHelper
     result.first["id"].to_s.empty? ? "0000-0000-0000-0000-0000" : result.first["id"].to_s
   end
 
-  def self.update_xml(xml_doc:, schema_type:, type_of_lodgement:, linked_id:, new_lodgement_assessment_id:,assessor:, old_address:, new_address:, old_date_of_assessment:, date_of_assessment:, old_date_of_registration:, date_of_registration:, old_address_id:, new_address_id:, old_date_of_expiry:, date_of_expiry:)
+  def self.update_xml(xml_doc:, schema_type:, type_of_lodgement:, linked_id:, new_lodgement_assessment_id:, assessor:, old_address:, new_address:, old_date_of_assessment:, date_of_assessment:, old_date_of_registration:, date_of_registration:, old_address_id:, new_address_id:, old_date_of_expiry:, date_of_expiry:)
     xml = xml_doc.to_s
     xml.gsub!("0000-0000-0000-0000-0001", linked_id)
     xml.gsub!("0000-0000-0000-0000-0000", new_lodgement_assessment_id)
@@ -144,7 +144,7 @@ class DevAssessmentsHelper
 
         old_date_of_registration = lodgement_data[0][:date_of_registration].dup
 
-        old_date_of_expiry = if ["DEC", "DEC+RR"].include?(type_of_lodgement)
+        old_date_of_expiry = if ["DEC+RR"].include?(type_of_lodgement)
                                fixture_xml.at("//Valid-Until").text
                              else
                                lodgement_data[0][:date_of_expiry].dup
@@ -170,7 +170,7 @@ class DevAssessmentsHelper
           address[:address_line1] = "1#{address[:address_line1]}"
         end
 
-        date_of_expiry = if ["DEC", "DEC+RR"].include?(type_of_lodgement)
+        date_of_expiry = if ["DEC+RR"].include?(type_of_lodgement)
                            lodgement_data[0][:date_of_expiry].dup.to_time
                          else
                            date_of_assessment + 10.years - 3600 * 24
