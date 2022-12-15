@@ -74,17 +74,20 @@ class DevAssessmentsHelper
     result.first["id"].to_s.empty? ? "0000-0000-0000-0000-0000" : result.first["id"].to_s
   end
 
-  def self.update_xml(xml_doc:, type_of_lodgement:, new_lodgement_assessment_id:, assessor:, date_of_expiry:, old_date_of_expiry:, date_of_registration:, old_date_of_registration:, new_address:, old_address:, linked_id:, old_date_of_assessment:, date_of_assessment:)
+  def self.update_xml(xml_doc:, schema_type:, type_of_lodgement:, linked_id:, new_lodgement_assessment_id:,assessor:, old_address:, new_address:, old_date_of_assessment:, date_of_assessment:, old_date_of_registration:, date_of_registration:, old_address_id:, new_address_id:, old_date_of_expiry:, date_of_expiry:)
     xml = xml_doc.to_s
     xml.gsub!("0000-0000-0000-0000-0001", linked_id)
+    xml.gsub!("0000-0000-0000-0000-0000", new_lodgement_assessment_id)
     xml.gsub!("SPEC000000", assessor["scheme_assessor_id"])
     xml.gsub!("111222333", assessor["telephone_number"])
     xml.gsub!("a@b.c", assessor["email"])
-    xml.gsub!(old_address[:address_id], new_address[:address_id])
     xml.gsub!(old_address[:address_line1], new_address[:address_line1])
-    xml.gsub!("0000-0000-0000-0000-0000", new_lodgement_assessment_id)
     xml.gsub!(old_date_of_assessment, date_of_assessment)
     xml.gsub!(old_date_of_registration, date_of_registration)
+
+    unless ["SAP-Schema-16.3", "SAP-Schema-13.0", "SAP-Schema-10.2"].include?(schema_type)
+      xml.gsub!(old_address_id, new_address_id)
+    end
 
     if %w[ac-cert ac-cert+ac-report cepc cepc+rr dec dec+rr].include?(type_of_lodgement.downcase)
       xml.gsub!(old_date_of_expiry, date_of_expiry)
@@ -128,6 +131,7 @@ class DevAssessmentsHelper
         dual_lodgement = lodgement_data.size > 1
         address = lodgement_data[0][:address]
         old_address = address.dup
+        old_address_id = old_address[:address_id]
 
         new_lodgement_assessment_id = get_latest_assessment_id.next!
 
@@ -154,15 +158,15 @@ class DevAssessmentsHelper
         when "superseded"
           date_of_registration = time_now - 5.years
           date_of_assessment = time_now - 5.years
-          address[:address_id] = "RRN-#{first_id_in_file_group}"
+          new_address_id = "RRN-#{first_id_in_file_group}"
         when "valid"
           date_of_registration = time_now
           date_of_assessment = time_now
-          address[:address_id] = "RRN-#{first_id_in_file_group}"
+          new_address_id = "RRN-#{first_id_in_file_group}"
         else
           date_of_registration = time_now - 15.years
           date_of_assessment = time_now - 15.years
-          address[:address_id] = address[:address_id].sub!("0", "1")
+          new_address_id = address[:address_id].sub!("0", "1")
           address[:address_line1] = "1#{address[:address_line1]}"
         end
 
@@ -173,23 +177,30 @@ class DevAssessmentsHelper
                          end
 
         xml_doc = update_xml(xml_doc: hash[:xml],
+                             schema_type:,
                              type_of_lodgement: type_of_lodgement.downcase,
+                             linked_id: linked_assessment_id,
                              new_lodgement_assessment_id:,
                              assessor:,
-                             date_of_expiry: date_of_expiry.strftime("%F"),
-                             old_date_of_expiry:,
-                             date_of_registration: date_of_registration.strftime("%F"),
-                             old_date_of_registration:,
-                             new_address: address,
                              old_address:,
-                             linked_id: linked_assessment_id,
+                             new_address: address,
                              old_date_of_assessment:,
-                             date_of_assessment: date_of_assessment.strftime("%F"))
+                             date_of_assessment: date_of_assessment.strftime("%F"),
+                             old_date_of_registration:,
+                             date_of_registration: date_of_registration.strftime("%F"),
+                             old_address_id:,
+                             new_address_id:,
+                             date_of_expiry: date_of_expiry.strftime("%F"),
+                             old_date_of_expiry:)
 
         begin
           scheme_ids = [assessor["registered_by"]]
           use_case.execute(assessment_xml: xml_doc.to_s, schema_name: schema_type, scheme_ids:, migrated: true, overridden: false)
           pp "Lodged assessment ID:#{new_lodgement_assessment_id}, Type: '#{type_of_lodgement}', Schema: '#{schema_type}, Validity: '#{validity}'"
+          if ["SAP-Schema-16.3", "SAP-Schema-13.0", "SAP-Schema-10.2"].include?(schema_type) && %w[valid superseded].include?(validity)
+            ActiveRecord::Base.connection.exec_query("UPDATE assessments SET address_id = '#{new_address_id}' WHERE assessment_id = '#{new_lodgement_assessment_id}'")
+            ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET address_id = '#{new_address_id}' WHERE assessment_id = '#{new_lodgement_assessment_id}'")
+          end
         rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
           pp "skipped lodged assessment ID:#{new_lodgement_assessment_id}"
         end

@@ -70,6 +70,7 @@ describe "lodge_dev_assessments rake" do
     let!(:rdsap_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'RdSAP' ORDER BY assessment_id") }
     let!(:sap_exported_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE type_of_assessment = 'SAP' ORDER BY assessment_id") }
     let!(:linked_assessment_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM linked_assessments ORDER BY assessment_id") }
+    let!(:address_id_data) { ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_address_id ORDER BY assessment_id") }
 
     it "lodges different types of seed data into the database", aggregate_failures: true do
       expect(exported_data.rows.length).to eq(63)
@@ -143,6 +144,22 @@ describe "lodge_dev_assessments rake" do
       it "has the same address in the assessments table as in the xml" do
         expect(superseded_cert["address_id"]).to eq(valid_xml.at("UPRN").text)
         expect(valid_cert["address_id"]).to eq(valid_xml.at("UPRN").text)
+      end
+    end
+
+    context "when lodging superseded and valid pairs for SAP-Schema-16.3, SAP-Schema-13.0, SAP-Schema-10.2" do
+      let(:superseded_cert) { rdsap_exported_data[6] }
+      let(:valid_cert) { rdsap_exported_data[7] }
+      let(:superseded_cert_address) { address_id_data[12] }
+      let(:valid_cert_address) { address_id_data[13] }
+
+      it "has the same address id" do
+        expect(superseded_cert["assessment_id"]).to eq("0000-0000-0000-0000-0013")
+        expect(valid_cert["assessment_id"]).to eq("0000-0000-0000-0000-0014")
+        expect(superseded_cert_address["assessment_id"]).to eq("0000-0000-0000-0000-0013")
+        expect(valid_cert_address["assessment_id"]).to eq("0000-0000-0000-0000-0014")
+        expect(superseded_cert["address_id"]).to eq(superseded_cert_address["address_id"])
+        expect(valid_cert["address_id"]).to eq(superseded_cert_address["address_id"])
       end
     end
 
