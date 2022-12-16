@@ -167,6 +167,23 @@ module LodgementRules
             return true
           end,
       },
+      {
+        name: "INSPECTION_DATE_LATER_THAN_REGISTRATION_DATE",
+        title:
+          'The "Registration-Date" must be equal to or later than "Inspection-Date"',
+        test:
+
+          lambda do |adapter|
+            dates = [
+              Date.parse(method_or_nil(adapter, :date_of_assessment)),
+              # Inspection-Date
+              Date.parse(method_or_nil(adapter, :date_of_registration)),
+              # Registration-Date
+            ]
+
+            Helper::Toggles.enabled?("register-api-non-domestic-inspection-date-rule") ? (dates[0] <= dates[1]) : true
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

@@ -1,5 +1,5 @@
 describe LodgementRules::NonDomestic, set_with_timecop: true do
-  def assert_errors(xml_updates, expected_errors)
+  def assert_errors(xml_updates, expected_errors, include_errors: false)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
       xml_updates.each do |key, value|
@@ -10,7 +10,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name], false)
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)
-      expect(errors).to match_array(expected_errors)
+      include_errors ? expect(errors).to(include(*expected_errors)) : expect(errors).to(match_array(expected_errors))
     end
   end
 
@@ -76,7 +76,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if the inspection date is in the future" do
-        assert_errors([["Inspection-Date", Date.tomorrow.to_s]], [error])
+        assert_errors([["Inspection-Date", Date.tomorrow.to_s]], [error], include_errors: true)
       end
 
       it "returns an error if the registration date is in the future" do
@@ -120,7 +120,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
 
       it "returns an error if the registration date is more than four years ago" do
         four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-        assert_errors([["Registration-Date", four_years_and_a_day_ago.to_s]], [error])
+        assert_errors([["Registration-Date", four_years_and_a_day_ago.to_s]], [error], include_errors: true)
       end
 
       it "returns an error if the issue date is more than four years ago" do
@@ -284,6 +284,36 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
 
       it "recognizes that CH66 is in England, not in Welsh CH6 (i.e. matches full outcode, not just prefix)" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "CH66 3RA"]], [])
+      end
+    end
+
+    context "when inspection date is greater than or equal to the registration date" do
+      let(:inspection_date_error) do
+        {
+          "code": "INSPECTION_DATE_LATER_THAN_REGISTRATION_DATE",
+          "title":
+            'The "Registration-Date" must be equal to or later than "Inspection-Date"',
+        }.freeze
+      end
+
+      context "when toggle is enabled" do
+        before do
+          allow(Helper::Toggles).to receive(:enabled?).with("register-api-non-domestic-inspection-date-rule").and_return(true)
+        end
+
+        it "throws Completion error when the Registration-Date is before the Inspection- and Completion-Date" do
+          assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.yesterday.to_s]], [inspection_date_error])
+        end
+
+        it "allows lodgement when the dates are equal" do
+          assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.today.to_s]], [])
+        end
+      end
+
+      context "when toggle is not enable " do
+        it "the ignores the Inspection-Date and Completion-Date rule" do
+          assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.yesterday.to_s]], [])
+        end
       end
     end
   end
