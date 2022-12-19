@@ -25,8 +25,8 @@
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
-        <E-Mail>test@example.com</E-Mail>
-        <Telephone-Number>07555 666777</Telephone-Number>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>111222333</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>UPRN-000000000010</UPRN>
@@ -120,8 +120,8 @@
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
-        <E-Mail>test@example.com</E-Mail>
-        <Telephone-Number>07555 666777</Telephone-Number>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>111222333</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>UPRN-000000000010</UPRN>

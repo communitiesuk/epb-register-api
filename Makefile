@@ -128,3 +128,13 @@ setup-hooks:
 .PHONY: cf-check-api-db-migration-task
 cf-check-api-db-migration-task: ## Get the status for the last migrate-db task
 	@cf curl /v3/apps/`cf app --guid ${DEPLOY_APPNAME}`/tasks?order_by=-created_at | jq -r ".resources[0].state"
+
+.PHONY: seed-local-db
+seed-local-db:
+	make setup-db
+	@echo ">>>>> Bootstrapping Dev Data"
+	@bundle exec rake tasks:bootstrap_dev_data
+	@echo ">>>>> Getting green deal fuel data"
+	@bundle exec rake maintenance:green_deal_update_fuel_data
+	@echo ">>>>> Seeding DB with fuel code mapping data"
+	@bundle exec rake db:seed

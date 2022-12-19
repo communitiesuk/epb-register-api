@@ -196,7 +196,7 @@ class DevAssessmentsHelper
         begin
           scheme_ids = [assessor["registered_by"]]
           use_case.execute(assessment_xml: xml_doc.to_s, schema_name: schema_type, scheme_ids:, migrated: true, overridden: false)
-          pp "Lodged assessment ID:#{new_lodgement_assessment_id}, Type: '#{type_of_lodgement}', Schema: '#{schema_type}, Validity: '#{validity}'"
+          # pp "Lodged assessment ID:#{new_lodgement_assessment_id}, Type: '#{type_of_lodgement}', Schema: '#{schema_type}, Validity: '#{validity}'"
           if ["SAP-Schema-16.3", "SAP-Schema-13.0", "SAP-Schema-10.2"].include?(schema_type) && %w[valid superseded].include?(validity)
             ActiveRecord::Base.connection.exec_query("UPDATE assessments SET address_id = '#{new_address_id}' WHERE assessment_id = '#{new_lodgement_assessment_id}'")
             ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET address_id = '#{new_address_id}' WHERE assessment_id = '#{new_lodgement_assessment_id}'")
