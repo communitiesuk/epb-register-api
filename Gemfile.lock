@@ -78,7 +78,7 @@ GEM
     geocoder (1.8.1)
     hashdiff (1.0.1)
     hashie (5.0.0)
-    http (5.1.0)
+    http (5.1.1)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
       http-form_data (~> 2.2)
