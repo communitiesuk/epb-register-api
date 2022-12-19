@@ -2248,6 +2248,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /interesting-numbers:
+    get:
+      tags:
+        - Service Performance
+      summary: Some interesting numbers about recent activity on the register
+      description: Interesting register numbers
+      operationId: get-interesting-numbers
+      security:
+        - oauth:
+            - 'statistics:fetch'
+      responses:
+        '200':
+          description: Interesting numbers about recent activity on the register, where all known interesting numbers are available
+          content:
+            application/json:
+              schema:
+                type: array
+                description: A list of existing interesting numbers
+                items:
+                  $ref: "#/components/schemas/InterestingNumber"
+        '202':
+          description: Interesting numbers about recent activity on the register, where not all known interesting numbers are available
+          content:
+            application/json:
+              schema:
+                type: array
+                description: An incomplete list of existing interesting numbers - the rest will be calculated and available soon
+                items:
+                  $ref: "#/components/schemas/InterestingNumber"
+
 components:
   securitySchemes:
     oauth:
@@ -3660,6 +3690,26 @@ components:
         very_dissatisfied:
           type: integer
           example: 321
+
+    InterestingNumber:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The unique reference name for the report/ interesting number
+          example: heat_pumps_for_saps
+        data:
+          oneOf:
+            - type: object
+            - type: array
+            - type: integer
+            - type: number
+        generatedAt:
+          type: string
+          format: date-time
+          description: Date and time of interesting number generation in UTC timezone
+          example: '2023-09-19T09:00:00Z'
+
     # Schemes
     Scheme:
       allOf:

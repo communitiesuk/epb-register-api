@@ -746,7 +746,6 @@ def fetch_assessment_meta_data(
   authenticate: true,
   auth_data: {}
 )
-
   assertive_get(
     "/api/assessments/#{assessment_id}/meta-data",
     accepted_responses:,
@@ -761,7 +760,6 @@ def fetch_statistics(
   authenticate: true,
   auth_data: {}
 )
-
   assertive_get(
     "/api/statistics",
     accepted_responses:,
@@ -777,9 +775,23 @@ def fetch_statistics_new(
   auth_data: {}
 
 )
-
   assertive_get(
     "/api/statistics/new",
+    accepted_responses:,
+    should_authenticate: authenticate,
+    auth_data:,
+    scopes:,
+  )
+end
+
+def fetch_interesting_numbers(
+  scopes: ["statistics:fetch"],
+  accepted_responses: [200],
+  authenticate: true,
+  auth_data: {}
+)
+  assertive_get(
+    "/api/interesting-numbers",
     accepted_responses:,
     should_authenticate: authenticate,
     auth_data:,

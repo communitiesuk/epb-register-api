@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 describe UseCase::TriggerAllDataWarehouseReports do
-  subject(:use_case) { described_class.new(individual_use_case:) }
+  subject(:use_case) { described_class.new(reports_gateway:) }
 
-  let(:individual_use_case) do
-    individual_use_case = instance_double UseCase::TriggerDataWarehouseReport
-    allow(individual_use_case).to receive(:execute)
-    individual_use_case
+  let(:reports_gateway) do
+    gateway = instance_double Gateway::DataWarehouseReportsGateway
+    allow(gateway).to receive(:write_all_triggers)
+    gateway
   end
 
-  it "calls down to the individual use case for each known report" do
+  before do
     use_case.execute
-    count = 0
-    expect(individual_use_case).to have_received(:execute).at_least(:once) do |report:|
-      expect(report).to eq(described_class::REPORTS[count])
-      count += 1
-    end
+  end
+
+  it "calls down to the reports gateway" do
+    expect(reports_gateway).to have_received(:write_all_triggers)
   end
 end

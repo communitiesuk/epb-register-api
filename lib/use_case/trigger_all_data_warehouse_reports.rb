@@ -2,18 +2,16 @@
 
 module UseCase
   class TriggerAllDataWarehouseReports
-    REPORTS = [:heat_pump_count_for_sap].freeze
-
-    def initialize(individual_use_case:)
-      @individual_use_case = individual_use_case
+    def initialize(reports_gateway:)
+      @reports_gateway = reports_gateway
     end
 
     def execute
-      REPORTS.each { |report| individual_use_case.execute report: }
+      reports_gateway.write_all_triggers
     end
 
   private
 
-    attr_reader :individual_use_case
+    attr_reader :reports_gateway
   end
 end
