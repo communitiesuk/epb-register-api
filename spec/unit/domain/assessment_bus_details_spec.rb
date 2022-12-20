@@ -19,6 +19,8 @@ describe Domain::AssessmentBusDetails do
         postcode: "AB1 2CD",
       },
       dwelling_type: "Top-floor flat",
+      uprn: "UPRN-000000000123",
+      lodgement_date: "2020-05-04",
     }
   end
 
@@ -40,6 +42,8 @@ describe Domain::AssessmentBusDetails do
         postcode: "AB1 2CD",
       },
       dwelling_type: "Top-floor flat",
+      uprn: "000000000123",
+      lodgement_date: "2020-05-04",
     }
   end
 
@@ -48,6 +52,14 @@ describe Domain::AssessmentBusDetails do
   describe "#to_hash" do
     it "returns the expected data" do
       expect(domain.to_hash).to eq expected_data
+    end
+
+    context "when the urpn contains an RRN " do
+      it "has a nil for the uprn" do
+        arguments[:uprn] = "RRN-0000-0000-0000-0000-0001"
+        expected_data[:uprn] = nil
+        expect(domain.to_hash).to eq expected_data
+      end
     end
   end
 

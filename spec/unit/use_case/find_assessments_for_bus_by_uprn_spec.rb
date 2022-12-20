@@ -21,6 +21,8 @@ describe UseCase::FindAssessmentsForBusByUprn do
         postcode: "AB1 2CD",
       },
       dwelling_type: "Top-floor flat",
+      lodgement_date: "2020-05-04",
+      uprn: "000000000000",
     )
   end
 

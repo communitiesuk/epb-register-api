@@ -8,7 +8,10 @@ module Domain
       loft_insulation_recommended:,
       secondary_heating:,
       address:,
-      dwelling_type:
+      dwelling_type:,
+      lodgement_date:,
+      uprn:
+
     )
       @epc_rrn = epc_rrn
       @report_type = report_type
@@ -18,6 +21,8 @@ module Domain
       @secondary_heating = secondary_heating
       @address = address
       @dwelling_type = dwelling_type
+      @lodgement_date = lodgement_date
+      @uprn = uprn.include?("UPRN") ? uprn.sub("UPRN-", "") : nil
     end
 
     def to_hash
@@ -30,6 +35,8 @@ module Domain
         secondary_heating: @secondary_heating,
         address: @address,
         dwelling_type: @dwelling_type,
+        lodgement_date: @lodgement_date,
+        uprn: @uprn,
       }
     end
 

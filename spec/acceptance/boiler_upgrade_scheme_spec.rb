@@ -40,6 +40,8 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         postcode: "A0 0AA",
       },
       dwellingType: "Mid-terrace house",
+      lodgementDate: "2020-05-04",
+      uprn: "000000000000",
     }
   end
 
@@ -61,6 +63,8 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         postcode: "A0 0AA",
       },
       dwellingType: "Mid-terrace house",
+      lodgementDate: "2020-05-04",
+      uprn: "000000000000",
     }
   end
 
@@ -82,6 +86,8 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         postcode: "A0 0AA",
       },
       dwellingType: "B1 Offices and Workshop businesses",
+      lodgementDate: "2020-05-04",
+      uprn: "000000000001",
     }
   end
 

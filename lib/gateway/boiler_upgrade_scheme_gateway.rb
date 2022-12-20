@@ -25,7 +25,8 @@ module Gateway
         SELECT
           a.assessment_id AS epc_rrn,
           a.type_of_assessment AS report_type,
-          a.date_of_expiry AS expiry_date
+          a.date_of_expiry AS expiry_date,
+          '#{uprn}' as uprn
         FROM assessments AS a
         WHERE assessment_id IN (
           SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
@@ -45,11 +46,13 @@ module Gateway
     def search_by_rrn(rrn)
       sql = <<-SQL
         SELECT
-          assessment_id AS epc_rrn,
-          type_of_assessment AS report_type,
-          date_of_expiry AS expiry_date
-        FROM assessments
-        WHERE assessment_id = $1
+          a.assessment_id AS epc_rrn,
+          a.type_of_assessment AS report_type,
+          a.date_of_expiry AS expiry_date,
+           aa.address_id as uprn
+        FROM assessments a
+        JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
+        WHERE a.assessment_id = $1
       SQL
 
       do_search(
@@ -85,6 +88,8 @@ module Gateway
           :postcode,
         ).transform_values { |v| v || "" },
         dwelling_type: fetch_dwelling_type(summary: assessment_summary),
+        lodgement_date: assessment_summary[:date_of_registration],
+        uprn: row["uprn"],
       )
     rescue UseCase::AssessmentSummary::Fetch::AssessmentUnavailable
       nil
@@ -95,8 +100,10 @@ module Gateway
         SELECT
             a.assessment_id AS epc_rrn,
             a.type_of_assessment AS report_type,
-            a.date_of_expiry AS expiry_date
+            a.date_of_expiry AS expiry_date,
+            aa.address_id as uprn
           FROM assessments AS a
+          JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
           WHERE 0=0
       SQL
 
@@ -115,8 +122,10 @@ module Gateway
         SELECT
             a.assessment_id AS epc_rrn,
             a.type_of_assessment AS report_type,
-            a.date_of_expiry AS expiry_date
+            a.date_of_expiry AS expiry_date,
+            aa.address_id as uprn
           FROM assessments AS a
+          JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
           WHERE 0=0
       SQL
       sql << Helper::AddressSearchHelper.where_postcode_clause

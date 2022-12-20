@@ -38,12 +38,13 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         postcode: "A0 0AA",
       },
       dwelling_type: "Mid-terrace house",
+      lodgement_date: "2020-05-04",
+      uprn: "000000000000",
     }
 
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
-
         expect(result).to be_a(Domain::AssessmentBusDetails)
         expect(result.to_hash).to eq expected_bus_details_hash
       end
@@ -56,7 +57,6 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     context "when searching by UPRN" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_uprn("UPRN-000000000000")
-
         expect(result).to be_a(Domain::AssessmentBusDetails)
         expect(result.to_hash).to eq expected_bus_details_hash
       end
@@ -140,6 +140,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         postcode: "A0 0AA",
       },
       dwelling_type: nil,
+      uprn: "000000000000",
+      lodgement_date: "2020-05-04",
     }
 
     it "finds and returns the expected data", aggregate_failures: true do
@@ -269,6 +271,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         postcode: "A0 0AA",
       },
       dwelling_type: "Mid-terrace house",
+      uprn: "000000000000",
+      lodgement_date: "2020-05-04",
     }
 
     context "when searching by postcode and building identifier" do
@@ -324,6 +328,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         postcode: "A0 0AA",
       },
       dwelling_type: "B1 Offices and Workshop businesses",
+      uprn: "000000000001",
+      lodgement_date: "2020-05-04",
     }
 
     context "when searching by postcode and building identifier" do
@@ -382,6 +388,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         postcode: "A0 0AA",
       },
       dwelling_type: "Mid-terrace house",
+      uprn: "000000000001",
+      lodgement_date: "2020-05-04",
     }
 
     context "when searching using correct original casing" do
