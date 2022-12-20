@@ -2264,19 +2264,30 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                description: A list of existing interesting numbers
-                items:
-                  $ref: "#/components/schemas/InterestingNumber"
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: A list of existing interesting numbers
+                    items:
+                      $ref: "#/components/schemas/InterestingNumber"
+                  meta:
+                    type: object
+
         '202':
           description: Interesting numbers about recent activity on the register, where not all known interesting numbers are available
           content:
             application/json:
               schema:
-                type: array
-                description: An incomplete list of existing interesting numbers - the rest will be calculated and available soon
-                items:
-                  $ref: "#/components/schemas/InterestingNumber"
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: A list of existing interesting numbers
+                    items:
+                      $ref: "#/components/schemas/InterestingNumber"
+                  meta:
+                    type: object
 
 components:
   securitySchemes:
