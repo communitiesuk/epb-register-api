@@ -31,6 +31,7 @@ module Gateway
         WHERE assessment_id IN (
           SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
         )
+        AND a.opt_out = false
       SQL
 
       sql = add_type_filter(sql, ASSESSMENT_TYPES)
@@ -49,10 +50,11 @@ module Gateway
           a.assessment_id AS epc_rrn,
           a.type_of_assessment AS report_type,
           a.date_of_expiry AS expiry_date,
-           aa.address_id as uprn
+          aa.address_id as uprn
         FROM assessments a
         JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
         WHERE a.assessment_id = $1
+        AND a.opt_out = false
       SQL
 
       do_search(
@@ -105,6 +107,7 @@ module Gateway
           FROM assessments AS a
           JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
           WHERE 0=0
+          AND a.opt_out = false
       SQL
 
       sql << Helper::AddressSearchHelper.where_postcode_clause
@@ -127,6 +130,7 @@ module Gateway
           FROM assessments AS a
           JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
           WHERE 0=0
+          AND a.opt_out = false
       SQL
       sql << Helper::AddressSearchHelper.where_postcode_clause
       sql << Helper::AddressSearchHelper.where_name_clause
@@ -148,6 +152,7 @@ module Gateway
         WHERE assessment_id IN (
           SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
         )
+        AND a.opt_out = false
       SQL
 
       sql = add_type_filter(sql, assessment_types)

@@ -453,7 +453,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
   end
 
-  context "when a certificate is cancelled" do
+  context "when a certificate is cancelled, marked not for issue, or opted out" do
     before do
       add_super_assessor(scheme_id:)
 
@@ -480,7 +480,19 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       rdsap_xml.at("UPRN").content = "UPRN-000111222335"
       do_lodgement.call
 
+      rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0003"
+      rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 More Another Street" }
+      rdsap_xml.at("UPRN").content = "UPRN-000111222336"
+      do_lodgement.call
+
+      rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0004"
+      rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 More Another Street" }
+      rdsap_xml.at("UPRN").content = "UPRN-000111222337"
+      do_lodgement.call
+
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0002")
     end
 
     it "only finds the 2 EPC that have not been cancelled" do

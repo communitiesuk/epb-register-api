@@ -14,7 +14,6 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         domestic_sap: "ACTIVE",
       ),
     )
-
     scheme_id
   end
 
@@ -402,6 +401,81 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
           symbolize_names: true,
         )
 
+        expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+      end
+    end
+
+    context "when a UPRN is provided in a valid format but is for a certificate that has been opted out" do
+      before do
+        lodge_assessment(
+          assessment_body: sap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-18.0.0",
+        )
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
+      end
+
+      it "receives an appropriate error with a 404" do
+        response = JSON.parse(
+          bus_details_by_uprn(
+            "UPRN-000000000000",
+            accepted_responses: [404],
+          ).body,
+          symbolize_names: true,
+        )
+        expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+      end
+    end
+
+    context "when a UPRN is provided in a valid format but is for a certificate that has been cancelled" do
+      before do
+        lodge_assessment(
+          assessment_body: sap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-18.0.0",
+        )
+        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+      end
+
+      it "receives an appropriate error with a 404" do
+        response = JSON.parse(
+          bus_details_by_uprn(
+            "UPRN-000000000000",
+            accepted_responses: [404],
+          ).body,
+          symbolize_names: true,
+        )
+        expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+      end
+    end
+
+    context "when a UPRN is provided in a valid format but is for a certificate that has been marked as not for issue" do
+      before do
+        lodge_assessment(
+          assessment_body: sap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-18.0.0",
+        )
+        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+      end
+
+      it "receives an appropriate error with a 404" do
+        response = JSON.parse(
+          bus_details_by_uprn(
+            "UPRN-000000000000",
+            accepted_responses: [404],
+          ).body,
+          symbolize_names: true,
+        )
         expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
       end
     end
