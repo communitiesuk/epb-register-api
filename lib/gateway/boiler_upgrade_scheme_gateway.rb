@@ -31,7 +31,6 @@ module Gateway
         WHERE assessment_id IN (
           SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
         )
-        AND a.opt_out = false
       SQL
 
       sql = add_type_filter(sql, ASSESSMENT_TYPES)
@@ -54,7 +53,6 @@ module Gateway
         FROM assessments a
         JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
         WHERE a.assessment_id = $1
-        AND a.opt_out = false
       SQL
 
       do_search(
@@ -152,7 +150,6 @@ module Gateway
         WHERE assessment_id IN (
           SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
         )
-        AND a.opt_out = false
       SQL
 
       sql = add_type_filter(sql, assessment_types)

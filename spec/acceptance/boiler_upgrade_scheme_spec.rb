@@ -181,6 +181,60 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
           expect(response[:data]).to eq expected_rdsap_details
         end
       end
+
+      context "when getting BUS details with a valid postcode and building name or number but is for a certificate that has been opted out" do
+        before do
+          opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
+        end
+
+        it "receives an appropriate error with a 404" do
+          response = JSON.parse(
+            bus_details_by_address(
+              postcode: "A0 0AA",
+              building_name_or_number: "1:",
+              accepted_responses: [404],
+            ).body,
+            symbolize_names: true,
+          )
+          expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+        end
+      end
+
+      context "when getting BUS details with a valid postcode and building name or number but is for a certificate that has been cancelled" do
+        before do
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+        end
+
+        it "receives an appropriate error with a 404" do
+          response = JSON.parse(
+            bus_details_by_address(
+              postcode: "A0 0AA",
+              building_name_or_number: "1:",
+              accepted_responses: [404],
+            ).body,
+            symbolize_names: true,
+          )
+          expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+        end
+      end
+
+      context "when getting BUS details with a valid postcode and building name or number but is for a certificate that has been marked as not for issue" do
+        before do
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+        end
+
+        it "receives an appropriate error with a 404" do
+          response = JSON.parse(
+            bus_details_by_address(
+              postcode: "A0 0AA",
+              building_name_or_number: "1:",
+              accepted_responses: [404],
+            ).body,
+            symbolize_names: true,
+          )
+          expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+        end
+      end
     end
 
     context "when there is one matching assessment to send BUS details for, but multiple for the same postcode" do
@@ -418,15 +472,15 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
       end
 
-      it "receives an appropriate error with a 404" do
+      it "receives the appropriate BUS details" do
         response = JSON.parse(
           bus_details_by_uprn(
             "UPRN-000000000000",
-            accepted_responses: [404],
           ).body,
           symbolize_names: true,
         )
-        expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+
+        expect(response[:data]).to eq expected_sap_details
       end
     end
 
