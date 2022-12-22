@@ -595,4 +595,37 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       })
     end
   end
+
+  context "when the address is in the channel islands or isle of man" do
+    let(:error) do
+      {
+        "code": "INVALID_COUNTRY",
+        "title": "Property address must be in England, Wales, or Northern Ireland",
+      }.freeze
+    end
+
+    it "returns an error if the address is JE" do
+      assert_errors([error], { "Address/Postcode": "JE3 6HW" })
+    end
+
+    it "returns an error if the address is GY" do
+      assert_errors([error], { "Address/Postcode": "GY7 9QS" })
+    end
+
+    it "returns an error if the address is IM" do
+      assert_errors([error], { "Address/Postcode": "IM7 3BZ" })
+    end
+
+    it "returns no error if the address is in England" do
+      assert_errors([], { "Address/Postcode": "SW1A 2AA" })
+    end
+
+    it "returns no error if the address is in Northern Ireland" do
+      assert_errors([], { "Address/Postcode": "BT3 9EP" })
+    end
+
+    it "returns no error if the address is in Wales" do
+      assert_errors([], { "Address/Postcode": "LL65 1DQ" })
+    end
+  end
 end

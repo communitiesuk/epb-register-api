@@ -267,12 +267,32 @@ module LodgementRules
             dates[0] <= dates[1]
           end,
       },
+      {
+        name: "INVALID_COUNTRY",
+        title:
+          "Property address must be in England, Wales, or Northern Ireland",
+        test:
+          lambda do |adapter|
+            lookup = country_lookup_for_assessment adapter
+            if lookup.in_channel_islands? || lookup.in_isle_of_man?
+              return false
+            else
+              return true
+            end
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
       errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
 
       errors.map { |error| { code: error[:name], title: error[:title] } }
+    end
+
+    def self.country_lookup_for_assessment(assessment)
+      ApiFactory.get_country_for_candidate_assessment_use_case.execute rrn: method_or_nil(assessment, :assessment_id),
+                                                                       postcode: method_or_nil(assessment, :postcode),
+                                                                       address_id: method_or_nil(assessment, :address_id)
     end
   end
 end

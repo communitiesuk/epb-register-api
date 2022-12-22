@@ -287,6 +287,27 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
     end
 
+    context "when the address is in the channel islands or isle of man" do
+      let(:error) do
+        {
+          "code": "INVALID_COUNTRY",
+          "title": "Property address must be in England, Wales, or Northern Ireland",
+        }.freeze
+      end
+
+      it "returns an error if the address is JE" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "JE3 6HW"]], [error])
+      end
+
+      it "returns an error if the address is GY" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "GY7 9QS"]], [error])
+      end
+
+      it "returns an error if the address is IM" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error])
+      end
+    end
+
     context "when inspection date is greater than or equal to the registration date" do
       let(:inspection_date_error) do
         {

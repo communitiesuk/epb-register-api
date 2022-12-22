@@ -131,6 +131,20 @@ module LodgementRules
           end,
       },
       {
+        name: "INVALID_COUNTRY",
+        title:
+          "Property address must be in England, Wales, or Northern Ireland",
+        test:
+          lambda do |adapter|
+            lookup = country_lookup_for_assessment adapter
+            if lookup.in_channel_islands? || lookup.in_isle_of_man?
+              return false
+            else
+              return true
+            end
+          end,
+      },
+      {
         name: "WRONG_SBEM_VERSION_FOR_REGION",
         title:
           "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 5.6, England - SBEM 6.1",

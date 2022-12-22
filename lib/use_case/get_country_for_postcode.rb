@@ -82,6 +82,12 @@ module UseCase
       case postcode
       when /^BT/
         lookup_for [:N]
+      when /^JE/
+        lookup_for [:L]
+      when /^GY/
+        lookup_for [:L]
+      when /^IM/
+        lookup_for [:M]
       when IN_WALES_ONLY_REGEX
         lookup_for [:W]
       when CROSS_BORDER_ENGLAND_AND_WALES_REGEX
