@@ -117,6 +117,52 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         expect(response[:data]).to eq expected_rdsap_details
       end
     end
+
+    context "when the RRN is associated with an assessment that is superseded by another assessment that BUS details can be sent for" do
+      let(:latest_rrn) { "0000-0000-0000-0000-0014" }
+
+      before do
+        lodge_assessment(
+          assessment_body: rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+        )
+
+        updated_rdsap = Nokogiri::XML rdsap_xml.clone
+        updated_rdsap.at("RRN").children = latest_rrn
+        updated_rdsap.at("Registration-Date").children = "2031-05-04"
+
+        lodge_assessment(
+          assessment_body: updated_rdsap.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          migrated: true,
+        )
+      end
+
+      context "with the register-api-sends-redirects-for-bus feature flag enabled" do
+        before do
+          allow(Helper::Toggles).to receive(:enabled?).with("register-api-sends-redirects-for-bus").and_return(true)
+        end
+
+        it "returns a 303 response with a redirect to the URL for the BUS details for the latest assessment" do
+          response = bus_details_by_rrn("0000-0000-0000-0000-0000", accepted_responses: [303])
+          expect(URI(response.location).request_uri).to eq "/api/bus/assessments/latest/search?rrn=#{latest_rrn}"
+        end
+      end
+
+      context "with the register-api-sends-redirects-for-bus feature flag not enabled" do
+        it "returns a 404" do
+          response = bus_details_by_rrn("0000-0000-0000-0000-0000", accepted_responses: [404])
+          expect(response.status).to eq 404
+        end
+      end
+    end
   end
 
   context "when getting BUS details with a UPRN" do

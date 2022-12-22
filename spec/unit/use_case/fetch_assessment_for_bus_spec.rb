@@ -72,4 +72,18 @@ describe UseCase::FetchAssessmentForBus do
       expect(use_case.execute(rrn:)).to be_nil
     end
   end
+
+  context "when fetching BUS (Boiler Upgrade Scheme) details for an RRN for an assessment that has been superseded" do
+    let(:rrn) { "0000-2222-4444-6666-8888" }
+
+    let(:assessment_reference) { Domain::AssessmentReference.new rrn: "0000-2222-4444-6666-8889" }
+
+    before do
+      allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return assessment_reference
+    end
+
+    it "returns the assessment reference passed to it from the gateway" do
+      expect(use_case.execute(rrn:)).to be assessment_reference
+    end
+  end
 end

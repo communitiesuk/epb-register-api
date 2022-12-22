@@ -1392,6 +1392,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MultipleBUSMatchesList'
+        '303':
+          description: 'Redirect to the URL for the latest assessment in the case that the assessment pertaining to the requested RRN has been superseded'
+          headers:
+            Location:
+              type: "string"
         '400':
           description: 'Badly formed request - error response message will contain the details.
                         This could be

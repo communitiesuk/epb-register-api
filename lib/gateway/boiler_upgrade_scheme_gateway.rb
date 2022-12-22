@@ -54,13 +54,23 @@ module Gateway
         JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
         WHERE a.assessment_id = $1
       SQL
+      binds = [Helper::AddressSearchHelper.string_attribute("rrn", rrn)]
 
-      do_search(
-        sql:,
-        binds: [
-          Helper::AddressSearchHelper.string_attribute("rrn", rrn),
-        ],
-      )
+      unless Helper::Toggles.enabled?("register-api-sends-redirects-for-bus")
+        return do_search(sql:, binds:)
+      end
+
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
+      return nil if results.count.zero?
+
+      assessment_details = results.map { |result| row_to_domain(result) }.first
+
+      later_rrn = nil
+      row_to_domain(results.to_a.first) do |summary|
+        later_rrn = summary[:superseded_by]
+      end
+
+      later_rrn ? Domain::AssessmentReference.new(rrn: later_rrn) : assessment_details
     end
 
   private

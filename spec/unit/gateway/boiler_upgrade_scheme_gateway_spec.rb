@@ -96,6 +96,43 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           expect(gateway.search_by_rrn("0000-0000-0000-0000-0000")).to be_nil
         end
       end
+
+      context "with an RRN that has been superseded" do
+        let(:latest_rrn) { "0000-0000-0000-0000-0013" }
+
+        before do
+          updated_rdsap = rdsap_xml.clone
+          updated_rdsap.at("RRN").children = latest_rrn
+          updated_rdsap.at("Registration-Date").children = "2021-05-04"
+
+          lodge_assessment(
+            assessment_body: updated_rdsap.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            migrated: true,
+          )
+        end
+
+        context "with the feature flag register-api-sends-redirects-for-bus enabled" do
+          before do
+            allow(Helper::Toggles).to receive(:enabled?).with("register-api-sends-redirects-for-bus").and_return(true)
+          end
+
+          it "returns a redirect reference" do
+            assessment_reference = gateway.search_by_rrn("0000-0000-0000-0000-0000")
+            expect(assessment_reference).to be_a_kind_of Domain::AssessmentReference
+            expect(assessment_reference.rrn).to eq latest_rrn
+          end
+        end
+
+        context "with the feature flag register-api-sends-redirects-for-bus not enabled" do
+          it "returns nil" do
+            expect(gateway.search_by_rrn("0000-0000-0000-0000-0000")).to be_nil
+          end
+        end
+      end
     end
   end
 

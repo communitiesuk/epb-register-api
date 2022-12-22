@@ -55,15 +55,16 @@ module Controller
         end
 
       result = use_case.execute(**execute_params)
-      status, data = case result
-                     when Domain::AssessmentBusDetails
-                       [200, result.to_hash]
-                     when Domain::AssessmentReferenceList
-                       [300, { links: { assessments: result.references } }]
-                     when nil
-                       raise Sinatra::NotFound
-                     end
-      json_api_response(code: status, data:)
+      case result
+      when Domain::AssessmentBusDetails
+        json_api_response code: 200, data: result.to_hash
+      when Domain::AssessmentReferenceList
+        json_api_response code: 300, data: { links: { assessments: result.references } }
+      when Domain::AssessmentReference
+        redirect "/api/bus/assessments/latest/search?rrn=#{result.rrn}", 303
+      when nil
+        raise Sinatra::NotFound
+      end
     rescue StandardError => e
       case e
       when Sinatra::NotFound
