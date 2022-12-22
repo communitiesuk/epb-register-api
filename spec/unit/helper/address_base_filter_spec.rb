@@ -77,8 +77,8 @@ describe Helper::AddressBaseFilter do
     W: true, # Wales
     S: false, # Scotland
     N: true, # Northern Ireland
-    L: true, # Channel Islands
-    M: true, # Isle of Man
+    L: false, # Channel Islands
+    M: false, # Isle of Man
     J: true, # an unassigned country
   }.each do |country_code_sym, is_accepted|
     context "when given an AddressBase entry with a country code denoting it is in #{COUNTRIES[country_code_sym]}" do

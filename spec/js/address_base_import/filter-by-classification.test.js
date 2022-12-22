@@ -69,14 +69,14 @@ describe('filter out non-EPC related location classifications', () => {
   })
 })
 
-describe('filter out Scottish addresses', () => {
+describe('filter out addresses', () => {
   Object.entries({
     E: true, // England
     W: true, // Wales
     S: false, // Scotland
     N: true, // Northern Ireland
-    L: true, // Channel Islands
-    M: true, // Isle of Man
+    L: false, // Channel Islands
+    M: false, // Isle of Man
     J: true // an unassigned country
   }).forEach(([countryCode, isAccepted]) => {
     it(`when given an AddressBase entry with a country code denoting it is in ${countries[countryCode]}`, () => {
