@@ -30,7 +30,6 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       loftInsulationRecommended: false,
       secondaryHeating: "Room heaters, electric",
       address: {
-        addressId: "UPRN-000000000000",
         addressLine1: "1 Some Street",
         addressLine2: "",
         addressLine3: "",
@@ -53,7 +52,6 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       loftInsulationRecommended: false,
       secondaryHeating: "Electric heater",
       address: {
-        addressId: "UPRN-000000000000",
         addressLine1: "1 Some Street",
         addressLine2: "Some Area",
         addressLine3: "Some County",
@@ -76,7 +74,6 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       loftInsulationRecommended: nil,
       secondaryHeating: nil,
       address: {
-        addressId: "UPRN-000000000001",
         addressLine1: "Some Unit",
         addressLine2: "2 Lonely Street",
         addressLine3: "Some Area",

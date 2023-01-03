@@ -89,7 +89,6 @@ module Gateway
         loft_insulation_recommended: has_domestic_recommendation?(type: "A", summary: assessment_summary),
         secondary_heating: fetch_property_description(node_name: "secondary_heating", summary: assessment_summary),
         address: assessment_summary[:address].slice(
-          :address_id,
           :address_line1,
           :address_line2,
           :address_line3,

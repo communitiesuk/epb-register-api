@@ -3135,8 +3135,6 @@ components:
         address:
           type: object
           properties:
-            addressId:
-              $ref: '#/components/schemas/AddressId'
             addressLine1:
               type: string
               example: '22 Acacia Avenue'

@@ -29,7 +29,6 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       loft_insulation_recommended: false,
       secondary_heating: "Room heaters, electric",
       address: {
-        address_id: "UPRN-000000000000",
         address_line1: "1 Some Street",
         address_line2: "",
         address_line3: "",
@@ -168,7 +167,6 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       loft_insulation_recommended: false,
       secondary_heating: nil,
       address: {
-        address_id: "UPRN-000000000000",
         address_line1: "1 Some Street",
         address_line2: "",
         address_line3: "",
@@ -299,7 +297,6 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       loft_insulation_recommended: false,
       secondary_heating: "Electric heater",
       address: {
-        address_id: "UPRN-000000000000",
         address_line1: "1 Some Street",
         address_line2: "Some Area",
         address_line3: "Some County",
@@ -356,7 +353,6 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       loft_insulation_recommended: nil,
       secondary_heating: nil,
       address: {
-        address_id: "UPRN-000000000001",
         address_line1: "Some Unit",
         address_line2: "2 Lonely Street",
         address_line3: "Some Area",
@@ -416,7 +412,6 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       loft_insulation_recommended: false,
       secondary_heating: "Room heaters, electric",
       address: {
-        address_id: "UPRN-000000000001",
         address_line1: "Flat 12A Street Lane",
         address_line2: "",
         address_line3: "",
