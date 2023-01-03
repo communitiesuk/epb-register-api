@@ -106,59 +106,59 @@
         </SAP:Addendum>
         <SAP:Property-Summary>
           <SAP:Walls>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Brick walls</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
           </SAP:Walls>
           <SAP:Walls>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Brick walls</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
           </SAP:Walls>
           <SAP:Roof>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>2</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Slate roof</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>2</SAP:Environmental-Efficiency-Rating>
           </SAP:Roof>
           <SAP:Roof>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>2</SAP:Energy-Efficiency-Rating>
             <SAP:Description>slate roof</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>2</SAP:Environmental-Efficiency-Rating>
           </SAP:Roof>
           <SAP:Floor>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>1</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Tiled floor</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>1</SAP:Environmental-Efficiency-Rating>
           </SAP:Floor>
           <SAP:Floor>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>1</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Tiled floor</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>1</SAP:Environmental-Efficiency-Rating>
           </SAP:Floor>
           <SAP:Windows>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>4</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Glass window</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>4</SAP:Environmental-Efficiency-Rating>
           </SAP:Windows>
           <SAP:Main-Heating>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Gas boiler</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating>
           <SAP:Main-Heating>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Gas boiler</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating>
           <SAP:Main-Heating-Controls>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>2</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Thermostat</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>2</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating-Controls>
           <SAP:Main-Heating-Controls>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>2</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Thermostat</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>2</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating-Controls>
           <SAP:Secondary-Heating>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
@@ -166,19 +166,19 @@
             <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Secondary-Heating>
           <SAP:Hot-Water>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Gas boiler</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
           </SAP:Hot-Water>
           <SAP:Lighting>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>5</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Energy saving bulbs</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>5</SAP:Environmental-Efficiency-Rating>
           </SAP:Lighting>
           <SAP:Air-Tightness>
-            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Energy-Efficiency-Rating>3</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Draft Exclusion</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>3</SAP:Environmental-Efficiency-Rating>
           </SAP:Air-Tightness>
           <SAP:Dwelling-Type>Mid-terrace house</SAP:Dwelling-Type>
           <SAP:Total-Floor-Area>69</SAP:Total-Floor-Area>

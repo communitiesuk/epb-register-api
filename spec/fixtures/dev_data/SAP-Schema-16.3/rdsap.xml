@@ -77,69 +77,69 @@
       <SAP:Energy-Assessment>
         <HIP:Property-Summary>
           <HIP:Wall>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Brick walls</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>3</HIP:Environmental-Efficiency-Rating>
           </HIP:Wall>
           <HIP:Wall>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Brick walls</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>3</HIP:Environmental-Efficiency-Rating>
           </HIP:Wall>
           <HIP:Roof>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>2</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Slate roof</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>2</HIP:Environmental-Efficiency-Rating>
           </HIP:Roof>
           <HIP:Roof>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>2</HIP:Energy-Efficiency-Rating>
             <HIP:Description>slate roof</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>2</HIP:Environmental-Efficiency-Rating>
           </HIP:Roof>
           <HIP:Floor>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>1</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Tiled floor</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>1</HIP:Environmental-Efficiency-Rating>
           </HIP:Floor>
           <HIP:Floor>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>1</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Tiled floor</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>1</HIP:Environmental-Efficiency-Rating>
           </HIP:Floor>
           <HIP:Window>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>4</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Glass window</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>4</HIP:Environmental-Efficiency-Rating>
           </HIP:Window>
           <HIP:Main-Heating>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Gas boiler</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>3</HIP:Environmental-Efficiency-Rating>
           </HIP:Main-Heating>
           <HIP:Main-Heating>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Gas boiler</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>3</HIP:Environmental-Efficiency-Rating>
           </HIP:Main-Heating>
           <HIP:Main-Heating-Controls>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>2</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Thermostat</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>2</HIP:Environmental-Efficiency-Rating>
           </HIP:Main-Heating-Controls>
           <HIP:Main-Heating-Controls>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>2</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Thermostat</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>2</HIP:Environmental-Efficiency-Rating>
           </HIP:Main-Heating-Controls>
           <HIP:Hot-Water>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>3</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Gas boiler</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>3</HIP:Environmental-Efficiency-Rating>
           </HIP:Hot-Water>
           <HIP:Lighting>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Energy-Efficiency-Rating>5</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Energy saving bulbs</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>5</HIP:Environmental-Efficiency-Rating>
           </HIP:Lighting>
           <HIP:Secondary-Heating>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>

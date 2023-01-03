@@ -90,49 +90,49 @@
         <SAP05:Assessment-Date>2010-03-23</SAP05:Assessment-Date>
         <SAP05:Property-Summary>
           <SAP05:Walls>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>3</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Brick walls</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>3</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Walls>
           <SAP05:Walls>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>3</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Brick walls</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>3</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Walls>
           <SAP05:Roof>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>2</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Slate roof</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>2</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Roof>
           <SAP05:Roof>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>2</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>slate roof</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>2</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Roof>
           <SAP05:Floor>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>1</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Tiled floor</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>1</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Floor>
           <SAP05:Floor>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>1</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Tiled floor</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>1</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Floor>
           <SAP05:Windows>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>4</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Glass window</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>4</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Windows>
           <SAP05:Main-Heating>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>3</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Gas boiler</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>3</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Main-Heating>
           <SAP05:Main-Heating-Controls>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>2</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Thermostat</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>2</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Main-Heating-Controls>
           <SAP05:Secondary-Heating>
             <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
@@ -140,19 +140,19 @@
             <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Secondary-Heating>
           <SAP05:Hot-Water>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>3</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Gas boiler</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>3</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Hot-Water>
           <SAP05:Lighting>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>5</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Energy saving bulbs</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>5</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Lighting>
           <SAP05:Air-Tightness>
-            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Energy-Efficiency-Rating>3</SAP05:Energy-Efficiency-Rating>
             <SAP05:Description>Draft Exclusion</SAP05:Description>
-            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>3</SAP05:Environmental-Efficiency-Rating>
           </SAP05:Air-Tightness>
           <SAP05:Has-Fixed-Air-Conditioning>false</SAP05:Has-Fixed-Air-Conditioning>
           <SAP05:Has-Hot-Water-Cylinder>true</SAP05:Has-Hot-Water-Cylinder>

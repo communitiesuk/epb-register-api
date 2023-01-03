@@ -71,59 +71,59 @@
     <Assessment-Date>2019-05-04</Assessment-Date>
     <Property-Summary>
       <Walls>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Description>Brick walls</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Walls>
       <Walls>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Description>Brick walls</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Walls>
       <Roof>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
         <Description>Slate roof</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
       </Roof>
       <Roof>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
         <Description>slate roof</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
       </Roof>
       <Floor>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>1</Energy-Efficiency-Rating>
         <Description>Tiled floor</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
       </Floor>
       <Floor>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>1</Energy-Efficiency-Rating>
         <Description>Tiled floor</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
       </Floor>
       <Windows>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
         <Description>Glass window</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Windows>
       <Main-Heating>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Description>Gas boiler</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Main-Heating>
       <Main-Heating>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Description>Gas boiler</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Main-Heating>
       <Main-Heating-Controls>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
         <Description>Thermostat</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
       </Main-Heating-Controls>
       <Main-Heating-Controls>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
         <Description>Thermostat</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
       </Main-Heating-Controls>
       <Secondary-Heating>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
@@ -131,19 +131,19 @@
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Secondary-Heating>
       <Hot-Water>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Description>Gas boiler</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Hot-Water>
       <Lighting>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
         <Description>Energy saving bulbs</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
       </Lighting>
       <Air-Tightness>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
         <Description>Draft Exclusion</Description>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Air-Tightness>
       <Dwelling-Type>Mid-terrace house</Dwelling-Type>
       <Total-Floor-Area>69</Total-Floor-Area>
