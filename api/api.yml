@@ -706,7 +706,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-          example: 503
+              example: 503
 
   /assessments:
     post:
@@ -1396,7 +1396,8 @@ paths:
           description: 'Redirect to the URL for the latest assessment in the case that the assessment pertaining to the requested RRN has been superseded'
           headers:
             Location:
-              type: "string"
+              schema:
+                type: "string"
         '400':
           description: 'Badly formed request - error response message will contain the details.
                         This could be
