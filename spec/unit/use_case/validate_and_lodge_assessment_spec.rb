@@ -410,5 +410,33 @@ describe UseCase::ValidateAndLodgeAssessment do
         }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
       end
     end
+
+    context "with inspection date later than registration date for non-domestic certificates (breaking the INSPECTION_DATE_LATER_THAN_REGISTRATION_DATE rule)" do
+      let(:cepc) do
+        xml = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc"))
+        xml.at("//CEPC:Inspection-Date").content = "2020-06-14"
+        xml
+      end
+
+      before do
+        Timecop.freeze(2022, 12, 22, 0, 0, 0)
+        allow(Helper::Toggles).to receive(:enabled?)
+        allow(Helper::Toggles).to receive(:enabled?).with("register-api-non-domestic-inspection-date-rule").and_return(true)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "raises a NotOverridableLodgmentRuleError error" do
+        expect {
+          use_case.execute assessment_xml: cepc.to_s,
+                           schema_name: "CEPC-8.0.0",
+                           scheme_ids: "1",
+                           migrated: false,
+                           overridden: true
+        }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+      end
+    end
   end
 end
