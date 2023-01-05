@@ -27,7 +27,7 @@ cat << EOF
     },
     {
       "metric_type": "cpu",
-      "breach_duration_secs": 90,
+      "breach_duration_secs": 30,
       "threshold": 50,
       "operator": ">=",
       "cool_down_secs": 60,
