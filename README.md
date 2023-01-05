@@ -15,9 +15,9 @@ Ensure you have Postgres 11 installed. If you are working on a Mac, [this tutori
 
 You will need to have a user with the role name postgres, which has the `Create DB` and `Superuser` permissions to create databases and install the `fuzzystrmatch` extension.
 
-Once you have set this up, run the command
+Once you have set this up, run the command to set up and seed your local database
 
-`make setup-db`
+`make seed-local-db`
 
 ### You will need to set the following environment variables
 
