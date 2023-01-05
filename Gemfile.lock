@@ -104,7 +104,7 @@ GEM
       ruby2_keywords
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    murmurhash3 (0.1.6)
+    murmurhash3 (0.1.7)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     namecase (2.0.0)
@@ -231,7 +231,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.3.0)
-    unleash (4.4.1)
+    unleash (4.4.2)
       murmurhash3 (~> 0.1.6)
     version_gem (1.1.1)
     webmock (3.18.1)
@@ -278,7 +278,7 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   timecop (~> 0.9.6)
-  unleash (~> 4.4.0)
+  unleash (~> 4.4.2)
   webmock (~> 3.18)
   wisper (~> 2.0.1)!
   wisper-rspec (~> 1.0, >= 1.0.1)
