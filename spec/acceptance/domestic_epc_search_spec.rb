@@ -1,17 +1,9 @@
 describe "fetching domestic epc search results from the API", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
-  let(:feature_flag) do
-    "register-api-domestic-epc-search-endpoint-enabled"
-  end
-
   let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
 
   describe "when calling the address search end point" do
-    before do
-      allow(Helper::Toggles).to receive(:enabled?)
-      allow(Helper::Toggles).to receive(:enabled?).with(feature_flag).and_return(true)
-    end
 
     let(:scope) do
       %w[assessment:domestic-epc:search]
@@ -141,24 +133,6 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
                               symbolize_names: true)
 
         expect(response[:errors][0][:code]).to eq "UNAUTHORISED"
-      end
-    end
-
-    context "when the feature flag for the this endpoint is not enabled" do
-      before do
-        allow(Helper::Toggles).to receive(:enabled?).with(feature_flag).and_return(false)
-      end
-
-      it "receives a 501 with an appropriate error" do
-        response = JSON.parse(
-          find_domestic_epcs_with_params(
-            params: {},
-            accepted_responses: [501],
-          ).body,
-          symbolize_names: true,
-        )
-
-        expect(response[:errors][0][:title]).to eq "This endpoint is not implemented"
       end
     end
   end

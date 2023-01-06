@@ -17,7 +17,6 @@ module Controller
     class NotImplementedError < StandardError; end
 
     get "/api/assessments/domestic-epcs/search", auth_token_has_all: ["assessment:domestic-epc:search"] do
-      raise NotImplementedError unless Helper::Toggles.enabled? "register-api-domestic-epc-search-endpoint-enabled"
 
       params_body SEARCH_SCHEMA
       use_case = ApiFactory.find_domestic_epcs_by_address
