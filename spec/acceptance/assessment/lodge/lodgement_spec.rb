@@ -304,7 +304,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "logs the events to the overridden_lodgement_events table" do
-      cepc_xml_doc.at("//CEPC:Registration-Date").children = "2006-05-04"
+      cepc_xml_doc.at("//CEPC:Inspection-Date").children = "2006-05-04"
 
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,

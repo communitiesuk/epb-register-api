@@ -317,24 +317,12 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         }.freeze
       end
 
-      context "when toggle is enabled" do
-        before do
-          allow(Helper::Toggles).to receive(:enabled?).with("register-api-non-domestic-inspection-date-rule").and_return(true)
-        end
-
-        it "throws Completion error when the Registration-Date is before the Inspection- and Completion-Date" do
-          assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.yesterday.to_s]], [inspection_date_error])
-        end
-
-        it "allows lodgement when the dates are equal" do
-          assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.today.to_s]], [])
-        end
+      it "throws Completion error when the Registration-Date is before the Inspection- and Completion-Date" do
+        assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.yesterday.to_s]], [inspection_date_error])
       end
 
-      context "when toggle is not enable " do
-        it "the ignores the Inspection-Date and Completion-Date rule" do
-          assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.yesterday.to_s]], [])
-        end
+      it "allows lodgement when the dates are equal" do
+        assert_errors([["Inspection-Date", Date.today.to_s], ["Registration-Date", Date.today.to_s]], [])
       end
     end
   end

@@ -421,7 +421,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       before do
         Timecop.freeze(2022, 12, 22, 0, 0, 0)
         allow(Helper::Toggles).to receive(:enabled?)
-        allow(Helper::Toggles).to receive(:enabled?).with("register-api-non-domestic-inspection-date-rule").and_return(true)
       end
 
       after do

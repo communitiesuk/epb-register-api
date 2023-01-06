@@ -62,6 +62,10 @@ describe UseCase::ExportOpenDataCepcrr, set_with_timecop: true do
           .reverse_each { |node| node.content = "2018-07-01" }
 
         xml
+          .xpath("//*[local-name() = 'Inspection-Date']")
+          .reverse_each { |node| node.content = "2018-07-01" }
+
+        xml
       end
 
       before do

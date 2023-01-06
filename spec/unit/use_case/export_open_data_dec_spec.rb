@@ -93,7 +93,6 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
         scheme_id = add_scheme_and_get_id
         dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
         dec_assessment_id = dec_xml.at("RRN")
-        dec_assessment_date = dec_xml.at("Registration-Date")
         dec_building_reference_number = dec_xml.at("UPRN")
 
         # Lodge CEPC to ensure it is not exported
@@ -150,7 +149,6 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
         )
 
         dec_assessment_id.children = "0000-0000-0000-0000-0002"
-        dec_assessment_date.children = "2018-07-01"
         lodge_assessment(
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],

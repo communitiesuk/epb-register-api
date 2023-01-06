@@ -195,7 +195,7 @@ module LodgementRules
               # Registration-Date
             ]
 
-            Helper::Toggles.enabled?("register-api-non-domestic-inspection-date-rule") ? (dates[0] <= dates[1]) : true
+            (dates[0] <= dates[1])
           end,
       },
     ].freeze
