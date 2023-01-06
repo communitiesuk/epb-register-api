@@ -21,7 +21,7 @@ namespace :dev_data do
       address_line2 = ["Red Street", "Blue Walk", "Green Way", "Brown Road", "Silver Lane"]
       address_line3 = ["District 9", "The Hights", "Duck Grange", "Lower Fields", "Upper Marshes"]
       town = %w[Newcastle London Whapping Liverpool Manchester Dublin]
-      postcode = ["NE14 3RE", "C23 6NM", "SH92 4ME", "BR1 7OK"]
+      postcode = ["NE13 3RE", "CR90 6NM", "S44 4ME", "BR1 7OK", "BT1 4WS", "PL7 3ED"]
       company_reg_no = %w[7892922 8245271 ND2536 KY63453 9872056]
       company_website = ["webbymcwebsite.org", "fawcette.com", "testington.co.uk", "mock.org", "practice.it"]
       company_email = ["testemail@email.com", "emailtest@email.com", "practiceemail@email.com", "emailpractice@email.com"]
