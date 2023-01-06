@@ -56,10 +56,6 @@ module Gateway
       SQL
       binds = [Helper::AddressSearchHelper.string_attribute("rrn", rrn)]
 
-      unless Helper::Toggles.enabled?("register-api-sends-redirects-for-bus")
-        return do_search(sql:, binds:)
-      end
-
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
       return nil if results.count.zero?
 

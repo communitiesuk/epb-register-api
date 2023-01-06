@@ -114,22 +114,10 @@ describe Gateway::BoilerUpgradeSchemeGateway do
           )
         end
 
-        context "with the feature flag register-api-sends-redirects-for-bus enabled" do
-          before do
-            allow(Helper::Toggles).to receive(:enabled?).with("register-api-sends-redirects-for-bus").and_return(true)
-          end
-
-          it "returns a redirect reference" do
-            assessment_reference = gateway.search_by_rrn("0000-0000-0000-0000-0000")
-            expect(assessment_reference).to be_a_kind_of Domain::AssessmentReference
-            expect(assessment_reference.rrn).to eq latest_rrn
-          end
-        end
-
-        context "with the feature flag register-api-sends-redirects-for-bus not enabled" do
-          it "returns nil" do
-            expect(gateway.search_by_rrn("0000-0000-0000-0000-0000")).to be_nil
-          end
+        it "returns a redirect reference" do
+          assessment_reference = gateway.search_by_rrn("0000-0000-0000-0000-0000")
+          expect(assessment_reference).to be_a_kind_of Domain::AssessmentReference
+          expect(assessment_reference.rrn).to eq latest_rrn
         end
       end
     end

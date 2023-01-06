@@ -4,7 +4,6 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
   let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
 
   describe "when calling the address search end point" do
-
     let(:scope) do
       %w[assessment:domestic-epc:search]
     end
