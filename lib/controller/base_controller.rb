@@ -32,7 +32,6 @@ module Controller
 
       raise ReadOnlyMode if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
 
-      response.headers["Access-Control-Allow-Origin"] = "*"
       response.headers["Access-Control-Allow-Headers"] =
         "Content-Type, Cache-Control, Accept"
     end
