@@ -3,8 +3,8 @@ module UseCase
     class ParameterMissing < StandardError
     end
 
-    def initialize
-      @assessment_gateway = Gateway::AssessmentsSearchGateway.new
+    def initialize(gateway = nil)
+      @assessment_gateway = gateway || Gateway::AssessmentsSearchGateway.new
     end
 
     def execute(street_name, town, assessment_type)
@@ -16,6 +16,7 @@ module UseCase
           town,
           assessment_type,
         )
+      raise Boundary::TooManyResults if result.length > 200 && Helper::Toggles.enabled?("register-api-limit-street-town-results")
 
       Helper::NaturalSort.sort!(result)
 

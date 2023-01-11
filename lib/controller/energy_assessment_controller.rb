@@ -18,7 +18,7 @@ module Controller
             assessment_id,
           )
         else
-          UseCase::FindAssessmentsByStreetNameAndTown.new.execute(
+          ApiFactory.find_assessments_by_street_name_and_town.execute(
             street,
             params[:town],
             assessment_types,
@@ -38,6 +38,8 @@ module Controller
         error_response(400, "INVALID_REQUEST", "The requested assessment type is not valid")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_REQUEST", "The requested assessment id is not valid")
+      when Boundary::TooManyResults
+        error_response(413, "PAYLOAD_TOO_LARGE", "There are too many results")
       else
         server_error(e)
       end

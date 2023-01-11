@@ -117,7 +117,7 @@ module Gateway
               AND a.opt_out = false'
       end
 
-      sql += " LIMIT 200"
+      sql += " LIMIT 201"
 
       result = Assessment.connection.exec_query sql, "SQL", binds
 

@@ -489,5 +489,36 @@ describe "Acceptance::Assessment::SearchForAssessments",
         0000-0000-0000-0000-0002
       ]
     end
+
+    context "when the number results are greater than 200" do
+      let(:find_use_case) { instance_double(UseCase::FindAssessmentsByStreetNameAndTown) }
+      let(:gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
+
+      before do
+        Helper::Toggles.set_feature("register-api-limit-street-town-results", false)
+        allow(ApiFactory).to receive(:find_assessments_by_street_name_and_town).and_return(
+          find_use_case,
+        )
+        allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(gateway)
+        allow(gateway).to receive(:search_by_street_name_and_town).and_return({ data: [] })
+        allow(find_use_case).to receive(:execute).and_raise Boundary::TooManyResults
+      end
+
+      it "raises the error" do
+        response_body =
+          assessments_search_by_street_and_town(street: "Some Street", town: "Whitbury", accepted_responses: [413])
+            .body
+        expect(JSON.parse(response_body, symbolize_names: true)).to eq(
+          {
+            errors: [
+              {
+                code: "PAYLOAD_TOO_LARGE",
+                title: "There are too many results",
+              },
+            ],
+          },
+        )
+      end
+    end
   end
 end
