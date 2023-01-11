@@ -273,6 +273,47 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
   end
 
+  context "when a 10-year DEC is superseded by a 1-year DEC" do
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
+
+    before do
+      add_super_assessor(scheme_id:)
+      dec_xml_10_years_yesterday = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
+      date_yesterday = Time.now.prev_day(1).strftime("%Y-%m-%d")
+      dec_xml_10_years_yesterday.at("Nominated-Date").children = date_yesterday
+      dec_xml_10_years_yesterday.at("OR-Assessment-End-Date").children = date_yesterday
+      lodge_assessment(
+        assessment_body: dec_xml_10_years_yesterday.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        )
+
+      dec_xml_1_year_today = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
+      dec_xml_1_year_today.at("RRN").content = "0000-0000-0000-0000-0001"
+      date_today = Time.now.strftime("%Y-%m-%d")
+      dec_xml_1_year_today.at("Nominated-Date").children = date_today
+      dec_xml_1_year_today.at("OR-Assessment-End-Date").children = date_today
+      dec_xml_1_year_today.at_css("Technical-Information Floor-Area").content = "9000"
+      lodge_assessment(
+        assessment_body: dec_xml_1_year_today.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        )
+    end
+
+    it "the 10-year DEC has a superseded rrn" do
+      expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to eq("0000-0000-0000-0000-0001")
+    end
+
+    it "the 1-year DEC does not have a superseded rrn" do
+      expect(use_case.execute("0000-0000-0000-0000-0001")[:superseded_by]).to eq(nil)
+    end
+  end
+
   context "when extracting summary assessment data for a SAP 19" do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway:, xml_gateway:) }
 
