@@ -2,6 +2,7 @@
 
 module Gateway
   class AssessmentsSearchGateway
+    MAX_LIMIT = 201
     class Assessment < ActiveRecord::Base
     end
 
@@ -117,7 +118,7 @@ module Gateway
               AND a.opt_out = false'
       end
 
-      sql += " LIMIT 201"
+      sql += " LIMIT #{MAX_LIMIT}"
 
       result = Assessment.connection.exec_query sql, "SQL", binds
 
