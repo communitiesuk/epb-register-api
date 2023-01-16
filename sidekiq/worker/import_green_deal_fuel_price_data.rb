@@ -6,7 +6,7 @@ module Worker
     include Worker::Helpers
 
     def perform
-      rake_task("maintenance:green_deal_update_fuel_data").invoke
+      ApiFactory.import_green_deal_fuel_price_use_case.execute
     rescue UseCase::ImportGreenDealFuelPrice::NoDataException
       message = ":alert_slow No Fuel Price data available from www.boilers.org.uk"
       Worker::SlackNotification.perform_async(message)

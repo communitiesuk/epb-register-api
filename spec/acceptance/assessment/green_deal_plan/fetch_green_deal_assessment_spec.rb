@@ -4,6 +4,10 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  before do
+    load_green_deal_data
+  end
+
   let(:scheme_id) { add_scheme_and_get_id }
 
   def add_assessment_with_green_deal(

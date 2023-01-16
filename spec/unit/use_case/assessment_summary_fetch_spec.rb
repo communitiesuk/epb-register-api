@@ -288,7 +288,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-        )
+      )
 
       dec_xml_1_year_today = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
       dec_xml_1_year_today.at("RRN").content = "0000-0000-0000-0000-0001"
@@ -302,7 +302,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-        )
+      )
     end
 
     it "the 10-year DEC has a superseded rrn" do

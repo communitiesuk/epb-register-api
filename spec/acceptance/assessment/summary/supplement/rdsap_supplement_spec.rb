@@ -13,8 +13,8 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
   summary0002 = nil
 
   before(:all) do
+    load_green_deal_data
     scheme_id = add_scheme_and_get_id
-
     assessor =
       AssessorStub.new.fetch_request_body(
         domestic_rd_sap: "ACTIVE",

@@ -2,6 +2,7 @@ describe Gateway::AssessmentsSearchGateway do
   include RSpecRegisterApiServiceMixin
 
   subject(:gateway) { described_class.new }
+
   let(:scheme_id) { add_scheme_and_get_id }
 
   before do

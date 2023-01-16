@@ -4,6 +4,10 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  before do
+    load_green_deal_data
+  end
+
   let(:valid_green_deal_plan_request_body) do
     {
       greenDealPlanId: "ABC123456DEF",
@@ -110,6 +114,10 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
   end
 
   describe "update a Green Deal Plan" do
+    before(:all) do
+      load_green_deal_data
+    end
+
     context "when unauthenticated" do
       it "returns status 401" do
         update_green_deal_plan plan_id: "AD0000002312",

@@ -4,6 +4,10 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  before do
+    load_green_deal_data
+  end
+
   let(:valid_green_deal_plan_request_body) do
     GreenDealPlanStub.new.request_body
   end

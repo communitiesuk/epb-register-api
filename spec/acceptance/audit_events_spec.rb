@@ -151,6 +151,7 @@ describe "Audit events", set_with_timecop: true do
 
   context "when a green deal plan is added" do
     before do
+      load_green_deal_data
       add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
                           body: GreenDealPlanStub.new.request_body)
     end
@@ -212,6 +213,7 @@ describe "Audit events", set_with_timecop: true do
     end
 
     before do
+      load_green_deal_data
       add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
                           body: GreenDealPlanStub.new.request_body)
       update_green_deal_plan(
@@ -232,6 +234,7 @@ describe "Audit events", set_with_timecop: true do
 
   context "when a green deal plan is deleted" do
     before do
+      load_green_deal_data
       add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
                           body: GreenDealPlanStub.new.request_body)
       delete_green_deal_plan(plan_id: "ABC123456DEF")

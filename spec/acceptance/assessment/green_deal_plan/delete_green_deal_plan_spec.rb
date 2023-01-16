@@ -4,6 +4,10 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  before do
+    load_green_deal_data
+  end
+
   describe "deleting a green deal plan" do
     context "when unauthenticated" do
       it "returns status 401" do

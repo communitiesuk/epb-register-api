@@ -1,6 +1,14 @@
 class GreenDealFuelDataMock
   def initialize
-    mock_data <<~DATA
+    @mock_data = response_data
+  end
+
+  def scan(string_response)
+    string_response.scan(/^\d,\d+,\d+,\d+\.\d+,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi)
+  end
+
+  def response_data
+    <<~DATA
       $001,462,2020,06,26
       #
       #
@@ -44,12 +52,11 @@ class GreenDealFuelDataMock
     DATA
   end
 
-  def mock_data(data)
+  def mock_data
     WebMock.enable!
-
     WebMock
       .stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat")
-      .to_return(status: 200, body: data)
+      .to_return(status: 200, body: @mock_data)
   end
 
   def disable

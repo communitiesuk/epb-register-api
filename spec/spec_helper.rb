@@ -267,6 +267,13 @@ def get_vcap_services_stub
   }'
 end
 
+def load_green_deal_data
+  fuel_price_mock = GreenDealFuelDataMock.new
+  gateway = Gateway::GreenDealFuelPriceGateway.new
+  response_data = fuel_price_mock.response_data
+  gateway.bulk_insert(fuel_price_mock.scan(response_data))
+end
+
 RSpec.configure do |config|
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
@@ -288,10 +295,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     Rake::Task["db:seed"].invoke
-
-    fuel_price_mock = GreenDealFuelDataMock.new
-    Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
-    fuel_price_mock.disable
 
     Events::Broadcaster.disable!
 
