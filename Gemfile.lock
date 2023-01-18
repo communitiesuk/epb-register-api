@@ -8,12 +8,12 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.4)
-      activesupport (= 7.0.4)
-    activerecord (7.0.4)
-      activemodel (= 7.0.4)
-      activesupport (= 7.0.4)
-    activesupport (7.0.4)
+    activemodel (7.0.4.1)
+      activesupport (= 7.0.4.1)
+    activerecord (7.0.4.1)
+      activemodel (= 7.0.4.1)
+      activesupport (= 7.0.4.1)
+    activesupport (7.0.4.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -99,7 +99,7 @@ GEM
       rake (~> 13.0)
     method_source (1.0.0)
     mini_portile2 (2.8.1)
-    minitest (5.16.3)
+    minitest (5.17.0)
     mock_redis (0.35.0)
       ruby2_keywords
     multi_json (1.15.0)
