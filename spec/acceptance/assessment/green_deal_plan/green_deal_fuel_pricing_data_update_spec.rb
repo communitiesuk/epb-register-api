@@ -4,7 +4,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
 
     before do
       fuel_price_mock.mock_data
-      ApiFactory.import_green_deal_fuel_price_use_case.execute
+      Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
     end
 
     after do
