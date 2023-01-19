@@ -3,6 +3,8 @@ module UseCase
     class ParameterMissing < StandardError
     end
 
+    MAX_RESULTS_THRESHOLD = 200
+
     def initialize(gateway = nil)
       @assessment_gateway = gateway || Gateway::AssessmentsSearchGateway.new
     end
@@ -15,8 +17,9 @@ module UseCase
           street_name,
           town,
           assessment_type,
+          limit: MAX_RESULTS_THRESHOLD + 1,
         )
-      raise Boundary::TooManyResults if result.length > 200 && Helper::Toggles.enabled?("register-api-limit-street-town-results")
+      raise Boundary::TooManyResults if result.length > MAX_RESULTS_THRESHOLD && Helper::Toggles.enabled?("register-api-limit-street-town-results")
 
       Helper::NaturalSort.sort!(result)
 

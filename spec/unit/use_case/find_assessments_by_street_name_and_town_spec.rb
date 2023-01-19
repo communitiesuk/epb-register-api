@@ -12,7 +12,8 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
     before do
       allow(gateway).to receive(:search_by_street_name_and_town).with("Some Street",
                                                                       "Town",
-                                                                      %w[RdSAP]).and_return(results)
+                                                                      %w[RdSAP],
+                                                                      limit: 201).and_return(results)
     end
 
     it "executes the method" do
@@ -34,7 +35,8 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
       before do
         allow(gateway).to receive(:search_by_street_name_and_town).with("1",
                                                                         "Town",
-                                                                        %w[RdSAP]).and_return(too_many_results)
+                                                                        %w[RdSAP],
+                                                                        limit: 201).and_return(too_many_results)
       end
 
       context "when the feature flag is on" do
@@ -69,7 +71,8 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
       before do
         allow(gateway).to receive(:search_by_street_name_and_town).with("1",
                                                                         "Town",
-                                                                        %w[RdSAP]).and_return(two_hundred_results)
+                                                                        %w[RdSAP],
+                                                                        limit: 201).and_return(two_hundred_results)
       end
 
       it "does not raise an error" do

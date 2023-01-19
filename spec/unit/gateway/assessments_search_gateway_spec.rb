@@ -47,5 +47,13 @@ describe Gateway::AssessmentsSearchGateway do
       expect(result.count).to eq(2)
       expect(result.first).to be_a(Domain::AssessmentSearchResult)
     end
+
+    context "when a limit is passed to the search" do
+      it "returns a data set constrained by the limit" do
+        limit = 1
+        result = gateway.search_by_street_name_and_town("Some Street", "Whitbury", %w[RdSAP], limit:)
+        expect(result.count).to eq 1
+      end
+    end
   end
 end
