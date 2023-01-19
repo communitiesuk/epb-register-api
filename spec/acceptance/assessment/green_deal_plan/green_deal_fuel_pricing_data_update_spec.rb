@@ -1,9 +1,14 @@
 describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
   context "when calling the rake to import data" do
+    let(:fuel_price_mock) { GreenDealFuelDataMock.new }
+
     before do
-      fuel_price_mock = GreenDealFuelDataMock.new
       fuel_price_mock.mock_data
-      Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
+      ApiFactory.import_green_deal_fuel_price_use_case.execute
+    end
+
+    after do
+      fuel_price_mock.disable
     end
 
     it "populates the database with the expected values" do
