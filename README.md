@@ -72,7 +72,7 @@ To run the docker image with CLI
 
 Where *host_port* is a free port you want to use on your host machine to make calls to the API.
 
-If you want docker to communiacte with a containarized instance of PostgreSQL, or another container in general, you will need to link them.
+If you want docker to communicate with a containarized instance of PostgreSQL, or another container in general, you will need to link them.
 
 `docker run -p {host_port}:80 --link {linked_container_id} --name test-epb-register-api epb-register-api`
 
