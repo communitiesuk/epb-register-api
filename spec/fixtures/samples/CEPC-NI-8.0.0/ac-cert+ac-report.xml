@@ -77,7 +77,7 @@
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Postcode>AL12 2AA</Postcode>
         </Registered-Address>
       </Equipment-Operator>
       <Building-Name>A. Shop</Building-Name>
@@ -131,7 +131,7 @@
           <Address-Line-3 />
           <Address-Line-4 />
           <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Postcode>AL12 2AA</Postcode>
         </Property-Address>
         <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>

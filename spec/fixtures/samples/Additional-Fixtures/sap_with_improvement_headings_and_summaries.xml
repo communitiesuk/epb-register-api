@@ -232,7 +232,7 @@
             <HIP:Address-Line-2></HIP:Address-Line-2>
             <HIP:Address-Line-3></HIP:Address-Line-3>
             <HIP:Post-Town></HIP:Post-Town>
-            <HIP:Postcode>AB1C 2DE</HIP:Postcode>
+            <HIP:Postcode>AL1C 2DE</HIP:Postcode>
           </HIP:Contact-Address>
           <HIP:Web-Site>http://www.hips.example.com</HIP:Web-Site>
           <HIP:E-Mail>a@b.c</HIP:E-Mail>
@@ -248,13 +248,13 @@
               <HIP:Address-Line-1>13 Hip Street</HIP:Address-Line-1>
               <HIP:Address-Line-2></HIP:Address-Line-2>
               <HIP:Post-Town></HIP:Post-Town>
-              <HIP:Postcode>AB1C 2DF</HIP:Postcode>
+              <HIP:Postcode>AL1C 2DF</HIP:Postcode>
             </HIP:Complaints-Address>
             <HIP:Contact-Address>
               <HIP:Address-Line-1>13 Hip Street</HIP:Address-Line-1>
               <HIP:Address-Line-2></HIP:Address-Line-2>
               <HIP:Post-Town></HIP:Post-Town>
-              <HIP:Postcode>AB1C 2DF</HIP:Postcode>
+              <HIP:Postcode>AL1C 2DF</HIP:Postcode>
             </HIP:Contact-Address>
             <HIP:Web-Site>http://www.hips.example.com</HIP:Web-Site>
             <HIP:E-Mail>info@example-scheme.org.uk</HIP:E-Mail>

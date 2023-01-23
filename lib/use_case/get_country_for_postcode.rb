@@ -74,6 +74,14 @@ module UseCase
     IN_WALES_ONLY_REGEX = Regexp.new((WALES_ONLY_POSTCODE_PREFIXES.map { |fragment| "^#{fragment}" } + WALES_ONLY_POSTCODE_OUTCODES.map { |fragment| "(#{fragment}\s)" }).join("|")).freeze
     CROSS_BORDER_ENGLAND_AND_WALES_REGEX = Regexp.new("^#{CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES.map { |fragment| "(#{fragment}\s)" }.join('|')}").freeze
 
+    SCOTLAND_ONLY_POSTCODE_PREFIXES = %w[AB DD EH FK G HS IV KA KW KY ML PA PH ZE].freeze
+
+    SCOTLAND_ONLY_POSTCODE_OUTCODES = %w[DG1 DG2 DG3 DG4 DG5 DG6 DG7 DG8 DG9 DG10 DG11 DG12 DG13 DG14 TD1 TD2 TD3 TD4 TD5 TD6 TD7 TD8 TD10 TD11 TD13 TD14].freeze
+
+    CROSS_BORDER_ENGLAND_AND_SCOTLAND_POSTCODE_OUTCODES = %w[DG16 TD9 TD12 TD15].freeze
+    IN_SCOTLAND_ONLY_REGEX = Regexp.new((SCOTLAND_ONLY_POSTCODE_PREFIXES.map { |fragment| "(^#{fragment}\\d)" } + SCOTLAND_ONLY_POSTCODE_OUTCODES.map { |fragment| "(#{fragment}\s)" }).join("|")).freeze
+    CROSS_BORDER_ENGLAND_AND_SCOTLAND_REGEX = Regexp.new("^#{CROSS_BORDER_ENGLAND_AND_SCOTLAND_POSTCODE_OUTCODES.map { |fragment| "(#{fragment}\s)" }.join('|')}").freeze
+
     def initialize(address_base_country_gateway: nil)
       @address_base_country_gateway = address_base_country_gateway || Gateway::AddressBaseCountryGateway.new
     end
@@ -93,6 +101,11 @@ module UseCase
       when CROSS_BORDER_ENGLAND_AND_WALES_REGEX
         lookup = address_base_country_gateway.lookup_from_postcode postcode
         lookup.match? ? lookup : lookup_for(%i[E W])
+      when IN_SCOTLAND_ONLY_REGEX
+        lookup_for [:S]
+      when CROSS_BORDER_ENGLAND_AND_SCOTLAND_REGEX
+        lookup = address_base_country_gateway.lookup_from_postcode postcode
+        lookup.match? ? lookup : lookup_for(%i[E S])
       else
         lookup_for [:E]
       end

@@ -596,7 +596,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "when the address is in the channel islands or isle of man" do
+  context "when the address is not in England, Wales, or Northern Ireland" do
     let(:error) do
       {
         "code": "INVALID_COUNTRY",
@@ -616,6 +616,14 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([error], { "Address/Postcode": "IM7 3BZ" })
     end
 
+    it "returns an error if the address is in Scotland" do
+      assert_errors([error], { "Address/Postcode": "TD14 5TY" })
+    end
+
+    it "returns an error if the country code is Scotland" do
+      assert_errors([error], { "Country-Code": "SCT" })
+    end
+
     it "returns no error if the address is in England" do
       assert_errors([], { "Address/Postcode": "SW1A 2AA" })
     end
@@ -626,6 +634,18 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "returns no error if the address is in Wales" do
       assert_errors([], { "Address/Postcode": "LL65 1DQ" })
+    end
+
+    it "returns no error if the postcode crosses the English/Scottish border" do
+      assert_errors([], { "Address/Postcode": "TD15 1UZ" })
+    end
+
+    it "returns no error if the country code is England or Wales" do
+      assert_errors([], { "Country-Code": "EAW" })
+    end
+
+    it "returns no error if the address is Northern Ireland" do
+      assert_errors([], { "Country-Code": "NIR" })
     end
   end
 end

@@ -273,8 +273,9 @@ module LodgementRules
           "Property address must be in England, Wales, or Northern Ireland",
         test:
           lambda do |adapter|
+            country_code = method_or_nil(adapter, :country_code)
             lookup = country_lookup_for_assessment adapter
-            if lookup.in_channel_islands? || lookup.in_isle_of_man?
+            if lookup.in_channel_islands? || lookup.in_isle_of_man? || (lookup.in_scotland? && !lookup.in_england?) || country_code == "SCT"
               return false
             else
               return true
