@@ -39,20 +39,8 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
                                                                         limit: 201).and_return(too_many_results)
       end
 
-      context "when the feature flag is on" do
-        before { Helper::Toggles.set_feature("register-api-limit-street-town-results", true) }
-
-        it "raises an error" do
-          expect { use_case.execute("1", "Town", %w[RdSAP]) }.to raise_error(Boundary::TooManyResults)
-        end
-      end
-
-      context "when the feature flag is off" do
-        before { Helper::Toggles.set_feature("register-api-limit-street-town-results", false) }
-
-        it "does not raise an error" do
-          expect { use_case.execute("1", "Town", %w[RdSAP]) }.not_to raise_error
-        end
+      it "raises an error" do
+        expect { use_case.execute("1", "Town", %w[RdSAP]) }.to raise_error(Boundary::TooManyResults)
       end
     end
 

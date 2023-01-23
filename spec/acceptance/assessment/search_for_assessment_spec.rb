@@ -495,7 +495,6 @@ describe "Acceptance::Assessment::SearchForAssessments",
       let(:gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
 
       before do
-        Helper::Toggles.set_feature("register-api-limit-street-town-results", false)
         allow(ApiFactory).to receive(:find_assessments_by_street_name_and_town).and_return(
           find_use_case,
         )

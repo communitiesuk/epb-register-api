@@ -19,7 +19,7 @@ module UseCase
           assessment_type,
           limit: MAX_RESULTS_THRESHOLD + 1,
         )
-      raise Boundary::TooManyResults if result.length > MAX_RESULTS_THRESHOLD && Helper::Toggles.enabled?("register-api-limit-street-town-results")
+      raise Boundary::TooManyResults if result.length > MAX_RESULTS_THRESHOLD
 
       Helper::NaturalSort.sort!(result)
 
