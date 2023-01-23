@@ -46,5 +46,34 @@ To run Rubocop:
 
 `make format`
 
-# CI
+## CI
 Build commands are stored in the buildspec directory
+
+## Docker image
+
+### Build
+
+To rebuild the Docker image locally, run
+
+`docker build . --tag epb-register-api`
+
+### Run
+
+#### Docker Desktop
+
+You can run the created image in Docker Desktop by going to **Images** and pressing **Run** in the *Actions* column.
+This will create a persistent deployment and has an interface to provide multiple useful options.
+
+#### CLI
+
+To run the docker image with CLI
+
+`docker run -p {host_port}:80 --name test-epb-register-api epb-register-api`
+
+Where *host_port* is a free port you want to use on your host machine to make calls to the API.
+
+If you want docker to communiacte with a containarized instance of PostgreSQL, or another container in general, you will need to link them.
+
+`docker run -p {host_port}:80 --link {linked_container_id} --name test-epb-register-api epb-register-api`
+
+Where *linked_container_id* is the name or ID of the container you want to access.
