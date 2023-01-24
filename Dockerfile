@@ -11,21 +11,11 @@ ENV STAGE=development
 ENV VALID_DOMESTIC_SCHEMAS:=AP-Schema-19.0.0,SAP-Schema-18.0.0,SAP-Schema-NI-18.0.0,RdSAP-Schema-20.0.0,RdSAP-Schema-NI-20.0.0
 ENV VALID_NON_DOMESTIC_SCHEMAS=CEPC-8.0.0,CEPC-NI-8.0.0
 
-
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -; \
-    apt-get update -qq && apt-get install -qq --no-install-recommends nodejs && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN gem install bundler -v '2.3.22' && \
-    gem install rerun
-
 COPY . /app
+WORKDIR /app
 
-RUN cd /app && bundle install
+RUN bundle install
 
-EXPOSE 80
+EXPOSE 80 433
 
-ENTRYPOINT bash -c 'cd /app && bundle exec rackup -p 80 -o 0.0.0.0'
+ENTRYPOINT ["bundle", "exec", "rackup", "-p", "80", "-o", "0.0.0.0"]

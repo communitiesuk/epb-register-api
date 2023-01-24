@@ -68,12 +68,12 @@ This will create a persistent deployment and has an interface to provide multipl
 
 To run the docker image with CLI
 
-`docker run -p {host_port}:80 --name test-epb-register-api epb-register-api`
+`docker run -p {host_port}:80 -p {{host_port2}:443 --name test-epb-register-api epb-register-api`
 
 Where *host_port* is a free port you want to use on your host machine to make calls to the API.
 
 If you want docker to communicate with a containarized instance of PostgreSQL, or another container in general, you will need to link them.
 
-`docker run -p {host_port}:80 --link {linked_container_id} --name test-epb-register-api epb-register-api`
+`docker run -p {host_port}:80 -p {{host_port2}:443 --link {linked_container_id} --name test-epb-register-api epb-register-api`
 
 Where *linked_container_id* is the name or ID of the container you want to access.
