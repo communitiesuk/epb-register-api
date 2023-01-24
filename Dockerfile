@@ -16,6 +16,6 @@ WORKDIR /app
 
 RUN bundle install
 
-EXPOSE 80 433
+EXPOSE 80 443
 
 ENTRYPOINT ["bundle", "exec", "rackup", "-p", "80", "-o", "0.0.0.0"]
