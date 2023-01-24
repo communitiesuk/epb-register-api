@@ -12,8 +12,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
   end
 
   before do
-    allow(Helper::Toggles).to receive(:enabled?)
-    allow(Helper::Toggles).to receive(:enabled?).with("sync_to_data_warehouse", default: false).and_return(true)
+    allow_any_instance_of(Events::Listener).to receive(:notify_data_warehouse_enabled?).and_return(true)
   end
 
   after do

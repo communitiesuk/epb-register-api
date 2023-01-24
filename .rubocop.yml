@@ -19,3 +19,7 @@ RSpec/ExampleLength:
 
 RSpec/BeforeAfterAll:
   Enabled: false
+
+# if you need it, you'll use it
+RSpec/AnyInstance:
+  Enabled: false
