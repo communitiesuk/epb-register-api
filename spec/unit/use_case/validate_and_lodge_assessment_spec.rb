@@ -67,11 +67,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       use_case
     end
 
-    before do
-      allow(Helper::Toggles).to receive(:enabled?)
-      allow(Helper::Toggles).to receive(:enabled?).with("validate-software", default: false).and_yield
-    end
-
     it "raises the error SoftwareNotApprovedError" do
       expect {
         use_case.execute assessment_xml: valid_xml,

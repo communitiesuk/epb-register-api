@@ -95,6 +95,33 @@ describe UseCase::CheckApprovedSoftware do
       end
     end
 
+    context "and there is a domestic software list but it is empty" do
+      before do
+        allow(ENV).to receive(:[])
+        allow(ENV).to receive(:[]).with("DOMESTIC_APPROVED_SOFTWARE").and_return('{"software":{}}')
+      end
+
+      it "returns true" do
+        expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be true
+      end
+
+      it "does not log out an error" do
+        use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")
+        expect(logger).not_to have_received :error
+      end
+
+      context "and when in a production environment" do
+        before do
+          allow(ENV).to receive(:[]).with("STAGE").and_return("production")
+        end
+
+        it "logs out an error" do
+          use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")
+          expect(logger).to have_received :error
+        end
+      end
+    end
+
     context "and there is no domestic software list available" do
       before do
         allow(ENV).to receive(:[])
@@ -102,7 +129,7 @@ describe UseCase::CheckApprovedSoftware do
       end
 
       it "returns true" do
-        expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0 ")).to be true
+        expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be true
       end
     end
   end

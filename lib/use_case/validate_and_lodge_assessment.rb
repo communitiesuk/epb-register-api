@@ -88,12 +88,10 @@ module UseCase
 
       xml_doc = as_parsed_document assessment_xml
 
-      Helper::Toggles.enabled? "validate-software", default: (ENV["STAGE"] == "production") do
-        raise SoftwareNotApprovedError unless migrated || software_is_approved?(
-          assessment_xml_doc: xml_doc,
-          schema_name:,
-        )
-      end
+      raise SoftwareNotApprovedError unless migrated || software_is_approved?(
+        assessment_xml_doc: xml_doc,
+        schema_name:,
+      )
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 

@@ -6,11 +6,13 @@ module UseCase
 
     def execute(assessment_xml:, schema_name:)
       if domestic_schema? schema_name
+        logger.error(list_missing_message(list_type: "domestic")) if in_production? && !domestic_software.list_exists?
         !domestic_software.list_exists? || domestic_software.match?(
           name: assessment_xml.at("Calculation-Software-Name")&.children.to_s,
           version: assessment_xml.at("Calculation-Software-Version")&.children.to_s,
         )
       else
+        logger.error(list_missing_message(list_type: "non-domestic")) if in_production? && !non_domestic_software.list_exists?
         !non_domestic_software.list_exists? || non_domestic_software.match?(identifier: assessment_xml.at("Calculation-Tool")&.children.to_s)
       end
     end
@@ -31,6 +33,14 @@ module UseCase
 
     def domestic_schema?(schema_name)
       domestic_schemas.include?(schema_name.split("-").first)
+    end
+
+    def list_missing_message(list_type:)
+      "The #{list_type} software list for the production environment is unexpectedly empty. Please address this - meanwhile, all softwares will be allowed."
+    end
+
+    def in_production?
+      ENV["STAGE"] == "production"
     end
 
     attr_reader :logger
