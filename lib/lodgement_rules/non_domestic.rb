@@ -135,9 +135,10 @@ module LodgementRules
         title:
           "Property address must be in England, Wales, or Northern Ireland",
         test:
+          # Unlike domestic lodgments non-domestic XML does not contain a country code
           lambda do |adapter|
             lookup = country_lookup_for_assessment adapter
-            if lookup.in_channel_islands? || lookup.in_isle_of_man?
+            if lookup.in_channel_islands? || lookup.in_isle_of_man? || (lookup.in_scotland? && !lookup.in_england?)
               return false
             else
               return true

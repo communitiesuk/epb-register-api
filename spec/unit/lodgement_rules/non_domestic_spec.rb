@@ -306,6 +306,25 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       it "returns an error if the address is IM" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error])
       end
+      it "returns an error if the address is in Scotland" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "TD14 5TY"]], [error])
+      end
+
+      it "returns no error if the address is in England" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "SW1A 2AA"]], [])
+      end
+
+      it "returns no error if the address is in Northern Ireland" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v4.1"], ["Postcode", "BT3 9EP"]], [])
+      end
+
+      it "returns no error if the address is in Wales" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6"], ["Postcode", "LL65 1DQ"]], [])
+      end
+
+      it "returns no error if the postcode crosses the English/Scottish border" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v56.1"], ["Postcode", "TD15 1UZ"]], [])
+      end
     end
 
     context "when inspection date is greater than or equal to the registration date" do
