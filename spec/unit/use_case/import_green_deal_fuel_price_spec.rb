@@ -24,12 +24,12 @@ describe UseCase::ImportGreenDealFuelPrice do
       it "converts the download data into the expected array", aggregate_failures: true do
         file_data = File.open("spec/fixtures/fuel_price_data.dat.txt")
 
-        stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat")
+        stub_request(:get, "https://www.ncm-pcdb.org.uk/pcdb/pcdf2012.dat")
           .with(
             headers: {
               "Accept" => "*/*",
               "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-              "Host" => "www.boilers.org.uk",
+              "Host" => "www.ncm-pcdb.org.uk",
               "User-Agent" => "Ruby",
             },
           )
@@ -44,7 +44,7 @@ describe UseCase::ImportGreenDealFuelPrice do
         WebMock.enable!
         allow(gateway).to receive(:bulk_insert)
         allow(gateway).to receive(:get_data)
-        stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat").to_raise(StandardError)
+        stub_request(:get, "https://www.ncm-pcdb.org.uk/pcdb/pcdf2012.dat").to_raise(StandardError)
       end
 
       after do
