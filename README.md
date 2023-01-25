@@ -88,6 +88,6 @@ To do this, you will need to use a bridge network and connect any containers tha
 You can set up a bridge network using
 `docker network create {network_name}`
 
-And then connect a container to the network when going to run it e.g.
+And then connect the containers to the network when going to run them e.g.
 * for the api `docker run -p {host_port}:80 -p {host_port2}:443 --network {network_name} --name test-epb-register-api epb-register-api`
 * for sidekiq `docker run --network {network_name} --name test-epb-register-api-worker epb-register-api-worker`
