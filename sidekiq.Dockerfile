@@ -1,4 +1,4 @@
-FROM ruby:3.1.2
+FROM ruby:3.1.3
 
 ENV LANG=en_GB.UTF-8
 ENV DATABASE_URL=postgresql://epb:superSecret30CharacterPassword@epb-register-api-db/epb
