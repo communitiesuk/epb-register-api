@@ -6,6 +6,9 @@
   "directories": {
     "lib": "lib"
   },
+  "engines": {
+    "node": "~18"
+  },
   "scripts": {
     "fmt": "npx standard --fix",
     "lint": "npx standard",
