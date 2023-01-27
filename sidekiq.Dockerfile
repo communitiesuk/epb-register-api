@@ -14,6 +14,11 @@ ENV VALID_NON_DOMESTIC_SCHEMAS=CEPC-8.0.0,CEPC-NI-8.0.0
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -; \
+    apt-get update -qq && apt-get install -qq --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY . /app
 WORKDIR /app
 
