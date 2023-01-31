@@ -306,6 +306,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       it "returns an error if the address is IM" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error])
       end
+
       it "returns an error if the address is in Scotland" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "TD14 5TY"]], [error])
       end
