@@ -6,7 +6,7 @@ module LodgementRules
       nil
     end
 
-    CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1", northern_ireland: "SBEM, v4.1", wales: "SBEM, v5.6" }.freeze
+    CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1", northern_ireland: "SBEM, v4.1", wales: "SBEM, v6.1.e", england_type_three: "SBEM, v5.6", wales_5_6: "SBEM, v5.6" }.freeze
 
     RULES = [
       {
@@ -148,15 +148,15 @@ module LodgementRules
       {
         name: "WRONG_SBEM_VERSION_FOR_REGION",
         title:
-          "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 5.6, England - SBEM 6.1",
+          "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1, England - SBEM 6.1",
         test:
           #  For non-domestic EPCs and recommendation reports (Report-Type is 3 or 4)
           #
           # If the address is in Northern Ireland (i.e. has "BT" postcode) then SBEM version must be "v4.1.h.0"
-          # If the address has a postcode that is entirely in Wales then SBEM version must be "v5.6.b.0"
+          # If the address has a postcode that is entirely in Wales then SBEM version must be "v6.1.b.0"
           # If the address has a postcode that is entirely in England and <Transaction-Type> is 1,2,4,5 or 6 then SBEM version must be "v6.1.b.0"
-          # If the address has a postcode that is entirely in England and <Transaction-Type> is equal to 3 then SBEM version can be either "v5.6.b.0" or "v6.1.b.0"
-          # If the address has a postcode that covers properties in both England and Wales then SBEM version can be either "v5.6.b.0" or "v6.1.b.0"
+          # If the address has a postcode that is in  England and <Transaction-Type> is equal to 3 then SBEM version can be either "v5.6.b.0" or "v6.1.b.0"
+          # If the address has a postcode that covers properties in both England and Wales then c version can be either "v5.6.b.0" or "v6.1.b.0"
           lambda do |adapter|
             report_type = method_or_nil(adapter, :report_type)
             if %w[3 4].include? report_type # This is a CEPC or CEPC-RR
@@ -168,9 +168,9 @@ module LodgementRules
                   return false
                 elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland]) && !lookup.in_northern_ireland?
                   return false
-                elsif (lookup.in_wales? && !lookup.in_england?) && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:wales])
+                elsif (lookup.in_wales? && !lookup.in_england?) && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6]))
                   return false
-                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) && lookup.in_england? && !lookup.in_wales?
+                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:england_type_three]) && lookup.in_england?
                   transaction_type = method_or_nil(adapter, :transaction_type)
                   return false unless transaction_type == "3"
                 end

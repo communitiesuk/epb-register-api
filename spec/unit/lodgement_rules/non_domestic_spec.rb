@@ -222,7 +222,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       let(:error) do
         {
           "code": "WRONG_SBEM_VERSION_FOR_REGION",
-          "title": "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 5.6, England - SBEM 6.1",
+          "title": "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1, England - SBEM 6.1",
         }.freeze
       end
 
@@ -246,15 +246,20 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL68 9XX"]], [])
       end
 
-      it "returns an error if the address is Wales and SBEM version is 6" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL55 9XX"]], [error])
+      it "returns an error if the address is Wales and SBEM version is 6.1.a/b/c/d" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.a, SBEM, v6.1.a.0"], ["Postcode", "LL68 9XX"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL68 9XX"]], [error])
+      end
+
+      it "returns no error if the address is Wales and SBEM version is 6.1.e" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "LL55 9XX"]], [])
       end
 
       it "returns an error if the address is England and SBEM version is 4" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"]], [error])
       end
 
-      it "returns an error if the address is England and SBEM version is 5 and the Transaction-Type is not 3" do
+      it "returns an error if the address is England and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 1]], [error])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 2]], [error])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
@@ -263,23 +268,22 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 6]], [error])
       end
 
+      it "returns an error if the postcode between Engalnd & Wales and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [error])
+      end
+
       it "returns no error if the address is England and SBEM version is 6" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "SW11 9XX"]], [])
       end
 
-      it "does not return an error if the address is in a cross-border postcode and SBEM version is 5 or 6" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
+      it "does not return an error if the address is in a cross-border postcode and SBEM version 6", aggregate_failures: true do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
       end
 
       it "recognizes that CH66 is in England, not in Welsh CH6 (i.e. matches full outcode, not just prefix)" do
@@ -287,7 +291,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
     end
 
-    context "when the address is in the channel islands or isle of man" do
+    context "when the address is not in England, Wales or NI" do
       let(:error) do
         {
           "code": "INVALID_COUNTRY",
@@ -295,19 +299,19 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         }.freeze
       end
 
-      it "returns an error if the address is JE" do
+      it "returns an INVALID_COUNTRY error if the address is JE" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "JE3 6HW"]], [error])
       end
 
-      it "returns an error if the address is GY" do
+      it "returns an INVALID_COUNTRY error if the address is GY" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "GY7 9QS"]], [error])
       end
 
-      it "returns an error if the address is IM" do
+      it "returns an INVALID_COUNTRY error if the address is IM" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error])
       end
 
-      it "returns an error if the address is in Scotland" do
+      it "returns an INVALID_COUNTRY error if the address is in Scotland" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "TD14 5TY"]], [error])
       end
 
@@ -320,11 +324,11 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns no error if the address is in Wales" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6"], ["Postcode", "LL65 1DQ"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e"], ["Postcode", "LL65 1DQ"]], [])
       end
 
       it "returns no error if the postcode crosses the English/Scottish border" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v56.1"], ["Postcode", "TD15 1UZ"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "TD15 1UZ"]], [])
       end
     end
 
