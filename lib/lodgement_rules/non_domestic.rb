@@ -163,17 +163,12 @@ module LodgementRules
               lookup = country_lookup_for_assessment adapter
               calc_tool = method_or_nil(adapter, :calculation_tool)
               building_level = method_or_nil(adapter, :building_level)
+              transaction_type = method_or_nil(adapter, :transaction_type)
               if %w[3 4].include? building_level # Check SBEM software version for these
-                if lookup.in_northern_ireland? && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland])
-                  return false
-                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland]) && !lookup.in_northern_ireland?
-                  return false
-                elsif (lookup.in_wales? && !lookup.in_england?) && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6]))
-                  return false
-                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:england_type_three]) && lookup.in_england?
-                  transaction_type = method_or_nil(adapter, :transaction_type)
-                  return false unless transaction_type == "3"
-                end
+                return false if if_in_ni?(lookup, calc_tool)
+                return false if unless_in_ni?(lookup, calc_tool)
+                return false if if_in_wales?(lookup, calc_tool)
+                return false if if_in_england_and_transaction_type_three?(lookup, calc_tool, transaction_type)
               else
                 #  Level 5 - DSM rules go in here once we know them
                 return true
@@ -200,6 +195,22 @@ module LodgementRules
           end,
       },
     ].freeze
+
+    def self.if_in_ni?(lookup, calc_tool)
+      true if lookup.in_northern_ireland? && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland])
+    end
+
+    def self.unless_in_ni?(lookup, calc_tool)
+      true if (calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland]) && !lookup.in_northern_ireland?
+    end
+
+    def self.if_in_wales?(lookup, calc_tool)
+      true if lookup.in_wales? && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6]))
+    end
+
+    def self.if_in_england_and_transaction_type_three?(lookup, calc_tool, transaction_type)
+      true if (calc_tool.include? CURRENT_SBEM_VERSIONS[:england_type_three]) && lookup.in_england? && !(transaction_type == "3")
+    end
 
     def validate(xml_adaptor)
       errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
