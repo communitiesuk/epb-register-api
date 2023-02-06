@@ -31,6 +31,8 @@ tags:
     description: Endpoints used by the Boiler Upgrade Scheme
   - name: Home Energy Retrofit Advice
     description: Endpoints used by the Home Energy Retrofit Advice service
+  - name: Home Energy Retrofit Funding
+    description: Endpoints used by the Home Energy Retrofit Funding service
   - name: Heat Pump Check
     description: Endpoints used by the Heat Pump Check service
   - name: Warm Home Discount
@@ -1495,6 +1497,63 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /retrofit-funding/assessments:
+    get:
+      tags:
+        - Home Energy Retrofit Funding
+      summary: 'Get the Home Energy Retrofit Funding details by property UPRN'
+      description: Get latest domestic EPC details for the supplied UPRN
+      operationId: get-assessment-retrofit-funding
+      security:
+        - oauth:
+            - 'retrofit-funding:assessment:fetch'
+      parameters:
+        - in: query
+          name: uprn
+          required: true
+          description: 'The 12-digit (left zero-padded) UPRN of the property whose EPC is being requested'
+          schema:
+            $ref: '#/components/schemas/LPaddedUprn'
+      responses:
+        '200':
+          description: Domestic EPC data for the Home Energy Retrofit Funding service
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/RetrofitFundingAssessmentDetails'
+        '400':
+          description: The UPRN parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No domestic EPCs found for this UPRN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /heat-pump-check/assessments/{assessmentId}:
     get:
       tags:
@@ -2396,6 +2455,12 @@ components:
                     * The reference number of the report this address appears on (prefixed RRN-)'
       example: 'UPRN-716375734512'
 
+    LPaddedUprn:
+      type: string
+      pattern: '^\d{12}$'
+      description: "An OS gazetteer UPRN (12-digits, left-padded with zeroes)"
+      example: '001234567890'
+
     AddressUprn:
       type: string
       pattern: '^UPRN-\d{12}$'
@@ -3133,25 +3198,7 @@ components:
           example: 'Electric bar heater'
           nullable: true
         address:
-          type: object
-          properties:
-            addressLine1:
-              type: string
-              example: '22 Acacia Avenue'
-            addressLine2:
-              type: string
-              example: ''
-            addressLine3:
-              type: string
-              example: ''
-            addressLine4:
-              type: string
-              example: ''
-            town:
-              type: string
-              example: 'Fulchester'
-            postcode:
-              $ref: '#/components/schemas/AddressPostcode'
+          $ref: '#/components/schemas/AddressStyle2'
         dwellingType:
           type: string
           example: 'Top-floor flat'
@@ -3159,7 +3206,7 @@ components:
         uprn:
           type: string
           nullable: true
-          example: '123412341234'
+          example: '001234567890'
 
     MultipleBUSMatchesList:
       type: object
@@ -3239,6 +3286,24 @@ components:
           description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
           example: true
+
+    # Home Energy Retrofit Funding
+    RetrofitFundingAssessmentDetails:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        uprn:
+          type: string
+          nullable: true
+          example: '001234567890'
+        lodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        currentBand:
+          type: string
+          example: 'D'
 
     # Heat Pump Check
     HeatPumpCheckAssessmentDetails:
