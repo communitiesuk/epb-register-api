@@ -61,7 +61,7 @@ describe "Acceptance::SearchForAssessor" do
     it "allows searching using a normal looking postcode" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
@@ -74,7 +74,7 @@ describe "Acceptance::SearchForAssessor" do
     it "will search using an outcode if we dont know the postcode" do
       add_outcodes("SE1")
       scheme_id = add_scheme_and_get_id
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
@@ -87,7 +87,7 @@ describe "Acceptance::SearchForAssessor" do
     it "allows searching using a postcode with excessive spaces" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
@@ -100,7 +100,7 @@ describe "Acceptance::SearchForAssessor" do
     it "allows searching using a postcode with no spaces" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
@@ -113,7 +113,7 @@ describe "Acceptance::SearchForAssessor" do
     it "allows searching using a lowercase postcode" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 

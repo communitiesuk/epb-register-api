@@ -86,7 +86,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan",
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: "SPEC000000",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",

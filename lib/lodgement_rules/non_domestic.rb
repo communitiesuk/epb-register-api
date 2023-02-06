@@ -209,7 +209,7 @@ module LodgementRules
     end
 
     def self.if_in_england_and_transaction_type_three?(lookup, calc_tool, transaction_type)
-      true if (calc_tool.include? CURRENT_SBEM_VERSIONS[:england_type_three]) && lookup.in_england? && !(transaction_type == "3")
+      true if (calc_tool.include? CURRENT_SBEM_VERSIONS[:england_type_three]) && lookup.in_england? && transaction_type != "3"
     end
 
     def validate(xml_adaptor)

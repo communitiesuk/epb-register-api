@@ -50,7 +50,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
     end
 
     before do
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE")
 
@@ -81,7 +81,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
     let(:response) { fetch_renewable_heat_incentive assessment_id: "0000-0000-0000-0000-0000" }
 
     before do
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: AssessorStub.new.fetch_request_body(
                      domestic_rd_sap: "ACTIVE",
@@ -425,7 +425,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
       end
 
       before do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: "SPEC000000",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
@@ -475,7 +475,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
       end
 
       before do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: "SPEC000000",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",

@@ -21,10 +21,10 @@ namespace :maintenance do
 
     file_name = args.file_name
 
-    PostcodeHelper.check_task_requirements file_name: file_name,
+    PostcodeHelper.check_task_requirements file_name:,
                                            env: ENV
     zipped = file_name.end_with?("zip")
-    file_io = PostcodeHelper.retrieve_file_on_s3 file_name: file_name,
+    file_io = PostcodeHelper.retrieve_file_on_s3 file_name:,
                                                  env: ENV
 
     if zipped

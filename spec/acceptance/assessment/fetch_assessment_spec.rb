@@ -72,7 +72,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
     end
 
     before do
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
 
@@ -113,7 +113,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
     end
 
     before do
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
 

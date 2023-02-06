@@ -118,7 +118,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
       end
 
       before do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: "SPEC000000",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
@@ -281,7 +281,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
         let(:assessment_id) { sap_assessment.at "RRN" }
 
         before do
-          add_assessor scheme_id: scheme_id,
+          add_assessor scheme_id:,
                        assessor_id: "SPEC000000",
                        body: AssessorStub.new.fetch_request_body(
                          domestic_sap: "ACTIVE",
@@ -320,7 +320,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
         end
 
         before do
-          add_assessor scheme_id: scheme_id,
+          add_assessor scheme_id:,
                        assessor_id: "SPEC000000",
                        body: AssessorStub.new.fetch_request_body(
                          domestic_rd_sap: "ACTIVE",
@@ -456,7 +456,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
       let(:assessment_date) { doc.at("Registration-Date") }
 
       before do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: "SPEC000000",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",

@@ -841,7 +841,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     before do
-      add_assessor scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body
+      add_assessor scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
                        scopes: %w[assessment:lodge migrate:assessment],
@@ -873,7 +873,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
     context "when migrating an assessment submitted by an assessor who is now unqualified" do
       let(:rdsap_xml) do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: "UNQU000000",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "INACTIVE",

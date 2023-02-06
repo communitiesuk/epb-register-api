@@ -3,9 +3,9 @@ module Gateway
     def fetch_by_address(postcode:, building_identifier:)
       identifier = Helper::AddressSearchHelper.clean_building_identifier building_identifier
       if !identifier
-        fetch_by_postcode postcode: postcode
+        fetch_by_postcode(postcode:)
       elsif identifier.match?(/^\d+$/)
-        fetch_by_postcode_and_building_number postcode: postcode, building_number: identifier
+        fetch_by_postcode_and_building_number postcode:, building_number: identifier
       else
         fetch_by_postcode_and_building_name postcode:, building_name: identifier
       end

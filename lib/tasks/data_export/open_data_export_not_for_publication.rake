@@ -14,7 +14,7 @@ namespace :open_data do
     exporter = ApiFactory.export_not_for_publication_use_case
     data = exporter.execute
 
-    raise Boundary::OpenDataEmpty if data.length.zero?
+    raise Boundary::OpenDataEmpty if data.empty?
 
     csv_data = Helper::ExportHelper.to_csv(data)
     OpenDataExportHelper.transmit_not_for_publication_file data: csv_data,

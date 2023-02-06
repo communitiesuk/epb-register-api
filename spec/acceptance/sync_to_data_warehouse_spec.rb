@@ -29,7 +29,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
           domestic_rd_sap: "ACTIVE",
           domestic_sap: "ACTIVE",
         )
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: assessor
       xml_doc = Samples.xml "SAP-Schema-18.0.0"
@@ -58,7 +58,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
           domestic_rd_sap: "ACTIVE",
           domestic_sap: "ACTIVE",
         )
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: assessor
       xml_doc = Samples.xml "SAP-Schema-18.0.0"
@@ -93,7 +93,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
           domestic_rd_sap: "ACTIVE",
           domestic_sap: "ACTIVE",
         )
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: assessor
       xml_doc = Samples.xml "SAP-Schema-18.0.0"
@@ -124,7 +124,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
           domestic_rd_sap: "ACTIVE",
           domestic_sap: "ACTIVE",
         )
-      add_assessor scheme_id: scheme_id,
+      add_assessor scheme_id:,
                    assessor_id: "SPEC000000",
                    body: assessor
       xml_doc = Samples.xml "SAP-Schema-18.0.0"

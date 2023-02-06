@@ -39,7 +39,7 @@ module Gateway
       new_source = "epb_team_update"
     )
       assessment_address_id_row =
-        AssessmentsAddressId.find_by assessment_id: assessment_id
+        AssessmentsAddressId.find_by(assessment_id:)
       assessment_address_id_row.update(
         { "address_id" => new_address_id, "source" => new_source },
       )

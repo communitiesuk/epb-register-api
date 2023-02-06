@@ -11,7 +11,7 @@ namespace :data_export do
     exporter = ApiFactory.ni_assessments_export_use_case
     data = exporter.execute(type_of_assessment: type_of_assessments.split("-"), date_from:, date_to:)
 
-    raise Boundary::OpenDataEmpty if data.length.zero?
+    raise Boundary::OpenDataEmpty if data.empty?
 
     csv_data = Helper::ExportHelper.to_csv(data)
     transmit_ni_file(csv_data, type_of_assessments)

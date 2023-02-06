@@ -569,7 +569,7 @@ describe "Acceptance::Assessor" do
 
       it "adds an assessor" do
         add_assessor_response =
-          add_assessor scheme_id: scheme_id,
+          add_assessor scheme_id:,
                        assessor_id: escaped_assessor_scheme_id,
                        body: valid_assessor_request
 
@@ -577,7 +577,7 @@ describe "Acceptance::Assessor" do
       end
 
       it "fetches an assessor" do
-        add_assessor scheme_id: scheme_id,
+        add_assessor scheme_id:,
                      assessor_id: escaped_assessor_scheme_id,
                      body: valid_assessor_request
 

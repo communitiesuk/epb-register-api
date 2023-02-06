@@ -8,7 +8,7 @@ module UseCase
     end
 
     def execute(rrn:)
-      domestic_digest = get_domestic_digest rrn: rrn
+      domestic_digest = get_domestic_digest(rrn:)
       return nil if domestic_digest.nil?
 
       assessment_summary = get_assessment_summary(rrn:)

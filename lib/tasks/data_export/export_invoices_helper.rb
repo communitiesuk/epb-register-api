@@ -3,7 +3,7 @@ require "archive/zip"
 module Helper
   class ExportInvoicesHelper
     def self.save_file(raw_data, csv_file, file_name)
-      if raw_data.length.zero?
+      if raw_data.empty?
         raise Boundary::NoData, "get assessment count by scheme name and type"
 
       else

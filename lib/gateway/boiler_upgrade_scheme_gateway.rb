@@ -14,7 +14,7 @@ module Gateway
     def search_by_postcode_and_building_identifier(postcode:, building_identifier:)
       identifier = Helper::AddressSearchHelper.clean_building_identifier building_identifier
       if identifier.match?(/^\d+$/)
-        search_by_postcode_and_building_number postcode: postcode, building_number: identifier, assessment_types: ASSESSMENT_TYPES
+        search_by_postcode_and_building_number postcode:, building_number: identifier, assessment_types: ASSESSMENT_TYPES
       else
         search_by_postcode_and_building_name postcode:, building_name: identifier, assessment_types: ASSESSMENT_TYPES
       end
