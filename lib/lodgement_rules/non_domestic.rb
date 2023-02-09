@@ -205,7 +205,7 @@ module LodgementRules
     end
 
     def self.if_in_wales?(lookup, calc_tool)
-      true if lookup.in_wales? && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6]))
+      true if (lookup.in_wales? && !lookup.in_england?) && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6]))
     end
 
     def self.if_in_england_and_transaction_type_three?(lookup, calc_tool, transaction_type)
