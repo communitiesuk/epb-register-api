@@ -2736,6 +2736,7 @@ components:
           example: "TEST00001"
         dateOfBirth:
           type: string
+          format: date
           example: "1974-12-28"
         qualificationChange:
           type: object
@@ -2765,6 +2766,7 @@ components:
     DateOfBirth:
       type: string
       format: date
+      example: '1980-01-10'
 
     # Assessments
     AssessmentId:
