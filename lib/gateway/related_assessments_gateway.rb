@@ -33,6 +33,8 @@ module Gateway
       # The ORDER BY here falls back to created_at for cases where registration
       # date are equal.
       # NOTE: This is only reliable for unmigrated certificates
+      # For migrated certificates, where the created_at value will be NULL,
+      # there is an additional sort on date_of_assessment as a tiebreak.
       sql = <<-SQL
         SELECT assessment_id,
                type_of_assessment AS assessment_type,
@@ -44,7 +46,7 @@ module Gateway
         WHERE assessment_id IN(#{assessment_ids.join(', ')}) AND
               not_for_issue_at IS NULL AND
               cancelled_at IS NULL
-        ORDER BY date_registered DESC, created_at DESC, assessment_id DESC
+        ORDER BY date_registered DESC, created_at DESC, date_of_assessment DESC, assessment_id DESC
       SQL
 
       results = ActiveRecord::Base.connection.exec_query(sql)
