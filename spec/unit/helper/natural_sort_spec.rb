@@ -1242,7 +1242,7 @@ describe Helper::NaturalSort do
     )
   end
 
-  it "can sort  where address_line one has been left nil" do
+  it "can sort where address_line one has been left nil" do
     addresses = [
       {
         address_line1: "55, Main Street",
@@ -1314,6 +1314,63 @@ describe Helper::NaturalSort do
         },
       ],
     )
+  end
+
+  it "can sort where the street name abuts a comma after the building number, combined with lettered addresses" do
+    addresses = [
+      {
+        address_line1: "Flat 10",
+        address_line2: "56 Main Street",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "56a Main Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat 10",
+        address_line2: "56,Main Street",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    described_class.sort!(addresses)
+    expect(addresses).to eq([
+      {
+        address_line1: "Flat 10",
+        address_line2: "56 Main Street",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat 10",
+        address_line2: "56,Main Street",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "56a Main Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ])
   end
 
   it "can sort addresses of a variety of address formats" do

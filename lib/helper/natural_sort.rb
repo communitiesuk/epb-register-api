@@ -21,7 +21,7 @@ module Helper
             b[:address_line3],
             b[:address_line2],
             b[:address_line1],
-          ].map { |item| item.to_s.strip.upcase.tr(",", "") }
+          ].map { |item| item.to_s.strip.upcase.gsub(/(\w),(\w)/, '\1 \2').tr(",", "") }
 
         postcode_comparison = compare_postcode(address_a, address_b)
         if postcode_comparison.zero?
@@ -82,6 +82,7 @@ module Helper
             line_split.first[-1]
           end
       end
+
       [property_number, property_letter]
     end
 
