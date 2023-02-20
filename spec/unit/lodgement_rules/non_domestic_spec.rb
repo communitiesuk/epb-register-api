@@ -222,7 +222,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       let(:error) do
         {
           "code": "WRONG_SBEM_VERSION_FOR_REGION",
-          "title": "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1, England - SBEM 6.1",
+          "title": "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1.e, England - SBEM 6.1",
         }.freeze
       end
 

@@ -148,7 +148,7 @@ module LodgementRules
       {
         name: "WRONG_SBEM_VERSION_FOR_REGION",
         title:
-          "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1, England - SBEM 6.1",
+          "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1.e, England - SBEM 6.1",
         test:
           #  For non-domestic EPCs and recommendation reports (Report-Type is 3 or 4)
           #

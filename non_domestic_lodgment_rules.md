@@ -14,4 +14,4 @@
 | MUST_RECORD_REASON_TYPE                      | "Reason-Type" must not be equal to 7                                                                                                                                  |
 | MUST_RECORD_DEC_DISCLOSURE                   | "DEC-Related-Party-Disclosure" must not be equal to 8                                                                                                                 |
 | INVALID_COUNTRY                              | "Property address must be in England, Wales, or Northern Ireland"                                                                                                     |
-| WRONG_SBEM_VERSION_FOR_REGION                | "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 5.6, England - SBEM 6.1"                                                                             | 
+| WRONG_SBEM_VERSION_FOR_REGION                | "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1.e, England - SBEM 6.1"                                                                           | 
