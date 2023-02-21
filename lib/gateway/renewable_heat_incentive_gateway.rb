@@ -33,7 +33,7 @@ module Gateway
 
       result = results.map { |row| record_to_rhi_domain row }
 
-      result.reduce
+      result.first
     end
 
   private

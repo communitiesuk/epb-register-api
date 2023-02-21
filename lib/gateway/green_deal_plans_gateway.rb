@@ -25,7 +25,7 @@ module Gateway
           ],
         )
 
-      results.map { |result| result["exists"] }.reduce
+      results.map { |result| result["exists"] }.first
     end
 
     def add(green_deal_plan, assessment_id)
