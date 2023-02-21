@@ -128,53 +128,6 @@ class HttpStub
     end
   end
 
-  def self.successful_status_update(assessment_id, status)
-    WebMock.enable!
-
-    WebMock
-      .stub_request(
-        :post,
-        "http://test-register/api/assessments/#{assessment_id}/status",
-      )
-      .with(
-        body: JSON.generate(status:),
-        headers: {
-          "Authorization" => "Bearer #{OAUTH_TOKEN}",
-        },
-      ).to_return status: 200,
-                  body: JSON.generate(status:),
-                  headers: {
-                    "Content-Type" => "application/json",
-                  }
-  end
-
-  def self.unsuccessful_status_update(assessment_id, status)
-    WebMock.enable!
-
-    WebMock
-      .stub_request(
-        :post,
-        "http://test-register/api/assessments/#{assessment_id}/status",
-      )
-      .with(
-        body: JSON.generate(status:),
-        headers: {
-          "Authorization" => "Bearer #{OAUTH_TOKEN}",
-        },
-      ).to_return status: 404,
-                  body:
-                 JSON.generate(
-                   {
-                     errors: [
-                       { code: "NOT_FOUND", title: "Assessment not found" },
-                     ],
-                   },
-                 ),
-                  headers: {
-                    "Content-Type" => "application/json",
-                  }
-  end
-
   def self.successful_token
     WebMock.enable!
 
@@ -206,13 +159,10 @@ class HttpStub
       "http://test-auth/oauth/token",
     ).to_return status: 401,
                 body:
-                                                                           JSON
-                                                                             .generate(
-                                                                               code:
-                                                                                 "NOT_AUTHENTICATED",
-                                                                               message:
-                                                                                 "Boundary::NotAuthenticatedError",
-                                                                             ),
+            JSON.generate(
+              code: "NOT_AUTHENTICATED",
+              message: "Boundary::NotAuthenticatedError",
+            ),
                 headers: {
                   "Content-Type" =>
                     "application/json",
