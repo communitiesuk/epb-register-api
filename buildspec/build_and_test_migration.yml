@@ -1,0 +1,27 @@
+version: 0.2
+
+runtime-versions:
+  ruby: 3.1
+
+env:
+  parameter-store:
+    DOCKER_POSTGRES_PASSWORD: "docker-postgres-password"
+    AWS_ACCOUNT_ID: "account-id"
+
+
+phases:
+  install:
+    runtime-versions:
+      ruby: 3.1
+    commands:
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+  pre_build:
+    commands:
+      - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD $POSTGRES_IMAGE_URL:latest
+      - until docker run --rm --link postgres-test:pg $POSTGRES_IMAGE_URL:latest pg_isready -U postgres -h pg; do sleep 1; done
+      - DATABASE_URL="postgresql://postgres:$DOCKER_POSTGRES_PASSWORD@127.0.0.1/auth_test" RACK_ENV=test make install
+  build:
+    commands:
+      - DATABASE_URL="postgresql://postgres:$DOCKER_POSTGRES_PASSWORD@127.0.0.1/auth_test" RACK_ENV=test make test

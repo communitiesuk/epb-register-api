@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - aws --version
+      - docker login -u AWS -p $(aws ecr get-login-password --region $AWS_DEFAULT_REGION) $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker load --input ebpr-register-api-image.tar
+      - docker tag ebpr-register-api-image:latest $DOCKER_IMAGE_URI:latest
+      - docker push $DOCKER_IMAGE_URI:latest
+
+  post_build:
+    commands:
+      - bash ./buildspec/assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server stage
+      - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --profile stage
