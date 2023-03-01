@@ -19,6 +19,6 @@ phases:
 
   post_build:
     commands:
-      - aws ssm send-command --document-name "AWS-RunRemoteScript" --targets "Key=InstanceIds,Values=arn:aws:codebuild:eu-west-2:145141030745:project/epbr-register-api-codebuild-deploy" --parameters '{"sourceType":["S3"],"sourceInfo":["{\"path\":\"https://s3://epbr-pipeline-storage/assume_role.sh\"}"],"commandLine":["assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server stage"]}'
+      - bash ./buildspec/assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server stage
       - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --profile stage
 
