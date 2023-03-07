@@ -7,7 +7,8 @@ describe "fetching interesting numbers" do
 
   before do
     stub_const("Gateway::DataWarehouseReportsGateway::REPORTS", %w[known_report_1 known_report_2])
-    Gateway::DataWarehouseReportsGateway.redis_client_class = MockRedis
+    stub_const("ENV", ENV.to_hash.merge({ "EPB_DATA_WAREHOUSE_QUEUES_URI" => "http://fake-redis-uri.com/" }))
+    Gateway::DataWarehouseRedisHelper.redis_client_class = MockRedis
     mock_redis = redis
     allow(MockRedis).to receive(:new).and_return mock_redis
   end

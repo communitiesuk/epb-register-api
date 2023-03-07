@@ -6,8 +6,6 @@ module Gateway
   class DataWarehouseReportsGateway
     REPORTS = [:heat_pump_count_for_sap].freeze
 
-    @redis_client_class = Redis
-
     def initialize(redis_client: nil)
       @redis = redis_client
     end
@@ -40,27 +38,12 @@ module Gateway
       REPORTS
     end
 
-    class << self
-      attr_writer :redis_client_class
-    end
-
-    class << self
-      attr_reader :redis_client_class
-    end
-
   private
 
     def redis
       return @redis if @redis
 
-      if ENV.key?("EPB_DATA_WAREHOUSE_QUEUES_URI")
-        redis_url = ENV["EPB_DATA_WAREHOUSE_QUEUES_URI"]
-      else
-        redis_instance_name = "dluhc-epb-redis-data-warehouse-#{ENV['STAGE']}"
-        redis_url = RedisConfigurationReader.configuration_url(redis_instance_name)
-      end
-
-      @redis = self.class.redis_client_class.new(url: redis_url)
+      @redis = DataWarehouseRedisHelper.redis
     end
   end
 end
