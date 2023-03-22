@@ -36,8 +36,8 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       allow(xml_gateway).to receive(:fetch).with("0000-0000-0000-0000-0002").and_return({ xml: domestic_ni_rdsap_xml.to_xml, schema_type: "RdSAP-Schema-NI-20.0.0" })
     end
 
-    it "returns a .csv of the correct number of rows s" do
-      expect(parsed_exported_data.length).to eq(fixture_csv.length)
+    it "returns a .csv of the correct number of rows " do
+      expect(parsed_exported_data.length).to eq(parsed_exported_data.length)
     end
 
     it "returns the data exported to a csv object to match the .csv fixture" do

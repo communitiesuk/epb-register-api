@@ -21,6 +21,7 @@ module UseCase
           )
         view_model_data = type_of_assessment == %w[CEPC] ? view_model.to_report : view_model.to_hash_ni
         combined_data = view_model_data.merge(assessment.symbolize_keys)
+        combined_data[:assessment_id] = Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
         assessments_array << combined_data
       end
       assessments_array
