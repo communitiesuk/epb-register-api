@@ -8,9 +8,9 @@ ENV EPB_WORKER_REDIS_URI=redis://epb-register-api-worker-redis
 ENV JWT_ISSUER=epb-auth-server
 ENV JWT_SECRET=test-jwt-secret
 ENV STAGE=development
+ENV RACK_ENV=development
 ENV VALID_DOMESTIC_SCHEMAS:=AP-Schema-19.0.0,SAP-Schema-18.0.0,SAP-Schema-NI-18.0.0,RdSAP-Schema-20.0.0,RdSAP-Schema-NI-20.0.0
 ENV VALID_NON_DOMESTIC_SCHEMAS=CEPC-8.0.0,CEPC-NI-8.0.0
-ENV RACK_ENV=production
 
 COPY . /app
 WORKDIR /app
