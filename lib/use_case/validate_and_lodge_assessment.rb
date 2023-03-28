@@ -235,7 +235,7 @@ module UseCase
     end
 
     def as_parsed_document(xml)
-      xml_doc = Nokogiri.XML xml
+      xml_doc = Nokogiri.XML(xml, &:strict)
       xml_doc.remove_namespaces!
       xml_doc
     end

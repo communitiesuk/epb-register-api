@@ -9,7 +9,7 @@ describe Helper::XmlHelper do
   end
 
   context "when validating valid xml" do
-    it "load a valid xml file" do
+    it "loads a valid xml file" do
       response = helper.convert_to_hash(xml, schema:)
 
       expect(response).to be_a Hash

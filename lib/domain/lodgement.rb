@@ -17,7 +17,7 @@ module Domain
     def fetch_data
       data = []
 
-      xml = Nokogiri.XML @raw_data
+      xml = Nokogiri.XML(@raw_data, &:strict)
       xml.remove_namespaces!
 
       rrns = xml.xpath("//RRN").map(&:text)
