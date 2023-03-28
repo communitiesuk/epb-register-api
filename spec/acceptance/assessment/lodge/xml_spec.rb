@@ -9,6 +9,7 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "ac-cert" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
+  let(:sap_starting_with_newline) { Samples.xml "Additional-Fixtures", "sap_starting_with_newline" }
 
   let(:cleaned_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/ac-cert.xml"
@@ -58,6 +59,18 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
         expect(cleaned_sap_xml).to eq(
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{database_xml}",
         )
+      end
+    end
+
+    context "with a SAP assessment starting with a newline" do
+      it "will raise an invalid XML exception" do
+        expect(sap_starting_with_newline[0]).to include("\n")
+        lodge_assessment assessment_body: sap_starting_with_newline,
+                         accepted_responses: [400],
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         },
+                         schema_name: "SAP-Schema-18.0.0"
       end
     end
   end
