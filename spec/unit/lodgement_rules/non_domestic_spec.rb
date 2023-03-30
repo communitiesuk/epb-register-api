@@ -268,13 +268,27 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 6]], [error])
       end
 
-      it "returns an error if the postcode between Engalnd & Wales and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
+      it "returns an error if the postcode between England & Wales and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [error])
       end
 
       it "returns no error if the address is England and SBEM version is 6" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "SW11 9XX"]], [])
+      end
+
+      it "returns no error if the address is England or Wales and the Transaction-Type is 3" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [])
+      end
+
+      it "returns an error if the Transaction-Type is 3 but the SBEM version is not current" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v3.0.x, SBEM, v3.0.x.2"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v12.1.e, SBEM, v12.1.e.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [error])
       end
 
       it "does not return an error if the address is in a cross-border postcode and SBEM version 6", aggregate_failures: true do
