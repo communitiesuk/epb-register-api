@@ -27,7 +27,7 @@ group :test do
 end
 
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.119"
+gem "aws-sdk-s3", "~> 1.120"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 1.0", ">= 1.0.29"
 gem "geocoder", "~> 1.8.0"
