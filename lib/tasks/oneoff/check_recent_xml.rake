@@ -1,4 +1,5 @@
 require "nokogiri"
+require "parallel"
 
 namespace :oneoff do
   desc "Check last n assessments of each type and perform strict parsing on the submitted XML"
@@ -11,9 +12,15 @@ namespace :oneoff do
     total_checks = 0
     total_fails = 0
     xml_sql = "SELECT xml FROM assessments_xml AS ax INNER JOIN assessments AS a ON ax.assessment_id=a.assessment_id WHERE a.type_of_assessment=$1 LIMIT #{count_per_assessment_type.to_i}"
+    parse_xml = lambda do |xml|
+      Nokogiri.XML(xml, &:strict)
+      nil
+    end
     assessment_types.each do |assessment_type|
       ActiveRecord::Base.connection.send(:exec_no_cache, xml_sql, "SQL", [ActiveRecord::Relation::QueryAttribute.new("type_of_assessment", assessment_type, ActiveRecord::Type::String.new)]).each do |row|
-        Nokogiri.XML(row.values.first, &:strict)
+        Parallel.map([0]) do |_|
+          parse_xml.call(row.values.first)
+        end
       rescue Nokogiri::XML::SyntaxError
         total_fails += 1
       ensure
