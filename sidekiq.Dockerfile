@@ -23,5 +23,6 @@ COPY . /app
 WORKDIR /app
 
 RUN bundle install
+RUN npm install
 
 ENTRYPOINT ["bundle", "exec", "sidekiq", "-r", "./sidekiq/config.rb"]
