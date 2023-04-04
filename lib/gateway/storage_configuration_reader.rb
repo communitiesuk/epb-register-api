@@ -11,9 +11,11 @@ module Gateway
     end
 
     def get_configuration
-      if paas_configuration_present?
+      if paas_specific_configuration?
         credentials_from_vcap_services
-      elsif local_configuration_present?
+      elsif aws_specific_configuration?
+        credentials_using_bucket_name_only
+      elsif local_configuration?
         credentials_from_local_keys
       else
         raise IllegalCallException,
@@ -23,13 +25,20 @@ module Gateway
 
   private
 
-    def local_configuration_present?
+    def local_configuration?
       !ENV["AWS_ACCESS_KEY_ID"].nil? && !ENV["AWS_SECRET_ACCESS_KEY"].nil? &&
         !bucket_name.nil?
     end
 
-    def paas_configuration_present?
-      !ENV["VCAP_SERVICES"].nil? && !instance_name.nil?
+    def paas_specific_configuration?
+      Helper::Platform.is_paas? && !instance_name.nil?
+    end
+
+    def aws_specific_configuration?
+      !Helper::Platform.is_paas? &&
+        ENV["AWS_ACCESS_KEY_ID"].nil? &&
+        ENV["AWS_SECRET_ACCESS_KEY"].nil? &&
+        !bucket_name.nil?
     end
 
     def credentials_from_local_keys
@@ -54,6 +63,10 @@ module Gateway
           s3_bucket_config["credentials"]["aws_secret_access_key"],
         bucket_name: s3_bucket_config["credentials"]["bucket_name"],
       )
+    end
+
+    def credentials_using_bucket_name_only
+      Gateway::StorageConfiguration.new bucket_name:
     end
   end
 end
