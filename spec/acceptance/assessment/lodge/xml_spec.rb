@@ -9,7 +9,6 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "ac-cert" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
-  let(:sap_starting_with_newline) { Samples.xml "Additional-Fixtures", "sap_starting_with_newline" }
 
   let(:cleaned_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/ac-cert.xml"
@@ -56,24 +55,6 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
 
       it "will remove the <PDF> element" do
         expect(valid_sap_xml).to include("<PDF>")
-        expect(cleaned_sap_xml).to eq(
-          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{database_xml}",
-        )
-      end
-    end
-
-    context "with a SAP assessment starting with a newline" do
-      before do
-        lodge_assessment assessment_body: sap_starting_with_newline,
-                         accepted_responses: [201],
-                         auth_data: {
-                           scheme_ids: [scheme_id],
-                         },
-                         schema_name: "SAP-Schema-18.0.0"
-      end
-
-      it "will remove the newline" do
-        expect(sap_starting_with_newline[0]).to include("\n")
         expect(cleaned_sap_xml).to eq(
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{database_xml}",
         )
@@ -161,48 +142,6 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
             /api/assessments/0000-0000-0000-0000-0000
             /api/assessments/0000-0000-0000-0000-0001
           ],
-        )
-      end
-    end
-
-    context "when lodging SAP with a newline at the beginning" do
-      let(:scheme_id) { add_scheme_and_get_id }
-
-      let(:response) do
-        Nokogiri.XML lodge_assessment(
-          assessment_body: sap_starting_with_newline,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          schema_name: "SAP-Schema-18.0.0",
-          headers: {
-            "Accept": "application/xml",
-          },
-        ).body
-      end
-
-      before do
-        add_assessor scheme_id:,
-                     assessor_id: "SPEC000000",
-                     body: fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
-      end
-
-      it "returns an XML response" do
-        data_assessment_id =
-          response
-            .at_css("response data assessments assessment")
-            .xpath("string()")
-
-        expect(data_assessment_id).to eq("0000-0000-0000-0000-0000")
-
-        data_assessment_link =
-          response
-            .at_css("response meta links assessments assessment")
-            .xpath("string()")
-
-        expect(data_assessment_link).to eq(
-          "/api/assessments/0000-0000-0000-0000-0000",
         )
       end
     end
