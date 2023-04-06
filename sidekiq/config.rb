@@ -18,11 +18,11 @@ SidekiqLoader.setup
 environment = ENV["STAGE"] || "development"
 
 unless %w[development test].include? environment
-  if Helper::Platform.is_paas?
-    redis_url = RedisConfigurationReader.read_configuration_url("dluhc-epb-redis-sidekiq-#{environment}")
-  else
-    redis_url = ENV["EPB_WORKER_REDIS_URI"]
-  end
+  redis_url = if Helper::Platform.is_paas?
+                RedisConfigurationReader.read_configuration_url("dluhc-epb-redis-sidekiq-#{environment}")
+              else
+                ENV["EPB_WORKER_REDIS_URI"]
+              end
   Sidekiq.configure_server do |config|
     config.redis = { url: redis_url, network_timeout: 5 }
   end

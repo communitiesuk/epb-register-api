@@ -12,12 +12,11 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t ebpr-register-api-image ./
-
+      - docker build -t $DOCKER_IMAGE_NAME ./
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker save -o ebpr-register-api-image.tar ebpr-register-api-image:latest
+      - docker save -o $DOCKER_IMAGE_NAME.tar $DOCKER_IMAGE_NAME:latest
 
 artifacts:
   files:
