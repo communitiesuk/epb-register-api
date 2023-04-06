@@ -12,7 +12,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t epb-register-api-worker -f sidekiq.Dockerfile
+      - docker build . -t epb-register-api-worker -f sidekiq.Dockerfile
 
   post_build:
     commands:
