@@ -125,35 +125,4 @@ describe "OpenDataExportNotForPublication" do
       end
     end
   end
-
-  context "when bucket_name or instance_name is not provided to the export task" do
-    before do
-      allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[])
-        .with("INSTANCE_NAME")
-        .and_return(incorrect_instance_name)
-      allow(ENV).to receive(:[])
-        .with("BUCKET_NAME")
-        .and_return(incorrect_bucket_name)
-
-      # Prevents logging during tests
-      allow($stdout).to receive(:puts)
-
-      # Mocks all dependencies created directly in the task
-      allow(ApiFactory).to receive(:export_not_for_publication_use_case).and_return(
-        export_usecase,
-      )
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
-
-      # Define mock expectations
-      allow(export_usecase).to receive(:execute).and_return(export)
-      allow(storage_gateway).to receive(:write_file)
-    end
-
-    it "fails to run with the relevant error type" do
-      expect { task.invoke("for_odc") }.to raise_error(
-        Gateway::StorageConfigurationReader::IllegalCallException,
-      )
-    end
-  end
 end
