@@ -6,7 +6,7 @@ describe UseCase::CheckSchemaVersion do
   before do
     allow(logger).to receive(:error)
     allow(ENV).to receive(:[])
-    allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("SAP-Schema-19.0.0,SAP-Schema-18.0.0,RdSAP-Schema-NI-19.0")
+    allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("SAP-Schema-19.1.0,SAP-Schema-19.0.0,SAP-Schema-18.0.0,RdSAP-Schema-NI-19.0")
     allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return("CEPC-8.0.0")
   end
 
@@ -18,8 +18,12 @@ describe UseCase::CheckSchemaVersion do
     expect(use_case.execute("SAP-Schema-17.0.0")).to eq(false)
   end
 
-  it "returns true for the latest SAP schema version" do
+  it "returns true for a valid SAP schema version" do
     expect(use_case.execute("SAP-Schema-19.0.0")).to eq(true)
+  end
+
+  it "returns true for the latest SAP schema version" do
+    expect(use_case.execute("SAP-Schema-19.1.0")).to eq(true)
   end
 
   it "returns true for the latest CEPC schema version" do

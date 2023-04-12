@@ -55,10 +55,16 @@ module UseCase
       COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE
       INSPECTION_DATE_LATER_THAN_REGISTRATION_DATE
     ].freeze
-    VALID_SAP_DATA_VERSIONS = { "SAP-Schema-19.0.0" => {
-      "SAP-Version" => %w[10.2],
-      "SAP-Data-Version" => %w[10.2],
-    } }.freeze
+    VALID_SAP_DATA_VERSIONS = {
+      "SAP-Schema-19.0.0" => {
+        "SAP-Version" => %w[10.2],
+        "SAP-Data-Version" => %w[10.2],
+      },
+      "SAP-Schema-19.1.0" => {
+        "SAP-Version" => %w[10.2],
+        "SAP-Data-Version" => %w[10.2],
+      },
+    }.freeze
 
     def initialize(
       validate_assessment_use_case:,

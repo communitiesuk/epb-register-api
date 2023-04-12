@@ -110,13 +110,25 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   context "when validating assessment XML that is from the current version of a schema" do
-    let(:valid_xml) { Samples.xml "SAP-Schema-19.0.0" }
 
     after do
       Timecop.return
     end
 
-    it "validates SAP Schema version 19 " do
+    it "validates SAP Schema version 19.1.0 " do
+      valid_xml = Samples.xml "SAP-Schema-19.1.0"
+      Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
+      expect {
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: "SAP-Schema-19.1.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overridden: false
+      }.not_to raise_exception
+    end
+
+    it "validates SAP Schema version 19.0.0 " do
+      valid_xml = Samples.xml "SAP-Schema-19.0.0"
       Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
       expect {
         use_case.execute assessment_xml: valid_xml,

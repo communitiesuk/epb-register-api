@@ -926,7 +926,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   end
 
   context "when lodging an assessment for SAP-Schema-19.0.0 which has an invalid SAP data version" do
-    let(:bad_sap_1800_data_version_xml) do
+    let(:bad_sap_1900_data_version_xml) do
       xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
       xml.at("SAP-Data-Version").content = "9.90"
 
@@ -940,13 +940,38 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     it "rejects the assessment with a 400" do
       register_assessor
       lodge_assessment(
-        assessment_body: bad_sap_1800_data_version_xml,
+        assessment_body: bad_sap_1900_data_version_xml,
         accepted_responses: [400],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-19.0.0",
       )
+    end
+  end
+
+  context "when lodging an assessment for SAP-Schema-19.1.0 which has an invalid SAP data version" do
+    let(:bad_sap_1910_data_version_xml) do
+      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.1.0")
+      xml.at("SAP-Data-Version").content = "9.90"
+
+      xml.to_s
+    end
+
+    let(:register_assessor) do
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+    end
+
+    it "rejects the assessment with a 400" do
+      register_assessor
+      lodge_assessment(
+        assessment_body: bad_sap_1910_data_version_xml,
+        accepted_responses: [400],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "SAP-Schema-19.1.0",
+        )
     end
   end
 
