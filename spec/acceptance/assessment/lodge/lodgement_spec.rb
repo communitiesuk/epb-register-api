@@ -971,7 +971,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-19.1.0",
-        )
+      )
     end
   end
 

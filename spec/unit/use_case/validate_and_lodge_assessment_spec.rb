@@ -110,7 +110,6 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   context "when validating assessment XML that is from the current version of a schema" do
-
     after do
       Timecop.return
     end
