@@ -4,7 +4,7 @@ namespace :open_data do
   desc "Exporting hashed assessment_id opt out, cancelled or not for issue data for Open Data Communities"
   task :export_not_for_publication, %i[type_of_export] do |_, arg|
     type_of_export = arg.type_of_export
-    bucket_name = ENV["BUCKET_NAME"]
+    bucket_name = ENV["BUCKET_NAME"] || ENV["ODE_BUCKET_NAME"]
     instance_name = ENV["INSTANCE_NAME"]
 
     raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if type_of_export.nil? || !%w[for_odc not_for_odc].include?(type_of_export)
@@ -19,7 +19,8 @@ namespace :open_data do
     csv_data = Helper::ExportHelper.to_csv(data)
     OpenDataExportHelper.transmit_not_for_publication_file data: csv_data,
                                                            type_of_export:,
-                                                           env: ENV
+                                                           instance_name:,
+                                                           bucket_name:
 
   rescue Boundary::RecoverableError => e
     error_output = {

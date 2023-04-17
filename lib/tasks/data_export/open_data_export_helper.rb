@@ -1,5 +1,5 @@
 module OpenDataExportHelper
-  def self.transmit_not_for_publication_file(data:, type_of_export:, env:)
+  def self.transmit_not_for_publication_file(data:, type_of_export:, instance_name:, bucket_name:)
     filename =
       if type_of_export == "for_odc"
         "open_data_export_not_for_publication_#{Time.now.utc.strftime('%F')}.csv"
@@ -8,8 +8,8 @@ module OpenDataExportHelper
       end
 
     storage_config_reader = Gateway::StorageConfigurationReader.new(
-      instance_name: env["INSTANCE_NAME"],
-      bucket_name: env["BUCKET_NAME"],
+      instance_name:,
+      bucket_name:,
     )
     storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
     storage_gateway.write_file(filename, data)
