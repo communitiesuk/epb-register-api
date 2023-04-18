@@ -5,6 +5,7 @@ describe Gateway::StorageConfigurationReader do
   let(:expected_secret_access_key) { "mysecret" }
 
   before { allow(ENV).to receive(:[]).and_return(nil) }
+  after { allow(ENV).to receive(:[]).and_return(nil) }
 
   context "when VCAP_SERVICES is present and we provide a GOV.UK PaaS S3 instance name" do
     subject(:storage_configuration_reader) { described_class.new(instance_name:) }
@@ -68,6 +69,7 @@ describe Gateway::StorageConfigurationReader do
 
     before do
       allow(ENV).to receive(:[]).with("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI").and_return("aws_credentials_uri")
+      allow(ENV).to receive(:[]).with("AWS_EXECUTION_ENV").and_return("AWS_ECS_FARGATE")
     end
 
     let(:config) { storage_configuration_reader.get_configuration }
