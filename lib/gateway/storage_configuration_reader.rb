@@ -36,6 +36,8 @@ module Gateway
 
     def aws_ecs_specific_configuration?
       !Helper::Platform.is_paas? &&
+        ENV["AWS_ACCESS_KEY_ID"].nil? &&
+        ENV["AWS_SECRET_ACCESS_KEY"].nil? && # ECS will not make these environment variables available
         !ENV["AWS_CONTAINER_CREDENTIALS_RELATIVE_URI"].nil? && # env var available on AWS ECS instances
         !ENV["AWS_EXECUTION_ENV"].nil? &&
         ENV["AWS_EXECUTION_ENV"].include?("ECS") &&
