@@ -13,8 +13,8 @@ module Gateway
     def get_configuration
       if paas_specific_configuration?
         credentials_from_vcap_services
-      elsif aws_specific_configuration?
-        credentials_using_bucket_name_only
+      elsif aws_ecs_specific_configuration?
+        credentials_for_ecs
       elsif local_configuration?
         credentials_from_local_keys
       else
@@ -34,10 +34,9 @@ module Gateway
       Helper::Platform.is_paas? && !instance_name.nil?
     end
 
-    def aws_specific_configuration?
+    def aws_ecs_specific_configuration?
       !Helper::Platform.is_paas? &&
-        ENV["AWS_ACCESS_KEY_ID"].nil? &&
-        ENV["AWS_SECRET_ACCESS_KEY"].nil? &&
+        !ENV["AWS_CONTAINER_CREDENTIALS_RELATIVE_URI"].nil? && # env var available on AWS ECS instances
         !bucket_name.nil?
     end
 
@@ -65,8 +64,9 @@ module Gateway
       )
     end
 
-    def credentials_using_bucket_name_only
-      Gateway::StorageConfiguration.new bucket_name:
+    def credentials_for_ecs
+      Gateway::StorageConfiguration.new bucket_name:,
+                                        credentials: Aws::ECSCredentials.new
     end
   end
 end

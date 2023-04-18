@@ -24,17 +24,9 @@ module Gateway
   private
 
     def initialise_client
-      credentials = if storage_config.credentials?
-                      Aws::Credentials.new(
-                        storage_config.access_key_id,
-                        storage_config.secret_access_key,
-                      )
-                    else
-                      nil
-                    end
       Aws::S3::Client.new(
         region: storage_config.region_name,
-        credentials:,
+        credentials: storage_config.credentials,
       )
     end
 

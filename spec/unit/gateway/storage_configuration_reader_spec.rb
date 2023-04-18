@@ -15,18 +15,16 @@ describe Gateway::StorageConfigurationReader do
         .and_return(get_vcap_services_stub)
     end
 
-    let(:credentials) { storage_configuration_reader.get_configuration }
+    let(:config) { storage_configuration_reader.get_configuration }
 
-    it "the credentials extractor return an access key ID" do
+    it "provides a config that gives access to a credentials object", aggregate_failures: true do
+      credentials = config.credentials.credentials
       expect(credentials.access_key_id).to eq expected_access_key
-    end
-
-    it "the credentials extractor return an secret access key" do
       expect(credentials.secret_access_key).to eq expected_secret_access_key
     end
 
     it "the credentials extractor return a bucket name" do
-      expect(credentials.bucket_name).to eq expected_bucket_name
+      expect(config.bucket_name).to eq expected_bucket_name
     end
   end
 
@@ -54,12 +52,10 @@ describe Gateway::StorageConfigurationReader do
 
     let(:config) { storage_configuration_reader.get_configuration }
 
-    it "the credentials extractor return an access key ID" do
-      expect(config.access_key_id).to eq expected_access_key
-    end
-
-    it "the credentials extractor return an secret access key" do
-      expect(config.secret_access_key).to eq expected_secret_access_key
+    it "provides a config that gives a credentials provider", aggregate_failures: true do
+      credentials = config.credentials.credentials
+      expect(credentials.access_key_id).to eq expected_access_key
+      expect(credentials.secret_access_key).to eq expected_secret_access_key
     end
 
     it "the credentials extractor return a bucket name" do
@@ -67,14 +63,19 @@ describe Gateway::StorageConfigurationReader do
     end
   end
 
-  context "when AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and VCAP_SERVICES are not present and we provide an S3 bucket name" do
+  context "when VCAP_SERVICES is not present but AWS ECS credentials are and we provide an S3 bucket name" do
     subject(:storage_configuration_reader) { described_class.new(bucket_name: expected_bucket_name) }
+
+    before do
+      allow(ENV).to receive(:[]).with("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI").and_return("aws_credentials_uri")
+    end
 
     let(:config) { storage_configuration_reader.get_configuration }
 
-    it "passes back a configuration with no credentials that refers to the passed bucket name" do
+    it "passes back a configuration with ECS credentials that refers to the passed bucket name" do
       expect(config.bucket_name).to eq expected_bucket_name
-      expect(config.credentials?).to be false
+      expect(config.credentials?).to be true
+      expect(config.credentials).to be_an_instance_of Aws::ECSCredentials
     end
   end
 

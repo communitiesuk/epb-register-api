@@ -6,14 +6,6 @@ describe Gateway::StorageConfiguration do
     let(:secret_access_key) { "SECRETACCESSKEY" }
     let(:bucket_name) { "BUCKETNAME" }
 
-    it "has the provided access key ID" do
-      expect(config.access_key_id).to eq access_key_id
-    end
-
-    it "has the provided secret access key" do
-      expect(config.secret_access_key).to eq secret_access_key
-    end
-
     it "has the expected bucket name" do
       expect(config.bucket_name).to eq bucket_name
     end
@@ -24,6 +16,12 @@ describe Gateway::StorageConfiguration do
 
     it "has credentials" do
       expect(config.credentials?).to be true
+    end
+
+    it "provides credentials that act like a credentials provider" do
+      credentials = config.credentials
+      expect(credentials.credentials.access_key_id).to eq access_key_id
+      expect(credentials.credentials.secret_access_key).to eq secret_access_key
     end
   end
 
@@ -43,6 +41,30 @@ describe Gateway::StorageConfiguration do
 
     it "does not have credentials" do
       expect(config.credentials?).to be false
+    end
+  end
+
+  context "when a storage configuration has credentials passed in as a credentials object" do
+    subject(:config) { described_class.new(bucket_name:, credentials:) }
+
+    let(:access_key_id) { "ACCESSKEYID" }
+    let(:secret_access_key) { "SECRETACCESSKEY" }
+    let(:bucket_name) { "BUCKETNAME" }
+
+    let(:credentials) { Aws::Credentials.new(access_key_id, secret_access_key) }
+
+    it "has the expected bucket name" do
+      expect(config.bucket_name).to eq bucket_name
+    end
+
+    it "has credentials" do
+      expect(config.credentials?).to be true
+    end
+
+    it "provides credentials that act like a credentials provider" do
+      credentials = config.credentials
+      expect(credentials.credentials.access_key_id).to eq access_key_id
+      expect(credentials.credentials.secret_access_key).to eq secret_access_key
     end
   end
 end
