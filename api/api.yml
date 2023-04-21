@@ -2817,8 +2817,6 @@ components:
           $ref: '#/components/schemas/AssessmentId'
         currentEnergyEfficiencyRating:
           type: integer
-          minimum: 1
-          maximum: 100
           example: 62
           description: The current energy rating to be submitted to the Register
         currentEnergyEfficiencyBand:
@@ -2981,7 +2979,6 @@ components:
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          maximum: 100
           example: 62
           description: The current energy rating to be submitted to the Register
         dwellingType:
@@ -3024,7 +3021,6 @@ components:
         potentialEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          maximum: 100
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         primaryEnergyUse:
           type: number
