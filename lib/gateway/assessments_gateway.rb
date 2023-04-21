@@ -19,7 +19,12 @@ module Gateway
 
     def insert_or_update(assessment)
       check_valid_energy_ratings assessment
-      send_to_db assessment
+      send_update_to_db assessment
+    end
+
+    def insert(assessment)
+      check_valid_energy_ratings assessment
+      send_insert_to_db assessment
     end
 
     def update_statuses(assessments_ids, status, value)
@@ -111,7 +116,17 @@ module Gateway
 
   private
 
-    def send_to_db(assessment)
+    def send_insert_to_db(assessment)
+      ActiveRecord::Base.transaction do
+        Assessment.create assessment.to_record
+
+        unless assessment.get(:related_rrn).nil?
+          add_linked_assessment assessment
+        end
+      end
+    end
+
+    def send_update_to_db(assessment)
       ActiveRecord::Base.transaction do
         existing_assessment =
           Assessment.exists? assessment_id: assessment.get(:assessment_id)

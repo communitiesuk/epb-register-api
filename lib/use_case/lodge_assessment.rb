@@ -76,7 +76,11 @@ module UseCase
           hashed_assessment_id: Helper::RrnHelper.hash_rrn(data[:assessment_id]),
         )
 
-      @assessments_gateway.insert_or_update assessment
+      if migrated
+        @assessments_gateway.insert_or_update assessment
+      else
+        @assessments_gateway.insert assessment
+      end
 
       insert_assessment_address_id assessment
 
