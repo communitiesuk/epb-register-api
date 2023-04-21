@@ -2,7 +2,7 @@ describe UseCase::LodgeAssessment do
   subject(:use_case) do
     described_class.new(
       assessments_gateway:,
-      assessments_search_gateway: instance_double(Gateway::AssessmentsSearchGateway),
+      assessments_search_gateway:,
       assessors_gateway:,
       assessments_xml_gateway:,
       assessments_address_id_gateway: instance_spy(Gateway::AssessmentsAddressIdGateway),
@@ -16,6 +16,7 @@ describe UseCase::LodgeAssessment do
   let(:assessments_gateway) { instance_spy(Gateway::AssessmentsGateway) }
   let(:assessors_gateway) { instance_spy(Gateway::AssessorsGateway) }
   let(:assessments_xml_gateway) { instance_spy(Gateway::AssessmentsXmlGateway) }
+  let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
   let(:assessor) { instance_double(Domain::Assessor) }
   let(:get_canonical_address_id_use_case) do
     use_case = instance_double UseCase::GetCanonicalAddressId
@@ -204,27 +205,51 @@ describe UseCase::LodgeAssessment do
   before do
     allow(assessors_gateway).to receive(:fetch).with("SPEC000000").and_return(assessor)
 
-    allow(assessor).to receive(:domestic_rd_sap_qualification).and_return("ACTIVE")
+    allow(assessor).to receive(:domestic_sap_qualification).and_return("ACTIVE")
     allow(assessor).to receive(:scheme_assessor_id).and_return("SPEC000000")
   end
 
   describe ".execute" do
-    it "calls AssessmentsGateway to save the assessment data to the assessments table" do
-      use_case.execute(data, true, "RdSAP-Schema-20.0.0")
+    context "when the assessment is passed as being migrated" do
+      it "calls AssessmentsGateway to save the assessment data to the assessments table" do
+        use_case.execute(data, true, "SAP-Schema-18.0.0")
 
-      expect(assessments_gateway).to have_received(:insert_or_update)
+        expect(assessments_gateway).to have_received(:insert_or_update)
+      end
+
+      it "calls AssessmentsXMLGateway to save the XML data to the assessments_xml table" do
+        use_case.execute(data, true, "SAP-Schema-18.0.0")
+
+        expect(assessments_xml_gateway).to have_received(:send_to_db).with(
+          {
+            assessment_id: "2000-0000-0000-0000-0001",
+            xml: "<SomeNode></SomeNode>",
+            schema_type: "SAP-Schema-18.0.0",
+          },
+        )
+      end
     end
 
-    it "calls AssessmentsXMLGateway to save the XML data to the assessments_xml table" do
-      use_case.execute(data, true, "RdSAP-Schema-20.0.0")
+    context "when the assessment is passed as being new and not migrated" do
+      before do
+        allow(assessments_search_gateway).to receive(:search_by_assessment_id).and_return([])
+      end
 
-      expect(assessments_xml_gateway).to have_received(:send_to_db).with(
-        {
-          assessment_id: "2000-0000-0000-0000-0001",
-          xml: "<SomeNode></SomeNode>",
-          schema_type: "RdSAP-Schema-20.0.0",
-        },
-      )
+      it "calls AssessmentsGateway to save the assessment data to the assessments table" do
+        use_case.execute(data, false, "SAP-Schema-18.0.0")
+
+        expect(assessments_gateway).to have_received(:insert)
+      end
+
+      context "when there is a race condition and the insert fails as the assessment has already been inserted by another request" do
+        before do
+          allow(assessments_gateway).to receive(:insert).and_raise(Gateway::AssessmentsGateway::AssessmentAlreadyExists)
+        end
+
+        it "raises a duplicate assessment ID error" do
+          expect { use_case.execute(data, false, "SAP-Schema-18.0.0") }.to raise_error(described_class::DuplicateAssessmentIdException)
+        end
+      end
     end
 
     context "when event broadcaster is enabled" do

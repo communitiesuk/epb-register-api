@@ -79,7 +79,11 @@ module UseCase
       if migrated
         @assessments_gateway.insert_or_update assessment
       else
-        @assessments_gateway.insert assessment
+        begin
+          @assessments_gateway.insert assessment
+        rescue Gateway::AssessmentsGateway::AssessmentAlreadyExists
+          raise DuplicateAssessmentIdException
+        end
       end
 
       insert_assessment_address_id assessment

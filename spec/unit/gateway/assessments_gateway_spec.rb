@@ -61,4 +61,35 @@ describe Gateway::AssessmentsGateway do
                                                                            "country" => "Northern Ireland" })
     end
   end
+
+  describe "#insert" do
+    context "when inserting an assessment with data that already exists on the database" do
+      before do
+        ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
+        ActiveRecord::Base.connection.exec_query(
+          "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
+        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
+        )
+        ActiveRecord::Base.connection.exec_query(
+          "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry)
+        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'RdSAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05')",
+        )
+        allow(Gateway::AssessmentsGateway::Assessment).to receive(:exists?).and_return(false)
+      end
+
+      it "raises an assessment already exists exception" do
+        assessment = Domain::AssessmentIndexRecord.new(
+          assessment_id: "0000-0000-0000-0000-0002",
+          type_of_assessment: "RdSAP",
+          date_of_assessment: "2010-01-04",
+          date_registered: "2010-01-05",
+          date_of_expiry: "2010-01-05",
+          assessor: Domain::Assessor.new(scheme_assessor_id: "TEST123456"),
+          current_energy_efficiency_rating: 60,
+          potential_energy_efficiency_rating: 75,
+        )
+        expect { gateway.insert assessment }.to raise_error described_class::AssessmentAlreadyExists
+      end
+    end
+  end
 end

@@ -6,6 +6,8 @@ module Gateway
 
     class InvalidAssessmentType < StandardError; end
 
+    class AssessmentAlreadyExists < StandardError; end
+
     VALID_ASSESSMENT_TYPES = %w[
       RdSAP
       SAP
@@ -118,7 +120,11 @@ module Gateway
 
     def send_insert_to_db(assessment)
       ActiveRecord::Base.transaction do
-        Assessment.create assessment.to_record
+        begin
+          Assessment.create assessment.to_record
+        rescue ActiveRecord::RecordNotUnique
+          raise AssessmentAlreadyExists
+        end
 
         unless assessment.get(:related_rrn).nil?
           add_linked_assessment assessment
