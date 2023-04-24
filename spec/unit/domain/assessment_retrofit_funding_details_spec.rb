@@ -1,0 +1,43 @@
+describe Domain::AssessmentRetrofitFundingDetails do
+  let(:arguments) do
+    {
+      address: {
+        address_id: "UPRN-000000000123",
+        address_line_1: "22 Acacia Avenue",
+        address_line_2: "",
+        address_line_3: "",
+        address_line_4: "",
+        town: "Anytown",
+        postcode: "AB1 2CD",
+      },
+      uprn: "UPRN-000000000123",
+      lodgement_date: "2020-05-04",
+      current_energy_efficiency_rating: 50,
+    }
+  end
+
+  let(:expected_data) do
+    {
+      address: {
+        address_id: "UPRN-000000000123",
+        address_line_1: "22 Acacia Avenue",
+        address_line_2: "",
+        address_line_3: "",
+        address_line_4: "",
+        town: "Anytown",
+        postcode: "AB1 2CD",
+      },
+      uprn: "000000000123",
+      lodgement_date: "2020-05-04",
+      current_band: "e",
+    }
+  end
+
+  let(:domain) { described_class.new(**arguments) }
+
+  describe "#to_hash" do
+    it "returns the expected data" do
+      expect(domain.to_hash).to eq expected_data
+    end
+  end
+end
