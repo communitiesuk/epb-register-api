@@ -3326,13 +3326,6 @@ components:
           example: "Boiler and radiators, mains gas"
           description: "A description of the main heating for the property as per the known descriptions for the SAP-MainHeatingCategoryCode node type in SAP/RdSAP schemas."
           nullable: true
-        wallTypes:
-          type: array
-          items:
-            type: string
-            enum: [basement wall, exposed wall, sheltered wall, party wall, internal wall]
-          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
-          description: "A list of free text descriptions associated with wall property features as documented in the assessment."
         wallsDescription:
           type: array
           items:
