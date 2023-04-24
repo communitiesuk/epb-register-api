@@ -29,7 +29,7 @@ tags:
     description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
   - name: Boiler Upgrade Scheme
     description: Endpoints used by the Boiler Upgrade Scheme
-  - name: - Energy Company Obligation (ECO)
+  - name: Energy Company Obligation (ECO)
     description: Endpoints used by the Energy Company Obligation (ECO) Scheme
   - name: Home Energy Retrofit Advice
     description: Endpoints used by the Home Energy Retrofit Advice service
