@@ -611,6 +611,7 @@ paths:
     get:
       tags:
         - Search
+        - Energy Company Obligation (ECO)
         - Home Energy Retrofit Advice
         - Heat Pump Check
         - Warm Home Discount
@@ -1438,6 +1439,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+
+  /ecoplus/assessments/{assessmentId}:
+    get:
+      tags:
+        - Energy Company Obligation (ECO)
+      summary: 'Get the ECO details from the domestic EPC with reference {assessmentId}'
+      description: Get domestic EPC details for the supplied RRN
+      operationId: get-assessment-ecoplus
+      security:
+        - oauth:
+            - 'ecoplus:assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID (RRN) of the assessment being requested'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Domestic EPC data for the ECO service
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/ECOAssessmentDetails'
+        '400':
+          description: The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Domestic EPC with this RRN not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
 
   /retrofit-advice/assessments/{assessmentId}:
     get:
@@ -3185,12 +3246,12 @@ components:
           type: boolean
           example: false
           nullable: true
-          description: "Whether cavity wall insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as `null` (meaning information was not available, for example for CEPCs) is semantically different to `false` here."
+          description: "Whether cavity wall insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available, for example for CEPCs) is semantically different to 'false' here."
         loftInsulationRecommended:
           type: boolean
           example: true
           nullable: true
-          description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as `null` (meaning information was not available, for example for CEPCs) is semantically different to `false` here."
+          description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available, for example for CEPCs) is semantically different to 'false' here."
         secondaryHeating:
           type: string
           example: 'Electric bar heater'
@@ -3217,6 +3278,84 @@ components:
               items:
                 $ref: '#/components/schemas/AssessmentId'
               example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
+
+    # ECO Plus
+    ECOAssessmentDetails:
+      type: object
+      properties:
+        typeOfAssessment:
+          type: string
+          enum: [ SAP, RdSAP ]
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        uprn:
+          type: string
+          nullable: true
+          example: '001234567890'
+        lodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          example: 62
+          description: The current energy rating to be submitted to the Register
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'c'
+          description: The band, from a to g, the current Energy Rating falls within
+        potentialEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
+        propertyType:
+          type: string
+          example: 'Mid-floor flat'
+        builtForm:
+          type: string
+          example: 'End-Terrace'
+          description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+          nullable: true
+        mainHeatingDescription:
+          type: string
+          example: "Boiler and radiators, mains gas"
+          description: "A description of the main heating for the property as per the known descriptions for the SAP-MainHeatingCategoryCode node type in SAP/RdSAP schemas."
+          nullable: true
+        wallTypes:
+          type: array
+          items:
+            type: string
+            enum: [basement wall, exposed wall, sheltered wall, party wall, internal wall]
+          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          description: "A list of free text descriptions associated with wall property features as documented in the assessment."
+        wallsDescription:
+          type: array
+          items:
+            type: string
+          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          description: "A list of free text descriptions associated with wall property features as documented in the assessment."
+        roofDescription:
+          type: array
+          items:
+            type: string
+          example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+          description: "A list of free text descriptions associated with roof property features as documented in the assessment."
+        cavityWallInsulationRecommended:
+          type: boolean
+          example: false
+          nullable: true
+          description: "Whether cavity wall insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available) is semantically different to 'false' here."
+        loftInsulationRecommended:
+          type: boolean
+          example: true
+          nullable: true
+          description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available) is semantically different to 'false' here."
+
 
     # Home Energy Retrofit Advice
     RetrofitAdviceAssessmentDetails:
@@ -3361,11 +3500,10 @@ components:
           type: boolean
           example: true
           nullable: true
-          description: "Whether mains gas is available in the property. NB. a `null` value means that this data point is not available from this assessment."
+          description: "Whether mains gas is available in the property. NB. a 'null' value means that this data point is not available from this assessment."
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          maximum: 100
           example: 62
           description: "The current energy rating to be submitted to the Register"
 
