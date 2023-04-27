@@ -2,11 +2,10 @@ describe Domain::AssessmentRetrofitFundingDetails do
   let(:arguments) do
     {
       address: {
-        address_id: "UPRN-000000000123",
-        address_line_1: "22 Acacia Avenue",
-        address_line_2: "",
-        address_line_3: "",
-        address_line_4: "",
+        address_line1: "22 Acacia Avenue",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
         town: "Anytown",
         postcode: "AB1 2CD",
       },
@@ -19,11 +18,10 @@ describe Domain::AssessmentRetrofitFundingDetails do
   let(:expected_data) do
     {
       address: {
-        address_id: "UPRN-000000000123",
-        address_line_1: "22 Acacia Avenue",
-        address_line_2: "",
-        address_line_3: "",
-        address_line_4: "",
+        address_line1: "22 Acacia Avenue",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
         town: "Anytown",
         postcode: "AB1 2CD",
       },
