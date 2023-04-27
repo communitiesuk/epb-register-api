@@ -185,5 +185,25 @@ describe Gateway::RetrofitFundingSchemeGateway do
         expect(result).to be_nil
       end
     end
+
+    context "when there are no assessments for a UPRN" do
+      before do
+        add_super_assessor(scheme_id:)
+
+        lodge_assessment(
+          assessment_body: rdsap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          migrated: true,
+        )
+      end
+
+      it "searches by uprn and returns nil" do
+        result = gateway.fetch_by_uprn("000000000001")
+        expect(result).to be_nil
+      end
+    end
   end
 end

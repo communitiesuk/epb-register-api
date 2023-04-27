@@ -27,14 +27,13 @@ module Gateway
   private
 
     def do_search(sql:, binds:)
-      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
-      results.map { |result| row_to_domain(result) }.compact.first
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).first
+      result.nil? ? nil : id_to_domain(result["assessment_id"])
     end
 
-    def row_to_domain(row)
+    def id_to_domain(assessment_id)
       assessment_summary =
-        UseCase::AssessmentSummary::Fetch.new.execute row["assessment_id"]
-      return nil if block_given? && !yield(assessment_summary)
+        UseCase::AssessmentSummary::Fetch.new.execute assessment_id
 
       Domain::AssessmentRetrofitFundingDetails.new(
         address: assessment_summary[:address].slice(
