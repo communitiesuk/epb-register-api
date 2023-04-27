@@ -9,6 +9,9 @@ module Gateway
         FROM assessments_address_id AS aai
         WHERE aai.address_id = CONCAT('UPRN-', $1::text))
       AND a.type_of_assessment IN ('SAP', 'RdSAP')
+      AND a.opt_out = false
+      AND a.cancelled_at IS NULL
+      AND a.not_for_issue_at IS NULL
       ORDER BY date_registered DESC
       LIMIT 1
       SQL
@@ -31,7 +34,6 @@ module Gateway
     def row_to_domain(row)
       assessment_summary =
         UseCase::AssessmentSummary::Fetch.new.execute row["assessment_id"]
-
       return nil if block_given? && !yield(assessment_summary)
 
       Domain::AssessmentRetrofitFundingDetails.new(
