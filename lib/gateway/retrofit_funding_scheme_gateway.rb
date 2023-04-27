@@ -8,6 +8,7 @@ module Gateway
         SELECT aai.assessment_id
         FROM assessments_address_id AS aai
         WHERE aai.address_id = CONCAT('UPRN-', $1::text))
+      AND a.type_of_assessment IN ('SAP', 'RdSAP')
       ORDER BY date_registered DESC
       LIMIT 1
       SQL
@@ -20,19 +21,12 @@ module Gateway
       )
     end
 
+  private
+
     def do_search(sql:, binds:)
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
-      details_list = results.map { |result| row_to_domain(result) }.compact
-
-      case details_list.count
-      when 1
-        details_list.first
-      else
-        nil
-      end
+      results.map { |result| row_to_domain(result) }.compact.first
     end
-
-  private
 
     def row_to_domain(row)
       assessment_summary =

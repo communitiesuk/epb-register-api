@@ -7,6 +7,8 @@ describe Gateway::RetrofitFundingSchemeGateway do
 
   let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
 
+  let(:cepc_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
+
   context "when expecting to find one assessment" do
     before do
       add_super_assessor(scheme_id:)
@@ -65,6 +67,28 @@ describe Gateway::RetrofitFundingSchemeGateway do
         result = gateway.fetch_by_uprn("000000000000")
         expect(result).to be_a(Domain::AssessmentRetrofitFundingDetails)
         expect(result.to_hash).to eq expected_retrofit_funding_details_hash
+      end
+    end
+  end
+
+  context "when expecting to find no assessments" do
+    context "when there is a non domestic assessment for a UPRN" do
+      before do
+        add_super_assessor(scheme_id:)
+
+        lodge_assessment(
+          assessment_body: cepc_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-8.0.0",
+        )
+      end
+
+      it "searches by uprn and returns nil" do
+        result = gateway.fetch_by_uprn("000000000001")
+        expect(result).to be_nil
       end
     end
   end
