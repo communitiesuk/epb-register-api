@@ -2,10 +2,14 @@ module Gateway
   class RetrofitFundingSchemeGateway
     def fetch_by_uprn(uprn)
       sql = <<-SQL
-        SELECT
-        assessment_id#{' '}
-        FROM assessments_address_id#{' '}
-        WHERE address_id = CONCAT('UPRN-', $1::text)
+      SELECT a.assessment_id
+      FROM assessments AS a
+      WHERE a.assessment_id IN (
+        SELECT aai.assessment_id
+        FROM assessments_address_id AS aai
+        WHERE aai.address_id = CONCAT('UPRN-', $1::text))
+      ORDER BY date_registered DESC
+      LIMIT 1
       SQL
 
       do_search(
