@@ -138,7 +138,7 @@ module Gateway
             SUBSTRING(a.postcode FROM 1 FOR LENGTH(a.postcode) - 4) = c.outcode
           )
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.created_at BETWEEN $1 AND $4
+        AND a.date_registered BETWEEN $1 AND $4
         AND a.postcode NOT LIKE 'BT%'
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id

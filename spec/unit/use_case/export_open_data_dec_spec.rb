@@ -176,12 +176,12 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
       end
 
       it "returns the correct number of assessments in the Data" do
-        expect(exported_data.length).to eq(3)
+        expect(exported_data.length).to eq(4)
       end
 
       it "expects logs to have 2 rows after export" do
         exported_data
-        expect(statistics[0]["num_rows"]).to eq(3)
+        expect(statistics[0]["num_rows"]).to eq(4)
       end
 
       expected_values.except(:lodgement_datetime).each_key do |index|
@@ -203,17 +203,17 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
       end
 
       it "returns 2 rows when called with a different task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(3)
-        expect(export_object.execute("2019-07-01", 2).length).to eq(3)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(4)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(4)
       end
 
       it "returns 2 rows no task id is passed" do
-        expect(export_object.execute("2019-07-01").length).to eq(3)
-        expect(statistics.first["num_rows"]).to eq(3)
+        expect(export_object.execute("2019-07-01").length).to eq(4)
+        expect(statistics.first["num_rows"]).to eq(4)
       end
 
       it "returns 0 rows when called with the existing task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(3)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(4)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
 
