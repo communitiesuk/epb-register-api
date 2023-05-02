@@ -23,25 +23,10 @@ describe Gateway::RetrofitFundingSchemeGateway do
       )
     end
 
-    expected_retrofit_funding_details_hash = {
-      address: {
-        address_line1: "1 Some Street",
-        address_line2: "",
-        address_line3: "",
-        address_line4: "",
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      uprn: "000000000000",
-      lodgement_date: "2020-05-04",
-      current_band: "e",
-    }
-
     context "when there is only a single assessment for a UPRN" do
-      it "searches by uprn and fetches data where one match exists" do
-        result = gateway.fetch_by_uprn("000000000000")
-        expect(result).to be_a(Domain::AssessmentRetrofitFundingDetails)
-        expect(result.to_hash).to eq expected_retrofit_funding_details_hash
+      it "searches by uprn and finds the assessment id where one match exists" do
+        result = gateway.find_by_uprn("000000000000")
+        expect(result).to eq("0000-0000-0000-0000-0000")
       end
     end
 
@@ -63,10 +48,9 @@ describe Gateway::RetrofitFundingSchemeGateway do
         )
       end
 
-      it "searches by uprn and fetches data where one match exists" do
-        result = gateway.fetch_by_uprn("000000000000")
-        expect(result).to be_a(Domain::AssessmentRetrofitFundingDetails)
-        expect(result.to_hash).to eq expected_retrofit_funding_details_hash
+      it "searches by uprn and finds the assessment id of the most recent assessment" do
+        result = gateway.find_by_uprn("000000000000")
+        expect(result).to eq("0000-0000-0000-0000-0000")
       end
     end
 
@@ -99,10 +83,9 @@ describe Gateway::RetrofitFundingSchemeGateway do
         )
       end
 
-      it "searches by uprn and returns the non-cancelled assessment" do
-        result = gateway.fetch_by_uprn("000000000000")
-        expect(result).to be_a(Domain::AssessmentRetrofitFundingDetails)
-        expect(result.to_hash).to eq expected_retrofit_funding_details_hash
+      it "searches by uprn and returns the assessment id of the most recent valid assessment" do
+        result = gateway.find_by_uprn("000000000000")
+        expect(result).to eq("0000-0000-0000-0000-0000")
       end
     end
 
@@ -135,16 +118,15 @@ describe Gateway::RetrofitFundingSchemeGateway do
         )
       end
 
-      it "searches by uprn and returns the valid assessment" do
-        result = gateway.fetch_by_uprn("000000000000")
-        expect(result).to be_a(Domain::AssessmentRetrofitFundingDetails)
-        expect(result.to_hash).to eq expected_retrofit_funding_details_hash
+      it "searches by uprn and returns the assessment id of the most recent for issue assessment" do
+        result = gateway.find_by_uprn("000000000000")
+        expect(result).to eq("0000-0000-0000-0000-0000")
       end
     end
   end
 
   context "when expecting to find no assessments" do
-    context "when there is a non domestic assessment for a UPRN" do
+    context "when there is only a non domestic assessment for a UPRN" do
       before do
         add_super_assessor(scheme_id:)
 
@@ -159,12 +141,12 @@ describe Gateway::RetrofitFundingSchemeGateway do
       end
 
       it "searches by uprn and returns nil" do
-        result = gateway.fetch_by_uprn("000000000001")
+        result = gateway.find_by_uprn("000000000001")
         expect(result).to be_nil
       end
     end
 
-    context "when there is an opted-out assessment for a UPRN" do
+    context "when there is only an opted-out assessment for a UPRN" do
       before do
         add_super_assessor(scheme_id:)
 
@@ -181,7 +163,7 @@ describe Gateway::RetrofitFundingSchemeGateway do
       end
 
       it "searches by uprn and returns nil" do
-        result = gateway.fetch_by_uprn("000000000000")
+        result = gateway.find_by_uprn("000000000000")
         expect(result).to be_nil
       end
     end
@@ -201,7 +183,7 @@ describe Gateway::RetrofitFundingSchemeGateway do
       end
 
       it "searches by uprn and returns nil" do
-        result = gateway.fetch_by_uprn("000000000001")
+        result = gateway.find_by_uprn("000000000001")
         expect(result).to be_nil
       end
     end

@@ -1,6 +1,6 @@
 module Gateway
   class RetrofitFundingSchemeGateway
-    def fetch_by_uprn(uprn)
+    def find_by_uprn(uprn)
       sql = <<-SQL
       SELECT a.assessment_id
       FROM assessments AS a
@@ -28,28 +28,7 @@ module Gateway
 
     def do_search(sql:, binds:)
       result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).first
-      result.nil? ? nil : id_to_domain(result["assessment_id"])
-    end
-
-    def id_to_domain(assessment_id)
-      assessment_summary =
-        UseCase::AssessmentSummary::Fetch.new.execute assessment_id
-
-      Domain::AssessmentRetrofitFundingDetails.new(
-        address: assessment_summary[:address].slice(
-          :address_line1,
-          :address_line2,
-          :address_line3,
-          :address_line4,
-          :town,
-          :postcode,
-        ).transform_values { |v| v || "" },
-        lodgement_date: assessment_summary[:date_registered],
-        uprn: assessment_summary[:address_id],
-        current_energy_efficiency_rating: assessment_summary[:current_energy_efficiency_rating],
-      )
-    rescue UseCase::AssessmentSummary::Fetch::AssessmentUnavailable
-      nil
+      result.nil? ? nil : result["assessment_id"]
     end
   end
 end
