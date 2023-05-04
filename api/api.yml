@@ -3433,9 +3433,22 @@ components:
           type: string
           format: date
           example: '2020-02-29'
+        expiryDate:
+          type: string
+          format: date
+          example: '2030-02-28'
         currentBand:
           type: string
           example: 'D'
+        propertyType:
+          type: string
+          example: 'Mid-floor flat'
+          nullable: true
+        builtForm:
+          type: string
+          example: 'End-Terrace'
+          description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
+          nullable: true
 
     # Heat Pump Check
     HeatPumpCheckAssessmentDetails:
