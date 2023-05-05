@@ -11,7 +11,7 @@ describe Domain::AssessmentRetrofitFundingDetails do
       },
       uprn: "UPRN-000000000123",
       lodgement_date: "2020-05-04",
-      current_energy_efficiency_rating: 50,
+      current_band: "e",
     }
   end
 

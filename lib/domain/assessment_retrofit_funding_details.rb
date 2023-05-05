@@ -4,12 +4,12 @@ module Domain
       address:,
       uprn:,
       lodgement_date:,
-      current_energy_efficiency_rating:
+      current_band:
     )
       @address = address
       @lodgement_date = lodgement_date
       @uprn = uprn.sub("UPRN-", "")
-      @current_energy_efficiency_rating = current_energy_efficiency_rating
+      @current_band = current_band
     end
 
     def to_hash
@@ -17,10 +17,7 @@ module Domain
         address: @address,
         uprn: @uprn,
         lodgement_date: @lodgement_date,
-        current_band:
-        Helper::EnergyBandCalculator.domestic(
-          @current_energy_efficiency_rating,
-        ),
+        current_band: @current_band,
       }
     end
   end
