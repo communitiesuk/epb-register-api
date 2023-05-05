@@ -583,6 +583,18 @@ def bus_details_by_arbitrary_params(
   )
 end
 
+def retrofit_funding_details_by_uprn(
+  uprn,
+  scopes: %w[retrofit-funding:assessment:fetch],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/retrofit-funding/assessments/#{uprn}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def hera_details_by_rrn(
   rrn,
   scopes: %w[retrofit-advice:assessment:fetch],

@@ -5,5 +5,6 @@ module Helper
     RRN = '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'.freeze
     GREEN_DEAL_PLAN_ID = "^[a-zA-Z0-9]{12}$".freeze
     POSTCODE = "^[a-zA-Z0-9 ]{4,10}$".freeze
+    STRIPPED_UPRN = '^\d{12}$'.freeze
   end
 end

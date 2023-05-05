@@ -61,6 +61,10 @@ class ApiFactory
     @boiler_upgrade_scheme_gateway ||= Gateway::BoilerUpgradeSchemeGateway.new
   end
 
+  def self.retrofit_funding_scheme_gateway
+    @retrofit_funding_scheme_gateway ||= Gateway::RetrofitFundingSchemeGateway.new
+  end
+
   def self.domestic_digest_gateway
     @domestic_digest_gateway ||= Gateway::DomesticDigestGateway.new
   end
@@ -250,6 +254,14 @@ class ApiFactory
   def self.find_assessments_for_bus_by_uprn_use_case
     @find_assessments_for_bus_by_uprn_use_case ||=
       UseCase::FindAssessmentsForBusByUprn.new(bus_gateway: boiler_upgrade_scheme_gateway)
+  end
+
+  def self.fetch_retrofit_funding_scheme_details_use_case
+    @fetch_retrofit_funding_scheme_details_use_case ||=
+      UseCase::FetchAssessmentForRetrofitFundingScheme.new(
+        retrofit_funding_scheme_gateway:,
+        assessments_search_gateway:,
+      )
   end
 
   def self.fetch_assessment_for_hera_use_case
