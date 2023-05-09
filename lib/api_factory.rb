@@ -261,6 +261,7 @@ class ApiFactory
       UseCase::FetchAssessmentForRetrofitFundingScheme.new(
         retrofit_funding_scheme_gateway:,
         assessments_search_gateway:,
+        domestic_digest_gateway:,
       )
   end
 

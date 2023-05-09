@@ -11,7 +11,10 @@ describe Domain::AssessmentRetrofitFundingDetails do
       },
       uprn: "UPRN-000000000123",
       lodgement_date: "2020-05-04",
+      expiry_date: Time.new(2030, 5, 3).to_date,
       current_band: "e",
+      property_type: "Mid-floor flat",
+      built_form: "End-Terrace",
     }
   end
 
@@ -27,7 +30,10 @@ describe Domain::AssessmentRetrofitFundingDetails do
       },
       uprn: "000000000123",
       lodgement_date: "2020-05-04",
+      expiry_date: "2030-05-03",
       current_band: "e",
+      property_type: "Mid-floor flat",
+      built_form: "End-Terrace",
     }
   end
 

@@ -30,7 +30,10 @@ describe "fetching Retrofit Funding Scheme details from the API", set_with_timec
       },
       uprn: "000000000000",
       lodgementDate: "2020-05-04",
+      expiryDate: "2030-05-03",
       currentBand: "e",
+      propertyType: "Mid-terrace house",
+      builtForm: "Semi-Detached",
     } }
   end
 
