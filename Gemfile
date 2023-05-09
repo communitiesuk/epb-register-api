@@ -12,7 +12,7 @@ group :worker do
   gem "http"
   gem "sentry-sidekiq", "~> 5.9.0"
   gem "sidekiq", "~> 7.1.0"
-  gem "sidekiq-cron", "~> 1.10.0"
+  gem "sidekiq-cron", "~> 1.10.1"
 end
 
 group :test do
