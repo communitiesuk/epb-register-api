@@ -93,7 +93,7 @@ GEM
     io-like (0.3.1)
     jmespath (1.6.2)
     json (2.6.3)
-    json-schema (3.0.0)
+    json-schema (4.0.0)
       addressable (>= 2.8)
     jwt (2.7.0)
     llhttp-ffi (0.4.0)
@@ -259,7 +259,7 @@ DEPENDENCIES
   epb_view_models (~> 1.1.1)
   geocoder (~> 1.8.0)
   http
-  json-schema (~> 3.0)
+  json-schema (~> 4.0)
   mock_redis (~> 0.36.0)
   namecase (~> 2.0)
   nokogiri (~> 1.14.3)
