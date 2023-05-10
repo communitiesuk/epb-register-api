@@ -12,7 +12,7 @@ phases:
 
   pre_build:
     commands:
-      - mv AWS-AWS-Procfile AWS-Procfile
+      - mv AWS-Procfile Procfile
 
   build:
     commands:
