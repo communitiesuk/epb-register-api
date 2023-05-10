@@ -24,7 +24,7 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker save -o ebpr-frontend-image.tar ebpr-frontend-image:latest
+      - docker save -o $DOCKER_IMAGE.tar $DOCKER_IMAGE:latest
 
 artifacts:
   files:
