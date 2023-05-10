@@ -1,0 +1,31 @@
+version: 0.2
+
+env:
+  variables:
+    DEPLOY_APPNAME: "epbr-sidekiq-integration"
+
+phases:
+  install:
+    commands:
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+
+  pre_build:
+    commands:
+      - mv AWS-AWS-Procfile AWS-Procfile
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Paketo image...
+      # We use --default-process below to define which entrypoint we want the application to have from the AWS-Procfile on the codebase
+      - pack build ebpr-sidekiq --buildpack paketo-buildpacks/ruby --builder paketobuildpacks/builder:full --default-process sidekiq
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker save -o ebpr-frontend-image.tar ebpr-frontend-image:latest
+
+artifacts:
+  files:
+    - '**/*'
