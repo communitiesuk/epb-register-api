@@ -41,7 +41,6 @@ module Controller
     class NotImplementedError < StandardError; end
 
     get "/api/bus/assessments/latest/search", auth_token_has_all: ["bus:assessment:search"] do
-      raise NotImplementedError unless Helper::Toggles.enabled? "bus-endpoint-enabled"
 
       filters = params_body SEARCH_SCHEMA
 
@@ -79,8 +78,6 @@ module Controller
                        else
                          "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
                        end
-      when NotImplementedError
-        error_response 501, "NOT_IMPLEMENTED", "This endpoint is not implemented"
       else
         server_error e
       end

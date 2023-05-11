@@ -87,11 +87,6 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
     }
   end
 
-  before do
-    allow(Helper::Toggles).to receive(:enabled?)
-    allow(Helper::Toggles).to receive(:enabled?).with("bus-endpoint-enabled").and_return(true)
-  end
-
   context "when getting BUS details with a RRN" do
     context "when the RRN is associated with an assessment that BUS details can be sent for" do
       before do
@@ -619,24 +614,6 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       )
 
       expect(response[:errors][0][:title]).to eq "The search query was invalid - please check the provided parameters"
-    end
-  end
-
-  context "when the feature flag for the BUS endpoint is not enabled" do
-    before do
-      allow(Helper::Toggles).to receive(:enabled?).with("bus-endpoint-enabled").and_return(false)
-    end
-
-    it "receives a 501 with an appropriate error" do
-      response = JSON.parse(
-        bus_details_by_arbitrary_params(
-          params: {},
-          accepted_responses: [501],
-        ).body,
-        symbolize_names: true,
-      )
-
-      expect(response[:errors][0][:title]).to eq "This endpoint is not implemented"
     end
   end
 end
