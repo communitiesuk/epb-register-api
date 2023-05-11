@@ -11,7 +11,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/retrofit-funding/assessments/:uprn", auth_token_has_all: ["retrofit-funding:assessment:fetch"] do
+    get "/api/retrofit-funding/assessments", auth_token_has_all: ["retrofit-funding:assessment:fetch"] do
       params_body SCHEMA
 
       uprn = params[:uprn]

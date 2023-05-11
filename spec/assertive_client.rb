@@ -589,7 +589,7 @@ def retrofit_funding_details_by_uprn(
   **assertive_kwargs
 )
   assertive_get(
-    "/api/retrofit-funding/assessments/#{uprn}",
+    "/api/retrofit-funding/assessments?uprn=#{uprn}",
     scopes:,
     **assertive_kwargs,
   )
