@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_15_132707) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_16_134159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -203,7 +203,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_132707) do
     t.index ["task_id"], name: "index_open_data_logs_on_task_id"
   end
 
-  create_table "overridden_lodgement_events", id: false, force: :cascade do |t|
+  create_table "overridden_lodgement_events", force: :cascade do |t|
     t.string "assessment_id"
     t.jsonb "rule_triggers", default: []
     t.datetime "created_at", null: false
