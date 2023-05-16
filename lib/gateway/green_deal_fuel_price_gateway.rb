@@ -11,7 +11,7 @@ module Gateway
 
         price_data.each do |row|
           sql = <<-SQL
-          INSERT INTO green_deal_fuel_price_data VALUES($1, $2, $3)
+          INSERT INTO green_deal_fuel_price_data (fuel_heat_source, standing_charge, fuel_price) VALUES($1, $2, $3)
           SQL
 
           binds = [
