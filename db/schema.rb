@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_11_093615) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_15_132707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -25,17 +25,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_093615) do
     t.string "classification_code", limit: 6
     t.string "address_type", limit: 15
     t.string "country_code", limit: 1
-    t.index ["address_line1"], name: "index_address_base_on_address_line1"
-    t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
-    t.index ["town"], name: "index_address_base_on_town"
   end
 
-  create_table "address_base_versions", id: false, force: :cascade do |t|
-    t.string "version_name", null: false
-    t.integer "version_number", null: false
-    t.datetime "created_at", null: false
-    t.index ["version_number"], name: "index_address_base_versions_on_version_number", unique: true
+  create_table "address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
+    t.string "version_name"
+    t.datetime "created_at"
   end
 
   create_table "assessment_statistics", force: :cascade do |t|
@@ -158,19 +153,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_11_093615) do
     t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
   end
 
-  create_table "green_deal_assessments", id: false, force: :cascade do |t|
+  create_table "green_deal_assessments", primary_key: ["green_deal_plan_id", "assessment_id"], force: :cascade do |t|
     t.string "green_deal_plan_id", null: false
     t.string "assessment_id", null: false
     t.index ["green_deal_plan_id", "assessment_id"], name: "index_green_deal_assessments_on_plan_id_and_assessment_id", unique: true
   end
 
-  create_table "green_deal_fuel_code_map", id: false, force: :cascade do |t|
+  create_table "green_deal_fuel_code_map", force: :cascade do |t|
     t.integer "fuel_code"
     t.integer "fuel_category"
     t.integer "fuel_heat_source"
   end
 
-  create_table "green_deal_fuel_price_data", id: false, force: :cascade do |t|
+  create_table "green_deal_fuel_price_data", force: :cascade do |t|
     t.integer "fuel_heat_source"
     t.decimal "standing_charge", precision: 5, scale: 2
     t.decimal "fuel_price", precision: 10, scale: 2
