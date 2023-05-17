@@ -41,7 +41,6 @@ module Controller
     class NotImplementedError < StandardError; end
 
     get "/api/bus/assessments/latest/search", auth_token_has_all: ["bus:assessment:search"] do
-
       filters = params_body SEARCH_SCHEMA
 
       use_case, execute_params =
