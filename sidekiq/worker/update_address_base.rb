@@ -3,7 +3,7 @@ module Worker
     include Sidekiq::Worker
 
     def perform
-      system("npm run update-address-base-auto")
+      system("npm run update-address-base-auto", exception: true)
     end
   end
 end
