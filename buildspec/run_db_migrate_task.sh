@@ -4,7 +4,7 @@
 # ./run_db_migrate_task.sh $CLIENT_ROLE_ARN client
 PREFIX=$1
 PROFILE=$2
-CLUSTER_NAME=$2
+CLUSTER_NAME=$3
 VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-reg-api-ecs-sg"
 TASK="${PREFIX}-reg-api-ecs-db-migrate-task"
