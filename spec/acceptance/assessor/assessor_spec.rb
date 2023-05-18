@@ -12,7 +12,7 @@ describe "Acceptance::Assessor" do
         telephoneNumber: "010199991010101",
         email: "person@person.com",
       },
-      searchResultsComparisonPostcode: "",
+      searchResultsComparisonPostcode: "SE1 7EZ",
       alsoKnownAs: "Bob",
       address: {
         addressLine1: "Flat 33",
@@ -407,6 +407,52 @@ describe "Acceptance::Assessor" do
 
         expect(assessor_response).to eq(expected_response)
       end
+
+      it "enters an upcased search_results_comparison_postcode" do
+        valid_assessor_request[:searchResultsComparisonPostcode] = 'se1 7ez'
+        assessor_response =
+          JSON.parse(
+            add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
+            )[
+            "data"
+          ]
+
+        expected_response =
+          JSON.parse(
+            {
+              registeredBy: {
+                schemeId: scheme_id.to_s,
+                name: "test scheme",
+              },
+              schemeAssessorId: "SCHE554433",
+              firstName: valid_assessor_request[:firstName],
+              middleNames: valid_assessor_request[:middleNames],
+              lastName: valid_assessor_request[:lastName],
+              dateOfBirth: valid_assessor_request[:dateOfBirth],
+              searchResultsComparisonPostcode: 'SE1 7EZ',
+              alsoKnownAs: valid_assessor_request[:alsoKnownAs],
+              address: valid_assessor_request[:address],
+              companyDetails: valid_assessor_request[:companyDetails],
+              qualifications: {
+                domesticSap: "ACTIVE",
+                domesticRdSap: "ACTIVE",
+                nonDomesticSp3: "ACTIVE",
+                nonDomesticCc4: "ACTIVE",
+                nonDomesticDec: "ACTIVE",
+                nonDomesticNos3: "ACTIVE",
+                nonDomesticNos4: "ACTIVE",
+                nonDomesticNos5: "ACTIVE",
+                gda: "ACTIVE",
+              },
+              contactDetails: {
+                email: "person@person.com",
+                telephoneNumber: "010199991010101",
+              },
+            }.to_json,
+            )
+
+        expect(assessor_response).to eq(expected_response)
+      end
     end
 
     context "with optional fields missing (but otherwise valid)" do
@@ -618,6 +664,27 @@ describe "Acceptance::Assessor" do
         expect(JSON.parse(response.body)["data"]).to eq(
           JSON.parse(expected_response.to_json),
         )
+      end
+
+      it "replaces search_results_comparison_postcode in upcase" do
+        assessor = valid_assessor_request
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
+
+        assessor[:searchResultsComparisonPostcode] = "ne23 1Tw"
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
+
+        response = fetch_assessor(scheme_id:, assessor_id: "ASSR000999")
+
+        expected_response = valid_assessor_request
+        expected_response[:registeredBy] = {
+          schemeId: scheme_id,
+          name: "test scheme",
+        }
+        expected_response[:schemeAssessorId] = "ASSR000999"
+        expected_response[:searchResultsComparisonPostcode] = "NE23 1TW"
+        expect(JSON.parse(response.body)["data"]).to eq(
+                                                       JSON.parse(expected_response.to_json),
+                                                       )
       end
     end
 

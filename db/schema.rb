@@ -25,12 +25,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_16_134159) do
     t.string "classification_code", limit: 6
     t.string "address_type", limit: 15
     t.string "country_code", limit: 1
+    t.index ["address_line1"], name: "index_address_base_on_address_line1"
+    t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
+    t.index ["town"], name: "index_address_base_on_town"
   end
 
   create_table "address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
-    t.string "version_name"
-    t.datetime "created_at"
+    t.string "version_name", null: false
+    t.datetime "created_at", null: false
+    t.index ["version_number"], name: "index_address_base_versions_on_version_number", unique: true
   end
 
   create_table "assessment_statistics", force: :cascade do |t|
