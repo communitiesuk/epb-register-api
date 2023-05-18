@@ -17,6 +17,6 @@ phases:
   post_build:
     commands:
       - bash ./buildspec/assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server this_profile
-      - bash ./buildspec/run_db_migrate_task.sh $PREFIX this_profile
+      - bash ./buildspec/run_db_migrate_task.sh $PREFIX this_profile $CLUSTER_NAME
       - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --profile this_profile
 
