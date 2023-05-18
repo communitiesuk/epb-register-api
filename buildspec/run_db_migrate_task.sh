@@ -4,15 +4,13 @@
 # ./run_db_migrate_task.sh $CLIENT_ROLE_ARN client
 PREFIX=$1
 PROFILE=$2
-CLUSTER_NAME=$3
 VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-reg-api-ecs-sg"
+CLUSTER_NAME="${PREFIX}-reg-api-cluster"
 TASK="${PREFIX}-reg-api-ecs-db-migrate-task"
 
-if [[ $CLUSTER_NAME =~ "sidekq" ]]; then
-    echo "NO MIGRATIONS NEEDED FOR SIDEKIQ"
-    exit 0
-fi
+
+
 
 VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$VPC_NAME --query 'Vpcs[0].VpcId' --profile $PROFILE)
 
