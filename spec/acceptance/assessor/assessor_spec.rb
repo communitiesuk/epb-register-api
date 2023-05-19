@@ -409,11 +409,11 @@ describe "Acceptance::Assessor" do
       end
 
       it "enters an upcased search_results_comparison_postcode" do
-        valid_assessor_request[:searchResultsComparisonPostcode] = 'se1 7ez'
+        valid_assessor_request[:searchResultsComparisonPostcode] = "se1 7ez"
         assessor_response =
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
-            )[
+          )[
             "data"
           ]
 
@@ -429,7 +429,7 @@ describe "Acceptance::Assessor" do
               middleNames: valid_assessor_request[:middleNames],
               lastName: valid_assessor_request[:lastName],
               dateOfBirth: valid_assessor_request[:dateOfBirth],
-              searchResultsComparisonPostcode: 'SE1 7EZ',
+              searchResultsComparisonPostcode: "SE1 7EZ",
               alsoKnownAs: valid_assessor_request[:alsoKnownAs],
               address: valid_assessor_request[:address],
               companyDetails: valid_assessor_request[:companyDetails],
@@ -449,7 +449,7 @@ describe "Acceptance::Assessor" do
                 telephoneNumber: "010199991010101",
               },
             }.to_json,
-            )
+          )
 
         expect(assessor_response).to eq(expected_response)
       end
@@ -683,8 +683,8 @@ describe "Acceptance::Assessor" do
         expected_response[:schemeAssessorId] = "ASSR000999"
         expected_response[:searchResultsComparisonPostcode] = "NE23 1TW"
         expect(JSON.parse(response.body)["data"]).to eq(
-                                                       JSON.parse(expected_response.to_json),
-                                                       )
+          JSON.parse(expected_response.to_json),
+        )
       end
     end
 
