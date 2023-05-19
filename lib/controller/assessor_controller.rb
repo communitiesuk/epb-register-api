@@ -18,7 +18,7 @@ module Controller
           format: "iso-date",
         },
         searchResultsComparisonPostcode: {
-          type: "string",
+          type: %w[string null],
         },
         alsoKnownAs: {
           type: %w[string null],

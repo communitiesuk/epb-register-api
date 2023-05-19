@@ -55,7 +55,7 @@ module UseCase
           registered_by_id: add_assessor_request.registered_by_id,
           registered_by_name: scheme[:name],
           search_results_comparison_postcode:
-            add_assessor_request.search_results_comparison_postcode.upcase,
+            add_assessor_request.search_results_comparison_postcode&.upcase,
           also_known_as: add_assessor_request.also_known_as,
           address_line1: add_assessor_request.address_line1,
           address_line2: add_assessor_request.address_line2,

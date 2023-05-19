@@ -453,6 +453,98 @@ describe "Acceptance::Assessor" do
 
         expect(assessor_response).to eq(expected_response)
       end
+
+      it "dosen't error when search_results_comparison_postcode is not provided" do
+        valid_assessor_request.delete(:searchResultsComparisonPostcode)
+        assessor_response =
+          JSON.parse(
+            add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
+            )[
+            "data"
+          ]
+
+        expected_response =
+          JSON.parse(
+            {
+              registeredBy: {
+                schemeId: scheme_id.to_s,
+                name: "test scheme",
+              },
+              schemeAssessorId: "SCHE554433",
+              firstName: valid_assessor_request[:firstName],
+              middleNames: valid_assessor_request[:middleNames],
+              lastName: valid_assessor_request[:lastName],
+              dateOfBirth: valid_assessor_request[:dateOfBirth],
+              searchResultsComparisonPostcode: nil,
+              alsoKnownAs: valid_assessor_request[:alsoKnownAs],
+              address: valid_assessor_request[:address],
+              companyDetails: valid_assessor_request[:companyDetails],
+              qualifications: {
+                domesticSap: "ACTIVE",
+                domesticRdSap: "ACTIVE",
+                nonDomesticSp3: "ACTIVE",
+                nonDomesticCc4: "ACTIVE",
+                nonDomesticDec: "ACTIVE",
+                nonDomesticNos3: "ACTIVE",
+                nonDomesticNos4: "ACTIVE",
+                nonDomesticNos5: "ACTIVE",
+                gda: "ACTIVE",
+              },
+              contactDetails: {
+                email: "person@person.com",
+                telephoneNumber: "010199991010101",
+              },
+            }.to_json,
+            )
+
+        expect(assessor_response).to eq(expected_response)
+      end
+
+      it "dosen't error when search_results_comparison_postcode is nil" do
+        valid_assessor_request[:searchResultsComparisonPostcode] = nil
+        assessor_response =
+          JSON.parse(
+            add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
+            )[
+            "data"
+          ]
+
+        expected_response =
+          JSON.parse(
+            {
+              registeredBy: {
+                schemeId: scheme_id.to_s,
+                name: "test scheme",
+              },
+              schemeAssessorId: "SCHE554433",
+              firstName: valid_assessor_request[:firstName],
+              middleNames: valid_assessor_request[:middleNames],
+              lastName: valid_assessor_request[:lastName],
+              dateOfBirth: valid_assessor_request[:dateOfBirth],
+              searchResultsComparisonPostcode: nil,
+              alsoKnownAs: valid_assessor_request[:alsoKnownAs],
+              address: valid_assessor_request[:address],
+              companyDetails: valid_assessor_request[:companyDetails],
+              qualifications: {
+                domesticSap: "ACTIVE",
+                domesticRdSap: "ACTIVE",
+                nonDomesticSp3: "ACTIVE",
+                nonDomesticCc4: "ACTIVE",
+                nonDomesticDec: "ACTIVE",
+                nonDomesticNos3: "ACTIVE",
+                nonDomesticNos4: "ACTIVE",
+                nonDomesticNos5: "ACTIVE",
+                gda: "ACTIVE",
+              },
+              contactDetails: {
+                email: "person@person.com",
+                telephoneNumber: "010199991010101",
+              },
+            }.to_json,
+            )
+
+        expect(assessor_response).to eq(expected_response)
+      end
     end
 
     context "with optional fields missing (but otherwise valid)" do
