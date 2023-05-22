@@ -19,7 +19,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Paketo image...
       # We use --default-process below to define which entrypoint we want the application to have from the AWS-Procfile on the codebase
-      - pack build ebpr-sidekiq-image --buildpack paketo-buildpacks/ruby --builder paketobuildpacks/builder:full --default-process sidekiq
+      - pack build ebpr-sidekiq-image --builder paketobuildpacks/builder-jammy-full --post-buildpack paketo-buildpacks/npm-install --post-buildpack paketo-buildpacks/ruby --default-process sidekiq
 
   post_build:
     commands:
