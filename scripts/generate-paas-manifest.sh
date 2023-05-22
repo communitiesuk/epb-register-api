@@ -9,10 +9,7 @@ case "$STAGE" in
  *) MEMORY="1G" ;;
 esac
 
-case "$STAGE" in
- production) DATABASE="mhclg-epb-db-production" ;;
- *) DATABASE="dluhc-epb-db-$STAGE" ;;
-esac
+DATABASE="dluhc-epb-db-$STAGE" ;;
 
 cat << EOF
 ---

@@ -4,10 +4,7 @@
 APPLICATION_NAME=$1  # e.g. dluhc-epb-worker-integration
 STAGE=$2 # i.e. [integration, staging, production]
 
-case "$STAGE" in
- production) DATABASE="mhclg-epb-db-production" ;;
- *) DATABASE="dluhc-epb-db-$STAGE" ;;
-esac
+DATABASE="dluhc-epb-db-$STAGE" ;;
 
 case "$STAGE" in
  production) MEMORY="3G" ;;
