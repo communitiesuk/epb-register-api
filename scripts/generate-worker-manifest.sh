@@ -3,8 +3,7 @@
 #define parameters which are passed in.
 APPLICATION_NAME=$1  # e.g. dluhc-epb-worker-integration
 STAGE=$2 # i.e. [integration, staging, production]
-
-DATABASE="dluhc-epb-db-$STAGE" ;;
+DATABASE="dluhc-epb-db-$STAGE"
 
 case "$STAGE" in
  production) MEMORY="3G" ;;
