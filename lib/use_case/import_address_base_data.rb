@@ -161,7 +161,7 @@ module UseCase
       lines =
         %i[
           DEPARTMENT_NAME
-          ORGANISATION_NAME
+          RM_ORGANISATION_NAME
           SUB_BUILDING_NAME
           BUILDING_NAME
           BUILDING_NUMBER

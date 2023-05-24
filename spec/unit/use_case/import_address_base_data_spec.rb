@@ -160,7 +160,7 @@ describe UseCase::ImportAddressBaseData do
   ]
   context "when importing the data for 10 downing street" do
     expected_query_clause =
-      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON', 'RD04', 'Delivery Point', 'E')"
+      "('100023336956', 'SW1A 2AA', 'PRIME MINISTER & FIRST LORD OF THE TREASURY', '10 DOWNING STREET', NULL, NULL, 'LONDON', 'RD04', 'Delivery Point', 'E')"
     use_case = described_class.new
     it "creates a query clause in the expected form" do
       hashed_data = Hash[headers.zip(number_ten)]
@@ -265,7 +265,7 @@ describe UseCase::ImportAddressBaseData do
           {
             uprn: "100023336956",
             postcode: "SW1A 2AA",
-            lines: ["10 DOWNING STREET"],
+            lines: ["PRIME MINISTER & FIRST LORD OF THE TREASURY", "10 DOWNING STREET"],
             town: "LONDON",
             country_code: "E",
           },
