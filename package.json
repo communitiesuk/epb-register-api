@@ -17,7 +17,7 @@
     "update-address-base-auto": "node lib/tasks/maintenance/address-base.js update -v",
     "full-address-base-reload": "node lib/tasks/maintenance/address-base.js update -f -v",
     "specify-address-base-version": "node lib/tasks/maintenance/address-base.js specify-version",
-    "build": ""
+    "build": "echo \"DO NOT DELETE - I am here as a placeholder to help prevent the Paketo Jammy Full Builder from complaining that I'm missing, see EPBR-3174\""
   },
   "repository": {
     "type": "git",
