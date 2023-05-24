@@ -166,8 +166,8 @@ test('when importing the data for 10 downing street', () => {
   const expected = {
     uprn: '100023336956',
     postcode: 'SW1A 2AA',
-    address_line1: '10 DOWNING STREET',
-    address_line2: null,
+    address_line1: 'PRIME MINISTER & FIRST LORD OF THE TREASURY',
+    address_line2: '10 DOWNING STREET',
     address_line3: null,
     address_line4: null,
     town: 'LONDON',
