@@ -459,7 +459,7 @@ describe "Acceptance::Assessor" do
         assessor_response =
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
-            )[
+          )[
             "data"
           ]
 
@@ -495,7 +495,7 @@ describe "Acceptance::Assessor" do
                 telephoneNumber: "010199991010101",
               },
             }.to_json,
-            )
+          )
 
         expect(assessor_response).to eq(expected_response)
       end
@@ -505,7 +505,7 @@ describe "Acceptance::Assessor" do
         assessor_response =
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
-            )[
+          )[
             "data"
           ]
 
@@ -541,7 +541,7 @@ describe "Acceptance::Assessor" do
                 telephoneNumber: "010199991010101",
               },
             }.to_json,
-            )
+          )
 
         expect(assessor_response).to eq(expected_response)
       end
