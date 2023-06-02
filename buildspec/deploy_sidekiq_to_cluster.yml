@@ -16,6 +16,6 @@ phases:
 
   post_build:
     commands:
-      - bash ./buildspec/assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server this_profile
+      - bash ./scripts/assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server this_profile
       - aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --profile this_profile
 
