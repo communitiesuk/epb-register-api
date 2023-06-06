@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_16_134159) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_05_140351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "address_base", primary_key: "uprn", id: :string, force: :cascade do |t|
@@ -78,6 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_16_134159) do
     t.index ["address_id"], name: "index_assessments_on_address_id"
     t.index ["created_at"], name: "index_assessments_on_created_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
+    t.index ["town"], name: "index_towns_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
   end
 
