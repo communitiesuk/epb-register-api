@@ -84,6 +84,8 @@ deploy-worker:
 setup-db:
 	@echo ">>>>> Creating DB"
 	@bundle exec rake db:create
+	@echo ">>>>> Enable Trigram Extension"
+	@bundle exec rake codebuild:enable_trigram_extension
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake db:migrate
 	@echo ">>>>> Seeding DB with fuel code mapping data"
@@ -138,3 +140,4 @@ seed-local-db:
 	@bundle exec rake maintenance:green_deal_update_fuel_data
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
+
