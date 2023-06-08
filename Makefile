@@ -91,6 +91,7 @@ setup-db:
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
 	@echo ">>>>> Populating Test DB"
+	@bundle exec rake db:environment:set[development]
 	@bundle exec rake db:test:prepare
 	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake maintenance:green_deal_update_fuel_data'.\n"
 
