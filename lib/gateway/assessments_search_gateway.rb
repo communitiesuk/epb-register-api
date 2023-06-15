@@ -123,7 +123,6 @@ module Gateway
       end
 
       result = Assessment.connection.exec_query sql, "SQL", binds
-
       result.map { |row| row_to_domain(row) }
     end
 
