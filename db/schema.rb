@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.string "hashed_assessment_id"
+    t.text "search_address"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
@@ -217,6 +218,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.datetime "created_at", null: false
   end
 
+  create_table "people", id: :serial, force: :cascade do |t|
+    t.string "first_name", limit: 255
+    t.string "last_name", limit: 255
+    t.index ["last_name", "first_name"], name: "idx_people_names"
+  end
+
   create_table "postcode_geolocation", force: :cascade do |t|
     t.string "postcode"
     t.decimal "latitude"
@@ -231,10 +238,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.string "region"
   end
 
+  create_table "roles", id: :serial, force: :cascade do |t|
+    t.string "first_name", limit: 255
+    t.string "last_name", limit: 255
+  end
+
   create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
     t.string "name"
     t.boolean "active", default: true
     t.index ["name"], name: "index_schemes_on_name", unique: true
+  end
+
+  create_table "search_address", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.text "address"
+    t.index ["address"], name: "index_search_address_trigram", opclass: :gist_trgm_ops, using: :gist
   end
 
   create_table "user_satisfaction", primary_key: "month", id: { type: :datetime, precision: nil }, force: :cascade do |t|
