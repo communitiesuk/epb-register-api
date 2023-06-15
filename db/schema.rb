@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_13_143427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -71,18 +71,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.string "hashed_assessment_id"
-    t.text "search_address"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
     t.index "lower((address_line4)::text)", name: "index_assessments_on_address_line4"
     t.index "lower((town)::text)", name: "index_assessments_on_town"
     t.index ["address_id"], name: "index_assessments_on_address_id"
-    t.index ["address_line1"], name: "index_address_line1_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
-    t.index ["address_line2"], name: "index_address_line2_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
     t.index ["created_at"], name: "index_assessments_on_created_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
-    t.index ["town"], name: "index_towns_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
   end
 
@@ -218,12 +214,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.datetime "created_at", null: false
   end
 
-  create_table "people", id: :serial, force: :cascade do |t|
-    t.string "first_name", limit: 255
-    t.string "last_name", limit: 255
-    t.index ["last_name", "first_name"], name: "idx_people_names"
-  end
-
   create_table "postcode_geolocation", force: :cascade do |t|
     t.string "postcode"
     t.decimal "latitude"
@@ -238,11 +228,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.string "region"
   end
 
-  create_table "roles", id: :serial, force: :cascade do |t|
-    t.string "first_name", limit: 255
-    t.string "last_name", limit: 255
-  end
-
   create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
     t.string "name"
     t.boolean "active", default: true
@@ -251,7 +236,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
 
   create_table "search_address", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.text "address"
-    t.index ["address"], name: "index_search_address_trigram", opclass: :gist_trgm_ops, using: :gist
   end
 
   create_table "user_satisfaction", primary_key: "month", id: { type: :datetime, precision: nil }, force: :cascade do |t|
