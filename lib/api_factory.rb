@@ -140,6 +140,7 @@ class ApiFactory
         green_deal_plans_gateway:,
         get_canonical_address_id_use_case:,
         event_broadcaster:,
+        search_address_gateway:,
       )
   end
 
@@ -358,6 +359,10 @@ class ApiFactory
 
   def self.data_warehouse_reports_gateway
     @data_warehouse_reports_gateway ||= Gateway::DataWarehouseReportsGateway.new
+  end
+
+  def self.search_address_gateway
+    @search_address_gateway ||= Gateway::SearchAddressGateway.new
   end
 
   def self.logger

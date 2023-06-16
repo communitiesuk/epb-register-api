@@ -10,10 +10,12 @@ describe UseCase::LodgeAssessment do
       green_deal_plans_gateway: instance_double(Gateway::GreenDealPlansGateway),
       get_canonical_address_id_use_case:,
       event_broadcaster: Events::Broadcaster.new,
+      search_address_gateway: search_address_gateway,
     )
   end
 
   let(:assessments_gateway) { instance_spy(Gateway::AssessmentsGateway) }
+  let(:search_address_gateway) { instance_double(Gateway::SearchAddressGateway)}
   let(:assessors_gateway) { instance_spy(Gateway::AssessorsGateway) }
   let(:assessments_xml_gateway) { instance_spy(Gateway::AssessmentsXmlGateway) }
   let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
@@ -204,9 +206,10 @@ describe UseCase::LodgeAssessment do
 
   before do
     allow(assessors_gateway).to receive(:fetch).with("SPEC000000").and_return(assessor)
-
+    allow(assessors_gateway).to receive(:fetch).with("SPEC000000").and_return(assessor)
     allow(assessor).to receive(:domestic_sap_qualification).and_return("ACTIVE")
     allow(assessor).to receive(:scheme_assessor_id).and_return("SPEC000000")
+    allow(search_address_gateway).to receive(:insert)
   end
 
   describe ".execute" do
@@ -215,6 +218,7 @@ describe UseCase::LodgeAssessment do
         use_case.execute(data, true, "SAP-Schema-18.0.0")
 
         expect(assessments_gateway).to have_received(:insert_or_update)
+        expect(search_address_gateway).to have_received(:insert).with({assessment_id: "2000-0000-0000-0000-0001",address:"1 some street some area some county" })
       end
 
       it "calls AssessmentsXMLGateway to save the XML data to the assessments_xml table" do
@@ -239,6 +243,7 @@ describe UseCase::LodgeAssessment do
         use_case.execute(data, false, "SAP-Schema-18.0.0")
 
         expect(assessments_gateway).to have_received(:insert)
+
       end
 
       context "when there is a race condition and the insert fails as the assessment has already been inserted by another request" do

@@ -8,10 +8,10 @@ describe Gateway::SearchAddressGateway, set_with_timecop: true do
       assessment_id: "0000-0000-0000-0000-0005",
       address: {
         address_id: "UPRN-000000000123",
-        address_line_1: "22 Acacia Avenue",
-        address_line_2: "some place",
-        address_line_3: "",
-        address_line_4: "",
+        address_line1: "22 Acacia Avenue",
+        address_line2: "some place",
+        address_line3: "",
+        address_line4: "",
         town: "Anytown",
         postcode: "AB1 2CD",
       },
@@ -47,6 +47,7 @@ describe Gateway::SearchAddressGateway, set_with_timecop: true do
     let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
 
     before do
+
       add_super_assessor(scheme_id:)
 
       do_lodgement = lambda {
@@ -64,6 +65,7 @@ describe Gateway::SearchAddressGateway, set_with_timecop: true do
       do_lodgement.call
       rdsap_xml.at("RRN").content = "0000-0000-0000-9999-9999"
       do_lodgement.call
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE search_address")
     end
 
     it "saves assessments to the search address table without error" do
@@ -90,5 +92,7 @@ describe Gateway::SearchAddressGateway, set_with_timecop: true do
       expect(saved_data[0]["assessment_id"]).to eq "0000-0000-0000-0000-0000"
       expect(saved_data[0]["address"]).to eq "1 some street student village"
     end
+
+
   end
 end

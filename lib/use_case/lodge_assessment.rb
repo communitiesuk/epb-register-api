@@ -20,7 +20,9 @@ module UseCase
       related_assessments_gateway:,
       green_deal_plans_gateway:,
       get_canonical_address_id_use_case:,
-      event_broadcaster:
+      event_broadcaster:,
+      search_address_gateway:
+
     )
       @assessments_gateway = assessments_gateway
       @assessments_search_gateway = assessments_search_gateway
@@ -31,6 +33,7 @@ module UseCase
       @green_deal_plans_gateway = green_deal_plans_gateway
       @get_canonical_address_id_use_case = get_canonical_address_id_use_case
       @event_broadcaster = event_broadcaster
+      @search_address_gateway = search_address_gateway
     end
 
     def execute(data, migrated, schema_name)
@@ -97,6 +100,9 @@ module UseCase
           schema_type: schema_name,
         },
       )
+
+      search_address = Domain::SearchAddress.new(data).to_hash
+      @search_address_gateway.insert search_address
 
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id
 
