@@ -198,6 +198,12 @@ class ApiFactory
     )
   end
 
+  def self.bulk_insert_search_address_use_case
+    @bulk_insert_search_address_use_case = UseCase::BulkInsertSearchAddress.new(
+      search_address_gateway:,
+    )
+  end
+
   def self.green_deal_fuel_price_gateway
     @green_deal_fuel_price_gateway ||= Gateway::GreenDealFuelPriceGateway.new
   end
