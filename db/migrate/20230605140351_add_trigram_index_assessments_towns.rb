@@ -1,6 +1,6 @@
 class AddTrigramIndexAssessmentsTowns < ActiveRecord::Migration[7.0]
   def up
-    # remove trigram on assessments tables
+    # removed as these specific trigram indexes didn't work and were dropped soon after
     # execute "CREATE INDEX IF NOT EXISTS index_towns_on_assessments_trigram ON assessments USING gist (town  gist_trgm_ops)"
   end
 end
