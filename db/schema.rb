@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_16_083615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -77,11 +77,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_184720) do
     t.index "lower((address_line4)::text)", name: "index_assessments_on_address_line4"
     t.index "lower((town)::text)", name: "index_assessments_on_town"
     t.index ["address_id"], name: "index_assessments_on_address_id"
-    t.index ["address_line1"], name: "index_address_line1_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
-    t.index ["address_line2"], name: "index_address_line2_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
     t.index ["created_at"], name: "index_assessments_on_created_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
-    t.index ["town"], name: "index_towns_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
   end
 
