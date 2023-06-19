@@ -8,10 +8,10 @@ describe Gateway::SearchAddressGateway, set_with_timecop: true do
       assessment_id: "0000-0000-0000-0000-0005",
       address: {
         address_id: "UPRN-000000000123",
-        address_line_1: "22 Acacia Avenue",
-        address_line_2: "some place",
-        address_line_3: "",
-        address_line_4: "",
+        address_line1: "22 Acacia Avenue",
+        address_line2: "some place",
+        address_line3: "",
+        address_line4: "",
         town: "Anytown",
         postcode: "AB1 2CD",
       },
@@ -64,6 +64,7 @@ describe Gateway::SearchAddressGateway, set_with_timecop: true do
       do_lodgement.call
       rdsap_xml.at("RRN").content = "0000-0000-0000-9999-9999"
       do_lodgement.call
+      ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessment_search_address")
     end
 
     it "saves assessments to the search address table without error" do
