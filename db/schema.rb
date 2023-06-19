@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_16_123424) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_19_095143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -36,6 +36,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_16_123424) do
     t.string "version_name", null: false
     t.datetime "created_at", null: false
     t.index ["version_number"], name: "index_address_base_versions_on_version_number", unique: true
+  end
+
+  create_table "assessment_search_address", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.text "address"
   end
 
   create_table "assessment_statistics", force: :cascade do |t|
