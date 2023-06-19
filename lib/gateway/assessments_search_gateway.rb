@@ -70,32 +70,55 @@ module Gateway
       restrictive: true,
       limit: nil
     )
-      sql = "#{ASSESSMENT_SEARCH_INDEX_SELECT} WHERE "
+
+      sql_cte = <<-SQL
+        WITH cte as (
+          SELECT a.assessment_id,
+          a.date_of_assessment,
+          a.type_of_assessment,
+          a.current_energy_efficiency_rating,
+          a.opt_out,
+          a.postcode,
+          a.date_of_expiry,
+          a.date_registered,
+          a.address_line1,
+          a.address_line2,
+          a.address_line3,
+          a.address_line4,
+          a.town,
+          a.created_at,
+          a.cancelled_at,
+          a.not_for_issue_at,
+          a.scheme_assessor_id
+        FROM assessments a
+        JOIN assessment_search_address sa on a.assessment_id = sa.assessment_id
+        WHERE sa.address LIKE $1
+      SQL
 
       unless assessment_type.nil? || assessment_type.empty?
         ins = []
         assessment_type.each do |type|
           ins.push(ActiveRecord::Base.connection.quote(type))
         end
-        sql += "a.type_of_assessment IN(#{ins.join(', ')}) AND "
+        sql_cte += " AND a.type_of_assessment IN(#{ins.join(', ')}) "
       end
 
-      sql += <<-SQL
-            (
-              LOWER(a.town) = $2
-              OR
-              LOWER(a.address_line2) = $2
-              OR
-              LOWER(a.address_line3) = $2
-              OR
-              LOWER(a.address_line4) = $2
-            )
-            AND
-            (
-              LOWER(a.address_line1) LIKE $1
-              OR
-              LOWER(a.address_line2) LIKE $1
-            )
+      if restrictive
+        sql_cte +=
+          ' AND a.cancelled_at IS NULL
+              AND a.not_for_issue_at IS NULL
+              AND a.opt_out = false'
+      end
+
+      sql = sql_cte + <<-SQL
+          )
+           SELECT cte.*, b.address_id, la.linked_assessment_id
+           FROM cte
+           INNER JOIN assessments_address_id b USING (assessment_id)
+           LEFT JOIN linked_assessments la USING (assessment_id)
+           WHERE ( LOWER(cte.town) = $2  OR  LOWER(cte.address_line2) = $2
+           OR  LOWER(cte.address_line3) = $2
+           OR  LOWER(cte.address_line4) = $2)
       SQL
 
       binds = [
@@ -111,13 +134,6 @@ module Gateway
         ),
       ]
 
-      if restrictive
-        sql +=
-          ' AND a.cancelled_at IS NULL
-              AND a.not_for_issue_at IS NULL
-              AND a.opt_out = false'
-      end
-
       if limit
         sql += " LIMIT #{limit.to_i}"
       end
@@ -132,8 +148,8 @@ module Gateway
     )
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE a.assessment_id = #{
-          ActiveRecord::Base.connection.quote(assessment_id)
-        }
+        ActiveRecord::Base.connection.quote(assessment_id)
+      }
       SQL
 
       if restrictive

@@ -18,7 +18,7 @@ describe Gateway::AssessmentsSearchGateway do
     )
   end
 
-  describe ".search_by_postcode" do
+  describe "#search_by_postcode" do
     it "returns the expected data" do
       result = gateway.search_by_postcode("A0 0AA")
 
@@ -27,7 +27,7 @@ describe Gateway::AssessmentsSearchGateway do
     end
   end
 
-  describe ".search_by_street_name_and_town" do
+  describe "#search_by_street_name_and_town" do
     before do
       domestic_rdsap_xml_2 = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       domestic_rdsap_xml_2.at("RRN").content = "0000-0000-0000-0000-0001"
