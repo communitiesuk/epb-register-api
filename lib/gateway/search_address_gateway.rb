@@ -3,7 +3,8 @@ module Gateway
     def insert(object)
       insert_sql = <<-SQL
             INSERT INTO assessment_search_address(assessment_id, address)
-            VALUES ($1, $2)
+            SELECT $1, $2
+            WHERE NOT EXISTS(SELECT * FROM assessment_search_address WHERE assessment_id = $3)
       SQL
 
       bindings = [
@@ -13,8 +14,13 @@ module Gateway
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
-          "assessment_id",
+          "address",
           object[:address],
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          object[:assessment_id],
           ActiveRecord::Type::String.new,
         ),
       ]
