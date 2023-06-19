@@ -27,5 +27,21 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings)
     end
+
+    def bulk_insert
+      insert_sql = <<-SQL
+            INSERT INTO assessment_search_address(assessment_id, address)
+            SELECT assessment_id, trim(lower(CONCAT(address_line1,
+                CASE WHEN address_line2 IS NULL OR address_line2='' THEN '' ELSE ' ' END,
+                address_line2,
+                CASE WHEN address_line3 IS NULL OR address_line3='' THEN '' ELSE ' ' END,
+                address_line3,
+                CASE WHEN address_line4 IS NULL OR address_line4='' THEN '' ELSE ' ' END,
+                address_line4))) FROM assessments a
+            WHERE NOT EXISTS(SELECT * FROM assessment_search_address WHERE assessment_id = a.assessment_id)
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
+    end
   end
 end
