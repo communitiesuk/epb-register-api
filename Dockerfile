@@ -17,6 +17,9 @@ WORKDIR /app
 
 RUN bundle install
 
+RUN adduser --system --no-create-home nonroot
+USER nonroot
+
 EXPOSE 80 443
 
 ENTRYPOINT ["bundle", "exec", "rackup", "-p", "80", "-o", "0.0.0.0"]
