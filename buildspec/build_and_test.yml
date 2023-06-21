@@ -19,6 +19,7 @@ phases:
     commands:
       - bundle install
       - npm ci
+      - make check-postgres-container
       - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD 689681667086.dkr.ecr.eu-west-2.amazonaws.com/codebuild-image-postgres:latest
       - until docker run --rm --link postgres-test:pg 689681667086.dkr.ecr.eu-west-2.amazonaws.com/codebuild-image-postgres:latest pg_isready -U postgres -h pg; do sleep 1; done
   build:

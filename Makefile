@@ -140,3 +140,6 @@ seed-local-db:
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
 
+.PHONY: check-postgres-container
+check-postgres-container:
+	@scripts/check-postgres-container.sh
