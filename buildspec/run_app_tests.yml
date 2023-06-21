@@ -22,7 +22,7 @@ phases:
     commands:
       - bundle install
       - npm ci
-      - make check-postgres-container
+      - make destroy-test-postgres-container-if-exists
       - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD $POSTGRES_IMAGE_URL:latest
       - until docker run --rm --link postgres-test:pg $POSTGRES_IMAGE_URL:latest pg_isready -U postgres -h pg; do sleep 1; done
   build:

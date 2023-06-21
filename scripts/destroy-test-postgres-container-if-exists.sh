@@ -4,4 +4,3 @@ DB_NAME="postgres-test"
           echo ">>>>>>>> REMOVING EXISTING POSTGRES CONTAINER"
           docker rm $DB_NAME
  fi
-
