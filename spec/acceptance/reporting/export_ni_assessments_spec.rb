@@ -1,7 +1,7 @@
 describe "Acceptance::Reports::ExportNIAssessments" do
   include RSpecRegisterApiServiceMixin
 
-  context "when exporting the exporting the domestic data to a csv before the rake is called" do
+  context "when exporting the domestic data to a csv before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
     let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway:) }
@@ -54,7 +54,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
   end
 
-  context "when exporting the exporting the commercial data to a csv before the rake is called" do
+  context "when exporting the commercial data to a csv before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
     let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway:) }
@@ -154,7 +154,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
   end
 
-  context "when calling the the rake to export the Northern Ireland commercial data" do
+  context "when calling the rake to export the Northern Ireland commercial data" do
     subject(:task) { get_task("data_export:ni_assessments") }
 
     let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
@@ -196,6 +196,45 @@ describe "Acceptance::Reports::ExportNIAssessments" do
              headers: {
                "Host" => "s3.eu-west-2.amazonaws.com",
              })
+    end
+  end
+
+  context "when calling the rake using environment variables" do
+    subject(:task) { get_task("data_export:ni_assessments") }
+
+    let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
+    let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
+    let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
+    let(:use_case_export) { instance_double(UseCase::ExportNiAssessments) }
+    let(:file_name) { "ni_assessments_export_cepc_#{Time.now.strftime('%F')}.csv" }
+    let(:export_use_case) { instance_double(UseCase::ExportNiAssessments) }
+    let(:export) do
+      [
+        {
+          assessment_id:
+            "9999-0000-0000-0000-0000",
+          address1: "1 Some Street",
+          address2: "",
+        },
+
+      ]
+    end
+
+    before do
+      EnvironmentStub.all
+      # Define mock expectations
+      allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
+        export_use_case,
+      )
+      allow(export_use_case).to receive(:execute).and_return(export)
+      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      EnvironmentStub.with("type_of_assessments", "CEPC")
+      EnvironmentStub.with("date_from", Time.now.strftime("%F"))
+      HttpStub.s3_put_csv(file_name)
+    end
+
+    it "does not raise an argument error" do
+      expect { task.invoke }.not_to raise_error
     end
   end
 end

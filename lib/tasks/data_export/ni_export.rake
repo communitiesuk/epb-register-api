@@ -2,9 +2,9 @@ namespace :data_export do
   desc "Exporting assessments data for Northern Ireland"
 
   task :ni_assessments, %i[type_of_assessments date_from date_to] do |_, args|
-    type_of_assessments = args.type_of_assessments
-    date_from = args.date_from || "1990-01-01"
-    date_to =   args.date_to || Time.now.utc.strftime("%F")
+    type_of_assessments = args.type_of_assessments || ENV["type_of_assessments"]
+    date_from = args.date_from || ENV["date_from"] || "1990-01-01"
+    date_to =   args.date_to || ENV["date_to"] || Time.now.utc.strftime("%F")
 
     raise Boundary::ArgumentMissing, "type_of_assessments" unless type_of_assessments
 
