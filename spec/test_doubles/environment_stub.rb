@@ -17,6 +17,11 @@ class EnvironmentStub
     self
   end
 
+  def self.remove(array)
+    array.each { |i| ENV[i] = nil }
+    self
+  end
+
   def self.with(variable, value)
     ENV[variable] = value
     @environments << variable

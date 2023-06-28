@@ -1,11 +1,11 @@
 namespace :open_data do
   desc "Exporting assessments data for Open Data Communities"
   task :export_assessments, %i[type_of_export assessment_type date_from date_to task_id] do |_, args|
-    type_of_export = args.type_of_export
-    assessment_type = args.assessment_type&.upcase
-    date_from = args.date_from
-    date_to =   args.date_to || Time.now.strftime("%F")
-    task_id =  args.task_id
+    type_of_export = args.type_of_export || ENV["type_of_export"]
+    assessment_type = args.assessment_type&.upcase || ENV["assessment_type"]&.upcase
+    date_from = args.date_from || ENV["date_from"]
+    date_to =   args.date_to || ENV["date_to"] || Time.now.strftime("%F")
+    task_id =  args.task_id || ENV["task_id"]
 
     raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if type_of_export.nil? || !%w[for_odc not_for_odc].include?(type_of_export)
     raise Boundary::ArgumentMissing, "assessment_type, eg: 'SAP-RDSAP', 'DEC' etc" unless assessment_type

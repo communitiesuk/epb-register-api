@@ -233,6 +233,10 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       HttpStub.s3_put_csv(file_name)
     end
 
+    after do
+      EnvironmentStub.remove(%w[type_of_assessments date_from])
+    end
+
     it "does not raise an argument error" do
       expect { task.invoke }.not_to raise_error
     end

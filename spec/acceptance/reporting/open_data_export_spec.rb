@@ -739,7 +739,6 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
       before do
         EnvironmentStub
           .all
-
         HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
       end
 
@@ -761,6 +760,25 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
         ).with(
           body: Regexp.new("1 Kitten Street"),
         )
+      end
+    end
+
+    context "when environment variables are set rather than arguments" do
+      before do
+        EnvironmentStub
+          .all
+        HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
+        EnvironmentStub.with("assessment_type", "SAP-RDSAP")
+        EnvironmentStub.with("date_from", Time.now.strftime("%F"))
+        EnvironmentStub.with("type_of_export", "for_odc")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[assessment_type date_from type_of_export])
+      end
+
+      it "does not raise an argument error" do
+        expect { get_task("open_data:export_assessments").invoke }.not_to raise_error
       end
     end
   end
