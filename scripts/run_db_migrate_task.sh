@@ -7,10 +7,7 @@ PROFILE=$2
 VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-reg-api-ecs-sg"
 CLUSTER_NAME="${PREFIX}-reg-api-cluster"
-TASK="${PREFIX}-reg-api-ecs-db-migrate-task"
-
-
-
+TASK="${PREFIX}-reg-api-ecs-exec-cmd-task"
 
 VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=$VPC_NAME --query 'Vpcs[0].VpcId' --profile $PROFILE)
 
