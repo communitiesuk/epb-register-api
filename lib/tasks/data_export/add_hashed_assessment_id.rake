@@ -2,9 +2,9 @@ namespace :data_export do
   desc "Add hashed assessment_is to the hashed_assessment_id column in the assessments table"
 
   task :add_hashed_assessment_id, %i[date_from date_to assessment_type] do |_, args|
-    date_from = args.date_from
-    date_to =   args.date_to
-    assessment_type = args.assessment_type
+    date_from = args.date_from || ENV["date_from"]
+    date_to =   args.date_to || ENV["date_to"]
+    assessment_type = args.assessment_type || ENV["assessment_type"]
 
     raise Boundary::ArgumentMissing, "date_from" unless date_from
     raise Boundary::ArgumentMissing, "date_to" unless date_to

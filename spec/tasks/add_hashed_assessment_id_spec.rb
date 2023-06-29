@@ -145,5 +145,21 @@ describe "add hashed assessment_id rake" do
     it "returns a no data to export error when date_from is later thank date_to" do
       expect { add_hashed_assessment_id_rake.invoke("2022-09-13", "2022-09-11", "DEC") }.to raise_error(Boundary::InvalidDates)
     end
+
+    context "when passing the rake arguments as environmental variables" do
+      before do
+        EnvironmentStub.with("date_from", "2022-09-01")
+        EnvironmentStub.with("date_to", "2022-09-11")
+        EnvironmentStub.with("assessment_type", "DEC")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[date_from date_to assessment_type])
+      end
+
+      it "does not raise an error" do
+        expect { add_hashed_assessment_id_rake.invoke }.not_to raise_error
+      end
+    end
   end
 end
