@@ -1,5 +1,7 @@
 module Gateway
   class GreenDealFuelPriceGateway
+    FUEL_PRICE_DATA_REGEX = /^\d,\d+,\d+(?:\.\d+)?,\d+(?:\.\d+)?,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi
+
     def bulk_insert(price_data)
       headers = %i[category heat_source standing_charge price date]
       price_data = price_data.map do |row|
@@ -39,7 +41,7 @@ module Gateway
 
     def get_data
       string_response = Net::HTTP.get URI "https://www.ncm-pcdb.org.uk/pcdb/pcdf2012.dat"
-      string_response.scan(/^\d,\d+,\d+,\d+\.\d+,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi)
+      string_response.scan(FUEL_PRICE_DATA_REGEX)
     end
   end
 end

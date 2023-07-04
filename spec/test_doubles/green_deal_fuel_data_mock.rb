@@ -4,7 +4,7 @@ class GreenDealFuelDataMock
   end
 
   def scan(string_response)
-    string_response.scan(/^\d,\d+,\d+,\d+\.\d+,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi)
+    string_response.scan(Gateway::GreenDealFuelPriceGateway::FUEL_PRICE_DATA_REGEX)
   end
 
   def response_data
@@ -26,7 +26,7 @@ class GreenDealFuelDataMock
       2,75,0,5.16,2019/Dec/03 12:12
       2,71,0,6.46,2019/Dec/03 12:12
       2,73,0,6.46,2019/Dec/03 12:12
-      2,76,0,47.00,2013/Jun/21 14:36
+      2,76,0,47,2013/Jun/21 14:36
       3,11,0,4.22,2019/Dec/03 12:12
       3,15,0,4.13,2019/Dec/03 12:12
       3,12,0,5.14,2019/Dec/03 12:12
@@ -42,7 +42,7 @@ class GreenDealFuelDataMock
       4,33,0,10.89,2019/Dec/03 12:12
       4,38,27,16.11,2019/Dec/03 12:12
       4,40,0,10.93,2019/Dec/03 12:12
-      4,35,17,10.75,2019/Dec/03 12:12
+      4,35,17.2,10.75,2019/Dec/03 12:12
       4,36,0,18.27,2019/Dec/03 12:12
       5,47,90,4.84,2019/Dec/03 12:12
       6,48,0,3.39,2019/Dec/03 12:12
