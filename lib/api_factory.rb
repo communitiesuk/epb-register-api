@@ -304,6 +304,19 @@ class ApiFactory
       )
   end
 
+  def self.backfill_data_warehouse_use_case
+    @backfill_data_warehouse_use_case ||=
+      UseCase::BackfillDataWarehouse.new(
+        backfill_gateway: backfill_data_warehouse_gateway,
+        data_warehouse_queues_gateway:,
+      )
+  end
+
+  def self.backfill_data_warehouse_gateway
+    @backfill_data_warehouse_gateway ||=
+      Gateway::BackfillDataWarehouseGateway
+  end
+
   def self.trigger_data_warehouse_report_use_case
     @trigger_data_warehouse_report_use_case ||= UseCase::TriggerDataWarehouseReport.new reports_gateway: data_warehouse_reports_gateway
   end
