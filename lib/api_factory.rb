@@ -73,6 +73,11 @@ class ApiFactory
     @domestic_epc_search_gateway ||= Gateway::DomesticEpcSearchGateway.new
   end
 
+  def self.backfill_data_warehouse_gateway
+    @backfill_data_warehouse_gateway ||=
+      Gateway::BackfillDataWarehouseGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -310,11 +315,6 @@ class ApiFactory
         backfill_gateway: backfill_data_warehouse_gateway,
         data_warehouse_queues_gateway:,
       )
-  end
-
-  def self.backfill_data_warehouse_gateway
-    @backfill_data_warehouse_gateway ||=
-      Gateway::BackfillDataWarehouseGateway
   end
 
   def self.trigger_data_warehouse_report_use_case

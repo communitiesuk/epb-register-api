@@ -84,14 +84,14 @@ describe Gateway::BackfillDataWarehouseGateway do
     end
 
     context "when there are no assessments of that schema in the date range" do
-      it "does not count the assessment to export" do
+      it "gives a count of 0" do
         result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "SAP-Schema-18.0.0")
         expect(result).to eq(0)
       end
     end
 
     context "when no assessments are in the date range" do
-      it "does not count the assessment to export" do
+      it "gives a count of 0" do
         result = gateway.count_assessments_to_export("2020-04-04", "2020-04-01", "RdSAP-Schema-20.0.0")
         expect(result).to eq(0)
       end

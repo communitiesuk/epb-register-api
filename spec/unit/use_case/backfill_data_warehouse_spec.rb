@@ -11,6 +11,7 @@ describe UseCase::BackfillDataWarehouse do
   let(:schema_type) { "RdSAP-Schema-20.0.0" }
 
   before do
+    allow($stdout).to receive(:puts)
     allow(backfill_gateway).to receive(:get_rrn_date).and_return(rrn_date)
     allow(backfill_gateway).to receive(:count_assessments_to_export).and_return(1)
     allow(backfill_gateway).to receive(:get_assessments_id).with(any_args).and_return(%w[0000-0000-0000-0000-0000])
