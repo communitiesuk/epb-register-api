@@ -37,6 +37,10 @@ describe "backfill data warehouse" do
         EnvironmentStub.with("dry_run", "true")
       end
 
+      after do
+        EnvironmentStub.remove(%w[dry_run])
+      end
+
       it "returns the number of assessments to export" do
         allow(use_case).to receive(:execute).and_return 2
         expect { rake.invoke("0000-0000-0000-0000-0000", "2020-05-04", "RdSAP-Schema-20.0.0") }.not_to raise_error
@@ -48,6 +52,10 @@ describe "backfill data warehouse" do
         EnvironmentStub.with("rrn", "0000-0000-0000-0000-0000")
         EnvironmentStub.with("start_date", "2020-05-04")
         EnvironmentStub.with("schema_type", "RdSAP-Schema-20.0.0")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[rrn start_date schema_type])
       end
 
       it "calls without error" do

@@ -69,6 +69,10 @@ describe UseCase::BackfillDataWarehouse do
         EnvironmentStub.with("dry_run", "true")
       end
 
+      after do
+        EnvironmentStub.with("dry_run", "false")
+      end
+
       it "gives a count of the number of assessment as 3" do
         allow(backfill_gateway).to receive(:count_assessments_to_export).and_return(3)
         expect(use_case.execute(rrn:, start_date:, schema_type:)).to eq(3)
