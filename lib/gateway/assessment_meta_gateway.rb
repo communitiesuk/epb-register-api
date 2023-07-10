@@ -8,6 +8,7 @@ module Gateway
       SELECT
       a.type_of_assessment,
       a.opt_out,
+      a.hashed_assessment_id,
       CASE WHEN a.migrated=true THEN NULL
            ELSE a.created_at
       END as created_at,

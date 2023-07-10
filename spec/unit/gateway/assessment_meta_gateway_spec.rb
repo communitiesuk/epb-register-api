@@ -50,6 +50,7 @@ describe Gateway::AssessmentMetaGateway do
         type_of_assessment: "RdSAP",
         schema_type: "RdSAP-Schema-20.0.0",
         created_at: Time.now.utc,
+        hashed_assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
       }
     end
 
