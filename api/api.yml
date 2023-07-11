@@ -3140,6 +3140,10 @@ components:
           format: date-time
           example: '2020-11-21T05:34:21.623Z'
           nullable: true
+        hashedAssessmentId:
+          type: string
+          example: '6ebf834b9a43884e1436ec234dd76cd04c6e55f90a3e94a42cc69c252b9ae7e2'
+          nullable: false
         schemaType:
           $ref: '#/components/schemas/SchemaName'
         assessmentAddressId:
