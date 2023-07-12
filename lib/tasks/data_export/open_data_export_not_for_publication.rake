@@ -3,7 +3,7 @@ require_relative "./open_data_export_helper"
 namespace :open_data do
   desc "Exporting hashed assessment_id opt out, cancelled or not for issue data for Open Data Communities"
   task :export_not_for_publication, %i[type_of_export] do |_, arg|
-    type_of_export = arg.type_of_export
+    type_of_export = arg.type_of_export || ENV["type_of_export"]
     bucket_name = ENV["BUCKET_NAME"] || ENV["ODE_BUCKET_NAME"]
     instance_name = ENV["INSTANCE_NAME"]
 

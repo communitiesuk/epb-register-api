@@ -125,4 +125,22 @@ describe "OpenDataExportNotForPublication" do
       end
     end
   end
+
+  context "when the type of export is set as an environment variable" do
+    before do
+      EnvironmentStub.all
+      EnvironmentStub.with("type_of_export", "not_for_odc")
+    end
+
+    after do
+      EnvironmentStub.remove(%w[type_of_export])
+    end
+
+    it "does not raise error message" do
+      expected_message =
+        "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
+
+      expect { task.invoke }.not_to output(/#{expected_message}/).to_stderr
+    end
+  end
 end
