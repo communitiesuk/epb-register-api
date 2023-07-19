@@ -62,10 +62,9 @@ namespace :oneoff do
       end
 
       puts "[#{Time.now}] Finished processing CSV file, #{counter.processed} LPRNs processed"
-
     rescue StandardError => e
       catch(:sigint) do
-        puts e.to_s
+        puts e
         abort "Interrupted while downloading or processing CSV file at line #{counter.processed}"
       end
       catch(:sigterm) do

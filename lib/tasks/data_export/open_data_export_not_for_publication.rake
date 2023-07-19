@@ -21,7 +21,6 @@ namespace :open_data do
                                                            type_of_export:,
                                                            instance_name:,
                                                            bucket_name:
-
   rescue Boundary::RecoverableError => e
     error_output = {
       error: e.class.name,
@@ -33,7 +32,6 @@ namespace :open_data do
     rescue JSON::ParserError
       # ignore
     end
-
   rescue Boundary::TerminableError => e
     warn e.message
   end

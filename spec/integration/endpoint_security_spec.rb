@@ -34,7 +34,7 @@ describe "Integration::EndpointSecurity" do
   end
 
   routes_to_test.each do |route|
-    context "an unauthenticated call to #{route[:verb]} #{route[:path]}" do
+    context "when an unauthenticated call to #{route[:verb]} #{route[:path]}" do
       verb = route[:verb]
       path = route[:path]
 

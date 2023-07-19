@@ -57,7 +57,6 @@ namespace :open_data do
 
     data = Helper::ExportHelper.to_csv(data)
     transmit_file.call(data)
-
   rescue Boundary::RecoverableError => e
     error_output = {
       error: e.class.name,
@@ -69,7 +68,6 @@ namespace :open_data do
     rescue JSON::ParserError
       # ignore
     end
-
   rescue Boundary::TerminableError => e
     e.message
     raise
@@ -112,7 +110,6 @@ namespace :open_data do
 
     data = Helper::ExportHelper.to_csv(data)
     transmit_file.call(data)
-
   rescue Boundary::RecoverableError => e
     error_output = {
       error: e.class.name,
@@ -124,7 +121,6 @@ namespace :open_data do
     rescue JSON::ParserError
       # ignore
     end
-
   rescue Boundary::TerminableError => e
     e.message
     raise
