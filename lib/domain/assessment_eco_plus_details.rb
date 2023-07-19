@@ -6,9 +6,7 @@ module Domain
       uprn:,
       lodgement_date:,
       current_energy_efficiency_rating:,
-      current_energy_efficiency_band:,
       potential_energy_efficiency_rating:,
-      potential_energy_efficiency_band:,
       property_type:,
       built_form:,
       main_heating_description:,
@@ -22,9 +20,13 @@ module Domain
       @uprn = uprn.include?("UPRN") ? uprn.sub("UPRN-", "") : nil
       @lodgement_date = lodgement_date
       @current_energy_efficiency_rating = current_energy_efficiency_rating
-      @current_energy_efficiency_band = current_energy_efficiency_band
+      @current_energy_efficiency_band = Helper::EnergyBandCalculator.domestic(
+        @current_energy_efficiency_rating,
+      )
       @potential_energy_efficiency_rating = potential_energy_efficiency_rating
-      @potential_energy_efficiency_band = potential_energy_efficiency_band
+      @potential_energy_efficiency_band = Helper::EnergyBandCalculator.domestic(
+        @potential_energy_efficiency_rating,
+      )
       @property_type = property_type
       @built_form = built_form
       @main_heating_description = main_heating_description
