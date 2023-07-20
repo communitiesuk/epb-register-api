@@ -583,6 +583,18 @@ def bus_details_by_arbitrary_params(
   )
 end
 
+def eco_plus_details_by_rrn(
+  rrn,
+  scopes: %w[ecoplus:assessment:fetch],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/ecoplus/assessments/#{rrn}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def retrofit_funding_details_by_uprn(
   uprn,
   scopes: %w[retrofit-funding:assessment:fetch],

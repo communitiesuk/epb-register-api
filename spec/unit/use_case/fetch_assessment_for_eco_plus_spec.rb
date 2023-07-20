@@ -159,7 +159,7 @@ describe UseCase::FetchAssessmentForEcoPlus do
         "xml" => xml,
         "schema_type" => "RdSAP-Schema-20.0.0",
       })
-      allow(assessments_search_gateway).to receive(:search_by_assessment_id).with(rrn).and_return(nil)
+      allow(assessments_search_gateway).to receive(:search_by_assessment_id).with(rrn).and_return([])
     end
 
     it "returns nil" do

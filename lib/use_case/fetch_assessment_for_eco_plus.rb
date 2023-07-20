@@ -11,10 +11,10 @@ module UseCase
       domestic_digest = get_domestic_digest(rrn:)
       return nil if domestic_digest.nil?
 
-      assessment_summary = @assessments_search_gateway.search_by_assessment_id(rrn)
+      assessment_summary = @assessments_search_gateway.search_by_assessment_id(rrn).first
       return nil if assessment_summary.nil?
 
-      assessment_summary = assessment_summary.first.to_hash
+      assessment_summary = assessment_summary.to_hash
 
       Domain::AssessmentEcoPlusDetails.new(
         type_of_assessment: domestic_digest[:type_of_assessment],

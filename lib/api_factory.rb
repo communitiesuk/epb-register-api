@@ -309,6 +309,14 @@ class ApiFactory
       )
   end
 
+  def self.fetch_assessment_for_eco_plus_use_case
+    @fetch_assessment_for_eco_plus_use_case ||=
+      UseCase::FetchAssessmentForEcoPlus.new(
+        domestic_digest_gateway:,
+        assessments_search_gateway:,
+      )
+  end
+
   def self.backfill_data_warehouse_use_case
     @backfill_data_warehouse_use_case ||=
       UseCase::BackfillDataWarehouse.new(
