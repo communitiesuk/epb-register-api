@@ -41,5 +41,4 @@ class RegisterApiService < Controller::BaseController
   use Controller::DomesticEpcSearchController
   use Controller::DomesticInitiativesController
   use Controller::RetrofitFundingSchemeController
-  use Controller::EcoPlusSchemeController
 end
