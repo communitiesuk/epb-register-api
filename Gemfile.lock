@@ -251,7 +251,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     wisper-rspec (1.1.0)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.9)
 
 PLATFORMS
   ruby
@@ -295,7 +295,7 @@ DEPENDENCIES
   webmock (~> 3.18)
   wisper (~> 2.0.1)!
   wisper-rspec (~> 1.0, >= 1.0.1)
-  zeitwerk (~> 2.6.8)
+  zeitwerk (~> 2.6.9)
 
 RUBY VERSION
    ruby 3.1.3p185
