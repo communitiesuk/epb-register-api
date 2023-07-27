@@ -3930,7 +3930,11 @@ components:
         data:
           oneOf:
             - type: object
+              items:
+                type: number
             - type: array
+              items:
+                type: number
             - type: integer
             - type: number
         generatedAt:
