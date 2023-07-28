@@ -255,17 +255,26 @@ class ApiFactory
 
   def self.fetch_assessment_for_bus_use_case
     @fetch_assessment_for_bus_use_case ||=
-      UseCase::FetchAssessmentForBus.new(bus_gateway: boiler_upgrade_scheme_gateway)
+      UseCase::FetchAssessmentForBus.new(
+        bus_gateway: boiler_upgrade_scheme_gateway,
+        summary_use_case: assessment_summary_fetch_use_case,
+      )
   end
 
   def self.find_assessments_for_bus_by_address_use_case
     @find_assessments_for_bus_by_address_use_case ||=
-      UseCase::FindAssessmentsForBusByAddress.new(bus_gateway: boiler_upgrade_scheme_gateway)
+      UseCase::FindAssessmentsForBusByAddress.new(
+        bus_gateway: boiler_upgrade_scheme_gateway,
+        summary_use_case: assessment_summary_fetch_use_case,
+      )
   end
 
   def self.find_assessments_for_bus_by_uprn_use_case
     @find_assessments_for_bus_by_uprn_use_case ||=
-      UseCase::FindAssessmentsForBusByUprn.new(bus_gateway: boiler_upgrade_scheme_gateway)
+      UseCase::FindAssessmentsForBusByUprn.new(
+        bus_gateway: boiler_upgrade_scheme_gateway,
+        summary_use_case: assessment_summary_fetch_use_case,
+      )
   end
 
   def self.fetch_retrofit_funding_scheme_details_use_case

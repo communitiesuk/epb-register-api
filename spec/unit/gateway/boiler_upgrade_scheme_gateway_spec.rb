@@ -21,43 +21,40 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       )
     end
 
-    expected_bus_details_hash = {
-      epc_rrn: "0000-0000-0000-0000-0000",
-      report_type: "RdSAP",
-      expiry_date: "2030-05-03",
-      cavity_wall_insulation_recommended: false,
-      loft_insulation_recommended: false,
-      secondary_heating: "Room heaters, electric",
-      address: {
-        address_line1: "1 Some Street",
-        address_line2: "",
-        address_line3: "",
-        address_line4: "",
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      dwelling_type: "Mid-terrace house",
-      lodgement_date: "2020-05-04",
-      uprn: "000000000000",
-    }
-
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
+      end
+
+      context "with a postcode not canonically formed" do
+        it "returns the relevant assessments" do
+          result = gateway.search_by_postcode_and_building_identifier postcode: "a00aa", building_identifier: "1"
+          expect(result.count).to eq 1
+          expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
+        end
+      end
+
+      context "with a building name or number containing an unexpected character like a colon" do
+        it "returns the relevant assessments" do
+          result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1:"
+          expect(result.count).to eq 1
+          expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
+        end
       end
 
       it "returns nil when no match" do
-        expect(gateway.search_by_postcode_and_building_identifier(postcode: "AB1 2CD", building_identifier: "2")).to be_nil
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "AB1 2CD", building_identifier: "2")
+        expect(result).to eq nil
       end
     end
 
     context "when searching by UPRN" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_uprn("UPRN-000000000000")
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
       end
 
       it "returns nil when no match" do
@@ -68,113 +65,16 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     context "when searching by RRN" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_rrn("0000-0000-0000-0000-0000")
-
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result["report_type"]).to eq "RdSAP"
       end
 
       it "returns nil when no match" do
         expect(gateway.search_by_rrn("0000-1111-2222-3333-4444")).to be_nil
       end
-
-      context "with a RRN that has been previously cancelled" do
-        before do
-          update_assessment_status(
-            assessment_id: "0000-0000-0000-0000-0000",
-            assessment_status_body: {
-              "status": "CANCELLED",
-            },
-            accepted_responses: [200],
-            auth_data: {
-              scheme_ids: [scheme_id],
-            },
-          )
-        end
-
-        it "returns nil" do
-          expect(gateway.search_by_rrn("0000-0000-0000-0000-0000")).to be_nil
-        end
-      end
-
-      context "with an RRN that has been superseded" do
-        let(:latest_rrn) { "0000-0000-0000-0000-0013" }
-
-        before do
-          updated_rdsap = rdsap_xml.clone
-          updated_rdsap.at("RRN").children = latest_rrn
-          updated_rdsap.at("Registration-Date").children = "2021-05-04"
-
-          lodge_assessment(
-            assessment_body: updated_rdsap.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-              scheme_ids: [scheme_id],
-            },
-            migrated: true,
-          )
-        end
-
-        it "returns a redirect reference" do
-          assessment_reference = gateway.search_by_rrn("0000-0000-0000-0000-0000")
-          expect(assessment_reference).to be_a_kind_of Domain::AssessmentReference
-          expect(assessment_reference.rrn).to eq latest_rrn
-        end
-      end
     end
   end
 
-  context "when there are null values in the XML" do
-    before do
-      add_super_assessor(scheme_id:)
-
-      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
-      do_lodgement = lambda {
-        lodge_assessment(
-          assessment_body: rdsap_xml.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          migrated: true,
-        )
-      }
-
-      do_lodgement.call
-
-      rdsap_xml.at("Dwelling-Type").children.remove
-      rdsap_xml.at("Secondary-Heating").at("Description").children.remove
-
-      do_lodgement.call
-    end
-
-    expected_nul_bus_details_hash = {
-      epc_rrn: "0000-0000-0000-0000-0000",
-      report_type: "RdSAP",
-      expiry_date: "2030-05-03",
-      cavity_wall_insulation_recommended: false,
-      loft_insulation_recommended: false,
-      secondary_heating: nil,
-      address: {
-        address_line1: "1 Some Street",
-        address_line2: "",
-        address_line3: "",
-        address_line4: "",
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      dwelling_type: nil,
-      uprn: "000000000000",
-      lodgement_date: "2020-05-04",
-    }
-
-    it "finds and returns the expected data", aggregate_failures: true do
-      result = gateway.search_by_rrn("0000-0000-0000-0000-0000")
-      expect(result).to be_a(Domain::AssessmentBusDetails)
-      expect(result.to_hash).to eq expected_nul_bus_details_hash
-    end
-  end
-
-  context "when expecting to find two RdSAP assessments" do
+  context "when there are multiple assessments for the same address but different uprns" do
     before do
       scheme_id = add_scheme_and_get_id
       add_super_assessor(scheme_id:)
@@ -195,21 +95,30 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
       rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0001"
       rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Another Street" }
-      rdsap_xml.at("UPRN").content = "UPRN-000111222333"
+      rdsap_xml.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
 
       do_lodgement.call
     end
 
     context "when performing a postcode and building identifier lookup" do
-      it "returns the assessments as a reference list" do
+      it "returns the details for all the assessments at that address" do
         result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1"
-        expect(result).to be_a Domain::AssessmentReferenceList
-        expect(result.references).to eq %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001]
+        expect(result.count).to eq 2
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
+        expect(result[1]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
+      end
+    end
+
+    context "when performing a uprn lookup" do
+      it "only returns the details for the correct uprn" do
+        result = gateway.search_by_uprn("RRN-0000-0000-0000-0000-0001")
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
       end
     end
   end
 
-  context "when there are multiple RdSAP certificates for the same address" do
+  context "when there are multiple RdSAP certificates for the same address with the same uprn" do
     before do
       scheme_id = add_scheme_and_get_id
       add_super_assessor(scheme_id:)
@@ -235,27 +144,19 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       do_lodgement.call
     end
 
+    context "when performing a uprn lookup" do
+      it "returns the most recent, non superseded result for that uprn" do
+        result = gateway.search_by_uprn("UPRN-000000000000")
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
+      end
+    end
+
     context "when performing a postcode and building identifier lookup" do
-      it "returns the latest assessment as a details object" do
+      it "returns the most recent, non superseded result" do
         result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1"
-        expect(result).to be_a Domain::AssessmentBusDetails
-        expect(result.to_hash[:epc_rrn]).to eq "0000-0000-0000-0000-0001"
-      end
-
-      context "with a postcode not canonically formed" do
-        it "returns the latest assessment as a details object" do
-          result = gateway.search_by_postcode_and_building_identifier postcode: "a00aa", building_identifier: "1"
-          expect(result).to be_a Domain::AssessmentBusDetails
-          expect(result.to_hash[:epc_rrn]).to eq "0000-0000-0000-0000-0001"
-        end
-      end
-
-      context "with a building name or number containing an unexpected character like a colon" do
-        it "returns the latest assessment as a details object" do
-          result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1:"
-          expect(result).to be_a Domain::AssessmentBusDetails
-          expect(result.to_hash[:epc_rrn]).to eq "0000-0000-0000-0000-0001"
-        end
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
       end
     end
   end
@@ -277,32 +178,12 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       )
     end
 
-    expected_bus_details_hash = {
-      epc_rrn: "0000-0000-0000-0000-0000",
-      report_type: "SAP",
-      expiry_date: "2030-05-03",
-      cavity_wall_insulation_recommended: false,
-      loft_insulation_recommended: false,
-      secondary_heating: "Electric heater",
-      address: {
-        address_line1: "1 Some Street",
-        address_line2: "Some Area",
-        address_line3: "Some County",
-        address_line4: "",
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      dwelling_type: "Mid-terrace house",
-      uprn: "000000000000",
-      lodgement_date: "2020-05-04",
-    }
-
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
       end
     end
 
@@ -310,8 +191,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_uprn("UPRN-000000000000")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
       end
     end
   end
@@ -333,32 +214,12 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       )
     end
 
-    expected_bus_details_hash = {
-      epc_rrn: "0000-0000-0000-0000-0000",
-      report_type: "CEPC",
-      expiry_date: "2026-05-04",
-      cavity_wall_insulation_recommended: nil,
-      loft_insulation_recommended: nil,
-      secondary_heating: nil,
-      address: {
-        address_line1: "Some Unit",
-        address_line2: "2 Lonely Street",
-        address_line3: "Some Area",
-        address_line4: "Some County",
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      dwelling_type: "B1 Offices and Workshop businesses",
-      uprn: "000000000001",
-      lodgement_date: "2020-05-04",
-    }
-
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
       end
     end
 
@@ -366,8 +227,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_uprn("UPRN-000000000001")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
       end
     end
   end
@@ -392,32 +253,12 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       )
     end
 
-    expected_bus_details_hash = {
-      epc_rrn: "3333-4444-5555-6666-7777",
-      report_type: "RdSAP",
-      expiry_date: "2030-05-03",
-      cavity_wall_insulation_recommended: false,
-      loft_insulation_recommended: false,
-      secondary_heating: "Room heaters, electric",
-      address: {
-        address_line1: "Flat 12A Street Lane",
-        address_line2: "",
-        address_line3: "",
-        address_line4: "",
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      dwelling_type: "Mid-terrace house",
-      uprn: "000000000001",
-      lodgement_date: "2020-05-04",
-    }
-
     context "when searching using correct original casing" do
       it "returns the expected BUS details" do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12A")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
       end
     end
 
@@ -425,8 +266,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       it "returns the expected BUS details regardless of casing" do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12a")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
       end
     end
 
@@ -434,8 +275,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       it "finds and returns the expected BUS details" do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
       end
     end
 
@@ -467,8 +308,8 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       it "finds and returns the expected BUS details" do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12A STREET")
 
-        expect(result).to be_a(Domain::AssessmentBusDetails)
-        expect(result.to_hash).to eq expected_bus_details_hash
+        expect(result.count).to eq 1
+        expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
       end
     end
   end
@@ -515,9 +356,11 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0002")
     end
 
-    it "only finds the 2 EPC that have not been cancelled" do
+    it "only finds the 2 EPC that have not been cancelled when searching by postcode and building identifier" do
       result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
       expect(result.count).to eq(2)
+      expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0003"
+      expect(result[1]["epc_rrn"]).to eq "0000-0000-0000-0000-0004"
     end
   end
 end

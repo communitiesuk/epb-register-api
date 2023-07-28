@@ -497,15 +497,15 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
       end
 
-      it "receives the appropriate BUS details" do
+      it "receives an appropriate error with a 404" do
         response = JSON.parse(
           bus_details_by_uprn(
             "UPRN-000000000000",
+            accepted_responses: [404],
           ).body,
           symbolize_names: true,
         )
-
-        expect(response[:data]).to eq expected_sap_details
+        expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
       end
     end
 
