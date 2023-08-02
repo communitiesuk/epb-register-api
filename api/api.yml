@@ -3263,8 +3263,43 @@ components:
           nullable: true
         uprn:
           type: string
-          nullable: true
           example: '001234567890'
+          nullable: true
+        tenure:
+          type: string
+          example: 'Owner-occupied'
+          nullable: true
+        inspection_date:
+          type: string
+          format: date
+          example: '2018-12-21'
+          nullable: true
+        mainFuelType:
+          type: string
+          example: 'Electricity: electricity, unspecified tariff'
+          nullable: true
+        wallsDescription:
+          type: array
+          items:
+            type: string
+          example: [ "Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)" ]
+          description: "A list of free text descriptions associated with wall property features as documented in the assessment."
+        totalFloorArea:
+          type: integer
+          example: 165
+          nullable: true
+        totalRoofArea:
+          type: integer
+          example: 65
+          nullable: true
+        currentEnergyEfficiencyRating:
+          type: integer
+          example: 72
+          nullable: true
+        hotWaterDescription:
+          type: string
+          example: "From main system, waste water heat recovery"
+          nullable: true
 
     MultipleBUSMatchesList:
       type: object

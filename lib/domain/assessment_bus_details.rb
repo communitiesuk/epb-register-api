@@ -5,12 +5,23 @@ module Domain
       SAP
     ].freeze
 
+    TENURE = {
+      "1" => "Owner-occupied",
+      "2" => "Rented (social)",
+      "3" => "Rented (private)",
+      "ND" => "Unknown",
+    }.freeze
+
+    def new_fields_toggle = Helper::Toggles.enabled?("api-bus-new-fields")
+
     def initialize(
       bus_details:,
-      assessment_summary:
+      assessment_summary:,
+      domestic_digest:
     )
       @bus_details = bus_details
       @assessment_summary = assessment_summary
+      @domestic_digest = domestic_digest
     end
 
     def to_hash
@@ -32,6 +43,19 @@ module Domain
         dwelling_type: fetch_dwelling_type,
         lodgement_date: @assessment_summary[:date_of_registration],
         uprn: strip_uprn,
+        **(
+          if new_fields_toggle
+            { tenure: TENURE[@assessment_summary[:tenure]],
+              inspection_date: @assessment_summary[:date_of_assessment],
+              main_fuel_type: !@domestic_digest.nil? ? @domestic_digest[:main_fuel_type] : nil,
+              walls_description: fetch_property_description_list(node_name: "wall"),
+              total_floor_area: @assessment_summary[:total_floor_area].to_i,
+              total_roof_area: @assessment_summary.key?(:total_roof_area) ? @assessment_summary[:total_roof_area].to_i : nil,
+              current_energy_efficiency_rating: @assessment_summary[:current_energy_efficiency_rating],
+              hot_water_description: fetch_property_description(node_name: "hot_water") }
+          else
+            {}
+          end),
       }
     end
 
@@ -57,6 +81,14 @@ module Domain
       end
 
       nil
+    end
+
+    def fetch_property_description_list(node_name:)
+      if @assessment_summary[:property_summary]
+        @assessment_summary[:property_summary]
+          .select { |feature| [node_name, "#{node_name}s"].include?(feature[:name]) } # descriptions in property summary can be called "wall" or "walls", or "window" or "windows" depending on whether SAP or RdSAP due to slight schema divergence here
+          .map { |feature| feature[:description] }
+      end
     end
 
     def fetch_dwelling_type

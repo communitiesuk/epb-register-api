@@ -1,8 +1,9 @@
 module UseCase
   class FetchAssessmentForBus
-    def initialize(bus_gateway:, summary_use_case:)
+    def initialize(bus_gateway:, summary_use_case:, domestic_digest_gateway:)
       @bus_gateway = bus_gateway
       @summary_use_case = summary_use_case
+      @domestic_digest_gateway = domestic_digest_gateway
     end
 
     def execute(rrn:)
@@ -12,9 +13,12 @@ module UseCase
       assessment_summary = @summary_use_case.execute(rrn)
       return nil if assessment_summary.nil?
 
+      domestic_digest = @domestic_digest_gateway.fetch_by_rrn(rrn)
+
       assessment_details = Domain::AssessmentBusDetails.new(
         bus_details:,
         assessment_summary:,
+        domestic_digest:,
       )
 
       later_rrn = assessment_summary[:superseded_by]

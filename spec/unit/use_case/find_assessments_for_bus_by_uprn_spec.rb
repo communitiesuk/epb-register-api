@@ -1,8 +1,9 @@
 describe UseCase::FindAssessmentsForBusByUprn do
-  subject(:use_case) { described_class.new(bus_gateway:, summary_use_case:) }
+  subject(:use_case) { described_class.new(bus_gateway:, summary_use_case:, domestic_digest_gateway:) }
 
   let(:bus_gateway) { instance_double Gateway::BoilerUpgradeSchemeGateway }
   let(:summary_use_case) { instance_double UseCase::AssessmentSummary::Fetch }
+  let(:domestic_digest_gateway) { instance_double Gateway::DomesticDigestGateway }
 
   let(:rrn) { "0123-4567-8901-2345-6789" }
   let(:uprn) { "UPRN-000011112222" }
@@ -71,17 +72,23 @@ describe UseCase::FindAssessmentsForBusByUprn do
     }
   end
 
+  let(:domestic_digest) do
+    { "main_fuel_type": "Electricity: electricity sold to grid" }
+  end
+
   context "when fetching BUS (Boiler Upgrade Scheme) details for a UPRN that has a relevant assessment associated" do
     let(:expected_response) do
       Domain::AssessmentBusDetails.new(
         bus_details:,
         assessment_summary:,
+        domestic_digest:,
       )
     end
 
     before do
       allow(bus_gateway).to receive(:search_by_uprn).with(uprn).and_return [bus_details]
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
     end
 
     it "returns an assessment bus details object from the gateway" do

@@ -1,8 +1,9 @@
 describe UseCase::FindAssessmentsForBusByAddress do
-  subject(:use_case) { described_class.new(bus_gateway:, summary_use_case:) }
+  subject(:use_case) { described_class.new(bus_gateway:, summary_use_case:, domestic_digest_gateway:) }
 
   let(:bus_gateway) { instance_double Gateway::BoilerUpgradeSchemeGateway }
   let(:summary_use_case) { instance_double UseCase::AssessmentSummary::Fetch }
+  let(:domestic_digest_gateway) { instance_double Gateway::DomesticDigestGateway }
 
   let(:rrn) { "0123-4567-8901-2345-6789" }
   let(:building_identifier) { "42" }
@@ -72,11 +73,16 @@ describe UseCase::FindAssessmentsForBusByAddress do
     }
   end
 
+  let(:domestic_digest) do
+    { "main_fuel_type": "Electricity: electricity sold to grid" }
+  end
+
   context "when fetching BUS (Boiler Upgrade Scheme) details for address where one relevant assessment exists" do
     let(:expected_response) do
       Domain::AssessmentBusDetails.new(
         bus_details:,
         assessment_summary:,
+        domestic_digest:,
       )
     end
 
@@ -85,6 +91,7 @@ describe UseCase::FindAssessmentsForBusByAddress do
                               .with(postcode:, building_identifier:)
                               .and_return [bus_details]
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
     end
 
     it "returns an assessment bus details object" do
@@ -112,6 +119,8 @@ describe UseCase::FindAssessmentsForBusByAddress do
                               .and_return [bus_details, bus_details2]
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
       allow(summary_use_case).to receive(:execute).with(rrn2).and_return assessment_summary
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn2).and_return domestic_digest
     end
 
     it "returns the reference list object" do

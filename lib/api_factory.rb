@@ -258,6 +258,7 @@ class ApiFactory
       UseCase::FetchAssessmentForBus.new(
         bus_gateway: boiler_upgrade_scheme_gateway,
         summary_use_case: assessment_summary_fetch_use_case,
+        domestic_digest_gateway:,
       )
   end
 
@@ -266,6 +267,7 @@ class ApiFactory
       UseCase::FindAssessmentsForBusByAddress.new(
         bus_gateway: boiler_upgrade_scheme_gateway,
         summary_use_case: assessment_summary_fetch_use_case,
+        domestic_digest_gateway:,
       )
   end
 
@@ -274,6 +276,7 @@ class ApiFactory
       UseCase::FindAssessmentsForBusByUprn.new(
         bus_gateway: boiler_upgrade_scheme_gateway,
         summary_use_case: assessment_summary_fetch_use_case,
+        domestic_digest_gateway:,
       )
   end
 
