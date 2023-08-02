@@ -312,6 +312,7 @@ class SummaryStub
       tenure: "1",
       transaction_type: "1",
       total_floor_area: 165.0,
+      total_roof_area: 57,
       status: "ENTERED",
       environmental_impact_current: "94",
       environmental_impact_potential: "96",
