@@ -32,6 +32,12 @@ module Controller
 
       raise ReadOnlyMode if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
 
+      unless ENV["EPB_API_DOCS_URL"].nil?
+        response.headers["Access-Control-Allow-Origin"] = ENV["EPB_API_DOCS_URL"]
+        response.headers["Vary"] = "Origin"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+      end
+
       response.headers["Access-Control-Allow-Headers"] =
         "Content-Type, Cache-Control, Accept"
     end
