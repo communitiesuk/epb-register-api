@@ -1,5 +1,8 @@
 module UseCase
   class FetchAssessmentForBus
+    class InvalidAssessmentTypeException < StandardError
+    end
+
     def initialize(bus_gateway:, summary_use_case:, domestic_digest_gateway:)
       @bus_gateway = bus_gateway
       @summary_use_case = summary_use_case
@@ -9,6 +12,8 @@ module UseCase
     def execute(rrn:)
       bus_details = @bus_gateway.search_by_rrn(rrn)
       return nil if bus_details.nil?
+
+      raise InvalidAssessmentTypeException unless %w[RdSAP SAP CEPC].include? bus_details["report_type"]
 
       assessment_summary = @summary_use_case.execute(rrn)
       return nil if assessment_summary.nil?

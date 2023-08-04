@@ -77,6 +77,8 @@ module Controller
                        else
                          "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
                        end
+      when UseCase::FetchAssessmentForBus::InvalidAssessmentTypeException
+        error_response 400, "INVALID_REQUEST", "The requested assessment type is not SAP, RdSAP, or CEPC"
       else
         server_error e
       end

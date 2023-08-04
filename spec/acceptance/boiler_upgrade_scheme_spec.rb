@@ -20,6 +20,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
   let(:rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
   let(:sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
   let(:cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
+  let(:dec_xml) { Samples.xml "CEPC-8.0.0", "dec" }
 
   let(:expected_rdsap_details) do
     {
@@ -140,6 +141,27 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       it "returns a 303 response with a redirect to the URL for the BUS details for the latest assessment" do
         response = bus_details_by_rrn("0000-0000-0000-0000-0000", accepted_responses: [303])
         expect(URI(response.location).request_uri).to eq "/api/bus/assessments/latest/search?rrn=#{latest_rrn}"
+      end
+    end
+
+    context "when trying to fetch BUS details with an RRN for a report type that isn't supported" do
+      before do
+        lodge_assessment(
+          assessment_body: dec_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-8.0.0",
+        )
+      end
+
+      it "returns a 400 error with information that you are looking for the wrong type of assessment" do
+        response = JSON.parse(
+          bus_details_by_rrn("0000-0000-0000-0000-0000", accepted_responses: [400]).body,
+          symbolize_names: true,
+        )
+        expect(response[:errors][0][:title]).to eq "The requested assessment type is not SAP, RdSAP, or CEPC"
       end
     end
   end

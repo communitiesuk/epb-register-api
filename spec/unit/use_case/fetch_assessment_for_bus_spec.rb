@@ -123,4 +123,26 @@ describe UseCase::FetchAssessmentForBus do
       expect(use_case.execute(rrn:).rrn).to eq later_rrn
     end
   end
+
+  context "when fetching BUS (Boiler Upgrade Scheme) details with an RRN for a DEC" do
+    before do
+      bus_details["report_type"] = "DEC"
+      allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return bus_details
+    end
+
+    it "raises an invalid assessment type error" do
+      expect { use_case.execute(rrn:) }.to raise_error described_class::InvalidAssessmentTypeException
+    end
+  end
+
+  context "when fetching BUS (Boiler Upgrade Scheme) details with an RRN for an AC-CERT" do
+    before do
+      bus_details["report_type"] = "AC-CERT"
+      allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return bus_details
+    end
+
+    it "raises an invalid assessment type error" do
+      expect { use_case.execute(rrn:) }.to raise_error described_class::InvalidAssessmentTypeException
+    end
+  end
 end
