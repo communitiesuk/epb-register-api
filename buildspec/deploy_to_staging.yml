@@ -7,6 +7,7 @@ env:
   variables:
     DEPLOY_APPNAME: "mhclg-epb-register-api-staging"
     DEPLOY_WORKER: "dluhc-epb-worker-staging"
+    EPB_API_DOCS_URL: "https://mhclg-epb-swagger.london.cloudapps.digital"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-staging-login"
