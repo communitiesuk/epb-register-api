@@ -39,7 +39,7 @@ module Controller
       end
 
       response.headers["Access-Control-Allow-Headers"] =
-        "Content-Type, Cache-Control, Accept, Authorization"
+        "Content-Type, Cache-Control, Accept, Authorization, X-Requested-With"
     end
 
     set(:auth_token_has_all) do |*scopes|

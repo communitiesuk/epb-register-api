@@ -31,6 +31,7 @@ describe "Acceptance::Responses" do
         "Cache-Control",
         "Accept",
         "Authorization",
+        "X-Requested-With",
       )
     end
 
