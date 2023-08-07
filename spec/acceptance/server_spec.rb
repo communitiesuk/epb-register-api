@@ -30,6 +30,7 @@ describe "Acceptance::Responses" do
         "Content-Type",
         "Cache-Control",
         "Accept",
+        "Authorization",
       )
     end
 
