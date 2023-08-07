@@ -44,6 +44,23 @@ describe "Acceptance::Responses" do
         "DELETE",
       )
     end
+
+    it "has no Access-Control-Allow-Origin header" do
+      expect(response.headers["Access-Control-Allow-Origin"]).to be_nil
+    end
+
+    context "and API docs URL is set in the environment" do
+      let(:docs_url) { "http://epb-api-docs/" }
+
+      before do
+        allow(ENV).to receive(:[])
+        allow(ENV).to receive(:[]).with("EPB_API_DOCS_URL").and_return(docs_url)
+      end
+
+      it "has an Access-Control-Allow-Origin header set to the docs URL" do
+        expect(response.headers["Access-Control-Allow-Origin"]).to eq docs_url
+      end
+    end
   end
 
   context "when sending a response when API docs URL is not set in environment" do

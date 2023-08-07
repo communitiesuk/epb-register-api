@@ -3,6 +3,10 @@ class RegisterApiService < Controller::BaseController
     response.headers["Allow"] = "HEAD,GET,PUT,DELETE,OPTIONS"
     response.headers["Access-Control-Allow-Methods"] =
       "HEAD, GET, PUT, OPTIONS, DELETE, POST"
+    unless ENV["EPB_API_DOCS_URL"].nil?
+      response.headers["Access-Control-Allow-Origin"] = ENV["EPB_API_DOCS_URL"]
+    end
+
     200
   end
 
