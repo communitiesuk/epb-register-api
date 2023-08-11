@@ -19,7 +19,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Paketo image...
       # We use --default-process below to define which entrypoint we want the application to have from the AWS-Procfile on the codebase
-      - pack build ebpr-register-api-image --builder paketobuildpacks/builder-jammy-full --default-process web --verbose
+      - pack build ebpr-register-api-image --builder paketobuildpacks/builder-jammy-full --default-process web --verbose --clear-cache
 
   post_build:
     commands:
