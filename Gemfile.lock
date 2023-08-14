@@ -228,7 +228,7 @@ GEM
       hashie
       version_gem (~> 1.1, >= 1.1.1)
     tilt (2.2.0)
-    timecop (0.9.6)
+    timecop (0.9.8)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -283,7 +283,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.26)
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
-  timecop (~> 0.9.6)
+  timecop (~> 0.9.8)
   unleash (~> 4.4.2)
   webmock (~> 3.18)
   wisper (~> 3.0.0.rc1)
