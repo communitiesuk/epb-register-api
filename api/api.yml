@@ -49,8 +49,8 @@ paths:
     get:
       tags:
         - Manage Schemes
-      summary: Get a list of all energy assessment schemes in the register
-      description: List the energy assessment schemes
+      summary: List the energy assessment schemes
+      description: Get a list of all energy assessment schemes in the register
       operationId: list-schemes
       security:
         - oauth:
@@ -86,8 +86,8 @@ paths:
     post:
       tags:
         - Manage Schemes
-      summary: Add a new energy assessment scheme to the register
-      description: Add an energy assessment scheme
+      summary: Add an energy assessment scheme
+      description: Add a new energy assessment scheme to the register
       operationId: add-scheme
       security:
         - oauth:
@@ -152,7 +152,7 @@ paths:
     put:
       tags:
         - Manage Schemes
-      description: Update a scheme
+      summary: Update a scheme
       operationId: update-scheme
       responses:
         '204':
@@ -187,8 +187,8 @@ paths:
     get:
       tags:
         - Manage Assessors
-      summary: List a summary of assessors belonging to a scheme
-      description: List assessors for a scheme
+      summary: List assessors for a scheme
+      description: List a summary of assessors belonging to a scheme
       operationId: list-scheme-assessors
       security:
         - oauth:
@@ -238,8 +238,8 @@ paths:
     get:
       tags:
         - Manage Assessors
-      summary: Get all details for an individual assessor registration
-      description: Get details for an assessor on a scheme
+      summary: Get details for an assessor on a scheme
+      description: Get all details for an individual assessor registration
       operationId: get-scheme-assessor
       security:
         - oauth:
@@ -289,10 +289,10 @@ paths:
     put:
       tags:
         - Manage Assessors
-      summary: >-
+      summary: Update or add an assessor
+      description: >-
         Register a new assessor to associate them with your scheme,
         or update details of an assessor already on your scheme.
-      description: Update or add an assessor
       operationId: upsert-assessor
       security:
         - oauth:
@@ -370,7 +370,8 @@ paths:
       tags:
         - Search
         - Manage Assessors
-      summary: 'Search for an assessor by postcode or full name
+      summary: Search for an assessor
+      description: 'Search for an assessor by postcode or full name
                 Clients with scope assessor:search can search by
                   EITHER:
                   - a postcode (with scope assessor:search) and optional qualification
@@ -379,7 +380,6 @@ paths:
 
                 Clients with scope scheme:assessor:fetch can search by
                   - firstName AND lastName AND dateOfBirth'
-      description: Search for an assessor
       operationId: search-assessors
       security:
         - oauth:
@@ -454,14 +454,14 @@ paths:
     get:
       tags:
         - Search
-      summary: 'Search for an address by (optional) type and
+      summary: Search for usable addresses for an assessment
+      description: 'Search for an address by (optional) type and
                 EITHER:
                 - a postcode (with optional building name or number)
                 OR
                 - a street AND town
                 OR
                 - a building reference number (UPRN or RRN)'
-      description: Search for usable addresses for an assessment
       operationId: search-addresses
       security:
         - oauth:
@@ -847,8 +847,8 @@ paths:
     get:
       tags:
         - Manage Assessments
-      summary: Get an Energy Performance Assessment
-      description: Get an assessment's XML
+      summary: Get an assessment's XML
+      description: Get an Energy Performance Assessment (XML document)
       operationId: get-assessment-xml
       security:
         - oauth:
@@ -909,8 +909,8 @@ paths:
     get:
       tags:
         - Manage Assessments
-      summary: Get assessment details in use by frontend in JSON format
-      description: Get summary of assessment for use by frontend
+      summary: Get summary of assessment for use by frontend
+      description: Get assessment details in use by frontend in JSON format
       operationId: get-assessment-summary
       security:
         - oauth:
@@ -967,8 +967,8 @@ paths:
     get:
       tags:
         - Manage Assessments
-      summary: Get assessment metadata attributes used by data-warehouse in JSON format
-      description: Get assessment metadata
+      summary: Get assessment metadata
+      description: Get assessment metadata attributes used by data-warehouse in JSON format
       operationId: get-assessment-metadata
       security:
         - oauth:
@@ -1015,8 +1015,8 @@ paths:
     put:
       tags:
         - Manage Assessments
-      summary: Mark an assessment as opted in or out from search and open data publication
-      description: Update opt-out status of an assessment
+      summary: Update opt-out status of an assessment
+      description: Mark an assessment as opted in or out from search and open data publication
       operationId: update-assessment-optout-status
       security:
         - oauth:
@@ -1073,8 +1073,8 @@ paths:
     put:
       tags:
         - Manage Assessments
-      summary: Update the address ID used to link this assessment with other assessments
-      description: Update the canonical address ID for an assessment
+      summary: Update the canonical address ID for an assessment
+      description: Update the address ID used to link this assessment with other assessments
       operationId: update-canonical-address-id
       security:
         - oauth:
@@ -1130,8 +1130,8 @@ paths:
     get:
       tags:
         - Manage Assessments
-      summary: Get XML from DEC that can be used by AECOM software
-      description: Get the XML for a DEC
+      summary: Get the XML for a DEC
+      description: Get XML from DEC that can be used by AECOM software
       operationId: get-dec-xml
       security:
         - oauth:
@@ -1189,8 +1189,8 @@ paths:
     post:
       tags:
         - Manage Assessments
-      summary: Update the status of an assessment
-      description: Update assessment status
+      summary: Update assessment status
+      description: Update the status of an assessment
       operationId: update-assessment-status
       security:
         - oauth:
@@ -1271,10 +1271,10 @@ paths:
       tags:
         - Manage Assessors
         - Reports
-      summary: >-
+      summary: Get report of assessors who were struck off on a particular day
+      description: >-
         Report of assessors who were suspended and struck off on a particular
         day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme
-      description: Get report of assessors who were struck off on a particular day
       operationId: get-assessor-status-report
       security:
         - oauth:
@@ -1440,8 +1440,8 @@ paths:
     get:
       tags:
         - Energy Company Obligation (ECO)
-      summary: 'Get the ECO details from the domestic EPC with reference {assessmentId}'
-      description: Get domestic EPC details for the supplied RRN
+      summary: Get domestic EPC details for the supplied RRN
+      description: 'Get the ECO details from the domestic EPC with reference {assessmentId}'
       operationId: get-assessment-ecoplus
       security:
         - oauth:
@@ -1499,9 +1499,9 @@ paths:
     get:
       tags:
         - Home Energy Retrofit Advice
-      summary: 'Get the Home Energy Retrofit Advice details from the domestic EPC
+      summary: Get domestic EPC details for the supplied RRN
+      description: 'Get the Home Energy Retrofit Advice details from the domestic EPC
                 with reference {assessmentId}'
-      description: Get domestic EPC details for the supplied RRN
       operationId: get-assessment-retrofit-advice
       security:
         - oauth:
@@ -1557,8 +1557,8 @@ paths:
     get:
       tags:
         - Home Energy Retrofit Funding
-      summary: 'Get the Home Energy Retrofit Funding details by property UPRN'
-      description: Get latest domestic EPC details for the supplied UPRN
+      summary: Get latest domestic EPC details for the supplied UPRN
+      description: 'Get the Home Energy Retrofit Funding details by property UPRN'
       operationId: get-assessment-retrofit-funding
       security:
         - oauth:
@@ -1614,9 +1614,9 @@ paths:
     get:
       tags:
         - Heat Pump Check
-      summary: 'Get the Heat Pump Check details from the domestic EPC
+      summary: Get domestic EPC details for the supplied RRN
+      description: 'Get the Heat Pump Check details from the domestic EPC
                 with reference {assessmentId}'
-      description: Get domestic EPC details for the supplied RRN
       operationId: get-assessment-heat-pump-check
       security:
         - oauth:
@@ -1672,9 +1672,9 @@ paths:
     get:
       tags:
         - Warm Home Discount
-      summary: 'Get the Warm Home Discount details from the domestic EPC
+      summary: Get domestic EPC details for the supplied RRN
+      description: 'Get the Warm Home Discount details from the domestic EPC
                 with reference {assessmentId}'
-      description: Get domestic EPC details for the supplied RRN
       operationId: get-assessment-warm-home-discount
       security:
         - oauth:
@@ -1737,9 +1737,9 @@ paths:
     get:
       tags:
         - Green Deal
-      summary: 'Get the Green Deal details from the assessment with reference
+      summary: Get any Green Deals against an assessment
+      description: 'Get the Green Deal details from the assessment with reference
                 {assessmentId}'
-      description: Get any Green Deals against an assessment
       operationId: get-assessment-green-deals
       security:
         - oauth:
@@ -1801,7 +1801,8 @@ paths:
     get:
       tags:
         - Green Deal
-      summary: 'Get the redacted RdSAP XML for the assessment with reference
+      summary: Get RdSAP assessment XML with sensitive nodes redacted
+      description: 'Get the redacted RdSAP XML for the assessment with reference
                 {assessmentId}. The response will consist of redacted EPC XML
                 that consists of the XML document as originally lodged, with the
                 exception of the following redacted elements and their children:
@@ -1820,7 +1821,6 @@ paths:
                 <Address>
                 <Related-Party-Disclosure>
                 <Insurance-Details>'
-      description: Get RdSAP assessment XML with sensitive nodes redacted
       operationId: get-redacted-assessment-xml
       security:
         - oauth:
@@ -1881,10 +1881,10 @@ paths:
     get:
       tags:
         - Green Deal
-      summary: 'Get the RHI details of the most recent Energy Performance
+      summary: Get RHI details for assessment address's most recent assessment
+      description: 'Get the RHI details of the most recent Energy Performance
                 Assessment for the address of the assessment with reference
                 {assessmentId}'
-      description: Get RHI details for assessment address's most recent assessment
       operationId: get-latest-rhi
       security:
         - oauth:
@@ -1946,9 +1946,9 @@ paths:
     post:
       tags:
         - Green Deal
-      summary: 'Disclose new live Green Deal plan to appear on EPC with RRN
+      summary: Accept disclosure of new live Green Deal plan against assessment
+      description: 'Disclose new live Green Deal plan to appear on EPC with RRN
                 {assessmentId}'
-      description: Accept disclosure of new live Green Deal plan against assessment
       operationId: accept-green-deal-disclosure
       security:
         - oauth:
@@ -2020,8 +2020,8 @@ paths:
     put:
       tags:
         - Green Deal
-      summary: 'Update an existing Green Deal plan'
-      description: Update a Green Deal plan
+      summary: Update a Green Deal plan
+      description: 'Update an existing Green Deal plan'
       operationId: update-green-deal-plan
       security:
         - oauth:
@@ -2126,8 +2126,8 @@ paths:
     get:
       tags:
         - Reports
-      summary: 'Gets the data regarding matching postcodes to regions'
-      description: Get region and type assessment data
+      summary: Get region and type assessment data
+      description: 'Gets the data regarding matching postcodes to regions'
       operationId: get-region-and-type-report
       security:
         - oauth:
@@ -2173,10 +2173,10 @@ paths:
     get:
       tags:
         - Reports
-      summary: >-
+      summary: Get report of assessment counts split by type and scheme
+      description: >-
         Creates a report of the number of assessments lodged between
         two dates broken down by assessment type and lodging scheme
-      description: Get report of assessment counts split by type and scheme
       operationId: get-assessment-counts-by-scheme-and-type-report
       security:
         - oauth:
@@ -2235,9 +2235,9 @@ paths:
     get:
       tags:
         - Reports
-      summary: >-
+      summary: Get a report of lodgements by scheme
+      description: >-
         Creates a report of lodgements made by each assessor scheme used for invoicing
-      description: Get a report of lodgements by scheme
       operationId: get-assessments-by-scheme-report
       security:
         - oauth:
@@ -2297,9 +2297,9 @@ paths:
     get:
       tags:
         - Service Performance
-      summary: >-
+      summary: Get statistics data for EPCs
+      description: >-
         Fetch the statistics data displayed on the Service Performance page
-      description: Get statistics data for EPCs
       operationId: get-assessment-statistics-data
       security:
         - oauth:
@@ -2332,8 +2332,8 @@ paths:
     put:
       tags:
         - Service Performance
-      summary: Add user satisfaction data for a month, for display on the Service Performance page
-      description: Update user satisfaction
+      summary: Update user satisfaction
+      description: Add user satisfaction data for a month, for display on the Service Performance page
       operationId: put-user-satisfaction
       security:
         - oauth:
@@ -2373,8 +2373,8 @@ paths:
     get:
       tags:
         - Service Performance
-      summary: Some interesting numbers about recent activity on the register
-      description: Interesting register numbers
+      summary: Interesting register numbers
+      description: Some interesting numbers about recent activity on the register
       operationId: get-interesting-numbers
       security:
         - oauth:
