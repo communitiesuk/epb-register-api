@@ -5,7 +5,7 @@ namespace :open_data do
     assessment_type = args.assessment_type&.upcase || ENV["assessment_type"]&.upcase
     date_from = args.date_from || ENV["date_from"]
     date_to =   args.date_to || ENV["date_to"] || Time.now.strftime("%F")
-    task_id =  args.task_id || ENV["task_id"]
+    task_id = args.task_id || ENV["task_id"]
 
     raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if type_of_export.nil? || !%w[for_odc not_for_odc].include?(type_of_export)
     raise Boundary::ArgumentMissing, "assessment_type, eg: 'SAP-RDSAP', 'DEC' etc" unless assessment_type

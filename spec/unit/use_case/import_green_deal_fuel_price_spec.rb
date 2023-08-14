@@ -51,7 +51,7 @@ describe UseCase::ImportGreenDealFuelPrice do
         WebMock.disable!
       end
 
-      it "calls the exec that raises a custom error and returns before call the gateway",  aggregate_failures: true do
+      it "calls the exec that raises a custom error and returns before call the gateway", aggregate_failures: true do
         expect { use_case.execute }.to raise_error(UseCase::ImportGreenDealFuelPrice::NoDataException)
         expect(gateway).to have_received(:bulk_insert).exactly(0).times
       end
@@ -63,7 +63,7 @@ describe UseCase::ImportGreenDealFuelPrice do
         allow(gateway).to receive(:get_data).and_return("<h1>no data</h1>")
       end
 
-      it "calls the exec that raises a custom error and returns before call the gateway",  aggregate_failures: true do
+      it "calls the exec that raises a custom error and returns before call the gateway", aggregate_failures: true do
         expect { use_case.execute }.to raise_error(UseCase::ImportGreenDealFuelPrice::NoDataException)
         expect(gateway).to have_received(:bulk_insert).exactly(0).times
       end
