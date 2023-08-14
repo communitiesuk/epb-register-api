@@ -371,15 +371,16 @@ paths:
         - Search
         - Manage Assessors
       summary: Search for an assessor
-      description: 'Search for an assessor by postcode or full name
-                Clients with scope assessor:search can search by
-                  EITHER:
-                  - a postcode (with scope assessor:search) and optional qualification
-                  OR
-                  - full name (with scope assessor:search) and optional qualification type (domestic or non-domestic)
+      description: |-
+        Search for an assessor by postcode or full name/number.
 
-                Clients with scope scheme:assessor:fetch can search by
-                  - firstName AND lastName AND dateOfBirth'
+        Clients with scope `assessor:search` can search by
+          _either_:
+          - a postcode (with scope `assessor:search`) and optional qualification; _or_
+          - full name (with scope `assessor:search`) and optional qualification type (domestic or non-domestic)
+
+        Clients with scope `scheme:assessor:fetch` can search by
+          - firstName AND lastName AND dateOfBirth
       operationId: search-assessors
       security:
         - oauth:
@@ -455,13 +456,12 @@ paths:
       tags:
         - Search
       summary: Search for usable addresses for an assessment
-      description: 'Search for an address by (optional) type and
-                EITHER:
-                - a postcode (with optional building name or number)
-                OR
-                - a street AND town
-                OR
-                - a building reference number (UPRN or RRN)'
+      description: |-
+        Search for an address by (optional) type and
+          _either_:
+          - a postcode (with optional building name or number); _or_
+          - a street AND town; _or_
+          - a building reference number (UPRN or RRN)
       operationId: search-addresses
       security:
         - oauth:
@@ -530,13 +530,12 @@ paths:
         - Search
         - Manage Assessments
       summary: Search for assessments
-      description: 'Search for an assessment by
-                    EITHER:
-                     - a postcode AND assessment type
-                    OR
-                     - a street AND town AND assessment type
-                    OR
-                     - an assessment reference number (RRN)'
+      description: |-
+        Search for an assessment by
+          _either_:
+           - a postcode AND assessment type; _or_
+           - a street AND town AND assessment type; _or_
+           - an assessment reference number (RRN)
       operationId: search-assessments
       security:
         - oauth:
@@ -620,7 +619,7 @@ paths:
       summary: Search for domestic EPCs by address
       description: 'Search for an assessment by postcode and optional building
                     name/number. If building name/number is not supplied then
-                    all domestic EPC matches for the postcode are returned'
+                    all domestic EPC matches for the postcode are returned.'
       operationId: search-domestic-epcs
       security:
         - oauth:
@@ -711,18 +710,20 @@ paths:
       tags:
         - Manage Assessments
       summary: Lodge a new assessment or migrate an existing assessment
-      description: 'Single endpoint for POSTing all new lodgements.
-                    It will accept as XML payload:
-                    * A single <Report> for a domestic RdSAP assessment
-                    * A single <Report> for a domestic SAP assessment
-                    * Non-domestic EPC and Recommendation report in a single XML
-                      payload with two <Report> elements
-                    * Air Conditioning certificate and AC-report in a single XML
-                      payload with two <Report> elements
-                    * A single <Report> for DEC
-                    * A single <Report> for DEC recommendation report
-                    * DEC and DEC-RR in a single XML payload with two <Report>
-                      elements'
+      description: |-
+        Single endpoint for POSTing all new lodgements.
+
+        It will accept as an XML payload one of the following:
+        * A single <Report> for a domestic RdSAP assessment
+        * A single <Report> for a domestic SAP assessment
+        * Non-domestic EPC and Recommendation report in a single XML
+          payload with two <Report> elements
+        * Air Conditioning certificate and AC-report in a single XML
+          payload with two <Report> elements
+        * A single <Report> for DEC
+        * A single <Report> for DEC recommendation report
+        * DEC and DEC-RR in a single XML payload with two <Report>
+          elements
       operationId: lodge-assessment
       security:
         - oauth:
@@ -1274,7 +1275,7 @@ paths:
       summary: Get report of assessors who were struck off on a particular day
       description: >-
         Report of assessors who were suspended and struck off on a particular
-        day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme
+        day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme.
       operationId: get-assessor-status-report
       security:
         - oauth:
@@ -1333,15 +1334,14 @@ paths:
       tags:
         - Boiler Upgrade Scheme
       summary: Search for assessments exposing details for the Boiler Upgrade Scheme (BUS)
-      description: 'Search for an assessment by
-                    EITHER
-                     - a postcode AND building name/ number
-                    OR
-                     - an address ID (UPRN)
-                    OR
-                     - an assessment reference number (RRN)
-                     in each case returning the BUS details of the most recent
-                     Energy Performance Certificate (EPC) for the property'
+      description: |-
+        Search for an assessment by  _either_:
+         - a postcode AND building name/ number; _or_
+         - an address ID (UPRN); _or_
+         - an assessment reference number (RRN)
+
+        in each case returning the BUS details of the most recent
+        Energy Performance Certificate (EPC) for the property.
       operationId: bus-search-latest-assessments
       security:
         - oauth:
@@ -1802,25 +1802,30 @@ paths:
       tags:
         - Green Deal
       summary: Get RdSAP assessment XML with sensitive nodes redacted
-      description: 'Get the redacted RdSAP XML for the assessment with reference
-                {assessmentId}. The response will consist of redacted EPC XML
-                that consists of the XML document as originally lodged, with the
-                exception of the following redacted elements and their children:
-                <Identification>
-                <Configuration>
-                <Calculation-Software-Name>
-                <Calculation-Software-Version>
-                <Inspection-Date>
-                <Completion-Date>
-                <Registration-Date>
-                <Status>
-                <Restricted-Access>
-                <Transaction-Type>
-                <Seller-Commission-Report>
-                <Energy-Assessor>
-                <Address>
-                <Related-Party-Disclosure>
-                <Insurance-Details>'
+      description: |-
+        Get the redacted RdSAP XML for the assessment with reference
+        {assessmentId}.
+
+        The response will consist of redacted EPC XML
+        that consists of the XML document as originally lodged, with the
+        exception of the following redacted elements and their children:
+        ```
+        <Identification>
+        <Configuration>
+        <Calculation-Software-Name>
+        <Calculation-Software-Version>
+        <Inspection-Date>
+        <Completion-Date>
+        <Registration-Date>
+        <Status>
+        <Restricted-Access>
+        <Transaction-Type>
+        <Seller-Commission-Report>
+        <Energy-Assessor>
+        <Address>
+        <Related-Party-Disclosure>
+        <Insurance-Details>
+        ```
       operationId: get-redacted-assessment-xml
       security:
         - oauth:
@@ -2176,7 +2181,7 @@ paths:
       summary: Get report of assessment counts split by type and scheme
       description: >-
         Creates a report of the number of assessments lodged between
-        two dates broken down by assessment type and lodging scheme
+        two dates broken down by assessment type and lodging scheme.
       operationId: get-assessment-counts-by-scheme-and-type-report
       security:
         - oauth:
@@ -2237,7 +2242,7 @@ paths:
         - Reports
       summary: Get a report of lodgements by scheme
       description: >-
-        Creates a report of lodgements made by each assessor scheme used for invoicing
+        Creates a report of lodgements made by each assessor scheme used for invoicing.
       operationId: get-assessments-by-scheme-report
       security:
         - oauth:
