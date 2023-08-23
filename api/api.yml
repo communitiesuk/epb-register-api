@@ -3579,6 +3579,10 @@ components:
         typeOfProperty:
           type: string
           enum: [ House,Bungalow,Flat,Maisonette,Park home ]
+        uprn:
+          type: string
+          example: '716375734512'
+          nullable: true
 
     # Green Deal
     AssessmentGreenDealDetails:

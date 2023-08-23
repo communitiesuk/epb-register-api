@@ -32,6 +32,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       property_age_band: "2007-2011",
       total_floor_area: 55,
       type_of_property: "House",
+      uprn: "000000000000",
     }
 
     let(:expected_not_latest) { expected }
@@ -52,7 +53,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
     context "with an RRN that is the property's latest assessment" do
       before do
         allow(summary_use_case).to receive(:execute).with(rrn).and_return({
-          superseded_by: nil,
+          superseded_by: nil, address_id: "UPRN-000000000000"
         })
       end
 
@@ -66,7 +67,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
     context "with an RRN that is not the property's latest assessment" do
       before do
         allow(summary_use_case).to receive(:execute).with(rrn).and_return({
-          superseded_by: "0000-1111-2222-3333-6666",
+          superseded_by: "0000-1111-2222-3333-6666", address_id: "UPRN-000000000000"
         })
       end
 
@@ -90,7 +91,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
           "schema_type" => "RdSAP-Schema-20.0.0",
         })
         allow(summary_use_case).to receive(:execute).with(rrn).and_return({
-          superseded_by: nil,
+          superseded_by: nil, address_id: "UPRN-000000000000"
         })
       end
 
@@ -113,7 +114,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
         "schema_type" => "SAP-Schema-18.0.0",
       })
       allow(summary_use_case).to receive(:execute).with(rrn).and_return({
-        superseded_by: nil,
+        superseded_by: nil, address_id: "UPRN-000000000000"
       })
     end
 
@@ -133,6 +134,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       property_age_band: "1750",
       total_floor_area: 69,
       type_of_property: "House",
+      uprn: "000000000000",
     }
 
     it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
@@ -152,7 +154,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
         "schema_type" => "SAP-Schema-10.2",
       })
       allow(summary_use_case).to receive(:execute).with(rrn).and_return({
-        superseded_by: nil,
+        superseded_by: nil, address_id: "UPRN-000000000000"
       })
     end
 
@@ -171,6 +173,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       property_age_band: nil,
       total_floor_area: 98,
       type_of_property: "House",
+      uprn: "000000000000",
     }
 
     it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do

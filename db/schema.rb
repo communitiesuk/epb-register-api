@@ -239,6 +239,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_095823) do
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end
 
+  create_table "search_address", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.text "address"
+  end
+
   create_table "user_satisfaction", primary_key: "month", id: { type: :datetime, precision: nil }, force: :cascade do |t|
     t.integer "very_satisfied", null: false
     t.integer "satisfied", null: false

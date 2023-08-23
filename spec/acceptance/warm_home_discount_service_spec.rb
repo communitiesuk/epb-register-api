@@ -36,6 +36,7 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         "builtForm": "Semi-Detached",
         "propertyAgeBand": "2007-2011",
         "totalFloorArea": 55,
+        "uprn": "000000000000",
       },
     }
   end
@@ -57,6 +58,7 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         "builtForm": "Detached",
         "propertyAgeBand": "1750",
         "totalFloorArea": 69,
+        "uprn": "000000000000",
       },
     }
   end
@@ -81,6 +83,28 @@ describe "fetching Warm Home Discount Service details from the API", set_with_ti
         )
 
         expect(response[:data]).to eq expected_rdsap_details
+      end
+    end
+
+    context "when the address is not a UPRN" do
+      before do
+        rdsap_xml.gsub!("UPRN-000000000000", "RRN-0000-0000-0000-0000-0000")
+        lodge_assessment(
+          assessment_body: rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+        )
+      end
+
+      it "returns the matching assessment Warm Home Discount service details in the expected format" do
+        response = JSON.parse(
+          warm_home_discount_details_by_rrn("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+        expect(response[:data][:assessment][:uprn]).to be_nil
       end
     end
 
