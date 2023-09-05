@@ -235,7 +235,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
-    unleash (4.4.4)
+    unleash (4.5.0)
       murmurhash3 (~> 0.1.7)
     version_gem (1.1.3)
     webmock (3.18.1)
@@ -284,7 +284,7 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   timecop (~> 0.9.8)
-  unleash (~> 4.4.2)
+  unleash (~> 4.5.0)
   webmock (~> 3.18)
   wisper (~> 3.0.0.rc1)
   wisper-rspec (~> 1.0, >= 1.0.1)
