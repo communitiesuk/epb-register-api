@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - mkdir swagger-ui && cd swagger-ui
+      - echo "Fetching latest Swagger-UI release from GitHub"
+      - 'curl -L -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/swagger-api/swagger-ui/releases/latest | jq -r ''[.zipball_url][]'' | xargs -t curl -L -o swagger-ui.zip && unzip -q swagger-ui.zip && cp -R $(ls -d */|head -n 1)/dist ./dist && rm -rf ./sw*'
+      - cd ..
+  post_build:
+    commands:
+      - export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" $(aws sts assume-role --role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server --role-session-name MySessionName --query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" --output text))
+      - echo ">>>>>>>> Pushing to AWS"
+      - aws sts get-caller-identity
+      - aws s3 cp --recursive ./swagger-ui/dist s3://$BUCKET_NAME
