@@ -19,7 +19,7 @@ class RegisterApiService < Controller::BaseController
 
     {
       links: {
-        apispec: "https://mhclg-epb-swagger.london.cloudapps.digital",
+        apispec: "https://api-docs.epcregisters.net",
       },
     }.to_json
   end
