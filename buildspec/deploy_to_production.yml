@@ -7,6 +7,7 @@ env:
   variables:
     DEPLOY_APPNAME: "mhclg-epb-register-api-production"
     DEPLOY_WORKER: "dluhc-epb-worker-production"
+    EPB_API_DOCS_URL: "https://api-docs.epcregisters.net/"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-production-login"
