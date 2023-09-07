@@ -6,7 +6,7 @@ phases:
       - mkdir swagger-ui && cd swagger-ui
       - echo "Fetching latest Swagger-UI release from GitHub"
       - 'curl -L -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/swagger-api/swagger-ui/releases/latest | jq -r ''[.zipball_url][]'' | xargs -t curl -L -o swagger-ui.zip && unzip -q swagger-ui.zip && cp -R $(ls -d */|head -n 1)/dist ./dist && rm -rf ./sw*'
-      - 'sed -i '''' ''s+https://petstore.swagger.io/v2/swagger.json+https://raw.githubusercontent.com/communitiesuk/epb-register-api/master/api/api.yml+g'' "dist/swagger-initializer.js"'
+      - 'sed -i ''s+https://petstore.swagger.io/v2/swagger.json+https://raw.githubusercontent.com/communitiesuk/epb-register-api/master/api/api.yml+g'' "dist/swagger-initializer.js"'
       - cd ..
   post_build:
     commands:
