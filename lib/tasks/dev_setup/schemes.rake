@@ -11,7 +11,8 @@ namespace :dev_data do
              "Elmhurst Energy Systems Ltd",
              "Sterling Accreditation Ltd",
              "Stroma Certification Ltd",
-             "Quidos Limited"]
+             "Quidos Limited",
+             "Kaizen Certification Ltd"]
 
     names.each do |name|
       query = "INSERT INTO schemes (name) VALUES('#{name}')"
