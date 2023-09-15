@@ -86,7 +86,7 @@ GEM
     io-like (0.3.1)
     jmespath (1.6.2)
     json (2.6.3)
-    json-schema (4.0.0)
+    json-schema (4.1.1)
       addressable (>= 2.8)
     jwt (2.7.1)
     language_server-protocol (3.17.0.3)
@@ -258,7 +258,7 @@ DEPENDENCIES
   epb_view_models (~> 1.1.4)
   geocoder (~> 1.8.0)
   http
-  json-schema (~> 4.0)
+  json-schema (~> 4.1)
   mock_redis (~> 0.37.0)
   namecase (~> 2.0)
   nokogiri (~> 1.14.3)
