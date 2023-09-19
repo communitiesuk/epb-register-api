@@ -11,7 +11,7 @@ end
 group :worker do
   gem "http"
   gem "sentry-sidekiq", "~> 5.11.0"
-  gem "sidekiq", "~> 7.1.2"
+  gem "sidekiq", "~> 7.1.4"
   gem "sidekiq-cron", "~> 1.10.1"
 end
 
@@ -31,7 +31,7 @@ gem "aws-sdk-s3", "~> 1.134"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 1.1.4"
 gem "geocoder", "~> 1.8.0"
-gem "json-schema", "~> 4.0"
+gem "json-schema", "~> 4.1"
 gem "namecase", "~> 2.0"
 gem "nokogiri", "~> 1.14.3"
 gem "ougai", "~> 2.0"
