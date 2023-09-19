@@ -94,7 +94,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType",
     )
 
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
-    non_domestic_xml.at("[local-name() = 'UPRN']").remove
+    non_domestic_xml.at("//*[local-name() = 'UPRN']").remove
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
