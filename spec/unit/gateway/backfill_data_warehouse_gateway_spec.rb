@@ -101,7 +101,7 @@ describe Gateway::BackfillDataWarehouseGateway do
   describe "#get_assessments_id" do
     it "gets the assessment ids in the time range and schema" do
       result = gateway.get_assessments_id(rrn_date: "2020-05-04", start_date: "2020-05-01", schema_type: "RdSAP-Schema-20.0.0")
-      expect(result).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002])
+      expect(result.sort).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002])
       expect(result).not_to include("0000-0000-0000-0000-0003")
       expect(result).not_to include("0000-0000-0000-0000-0004")
     end
