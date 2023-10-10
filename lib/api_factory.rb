@@ -413,10 +413,6 @@ class ApiFactory
     @logger
   end
 
-  def self.notify_client
-    Notifications::Client.new(ENV["NOTIFY_API_KEY"])
-  end
-
   def self.event_broadcaster
     return @event_broadcaster unless @event_broadcaster.nil?
 
