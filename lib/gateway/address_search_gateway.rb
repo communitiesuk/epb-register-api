@@ -1,5 +1,7 @@
 module Gateway
   class AddressSearchGateway
+    include ReadOnlyDatabaseAccess
+
     ADDRESS_TYPES = {
       DOMESTIC: %w[SAP RdSAP],
       COMMERCIAL: %w[DEC DEC-RR CEPC CEPC-RR AC-REPORT AC-CERT],
@@ -89,20 +91,22 @@ module Gateway
           )
       end
 
-      parse_results(
-        [
-          ActiveRecord::Base.connection.exec_query(
-            sql_address_base,
-            "SQL",
-            binds,
-          ).map { |address| title_case_address(address) },
-          ActiveRecord::Base.connection.exec_query(
-            sql_assessments,
-            "SQL",
-            binds,
-          ),
-        ].flatten,
-      )
+      read_only do
+        parse_results(
+          [
+            ActiveRecord::Base.connection.exec_query(
+              sql_address_base,
+              "SQL",
+              binds,
+            ).map { |address| title_case_address(address) },
+            ActiveRecord::Base.connection.exec_query(
+              sql_assessments,
+              "SQL",
+              binds,
+            ),
+          ].flatten,
+        )
+      end
     end
 
     def search_by_address_id(address_id)
@@ -173,26 +177,28 @@ module Gateway
         ),
       ]
 
-      parse_results(
-        [
-          ActiveRecord::Base.connection.exec_query(
-            sql_address_base,
-            "SQL",
-            binds,
-          ).map { |address| title_case_address(address) },
-          ActiveRecord::Base.connection.exec_query(
-            sql_assessments,
-            "SQL",
-            binds + [
-              ActiveRecord::Relation::QueryAttribute.new(
-                "address_id",
-                address_id,
-                ActiveRecord::Type::String.new,
-              ),
-            ],
-          ),
-        ].flatten,
-      )
+      read_only do
+        parse_results(
+          [
+            ActiveRecord::Base.connection.exec_query(
+              sql_address_base,
+              "SQL",
+              binds,
+            ).map { |address| title_case_address(address) },
+            ActiveRecord::Base.connection.exec_query(
+              sql_assessments,
+              "SQL",
+              binds + [
+                ActiveRecord::Relation::QueryAttribute.new(
+                  "address_id",
+                  address_id,
+                  ActiveRecord::Type::String.new,
+                ),
+              ],
+            ),
+          ].flatten,
+        )
+      end
     end
 
     def search_by_street_and_town(street, town, address_type)
@@ -293,20 +299,22 @@ module Gateway
         ),
       ]
 
-      parse_results(
-        [
-          ActiveRecord::Base.connection.exec_query(
-            sql_address_base,
-            "SQL",
-            binds,
-          ).map { |address| title_case_address(address) },
-          ActiveRecord::Base.connection.exec_query(
-            sql_assessments,
-            "SQL",
-            binds,
-          ),
-        ].flatten,
-      )
+      read_only do
+        parse_results(
+          [
+            ActiveRecord::Base.connection.exec_query(
+              sql_address_base,
+              "SQL",
+              binds,
+            ).map { |address| title_case_address(address) },
+            ActiveRecord::Base.connection.exec_query(
+              sql_assessments,
+              "SQL",
+              binds,
+            ),
+          ].flatten,
+        )
+      end
     end
 
   private

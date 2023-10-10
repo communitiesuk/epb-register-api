@@ -1,16 +1,56 @@
 development:
-  adapter: postgresql
-  database: epb_development
-  host: 127.0.0.1
-  username: postgres
-  password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+  primary:
+    adapter: postgresql
+    database: epb_development
+    host: 127.0.0.1
+    username: postgres
+    password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+  primary_replica:
+    adapter: postgresql
+    database: epb_development
+    host: 127.0.0.1
+    username: postgres
+    password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+    database_tasks: false
+    replica: true
 test:
-  adapter: postgresql
-  database: epb_test
-  username: postgres
-  password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
-  host: 127.0.0.1
+  primary:
+    adapter: postgresql
+    database: epb_test
+    username: postgres
+    password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+    host: 127.0.0.1
+  primary_replica:
+    adapter: postgresql
+    database: epb_test
+    username: postgres
+    password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+    host: 127.0.0.1
+    database_tasks: false
+    replica: true
+default_env:
+  primary:
+    adapter: postgresql
+    database: epb
+    pool: 62
+    url: <%= ENV['DATABASE_URL'] %>
+  primary_replica:
+    adapter: postgresql
+    database: epb
+    pool: 62
+    url: <%= ENV['DATABASE_READER_URL'] %>
+    database_tasks: false
+    replica: true
 production:
-  database: epb
-  pool: 62
-  url: <%= ENV['DATABASE_URL'] %>
+  primary:
+    adapter: postgresql
+    database: epb
+    pool: 62
+    url: <%= ENV['DATABASE_URL'] %>
+  primary_replica:
+    adapter: postgresql
+    database: epb
+    pool: 62
+    url: <%= ENV['DATABASE_READER_URL'] %>
+    database_tasks: false
+    replica: true

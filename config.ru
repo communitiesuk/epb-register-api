@@ -1,6 +1,7 @@
 require "active_support"
 require "active_support/core_ext"
 require "sentry-ruby"
+require "sinatra/activerecord"
 require "zeitwerk"
 
 loader = Zeitwerk::Loader.new
@@ -8,6 +9,8 @@ loader.push_dir("#{__dir__}/lib/")
 loader.setup
 
 environment = ENV["STAGE"]
+
+ActiveRecord::Base.connects_to(database: { writing: :primary, reading: :primary_replica })
 
 Sentry.init do |config|
   config.environment = environment
