@@ -22,7 +22,7 @@ describe UseCase::SaveUserSatisfaction do
     expect(gateway).to have_received(:upsert).with(domain_object).exactly(1).times
   end
 
-  it "raises a error if the argument passed in not the the correct domian object" do
+  it "raises a error if the argument passed in not the the correct domain object" do
     expect { use_case.execute("domain_object") }.to raise_error(ArgumentError)
     expect { use_case.execute(gateway) }.to raise_error(ArgumentError)
   end
