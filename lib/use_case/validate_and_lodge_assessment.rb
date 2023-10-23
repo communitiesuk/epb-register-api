@@ -46,6 +46,8 @@ module UseCase
 
     class NotOverridableLodgementRuleError < StandardError; end
 
+    class DatabaseWriteError < StandardError; end
+
     LATEST_COMMERCIAL = %w[CEPC-8.0.0 CEPC-NI-8.0.0].freeze
     NOT_OVERRIDABLE_LODGEMENT_RULES = %w[
       FLOOR_AREA_CANT_BE_LESS_THAN_ZERO
@@ -149,23 +151,27 @@ module UseCase
 
       responses = []
 
-      ActiveRecord::Base.transaction do
-        lodgement_data.each do |assessment_data|
-          unless assessor_can_lodge?(
-            assessment_data[:assessor][:scheme_assessor_id],
-            scheme_ids,
-          )
-            raise UnauthorisedToLodgeAsThisSchemeException
-          end
+      begin
+        ActiveRecord::Base.transaction do
+          lodgement_data.each do |assessment_data|
+            unless assessor_can_lodge?(
+              assessment_data[:assessor][:scheme_assessor_id],
+              scheme_ids,
+            )
+              raise UnauthorisedToLodgeAsThisSchemeException
+            end
 
-          responses.push(
-            @lodge_assessment_use_case.execute(
-              assessment_data,
-              migrated,
-              schema_name,
-            ),
-          )
+            responses.push(
+              @lodge_assessment_use_case.execute(
+                assessment_data,
+                migrated,
+                schema_name,
+              ),
+            )
+          end
         end
+      rescue ActiveRecord::StatementInvalid
+        raise DatabaseWriteError, "There was a problem interacting with the database and assessments could not be written."
       end
 
       responses

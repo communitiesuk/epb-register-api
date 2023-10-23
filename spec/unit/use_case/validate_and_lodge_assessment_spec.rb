@@ -2,7 +2,7 @@ describe UseCase::ValidateAndLodgeAssessment do
   subject(:use_case) do
     described_class.new(
       validate_assessment_use_case:,
-      lodge_assessment_use_case: instance_spy(UseCase::LodgeAssessment),
+      lodge_assessment_use_case:,
       check_assessor_belongs_to_scheme_use_case:,
       check_approved_software_use_case:,
     )
@@ -29,6 +29,10 @@ describe UseCase::ValidateAndLodgeAssessment do
     allow(use_case).to receive(:execute).and_return true
 
     use_case
+  end
+
+  let(:lodge_assessment_use_case) do
+    instance_spy(UseCase::LodgeAssessment)
   end
 
   context "when validating an invalid schema name" do
@@ -442,6 +446,31 @@ describe UseCase::ValidateAndLodgeAssessment do
                            overridden: true
         }.to raise_exception UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
       end
+    end
+  end
+
+  context "when lodging the assessment notifies an ActiveRecord::StatementInvalid error" do
+    let(:rdsap) do
+      Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+    end
+
+    before do
+      allow(lodge_assessment_use_case).to receive(:execute).and_raise(ActiveRecord::StatementInvalid)
+      Timecop.freeze(2021, 2, 22, 0, 0, 0)
+    end
+
+    after do
+      Timecop.return
+    end
+
+    it "raises a DatabaseWriteError" do
+      expect {
+        use_case.execute assessment_xml: rdsap.to_s,
+                         schema_name: "RdSAP-Schema-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overridden: true
+      }.to raise_exception UseCase::ValidateAndLodgeAssessment::DatabaseWriteError
     end
   end
 end

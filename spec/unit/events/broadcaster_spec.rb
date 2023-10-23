@@ -102,5 +102,20 @@ describe Events::Broadcaster do
       broadcaster.broadcast(:exploding_event)
       expect(logger).to have_received(:error).with include("RuntimeError", "the listener exploded")
     end
+
+    context "when the error is an ActiveRecord::StatementInvalid and occurs during a transaction" do
+      before do
+        # complete the test transaction set up by DatabaseCleaner
+        DatabaseCleaner.clean
+
+        broadcaster.on(:exploding_statement_invalid_event) { raise ActiveRecord::StatementInvalid }
+      end
+
+      it "re-raises the error" do
+        ActiveRecord::Base.connection.transaction do
+          expect { broadcaster.broadcast(:exploding_statement_invalid_event) }.to raise_error ActiveRecord::StatementInvalid
+        end
+      end
+    end
   end
 end

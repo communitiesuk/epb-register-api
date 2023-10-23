@@ -56,6 +56,44 @@ describe "Audit events", set_with_timecop: true do
           "sup" => { "scheme_ids" => [scheme_id] } },
       )
     end
+
+    context "when writing audit log to the database fails" do
+      failing_assessment_rrn = "0000-0000-0000-0000-0001"
+      second_assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+      second_assessment.at("RRN").children = failing_assessment_rrn
+
+      scheme_id = nil
+
+      before do
+        ApiFactory.clear!
+
+        # we need to use break out of any transaction started by DatabaseCleaner
+        DatabaseCleaner.clean
+
+        # adding this assessor, and scheme, was nixed by transaction rollback
+        scheme_id = add_scheme_and_get_id
+        add_super_assessor(scheme_id:)
+
+        ActiveRecord::Base.connection.exec_query("ALTER TABLE audit_logs RENAME TO audit_logs_obscured")
+
+        # silence logging in this test
+        allow($stdout).to receive(:write)
+      end
+
+      it "does not write the assessment and returns a 500" do
+        lodge_assessment(
+          assessment_body: second_assessment.to_xml,
+          accepted_responses: [500],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+        )
+
+        ActiveRecord::Base.connection.reconnect!
+        is_assessment_written = !ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE assessment_id = '#{failing_assessment_rrn}'").rows.empty?
+        expect(is_assessment_written).to be false
+      end
+    end
   end
 
   context "when opting out an assessment" do

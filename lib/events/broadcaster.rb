@@ -105,6 +105,10 @@ module Events
       super if self.class.enabled? && accepts?(event)
     rescue StandardError => e
       logger.error "Event broadcaster caught #{e.class} from a listener: #{e.message}"
+      if e.is_a?(ActiveRecord::StatementInvalid) && ActiveRecord::Base.connection.transaction_open?
+        logger.error "Event broadcaster re-raising an ActiveRecord::StatementInvalid error as open ActiveRecord transaction should error"
+        raise
+      end
     end
 
     def self.disable!
