@@ -226,7 +226,7 @@ GEM
       rack (~> 2.2, >= 2.2.4)
       rack-protection (= 3.1.0)
       tilt (~> 2.0)
-    sinatra-activerecord (2.0.26)
+    sinatra-activerecord (2.0.27)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     sinatra-contrib (3.1.0)
@@ -294,7 +294,7 @@ DEPENDENCIES
   sidekiq (~> 7.1.6)
   sidekiq-cron (~> 1.10.1)
   sinatra (~> 3.1)
-  sinatra-activerecord (~> 2.0.26)
+  sinatra-activerecord (~> 2.0.27)
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   timecop (~> 0.9.8)
