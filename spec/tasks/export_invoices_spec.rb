@@ -125,6 +125,83 @@ describe "monthly invoice export" do
     end
   end
 
+  context "when passing environmental variables to the rake" do
+    before do
+      WebMock.enable!
+      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
+    end
+
+    context "when getting the assessment count by scheme name and type" do
+      let(:use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
+      let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
+
+      before do
+        allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
+        allow(use_case).to receive(:execute).and_return []
+        allow(use_case).to receive(:execute).and_return returned_data
+        EnvironmentStub.with("start_date", "2020-05-01")
+        EnvironmentStub.with("end_date", "2020-05-31")
+        EnvironmentStub.with("report_type", "scheme_name_type")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[start_date end_date report_type])
+      end
+
+      it "calls without error" do
+        expect { monthly_invoice_rake.invoke }.not_to raise_error
+      end
+    end
+
+    context "when getting the assessment count by region and type" do
+      let(:use_case) { instance_double(UseCase::GetAssessmentCountByRegionAndType) }
+      let(:returned_data) { [{ number_of_assessments: 122, type_of_assessment: "AC-CERT", region: "Eastern" }, { number_of_assessments: 153, type_of_assessment: "CEPC", region: "Northern Ireland " }] }
+
+      before do
+        allow(ApiFactory).to receive(:get_assessment_count_by_region_type).and_return(use_case)
+        allow(use_case).to receive(:execute).and_return []
+        allow(use_case).to receive(:execute).and_return returned_data
+        EnvironmentStub.with("start_date", "2020-05-01")
+        EnvironmentStub.with("end_date", "2020-05-31")
+        EnvironmentStub.with("report_type", "region_type")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[start_date end_date report_type])
+      end
+
+      it "calls without error" do
+        expect { monthly_invoice_rake.invoke }.not_to raise_error
+      end
+    end
+
+    context "when getting the assessment rrns by scheme and type" do
+      let(:use_case) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+      let(:returned_data) do
+        [{ rrn: "0000-0000-0000-0000-0000", scheme_name: "test", type_of_assessment: "RdSAP", lodged_at: "2022-08-01 00:20:33 UTC" },
+         { rrn: "0000-0000-0000-0000-0001", scheme_name: "test", type_of_assessment: "RdSAP", lodged_at: "2022-08-02 00:20:33 UTC" }]
+      end
+
+      before do
+        allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(use_case)
+        allow(use_case).to receive(:execute).and_return []
+        allow(use_case).to receive(:execute).and_return returned_data
+        EnvironmentStub.with("start_date", "2020-05-01")
+        EnvironmentStub.with("end_date", "2020-05-31")
+        EnvironmentStub.with("report_type", "rrn_scheme_type")
+        EnvironmentStub.with("scheme_id", "1")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[start_date end_date report_type scheme_id])
+      end
+
+      it "calls without error" do
+        expect { monthly_invoice_rake.invoke }.not_to raise_error
+      end
+    end
+  end
+
   context "when posting to slack fails" do
     let(:use_case) { instance_double(UseCase::GetAssessmentCountByRegionAndType) }
     let(:returned_data) { [{ number_of_assessments: 122, type_of_assessment: "AC-CERT", region: "Eastern" }, { number_of_assessments: 153, type_of_assessment: "CEPC", region: "Northern Ireland " }] }

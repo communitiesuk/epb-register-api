@@ -4,10 +4,10 @@ namespace :data_export do
   desc "Export invoices on the 1st of the month every month"
 
   task :export_invoices, [:start_date, :end_date, :report_type, :scheme_id] do |_, args|
-    start_date = args[:start_date]
-    end_date = args[:end_date]
-    report_type = args[:report_type]
-    scheme_id = args[:scheme_id]
+    start_date = args[:start_date] || ENV["start_date"]
+    end_date = args[:end_date] || ENV["end_date"]
+    report_type = args[:report_type] || ENV["report_type"]
+    scheme_id = args[:scheme_id] || ENV["scheme_id"]
     assessment_use_case = case report_type
                           when "scheme_name_type"
                             ApiFactory.get_assessment_count_by_scheme_name_type
