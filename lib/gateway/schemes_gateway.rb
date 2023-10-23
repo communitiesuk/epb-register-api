@@ -32,5 +32,9 @@ module Gateway
       scheme = Scheme.find_by(scheme_id: id)
       scheme.update(name: scheme_body[:name], active: scheme_body[:active])
     end
+
+    def fetch_active
+      Scheme.select(:scheme_id).where("active = 'true'").map(&:scheme_id)
+    end
   end
 end

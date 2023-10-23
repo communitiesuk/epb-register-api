@@ -248,6 +248,11 @@ class ApiFactory
       )
   end
 
+  def self.fetch_active_schemes_use_case
+    @fetch_active_schemes_use_case ||=
+      UseCase::FetchActiveSchemesId.new
+  end
+
   def self.find_assessments_by_street_name_and_town
     @find_assessments_by_street_name_and_town ||=
       UseCase::FindAssessmentsByStreetNameAndTown.new(assessments_search_gateway)

@@ -12,7 +12,8 @@ module Worker
       @monthly_invoice_rake = rake_task("data_export:export_invoices")
       call_rake("scheme_name_type")
       call_rake("region_type")
-      (1..6).each do |i|
+      active_scheme_ids = ApiFactory.fetch_active_schemes_use_case.execute
+      active_scheme_ids.each do |i|
         call_rake("rrn_scheme_type", i)
       end
     end

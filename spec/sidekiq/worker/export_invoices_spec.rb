@@ -14,17 +14,20 @@ RSpec.describe Worker::ExportInvoices do
     let(:scheme_use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
     let(:region_use_case) { instance_double(UseCase::GetAssessmentCountByRegionAndType) }
     let(:rrn_use_case) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
-
+    let(:fetch_active_schemes_use_case) { instance_double(UseCase::FetchActiveSchemesId) }
     let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
+    let(:active_scheme_ids) { [1, 2, 3, 4, 5, 6, 18] }
 
     before do
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
       allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(scheme_use_case)
       allow(ApiFactory).to receive(:get_assessment_count_by_region_type).and_return(region_use_case)
       allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case)
+      allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
       allow(scheme_use_case).to receive(:execute).and_return returned_data
       allow(region_use_case).to receive(:execute).and_return returned_data
       allow(rrn_use_case).to receive(:execute).and_return returned_data
+      allow(fetch_active_schemes_use_case).to receive(:execute).and_return active_scheme_ids
       allow(Sentry).to receive(:capture_exception)
     end
 
@@ -41,6 +44,7 @@ RSpec.describe Worker::ExportInvoices do
     it "call the rake many tines for each scheme" do
       described_class.new.perform
       (1..6).each { |i| expect(rrn_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date, i).exactly(1).times }
+      expect(rrn_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date, 18).exactly(1).times
     end
 
     context "when there is no data to send" do
@@ -53,7 +57,7 @@ RSpec.describe Worker::ExportInvoices do
 
       it "send the error to sentry" do
         described_class.new.perform
-        expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(8).times
+        expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(9).times
       end
     end
 
@@ -64,7 +68,7 @@ RSpec.describe Worker::ExportInvoices do
 
       it "send the errors to sentry" do
         described_class.new.perform
-        expect(Sentry).to have_received(:capture_exception).with(Boundary::SlackMessageError).exactly(8).times
+        expect(Sentry).to have_received(:capture_exception).with(Boundary::SlackMessageError).exactly(9).times
       end
     end
   end
