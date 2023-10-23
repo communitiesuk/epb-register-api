@@ -1,15 +1,21 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.8)
-      activesupport (= 7.0.8)
-    activerecord (7.0.8)
-      activemodel (= 7.0.8)
-      activesupport (= 7.0.8)
-    activesupport (7.0.8)
+    activemodel (7.1.0)
+      activesupport (= 7.1.0)
+    activerecord (7.1.0)
+      activemodel (= 7.1.0)
+      activesupport (= 7.1.0)
+      timeout (>= 0.4.0)
+    activesupport (7.1.0)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
@@ -33,6 +39,7 @@ GEM
     aws-sigv4 (1.6.0)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.1.1)
+    bigdecimal (3.1.4)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
@@ -50,6 +57,8 @@ GEM
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    drb (2.1.1)
+      ruby2_keywords
     epb-auth-tools (1.1.0)
       jwt (~> 2.3)
       oauth2 (>= 1.4, < 3.0)
@@ -104,6 +113,7 @@ GEM
     murmurhash3 (0.1.7)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
+    mutex_m (0.1.2)
     namecase (2.0.0)
     nio4r (2.5.9)
     nokogiri (1.15.4)
@@ -231,6 +241,7 @@ GEM
       version_gem (~> 1.1, >= 1.1.1)
     tilt (2.3.0)
     timecop (0.9.8)
+    timeout (0.4.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
@@ -252,6 +263,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord (~> 7.1.0)
   archive-zip
   aws-sdk-s3 (~> 1.136)
   database_cleaner

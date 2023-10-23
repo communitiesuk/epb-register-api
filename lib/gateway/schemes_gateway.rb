@@ -5,7 +5,7 @@ module Gateway
 
     class Scheme < ActiveRecord::Base
       def to_hash
-        { scheme_id: self[:id], name: self[:name], active: self[:active] }
+        { scheme_id: id, name: self[:name], active: self[:active] }
       end
     end
 
