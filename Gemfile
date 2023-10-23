@@ -40,7 +40,7 @@ gem "parallel", "~> 1.23"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "rake", "~> 13.0", ">= 13.0.6"
-gem "redis", "~> 5.0.7"
+gem "redis", "~> 5.0.8"
 gem "rubocop", "~> 1.55.0"
 gem "rubocop-govuk", "~> 4.12"
 gem "rubocop-performance", require: false
