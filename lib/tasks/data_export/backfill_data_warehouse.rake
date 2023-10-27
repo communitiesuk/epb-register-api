@@ -1,16 +1,13 @@
 namespace :data_export do
   desc "Export assessment IDs for date ranges towards data warehouse"
 
-  task :backfill_data_warehouse, %i[rrn start_date schema_type] do |_, args|
-    rrn = args.rrn || ENV["rrn"]
+  task :backfill_data_warehouse, %i[start_date end_date type_of_assessment] do |_, args|
     start_date = args.start_date || ENV["start_date"]
-    schema_type = args.schema_type || ENV["schema_type"]
-    raise Boundary::ArgumentMissing, "rrn" unless rrn
+    type_of_assessment = args.schema_type || ENV["type_of_assessment"]
+    end_date = args.start_date || ENV["end_date"]
     raise Boundary::ArgumentMissing, "start_date" unless start_date
-    raise Boundary::ArgumentMissing, "schema_type" unless schema_type
 
     use_case = ApiFactory.backfill_data_warehouse_use_case
-
-    use_case.execute(rrn:, start_date:, schema_type:)
+    use_case.execute(start_date:, end_date:, type_of_assessment:)
   end
 end

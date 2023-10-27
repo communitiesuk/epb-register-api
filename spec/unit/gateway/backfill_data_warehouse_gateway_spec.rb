@@ -53,57 +53,61 @@ describe Gateway::BackfillDataWarehouseGateway do
       schema_name: "SAP-Schema-19.0.0",
       migrated: true,
     )
+
+    old_rdsap1_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+    old_rdsap1_xml.at("RRN").children = "0000-0000-0000-0000-0009"
+    sap_xml.at("Registration-Date").children = "2020-04-02"
+    lodge_assessment(
+      assessment_body: rdsap1_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      migrated: true,
+    )
   end
 
   after do
     Timecop.return
   end
 
-  describe "#get_rrn_date" do
-    context "when searching for an rrn present in the assessments database" do
-      it "returns a single assessment" do
-        result = gateway.get_rrn_date("0000-0000-0000-0000-0001")
-        expect(result.first["date_registered"]).to eq("2020-05-04")
-      end
-    end
-
-    context "when searching for an rrn not present in the assessment database" do
-      it "returns does not return an assessment" do
-        result = gateway.get_rrn_date("0000-0000-0000-0000-0000")
-        expect(result.count).to eq(0)
-      end
-    end
-  end
-
-  describe "#count_assessments_to_export" do
-    context "when assessments are within the date range" do
-      it "correctly counts how many assessments of the schema type to export" do
-        result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "RdSAP-Schema-20.0.0")
-        expect(result).to eq(2)
-      end
-    end
-
-    context "when there are no assessments of that schema in the date range" do
-      it "gives a count of 0" do
-        result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "SAP-Schema-18.0.0")
-        expect(result).to eq(0)
-      end
-    end
-
-    context "when no assessments are in the date range" do
-      it "gives a count of 0" do
-        result = gateway.count_assessments_to_export("2020-04-04", "2020-04-01", "RdSAP-Schema-20.0.0")
-        expect(result).to eq(0)
-      end
-    end
-  end
+  # describe "#count_assessments_to_export" do
+  #   context "when assessments are within the date range" do
+  #     it "correctly counts how many assessments of the schema type to export" do
+  #       result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "RdSAP-Schema-20.0.0")
+  #       expect(result).to eq(2)
+  #     end
+  #   end
+  #
+  #   context "when there are no assessments of that schema in the date range" do
+  #     it "gives a count of 0" do
+  #       result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "SAP-Schema-18.0.0")
+  #       expect(result).to eq(0)
+  #     end
+  #   end
+  #
+  #   context "when no assessments are in the date range" do
+  #     it "gives a count of 0" do
+  #       result = gateway.count_assessments_to_export("2020-04-04", "2020-04-01", "RdSAP-Schema-20.0.0")
+  #       expect(result).to eq(0)
+  #     end
+  #   end
+  # end
 
   describe "#get_assessments_id" do
     it "gets the assessment ids in the time range and schema" do
-      result = gateway.get_assessments_id(rrn_date: "2020-05-04", start_date: "2020-05-01", schema_type: "RdSAP-Schema-20.0.0")
+      result = gateway.get_assessments_id(start_date: "2020-05-01", type_of_assessment: "RdSAP", end_date: "2020-05-04")
       expect(result.sort).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002])
-      expect(result).not_to include("0000-0000-0000-0000-0003")
-      expect(result).not_to include("0000-0000-0000-0000-0004")
+    end
+
+    it "gets the assessment ids for any schema" do
+      result = gateway.get_assessments_id(start_date: "2020-05-01", end_date: "2020-05-04")
+      expect(result.sort).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0004])
+    end
+
+    it "gets the assessment ids for any type until now " do
+      result = gateway.get_assessments_id(start_date: "2020-05-01")
+      expect(result.count).to eq(4)
     end
   end
 end

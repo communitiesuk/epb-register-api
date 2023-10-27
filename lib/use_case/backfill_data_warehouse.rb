@@ -5,31 +5,26 @@ module UseCase
       @data_warehouse_queues_gateway = data_warehouse_queues_gateway
     end
 
-    def execute(rrn:, start_date:, schema_type:)
-      result = @backfill_gateway.get_rrn_date(rrn)
-      raise Boundary::NoData, "No assessment for this rrn" if result.count.zero?
+    def execute(start_date:, type_of_assessment: nil, end_date: Time.now.utc)
+      raise Boundary::InvalidDate if end_date < Time.parse(start_date)
 
-      rrn_date = result.first["date_registered"]
-      raise Boundary::InvalidDate if rrn_date < Time.parse(start_date)
-
-      assessment_count = @backfill_gateway.count_assessments_to_export(rrn_date, start_date, schema_type)
-      raise Boundary::NoData, "No assessments to export" if assessment_count.zero?
+      rrn_array = @backfill_gateway.get_assessments_id(start_date:, type_of_assessment:, end_date:)
+      raise Boundary::NoData, "No assessments to export" if rrn_array.count.zero?
 
       is_dry_run = ENV["dry_run"] != "false"
 
       if is_dry_run
-        puts "#{assessment_count} assessments would be exported out to the data warehouse queue."
+        puts "#{rrn_array.count} assessments would be exported out to the data warehouse queue."
         puts "To run this export, run this command again with a dry_run=false option declared."
-        assessment_count
+        rrn_array.count
       else
-        puts "Exporting #{assessment_count} assessments out to the data warehouse queue..."
+        puts "Exporting #{rrn_array.count} assessments out to the data warehouse queue..."
         start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-        list_of_assessments = @backfill_gateway.get_assessments_id(rrn_date:, start_date:, schema_type:)
-        list_of_assessments.map { |assessment_ids| assessment_ids }.each_slice(500) do |assessment_ids|
+        rrn_array.map { |assessment_ids| assessment_ids }.each_slice(500) do |assessment_ids|
           @data_warehouse_queues_gateway.push_to_queue(:assessments, assessment_ids)
         end
         seconds_elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
-        puts "Pushed #{assessment_count} assessments out to the data warehouse queue in #{seconds_elapsed}s."
+        puts "Pushed #{rrn_array} assessments out to the data warehouse queue in #{seconds_elapsed}s."
       end
     end
   end
