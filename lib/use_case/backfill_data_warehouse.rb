@@ -11,18 +11,11 @@ module UseCase
       rrn_array = @backfill_gateway.get_assessments_id(start_date:, type_of_assessment:, end_date:)
       raise Boundary::NoData, "No assessments to export" if rrn_array.count.zero?
 
-      is_dry_run = ENV["dry_run"] != "false"
+      puts "Exporting #{rrn_array.count} assessments out to the data warehouse queue..."
+      start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      rrn_array.map { |assessment_ids| assessment_ids }.each_slice(500) do |assessment_ids|
+        @data_warehouse_queues_gateway.push_to_queue(:assessments, assessment_ids)
 
-      if is_dry_run
-        puts "#{rrn_array.count} assessments would be exported out to the data warehouse queue."
-        puts "To run this export, run this command again with a dry_run=false option declared."
-        rrn_array.count
-      else
-        puts "Exporting #{rrn_array.count} assessments out to the data warehouse queue..."
-        start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-        rrn_array.map { |assessment_ids| assessment_ids }.each_slice(500) do |assessment_ids|
-          @data_warehouse_queues_gateway.push_to_queue(:assessments, assessment_ids)
-        end
         seconds_elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
         puts "Pushed #{rrn_array} assessments out to the data warehouse queue in #{seconds_elapsed}s."
       end

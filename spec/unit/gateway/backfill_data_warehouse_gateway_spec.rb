@@ -71,29 +71,6 @@ describe Gateway::BackfillDataWarehouseGateway do
     Timecop.return
   end
 
-  # describe "#count_assessments_to_export" do
-  #   context "when assessments are within the date range" do
-  #     it "correctly counts how many assessments of the schema type to export" do
-  #       result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "RdSAP-Schema-20.0.0")
-  #       expect(result).to eq(2)
-  #     end
-  #   end
-  #
-  #   context "when there are no assessments of that schema in the date range" do
-  #     it "gives a count of 0" do
-  #       result = gateway.count_assessments_to_export("2020-05-04", "2020-05-01", "SAP-Schema-18.0.0")
-  #       expect(result).to eq(0)
-  #     end
-  #   end
-  #
-  #   context "when no assessments are in the date range" do
-  #     it "gives a count of 0" do
-  #       result = gateway.count_assessments_to_export("2020-04-04", "2020-04-01", "RdSAP-Schema-20.0.0")
-  #       expect(result).to eq(0)
-  #     end
-  #   end
-  # end
-
   describe "#get_assessments_id" do
     it "gets the assessment ids in the time range and schema" do
       result = gateway.get_assessments_id(start_date: "2020-05-01", type_of_assessment: "RdSAP", end_date: "2020-05-04")

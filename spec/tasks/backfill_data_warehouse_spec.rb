@@ -22,21 +22,6 @@ describe "backfill data warehouse" do
       expect { rake.invoke }.to raise_error(Boundary::ArgumentMissing)
     end
 
-    context "when the dry_run environment variable is set" do
-      before do
-        EnvironmentStub.with("dry_run", "true")
-      end
-
-      after do
-        EnvironmentStub.remove(%w[dry_run])
-      end
-
-      it "returns the number of assessments to export" do
-        allow(use_case).to receive(:execute).and_return 2
-        expect { rake.invoke("2020-05-04") }.not_to raise_error
-      end
-    end
-
     context "with environmental variables" do
       before do
         EnvironmentStub.with("start_date", "2020-05-04")
