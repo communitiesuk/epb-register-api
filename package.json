@@ -54,10 +54,10 @@
     "async-memoize-one": "^1.1.0",
     "commander": "^9.0.0",
     "csv-stream": "^0.2.0",
+    "got": "^11, <12",
     "node-fetch": "^2.6.7",
     "pg": "^8.7.3",
     "pg-promise": "^10.11.1",
-    "request": "^2.88.2",
     "unzipper": "kinolaev/node-unzipper#patch-1"
   },
   "jest": {
