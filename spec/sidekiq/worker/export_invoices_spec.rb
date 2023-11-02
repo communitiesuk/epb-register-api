@@ -41,10 +41,26 @@ RSpec.describe Worker::ExportInvoices do
       expect(region_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date).exactly(1).times
     end
 
-    it "call the rake many tines for each scheme" do
+    it "call the rake many times for each scheme" do
       described_class.new.perform
       (1..6).each { |i| expect(rrn_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date, i).exactly(1).times }
       expect(rrn_use_case).to have_received(:execute).with("2022-08-01".to_date, "2022-09-01".to_date, 18).exactly(1).times
+    end
+
+    context "when the worker is run in the middle of the month" do
+      before do
+        Timecop.freeze(2023, 1, 15, 0, 0, 0)
+        WebMock.enable!
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "gets last months data" do
+        described_class.new.perform
+        expect(scheme_use_case).to have_received(:execute).with("2022-12-01".to_date, "2023-01-01".to_date).exactly(1).times
+      end
     end
 
     context "when there is no data to send" do

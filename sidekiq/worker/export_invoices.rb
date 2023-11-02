@@ -5,10 +5,12 @@ module Worker
     include Sidekiq::Worker
     include Worker::Helpers
 
+    sidekiq_options retry: 1
+
     def perform
-      @end_date = Date.today.strftime("%Y-%m-%d")
-      # start_date is 1st of last month
-      @start_date = Date.yesterday.strftime("%Y-%m-01")
+      last_month = Time.now - 1.month
+      @start_date = last_month.to_date.beginning_of_month.strftime("%Y-%m-%d")
+      @end_date = (last_month.to_date.end_of_month + 1.day).strftime("%Y-%m-%d")
       @monthly_invoice_rake = rake_task("data_export:export_invoices")
       call_rake("scheme_name_type")
       call_rake("region_type")

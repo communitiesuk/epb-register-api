@@ -250,7 +250,7 @@ class ApiFactory
 
   def self.fetch_active_schemes_use_case
     @fetch_active_schemes_use_case ||=
-      UseCase::FetchActiveSchemesId.new
+      UseCase::FetchActiveSchemesId.new(schemes_gateway)
   end
 
   def self.find_assessments_by_street_name_and_town
