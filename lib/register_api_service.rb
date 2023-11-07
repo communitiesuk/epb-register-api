@@ -41,7 +41,6 @@ class RegisterApiService < Controller::BaseController
   use Controller::ReportingController
   use Controller::AssessmentMetaController
   use Controller::StatisticsController
-  use Controller::UserSatisfactionController
   use Controller::DomesticEpcSearchController
   use Controller::DomesticInitiativesController
   use Controller::RetrofitFundingSchemeController
