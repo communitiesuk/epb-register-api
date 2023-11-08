@@ -2333,47 +2333,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /user-satisfaction:
-    put:
-      tags:
-        - Service Performance
-      summary: Update user satisfaction
-      description: Add user satisfaction data for a month, for display on the Service Performance page
-      operationId: put-user-satisfaction
-      security:
-        - oauth:
-            - 'admin:upload_stats'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserSatisfaction"
-      responses:
-        '200':
-          description: Confirmation of successful update
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: string
-                    example: "User satisfaction statistics have been saved"
-                  meta:
-                    type: object
-        '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
   /interesting-numbers:
     get:
       tags:
@@ -3938,31 +3897,6 @@ components:
         month:
           type: string
           example: '2021-07'
-
-    UserSatisfaction:
-      type: object
-      properties:
-        stats_date:
-          description: 'The month and year of the survey(Dec 2021),
-                        add 1 for the day'
-          type: string
-          format: date
-          example: '2020-12-01'
-        very_satisfied:
-          type: integer
-          example: 125
-        satisfied:
-          type: integer
-          example: 895
-        neither:
-          type: integer
-          example: 789
-        dissatisfied:
-          type: integer
-          example: 123
-        very_dissatisfied:
-          type: integer
-          example: 321
 
     InterestingNumber:
       type: object
