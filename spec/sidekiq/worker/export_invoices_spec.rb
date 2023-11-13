@@ -2,6 +2,7 @@ require "sentry-ruby"
 
 RSpec.describe Worker::ExportInvoices do
   before do
+    allow($stdout).to receive(:puts)
     Timecop.freeze(2022, 9, 1, 0, 0, 0)
     WebMock.enable!
   end

@@ -12,7 +12,6 @@ describe UseCase::BackfillDataWarehouse do
     allow($stdout).to receive(:puts)
     allow(backfill_gateway).to receive(:get_assessments_id).with(any_args).and_return(%w[0000-0000-0000-0000-0000])
     allow(data_warehouse_queues_gateway).to receive(:push_to_queue).with(any_args)
-
   end
 
   describe "#execute" do
@@ -41,7 +40,5 @@ describe UseCase::BackfillDataWarehouse do
       use_case.execute(start_date:, type_of_assessment:)
       expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).exactly(2).times
     end
-
-
   end
 end

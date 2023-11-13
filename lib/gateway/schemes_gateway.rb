@@ -34,7 +34,9 @@ module Gateway
     end
 
     def fetch_active
-      Scheme.select(:scheme_id).where("active = 'true'").map(&:scheme_id)
+      ActiveRecord::Base.connection.exec_query(
+        "SELECT scheme_id FROM schemes WHERE active = true",
+      ).map { |result| result["scheme_id"] }
     end
   end
 end

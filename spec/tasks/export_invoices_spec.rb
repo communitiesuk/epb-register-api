@@ -9,7 +9,7 @@ describe "monthly invoice export" do
 
     context "when invalid date range is passed " do
       it "raises a no data error" do
-        expect { monthly_invoice_rake.invoke("22-08-01", "21-08-31", "scheme_name_type") }.to raise_error Boundary::NoData, "no data to be saved for: get assessment count by scheme name and type"
+        expect { monthly_invoice_rake.invoke("22-08-01", "21-08-31", "scheme_name_type") }.to raise_error Boundary::NoData, "no data to be saved for: get assessment count by scheme name and type scheme_name_type"
       end
     end
 
