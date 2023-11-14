@@ -118,6 +118,5 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       )
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:northernIreland]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 1, ratingAverage: 50.0, country: "Northern Ireland" }])
     end
-
   end
 end
