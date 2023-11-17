@@ -17,6 +17,10 @@ module Worker
       puts "Active Schemes: #{active_scheme_ids.join(', ')}"
       active_scheme_ids.each do |i|
         call_rake("rrn_scheme_type", i)
+      rescue Boundary::NoData => e
+        Sentry.capture_exception(e)  if defined?(Sentry)
+      rescue Boundary::SlackMessageError => e
+        Sentry.capture_exception(e)  if defined?(Sentry)
       end
     end
 
@@ -24,11 +28,20 @@ module Worker
 
     def call_rake(report_type, scheme_id = nil)
       scheme_id.nil? ? @monthly_invoice_rake.invoke(@start_date, @end_date, report_type) : @monthly_invoice_rake.invoke(@start_date, @end_date, report_type, scheme_id)
-      @monthly_invoice_rake.reenable
     rescue Boundary::NoData => e
-      Sentry.capture_exception(e)  if defined?(Sentry)
+      if scheme_id.nil?
+        Sentry.capture_exception(e) if defined?(Sentry)
+      else
+        raise Boundary::NoData, e
+      end
     rescue Boundary::SlackMessageError => e
-      Sentry.capture_exception(e)  if defined?(Sentry)
+      if scheme_id.nil?
+        Sentry.capture_exception(e) if defined?(Sentry)
+      else
+        raise Boundary::SlackMessageError, e
+      end
+    ensure
+      @monthly_invoice_rake.reenable
     end
   end
 end

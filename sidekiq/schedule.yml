@@ -22,7 +22,7 @@ import_green_deal_fuel_price_data:
   queue: default
 
 export_invoice_data:
-  cron: "55 9 14 * *"
+  cron: "20 12 17 * *"
   class: "Worker::ExportInvoices"
   name: "Export invoice data on the - 1st day of each month at 6:55am"
   queue: default
