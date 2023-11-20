@@ -17,7 +17,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "mock_redis", "~> 0.39.0"
+  gem "mock_redis", "~> 0.40.0"
   gem "pry", "~> 0.14.2"
   gem "rack-test", "~> 2.1.0"
   gem "rspec", "~>3.12"
@@ -28,7 +28,7 @@ end
 
 gem "activerecord", "~> 7.1.2"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.136"
+gem "aws-sdk-s3", "~> 1.137"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 1.1.4"
 gem "geocoder", "~> 1.8.0"
