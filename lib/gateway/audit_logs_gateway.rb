@@ -31,5 +31,40 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings)
     end
+
+    def fetch_assessment_ids(event_types:, valid_events:, start_date:, end_date: Time.now)
+      sql = <<-SQL
+            SELECT entity_id
+            FROM audit_logs
+            WHERE 0=0
+            AND timestamp BETWEEN $1 AND $2
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          start_date,
+          ActiveRecord::Type::Date.new,
+        ),
+
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          end_date,
+          ActiveRecord::Type::Date.new,
+        ),
+
+      ]
+
+      invalid_types = event_types - valid_events.map(&:to_s)
+      raise StandardError, "Invalid event types" unless invalid_types.empty?
+
+      list_of_types = event_types.map { |n| "'#{n}'" }.join(",")
+
+      sql << <<~SQL_TYPE
+        AND event_type IN(#{list_of_types})
+      SQL_TYPE
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result["entity_id"] }
+    end
   end
 end

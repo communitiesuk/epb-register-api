@@ -27,6 +27,10 @@ module Domain
       @data = data
     end
 
+    def self.valid_assessment_types
+      VALID_TYPES[:assessment]
+    end
+
   private
 
     def validate(entity_type, event_type)
