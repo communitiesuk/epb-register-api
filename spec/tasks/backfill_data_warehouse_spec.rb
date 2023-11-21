@@ -15,7 +15,7 @@ describe "backfill data warehouse" do
 
     it "the use case executes when type_of_assessment is nil" do
       rake.invoke("2020-05-04", "2020-06-04")
-      expect(use_case).to have_received(:execute).with({ end_date: "2020-05-04", start_date: "2020-05-04", type_of_assessment: nil }).exactly(1).times
+      expect(use_case).to have_received(:execute).with({ end_date: "2020-06-04", start_date: "2020-05-04", type_of_assessment: nil }).exactly(1).times
     end
 
     it "raises an error when arguments are missing" do
