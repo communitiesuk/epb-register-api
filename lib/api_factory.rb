@@ -342,6 +342,14 @@ class ApiFactory
       )
   end
 
+  def self.backfill_data_warehouse_by_events_use_case
+    @backfill_data_warehouse_by_events_use_case ||=
+      UseCase::BackfillDataWarehouseByEvents.new(
+        gateway: audit_log_gateway,
+        data_warehouse_queues_gateway:,
+      )
+  end
+
   def self.trigger_data_warehouse_report_use_case
     @trigger_data_warehouse_report_use_case ||= UseCase::TriggerDataWarehouseReport.new reports_gateway: data_warehouse_reports_gateway
   end
@@ -407,6 +415,10 @@ class ApiFactory
 
   def self.search_address_gateway
     @search_address_gateway ||= Gateway::SearchAddressGateway.new
+  end
+
+  def self.audit_log_gateway
+    @audit_log_gateway ||= Gateway::AuditLogsGateway.new
   end
 
   def self.logger

@@ -45,10 +45,10 @@ describe Gateway::AuditLogsGateway do
     end
 
     context "when there are 3 entries in the audit logs" do
-      it "returns an array of the 2 RRNs that match the event type" do
+      it "returns an array of the RRN that matches the event type" do
         start_date = Time.now - 1.day
-        expect(gateway.fetch_assessment_ids(event_types: %w[opt_out opt_in], valid_events:, start_date:, end_date: Time.now + 1.day)).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002])
-        expect(gateway.fetch_assessment_ids(event_types: %w[cancelled], valid_events:, start_date:, end_date: Time.now + 1.day)).to eq([])
+        expect(gateway.fetch_assessment_ids(event_type: "opt_in", start_date:, end_date: Time.now + 1.day)).to eq(%w[0000-0000-0000-0000-0002])
+        expect(gateway.fetch_assessment_ids(event_type: "cancelled", start_date:, end_date: Time.now + 1.day)).to eq([])
       end
     end
 
@@ -61,13 +61,7 @@ describe Gateway::AuditLogsGateway do
 
       it "does not return the rrn of older event " do
         start_date = Time.now - 1.day
-        expect(gateway.fetch_assessment_ids(event_types: %w[opt_out opt_in], valid_events:, start_date:, end_date: Time.now + 1.day)).not_to include(%w[0000-0000-0000-0000-0004])
-      end
-    end
-
-    context "when invalid event types are passed " do
-      it "raises an error" do
-        expect { gateway.fetch_assessment_ids(event_types: %w[test opt_in], valid_events:, start_date: Time.now, end_date: Time.now + 1.day) }.to raise_error(StandardError, "Invalid event types")
+        expect(gateway.fetch_assessment_ids(event_type: "opt_in", start_date:, end_date: Time.now + 1.day)).not_to include(%w[0000-0000-0000-0000-0004])
       end
     end
   end
