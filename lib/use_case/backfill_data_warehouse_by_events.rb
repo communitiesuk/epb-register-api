@@ -12,7 +12,7 @@ module UseCase
 
       raise Boundary::NoData, "No assessments to export for type #{event_type}" if rrn_array.count.zero?
 
-      queue_name = event_type == "opt_in" ? "opt_out" : event_type
+      queue_name = event_type == "cancelled" ? event_type : "opt_outs"
 
       rrn_array.map { |assessment_ids| assessment_ids }.each_slice(500) do |assessment_ids|
         @data_warehouse_queues_gateway.push_to_queue(queue_name.to_sym, assessment_ids)

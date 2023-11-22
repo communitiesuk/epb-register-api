@@ -26,7 +26,7 @@ describe UseCase::BackfillDataWarehouseByEvents do
     end
 
     it "pushes the returned data onto the opt out queue once for every 500 hundred items" do
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:opt_out, %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]).exactly(1).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:opt_outs, %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]).exactly(1).times
     end
   end
 
@@ -41,7 +41,7 @@ describe UseCase::BackfillDataWarehouseByEvents do
     end
 
     it "pushes the returned data onto the opt out queue" do
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:opt_out, %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]).exactly(1).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:opt_outs, %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]).exactly(1).times
     end
   end
 
