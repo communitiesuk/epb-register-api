@@ -345,7 +345,7 @@ class ApiFactory
   def self.backfill_data_warehouse_by_events_use_case
     @backfill_data_warehouse_by_events_use_case ||=
       UseCase::BackfillDataWarehouseByEvents.new(
-        gateway: audit_log_gateway,
+        audit_logs_gateway:,
         data_warehouse_queues_gateway:,
       )
   end
@@ -417,8 +417,8 @@ class ApiFactory
     @search_address_gateway ||= Gateway::SearchAddressGateway.new
   end
 
-  def self.audit_log_gateway
-    @audit_log_gateway ||= Gateway::AuditLogsGateway.new
+  def self.audit_logs_gateway
+    @audit_logs_gateway ||= Gateway::AuditLogsGateway.new
   end
 
   def self.logger

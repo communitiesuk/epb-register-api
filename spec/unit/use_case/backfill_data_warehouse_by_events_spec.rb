@@ -1,13 +1,11 @@
 describe UseCase::BackfillDataWarehouseByEvents do
-  subject(:use_case) { described_class.new(gateway:, data_warehouse_queues_gateway:) }
+  subject(:use_case) { described_class.new(audit_logs_gateway:, data_warehouse_queues_gateway:) }
 
-  let(:gateway) do
-    instance_double(Gateway::AuditLogsGateway)
-  end
+  let(:audit_logs_gateway) { instance_double(Gateway::AuditLogsGateway) }
   let(:data_warehouse_queues_gateway) { instance_double(Gateway::DataWarehouseQueuesGateway) }
 
   before do
-    allow(gateway).to receive(:fetch_assessment_ids).and_return(data)
+    allow(audit_logs_gateway).to receive(:fetch_assessment_ids).and_return(data)
     allow(data_warehouse_queues_gateway).to receive(:push_to_queue).with(any_args)
   end
 
@@ -22,7 +20,7 @@ describe UseCase::BackfillDataWarehouseByEvents do
     end
 
     it "calls the gateway" do
-      expect(gateway).to have_received(:fetch_assessment_ids).exactly(1).times
+      expect(audit_logs_gateway).to have_received(:fetch_assessment_ids).exactly(1).times
     end
 
     it "pushes the returned data onto the opt out queue once for every 500 hundred items" do
