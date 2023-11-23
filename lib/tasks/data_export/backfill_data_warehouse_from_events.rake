@@ -1,7 +1,7 @@
 namespace :data_export do
   desc "Export assessment IDs from audit logs for the data warehouse"
 
-  task :backfill_data_warehouse_from_events, %i[start_date end_date event_types] do |_, args|
+  task :backfill_data_warehouse_from_events, %i[start_date end_date] do |_, args|
     start_date = args.start_date || ENV["start_date"]
     end_date = args.end_date || ENV["end_date"]
     raise Boundary::ArgumentMissing, "start_date" unless start_date
