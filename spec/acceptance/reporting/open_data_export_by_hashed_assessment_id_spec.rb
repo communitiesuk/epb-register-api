@@ -5,7 +5,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
   scheme_id = nil
 
-  before(:all) { scheme_id = lodge_assessor }
+  before { scheme_id = lodge_assessor }
 
   after { WebMock.disable! }
 
