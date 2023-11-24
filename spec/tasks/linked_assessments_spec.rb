@@ -3,7 +3,7 @@ require "rspec"
 describe "LinkedAssessments" do
   include RSpecRegisterApiServiceMixin
 
-  before(:all) do
+  before do
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
 
