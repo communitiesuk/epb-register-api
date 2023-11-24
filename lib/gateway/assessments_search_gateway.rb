@@ -2,8 +2,6 @@
 
 module Gateway
   class AssessmentsSearchGateway
-    include ReadOnlyDatabaseAccess
-
     class Assessment < ActiveRecord::Base
     end
 
@@ -60,11 +58,7 @@ module Gateway
           " AND type_of_assessment IN(#{sanitized_assessment_types.join(', ')})"
       end
 
-      result = []
-
-      read_only do
-        result = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
-      end
+      result = Assessment.connection.exec_query sql, "SQL", binds
 
       result.map { |row| row_to_domain(row) }
     end
@@ -144,12 +138,7 @@ module Gateway
         sql += " LIMIT #{limit.to_i}"
       end
 
-      result = []
-
-      read_only do
-        result = Assessment.connection.exec_query sql, "SQL", binds
-      end
-
+      result = Assessment.connection.exec_query sql, "SQL", binds
       result.map { |row| row_to_domain(row) }
     end
 
