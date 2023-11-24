@@ -164,6 +164,29 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
         expect(response[:errors][0][:title]).to eq "The requested assessment type is not SAP, RdSAP, or CEPC"
       end
     end
+
+    context "when trying to fetch BUS details with an RRN for a cancelled certificate" do
+      before do
+        lodge_assessment(
+          assessment_body: rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+          )
+
+        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+      end
+
+      it "returns a 404 error" do
+        response = JSON.parse(
+          bus_details_by_rrn("0000-0000-0000-0000-0000", accepted_responses: [404]).body,
+          symbolize_names: true,
+          )
+        expect(response[:errors][0][:title]).to eq "No assessment details relevant to the BUS could be found for that query"
+      end
+    end
   end
 
   context "when getting BUS details with a UPRN" do

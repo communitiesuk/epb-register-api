@@ -67,6 +67,8 @@ module Controller
       case e
       when Sinatra::NotFound
         error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
+      when UseCase::AssessmentSummary::Fetch::AssessmentGone
+        error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
       when Boundary::Json::ValidationError
         error_response 400, "BAD_REQUEST",
                        case e.failed_properties.count
