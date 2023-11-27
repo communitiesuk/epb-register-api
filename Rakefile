@@ -28,6 +28,10 @@ namespace :tasks do
   ]
 end
 
+unless ActiveRecord::Base.connected?
+  ActiveRecord::Base.connects_to(database: { writing: :primary, reading: :primary_replica })
+end
+
 begin
   require "rspec/core/rake_task"
   RSpec::Core::RakeTask.new(:spec)

@@ -274,6 +274,8 @@ def load_green_deal_data
   gateway.bulk_insert(fuel_price_mock.scan(response_data))
 end
 
+ActiveRecord::Base.connects_to(database: { writing: :primary, reading: :primary })
+
 RSpec.configure do |config|
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
