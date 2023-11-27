@@ -28,7 +28,7 @@ end
 
 gem "activerecord", "~> 7.1.2"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.139"
+gem "aws-sdk-s3", "~> 1.140"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 1.1.4"
 gem "geocoder", "~> 1.8.0"
