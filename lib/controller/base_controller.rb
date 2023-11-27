@@ -100,7 +100,7 @@ module Controller
       content_type :json
       status code
 
-      ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
+      ActiveRecord::Base.connection_handler.clear_active_connections!
 
       @json_helper.convert_to_json(object)
     end
@@ -124,7 +124,7 @@ module Controller
       content_type :xml
       status code
 
-      ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
+      ActiveRecord::Base.connection_handler.clear_active_connections!
 
       body xml
     end
@@ -147,7 +147,7 @@ module Controller
 
       @logger.error JSON.generate(error)
 
-      ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
+      ActiveRecord::Base.connection_handler.clear_active_connections!
 
       error_response(500, "SERVER_ERROR", message)
     end
