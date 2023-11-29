@@ -33,7 +33,7 @@ test:
 default_env:
   primary:
     adapter: postgresql
-    database: epb
+    database: <%= ENV['DATABASE_URL'] ? ENV['DATABASE_URL'].split('/')[-1] : 'epb_development' %>
     pool: 62
     url: <%= ENV['DATABASE_URL'] %>
   primary_replica:
