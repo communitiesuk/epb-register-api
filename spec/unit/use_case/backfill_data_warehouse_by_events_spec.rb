@@ -58,6 +58,21 @@ describe UseCase::BackfillDataWarehouseByEvents do
     end
   end
 
+  context "when extracting RRNs from audit event logs for address_id_updated" do
+    let(:data) do
+      %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
+    end
+
+    before do
+      use_case.execute(event_type: "address_id_updated", start_date: Time.now.strftime("%Y-%m-%d"),
+                       end_date: (Time.now + 1.day).strftime("%Y-%m-%d"))
+    end
+
+    it "pushes the returned data onto the opt out queue" do
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:assessments, %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]).exactly(1).times
+    end
+  end
+
   context "when there is no data" do
     let(:data) do
       %w[]

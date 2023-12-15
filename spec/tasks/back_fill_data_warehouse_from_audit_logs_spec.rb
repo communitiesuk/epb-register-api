@@ -3,6 +3,12 @@ describe "backfill data warehouse from audit logs" do
 
   let(:use_case) { instance_double(UseCase::BackfillDataWarehouseByEvents) }
   let(:valid_events) { Domain::AuditEvent.valid_assessment_types }
+  let(:start_date) do
+    "2020-05-04"
+  end
+  let(:end_date) do
+    "2020-05-31"
+  end
 
   before do
     allow(ApiFactory).to receive(:backfill_data_warehouse_by_events_use_case).and_return(use_case)
@@ -29,6 +35,7 @@ describe "backfill data warehouse from audit logs" do
       expect(use_case).to have_received(:execute).with(event_type: "opt_out", start_date: "2020-05-04", end_date: "2020-05-08").exactly(1).times
       expect(use_case).to have_received(:execute).with(event_type: "opt_in", start_date: "2020-05-04", end_date: "2020-05-08").exactly(1).times
       expect(use_case).to have_received(:execute).with(event_type: "cancelled", start_date: "2020-05-04", end_date: "2020-05-08").exactly(1).times
+      expect(use_case).to have_received(:execute).with(event_type: "address_id_updated", start_date: "2020-05-04", end_date: "2020-05-08").exactly(1).times
     end
   end
 
@@ -43,21 +50,16 @@ describe "backfill data warehouse from audit logs" do
     let(:use_case_opt_out) { instance_double(UseCase::BackfillDataWarehouseByEvents) }
     let(:use_case_opt_in) { instance_double(UseCase::BackfillDataWarehouseByEvents) }
     let(:use_case_cancelled) { instance_double(UseCase::BackfillDataWarehouseByEvents) }
-
-    let(:start_date) do
-      "2020-05-04"
-    end
-    let(:end_date) do
-      "2020-05-31"
-    end
+    let(:use_case_address) { instance_double(UseCase::BackfillDataWarehouseByEvents) }
 
     before do
       EnvironmentStub.with("start_date", start_date)
       EnvironmentStub.with("end_date", end_date)
-      allow(ApiFactory).to receive(:backfill_data_warehouse_by_events_use_case).and_return(use_case_opt_out, use_case_opt_in, use_case_cancelled)
+      allow(ApiFactory).to receive(:backfill_data_warehouse_by_events_use_case).and_return(use_case_opt_out, use_case_opt_in, use_case_cancelled, use_case_address)
       allow(use_case_opt_out).to receive(:execute).with(event_type: "opt_out", start_date:, end_date:).and_return []
       allow(use_case_opt_in).to receive(:execute).with(event_type: "opt_in", start_date:, end_date:).and_raise Boundary::NoData, "No data "
       allow(use_case_cancelled).to receive(:execute).with(event_type: "cancelled", start_date:, end_date:).and_return []
+      allow(use_case_address).to receive(:execute).with(event_type: "address_id_updated", start_date:, end_date:).and_return []
     end
 
     after do
@@ -71,6 +73,27 @@ describe "backfill data warehouse from audit logs" do
     it "executes the next use case that has data" do
       rake.invoke
       expect(use_case_cancelled).to have_received(:execute).with(event_type: "cancelled", start_date:, end_date:)
+    end
+  end
+
+  context "when passing an optional specific event type" do
+    before do
+      EnvironmentStub.with("start_date", start_date)
+      EnvironmentStub.with("end_date", end_date)
+      EnvironmentStub.with("event_type", "address_id_updated")
+      rake.invoke
+    end
+
+    after do
+      EnvironmentStub.remove(%w[end_date start_date event_type])
+    end
+
+    it "calls the use case with the correct event type" do
+      expect(use_case).to have_received(:execute).with(event_type: "address_id_updated", start_date:, end_date:)
+    end
+
+    it "calls the use case only once" do
+      expect(use_case).to have_received(:execute).exactly(1).times
     end
   end
 end
