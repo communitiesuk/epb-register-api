@@ -8,7 +8,6 @@ namespace :open_data do
 
     raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if type_of_export.nil? || !%w[for_odc not_for_odc].include?(type_of_export)
 
-    raise Boundary::ArgumentMissing, "bucket_name" unless bucket_name
 
     exporter = ApiFactory.export_not_for_publication_use_case
     data = exporter.execute
