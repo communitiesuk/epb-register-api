@@ -139,9 +139,9 @@ module LodgementRules
           lambda do |adapter|
             lookup = country_lookup_for_assessment adapter
             if lookup.in_channel_islands? || lookup.in_isle_of_man? || (lookup.in_scotland? && !lookup.in_england?)
-              return false
+              false
             else
-              return true
+              true
             end
           end,
       },
@@ -175,7 +175,7 @@ module LodgementRules
                 return true
               end
             end
-            return true
+            true
           end,
       },
       {

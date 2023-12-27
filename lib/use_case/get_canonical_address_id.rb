@@ -47,10 +47,8 @@ module UseCase
     def is_related_report?(type_of_assessment:)
       return false if type_of_assessment.nil?
 
-      (
-        type_of_assessment.include?("-RR") ||
-          type_of_assessment.include?("-REPORT")
-      )
+      type_of_assessment.include?("-RR") ||
+        type_of_assessment.include?("-REPORT")
     end
 
     def address_base_has_uprn?(uprn)

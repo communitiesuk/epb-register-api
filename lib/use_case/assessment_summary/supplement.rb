@@ -67,12 +67,11 @@ module UseCase
 
         related_assessments.filter do |assessment|
           related = assessment.to_hash
+
           (
-            (
-              domestic_types.include?(related[:assessment_type]) &&
-                domestic_types.include?(hash[:type_of_assessment])
-            ) || related[:assessment_type] == hash[:type_of_assessment]
-          )
+            domestic_types.include?(related[:assessment_type]) &&
+              domestic_types.include?(hash[:type_of_assessment])
+          ) || related[:assessment_type] == hash[:type_of_assessment]
         end
       end
 

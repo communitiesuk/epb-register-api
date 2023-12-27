@@ -12,7 +12,7 @@ class SummaryStub
       address_line4: "",
       town: "Whitbury",
       postcode: "A0 0AA",
-      address: { address_id: nil,  # Set at lodgement, which this unit test doesn't exercise
+      address: { address_id: nil, # Set at lodgement, which this unit test doesn't exercise
                  address_line1: "1 Some Street",
                  address_line2: "",
                  address_line3: "",
@@ -187,7 +187,7 @@ class SummaryStub
       town: "Whitbury",
       postcode: "A0 0AA",
       address:
-         { address_id: nil,  # Set at lodgement, which this unit test doesn't exercise
+         { address_id: nil, # Set at lodgement, which this unit test doesn't exercise
            address_line1: "1 Some Street",
            address_line2: "Some Area",
            address_line3: "Some County",

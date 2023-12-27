@@ -19,7 +19,7 @@ module LodgementRules
             begin
               Integer(habitable_room_count) >= 1
             rescue StandardError
-              return false
+              false
             end
           end,
       },
@@ -276,9 +276,9 @@ module LodgementRules
             country_code = method_or_nil(adapter, :country_code)
             lookup = country_lookup_for_assessment adapter
             if lookup.in_channel_islands? || lookup.in_isle_of_man? || (lookup.in_scotland? && !lookup.in_england?) || country_code == "SCT"
-              return false
+              false
             else
-              return true
+              true
             end
           end,
       },

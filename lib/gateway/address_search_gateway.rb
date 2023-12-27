@@ -357,7 +357,7 @@ module Gateway
           address_hashes[address_hash].push i
         end
 
-      address_ids.each do |_, entries|
+      address_ids.each_value do |entries|
         root_entry = results[entries.first]
         entries_sharing_hash =
           address_hashes[compact_address(root_entry).downcase.hash]
