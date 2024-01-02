@@ -100,7 +100,6 @@ namespace :open_data do
         end
 
       storage_config_reader = Gateway::StorageConfigurationReader.new(
-        instance_name: ENV["INSTANCE_NAME"],
         bucket_name: ENV["BUCKET_NAME"] || ENV["ODE_BUCKET_NAME"],
       )
       storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)

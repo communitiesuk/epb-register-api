@@ -37,7 +37,6 @@ namespace :oneoff do
 
       storage_config_reader = Gateway::StorageConfigurationReader.new(
         bucket_name: ENV["bucket_name"],
-        instance_name: ENV["instance_name"],
       )
       storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
 

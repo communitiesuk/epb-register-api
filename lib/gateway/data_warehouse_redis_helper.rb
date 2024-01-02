@@ -9,11 +9,8 @@ module Gateway
     def self.redis
       if ENV.key?("EPB_DATA_WAREHOUSE_QUEUES_URI")
         redis_url = ENV["EPB_DATA_WAREHOUSE_QUEUES_URI"]
-      elsif !Helper::Platform.is_paas?
-        return fake_redis
       else
-        redis_instance_name = "dluhc-epb-redis-data-warehouse-#{ENV['STAGE']}"
-        redis_url = RedisConfigurationReader.configuration_url(redis_instance_name)
+        return fake_redis
       end
 
       redis_client_class.new(url: redis_url)

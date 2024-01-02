@@ -62,8 +62,8 @@ module AddressMatchingHelper
   end
 
   def self.check_address_matching_requirements(env:)
-    if env["bucket_name"].nil? && env["instance_name"].nil?
-      abort("Please set the bucket_name or instance_name environment variable")
+    if env["bucket_name"].nil?
+      abort("Please set the bucket_name environment variable")
     end
     if env["file_name"].nil?
       abort("Please set the file_name environment variable")

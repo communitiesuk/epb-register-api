@@ -1,9 +1,5 @@
 describe Gateway::DataWarehouseRedisHelper do
-  context "when application is not running on PaaS and Redis URI is not set in an environment variable" do
-    before do
-      allow(Helper::Platform).to receive(:is_paas?).and_return(false)
-    end
-
+  context "when Redis URI is not set in an environment variable" do
     let(:redis) { described_class.redis }
 
     it "provides a redis client object that does not have class of Redis" do

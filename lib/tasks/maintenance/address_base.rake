@@ -36,8 +36,8 @@ namespace :maintenance do
       if ENV["file_template"].nil?
         abort("Please set the file_template environment variable")
       end
-      if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
-        abort("Please set the bucket_name or instance_name environment variable")
+      if ENV["bucket_name"].nil?
+        abort("Please set the bucket_name environment variable")
       end
 
       if ENV["number_of_files"].nil?
@@ -73,7 +73,6 @@ namespace :maintenance do
 
       storage_config_reader = Gateway::StorageConfigurationReader.new(
         bucket_name: ENV["bucket_name"],
-        instance_name: ENV["instance_name"],
       )
       storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
 

@@ -10,15 +10,12 @@ phases:
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
 
-  pre_build:
-    commands:
-      - mv AWS-Procfile Procfile
 
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Paketo image...
-      # We use --default-process below to define which entrypoint we want the application to have from the AWS-Procfile on the codebase
+      # We use --default-process below to define which entrypoint we want the application to have from the Procfile on the codebase
       - pack build ebpr-sidekiq-image --builder paketobuildpacks/builder-jammy-full --post-buildpack paketo-buildpacks/npm-install@1.1.1 --post-buildpack paketo-buildpacks/ruby --default-process sidekiq
 
   post_build:

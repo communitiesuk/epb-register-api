@@ -9,8 +9,7 @@ module PostcodeHelper
   end
 
   def self.retrieve_file_on_s3(file_name:, env:)
-    storage_gateway = ApiFactory.storage_gateway bucket_name: env["bucket_name"],
-                                                 instance_name: env["instance_name"]
+    storage_gateway = ApiFactory.storage_gateway bucket_name: env["bucket_name"]
 
     puts "[#{Time.now}] Retrieving from S3 file: #{file_name}"
     storage_gateway.get_file_io(file_name)

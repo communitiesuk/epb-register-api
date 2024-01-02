@@ -379,10 +379,9 @@ class ApiFactory
     UseCase::GetAssessmentRrnsBySchemeNameAndType.new
   end
 
-  def self.storage_configuration_reader(bucket_name:, instance_name:)
+  def self.storage_configuration_reader(bucket_name:)
     Gateway::StorageConfigurationReader.new(
       bucket_name:,
-      instance_name:,
     )
   end
 
@@ -395,12 +394,11 @@ class ApiFactory
     @geolocation_gateway ||= Gateway::PostcodeGeolocationGateway.new
   end
 
-  def self.storage_gateway(bucket_name:, instance_name:)
+  def self.storage_gateway(bucket_name:)
     Gateway::StorageGateway.new(
       storage_config:
         storage_configuration_reader(
           bucket_name:,
-          instance_name:,
         ).get_configuration,
     )
   end
