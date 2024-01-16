@@ -379,6 +379,10 @@ class ApiFactory
     UseCase::GetAssessmentRrnsBySchemeNameAndType.new
   end
 
+  def self.process_postcode_csv
+    @process_postcode_csv ||= UseCase::ProcessPostcodeCsv.new(geolocation_gateway)
+  end
+
   def self.storage_configuration_reader(bucket_name:)
     Gateway::StorageConfigurationReader.new(
       bucket_name:,
@@ -387,7 +391,7 @@ class ApiFactory
 
   def self.delete_geolocation_tables
     @delete_geolocation_tables ||=
-      UseCase::DeleteGeolocationTables.new.call(geolocation_gateway)
+      UseCase::DeleteGeolocationTables.new(geolocation_gateway)
   end
 
   def self.geolocation_gateway

@@ -1,15 +1,15 @@
 module PostcodeHelper
-  def self.check_task_requirements(file_name:, env:)
-    if env["bucket_name"].nil? && env["instance_name"].nil?
-      abort("Please set the bucket_name or instance_name environment variable")
+  def self.check_task_requirements(file_name:, bucket_name:)
+    if bucket_name.nil?
+      abort("Please set the bucket_name")
     end
     if file_name.nil?
       abort("Please set the file_name argument")
     end
   end
 
-  def self.retrieve_file_on_s3(file_name:, env:)
-    storage_gateway = ApiFactory.storage_gateway bucket_name: env["bucket_name"]
+  def self.retrieve_file_on_s3(file_name:, bucket_name:)
+    storage_gateway = ApiFactory.storage_gateway(bucket_name:)
 
     puts "[#{Time.now}] Retrieving from S3 file: #{file_name}"
     storage_gateway.get_file_io(file_name)

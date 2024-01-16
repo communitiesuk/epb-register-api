@@ -3,29 +3,30 @@ require "net/http"
 require "aws-sdk-s3"
 require "geocoder"
 require_relative "./postcode_helper"
+require "open-uri"
 
 namespace :maintenance do
   desc "Clean up temporary tables following postcode data update"
-  task :import_postcode_cleanup do
-    delete_use_case = UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
+  task :delete_postcode_geo_location_tables do
+    delete_use_case = ApiFactory.delete_geolocation_tables
     delete_use_case.execute
   end
 
   desc "Import postcode geolocation data"
-  task :import_postcode, %i[file_name] do |_, args|
-    postcode_gateway = Gateway::PostcodeGeolocationGateway.new
-    delete_use_case = UseCase::DeleteGeolocationTables.new(postcode_gateway)
+  task :import_postcode_geo_location, %i[file_name] do |_, args|
+    ons_bucket_name = ENV["ONS_POSTCODE_BUCKET_NAME"]
+    delete_use_case = ApiFactory.delete_geolocation_tables
     delete_use_case.execute
 
-    process_use_case = UseCase::ProcessPostcodeCsv.new(postcode_gateway)
+    process_use_case = ApiFactory.process_postcode_csv
 
-    file_name = args.file_name
+    file_name = args.file_name || ENV["FILE_NAME"]
 
     PostcodeHelper.check_task_requirements file_name:,
-                                           env: ENV
+                                           bucket_name: ons_bucket_name
     zipped = file_name.end_with?("zip")
     file_io = PostcodeHelper.retrieve_file_on_s3 file_name:,
-                                                 env: ENV
+                                                 bucket_name: ons_bucket_name
 
     if zipped
       Zip::InputStream.open(file_io) do |csv_io|
@@ -40,6 +41,7 @@ namespace :maintenance do
     else
       puts "[#{Time.now}] Reading postcodes CSV file: #{file_name}"
       postcode_csv = CSV.new(file_io, headers: true)
+
       process_use_case.execute(postcode_csv)
     end
   end
