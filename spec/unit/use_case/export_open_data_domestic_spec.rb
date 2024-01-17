@@ -314,12 +314,12 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
         expect(exported_data[1].keys - sap_odc_hash.keys).to be_empty
       end
 
-      it "returns 4 rows when called with a different task_id" do
+      it "returns 5 rows when called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(5)
         expect(export_object.execute("2019-07-01", 2).length).to eq(5)
       end
 
-      it "returns 4 row when no task id is passed" do
+      it "returns 5 row when no task id is passed" do
         expect(export_object.execute("2019-07-01").length).to eq(5)
         expect(statistics.first["num_rows"]).to eq(5)
       end
