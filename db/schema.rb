@@ -152,6 +152,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_111654) do
     t.string "auth_client_id"
   end
 
+  create_table "audit_logs", force: :cascade do |t|
+    t.string "event_type", null: false
+    t.datetime "timestamp", precision: nil, default: -> { "now()" }, null: false
+    t.string "entity_id", null: false
+    t.string "entity_type", null: false
+    t.jsonb "data"
+    t.index ["entity_id"], name: "index_audit_logs_on_entity_id"
+    t.index ["event_type"], name: "index_audit_logs_on_event_type"
+    t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
+  end
+
   create_table "green_deal_assessments", primary_key: ["green_deal_plan_id", "assessment_id"], force: :cascade do |t|
     t.string "green_deal_plan_id", null: false
     t.string "assessment_id", null: false
