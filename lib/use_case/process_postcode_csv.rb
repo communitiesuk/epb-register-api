@@ -1,17 +1,17 @@
 module UseCase
   class ProcessPostcodeCsv
     REGION_CODES = {
-      E15000001: "North East",
-      E15000002: "North West",
-      E15000003: "Yorkshire and The Humber",
-      E15000004: "East Midlands",
-      E15000005: "West Midlands",
-      E15000006: "Eastern",
-      E15000007: "London",
-      E15000008: "South East",
-      E15000009: "South West",
-      N07000001: "Northern Ireland",
-      W08000001: "Wales",
+      E12000001: "North East",
+      E12000002: "North West",
+      E12000003: "Yorkshire and The Humber",
+      E12000004: "East Midlands",
+      E12000005: "West Midlands",
+      E12000006: "Eastern of England",
+      E12000007: "London",
+      E12000008: "South East",
+      E12000009: "South West",
+      S99999999: "Northern Ireland",
+      W99999999: "Wales",
     }.freeze
 
     def initialize(geolocation_gateway)
@@ -30,7 +30,8 @@ module UseCase
         postcode = row["pcd"]
         lat = row["lat"]
         long = row["long"]
-        region = REGION_CODES[row["eer"].to_sym]
+
+        region = REGION_CODES[row["rgn"].to_sym]
 
         # Only considers England, NI and Wales
         next if region.nil?
@@ -42,7 +43,6 @@ module UseCase
         add_outcode(outcodes, new_outcode, lat, long, region)
 
         if (row_number % buffer_size).zero?
-          pp postcode_geolocation_buffer
           @gateway.insert_postcode_batch(postcode_geolocation_buffer)
           postcode_geolocation_buffer.clear
         end
@@ -50,10 +50,11 @@ module UseCase
         row_number += 1
       end
 
+
       # Insert and clear remaining postcode buffer
       unless postcode_geolocation_buffer.empty?
         @gateway.insert_postcode_batch(postcode_geolocation_buffer)
-        postcode_geolocation_buffer.clear
+        postcode_geolocation_buffer = []
       end
 
       puts "[#{Time.now}] Inserted #{row_number} postcodes"
