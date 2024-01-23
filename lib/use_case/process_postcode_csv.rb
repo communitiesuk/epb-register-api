@@ -10,7 +10,7 @@ module UseCase
       E12000007: "London",
       E12000008: "South East",
       E12000009: "South West",
-      S99999999: "Northern Ireland",
+      N99999999: "Northern Ireland",
       W99999999: "Wales",
     }.freeze
 
@@ -49,7 +49,6 @@ module UseCase
 
         row_number += 1
       end
-
 
       # Insert and clear remaining postcode buffer
       unless postcode_geolocation_buffer.empty?
