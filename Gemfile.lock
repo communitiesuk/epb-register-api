@@ -105,7 +105,7 @@ GEM
     method_source (1.0.0)
     mini_portile2 (2.8.5)
     minitest (5.21.2)
-    mock_redis (0.41.0)
+    mock_redis (0.43.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     murmurhash3 (0.1.7)
@@ -274,7 +274,7 @@ DEPENDENCIES
   geocoder (~> 1.8.0)
   http
   json-schema (~> 4.1)
-  mock_redis (~> 0.41.0)
+  mock_redis (~> 0.43.0)
   namecase (~> 2.0)
   nokogiri (~> 1.15)
   ougai (~> 2.0)
