@@ -6,7 +6,7 @@ module UseCase
       E12000003: "Yorkshire and The Humber",
       E12000004: "East Midlands",
       E12000005: "West Midlands",
-      E12000006: "Eastern of England",
+      E12000006: "East of England",
       E12000007: "London",
       E12000008: "South East",
       E12000009: "South West",
@@ -50,10 +50,9 @@ module UseCase
         row_number += 1
       end
 
-      # Insert and clear remaining postcode buffer
+      # Insert remaining postcode buffer
       unless postcode_geolocation_buffer.empty?
         @gateway.insert_postcode_batch(postcode_geolocation_buffer)
-        postcode_geolocation_buffer = []
       end
 
       puts "[#{Time.now}] Inserted #{row_number} postcodes"
