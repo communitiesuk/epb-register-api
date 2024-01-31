@@ -382,6 +382,10 @@ class ApiFactory
       UseCase::DeleteGeolocationTables.new(geolocation_gateway)
   end
 
+  def self.update_assessments_from_landmark(bucket_name:)
+    @update_assessments_from_landmark ||= UseCase::UpdateAssessmentsFromLandmark.new(assessments_gateway:, storage_gateway: storage_gateway(bucket_name:))
+  end
+
   def self.geolocation_gateway
     @geolocation_gateway ||= Gateway::PostcodeGeolocationGateway.new
   end
