@@ -116,6 +116,30 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
+    def update_created_at_from_landmark?(assessment_id, created_at)
+      sql = <<-SQL
+        UPDATE assessments
+        SET created_at = $1
+        WHERE assessment_id = $2 AND migrated = false
+        RETURNING true as updated
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date",
+          created_at,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      !ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).rows.empty?
+    end
+
   private
 
     def send_insert_to_db(assessment)

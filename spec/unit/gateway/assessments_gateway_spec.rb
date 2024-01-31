@@ -1,5 +1,14 @@
+shared_context "when updating epc dates" do
+  def fetch_created_at(assessment_id)
+    ActiveRecord::Base.connection.exec_query("SELECT created_at FROM assessments WHERE assessment_id='#{assessment_id}'").first["created_at"]
+  end
+end
+
 describe Gateway::AssessmentsGateway do
   subject(:gateway) { described_class.new }
+
+  include RSpecRegisterApiServiceMixin
+  include_context "when updating epc dates"
 
   describe "#fetch_assessments_by_date" do
     before do
@@ -90,6 +99,100 @@ describe Gateway::AssessmentsGateway do
         )
         expect { gateway.insert assessment }.to raise_error described_class::AssessmentAlreadyExists
       end
+    end
+  end
+
+  describe "#update_field" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    before do
+      add_super_assessor(scheme_id:)
+      domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      lodge_assessment(
+        assessment_body: domestic_rdsap_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        migrated: true,
+      )
+    end
+
+    it "updates the fields with the expected value" do
+      gateway.update_field("0000-0000-0000-0000-0000", "type_of_assessment", "SAP")
+      result = ActiveRecord::Base.connection.exec_query("SELECT type_of_assessment FROM assessments WHERE assessment_id='0000-0000-0000-0000-0000'").first["type_of_assessment"]
+      expect(result).to eq("SAP")
+    end
+
+    it "updates the created_at with a correct date" do
+      gateway.update_field("0000-0000-0000-0000-0000", "created_at", "2024-01-16 17:52:43.00000")
+      result = ActiveRecord::Base.connection.exec_query("SELECT created_at FROM assessments WHERE assessment_id='0000-0000-0000-0000-0000'").first["created_at"]
+      expect(result).to eq("2024-01-16 17:52:43.00000")
+    end
+
+    it "does not raise an error when no ID is found" do
+      expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000") }.not_to raise_error
+    end
+  end
+
+  describe "#update_created_at_from_landmark" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    before do
+      Timecop.freeze(2020, 6, 22, 0, 0, 0)
+
+      add_super_assessor(scheme_id:)
+      domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      lodge_assessment(
+        assessment_body: domestic_rdsap_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        migrated: false,
+      )
+
+      domestic_rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+      lodge_assessment(
+        assessment_body: domestic_rdsap_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        migrated: false,
+      )
+    end
+
+    after do
+      Timecop.return
+    end
+
+    it "returns true when row is updated" do
+      result = gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", "2024-01-16 17:52:43.00000")
+      expect(result).to be true
+    end
+
+    it "updates only the row with specified RRN", aggregate_failure: true do
+      result =  gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", "2024-01-16 17:52:43.00000")
+
+      expect(fetch_created_at("0000-0000-0000-0000-0000")).to eq("2024-01-16 17:52:43.00000")
+      expect(fetch_created_at("0000-0000-0000-0000-0001")).not_to eq("2024-01-16 17:52:43.00000")
+    end
+
+    it "does not raise an error when no ID is found" do
+      expect { gateway.update_created_at_from_landmark?("1235", "2024-01-16 17:52:43.00000") }.not_to raise_error
+    end
+
+    it "returns false when the row is not updated" do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated = true WHERE assessment_id = '0000-0000-0000-0000-0001'")
+      result = gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "2024-01-16 17:52:43.00000")
+      expect(result).to be false
+    end
+
+    it "does not updated the row if has already been migrated" do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated = true WHERE assessment_id = '0000-0000-0000-0000-0001'")
+      gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "2024-01-16 17:52:43.00000")
+      expect(fetch_created_at("0000-0000-0000-0000-0001")).not_to eq("2024-01-16 17:52:43.00000")
     end
   end
 end
