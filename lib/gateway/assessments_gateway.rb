@@ -117,10 +117,12 @@ module Gateway
     end
 
     def update_created_at_from_landmark?(assessment_id, created_at)
+      return false if created_at < "2006-01-01" || created_at > "2020-10-01"
+
       sql = <<-SQL
         UPDATE assessments
         SET created_at = $1
-        WHERE assessment_id = $2 AND migrated = false
+        WHERE assessment_id = $2 AND migrated = true
         RETURNING true as updated
       SQL
 

@@ -137,6 +137,9 @@ describe Gateway::AssessmentsGateway do
 
   describe "#update_created_at_from_landmark" do
     let(:scheme_id) { add_scheme_and_get_id }
+    let(:landmark_date) do
+      "2019-01-16 17:52:43.00000"
+    end
 
     before do
       Timecop.freeze(2020, 6, 22, 0, 0, 0)
@@ -149,7 +152,7 @@ describe Gateway::AssessmentsGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        migrated: false,
+        migrated: true,
       )
 
       domestic_rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0001"
@@ -159,7 +162,7 @@ describe Gateway::AssessmentsGateway do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        migrated: false,
+        migrated: true,
       )
     end
 
@@ -167,32 +170,29 @@ describe Gateway::AssessmentsGateway do
       Timecop.return
     end
 
-    it "returns true when row is updated" do
-      result = gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", "2024-01-16 17:52:43.00000")
+    it "returns true when the row is updated" do
+      result = gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", landmark_date)
       expect(result).to be true
     end
 
     it "updates only the row with specified RRN", aggregate_failure: true do
-      result =  gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", "2024-01-16 17:52:43.00000")
-
-      expect(fetch_created_at("0000-0000-0000-0000-0000")).to eq("2024-01-16 17:52:43.00000")
-      expect(fetch_created_at("0000-0000-0000-0000-0001")).not_to eq("2024-01-16 17:52:43.00000")
+      gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", landmark_date)
+      expect(fetch_created_at("0000-0000-0000-0000-0000")).to eq(landmark_date)
+      expect(fetch_created_at("0000-0000-0000-0000-0001")).not_to eq(landmark_date)
     end
 
-    it "does not raise an error when no ID is found" do
-      expect { gateway.update_created_at_from_landmark?("1235", "2024-01-16 17:52:43.00000") }.not_to raise_error
+    it "does not raise an error when no assessment_id is found" do
+      expect { gateway.update_created_at_from_landmark?("blah", landmark_date) }.not_to raise_error
     end
 
-    it "returns false when the row is not updated" do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated = true WHERE assessment_id = '0000-0000-0000-0000-0001'")
-      result = gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "2024-01-16 17:52:43.00000")
-      expect(result).to be false
+    it "returns false if the date is not in range", aggregate_failure: true do
+      expect(gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "2024-01-16 17:52:43.00000")).to be false
+      expect(gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "1900-01-16 17:52:43.00000")).to be false
     end
 
-    it "does not updated the row if has already been migrated" do
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated = true WHERE assessment_id = '0000-0000-0000-0000-0001'")
-      gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "2024-01-16 17:52:43.00000")
-      expect(fetch_created_at("0000-0000-0000-0000-0001")).not_to eq("2024-01-16 17:52:43.00000")
+    it "returns false when the assessment_id is for an EPC that has NOT been migrated" do
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated = false WHERE assessment_id = '0000-0000-0000-0000-0001'")
+      expect(gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", landmark_date)).to be false
     end
   end
 end
