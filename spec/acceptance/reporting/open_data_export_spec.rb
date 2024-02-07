@@ -172,8 +172,9 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
           it "transfers the file to the S3 bucket with the correct filename, body and headers " do
             assessment_type = "SAP-RDSAP"
+            date_to = "2021-07-01"
             date_from = test_start_date
-            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to)
 
             expect(WebMock).to have_requested(
               :put,
@@ -190,11 +191,12 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
             it "prefixes the csv filename with `test/` so it's stored in a separate folder in the S3 bucket" do
               assessment_type = "SAP-RDSAP"
               date_from = test_start_date
+              date_to = "2021-07-01"
               HttpStub.s3_put_csv(
                 "test/open_data_export_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
               )
 
-              get_task("open_data:export_assessments").invoke("not_for_odc", assessment_type, date_from)
+              get_task("open_data:export_assessments").invoke("not_for_odc", assessment_type, date_from, date_to)
 
               expect(WebMock).to have_requested(
                 :put,
@@ -217,7 +219,8 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "SAP-RDSAP-RR"
             date_from = test_start_date
-            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+            date_to = "2021-07-01"
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to)
 
             expect(WebMock).to have_requested(
               :put,
@@ -396,7 +399,8 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "CEPC"
             date_from = test_start_date
-            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+            date_to = "2021-07-01"
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to)
 
             expect(WebMock).to have_requested(
               :put,
@@ -423,7 +427,8 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "CEPC-RR"
             date_from = test_start_date
-            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+            date_to = "2021-07-01"
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to)
 
             expect(WebMock).to have_requested(
               :put,
@@ -603,7 +608,8 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "DEC"
             date_from = test_start_date
-            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+            date_to = "2021-07-01"
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to)
 
             expect(WebMock).to have_requested(
               :put,
@@ -630,7 +636,8 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "DEC-RR"
             date_from = test_start_date
-            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+            date_to = "2021-07-01"
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to)
             expect(WebMock).to have_requested(
               :put,
               "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{Time.now.strftime('%F')}_1.csv",
@@ -662,21 +669,6 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
       it "returns an error when the wrong type of assessment type is provided" do
         expect { get_task("open_data:export_assessments").invoke("for_odc", "TEST", Time.now.strftime("%F")) }.to raise_error Boundary::InvalidAssessment
-      end
-    end
-
-    context "when we set the correct arguments and a date_from equivalent to now" do
-      it "returns a no data to export error" do
-        assessment_type = "SAP-RDSAP"
-        date_from = Time.now.strftime("%F")
-        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from) }.to raise_error Boundary::OpenDataEmpty
-      end
-
-      it "returns a date validation error when date_from is greater than date_to" do
-        assessment_type = "SAP-RDSAP"
-        date_from = Time.now.strftime("%F")
-        date_to = (Time.now - 3600 * 24).strftime("%F")
-        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to raise_error Boundary::InvalidDates
       end
     end
 
@@ -745,7 +737,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
       it "returns the data without line breaks in the body" do
         assessment_type = "SAP-RDSAP"
         date_from = test_start_date
-        get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
+        get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, Time.now.strftime("%F"))
 
         expect(WebMock).not_to have_requested(
           :put,
@@ -769,7 +761,28 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           .all
         HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
         EnvironmentStub.with("assessment_type", "SAP-RDSAP")
-        EnvironmentStub.with("date_from", Time.now.strftime("%F"))
+        EnvironmentStub.with("date_from", test_start_date)
+        EnvironmentStub.with("date_to", "2021-07-01")
+        EnvironmentStub.with("type_of_export", "for_odc")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[assessment_type date_from type_of_export])
+      end
+
+      it "does not raise an argument error" do
+        expect { get_task("open_data:export_assessments").invoke }.not_to raise_error
+      end
+    end
+
+    context "when no dates are set or passed in and it the 1st day of the month" do
+      before do
+        Timecop.freeze(Time.utc(2021, 7, 1))
+        EnvironmentStub
+          .all
+        HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
+        EnvironmentStub.with("assessment_type", "SAP-RDSAP")
+
         EnvironmentStub.with("type_of_export", "for_odc")
       end
 

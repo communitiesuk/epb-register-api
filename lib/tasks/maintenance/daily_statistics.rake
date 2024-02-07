@@ -1,7 +1,7 @@
 namespace :maintenance do
   desc "Save statistics for a date (defaults to yesterday)"
   task :daily_statistics, %i[date] do |_, args|
-    date = args.date
+    date = args.date || ENV["date"]
 
     if date
       parsable = begin

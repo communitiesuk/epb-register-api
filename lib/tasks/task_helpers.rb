@@ -5,5 +5,12 @@ module Tasks
         raise StandardError, "This task can only be run if the STAGE is test, development, integration or staging"
       end
     end
+
+    def self.get_last_months_dates
+      end_date = Date.today.strftime("%Y-%m-01")
+      start_date = Date.yesterday.strftime("%Y-%m-01")
+
+      { start_date:, end_date: }
+    end
   end
 end

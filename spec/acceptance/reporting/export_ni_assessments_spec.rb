@@ -1,5 +1,21 @@
+shared_context "when exporting NI epcs" do
+  def read_ni_csv_fixture(file_name, parse: true)
+    fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
+    fixture_path << "/fixtures/ni_export/"
+    read_file = File.read("#{fixture_path}#{file_name}.csv")
+    CSV.parse(read_file, headers: true) if parse
+  end
+
+  def redact_ni_lodgement_datetime(csv_object)
+    array = csv_object.to_a
+    array.reject { |k| k[0] == "LODGEMENT_DATETIME" }
+    array.reject { |k| k[0] == "LODGEMENT_DATE" }
+  end
+end
+
 describe "Acceptance::Reports::ExportNIAssessments" do
   include RSpecRegisterApiServiceMixin
+  include_context "when exporting NI epcs"
 
   context "when exporting the domestic data to a csv before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
@@ -132,6 +148,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
 
     before do
       EnvironmentStub.all
+
       # Define mock expectations
       allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
         export_use_case,
@@ -226,7 +243,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
         export_use_case,
       )
-      allow(export_use_case).to receive(:execute).and_return(export)
+      allow(export_use_case).to receive(:execute).with(any_args).and_return(export)
       allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
       EnvironmentStub.with("type_of_assessments", "CEPC")
       EnvironmentStub.with("date_from", Time.now.strftime("%F"))
@@ -241,17 +258,48 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       expect { task.invoke }.not_to raise_error
     end
   end
-end
 
-def read_ni_csv_fixture(file_name, parse: true)
-  fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
-  fixture_path << "/fixtures/ni_export/"
-  read_file = File.read("#{fixture_path}#{file_name}.csv")
-  CSV.parse(read_file, headers: true) if parse
-end
+  context "when calling the rake on the 1st of the month with no dates" do
+    subject(:task) { get_task("data_export:ni_assessments") }
 
-def redact_ni_lodgement_datetime(csv_object)
-  array = csv_object.to_a
-  array.reject { |k| k[0] == "LODGEMENT_DATETIME" }
-  array.reject { |k| k[0] == "LODGEMENT_DATE" }
+    let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
+    let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
+    let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
+    let(:use_case_export) { instance_double(UseCase::ExportNiAssessments) }
+    let(:file_name) { "ni_assessments_export_cepc_#{Time.now.strftime('%F')}.csv" }
+    let(:export_use_case) { instance_double(UseCase::ExportNiAssessments) }
+    let(:export) do
+      [
+        {
+          assessment_id:
+            "9999-0000-0000-0000-0000",
+          address1: "1 Some Street",
+          address2: "",
+        },
+
+      ]
+    end
+
+    before do
+      Timecop.freeze(2021, 2, 0o1, 0, 0, 0)
+      EnvironmentStub.all
+      # Define mock expectations
+      allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
+        export_use_case,
+      )
+      allow(export_use_case).to receive(:execute).with(any_args).and_return(export)
+      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      EnvironmentStub.with("type_of_assessments", "CEPC")
+      HttpStub.s3_put_csv(file_name)
+    end
+
+    after do
+      EnvironmentStub.remove(%w[type_of_assessments date_from])
+    end
+
+    it "passes the first and last dates of the previous month tgo the use case" do
+      task.invoke
+      expect(export_use_case).to have_received(:execute).with(type_of_assessment: %w[CEPC], date_from: "2021-01-01", date_to: "2021-02-01")
+    end
+  end
 end

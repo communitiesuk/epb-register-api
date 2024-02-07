@@ -17,6 +17,10 @@ namespace :data_export do
                             ApiFactory.get_assessment_rrns_by_scheme_type
                           end
 
+    last_months_dates = Tasks::TaskHelpers.get_last_months_dates
+    start_date ||= last_months_dates[:start_date]
+    end_date ||= last_months_dates[:end_date]
+
     raw_data = if report_type == "rrn_scheme_type"
                  assessment_use_case.execute(
                    Date.parse(start_date),

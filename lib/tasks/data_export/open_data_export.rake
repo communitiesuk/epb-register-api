@@ -4,13 +4,15 @@ namespace :open_data do
     type_of_export = args.type_of_export || ENV["type_of_export"]
     assessment_type = args.assessment_type&.upcase || ENV["assessment_type"]&.upcase
     date_from = args.date_from || ENV["date_from"]
-    date_to =   args.date_to || ENV["date_to"] || Time.now.strftime("%F")
+    date_to =   args.date_to || ENV["date_to"]
     task_id = args.task_id || ENV["task_id"]
+
+    last_months_dates = Tasks::TaskHelpers.get_last_months_dates
+    date_from ||= last_months_dates[:start_date]
+    date_to ||= last_months_dates[:end_date]
 
     raise Boundary::ArgumentMissing, "type_of_export. You  must specify 'for_odc' or 'not_for_odc'" if type_of_export.nil? || !%w[for_odc not_for_odc].include?(type_of_export)
     raise Boundary::ArgumentMissing, "assessment_type, eg: 'SAP-RDSAP', 'DEC' etc" unless assessment_type
-    raise Boundary::ArgumentMissing, "date_from" unless date_from
-    raise Boundary::InvalidDates unless date_from <= date_to
 
     open_data_use_case = case assessment_type
                          when "CEPC"

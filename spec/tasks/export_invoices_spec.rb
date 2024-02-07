@@ -233,4 +233,28 @@ describe "monthly invoice export" do
       expect(File.exist?("scheme_name_type_invoice.zip")).to be false
     end
   end
+
+  context "when it is the 1st of the month and no dates are passed to the rake" do
+    let(:use_case) { instance_double(UseCase::GetAssessmentCountBySchemeNameAndType) }
+    let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
+
+    before do
+      Timecop.freeze(2024, 2, 1, 7, 0, 0)
+      EnvironmentStub.with("report_type", "scheme_name_type")
+      EnvironmentStub.with("scheme_id", "1")
+      allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
+      allow(use_case).to receive(:execute).and_return returned_data
+      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, body: { ok: true }.to_json)
+      monthly_invoice_rake.invoke
+    end
+
+    after do
+      Timecop.return
+      EnvironmentStub.remove(%w[report_type scheme_id])
+    end
+
+    it "passes this month's start and end dates to the use case" do
+      expect(use_case).to have_received(:execute).with(Date.parse("2024-01-01"), Date.parse("2024-02-01"))
+    end
+  end
 end
