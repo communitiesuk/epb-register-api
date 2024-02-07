@@ -3,10 +3,12 @@ namespace :data_export do
 
   task :ni_assessments, %i[type_of_assessments date_from date_to] do |_, args|
     type_of_assessments = args.type_of_assessments || ENV["type_of_assessments"]
-    last_months_dates = Tasks::TaskHelpers.get_last_months_dates
+    date_from = args.date_from || ENV["date_from"]
+    date_to =   args.date_to || ENV["date_to"]
 
-    date_from = args.date_from || ENV["date_from"] || last_months_dates[:start_date]
-    date_to =   args.date_to || ENV["date_to"] ||  last_months_dates[:end_date]
+    last_months_dates = Tasks::TaskHelpers.get_last_months_dates
+    date_from ||= last_months_dates[:start_date]
+    date_to ||= last_months_dates[:end_date]
 
     raise Boundary::ArgumentMissing, "type_of_assessments" unless type_of_assessments
 

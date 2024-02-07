@@ -281,7 +281,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     before do
-      Timecop.freeze(2021, 2, 0o1, 0, 0, 0)
+      Timecop.freeze(2021, 2, 1, 0, 0, 0)
       EnvironmentStub.all
       # Define mock expectations
       allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(

@@ -34,4 +34,24 @@ describe "daily statistics rake" do
     expect { daily_statistics_rake.invoke("2021-01-35") }.to raise_error(ArgumentError)
     expect { daily_statistics_rake.invoke("20-01-2021") }.to raise_error(ArgumentError)
   end
+
+  context "when the date is passed as an ENV variable" do
+    before do
+      EnvironmentStub.with("date", "2021-12-09")
+    end
+
+    after do
+      EnvironmentStub.remove(%w[date])
+    end
+
+    it "calls the use case to save the data for a given date and prints success message" do
+      expect { daily_statistics_rake.invoke }.to output(
+        /Statistics for 2021-12-09 saved/,
+      ).to_stdout
+      expect(save_daily_assessments_stats_use_case).to have_received(:execute).with(
+        date: "2021-12-09",
+        assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT DEC-RR],
+      )
+    end
+  end
 end

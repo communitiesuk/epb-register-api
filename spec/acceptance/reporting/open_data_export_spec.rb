@@ -767,7 +767,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
       end
 
       after do
-        EnvironmentStub.remove(%w[assessment_type date_from type_of_export])
+        EnvironmentStub.remove(%w[assessment_type date_from date_to type_of_export])
       end
 
       it "does not raise an argument error" do
@@ -782,12 +782,11 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           .all
         HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
         EnvironmentStub.with("assessment_type", "SAP-RDSAP")
-
         EnvironmentStub.with("type_of_export", "for_odc")
       end
 
       after do
-        EnvironmentStub.remove(%w[assessment_type date_from type_of_export])
+        EnvironmentStub.remove(%w[assessment_type type_of_export])
       end
 
       it "does not raise an argument error" do
