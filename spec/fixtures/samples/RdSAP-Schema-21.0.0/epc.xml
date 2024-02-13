@@ -183,7 +183,13 @@
       <Habitable-Room-Count>5</Habitable-Room-Count>
       <Heated-Room-Count>5</Heated-Room-Count>
       <Measurement-Type>1</Measurement-Type>
+      <Mechanical-Ventilation-Index-Number>12</Mechanical-Ventilation-Index-Number>
       <Mechanical-Ventilation>6</Mechanical-Ventilation>
+      <Mechanical-Vent-Duct-Type>3</Mechanical-Vent-Duct-Type>
+      <Mechanical-Vent-Duct-Placement>2</Mechanical-Vent-Duct-Placement>
+      <Mechanical-Ventilation-Duct-Insulation>2</Mechanical-Ventilation-Duct-Insulation>
+      <Mechanical-Vent-Duct-Insulation-Level>2</Mechanical-Vent-Duct-Insulation-Level>
+      <Mechanical-Vent-Measured-Installation>false</Mechanical-Vent-Measured-Installation>
       <Solar-Water-Heating>N</Solar-Water-Heating>
       <Conservatory-Type>1</Conservatory-Type>
       <SAP-Flat-Details>
@@ -259,7 +265,7 @@
         <Water-Heating-Code>901</Water-Heating-Code>
         <Water-Heating-Fuel>26</Water-Heating-Fuel>
         <Immersion-Heating-Type>NA</Immersion-Heating-Type>
-        <Cylinder-Size>0</Cylinder-Size>
+        <Cylinder-Size>1</Cylinder-Size>
         <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
         <Instantaneous-WWHRS>
           <WWHRS-Index-Number1>1</WWHRS-Index-Number1>

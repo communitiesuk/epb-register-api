@@ -20,7 +20,7 @@
     <xs:element name="SAP-Property-Details" type="SAP-Property-Details"/>
     <xs:complexType name="SAP-Property-Details">
         <xs:all>
-            <xs:element name="Built-Form" type="SAP-BuiltFormCode">
+            <xs:element name="Built-Form" type="SAP-BuiltFormCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>The building type of the Property e.g. Detached, Semi-Detached, Terrace etc.
 
@@ -147,11 +147,6 @@ This is actually the type differentiator for Property but only a limited number 
                     <xs:documentation>The number of flueless gas fires in the Property.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="Mechanical-Ventilation-Duct-Insulation" type="xs:boolean" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Relevant when mechanical ventilation system is from PCDB.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element name="Mechanical-Ventilation-Index-Number" type="xs:positiveInteger" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Relevant when mechanical ventilation system is from PCDB.</xs:documentation>
@@ -160,6 +155,36 @@ This is actually the type differentiator for Property but only a limited number 
             <xs:element name="Mechanical-Ventilation" type="VentilationTypeCode">
                 <xs:annotation>
                     <xs:documentation>Identifies the type of mechanical ventilation the property has. This is required for the RdSAP calculation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Mechanical-Vent-Duct-Type" type="SAP-DuctTypeCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mechanical vent duct type; if MEV c, MV or MVHR from PCDB.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Mechanical-Vent-Duct-Placement" type="SAP-DuctPlacement" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mechanical ventilation duct insulation; if MVHR from PCDB.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Mechanical-Ventilation-Duct-Insulation" type="SAP-DuctInsulationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Relevant when mechanical ventilation system is from PCDB.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Mechanical-Vent-Duct-Insulation-Level" type="SAP-DuctInsulationLevel" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mechanical vent duct insulation; if MVHR from PCDB.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Mechanical-Vent-Measured-Installation" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mechanical ventilation SPF measured in situ; if MVHR or balanced from pcdb.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Is-Mechanical-Vent-Approved-Installer-Scheme" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>If MVHR from pcdb.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Conservatory-Type" type="SAP-ConservatoryTypeCode">
@@ -867,11 +892,6 @@ For the purpose of calculating the overall Energy Assessment for the property de
                             </xs:annotation>
                         </xs:element>
                         <xs:element name="Community-Heat-Distribution-Type" type="SAP-HeatingDistributionCode" minOccurs="0"/>
-                        <xs:element name="Community-Generator-Type" type="CommunityGeneratorTypeCode" minOccurs="0">
-                            <xs:annotation>
-                                <xs:documentation>Only required if index number not available.</xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
                         <xs:element name="Community-Heat-CHP-Electricity-Generation" type="SAP-CHPElectricityGenerationCode" minOccurs="0">
                             <xs:annotation>
                                 <xs:documentation>Only if community heating not from pcdb and a heat source with CHP. CHP Electricity generation options from table 12f.</xs:documentation>
@@ -951,7 +971,7 @@ If the total peak power has been apportioned between different dwellings within 
     <xs:element name="PV-Batteries" type="PV-Batteries"/>
     <xs:complexType name="PV-Batteries">
         <xs:sequence>
-            <xs:element name="PV-Battery" type="PV-Battery"/>
+            <xs:element name="PV-Battery" type="PV-Battery" maxOccurs="20"/>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="PV-Battery" type="PV-Battery"/>

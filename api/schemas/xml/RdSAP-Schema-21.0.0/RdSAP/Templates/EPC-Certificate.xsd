@@ -47,6 +47,7 @@ The report also identifies a number of potential improvements that may be made t
 			<xs:element name="Roof" type="PropertySummaryType" maxOccurs="unbounded"/>
 			<xs:element name="Floor" type="PropertySummaryType" maxOccurs="unbounded"/>
 			<xs:element name="Window" type="PropertySummaryType"/>
+			<xs:element name="Air-Tightness" type="PropertySummaryType" minOccurs="0"/>
 			<xs:element name="Main-Heating" type="PropertySummaryType" maxOccurs="2"/>
 			<xs:element name="Main-Heating-Controls" type="PropertySummaryType" maxOccurs="2"/>
 			<xs:element name="Hot-Water" type="PropertySummaryType"/>

@@ -3,7 +3,7 @@
   <User-Interface-Name>SomeSoft RdSAP FormWiz</User-Interface-Name>
   <User-Interface-Version>UI-13.05r16</User-Interface-Version>
   <Schema-Version-Original>SAP-19.0</Schema-Version-Original>
-  <SAP-Version>9.80</SAP-Version>
+  <SAP-Version>10.2</SAP-Version>
   <PCDF-Revision-Number>345</PCDF-Revision-Number>
   <Previous-EPC-Check>
     <Previous-EPC-Checked>Y</Previous-EPC-Checked>
@@ -81,9 +81,11 @@
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Secondary-Heating>
+      <Has-Hot-Water-Cylinder>true</Has-Hot-Water-Cylinder>
       <Dwelling-Type>Mid-terrace house</Dwelling-Type>
       <Total-Floor-Area>55</Total-Floor-Area>
-      <Multiple-Glazed-Proportion-NR>NR</Multiple-Glazed-Proportion-NR>
+      <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
+      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
     </Property-Summary>
     <Energy-Use>
       <Energy-Rating-Current>50</Energy-Rating-Current>
@@ -165,9 +167,6 @@
       <Property-Type>0</Property-Type>
       <Built-Form>2</Built-Form>
       <Extensions-Count>0</Extensions-Count>
-      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
-      <Multiple-Glazing-Type>2</Multiple-Glazing-Type>
-      <Glazed-Area>1</Glazed-Area>
       <Door-Count>2</Door-Count>
       <Insulated-Door-Count>2</Insulated-Door-Count>
       <Insulated-Door-U-Value>3</Insulated-Door-U-Value>
@@ -179,12 +178,14 @@
       <Percent-Draughtproofed>100</Percent-Draughtproofed>
       <Habitable-Room-Count>5</Habitable-Room-Count>
       <Heated-Room-Count>5</Heated-Room-Count>
-      <Fixed-Lighting-Outlets-Count>16</Fixed-Lighting-Outlets-Count>
-      <Low-Energy-Fixed-Lighting-Outlets-Count>16</Low-Energy-Fixed-Lighting-Outlets-Count>
-      <Low-Energy-Lighting>100</Low-Energy-Lighting>
       <Measurement-Type>1</Measurement-Type>
-      <Mechanical-Ventilation>0</Mechanical-Ventilation>
-      <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+      <Mechanical-Ventilation-Index-Number>12</Mechanical-Ventilation-Index-Number>
+      <Mechanical-Ventilation>6</Mechanical-Ventilation>
+      <Mechanical-Vent-Duct-Type>3</Mechanical-Vent-Duct-Type>
+      <Mechanical-Vent-Duct-Placement>2</Mechanical-Vent-Duct-Placement>
+      <Mechanical-Ventilation-Duct-Insulation>2</Mechanical-Ventilation-Duct-Insulation>
+      <Mechanical-Vent-Duct-Insulation-Level>2</Mechanical-Vent-Duct-Insulation-Level>
+      <Mechanical-Vent-Measured-Installation>false</Mechanical-Vent-Measured-Installation>
       <Solar-Water-Heating>N</Solar-Water-Heating>
       <Conservatory-Type>1</Conservatory-Type>
       <SAP-Flat-Details>
@@ -199,7 +200,7 @@
         <SAP-Building-Part>
           <Building-Part-Number>1</Building-Part-Number>
           <Identifier>Main Dwelling</Identifier>
-          <Construction-Age-Band>K</Construction-Age-Band>
+          <Construction-Age-Band>M</Construction-Age-Band>
           <SAP-Floor-Dimensions>
             <SAP-Floor-Dimension>
               <Floor>0</Floor>
@@ -254,6 +255,7 @@
             <Has-FGHRS>N</Has-FGHRS>
             <Emitter-Temperature>0</Emitter-Temperature>
             <Central-Heating-Pump-Age>0</Central-Heating-Pump-Age>
+            <Boiler-Ignition-Type>1</Boiler-Ignition-Type>
           </Main-Heating>
         </Main-Heating-Details>
         <Water-Heating-Code>901</Water-Heating-Code>
@@ -262,40 +264,91 @@
         <Cylinder-Size>1</Cylinder-Size>
         <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
         <Instantaneous-WWHRS>
-          <Rooms-With-Bath-And-Or-Shower>1</Rooms-With-Bath-And-Or-Shower>
-          <Rooms-With-Mixer-Shower-No-Bath>0</Rooms-With-Mixer-Shower-No-Bath>
-          <Rooms-With-Bath-And-Mixer-Shower>0</Rooms-With-Bath-And-Mixer-Shower>
+          <WWHRS-Index-Number1>1</WWHRS-Index-Number1>
+          <WWHRS-Index-Number2>2</WWHRS-Index-Number2>
         </Instantaneous-WWHRS>
         <Secondary-Fuel-Type>25</Secondary-Fuel-Type>
+        <Shower-Outlets>
+          <Shower-Outlet>
+            <Shower-Outlet-Type>1</Shower-Outlet-Type>
+            <Shower-WWHRS>1</Shower-WWHRS>
+          </Shower-Outlet>
+        </Shower-Outlets>
       </SAP-Heating>
       <SAP-Energy-Source>
         <Meter-Type>2</Meter-Type>
         <Mains-Gas>Y</Mains-Gas>
         <Wind-Turbines-Count>0</Wind-Turbines-Count>
-        <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
+        <Wind-Turbines-Terrain-Type>4</Wind-Turbines-Terrain-Type>
         <Photovoltaic-Supply>
           <None-Or-No-Details>
             <Percent-Roof-Area>0</Percent-Roof-Area>
-            <PV-Connection>0</PV-Connection>
           </None-Or-No-Details>
         </Photovoltaic-Supply>
+        <PV-Battery-Count>1</PV-Battery-Count>
+        <PV-Batteries>
+          <PV-Battery>
+            <Battery-Capacity>5</Battery-Capacity>
+          </PV-Battery>
+        </PV-Batteries>
+        <Electricity-Smart-Meter-Present>true</Electricity-Smart-Meter-Present>
+        <Gas-Smart-Meter-Present>false</Gas-Smart-Meter-Present>
+        <Is-Dwelling-Export-Capable>false</Is-Dwelling-Export-Capable>
+        <Wind-Turbine-Details>
+          <Rotor-Diameter>0</Rotor-Diameter>
+          <Hub-Height>0</Hub-Height>
+        </Wind-Turbine-Details>
+        <PV-Connection>0</PV-Connection>
       </SAP-Energy-Source>
       <SAP-Windows>
         <SAP-Window>
           <Window-Location>0</Window-Location>
-          <Window-Area>200.1</Window-Area>
-          <Glazing-Type>1</Glazing-Type>
+          <Window-Height>2.0</Window-Height>
+          <Window-Width>1.2</Window-Width>
+          <Draught-Proofed>true</Draught-Proofed>
+          <Glazing-Type>14</Glazing-Type>
           <Window-Type>2</Window-Type>
           <Orientation>1</Orientation>
+          <Window-Transmission-Details>
+            <Data-Source>2</Data-Source>
+            <U-Value>1.0</U-Value>
+            <Solar-Transmittance>1.0</Solar-Transmittance>
+          </Window-Transmission-Details>
+          <PVC-Frame>false</PVC-Frame>
+          <Glazing-Gap>6</Glazing-Gap>
+          <Frame-Factor>1.0</Frame-Factor>
+          <Window-Wall-Type>6</Window-Wall-Type>
+          <Permanent-Shutters-Present>N</Permanent-Shutters-Present>
+          <Permanent-Shutters-Insulated>N</Permanent-Shutters-Insulated>
         </SAP-Window>
         <SAP-Window>
           <Window-Location>1</Window-Location>
-          <Window-Area>180.2</Window-Area>
-          <Glazing-Type>2</Glazing-Type>
-          <Window-Type>1</Window-Type>
-          <Orientation>2</Orientation>
+          <Window-Height>2.0</Window-Height>
+          <Window-Width>1.2</Window-Width>
+          <Draught-Proofed>true</Draught-Proofed>
+          <Glazing-Type>1</Glazing-Type>
+          <Window-Type>2</Window-Type>
+          <Orientation>1</Orientation>
+          <Window-Transmission-Details>
+            <Data-Source>2</Data-Source>
+            <U-Value>1.0</U-Value>
+            <Solar-Transmittance>1.0</Solar-Transmittance>
+          </Window-Transmission-Details>
+          <PVC-Frame>false</PVC-Frame>
+          <Glazing-Gap>6</Glazing-Gap>
+          <Frame-Factor>1.0</Frame-Factor>
+          <Window-Wall-Type>6</Window-Wall-Type>
+          <Permanent-Shutters-Present>N</Permanent-Shutters-Present>
+          <Permanent-Shutters-Insulated>N</Permanent-Shutters-Insulated>
         </SAP-Window>
       </SAP-Windows>
+      <CFL-Fixed-Lighting-Bulbs-Count>5</CFL-Fixed-Lighting-Bulbs-Count>
+      <LED-Fixed-Lighting-Bulbs-Count>10</LED-Fixed-Lighting-Bulbs-Count>
+      <Low-Energy-Fixed-Lighting-Bulbs-Count>16</Low-Energy-Fixed-Lighting-Bulbs-Count>
+      <Incandescent-Fixed-Lighting-Bulbs-Count>0</Incandescent-Fixed-Lighting-Bulbs-Count>
+      <Pressure-Test-Certificate-Number>0</Pressure-Test-Certificate-Number>
+      <Wet-Rooms-Count>0</Wet-Rooms-Count>
+      <Pressure-Test>6</Pressure-Test>
     </SAP-Property-Details>
   </SAP-Data>
   <Report-Header>
@@ -304,7 +357,7 @@
     <Language-Code>1</Language-Code>
     <Property-Type>0</Property-Type>
     <Region-Code>1</Region-Code>
-    <Country-Code>EAW</Country-Code>
+    <Country-Code>ENG</Country-Code>
     <Tenure>1</Tenure>
     <Property>
       <UPRN>UPRN-000000000000</UPRN>
