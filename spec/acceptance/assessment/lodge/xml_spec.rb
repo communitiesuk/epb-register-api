@@ -54,7 +54,7 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
                          schema_name: "SAP-Schema-18.0.0"
       end
 
-      it "will remove the <PDF> element" do
+      it "removes the <PDF> element" do
         expect(valid_sap_xml).to include("<PDF>")
         expect(cleaned_sap_xml).to eq(
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{database_xml}",
@@ -63,7 +63,7 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
     end
 
     context "with a SAP assessment starting with a newline" do
-      it "will raise an invalid XML exception" do
+      it "raises an invalid XML exception" do
         expect(sap_starting_with_newline[0]).to include("\n")
         lodge_assessment assessment_body: sap_starting_with_newline,
                          accepted_responses: [400],

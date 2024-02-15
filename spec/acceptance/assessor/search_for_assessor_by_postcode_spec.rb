@@ -71,7 +71,7 @@ describe "Acceptance::SearchForAssessor" do
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
-    it "will search using an outcode if we dont know the postcode" do
+    it "searches using an outcode if we dont know the postcode" do
       add_outcodes("SE1")
       scheme_id = add_scheme_and_get_id
       add_assessor scheme_id:,

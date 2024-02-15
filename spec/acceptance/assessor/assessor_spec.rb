@@ -226,7 +226,7 @@ describe "Acceptance::Assessor" do
       )
     end
 
-    it "will raise an error if given the incorrect auth scope" do
+    it "raises an error if given the incorrect auth scope" do
       response =
         JSON.parse(
           fetch_assessor_current_status(

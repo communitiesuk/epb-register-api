@@ -125,7 +125,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
                        schema_name: "SAP-Schema-18.0.0"
     end
 
-    it "will not allow another scheme to download another schemes lodged data" do
+    it "does not allow another scheme to download another schemes lodged data" do
       fetch_assessment(
         id: "0000-0000-0000-0000-0000",
         accepted_responses: [403],

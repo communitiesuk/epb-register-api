@@ -42,7 +42,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   end
 
   context "when getting a redacted green deal assessments XML" do
-    it "will return the redacted XML" do
+    it "returns the redacted XML" do
       add_assessment_with_green_deal
 
       xml =
@@ -55,7 +55,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   end
 
   context "when getting an assessment with a malformed RRN" do
-    it "will return error 400, assessment id not valid" do
+    it "returns error 400, assessment id not valid" do
       error_response =
         fetch_green_deal_assessment_xml(
           assessment_id: "randomly-wrong-rrn",
@@ -69,7 +69,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   end
 
   context "when getting a redacted assessment that is not an RdSAP" do
-    it "will return error 403, assessment is not an RdSAP" do
+    it "returns error 403, assessment is not an RdSAP" do
       add_assessment_with_green_deal("CEPC")
 
       error_response =
@@ -85,7 +85,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   end
 
   context "when getting a redacted assessment that doesn't exist" do
-    it "will return error 404, assessment not found" do
+    it "returns error 404, assessment not found" do
       error_response =
         fetch_green_deal_assessment_xml(
           assessment_id: "0000-0000-0000-0000-0000",
@@ -99,7 +99,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   end
 
   context "when getting a cancelled certificate" do
-    it "will return error 410, assessment is gone" do
+    it "returns error 410, assessment is gone" do
       add_assessment_with_green_deal
 
       update_assessment_status(
@@ -126,7 +126,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   end
 
   context "when getting a not for issue certificate" do
-    it "will return error 410, assessment is gone" do
+    it "returns error 410, assessment is gone" do
       add_assessment_with_green_deal
 
       update_assessment_status(

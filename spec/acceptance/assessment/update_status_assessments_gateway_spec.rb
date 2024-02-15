@@ -13,7 +13,7 @@ describe "Updating assessment status" do
 
   context "when given a dual lodgement" do
     context "when calling get_linked_assessment_id on both assessments" do
-      it "will return the first assessment's linked assessment counterpart" do
+      it "returns the first assessment's linked assessment counterpart" do
         expect(
           assessment_gateway.get_linked_assessment_id(
             "0000-0000-0000-0000-0000",
@@ -21,7 +21,7 @@ describe "Updating assessment status" do
         ).to eq("0000-0000-0000-0000-0001")
       end
 
-      it "will return the second assessment's linked assessment counterpart" do
+      it "returns the second assessment's linked assessment counterpart" do
         expect(
           assessment_gateway.get_linked_assessment_id(
             "0000-0000-0000-0000-0001",

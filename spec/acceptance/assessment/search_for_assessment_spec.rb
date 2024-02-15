@@ -254,7 +254,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
                                      assessment_types: %w[rdap]
     end
 
-    it "will sort the results" do
+    it "sorts the results" do
       setup_scheme_and_lodge
 
       second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
@@ -448,7 +448,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       )
     end
 
-    it "will sort the results" do
+    it "sorts the results" do
       setup_scheme_and_lodge
 
       second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))

@@ -26,7 +26,7 @@ describe "Acceptance::AssessorStatus" do
       )
     end
 
-    it "will give an error if date param is empty" do
+    it "gives an error if date param is empty" do
       response =
         JSON.parse(
           fetch_assessors_updated_status(scheme_id: test_scheme_id, date: "", accepted_responses: [400]).body,

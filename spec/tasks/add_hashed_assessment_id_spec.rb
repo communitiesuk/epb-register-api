@@ -93,7 +93,7 @@ describe "add hashed assessment_id rake" do
         expect(rdsap_ni_date_registered).to eq("2022-09-11 00:00:00.000000000 +0000")
       end
 
-      it "will always generate the same expected hash" do
+      it "alwayses generate the same expected hash" do
         expect(rdsap_hashed_assessment_id).to eq("4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a")
         expect(rdsap_ni_hashed_assessment_id).to eq("3219a657a59c669870b97a97a00fd722b81dbb02ffed384e794782f4991a5687")
       end

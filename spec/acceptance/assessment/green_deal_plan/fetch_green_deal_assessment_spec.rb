@@ -75,7 +75,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when getting an assessment without the correct permissions" do
-    it "will return error 403" do
+    it "returns error 403" do
       add_assessment_with_green_deal type: "RdSAP"
 
       error_response =
@@ -92,7 +92,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when getting an assessment that does not exist" do
-    it "will return error 404" do
+    it "returns error 404" do
       error_response =
         fetch_green_deal_assessment(
           assessment_id: "0000-0000-0000-0000-0000",
@@ -106,7 +106,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when assessment ID is not valid" do
-    it "will return error 400" do
+    it "returns error 400" do
       error_response =
         fetch_green_deal_assessment(
           assessment_id: "abcd",
@@ -120,7 +120,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when assessment status is cancelled or not for issue" do
-    it "will return error 410" do
+    it "returns error 410" do
       add_assessment_with_green_deal type: "RdSAP"
 
       update_assessment_status(
@@ -147,7 +147,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when getting a valid CEPC assessment" do
-    it "will return error 403" do
+    it "returns error 403" do
       add_non_domestic_assessment
 
       error_response =
@@ -163,7 +163,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when getting a valid RdSAP assessment" do
-    it "will return the assessments details" do
+    it "returns the assessments details" do
       add_assessment_with_green_deal(type: "RdSAP")
       add_assessment_with_green_deal(
         type: "RdSAP",
@@ -216,7 +216,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
       end
 
       context "when the address has not been matched to another id" do
-        it "will return the LPRN as lodged" do
+        it "returns the LPRN as lodged" do
           response =
             fetch_green_deal_assessment(
               assessment_id: "0000-0000-0000-0000-0000",
@@ -238,7 +238,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
           WHERE assessment_id = '0000-0000-0000-0000-0000'
         SQL
 
-        it "will return the matched UPRN and the LPRN as lodged" do
+        it "returns the matched UPRN and the LPRN as lodged" do
           response =
             fetch_green_deal_assessment(
               assessment_id: "0000-0000-0000-0000-0000",
@@ -257,7 +257,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "when getting a valid SAP assessment" do
-    it "will return the assessments details" do
+    it "returns the assessments details" do
       add_assessment_with_green_deal(type: "SAP")
       add_assessment_with_green_deal(
         type: "SAP",
@@ -321,7 +321,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
       SQL
     end
 
-    it "will return the assessments details" do
+    it "returns the assessments details" do
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
           .body

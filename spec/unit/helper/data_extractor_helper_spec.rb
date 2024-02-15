@@ -89,15 +89,15 @@ describe Helper::DataExtractorHelper do
 
     let(:result) { helper.fetch_data(raw_data, data_settings) }
 
-    it "will return the extracted data" do
+    it "returns the extracted data" do
       expect(result[:text]).to eq("bar")
     end
 
-    it "will dig into multiple hashes" do
+    it "digs into multiple hashes" do
       expect(result[:treasure]).to eq("found me")
     end
 
-    it "will extract arrays with keys inside" do
+    it "extracts arrays with keys inside" do
       expect(result[:array_extraction]).to eq(
         [
           { full_name: "Barry Garlow" },
@@ -107,7 +107,7 @@ describe Helper::DataExtractorHelper do
       )
     end
 
-    it "will extract an array and store the keys" do
+    it "extracts an array and store the keys" do
       expect(result[:smart_array_extraction]).to eq(
         [
           { key: "crazy", full_name: "Barry Garlow" },
@@ -117,7 +117,7 @@ describe Helper::DataExtractorHelper do
       )
     end
 
-    it "will extract an array and store the keys, ignoring ones with missing keys" do
+    it "extracts an array and store the keys, ignoring ones with missing keys" do
       expect(result[:supersmart_array_extraction]).to eq(
         [
           { key: "crazy", full_name: "Barry Garlow" },
@@ -127,19 +127,19 @@ describe Helper::DataExtractorHelper do
       )
     end
 
-    it "will extract a key and add a default value if it is missing" do
+    it "extracts a key and add a default value if it is missing" do
       expect(result[:default_value_extraction]).to eq([])
     end
 
-    it "will extract a key and cast it to an integer" do
+    it "extracts a key and cast it to an integer" do
       expect(result[:make_an_int]).to eq(99)
     end
 
-    it "will extract a key and cast it to snake case" do
+    it "extracts a key and cast it to snake case" do
       expect(result[:make_snake_case]).to eq("how_great_is_this")
     end
 
-    it "will extract a key and cast it to map" do
+    it "extracts a key and cast it to map" do
       expect(result[:make_map]).to eq("great")
     end
   end
