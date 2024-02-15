@@ -45,10 +45,28 @@ describe Gateway::StorageConfigurationReader do
     subject(:storage_configuration_reader) { described_class.new(bucket_name: expected_bucket_name) }
 
     before do
-      allow(ENV).to receive(:[]).with("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI").and_return("aws_credentials_uri")
+      WebMock.enable!
+      allow(ENV).to receive(:[]).with("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI").and_return("http://169.254.170.2")
       allow(ENV).to receive(:[]).with("AWS_EXECUTION_ENV").and_return("AWS_ECS_FARGATE")
+      # stub the request using the ip address hard codes int the Aws SDK ecs_configuration.rb
+      WebMock.stub_request(:get, "http://169.254.170.2").to_return(status: 200, body: resp)
     end
 
+    after do
+      WebMock.disable!
+    end
+
+    let(:resp) { <<~JSON.strip }
+      {
+        "RoleArn" : "arn:aws:iam::123456789012:role/BarFooRole",
+        "AccessKeyId" : "akid",
+        "SecretAccessKey" : "secret",
+        "Token" : "session-token",
+        "Expiration" : "#{expiration.strftime('%Y-%m-%dT%H:%M:%SZ')}"
+      }
+    JSON
+
+    let(:expiration) { Time.now.utc + 3600 }
     let(:config) { storage_configuration_reader.get_configuration }
 
     it "passes back a configuration with ECS credentials that refers to the passed bucket name" do
