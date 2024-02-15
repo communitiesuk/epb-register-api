@@ -244,7 +244,8 @@ describe "monthly invoice export" do
       EnvironmentStub.with("scheme_id", "1")
       allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
       allow(use_case).to receive(:execute).and_return returned_data
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, body: { ok: true }.to_json)
+      allow(Helper::ExportInvoicesHelper).to receive(:save_file)
+      allow(Helper::ExportInvoicesHelper).to receive(:send_to_slack)
       monthly_invoice_rake.invoke
     end
 
