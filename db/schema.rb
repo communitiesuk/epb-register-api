@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_08_111654) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_16_120340) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -91,12 +91,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_08_111654) do
     t.string "address_id"
     t.string "source"
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
-  end
-
-  create_table "assessments_address_id_backup", primary_key: "assessment_id", id: :string, force: :cascade do |t|
-    t.string "address_id"
-    t.string "source"
-    t.index ["address_id"], name: "index_assessments_address_id_backup_on_address_id"
   end
 
   create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
