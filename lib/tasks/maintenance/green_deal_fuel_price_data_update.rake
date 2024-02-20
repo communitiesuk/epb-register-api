@@ -7,6 +7,9 @@ namespace :maintenance do
   task :green_deal_update_fuel_data do
     ApiFactory.import_green_deal_fuel_price_use_case.execute
   rescue UseCase::ImportGreenDealFuelPrice::NoDataException
+    text = ":alert_slow No Fuel Price data available from www.ncm-pcdb.org.uk"
+    webhook_url = ENV["EPB_TEAM_SLACK_URL"]
+    Helper::SlackHelper.post_to_slack(text:, webhook_url:)
     raise
   end
 end
