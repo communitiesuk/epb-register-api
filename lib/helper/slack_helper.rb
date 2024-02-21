@@ -1,30 +1,30 @@
+
+require 'slack-ruby-client'
+
 module Helper
   class SlackHelper
-    def self.hyperlink(text, url)
+    def initialize
+      Slack.configure do |config|
+        config.token = ENV["SLACK_EPB_BOT_TOKEN"]
+        raise Boundary::SlackMessageError, "Missing ENV[SLACK_API_TOKEN]!" unless config.token
+      end
+    end
+
+    def hyperlink(text, url)
       "<#{url}|#{text}>"
     end
 
-    def self.post_to_slack(text:, webhook_url:)
+    def post_to_slack(text:)
       if ENV["STAGE"] == "production"
-        slack_message = text
-        slack_channel = "#team-epb"
+        channel = "#team-epb"
       else
-        slack_message = "[#{ENV['STAGE']}] #{text}"
-        slack_channel = "#team-epb-pre-production"
+        text = "[#{ENV['STAGE']}] #{text}"
+        channel = "#team-epb-pre-production"
       end
 
-      payload = {
-        username: "Energy Performance of Buildings",
-        channel: slack_channel,
-        text: slack_message,
-        mrkdwn: true,
-      }
-
-      response = HTTP.post(webhook_url, body: payload.to_json)
-
-      unless response.status.success?
-        raise Boundary::SlackMessageError, "Slack error: #{response.body}"
-      end
+      client = Slack::Web::Client.new
+      client.auth_test
+      client.chat_postMessage(channel:, text:, as_user: true)
     end
   end
 end
