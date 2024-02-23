@@ -589,7 +589,7 @@
       <Conservatory-Type>1</Conservatory-Type>
       <Terrain-Type>1</Terrain-Type>
       <Is-Dwelling-Export-Capable>true</Is-Dwelling-Export-Capable>
-      <Gas-Smart-Meter-Present>false</Gas-Smart-Meter-Present>
+      <Gas-Smart-Meter-Present>true</Gas-Smart-Meter-Present>
       <Electricity-Smart-Meter-Present>false</Electricity-Smart-Meter-Present>
     </SAP-Property-Details>
     <Data-Type>1</Data-Type>
