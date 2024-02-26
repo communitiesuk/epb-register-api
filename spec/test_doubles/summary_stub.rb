@@ -355,7 +355,7 @@ class SummaryStub
       opt_out: nil,
       superseded_by: nil,
       related_assessments: [],
-      gas_smart_meter_present: "true",
-      electricity_smart_meter_present: "false" }
+      gas_smart_meter_present: true,
+      electricity_smart_meter_present: false }
   end
 end
