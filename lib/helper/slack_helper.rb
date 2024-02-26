@@ -20,9 +20,22 @@ module Helper
         mrkdwn: true,
       }
 
-      response = HTTP.post(webhook_url, body: payload.to_json)
+      uri = URI(webhook_url)
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = true
+      header = { 'Content-Type': "text/json" }
 
-      unless response.status.success?
+      request = Net::HTTP::Post.new(uri.path, header)
+      request.body = payload.to_json
+
+      response = https.request(request)
+
+      case response
+      when Net::HTTPSuccess
+        response
+      when Net::HTTPRedirection
+        response
+      else
         raise Boundary::SlackMessageError, "Slack error: #{response.body}"
       end
     end
