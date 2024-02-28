@@ -163,6 +163,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_120340) do
     t.index ["green_deal_plan_id", "assessment_id"], name: "index_green_deal_assessments_on_plan_id_and_assessment_id", unique: true
   end
 
+  create_table "countries", primary_key: "country_id", force: :cascade do |t|
+    t.string "country_code"
+    t.string "country_name"
+  end
+
   create_table "green_deal_fuel_code_map", force: :cascade do |t|
     t.integer "fuel_code"
     t.integer "fuel_category"
