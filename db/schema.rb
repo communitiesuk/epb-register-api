@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_16_120340) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_28_150058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -76,12 +76,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_120340) do
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.string "hashed_assessment_id"
+    t.bigint "country_id"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
     t.index "lower((address_line4)::text)", name: "index_assessments_on_address_line4"
     t.index "lower((town)::text)", name: "index_assessments_on_town"
     t.index ["address_id"], name: "index_assessments_on_address_id"
+    t.index ["country_id"], name: "index_assessments_on_country_id"
     t.index ["created_at"], name: "index_assessments_on_created_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
@@ -157,15 +159,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_120340) do
     t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
   end
 
+  create_table "countries", primary_key: "country_id", force: :cascade do |t|
+    t.string "country_code"
+    t.string "country_name"
+  end
+
   create_table "green_deal_assessments", primary_key: ["green_deal_plan_id", "assessment_id"], force: :cascade do |t|
     t.string "green_deal_plan_id", null: false
     t.string "assessment_id", null: false
     t.index ["green_deal_plan_id", "assessment_id"], name: "index_green_deal_assessments_on_plan_id_and_assessment_id", unique: true
-  end
-
-  create_table "countries", primary_key: "country_id", force: :cascade do |t|
-    t.string "country_code"
-    t.string "country_name"
   end
 
   create_table "green_deal_fuel_code_map", force: :cascade do |t|
