@@ -297,7 +297,6 @@ describe "monthly invoice export" do
       expect(rrn_use_case3).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).exactly(1).times
     end
 
-
     it "send a no data error to sentry for one of the schemas" do
       expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times
     end
