@@ -1,3 +1,5 @@
+require "sentry-ruby"
+
 describe "monthly invoice export" do
   let(:monthly_invoice_rake) { get_task("data_export:export_invoices") }
 
@@ -256,6 +258,47 @@ describe "monthly invoice export" do
 
     it "passes this month's start and end dates to the use case" do
       expect(use_case).to have_received(:execute).with(Date.parse("2024-01-01"), Date.parse("2024-02-01"))
+    end
+  end
+
+  context "when calling rake:export_schema_invoices" do
+    let(:monthly_invoice_rake) { get_task("data_export:export_schema_invoices") }
+    let(:use_case) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:fetch_active_schemes_use_case) { instance_double(UseCase::FetchActiveSchemesId) }
+    let(:active_scheme_ids) { [1, 2, 3] }
+    let(:rrn_use_case1) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case2) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case3) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
+
+    before do
+      Timecop.freeze(2024, 2, 1, 0, 0, 0)
+      WebMock.enable!
+      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
+      allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case1, rrn_use_case2, rrn_use_case3)
+      allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
+      allow(rrn_use_case1).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).and_return returned_data
+      allow(rrn_use_case2).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).and_return []
+      allow(rrn_use_case3).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).and_return returned_data
+      allow(fetch_active_schemes_use_case).to receive(:execute).and_return active_scheme_ids
+      allow(Sentry).to receive(:capture_exception)
+
+      monthly_invoice_rake.invoke
+    end
+
+    after do
+      Timecop.return
+      WebMock.disable!
+    end
+
+    it "exports schemas with data" do
+      expect(rrn_use_case1).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).exactly(1).times
+      expect(rrn_use_case2).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).exactly(1).times
+      expect(rrn_use_case3).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).exactly(1).times
+    end
+
+    it "send a no data error to sentry for one of the schemas" do
+      expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times
     end
   end
 end
