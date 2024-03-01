@@ -274,6 +274,7 @@ describe "monthly invoice export" do
     before do
       Timecop.freeze(2024, 2, 1, 0, 0, 0)
       WebMock.enable!
+      allow($stdout).to receive(:puts)
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
       allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case1, rrn_use_case2, rrn_use_case3)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
@@ -282,7 +283,6 @@ describe "monthly invoice export" do
       allow(rrn_use_case3).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).and_return returned_data
       allow(fetch_active_schemes_use_case).to receive(:execute).and_return active_scheme_ids
       allow(Sentry).to receive(:capture_exception)
-
       monthly_invoice_rake.invoke
     end
 
@@ -296,6 +296,7 @@ describe "monthly invoice export" do
       expect(rrn_use_case2).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).exactly(1).times
       expect(rrn_use_case3).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).exactly(1).times
     end
+
 
     it "send a no data error to sentry for one of the schemas" do
       expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times

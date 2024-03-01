@@ -9,7 +9,7 @@ namespace :data_export do
     report_type = args[:report_type] || ENV["report_type"]
     scheme_id = args[:scheme_id] || ENV["scheme_id"]
     assessment_use_case = case report_type
-                          when "st"
+                          when "scheme_name_type"
                             ApiFactory.get_assessment_count_by_scheme_name_type
                           when "region_type"
                             ApiFactory.get_assessment_count_by_region_type
