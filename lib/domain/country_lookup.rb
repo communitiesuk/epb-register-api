@@ -24,6 +24,12 @@ module Domain
       J: "in_unassigned_location",
     }.freeze
 
+    COUNTRY_IDS = {
+      E: 1,
+      W: 2,
+      N: 3,
+    }.freeze
+
     def initialize(country_codes:)
       @country_codes = country_codes.map(&:to_sym)
     end
@@ -54,6 +60,14 @@ module Domain
 
     def country_codes
       @country_codes.sort
+    end
+
+    def country_id
+      return 4 if @country_codes == %i[W E]
+
+      COUNTRY_IDS[@country_codes[0].to_sym]
+    rescue NoMethodError
+      nil
     end
 
   private
