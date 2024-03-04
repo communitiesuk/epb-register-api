@@ -234,12 +234,12 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  describe "date scenarios" do
+  describe "dates in future scenarios" do
     let(:rule_under_test_error) do
       {
-        "code": "DATES_IN_RANGE",
+        "code": "DATES_CANT_BE_IN_FUTURE",
         "title":
-          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
+          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future',
       }.freeze
     end
 
@@ -261,6 +261,34 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
                     })
     end
 
+    it "returns an error when completion date is in the future" do
+      assert_errors([rule_under_test_error],
+                    {
+                      "Inspection-Date": Date.today.to_s,
+                      "Completion-Date": Date.tomorrow.to_s,
+                      "Registration-Date": Date.tomorrow.to_s,
+                    })
+    end
+  end
+
+  describe "dates in range scenarios" do
+    let(:rule_under_test_error) do
+      {
+        "code": "DATES_IN_RANGE",
+        "title":
+          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be more than 18 months ago',
+      }.freeze
+    end
+
+    it "Allows an inspection date that is today" do
+      assert_errors([],
+                    {
+                      "Inspection-Date": Date.today.to_s,
+                      "Registration-Date": Date.today.to_s,
+                      "Completion-Date": Date.today.to_s,
+                    })
+    end
+
     it "returns an error when any of the dates are more than 18 months ago" do
       assert_errors(
         [rule_under_test_error],
@@ -270,15 +298,6 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
           "Completion-Date": Date.today.prev_month(19).to_s,
         },
       )
-    end
-
-    it "returns an error when completion date is in the future" do
-      assert_errors([rule_under_test_error],
-                    {
-                      "Inspection-Date": Date.today.to_s,
-                      "Completion-Date": Date.tomorrow.to_s,
-                      "Registration-Date": Date.tomorrow.to_s,
-                    })
     end
   end
 
