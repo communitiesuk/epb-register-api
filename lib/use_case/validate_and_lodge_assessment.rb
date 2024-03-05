@@ -72,12 +72,14 @@ module UseCase
       validate_assessment_use_case:,
       lodge_assessment_use_case:,
       check_assessor_belongs_to_scheme_use_case:,
-      check_approved_software_use_case:
+      check_approved_software_use_case:,
+      country_use_case:
     )
       @validate_assessment_use_case = validate_assessment_use_case
       @lodge_assessment_use_case = lodge_assessment_use_case
       @check_assessor_belongs_to_scheme_use_case = check_assessor_belongs_to_scheme_use_case
       @check_approved_software_use_case = check_approved_software_use_case
+      @country_use_case = country_use_case
     end
 
     def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:)
@@ -121,7 +123,11 @@ module UseCase
               LodgementRules::DomesticCommon.new
             end
 
-          validation_result = rules.validate(wrapper.get_view_model)
+          country_lookup = @country_use_case.execute rrn: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :assessment_id),
+                                                     postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
+                                                     address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
+
+          validation_result = rules.validate(wrapper.get_view_model, country_lookup)
 
           unless validation_result.empty?
             if overridden

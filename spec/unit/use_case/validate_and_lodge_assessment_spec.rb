@@ -5,6 +5,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       lodge_assessment_use_case:,
       check_assessor_belongs_to_scheme_use_case:,
       check_approved_software_use_case:,
+      country_use_case:,
     )
   end
 
@@ -33,6 +34,10 @@ describe UseCase::ValidateAndLodgeAssessment do
 
   let(:lodge_assessment_use_case) do
     instance_spy(UseCase::LodgeAssessment)
+  end
+
+  let(:country_use_case) do
+    instance_double(UseCase::GetCountryForCandidateLodgement)
   end
 
   context "when validating an invalid schema name" do
@@ -116,6 +121,10 @@ describe UseCase::ValidateAndLodgeAssessment do
   context "when validating assessment XML that is from the current version of a schema" do
     after do
       Timecop.return
+    end
+
+    before do
+      allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
     end
 
     it "validates SAP Schema version 19.1.0 " do
@@ -296,6 +305,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     let(:rdsap) { Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")) }
 
     before do
+      allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
     end
 
@@ -341,6 +351,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       let(:cepc) { Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc")) }
 
       before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:E])
         Timecop.freeze(2019, 2, 22, 0, 0, 0)
       end
 
@@ -367,6 +378,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
         Timecop.freeze(2021, 2, 22, 0, 0, 0)
       end
 
@@ -391,6 +403,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
         Timecop.freeze(2025, 2, 22, 0, 0, 0)
       end
 
@@ -417,6 +430,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
         Timecop.freeze(2021, 2, 22, 0, 0, 0)
       end
 
@@ -443,6 +457,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:E])
         Timecop.freeze(2022, 12, 22, 0, 0, 0)
         allow(Helper::Toggles).to receive(:enabled?)
       end
@@ -469,6 +484,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
 
     before do
+      allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
       allow(lodge_assessment_use_case).to receive(:execute).and_raise(ActiveRecord::StatementInvalid)
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
     end
@@ -485,6 +501,37 @@ describe UseCase::ValidateAndLodgeAssessment do
                          migrated: false,
                          overridden: true
       }.to raise_exception UseCase::ValidateAndLodgeAssessment::DatabaseWriteError
+    end
+  end
+
+  context "when checking the country of the assessment" do
+    let(:welsh_sap_10_2_xml) do
+      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+      xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "CF10 1EP" }
+      xml.to_s
+    end
+
+    let(:country_domain) do
+      Domain::CountryLookup.new(country_codes: [:W])
+    end
+
+    before do
+      Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
+      allow(country_use_case).to receive(:execute).and_return country_domain
+    end
+
+    after do
+      Timecop.return
+    end
+
+    it "executes the county for candidate assessment use case" do
+      use_case.execute assessment_xml: welsh_sap_10_2_xml,
+                       schema_name: "SAP-Schema-19.0.0",
+                       scheme_ids: "1",
+                       migrated: false,
+                       overridden: false
+
+      expect(country_use_case).to have_received(:execute).with(rrn: "0000-0000-0000-0000-0000", address_id: "UPRN-0000000001", postcode: "CF10 1EP").exactly(1).times
     end
   end
 end

@@ -60,4 +60,28 @@ shared_context "when lodging XML" do
       schema_name: schema,
     )
   end
+
+  def assert_errors(expected_errors:, values: nil, new_nodes: [], country_code: [:E])
+    country_lookup = Domain::CountryLookup.new(country_codes: country_code)
+    docs_under_test.each do |doc|
+      xml_doc = Nokogiri.XML(Samples.xml(doc))
+
+      values.each do |k, v|
+        if v == :delete
+          xml_doc.at(k).remove
+        else
+          xml_doc.at(k).children = v
+        end
+      end
+
+      new_nodes.each do |node|
+        xml_doc.at(node[:selector]).add_next_sibling(node[:xml])
+      end
+
+      wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc, false)
+      adapter = wrapper.get_view_model
+      errors = described_class.new.validate(adapter, country_lookup)
+      expect(errors).to match_array(expected_errors)
+    end
+  end
 end

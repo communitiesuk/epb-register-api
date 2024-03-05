@@ -1,9 +1,7 @@
 module LodgementRules
   class DomesticCommon
     def self.method_or_nil(adapter, method)
-      adapter.send(method)
-    rescue NoMethodError
-      nil
+      Helper::ClassHelper.method_or_nil(adapter, method)
     end
 
     RULES = [
@@ -12,7 +10,7 @@ module LodgementRules
         title:
           '"Habitable-Room-Count" must be an integer and must be greater than or equal to 1',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             habitable_room_count = method_or_nil(adapter, :habitable_room_count)
             return true if habitable_room_count.nil?
 
@@ -28,7 +26,7 @@ module LodgementRules
         title:
           '"Energy-Rating-Current", "Energy-Rating-Potential", "Environmental-Impact-Current" and "Environmental-Impact-Potential" must be greater than 0',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             ratings = [
               method_or_nil(adapter, :energy_rating_current),
               method_or_nil(adapter, :energy_rating_potential),
@@ -43,7 +41,7 @@ module LodgementRules
         title:
           '"Description" for parent node "Wall", "Walls", "Roof", "Floor", "Window", "Windows", "Main-Heating", "Main-Heating-Controls", "Hot-Water", "Lighting" and "Secondary-Heating" must not be equal to the parent node name, ignoring case',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             walls = method_or_nil(adapter, :all_wall_descriptions)
             if !walls.nil? && !walls.compact.select { |desc|
                  desc.casecmp("wall").zero?
@@ -118,7 +116,7 @@ module LodgementRules
         title:
           '"Total-Floor-Area" within "SAP-Floor-Dimension" must be greater than 0 and less than or equal to 3000',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             sap_floor_dimensions =
               method_or_nil(adapter, :all_sap_floor_dimensions)
 
@@ -130,7 +128,7 @@ module LodgementRules
         title:
           'If "Level" is greater than 1 and "Building-Part-Number" is equal to 1 then "Floor-Heat-Loss" must not be equal to 7',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             level = method_or_nil(adapter, :level)
             building_part_number = method_or_nil(adapter, :building_part_number)
             floor_heat_loss = method_or_nil(adapter, :floor_heat_loss)
@@ -146,7 +144,7 @@ module LodgementRules
         title:
           'If "Water-Heating-Code" is equal to 903 then "Immersion-Heating-Type" must not be equal to \'NA\'',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             water_heating_code = method_or_nil(adapter, :water_heating_code)
             immersion_heating_type =
               method_or_nil(adapter, :immersion_heating_type)
@@ -159,7 +157,7 @@ module LodgementRules
         title:
           'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             heating_category = method_or_nil(adapter, :main_heating_category)
             fuel_type = method_or_nil(adapter, :main_fuel_type)
             boiler_flue_type = method_or_nil(adapter, :boiler_flue_type)
@@ -177,7 +175,7 @@ module LodgementRules
         title:
           '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             dates = [
               Date.parse(method_or_nil(adapter, :date_of_assessment)),
               Date.parse(method_or_nil(adapter, :date_of_registration)),
@@ -194,7 +192,7 @@ module LodgementRules
         title:
           'If "Meter-Type" is equal to 2 then "SAP-Main-Heating-Code" must not be equal to 401, 402, 404, 408, 409, 421 or 422',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             relevant_heating_codes = %w[401 402 404 408 409 421 422]
             meter_type = method_or_nil(adapter, :meter_type)
             sap_main_heating_code =
@@ -211,7 +209,7 @@ module LodgementRules
         title:
           'Only one of "Roof-Insulation-Thickness", "Rafter-Insulation-Thickness", "Flat-Roof-Insulation-Thickness", "Sloping-Ceiling-Insulation-Thickness" or "Roof-U-Value" may be supplied',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             building_parts = method_or_nil(adapter, :all_building_parts)
 
             building_parts.select { |part|
@@ -230,7 +228,7 @@ module LodgementRules
         title:
           'If "Roof-Room-Connected" is equal to \'Y\' or \'y\' then more than one "SAP-Building-Part" must be supplied',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             building_parts = method_or_nil(adapter, :all_building_parts)
             roof_room_connected = !building_parts.map { |part| part[:roof_room_connected] }.select { |flag| flag&.upcase == "Y" }.empty?
             !(roof_room_connected && building_parts.length <= 1)
@@ -241,7 +239,7 @@ module LodgementRules
         title:
           'The "Completion-Date" must be equal to or later than "Inspection-Date"',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             dates = [
               Date.parse(method_or_nil(adapter, :date_of_assessment)),
               # Inspection-Date
@@ -256,7 +254,7 @@ module LodgementRules
         title:
           'The "Completion-Date" must be before or equal to the "Registration-Date"',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             dates = [
               Date.parse(method_or_nil(adapter, :date_of_completion)),
               # Completion-Date
@@ -272,10 +270,9 @@ module LodgementRules
         title:
           "Property address must be in England, Wales, or Northern Ireland",
         test:
-          lambda do |adapter|
+          lambda do |adapter, country_lookup = nil|
             country_code = method_or_nil(adapter, :country_code)
-            lookup = country_lookup_for_assessment adapter
-            if lookup.in_channel_islands? || lookup.in_isle_of_man? || (lookup.in_scotland? && !lookup.in_england?) || country_code == "SCT"
+            if country_lookup.in_channel_islands? || country_lookup.in_isle_of_man? || (country_lookup.in_scotland? && !country_lookup.in_england?) || country_code == "SCT"
               false
             else
               true
@@ -284,16 +281,10 @@ module LodgementRules
       },
     ].freeze
 
-    def validate(xml_adaptor)
-      errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
+    def validate(xml_adaptor, country_lookup)
+      errors = RULES.reject { |rule| rule[:test].call(xml_adaptor, country_lookup) }
 
       errors.map { |error| { code: error[:name], title: error[:title] } }
-    end
-
-    def self.country_lookup_for_assessment(assessment)
-      ApiFactory.get_country_for_candidate_assessment_use_case.execute rrn: method_or_nil(assessment, :assessment_id),
-                                                                       postcode: method_or_nil(assessment, :postcode),
-                                                                       address_id: method_or_nil(assessment, :address_id)
     end
   end
 end

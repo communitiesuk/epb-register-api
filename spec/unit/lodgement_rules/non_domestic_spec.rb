@@ -1,5 +1,5 @@
-describe LodgementRules::NonDomestic, set_with_timecop: true do
-  def assert_errors(xml_updates, expected_errors, include_errors: false)
+shared_context "when testing non-domestic lodgements" do
+  def assert_errors(xml_updates, expected_errors, include_errors: false, country_code: nil)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
       xml_updates.each do |key, value|
@@ -9,10 +9,33 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       wrapper =
         ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name], false)
       adapter = wrapper.get_view_model
-      errors = described_class.new.validate(adapter)
+      lookup_country_code = if country_code.nil?
+                              doc[:schema_name].include?("NI") ? [:N] : [:E]
+                            else
+                              country_code
+                            end
+      country_lookup = Domain::CountryLookup.new(country_codes: lookup_country_code)
+      errors = described_class.new.validate(adapter, country_lookup)
       include_errors ? expect(errors).to(include(*expected_errors)) : expect(errors).to(match_array(expected_errors))
     end
   end
+
+  def do_expect(doc, reset_dates: true)
+    xml = doc[:xml_doc]
+    xml_doc = if reset_dates
+                reset_dates_to_yesterday(xml)
+              else
+                doc[:xml_doc]
+              end
+    wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name])
+    adapter = wrapper.get_view_model
+    country_code = doc[:schema_name].include?("NI") ? [:N] : [:E]
+    described_class.new.validate(adapter, Domain::CountryLookup.new(country_codes: country_code))
+  end
+end
+
+describe LodgementRules::NonDomestic, set_with_timecop: true do
+  include_context "when testing non-domestic lodgements"
 
   before do
     map_lookups_to_country_codes do |postcode:|
@@ -29,7 +52,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "when CEPC is lodged" do
+  context "when CEPC and CEPC-NI are lodged for " do
     let!(:docs_under_test) do
       [
         {
@@ -57,12 +80,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
 
     it "Returns an empty list for a valid file" do
       docs_under_test.each do |doc|
-        xml = doc[:xml_doc]
-        xml_doc = reset_dates_to_yesterday(xml)
-        wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name])
-        adapter = wrapper.get_view_model
-        errors = described_class.new.validate(adapter)
-        expect(errors).to eq([])
+        expect(do_expect(doc)).to eq([])
       end
     end
 
@@ -227,7 +245,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns no error if the address is NI and SBEM version is 4" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "BT7 8KK"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "BT7 8KK"]], [], country_code: [:N])
       end
 
       it "returns an error if the address is NI and SBEM version is 5" do
@@ -235,55 +253,55 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if the address is NI and SBEM version is 6" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b.0, SBEM, v6.1.b.0"], ["Postcode", "BT7 8KK"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b.0, SBEM, v6.1.b.0"], ["Postcode", "BT7 8KK"]], [error], country_code: [:N])
       end
 
       it "returns an error if the address is Wales and SBEM version is 4" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "CF23 9XX"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "CF23 9XX"]], [error], country_code: [:W])
       end
 
       it "returns no error if the address is Wales and SBEM version is 5" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL68 9XX"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL68 9XX"]], [], country_code: [:W])
       end
 
       it "returns an error if the address is Wales and SBEM version is 6.1.a/b/c/d" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.a, SBEM, v6.1.a.0"], ["Postcode", "LL68 9XX"]], [error])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL68 9XX"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.a, SBEM, v6.1.a.0"], ["Postcode", "LL68 9XX"]], [error], country_code: [:W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL68 9XX"]], [error], country_code: [:W])
       end
 
       it "returns no error if the address is Wales and SBEM version is 6.1.e" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "LL55 9XX"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "LL55 9XX"]], [], country_code: [:W])
       end
 
       it "returns an error if the address is England and SBEM version is 4" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"]], [error], country_code: [:E])
       end
 
       it "returns an error if the address is England and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 1]], [error])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 2]], [error])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 4]], [error])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 5]], [error])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 6]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 1]], [error], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 2]], [error], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 4]], [error], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 5]], [error], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 6]], [error], country_code: [:E])
       end
 
       it "returns an error if the postcode between England & Wales and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [], country_code: %i[E W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [error], country_code: %i[E W])
       end
 
       it "returns no error if the address is England and SBEM version is 6" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "SW11 9XX"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "SW11 9XX"]], [], country_code: [:E])
       end
 
       it "returns no error if the address is England or Wales and the Transaction-Type is 3" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [], country_code: [:E])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [], country_code: [:W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [], country_code: [:W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [], country_code: [:W])
       end
 
       it "returns an error if the Transaction-Type is 3 but the SBEM version is not current" do
@@ -292,16 +310,16 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "does not return an error if the address is in a cross-border postcode and SBEM version 6", aggregate_failures: true do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [], country_code: %i[E W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [], country_code: %i[E W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [], country_code: %i[E W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [], country_code: %i[E W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [], country_code: %i[E W])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [], country_code: %i[E W])
       end
 
       it "recognizes that CH66 is in England, not in Welsh CH6 (i.e. matches full outcode, not just prefix)" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "CH66 3RA"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "CH66 3RA"]], [], country_code: [:E])
       end
     end
 
@@ -314,35 +332,35 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an INVALID_COUNTRY error if the address is JE" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "JE3 6HW"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "JE3 6HW"]], [error], country_code: [:L])
       end
 
       it "returns an INVALID_COUNTRY error if the address is GY" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "GY7 9QS"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "GY7 9QS"]], [error], country_code: [:L])
       end
 
       it "returns an INVALID_COUNTRY error if the address is IM" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error], country_code: [:L])
       end
 
       it "returns an INVALID_COUNTRY error if the address is in Scotland" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "TD14 5TY"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "TD14 5TY"]], [error], country_code: [:S])
       end
 
       it "returns no error if the address is in England" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "SW1A 2AA"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "SW1A 2AA"]], [], country_code: [:E])
       end
 
       it "returns no error if the address is in Northern Ireland" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v4.1"], ["Postcode", "BT3 9EP"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v4.1"], ["Postcode", "BT3 9EP"]], [], country_code: [:N])
       end
 
       it "returns no error if the address is in Wales" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e"], ["Postcode", "LL65 1DQ"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e"], ["Postcode", "LL65 1DQ"]], [], country_code: [:W])
       end
 
       it "returns no error if the postcode crosses the English/Scottish border" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "TD15 1UZ"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "TD15 1UZ"]], [], country_code: %i[E S])
       end
     end
 
@@ -383,11 +401,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
 
     it "returns an empty list for a valid file" do
       docs_under_test.each do |doc|
-        xml_doc = doc[:xml_doc]
-        wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name])
-        adapter = wrapper.get_view_model
-        errors = described_class.new.validate(adapter)
-        expect(errors).to eq([])
+        expect(do_expect(doc, reset_dates: false)).to eq([])
       end
     end
 

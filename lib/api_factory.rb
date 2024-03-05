@@ -94,6 +94,7 @@ class ApiFactory
         validate_assessment_use_case:,
         check_assessor_belongs_to_scheme_use_case:,
         check_approved_software_use_case:,
+        country_use_case: get_country_for_candidate_assessment_use_case,
       )
   end
 

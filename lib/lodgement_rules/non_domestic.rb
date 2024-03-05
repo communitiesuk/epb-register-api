@@ -1,9 +1,7 @@
 module LodgementRules
   class NonDomestic
     def self.method_or_nil(adapter, method)
-      adapter.send(method)
-    rescue NoMethodError
-      nil
+      Helper::ClassHelper.method_or_nil(adapter, method)
     end
 
     CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1", northern_ireland: "SBEM, v4.1", wales: "SBEM, v6.1.e", england_type_three: "SBEM, v5.6", wales_5_6: "SBEM, v5.6" }.freeze
@@ -14,7 +12,7 @@ module LodgementRules
         title:
           '"Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             dates =
               [
                 method_or_nil(adapter, :date_of_assessment),
@@ -32,7 +30,7 @@ module LodgementRules
         title:
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be more than 4 years ago',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             dates = [
               method_or_nil(adapter, :date_of_assessment),
               method_or_nil(adapter, :date_of_registration),
@@ -48,7 +46,7 @@ module LodgementRules
         name: "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
         title: '"Floor-Area" must be greater than 0',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             floor_area = method_or_nil(adapter, :floor_area)
             floor_area.nil? || floor_area.to_f.positive?
           end,
@@ -57,7 +55,7 @@ module LodgementRules
         name: "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
         title: '"SER", "BER", "TER" and "TYR" must not be negative numbers',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             [
               method_or_nil(adapter, :standard_emissions),
               method_or_nil(adapter, :building_emissions),
@@ -72,7 +70,7 @@ module LodgementRules
         name: "MUST_RECORD_TRANSACTION_TYPE",
         title: '"Transaction-Type" must not be equal to 7',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             method_or_nil(adapter, :transaction_type).to_i != 7
           end,
       },
@@ -80,7 +78,7 @@ module LodgementRules
         name: "MUST_RECORD_EPC_DISCLOSURE",
         title: '"EPC-Related-Party-Disclosure" must not be equal to 13',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             method_or_nil(adapter, :epc_related_party_disclosure).to_i != 13
           end,
       },
@@ -88,7 +86,7 @@ module LodgementRules
         name: "MUST_RECORD_ENERGY_TYPE",
         title: '"Energy-Type" must not be equal to 4',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             adapter
               .all_energy_types
               .map(&:to_i)
@@ -99,7 +97,7 @@ module LodgementRules
         name: "MUST_RECORD_REASON_TYPE",
         title: '"Reason-Type" must not be equal to 7',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             reason_types = method_or_nil(adapter, :all_reason_types)
             return true unless reason_types
 
@@ -110,7 +108,7 @@ module LodgementRules
         name: "MUST_RECORD_DEC_DISCLOSURE",
         title: '"DEC-Related-Party-Disclosure" must not be equal to 8',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             disclosure = method_or_nil(adapter, :dec_related_party_disclosure)
             disclosure.nil? || disclosure != "8"
           end,
@@ -120,7 +118,7 @@ module LodgementRules
         title:
           '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
         test:
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             current_nominated_date =
               method_or_nil(adapter, :current_assessment_date)
             or_end_date = method_or_nil(adapter, :or_assessment_end_date)
@@ -136,9 +134,9 @@ module LodgementRules
           "Property address must be in England, Wales, or Northern Ireland",
         test:
           # Unlike domestic lodgments non-domestic XML does not contain a country code
-          lambda do |adapter|
-            lookup = country_lookup_for_assessment adapter
-            if lookup.in_channel_islands? || lookup.in_isle_of_man? || (lookup.in_scotland? && !lookup.in_england?)
+          lambda do |adapter, country_lookup = nil|
+            country_code = method_or_nil(adapter, :country_code)
+            if country_lookup.in_channel_islands? || country_lookup.in_isle_of_man? || (country_lookup.in_scotland? && !country_lookup.in_england?) || country_code == "SCT"
               false
             else
               true
@@ -157,19 +155,18 @@ module LodgementRules
           # If the address has a postcode that is entirely in England and <Transaction-Type> is 1,2,4,5 or 6 then SBEM version must be "v6.1.b.0"
           # If the address has a postcode that is in  England and <Transaction-Type> is equal to 3 then SBEM version can be either "v5.6.b.0" or "v6.1.b.0"
           # If the address has a postcode that covers properties in both England and Wales then c version can be either "v5.6.b.0" or "v6.1.b.0"
-          lambda do |adapter|
+          lambda do |adapter, country_lookup = nil|
             report_type = method_or_nil(adapter, :report_type)
             if %w[3 4].include? report_type # This is a CEPC or CEPC-RR
-              lookup = country_lookup_for_assessment adapter
               calc_tool = method_or_nil(adapter, :calculation_tool)
               building_level = method_or_nil(adapter, :building_level)
               transaction_type = method_or_nil(adapter, :transaction_type)
               if %w[3 4].include? building_level # Check SBEM software version for these
-                return false if wrong_sbem_version_for_ni?(lookup, calc_tool)
-                return false if unless_in_ni?(lookup, calc_tool, transaction_type)
-                return false if wrong_sbem_version_for_wales?(lookup, calc_tool, transaction_type)
-                return false if wrong_sbem_version_for_england?(lookup, calc_tool, transaction_type)
-                return false if no_known_sbem_version_for_england_and_wales_transaction_type_three?(lookup, calc_tool, transaction_type)
+                return false if wrong_sbem_version_for_ni?(country_lookup, calc_tool)
+                return false if unless_in_ni?(country_lookup, calc_tool, transaction_type)
+                return false if wrong_sbem_version_for_wales?(country_lookup, calc_tool, transaction_type)
+                return false if wrong_sbem_version_for_england?(country_lookup, calc_tool, transaction_type)
+                return false if no_known_sbem_version_for_england_and_wales_transaction_type_three?(country_lookup, calc_tool, transaction_type)
               else
                 #  Level 5 - DSM rules go in here once we know them
                 return true
@@ -184,7 +181,7 @@ module LodgementRules
           'The "Registration-Date" must be equal to or later than "Inspection-Date"',
         test:
 
-          lambda do |adapter|
+          lambda do |adapter, _country_lookup = nil|
             dates = [
               Date.parse(method_or_nil(adapter, :date_of_assessment)),
               # Inspection-Date
@@ -217,18 +214,10 @@ module LodgementRules
       true if (lookup.in_wales? || lookup.in_england?) && transaction_type == "3" && CURRENT_SBEM_VERSIONS.values.none? { |sbem_version| calc_tool.include? sbem_version }
     end
 
-    def validate(xml_adaptor)
-      errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
+    def validate(xml_adaptor, country_lookup)
+      errors = RULES.reject { |rule| rule[:test].call(xml_adaptor, country_lookup) }
 
       errors.map { |error| { code: error[:name], title: error[:title] } }
     end
-
-    def self.country_lookup_for_assessment(assessment)
-      ApiFactory.get_country_for_candidate_assessment_use_case.execute rrn: method_or_nil(assessment, :assessment_id),
-                                                                       postcode: method_or_nil(assessment, :postcode),
-                                                                       address_id: method_or_nil(assessment, :address_id)
-    end
-
-    private_class_method :country_lookup_for_assessment
   end
 end

@@ -1,30 +1,12 @@
+require_relative "../../shared_context/shared_logdement"
+
 describe LodgementRules::DomesticCommon, set_with_timecop: true do
+  include_context "when lodging XML"
   let(:docs_under_test) { %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0] }
 
-  def assert_errors(expected_errors, values = nil, new_nodes = [])
-    docs_under_test.each do |doc|
-      xml_doc = Nokogiri.XML(Samples.xml(doc))
-
-      values.each do |k, v|
-        if v == :delete
-          xml_doc.at(k).remove
-        else
-          xml_doc.at(k).children = v
-        end
-      end
-
-      new_nodes.each do |node|
-        xml_doc.at(node[:selector]).add_next_sibling(node[:xml])
-      end
-
-      wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc, false)
-      adapter = wrapper.get_view_model
-      errors = described_class.new.validate(adapter)
-      expect(errors).to match_array(expected_errors)
-    end
-  end
-
   it "returns an empty list for a valid file" do
+    country_lookup = Domain::CountryLookup.new(country_codes: [:E])
+
     docs_under_test.each do |doc|
       wrapper =
         ViewModel::Factory.new.create(
@@ -33,7 +15,8 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
           false,
         )
       adapter = wrapper.get_view_model
-      errors = described_class.new.validate(adapter)
+
+      errors = described_class.new.validate(adapter, country_lookup)
       expect(errors).to eq([])
     end
   end
@@ -48,15 +31,15 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error if the habitable room count is not an integer" do
-      assert_errors([error], { "Habitable-Room-Count": "6.2" })
+      assert_errors(expected_errors: [error], values: { "Habitable-Room-Count": "6.2" })
     end
 
     it "returns an error if the habitable room count is zero" do
-      assert_errors([error], { "Habitable-Room-Count": "0" })
+      assert_errors(expected_errors: [error], values: { "Habitable-Room-Count": "0" })
     end
 
     it "returns an error if the habitable room count is negative" do
-      assert_errors([error], { "Habitable-Room-Count": "-2" })
+      assert_errors(expected_errors: [error], values: { "Habitable-Room-Count": "-2" })
     end
   end
 
@@ -70,19 +53,19 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error if Energy Rating Current is 0" do
-      assert_errors([error], { "Energy-Rating-Current": "0" })
+      assert_errors(expected_errors: [error], values: { "Energy-Rating-Current": "0" })
     end
 
     it "returns an error if Energy Rating Potential is 0" do
-      assert_errors([error], { "Energy-Rating-Potential": "0" })
+      assert_errors(expected_errors: [error], values: { "Energy-Rating-Potential": "0" })
     end
 
     it "returns an error if Environmental-Impact-Current is 0" do
-      assert_errors([error], { "Environmental-Impact-Current": "0" })
+      assert_errors(expected_errors: [error], values: { "Environmental-Impact-Current": "0" })
     end
 
     it "returns an error if Environmental-Impact-Potential is 0" do
-      assert_errors([error], { "Environmental-Impact-Potential": "0" })
+      assert_errors(expected_errors: [error], values: { "Environmental-Impact-Potential": "0" })
     end
   end
 
@@ -96,45 +79,39 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error if Wall has a description of wall" do
-      assert_errors([error], { "Wall/Description": "wall" })
+      assert_errors(expected_errors: [error], values: { "Wall/Description": "wall" })
     end
 
     it "returns an error if Roof has a description of roof" do
-      assert_errors([error], { "Roof/Description": "roof" })
+      assert_errors(expected_errors: [error], values: { "Roof/Description": "roof" })
     end
 
     it "returns an error if Floor has a description of floor" do
-      assert_errors([error], { "Floor/Description": "floor" })
+      assert_errors(expected_errors: [error], values: { "Floor/Description": "floor" })
     end
 
     it "returns an error if Window has a description of window" do
-      assert_errors([error], { "Window/Description": "window" })
+      assert_errors(expected_errors: [error], values: { "Window/Description": "window" })
     end
 
     it "returns an error if Main-Heating has a description of main-heating" do
-      assert_errors([error], { "Main-Heating/Description": "main-heating" })
+      assert_errors(expected_errors: [error], values: { "Main-Heating/Description": "main-heating" })
     end
 
     it "returns an error if Main-Heating-Controls has a description of main-heating-controls" do
-      assert_errors(
-        [error],
-        { "Main-Heating-Controls/Description": "main-heating-controls" },
-      )
+      assert_errors(expected_errors: [error], values: { "Main-Heating-Controls/Description": "main-heating-controls" })
     end
 
     it "returns an error if Hot-Water has a description of hot-water" do
-      assert_errors([error], { "Hot-Water/Description": "hot-water" })
+      assert_errors(expected_errors: [error], values: { "Hot-Water/Description": "hot-water" })
     end
 
     it "returns an error if Lighting has a description of lighting" do
-      assert_errors([error], { "Lighting/Description": "lighting" })
+      assert_errors(expected_errors: [error], values: { "Lighting/Description": "lighting" })
     end
 
     it "returns an error if Secondary-Heating has a description of secondary-heating" do
-      assert_errors(
-        [error],
-        { "Secondary-Heating/Description": "secondary-heating" },
-      )
+      assert_errors(expected_errors: [error], values: { "Secondary-Heating/Description": "secondary-heating" })
     end
   end
 
@@ -148,23 +125,23 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error if the floor area is 0" do
-      assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "0" })
+      assert_errors(expected_errors: [error], values: { "SAP-Floor-Dimension/Total-Floor-Area": "0" })
     end
 
     it "returns an error if the floor area is negative" do
-      assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "-6" })
+      assert_errors(expected_errors: [error], values: { "SAP-Floor-Dimension/Total-Floor-Area": "-6" })
     end
 
     it "returns an error if the floor area is more than 3000" do
-      assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "3001" })
+      assert_errors(expected_errors: [error], values: { "SAP-Floor-Dimension/Total-Floor-Area": "3001" })
     end
 
     it "returns no errors if floor area is 100" do
-      assert_errors([], { "SAP-Floor-Dimension/Total-Floor-Area": "100" })
+      assert_errors(expected_errors: [], values: { "SAP-Floor-Dimension/Total-Floor-Area": "100" })
     end
 
     it "returns no errors if floor area is 0.45" do
-      assert_errors([], { "SAP-Floor-Dimension/Total-Floor-Area": "0.45" })
+      assert_errors(expected_errors: [], values: { "SAP-Floor-Dimension/Total-Floor-Area": "0.45" })
     end
   end
 
@@ -178,10 +155,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error when the described scenario is triggered (Floor-Heat-Loss being given as 7)" do
-      assert_errors(
-        [error],
-        { "Level": "2", "Building-Part-Number": "1", "Floor-Heat-Loss": "7" },
-      )
+      assert_errors(expected_errors: [error], values: { "Level": "2", "Building-Part-Number": "1", "Floor-Heat-Loss": "7" })
     end
   end
 
@@ -195,10 +169,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error when the described scenario is triggered (Immersion-Heating-Type is 'NA')" do
-      assert_errors(
-        [error],
-        { "Water-Heating-Code": "903", "Immersion-Heating-Type": "NA" },
-      )
+      assert_errors(expected_errors: [error], values: { "Water-Heating-Code": "903", "Immersion-Heating-Type": "NA" })
     end
   end
 
@@ -212,24 +183,18 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns no errors when main fuel type is 17 but boiler flue type is present" do
-      assert_errors(
-        [],
-        { "Main-Heating-Category": "2", "Main-Fuel-Type": "17" },
-      )
+      assert_errors(expected_errors: [], values: { "Main-Heating-Category": "2", "Main-Fuel-Type": "17" })
     end
 
     it "returns an error when boiler flue type is missing" do
       relevant_fuel_types = %w[17 18 26 27 28 34 35 36 37 51]
 
       relevant_fuel_types.each do |fuel_type|
-        assert_errors(
-          [error],
-          {
-            "Main-Heating-Category": "2",
-            "Boiler-Flue-Type": :delete,
-            "Main-Fuel-Type": fuel_type,
-          },
-        )
+        assert_errors(expected_errors: [error], values: {
+          "Main-Heating-Category": "2",
+          "Boiler-Flue-Type": :delete,
+          "Main-Fuel-Type": fuel_type,
+        })
       end
     end
   end
@@ -244,41 +209,35 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "Allows an inspection date that is today" do
-      assert_errors([],
-                    {
-                      "Inspection-Date": Date.today.to_s,
-                      "Registration-Date": Date.today.to_s,
-                      "Completion-Date": Date.today.to_s,
-                    })
+      assert_errors(expected_errors: [], values: {
+        "Inspection-Date": Date.today.to_s,
+        "Registration-Date": Date.today.to_s,
+        "Completion-Date": Date.today.to_s,
+      })
     end
 
     it "returns an error when any of the dates are in the future" do
-      assert_errors([rule_under_test_error],
-                    {
-                      "Inspection-Date": Date.tomorrow.to_s,
-                      "Registration-Date": Date.tomorrow.to_s,
-                      "Completion-Date": Date.tomorrow.to_s,
-                    })
+      assert_errors(expected_errors: [rule_under_test_error], values: {
+        "Inspection-Date": Date.tomorrow.to_s,
+        "Registration-Date": Date.tomorrow.to_s,
+        "Completion-Date": Date.tomorrow.to_s,
+      })
     end
 
     it "returns an error when any of the dates are more than 18 months ago" do
-      assert_errors(
-        [rule_under_test_error],
-        {
-          "Inspection-Date": Date.today.prev_month(19).to_s,
-          "Registration-Date": Date.today.prev_month(19).to_s,
-          "Completion-Date": Date.today.prev_month(19).to_s,
-        },
-      )
+      assert_errors(expected_errors: [rule_under_test_error], values: {
+        "Inspection-Date": Date.today.prev_month(19).to_s,
+        "Registration-Date": Date.today.prev_month(19).to_s,
+        "Completion-Date": Date.today.prev_month(19).to_s,
+      })
     end
 
     it "returns an error when completion date is in the future" do
-      assert_errors([rule_under_test_error],
-                    {
-                      "Inspection-Date": Date.today.to_s,
-                      "Completion-Date": Date.tomorrow.to_s,
-                      "Registration-Date": Date.tomorrow.to_s,
-                    })
+      assert_errors(expected_errors: [rule_under_test_error], values: {
+        "Inspection-Date": Date.today.to_s,
+        "Completion-Date": Date.tomorrow.to_s,
+        "Registration-Date": Date.tomorrow.to_s,
+      })
     end
   end
 
@@ -295,10 +254,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       relevant_heating_codes = %w[401 402 404 408 409 421 422]
 
       relevant_heating_codes.each do |heating_code|
-        assert_errors(
-          [error],
-          { "Meter-Type": "2", "SAP-Main-Heating-Code": heating_code },
-        )
+        assert_errors(expected_errors: [error], values: {
+          "Meter-Type": "2", "SAP-Main-Heating-Code": heating_code
+        })
       end
     end
   end
@@ -313,7 +271,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "Accepts assessment where only one value is supplied" do
-      assert_errors([], {})
+      assert_errors(expected_errors: [], values: {})
     end
 
     it "accepts assessment where Roof-Insulation-Thickness is supplied inside SAP-Room-In-Roof as well" do
@@ -333,9 +291,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
         ND
       ].each do |value|
         assert_errors(
-          [],
-          { "SAP-Building-Part Roof-Insulation-Thickness": :delete },
-          [
+          expected_errors: [],
+          values: { "SAP-Building-Part Roof-Insulation-Thickness": :delete },
+          new_nodes: [
             {
               selector: "Roof-Insulation-Location",
               xml:
@@ -355,9 +313,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "Rejects assessment where rafter and roof insulation are supplied" do
       assert_errors(
-        [error],
-        {},
-        [
+        expected_errors: [error],
+        values: {},
+        new_nodes: [
           {
             selector: "Roof-Insulation-Thickness",
             xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>",
@@ -368,9 +326,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "Rejects assessment where roof and flat roof insulation are supplied" do
       assert_errors(
-        [error],
-        {},
-        [
+        expected_errors: [error],
+        values: {},
+        new_nodes: [
           {
             selector: "Roof-Insulation-Thickness",
             xml:
@@ -382,9 +340,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "Rejects assessment where roof and sloping ceiling insulation are supplied" do
       assert_errors(
-        [error],
-        {},
-        [
+        expected_errors: [error],
+        values: {},
+        new_nodes: [
           {
             selector: "Roof-Insulation-Thickness",
             xml:
@@ -396,9 +354,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "Rejects assessment where roof and roof u value are supplied" do
       assert_errors(
-        [error],
-        {},
-        [
+        expected_errors: [error],
+        values: {},
+        new_nodes: [
           {
             selector: "Roof-Insulation-Thickness",
             xml: "<Roof-U-Value>2</Roof-U-Value>",
@@ -409,9 +367,9 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "Rejects assessment with more than 2 types of roof insulation" do
       assert_errors(
-        [error],
-        {},
-        [
+        expected_errors: [error],
+        values: {},
+        new_nodes: [
           {
             selector: "Roof-Insulation-Thickness",
             xml: "<Roof-U-Value>2</Roof-U-Value>",
@@ -450,18 +408,18 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "returns no errors when roof room connected is y and more than one building part supplied" do
       assert_errors(
-        [],
-        { "Roof-Room-Connected": "Y" },
-        [{ selector: "SAP-Building-Part", xml: building_part_xml }],
+        expected_errors: [],
+        values: { "Roof-Room-Connected": "Y" },
+        new_nodes: [{ selector: "SAP-Building-Part", xml: building_part_xml }],
       )
     end
 
     it "returns no errors when roof room connected is n and only building part supplied" do
-      assert_errors([], { "Roof-Room-Connected": "N" })
+      assert_errors(expected_errors: [], values: { "Roof-Room-Connected": "N" })
     end
 
     it "returns error when roof room connected is y and only building part supplied" do
-      assert_errors([error], { "Roof-Room-Connected": "Y" })
+      assert_errors(expected_errors: [error], values: { "Roof-Room-Connected": "Y" })
     end
   end
 
@@ -475,28 +433,21 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "allows lodgement when the Completion-Date is after the Inspection-Date" do
-      assert_errors([], {
-        "Inspection-Date": Date.yesterday.to_s,
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.today.to_s,
-
-      })
+      assert_errors(expected_errors: [], values: { "Inspection-Date": Date.yesterday.to_s,
+                                                   "Completion-Date": Date.today.to_s,
+                                                   "Registration-Date": Date.today.to_s })
     end
 
     it "allows lodgement when the Inspection-Date and the Completion-Date are equal" do
-      assert_errors([], {
-        "Inspection-Date": Date.today.to_s,
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [], values: { "Inspection-Date": Date.today.to_s,
+                                                   "Completion-Date": Date.today.to_s,
+                                                   "Registration-Date": Date.today.to_s  })
     end
 
     it "throws an error when the Inspection-Date is later than the Completion-Date" do
-      assert_errors([error], {
-        "Inspection-Date": Date.today.to_s,
-        "Completion-Date": Date.yesterday.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [error], values: {   "Inspection-Date": Date.today.to_s,
+                                                          "Completion-Date": Date.yesterday.to_s,
+                                                          "Registration-Date": Date.today.to_s })
     end
   end
 
@@ -510,24 +461,18 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "allows lodgement when the Registration-Date is after the Completion-Date" do
-      assert_errors([], {
-        "Completion-Date": Date.yesterday.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [], values: { "Completion-Date": Date.yesterday.to_s,
+                                                   "Registration-Date": Date.today.to_s  })
     end
 
     it "allows lodgement when the Completion-Date and the Registration-Date are equal" do
-      assert_errors([], {
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [], values: { "Completion-Date": Date.today.to_s,
+                                                   "Registration-Date": Date.today.to_s })
     end
 
     it "throws an error when the Completion-Date is later than the Registration-Date" do
-      assert_errors([error], {
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.yesterday.to_s,
-      })
+      assert_errors(expected_errors: [error], values: { "Completion-Date": Date.today.to_s,
+                                                        "Registration-Date": Date.yesterday.to_s })
     end
   end
 
@@ -548,51 +493,39 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "allows lodgement when the Completion-Date is after the Inspection-Date and the Registration-Date is after the Completion-Date" do
-      assert_errors([], {
-        "Inspection-Date": Date.yesterday.prev_day.to_s,
-        "Completion-Date": Date.yesterday.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [], values: { "Inspection-Date": Date.yesterday.prev_day.to_s,
+                                                   "Completion-Date": Date.yesterday.to_s,
+                                                   "Registration-Date": Date.today.to_s })
     end
 
     it "allows lodgement when all the dates are equal" do
-      assert_errors([], {
-        "Inspection-Date": Date.today.to_s,
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [], values: { "Inspection-Date": Date.today.to_s,
+                                                   "Completion-Date": Date.today.to_s,
+                                                   "Registration-Date": Date.today.to_s })
     end
 
     it "throws the Inspection error when the Completion-Date is before the Inspection-Date" do
-      assert_errors([inspection_date_error], {
-        "Inspection-Date": Date.yesterday.to_s,
-        "Completion-Date": Date.yesterday.prev_day.to_s,
-        "Registration-Date": Date.today.to_s,
-      })
+      assert_errors(expected_errors: [inspection_date_error], values: { "Inspection-Date": Date.yesterday.to_s,
+                                                                        "Completion-Date": Date.yesterday.prev_day.to_s,
+                                                                        "Registration-Date": Date.today.to_s })
     end
 
     it "throws the Completion error when the Registration-Date is before the Completion-Date" do
-      assert_errors([completion_date_error], {
-        "Inspection-Date": Date.yesterday.prev_day.to_s,
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.yesterday.to_s,
-      })
+      assert_errors(expected_errors: [completion_date_error], values: { "Inspection-Date": Date.yesterday.prev_day.to_s,
+                                                                        "Completion-Date": Date.today.to_s,
+                                                                        "Registration-Date": Date.yesterday.to_s })
     end
 
     it "throws both errors when both the Inspection-Date is later than the Completion-Date and when the Completion-Date is later than the Registration-Date" do
-      assert_errors([inspection_date_error, completion_date_error], {
-        "Inspection-Date": Date.today.to_s,
-        "Completion-Date": Date.yesterday.to_s,
-        "Registration-Date": Date.yesterday.prev_day.to_s,
-      })
+      assert_errors(expected_errors: [inspection_date_error, completion_date_error], values: { "Inspection-Date": Date.today.to_s,
+                                                                                               "Completion-Date": Date.yesterday.to_s,
+                                                                                               "Registration-Date": Date.yesterday.prev_day.to_s })
     end
 
     it "throws Completion error when the Registration-Date is before the Inspection- and Completion-Date" do
-      assert_errors([completion_date_error], {
-        "Inspection-Date": Date.yesterday.to_s,
-        "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.yesterday.prev_day.to_s,
-      })
+      assert_errors(expected_errors: [completion_date_error], values: { "Inspection-Date": Date.yesterday.to_s,
+                                                                        "Completion-Date": Date.today.to_s,
+                                                                        "Registration-Date": Date.yesterday.prev_day.to_s })
     end
   end
 
@@ -605,47 +538,47 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
 
     it "returns an error if the address is JE" do
-      assert_errors([error], { "Address/Postcode": "JE3 6HW" })
+      assert_errors(expected_errors: [error], values: { "Address/Postcode": "JE3 6HW" }, country_code: [:L])
     end
 
     it "returns an error if the address is GY" do
-      assert_errors([error], { "Address/Postcode": "GY7 9QS" })
+      assert_errors(expected_errors: [error], values: { "Address/Postcode": "GY7 9QS" }, country_code: [:L])
     end
 
     it "returns an error if the address is IM" do
-      assert_errors([error], { "Address/Postcode": "IM7 3BZ" })
+      assert_errors(expected_errors: [error], values: { "Address/Postcode": "IM7 3BZ" }, country_code: [:L])
     end
 
     it "returns an error if the address is in Scotland" do
-      assert_errors([error], { "Address/Postcode": "TD14 5TY" })
+      assert_errors(expected_errors: [error], values: { "Address/Postcode": "TD14 5TY" }, country_code: [:S])
     end
 
     it "returns an error if the country code is Scotland" do
-      assert_errors([error], { "Country-Code": "SCT" })
+      assert_errors(expected_errors: [error], values: { "Country-Code": "SCT" }, country_code: [:S])
     end
 
     it "returns no error if the address is in England" do
-      assert_errors([], { "Address/Postcode": "SW1A 2AA" })
+      assert_errors(expected_errors: [], values: { "Address/Postcode": "SW1A 2AA" }, country_code: [:E])
     end
 
     it "returns no error if the address is in Northern Ireland" do
-      assert_errors([], { "Address/Postcode": "BT3 9EP" })
+      assert_errors(expected_errors: [], values: { "Address/Postcode": "BT3 9EP" }, country_code: [:N])
     end
 
     it "returns no error if the address is in Wales" do
-      assert_errors([], { "Address/Postcode": "LL65 1DQ" })
+      assert_errors(expected_errors: [], values: { "Address/Postcode": "LL65 1DQ" }, country_code: [:W])
     end
 
     it "returns no error if the postcode crosses the English/Scottish border" do
-      assert_errors([], { "Address/Postcode": "TD15 1UZ" })
+      assert_errors(expected_errors: [], values: { "Address/Postcode": "TD15 1UZ" }, country_code: %i[E S])
     end
 
     it "returns no error if the country code is England or Wales" do
-      assert_errors([], { "Country-Code": "EAW" })
+      assert_errors(expected_errors: [], values:  { "Country-Code": "EAW" }, country_code: %i[E W])
     end
 
     it "returns no error if the address is Northern Ireland" do
-      assert_errors([], { "Country-Code": "NIR" })
+      assert_errors(expected_errors: [], values:  { "Country-Code": "NIR" }, country_code: [:N])
     end
   end
 end
