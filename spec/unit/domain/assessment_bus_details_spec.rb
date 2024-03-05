@@ -109,6 +109,14 @@ describe Domain::AssessmentBusDetails do
       dwelling_type: "Top-floor flat",
       uprn: "000000000123",
       lodgement_date: "2020-05-04",
+      tenure: "Owner-occupied",
+      inspection_date: "2020-05-04",
+      main_fuel_type: "Electricity: electricity, unspecified tariff",
+      walls_description: ["Solid brick, as built, no insulation (assumed)", "Average thermal transmittance 0.18 W/m²K"],
+      total_floor_area: 165,
+      total_roof_area: nil,
+      current_energy_efficiency_rating: 72,
+      hot_water_description: "From main system, waste water heat recovery",
     }
   end
 
@@ -153,38 +161,38 @@ describe Domain::AssessmentBusDetails do
       end
     end
 
-    context "when there is no secondary heating" do
-      context "with there being no property summary node" do
-        before do
-          assessment_summary[:property_summary] = nil
-          expected_data[:secondary_heating] = nil
-        end
-
-        it "does not return any secondary heating information" do
-          expect(domain.to_hash).to eq expected_data
-        end
+    context "when there is no property summary node at all" do
+      before do
+        assessment_summary[:property_summary] = nil
+        expected_data[:secondary_heating] = nil
+        expected_data[:hot_water_description] = nil
+        expected_data[:walls_description] = nil
       end
 
-      context "with there being no secondary heating feature" do
-        before do
-          assessment_summary[:property_summary][1][:name] = "wall"
-          expected_data[:secondary_heating] = nil
-        end
+      it "does not return any secondary heating, hot water or walls information" do
+        expect(domain.to_hash).to eq expected_data
+      end
+    end
 
-        it "does not return any secondary heating information" do
-          expect(domain.to_hash).to eq expected_data
-        end
+    context "when there is no secondary heating feature in the property summary" do
+      before do
+        assessment_summary[:property_summary].delete_at(1)
+        expected_data[:secondary_heating] = nil
       end
 
-      context "with the feature description being empty" do
-        before do
-          assessment_summary[:property_summary][1][:description] = ""
-          expected_data[:secondary_heating] = nil
-        end
+      it "does not return any secondary heating information" do
+        expect(domain.to_hash).to eq expected_data
+      end
+    end
 
-        it "does not return any secondary heating information" do
-          expect(domain.to_hash).to eq expected_data
-        end
+    context "when the feature description is empty" do
+      before do
+        assessment_summary[:property_summary][1][:description] = ""
+        expected_data[:secondary_heating] = nil
+      end
+
+      it "does not return any secondary heating information" do
+        expect(domain.to_hash).to eq expected_data
       end
     end
 
@@ -212,60 +220,15 @@ describe Domain::AssessmentBusDetails do
         end
       end
     end
-  end
-
-  context "when the toggle is on for the expanded set of results" do
-    let(:expanded_expected_data) do
-      {
-        epc_rrn: rrn,
-        report_type: "RdSAP",
-        expiry_date: "2030-05-03",
-        cavity_wall_insulation_recommended: true,
-        loft_insulation_recommended: true,
-        secondary_heating: "Electric bar heater",
-        address: {
-          address_line1: "22 Acacia Avenue",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          town: "Anytown",
-          postcode: "AB1 2CD",
-        },
-        dwelling_type: "Top-floor flat",
-        uprn: "000000000123",
-        lodgement_date: "2020-05-04",
-        tenure: "Owner-occupied",
-        inspection_date: "2020-05-04",
-        main_fuel_type: "Electricity: electricity, unspecified tariff",
-        walls_description: ["Solid brick, as built, no insulation (assumed)", "Average thermal transmittance 0.18 W/m²K"],
-        total_floor_area: 165,
-        total_roof_area: nil,
-        current_energy_efficiency_rating: 72,
-        hot_water_description: "From main system, waste water heat recovery",
-      }
-    end
-
-    before do
-      Helper::Toggles.set_feature("api-bus-new-fields", true)
-    end
-
-    after do
-      Helper::Toggles.set_feature("api-bus-new-fields", false)
-    end
-
-    it "finds and returns the expanded set of results", aggregate_failures: true do
-      result = domain.to_hash
-      expect(result).to eq expanded_expected_data
-    end
 
     context "when the total_roof_area key is present in the data" do
       before do
         assessment_summary[:total_roof_area] = 123
-        expanded_expected_data[:total_roof_area] = 123
+        expected_data[:total_roof_area] = 123
       end
 
       it "returns the expected results including a value for the total roof area" do
-        expect(domain.to_hash).to eq expanded_expected_data
+        expect(domain.to_hash).to eq expected_data
       end
     end
 
@@ -273,11 +236,11 @@ describe Domain::AssessmentBusDetails do
       let(:domestic_digest) { nil }
 
       before do
-        expanded_expected_data[:main_fuel_type] = nil
+        expected_data[:main_fuel_type] = nil
       end
 
       it "returns the information for the property type without the main fuel type" do
-        expect(domain.to_hash).to eq expanded_expected_data
+        expect(domain.to_hash).to eq expected_data
       end
     end
   end
