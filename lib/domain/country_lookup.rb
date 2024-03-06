@@ -25,9 +25,25 @@ module Domain
     }.freeze
 
     COUNTRY_IDS = {
-      E: 1,
-      W: 2,
-      N: 3,
+      1 => [:E],
+      2 => [:W],
+      3 => [:N],
+      4 => %i[E W],
+      5 => [:S],
+      6 => %i[E S],
+      7 => [:L],
+      8 => [:M],
+      9 => [:J],
+    }.freeze
+
+    UK_COUNTRY_CODES = {
+      ENG: 1,
+      WLS: 2,
+      NIR: 3,
+      EAW: 4,
+      SCT: 5,
+      IOM: 8,
+      NR: 9,
     }.freeze
 
     def initialize(country_codes:)
@@ -63,11 +79,17 @@ module Domain
     end
 
     def country_id
-      return 4 if @country_codes == %i[W E]
-
-      COUNTRY_IDS[@country_codes[0].to_sym]
+      COUNTRY_IDS.key(country_codes)
     rescue NoMethodError
       nil
+    end
+
+    def on_border?
+      @country_codes.length > 1
+    end
+
+    def uk_country_code(xml_country_code)
+      UK_COUNTRY_CODES[xml_country_code.to_sym]
     end
 
   private

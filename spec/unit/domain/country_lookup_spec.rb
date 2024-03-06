@@ -6,6 +6,10 @@ describe Domain::CountryLookup do
       expect(lookup.match?).to be true
     end
 
+    it "is not on a border" do
+      expect(lookup.on_border?).to be false
+    end
+
     it "reports as being in england" do
       expect(lookup.in_england?).to be true
     end
@@ -64,6 +68,7 @@ describe Domain::CountryLookup do
 
     it "reports out its country codes in sorted order, as symbols" do
       expect(lookup.country_codes).to eq %i[E W]
+      expect(lookup.on_border?).to eq true
     end
 
     it "returns a country id of 4" do
@@ -88,6 +93,22 @@ describe Domain::CountryLookup do
 
     it "returns a nil when there is no country_id" do
       expect(lookup.country_id).to eq nil
+    end
+  end
+
+  describe "#uk_country_code" do
+    subject(:lookup) { described_class.new country_codes: [:E] }
+
+    it "returns 1 for england" do
+      expect(lookup.uk_country_code("ENG")).to eq 1
+    end
+
+    it "returns 3 for WALES" do
+      expect(lookup.uk_country_code("WLS")).to eq 2
+    end
+
+    it "returns 9 for NR (for backwards compatibility only)" do
+      expect(lookup.uk_country_code("NR")).to eq 9
     end
   end
 end
