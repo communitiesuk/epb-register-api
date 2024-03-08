@@ -58,7 +58,7 @@ module LodgementRules
           lambda do |adapter, _country_lookup = nil|
             [
               method_or_nil(adapter, :standard_emissions),
-              method_or_nil(adapter, :building_emissions),
+              method_or_nil(adapter, :building_emission_rate),
               method_or_nil(adapter, :target_emissions),
               method_or_nil(adapter, :typical_emissions),
             ].compact
