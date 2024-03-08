@@ -127,7 +127,7 @@ module UseCase
 
       if %w[CEPC CEPC-RR].include?(data[:type_of_assessment])
         if data[:building_complexity]
-          level = data[:building_complexity][-1]
+          level = data[:building_complexity]
 
           if assessor.send(:"non_domestic_nos#{level}_qualification") !=
               active_status
