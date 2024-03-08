@@ -8,11 +8,22 @@ describe Domain::Lodgement do
     Domain::CountryLookup.new(country_codes: [:E])
   end
 
+  let!(:rdsap_20) {
+    Samples.xml "RdSAP-Schema-20.0.0"
+  }
+
+  let!(:rdsap_21) {
+    Samples.xml "RdSAP-Schema-21.0.0"
+  }
+
+  let!(:cepc) {
+    Samples.xml "CEPC-8.0.0", "dec-rr"
+  }
+
   describe "#fetch_data" do
     context "when an RdSAP is passed" do
-      let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
-      let(:domain) { described_class.new(xml, "RdSAP-Schema-20.0.0") }
+      let(:domain) { described_class.new(rdsap_20, "RdSAP-Schema-20.0.0") }
 
       it "returns an assessment hash in an array" do
         expect(domain.fetch_data).to be_a Array
@@ -20,7 +31,7 @@ describe Domain::Lodgement do
       end
 
       it "has a country_id for England" do
-        domain.add_country_id_to_data(country_domain: english_domain)
+        domain.add_country_id_to_data(1)
         expect(domain.fetch_data[0][:country_id]).to eq 1
       end
     end
@@ -37,97 +48,66 @@ describe Domain::Lodgement do
       end
 
       it "has a country_id for England" do
-        domain.add_country_id_to_data(country_domain: english_domain)
-
-        expect(domain.fetch_data.first[:country_id]).to eq 1
-      end
-    end
-  end
-
-  describe "processing RdSAP assessments" do
-    context "when the address is a border between England & Wales" do
-      let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
-
-      let(:domain) { described_class.new(xml, "RdSAP-Schema-20.0.0") }
-
-      it "returns a 4 for england and wales" do
-        domain.add_country_id_to_data(country_domain: border_domain)
-        expect(domain.fetch_data.first[:country_id]).to eq 4
-      end
-    end
-
-    context "when schema version greater than 20 and on a border and the xml country code is england" do
-      let(:xml) { Samples.xml "RdSAP-Schema-21.0.0" }
-
-      let(:domain) { described_class.new(xml, "RdSAP-Schema-21.0.0") }
-
-      it "has a country_id for England" do
-        domain.add_country_id_to_data(country_domain: border_domain)
-        expect(domain.fetch_data.first[:country_id]).to eq 1
-      end
-    end
-
-    context "when schema version greater than 20 and on a border and the xml country code is wales" do
-      let(:xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-21.0.0") }
-
-      before do
-        xml.at("Country-Code").children = "WLS"
-      end
-
-      it "returns a 2 for Wales " do
-        domain = described_class.new(xml.to_s, "RdSAP-Schema-21.0.0")
-        domain.add_country_id_to_data(country_domain: border_domain)
+        domain.add_country_id_to_data(2)
         expect(domain.fetch_data.first[:country_id]).to eq 2
       end
     end
   end
 
-  describe "processing SAP assessments" do
-    context "when on a border of England & Wales" do
-      let(:xml) { Samples.xml "SAP-Schema-18.0.0" }
-
-      let(:domain) { described_class.new(xml, "SAP-Schema-18.0.0") }
-
-      it "returns a 4 for england & wales " do
-        domain.add_country_id_to_data(country_domain: border_domain)
-        expect(domain.fetch_data.first[:country_id]).to eq 4
-      end
+  describe "#country_code" do
+    it "returns the country code from an RdSAP" do
+      domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
+      expect(domain.country_code).to eq("EAW")
     end
 
-    context "when a schema version greater than 18 on a border and the xml country code is england" do
-      let(:xml) { Samples.xml "SAP-Schema-19.0.0" }
+    it "returns the country code from an RdSAP 21.0.0" do
 
-      let(:domain) { described_class.new(xml, "SAP-Schema-19.0.0") }
-
-      it "returns a 1 for england " do
-        domain.add_country_id_to_data(country_domain: border_domain)
-        expect(domain.fetch_data.first[:country_id]).to eq 1
-      end
+      domain = described_class.new(rdsap_21, "RdSAP-Schema-21.0.0")
+      expect(domain.country_code).to eq("ENG")
     end
 
-    context "when a schema version greater than 18 on a border and the xml country code is wales" do
-      let(:xml) { Nokogiri.XML Samples.xml("SAP-Schema-19.0.0") }
-
-      before do
-        xml.at("Country-Code").children = "WLS"
-      end
-
-      it "returns a 2 for Wales " do
-        domain = described_class.new(xml.to_s, "SAP-Schema-19.0.0")
-        domain.add_country_id_to_data(country_domain: border_domain)
-        expect(domain.fetch_data.first[:country_id]).to eq 2
-      end
+    it "returns the country code from a SAP 19.1.0" do
+      xml = Samples.xml "SAP-Schema-19.1.0"
+      domain = described_class.new(xml, "SAP-Schema-19.1.0")
+      expect(domain.country_code).to eq("ENG")
     end
+
   end
 
-  describe "processing CEPC" do
-    let(:xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
 
-    let(:domain) { described_class.new(xml, "CEPC-8.0.0") }
+  describe "#schema_version" do
+    it "returns decimal of the RdSAP schema version" do
 
-    it "returns a 1 for england " do
-      domain.add_country_id_to_data(country_domain: english_domain)
-      expect(domain.fetch_data.first[:country_id]).to eq 1
+      domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
+      expect(domain.schema_version).to eq 20.0
     end
+
+    it "returns decimal of the CEPC schema version" do
+      domain = described_class.new(cepc, "CEPC-8.0.0")
+      expect(domain.schema_version).to eq 8.0
+    end
+
   end
+
+  describe "#is_new_rdsap?" do
+
+    it "returns true for RdSAP-Schema-21.0.0" do
+      xml = Samples.xml "RdSAP-Schema-21.0.0"
+      domain = described_class.new(xml, "RdSAP-Schema-21.0.0")
+      expect(domain.is_new_rdsap?).to eq true
+    end
+
+    it "returns false for RdSAP-Schema-20.0.0" do
+
+      domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
+      expect(domain.is_new_rdsap?).to eq false
+    end
+
+    it "returns false for CPEC" do
+      domain = described_class.new(cepc, "CEPC-8.0.0")
+      expect(domain.is_new_rdsap?).to eq false
+    end
+
+  end
+
 end

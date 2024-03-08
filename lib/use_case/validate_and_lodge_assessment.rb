@@ -91,9 +91,8 @@ module UseCase
 
       ensure_lodgement_xml_valid assessment_xml, schema_name
 
-
-      domain_lodgement = Domain::Lodgement.new(assessment_xml, schema_name)
-      lodgement_data = domain_lodgement.fetch_data
+      lodgement_domain = Domain::Lodgement.new(assessment_xml, schema_name)
+      lodgement_data = lodgement_domain.fetch_data
 
       xml_doc = as_parsed_document assessment_xml
 
@@ -128,7 +127,7 @@ module UseCase
                                                      postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
                                                      address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
 
-          domain_lodgement.add_country_id_to_data(country_domain: country_lookup)
+
 
           validation_result = rules.validate(wrapper.get_view_model, country_lookup)
 
@@ -148,6 +147,7 @@ module UseCase
                   validation_result,
                 )
               end
+
             else
               raise LodgementRulesException, validation_result
             end
@@ -158,7 +158,11 @@ module UseCase
 
       end
 
+      ApiFactory.add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain: )
+
       responses = []
+
+
 
       begin
         ActiveRecord::Base.transaction do
@@ -248,10 +252,6 @@ module UseCase
         )
       end
     end
-
-    # def extract_data_from_lodgement_xml(lodgement)
-    #   lodgement.fetch_data
-    # end
 
     def as_parsed_document(xml)
       xml_doc = Nokogiri.XML(xml, &:strict)

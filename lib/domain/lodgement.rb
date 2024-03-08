@@ -22,8 +22,24 @@ module Domain
       @assessment_data
     end
 
-    def add_country_id_to_data(country_domain:)
-      @assessment_data.each { |report| report[:country_id] = get_country_id country_domain }
+    def add_country_id_to_data(id)
+      @assessment_data.each { |report| report[:country_id] = id }
+    end
+
+    def country_code
+      @assessment_data.first[:country_code]
+    end
+
+    def schema_version
+      @schema_name.to_s.split("-").last.to_f
+    end
+
+    def is_new_rdsap?
+      @schema_name.to_s.include?("RdSAP") && schema_version > 20
+    end
+
+    def is_new_sap?
+      @schema_name.to_s.match?(/^SAP/) && schema_version > 18
     end
 
   private
@@ -48,18 +64,6 @@ module Domain
       return country_domain.uk_country_code(xml_country_code) if (is_new_rdsap? || is_new_sap?) && country_domain.on_border?
 
       country_domain.country_id
-    end
-
-    def schema_version
-      @schema_name.to_s.split("-").last.to_f
-    end
-
-    def is_new_rdsap?
-      @schema_name.to_s.include?("RdSAP") && schema_version > 20
-    end
-
-    def is_new_sap?
-      @schema_name.to_s.match?(/^SAP/) && schema_version > 18
     end
   end
 end

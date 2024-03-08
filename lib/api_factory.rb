@@ -387,8 +387,16 @@ class ApiFactory
     @update_assessments_from_landmark ||= UseCase::UpdateAssessmentsFromLandmark.new(assessments_gateway:, storage_gateway: storage_gateway(bucket_name:))
   end
 
+  def self.add_country_id_from_address
+    @add_country_id_from_address ||= UseCase::AddCountryIdFromAddress.new(country_gateway)
+  end
+
   def self.geolocation_gateway
     @geolocation_gateway ||= Gateway::PostcodeGeolocationGateway.new
+  end
+
+  def self.country_gateway
+    @country_gateway ||= Gateway::CountryGateway.new
   end
 
   def self.storage_gateway(bucket_name:)

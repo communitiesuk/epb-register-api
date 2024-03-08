@@ -36,7 +36,8 @@ module Domain
       xml: nil,
       related_assessments: nil,
       related_rrn: nil,
-      hashed_assessment_id: nil
+      hashed_assessment_id: nil,
+      country_id: nil
     )
       @migrated = migrated
       @date_of_assessment =
@@ -81,6 +82,7 @@ module Domain
       @related_assessments = related_assessments
       @related_rrn = related_rrn
       @hashed_assessment_id = hashed_assessment_id
+      @country_id = country_id
     end
 
     def to_record
@@ -103,6 +105,7 @@ module Domain
         address_line4: @address_line4,
         town: @town,
         hashed_assessment_id: @hashed_assessment_id,
+        country_id: @country_id,
       }
     end
 

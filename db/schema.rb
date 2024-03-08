@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_28_150058) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_06_155420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -162,6 +162,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_150058) do
   create_table "countries", primary_key: "country_id", force: :cascade do |t|
     t.string "country_code"
     t.string "country_name"
+    t.jsonb "address_base_country_code", default: "{}"
   end
 
   create_table "green_deal_assessments", primary_key: ["green_deal_plan_id", "assessment_id"], force: :cascade do |t|

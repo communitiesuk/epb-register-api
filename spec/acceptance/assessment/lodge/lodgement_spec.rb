@@ -3,6 +3,10 @@
 describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  before do
+    add_countries
+  end
+
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
       domestic_rd_sap: "ACTIVE",
@@ -297,7 +301,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   end
 
   context "when lodging and overriding the rules" do
-    let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
+    let(:cepc_xml_doc)  { Nokogiri.XML(valid_cepc_rr_xml) }
 
     before do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
@@ -508,6 +512,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "accepts large current energy efficiency rating values for CEPC" do
+
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-267654"
 
@@ -519,6 +524,22 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         },
         schema_name: "CEPC-8.0.0",
       )
+    end
+
+    it "saves the country id to the assessment table " do
+
+      map_lookups_to_country_codes { %w[E] } # 'N
+      lodge_assessment assessment_body: valid_rdsap_xml,
+                       accepted_responses: [201],
+                       scopes: %w[assessment:lodge],
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       },
+                       migrated: "false"
+
+      country_id = ActiveRecord::Base.connection.exec_query("SELECT country_id FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'").entries.first["country_id"]
+
+      expect(country_id).to eq(1)
     end
 
     context "when given an assessment with an NI schema and a BT postcode" do

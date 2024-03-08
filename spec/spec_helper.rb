@@ -153,6 +153,18 @@ def add_uprns_to_address_base(*uprns)
   uprns.each { |uprn| add_address_base(uprn:) }
 end
 
+def add_countries
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY", "SQL")
+
+  insert_sql = <<-SQL
+            INSERT INTO countries(country_code, country_name, address_base_country_code)
+            VALUES ('ENG', 'England' ,'["E"]'::jsonb),
+                   ('EAW', 'England and Wales', '["E", "W"]'::jsonb),
+                     ('UKN', 'Unknown', '{}'::jsonb)
+    SQL
+  ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
+end
+
 def add_address_base(uprn:, postcode: nil, country_code: nil)
   ActiveRecord::Base.connection.exec_query(
     "INSERT INTO address_base (uprn, postcode, country_code) VALUES($1, $2, $3) ON CONFLICT DO NOTHING",

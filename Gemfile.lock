@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/communitiesuk/epb-view-models
+  revision: d2d506d25d75e4410b8884b0d1a997c543b236cf
+  specs:
+    epb_view_models (1.2.2)
+      nokogiri (~> 1.11)
+      zeitwerk (~> 2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -62,9 +70,6 @@ GEM
     epb-auth-tools (1.1.0)
       jwt (~> 2.3)
       oauth2 (>= 1.4, < 3.0)
-    epb_view_models (1.2.2)
-      nokogiri (~> 1.11)
-      zeitwerk (~> 2.6)
     et-orbi (1.2.7)
       tzinfo
     faraday (2.9.0)
@@ -273,7 +278,7 @@ DEPENDENCIES
   database_cleaner
   debase (~> 0.2, >= 0.2.5.beta2)
   epb-auth-tools (~> 1.1.0)
-  epb_view_models (~> 1.2.2)
+  epb_view_models!
   geocoder (~> 1.8.0)
   http
   json-schema (~> 4.1)

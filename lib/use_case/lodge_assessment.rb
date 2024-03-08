@@ -77,6 +77,7 @@ module UseCase
           migrated:,
           related_rrn: find_related_rrn(data),
           hashed_assessment_id: Helper::RrnHelper.hash_rrn(data[:assessment_id]),
+          country_id: data[:country_id],
         )
 
       if migrated
