@@ -107,7 +107,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       wallsDescription: nil,
       totalFloorArea: 0,
       totalRoofArea: nil,
-      currentEnergyEfficiencyRating: "80",
+      currentEnergyEfficiencyRating: 80,
       hotWaterDescription: nil,
     }
   end
