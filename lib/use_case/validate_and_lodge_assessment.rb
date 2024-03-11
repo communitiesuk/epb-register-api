@@ -127,8 +127,6 @@ module UseCase
                                                      postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
                                                      address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
 
-
-
           validation_result = rules.validate(wrapper.get_view_model, country_lookup)
 
           unless validation_result.empty?
@@ -158,11 +156,9 @@ module UseCase
 
       end
 
-      ApiFactory.add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain: )
+      ApiFactory.add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain:)
 
       responses = []
-
-
 
       begin
         ActiveRecord::Base.transaction do

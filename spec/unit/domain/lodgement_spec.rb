@@ -4,25 +4,32 @@ describe Domain::Lodgement do
     Domain::CountryLookup.new(country_codes: %i[E W])
   end
 
-  let(:english_domain) do
+  let!(:english_domain) do
     Domain::CountryLookup.new(country_codes: [:E])
   end
 
-  let!(:rdsap_20) {
+  let!(:rdsap_20) do
     Samples.xml "RdSAP-Schema-20.0.0"
-  }
+  end
 
-  let!(:rdsap_21) {
+  let!(:rdsap_21) do
     Samples.xml "RdSAP-Schema-21.0.0"
-  }
+  end
 
-  let!(:cepc) {
+  let!(:cepc) do
     Samples.xml "CEPC-8.0.0", "dec-rr"
-  }
+  end
+
+  let!(:sap_19) do
+    Samples.xml "SAP-Schema-19.0.0"
+  end
+
+  let!(:sap_18) do
+    Samples.xml "SAP-Schema-18.0.0"
+  end
 
   describe "#fetch_data" do
     context "when an RdSAP is passed" do
-
       let(:domain) { described_class.new(rdsap_20, "RdSAP-Schema-20.0.0") }
 
       it "returns an assessment hash in an array" do
@@ -61,7 +68,6 @@ describe Domain::Lodgement do
     end
 
     it "returns the country code from an RdSAP 21.0.0" do
-
       domain = described_class.new(rdsap_21, "RdSAP-Schema-21.0.0")
       expect(domain.country_code).to eq("ENG")
     end
@@ -71,13 +77,10 @@ describe Domain::Lodgement do
       domain = described_class.new(xml, "SAP-Schema-19.1.0")
       expect(domain.country_code).to eq("ENG")
     end
-
   end
-
 
   describe "#schema_version" do
     it "returns decimal of the RdSAP schema version" do
-
       domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
       expect(domain.schema_version).to eq 20.0
     end
@@ -86,11 +89,9 @@ describe Domain::Lodgement do
       domain = described_class.new(cepc, "CEPC-8.0.0")
       expect(domain.schema_version).to eq 8.0
     end
-
   end
 
   describe "#is_new_rdsap?" do
-
     it "returns true for RdSAP-Schema-21.0.0" do
       xml = Samples.xml "RdSAP-Schema-21.0.0"
       domain = described_class.new(xml, "RdSAP-Schema-21.0.0")
@@ -98,7 +99,6 @@ describe Domain::Lodgement do
     end
 
     it "returns false for RdSAP-Schema-20.0.0" do
-
       domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
       expect(domain.is_new_rdsap?).to eq false
     end
@@ -107,7 +107,22 @@ describe Domain::Lodgement do
       domain = described_class.new(cepc, "CEPC-8.0.0")
       expect(domain.is_new_rdsap?).to eq false
     end
-
   end
 
+  describe "#is_new_sap?" do
+    it "returns true for SAP-Schema-19.0.0" do
+      domain = described_class.new(sap_19, "SAP-Schema-19.0.0")
+      expect(domain.is_new_sap?).to eq true
+    end
+
+    it "returns false for SAP-Schema-18.0.0" do
+      domain = described_class.new(sap_18, "SAP-Schema-18.0.0")
+      expect(domain.is_new_rdsap?).to eq false
+    end
+
+    it "returns false for RdSAP which contasin string 'SAP'" do
+      domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
+      expect(domain.is_new_rdsap?).to eq false
+    end
+  end
 end

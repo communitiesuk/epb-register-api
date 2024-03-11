@@ -27,8 +27,8 @@ module UseCase
 
     def get_country_id(value)
       @countries.find { |country| country[:country_code] == value }[:country_id]
-      rescue NoMethodError
-       nil
+    rescue NoMethodError
+      nil
     end
 
     def get_country_id_by_address_base_code(value)

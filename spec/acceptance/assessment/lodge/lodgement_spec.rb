@@ -512,7 +512,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "accepts large current energy efficiency rating values for CEPC" do
-
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-267654"
 
@@ -527,7 +526,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "saves the country id to the assessment table " do
-
       map_lookups_to_country_codes { %w[E] } # 'N
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],

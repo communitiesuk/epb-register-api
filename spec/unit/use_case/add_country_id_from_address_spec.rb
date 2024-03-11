@@ -27,8 +27,11 @@ describe UseCase::AddCountryIdFromAddress do
   end
 
   context "when the class is instantiated" do
+    before do
+      described_class.new gateway
+    end
+
     it "extracts the counties from the gateway" do
-      use_case
       expect(gateway).to have_received(:fetch_countries)
     end
   end
@@ -49,7 +52,6 @@ describe UseCase::AddCountryIdFromAddress do
 
       it "adds the id for England to the lodgement" do
         country_domain = Domain::CountryLookup.new(country_codes: [:E])
-        lodgement_domain = Domain::Lodgement.new(xml, "RdSAP-Schema-20.0.0")
         use_case.execute(country_domain:, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
@@ -130,14 +132,10 @@ describe UseCase::AddCountryIdFromAddress do
         end
       end
 
-      context "when the xml country code is null" do
-        let(:xml) { Nokogiri.XML Samples.xml("SAP-Schema-19.0.0") }
-        let(:lodgement_domain) { Domain::Lodgement.new(xml.to_s, "SAP-Schema-19.0.0") }
+      context "when the xml country code is null and the country code is null" do
+        let(:xml) { Nokogiri.XML Samples.xml("SAP-Schema-17.0") }
+        let(:lodgement_domain) { Domain::Lodgement.new(xml.to_s, "SAP-Schema-17.0") }
         let(:country_domain) { Domain::CountryLookup.new(country_codes: []) }
-
-        before do
-          xml.at("Country-Code").remove
-        end
 
         it "falls back to using the value from the xml " do
           use_case.execute(country_domain:, lodgement_domain:)
@@ -152,8 +150,6 @@ describe UseCase::AddCountryIdFromAddress do
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
       it "returns a 1 for england " do
-        pp lodgement_domain.country_code
-
         use_case.execute(country_domain: english_domain, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
@@ -168,7 +164,6 @@ describe UseCase::AddCountryIdFromAddress do
         use_case.execute(country_domain: english_domain, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
-
     end
 
     context "when passing a CEPC with no found address" do
@@ -180,7 +175,6 @@ describe UseCase::AddCountryIdFromAddress do
         use_case.execute(country_domain: nil, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 6
       end
-
     end
 
     context "when passing a DEC" do
@@ -194,13 +188,13 @@ describe UseCase::AddCountryIdFromAddress do
       end
     end
 
-    context "when no fall back is present in the database" do
+    context "when no value for unknown in the table" do
       let(:xml) { Samples.xml "CEPC-8.0.0", "dec-rr" }
 
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
-      it "adds a nil " do
-        allow(gateway).to receive(:fetch_countries).and_return  [{ country_code: "ENG", address_base_country_code: "[\"E\"]", country_id: 1, country_name: "England" }]
+      it "does not error and returns a nil " do
+        allow(gateway).to receive(:fetch_countries).and_return [{ country_code: "ENG", address_base_country_code: "[\"E\"]", country_id: 1, country_name: "England" }]
 
         use_case.execute(country_domain: nil, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to be_nil

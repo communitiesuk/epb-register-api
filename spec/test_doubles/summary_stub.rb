@@ -171,8 +171,7 @@ class SummaryStub
       green_deal_plan: [],
       superseded_by: nil,
       gas_smart_meter_present: nil,
-      electricity_smart_meter_present: nil
-    }
+      electricity_smart_meter_present: nil }
   end
 
   def self.fetch_summary_sap_19(scheme_id)
@@ -358,7 +357,6 @@ class SummaryStub
       related_assessments: [],
       gas_smart_meter_present: true,
       electricity_smart_meter_present: false,
-      country_code: "ENG",
-    }
+      country_code: "ENG" }
   end
 end

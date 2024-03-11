@@ -161,7 +161,7 @@ def add_countries
             VALUES ('ENG', 'England' ,'["E"]'::jsonb),
                    ('EAW', 'England and Wales', '["E", "W"]'::jsonb),
                      ('UKN', 'Unknown', '{}'::jsonb)
-    SQL
+  SQL
   ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
 end
 
