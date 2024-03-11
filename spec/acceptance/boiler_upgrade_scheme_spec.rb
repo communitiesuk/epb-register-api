@@ -41,6 +41,14 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       dwellingType: "Mid-terrace house",
       lodgementDate: "2020-05-04",
       uprn: "000000000000",
+      tenure: "Owner-occupied",
+      inspectionDate: "2020-05-04",
+      mainFuelType: nil,
+      wallsDescription: ["Solid brick, as built, no insulation (assumed)", "Cavity wall, as built, insulated (assumed)"],
+      totalFloorArea: 55,
+      totalRoofArea: nil,
+      currentEnergyEfficiencyRating: 50,
+      hotWaterDescription: "From main system",
     }
   end
 
@@ -63,6 +71,14 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       dwellingType: "Mid-terrace house",
       lodgementDate: "2020-05-04",
       uprn: "000000000000",
+      tenure: "Owner-occupied",
+      inspectionDate: "2020-05-04",
+      mainFuelType: nil,
+      wallsDescription: ["Brick walls", "Brick walls"],
+      totalFloorArea: 69,
+      totalRoofArea: 0,
+      currentEnergyEfficiencyRating: 50,
+      hotWaterDescription: "Gas boiler",
     }
   end
 
@@ -85,6 +101,14 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       dwellingType: "B1 Offices and Workshop businesses",
       lodgementDate: "2020-05-04",
       uprn: "000000000001",
+      tenure: nil,
+      inspectionDate: "2020-05-04",
+      mainFuelType: nil,
+      wallsDescription: nil,
+      totalFloorArea: 0,
+      totalRoofArea: nil,
+      currentEnergyEfficiencyRating: "80",
+      hotWaterDescription: nil,
     }
   end
 

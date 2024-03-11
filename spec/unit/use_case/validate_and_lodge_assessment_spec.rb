@@ -397,14 +397,14 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
     end
 
-    context "with dates outside expected range (breaking DATES_IN_RANGE rule)" do
+    context "with dates in the future (breaking DATES_CANT_BE_IN_FUTURE rule)" do
       let(:rdsap) do
         Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
       end
 
       before do
         allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
-        Timecop.freeze(2025, 2, 22, 0, 0, 0)
+        Timecop.freeze(2020, 5, 3, 0, 0, 0) # Fixture has dates of 2020-05-04; this is the day before.
       end
 
       after do

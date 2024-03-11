@@ -171,9 +171,23 @@ module LodgementRules
           end,
       },
       {
+        name: "DATES_CANT_BE_IN_FUTURE",
+        title:
+          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future',
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            dates = [
+              method_or_nil(adapter, :date_of_assessment),
+              method_or_nil(adapter, :date_of_registration),
+              method_or_nil(adapter, :date_of_completion),
+            ]
+            dates.none? { |date| Date.parse(date).future? }
+          end,
+      },
+      {
         name: "DATES_IN_RANGE",
         title:
-          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
+          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be more than 18 months ago',
         test:
           lambda do |adapter, _country_lookup = nil|
             dates = [
@@ -183,7 +197,7 @@ module LodgementRules
             ]
 
             dates.reject { |date|
-              date.between?(Date.today.prev_month(18), Date.today)
+              date.after?(Date.today.prev_month(18))
             }.empty?
           end,
       },

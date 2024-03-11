@@ -12,8 +12,6 @@ module Domain
       "ND" => "Unknown",
     }.freeze
 
-    def new_fields_toggle = Helper::Toggles.enabled?("api-bus-new-fields")
-
     def initialize(
       bus_details:,
       assessment_summary:,
@@ -43,19 +41,14 @@ module Domain
         dwelling_type: fetch_dwelling_type,
         lodgement_date: @assessment_summary[:date_of_registration],
         uprn: strip_uprn,
-        **(
-          if new_fields_toggle
-            { tenure: TENURE[@assessment_summary[:tenure]],
-              inspection_date: @assessment_summary[:date_of_assessment],
-              main_fuel_type: !@domestic_digest.nil? ? @domestic_digest[:main_fuel_type] : nil,
-              walls_description: fetch_property_description_list(node_name: "wall"),
-              total_floor_area: @assessment_summary[:total_floor_area].to_i,
-              total_roof_area: @assessment_summary.key?(:total_roof_area) ? @assessment_summary[:total_roof_area].to_i : nil,
-              current_energy_efficiency_rating: @assessment_summary[:current_energy_efficiency_rating],
-              hot_water_description: fetch_property_description(node_name: "hot_water") }
-          else
-            {}
-          end),
+        tenure: TENURE[@assessment_summary[:tenure]],
+        inspection_date: @assessment_summary[:date_of_assessment],
+        main_fuel_type: !@domestic_digest.nil? ? @domestic_digest[:main_fuel_type] : nil,
+        walls_description: fetch_property_description_list(node_name: "wall"),
+        total_floor_area: @assessment_summary[:total_floor_area].to_i,
+        total_roof_area: @assessment_summary.key?(:total_roof_area) ? @assessment_summary[:total_roof_area].to_i : nil,
+        current_energy_efficiency_rating: @assessment_summary[:current_energy_efficiency_rating],
+        hot_water_description: fetch_property_description(node_name: "hot_water"),
       }
     end
 
