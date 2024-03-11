@@ -4,7 +4,7 @@ describe Domain::Lodgement do
     Domain::CountryLookup.new(country_codes: %i[E W])
   end
 
-  let!(:english_domain) do
+  let(:english_domain) do
     Domain::CountryLookup.new(country_codes: [:E])
   end
 

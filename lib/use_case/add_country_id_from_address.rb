@@ -6,7 +6,7 @@ module UseCase
 
     def execute(lodgement_domain:, country_domain:)
       begin
-        country_id = if lodgement_domain.country_code.nil? && !country_domain.country_codes.any?
+        country_id = if lodgement_domain.country_code.nil? && country_domain.country_codes.none?
                        get_unknown_country
                      elsif (lodgement_domain.is_new_rdsap? || lodgement_domain.is_new_sap?) && country_domain.on_border?
                        get_country_id(lodgement_domain.country_code)

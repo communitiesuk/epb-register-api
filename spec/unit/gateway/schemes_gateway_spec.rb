@@ -11,7 +11,7 @@ describe Gateway::SchemesGateway do
       end
 
       it "returns only active scheme_ids" do
-        expect((gateway.fetch_active).sort).to eq([2, 3, 4])
+        expect(gateway.fetch_active.sort).to eq([2, 3, 4])
       end
     end
   end
