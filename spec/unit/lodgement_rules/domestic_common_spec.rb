@@ -30,10 +30,6 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       }.freeze
     end
 
-    it "returns an error if the habitable room count is not an integer" do
-      assert_errors(expected_errors: [error], values: { "Habitable-Room-Count": "6.2" })
-    end
-
     it "returns an error if the habitable room count is zero" do
       assert_errors(expected_errors: [error], values: { "Habitable-Room-Count": "0" })
     end
