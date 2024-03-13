@@ -161,7 +161,7 @@ module LodgementRules
               calc_tool = method_or_nil(adapter, :calculation_tool)
               building_level = method_or_nil(adapter, :building_level)
               transaction_type = method_or_nil(adapter, :transaction_type)
-              if [3,4].include? building_level # Check SBEM software version for these
+              if [3, 4].include? building_level # Check SBEM software version for these
                 return false if wrong_sbem_version_for_ni?(country_lookup, calc_tool)
                 return false if unless_in_ni?(country_lookup, calc_tool, transaction_type)
                 return false if wrong_sbem_version_for_wales?(country_lookup, calc_tool, transaction_type)
