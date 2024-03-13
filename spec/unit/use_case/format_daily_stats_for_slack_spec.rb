@@ -29,7 +29,6 @@ describe UseCase::FormatDailyStatsForSlack do
       end
 
       before do
-        allow(Worker::SlackNotification).to receive(:perform_async)
         allow(assessment_statistics_gateway).to receive(:fetch_daily_stats_by_date).with("2022-01-17").and_return(stats_data)
       end
 

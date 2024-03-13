@@ -53,14 +53,11 @@ Build commands are stored in the buildspec directory
 
 ### Build
 
-The codebase contains two dockerfiles, one for the api itself and one for sidekiq
+The codebase contains a dockerfile for the api
+
 To rebuild the api Docker image locally, run
 
 `docker build . --tag epb-register-api`
-
-To rebuild the sidekiq Docker image locally, run
-
-`docker build . --tag epb-register-api-worker -f sidekiq.Dockerfile`
 
 ### Run
 
@@ -77,10 +74,6 @@ This will create a persistent deployment and has an interface to provide multipl
 
 Where *host_port* is a free port you want to use on your host machine to make calls to the API.
 
-##### Sidekiq
-
-`docker run --name test-epb-register-api-worker epb-register-api-worker`
-
 #### Communicating with other containers
 When running the containers, you may want them to communicate with a containerized instance of PostgreSQL, Redis, or another container in general.
 To do this, you will need to use a bridge network and connect any containers that need to communicate with each other to it
@@ -90,4 +83,3 @@ You can set up a bridge network using
 
 And then connect the containers to the network when going to run them e.g.
 * for the api `docker run -p {host_port}:80 -p {host_port2}:443 --network {network_name} --name test-epb-register-api epb-register-api`
-* for sidekiq `docker run --network {network_name} --name test-epb-register-api-worker epb-register-api-worker`

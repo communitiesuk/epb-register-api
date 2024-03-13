@@ -9,4 +9,3 @@ manifest.yml
 db_data
 node_modules/
 dump.rdb
-sidekiq/schedule_dev.yml
