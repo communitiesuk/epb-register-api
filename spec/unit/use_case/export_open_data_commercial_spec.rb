@@ -89,9 +89,9 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           non_domestic_xml.at("//CEPC:UPRN")
 
         # Lodge a dec to ensure it is not exported
-        domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
-        domestic_assessment_id = domestic_xml.at("RRN")
-        domestic_assessment_date = domestic_xml.at("Registration-Date")
+        dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
+        dec_assessment_id = dec_xml.at("RRN")
+        dec_assessment_date = dec_xml.at("Registration-Date")
 
         add_assessor(
           scheme_id:,
@@ -178,11 +178,11 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           migrated: true,
         )
 
-        # Domestic assessment not exported
-        domestic_assessment_date.children = "2018-05-04"
-        domestic_assessment_id.children = "0000-0000-0000-0000-0005"
+        # DEC not exported
+        dec_assessment_date.children = "2018-05-04"
+        dec_assessment_id.children = "0000-0000-0000-0000-0005"
         lodge_assessment(
-          assessment_body: domestic_xml.to_xml,
+          assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
             scheme_ids: [scheme_id],
