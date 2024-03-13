@@ -314,6 +314,32 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
   end
 
+  context "when a DEC only has data for the current year" do
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
+
+    before do
+      add_super_assessor(scheme_id:)
+      dec_current_year = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec-current-year-only")
+      lodge_assessment(
+        assessment_body: dec_current_year.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+      )
+    end
+
+    it "can generate a summary OK" do
+      expect { use_case.execute("0005-0004-0003-0002-0001") }.not_to raise_error
+    end
+
+    it "has nil values for subsequent years' data" do
+      expect(
+        use_case.execute("0005-0004-0003-0002-0001")[:year1_assessment][:energy_efficiency_band],
+      ).to eq(nil)
+    end
+  end
+
   context "when extracting summary assessment data for a SAP 19" do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway:, xml_gateway:) }
 

@@ -1,0 +1,137 @@
+<Reports
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
+>
+  <Report>
+    <Report-Header>
+      <RRN>0005-0004-0003-0002-0001</RRN>
+      <Issue-Date>2020-09-23</Issue-Date>
+      <Valid-Until>2029-01-01</Valid-Until>
+      <Report-Type>1</Report-Type>
+      <Inspection-Date>2020-09-23</Inspection-Date>
+      <Registration-Date>2020-09-23</Registration-Date>
+      <Status>entered</Status>
+      <Related-RRN>0001-0002-0003-0004-0005</Related-RRN>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Arthur Dent</Name>
+        <Accreditation-Scheme-Name>Elmhurst Energy Systems</Accreditation-Scheme-Name>
+        <Trading-Address>700 Sheffield Road, London</Trading-Address>
+        <Company-Name>Interplanetary Incorporated</Company-Name>
+        <Status>Registered</Status>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>0123456789</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <Location-Description>this is a very nice building.</Location-Description>
+        <Property-Address>
+          <Address-Line-1 />
+          <Address-Line-2>Prime Minister &amp; First Lord of the Treasury</Address-Line-2>
+          <Address-Line-3>10 - 12 Downing Street</Address-Line-3>
+          <Address-Line-4 />
+          <Post-Town>LONDON</Post-Town>
+          <Postcode>SW1A 2AA</Postcode>
+        </Property-Address>
+        <Property-Type>Bar, Pub Or Licensed Club</Property-Type>
+        <Occupier>Francis Bacon</Occupier>
+        <UPRN>RRN-5527-2914-3214-7604-0043</UPRN>
+      </Property-Details>
+      <Calculation-Details>
+        <Methodology>ORCalc</Methodology>
+        <Calculation-Tool>CLG, ORCalc, v4.0.4</Calculation-Tool>
+        <Output-Engine>ORGen v4.0.4</Output-Engine>
+      </Calculation-Details>
+    </Report-Header>
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2018-01-01</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2019-01-01</OR-Assessment-End-Date>
+      <Building-Category>H2; </Building-Category>
+      <OR-Building-Data>
+        <Internal-Environment>Heating and Natural Ventilation</Internal-Environment>
+        <Assessment-Period-Alignment>Start Of Main Heating Fuel Period</Assessment-Period-Alignment>
+        <HVAC-System>Radiators</HVAC-System>
+      </OR-Building-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark>Bar, Pub Or Licensed Club</Main-Benchmark>
+        <Benchmarks>
+          <Benchmark>
+            <Name>Discotheque</Name>
+            <Benchmark-ID>1</Benchmark-ID>
+            <Area-Metric>Gross floor area measured as RICS Gross Internal Area (GIA)</Area-Metric>
+            <Floor-Area>100</Floor-Area>
+            <Special-Uses-Area />
+            <TUFA>100</TUFA>
+            <Benchmark>Bar, Pub Or Licensed Club</Benchmark>
+            <Occupancy-Level>Standard Occupancy</Occupancy-Level>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Electricity>
+          <Consumption>15000</Consumption>
+          <Start-Date>2018-01-01</Start-Date>
+          <End-Date>2019-01-01</End-Date>
+          <Estimate>0</Estimate>
+        </Electricity>
+        <Thermal>
+          <Consumption>2891.30</Consumption>
+          <Start-Date>2018-01-01</Start-Date>
+          <End-Date>2019-01-01</End-Date>
+          <Estimate>0</Estimate>
+        </Thermal>
+      </OR-Energy-Consumption>
+      <OR-Usable-Floor-Area>
+        <UFA-1>
+          <Name>nice</Name>
+          <Floor-Area>20</Floor-Area>
+        </UFA-1>
+        <Total-UFA>20</Total-UFA>
+      </OR-Usable-Floor-Area>
+      <OR-Previous-Data>
+        <Asset-Rating>340</Asset-Rating>
+      </OR-Previous-Data>
+    </OR-Operational-Rating>
+    <Insurance-Details>
+      <Insurer>Walmart Insurance</Insurer>
+      <Policy-No>999999111</Policy-No>
+      <Effective-Date>2020-09-03</Effective-Date>
+      <Expiry-Date>2022-01-13</Expiry-Date>
+      <PI-Limit>100000</PI-Limit>
+    </Insurance-Details>
+    <Display-Certificate>
+      <DEC-Annual-Energy-Summary>
+        <Annual-Energy-Use-Electrical>150.00</Annual-Energy-Use-Electrical>
+        <Annual-Energy-Use-Fuel-Thermal>0</Annual-Energy-Use-Fuel-Thermal>
+        <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
+        <Renewables-Electrical>0</Renewables-Electrical>
+        <Typical-Thermal-Use>356.65</Typical-Thermal-Use>
+        <Typical-Electrical-Use>130</Typical-Electrical-Use>
+      </DEC-Annual-Energy-Summary>
+      <DEC-Status>0</DEC-Status>
+      <Reason-Type>3</Reason-Type>
+      <DEC-Related-Party-Disclosure>1</DEC-Related-Party-Disclosure>
+      <This-Assessment>
+        <Nominated-Date>2019-01-02</Nominated-Date>
+        <Energy-Rating>59</Energy-Rating>
+        <Electricity-CO2>8</Electricity-CO2>
+        <Heating-CO2>0</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </This-Assessment>
+      <Technical-Information>
+        <Main-Heating-Fuel>Grid Supplied Electricity</Main-Heating-Fuel>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>100</Floor-Area>
+        <Separately-Metered-Electric-Heating>0</Separately-Metered-Electric-Heating>
+      </Technical-Information>
+      <AC-Questionnaire>
+        <AC-Present>No</AC-Present>
+        <AC-Rated-Output>
+          <AC-Rating-Unknown-Flag>1</AC-Rating-Unknown-Flag>
+        </AC-Rated-Output>
+        <AC-Inspection-Commissioned>4</AC-Inspection-Commissioned>
+      </AC-Questionnaire>
+    </Display-Certificate>
+  </Report>
+</Reports>

@@ -1,6 +1,10 @@
 module Helper
   class EnergyBandCalculator
     def self.domestic(number)
+      if number.nil?
+        return nil
+      end
+
       case number
       when proc { |n| n <= 20 }
         "g"
@@ -20,6 +24,10 @@ module Helper
     end
 
     def self.commercial(number)
+      if number.nil?
+        return nil
+      end
+
       case number
       when proc { |n| n <= -1 }
         "a+"
