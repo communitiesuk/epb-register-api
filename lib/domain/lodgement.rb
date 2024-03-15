@@ -13,7 +13,7 @@ module Domain
       @raw_data = data
       @schema_name = schema_name.to_sym
       @assessment_data = []
-      @xml = Nokogiri.XML(@raw_data, &:strict)
+      @xml = Nokogiri.XML(@raw_data) { |config| config.huge.strict }
       @xml.remove_namespaces!
       set_data
     end
