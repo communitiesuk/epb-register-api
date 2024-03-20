@@ -117,7 +117,6 @@
         <Improvement-Details>
           <Improvement-Number>5</Improvement-Number>
         </Improvement-Details>
-        <Green-Deal-Category>1</Green-Deal-Category>
       </Improvement>
       <Improvement>
         <Sequence>2</Sequence>
@@ -130,7 +129,6 @@
         <Improvement-Details>
           <Improvement-Number>1</Improvement-Number>
         </Improvement-Details>
-        <Green-Deal-Category>3</Green-Deal-Category>
       </Improvement>
       <Improvement>
         <Sequence>3</Sequence>
@@ -145,7 +143,6 @@
             <Improvement-Description>Improvement desc</Improvement-Description>
           </Improvement-Texts>
         </Improvement-Details>
-        <Green-Deal-Category>3</Green-Deal-Category>
       </Improvement>
     </Suggested-Improvements>
     <Renewable-Heat-Incentive>
@@ -167,8 +164,9 @@
       <Property-Type>0</Property-Type>
       <Built-Form>2</Built-Form>
       <Extensions-Count>0</Extensions-Count>
-      <Door-Count>2</Door-Count>
+      <Door-Count>3</Door-Count>
       <Insulated-Door-Count>2</Insulated-Door-Count>
+      <Draughtproofed-Door-Count>1</Draughtproofed-Door-Count>
       <Insulated-Door-U-Value>3</Insulated-Door-U-Value>
       <Windows-Transmission-Details>
         <U-Value>2</U-Value>
@@ -233,8 +231,6 @@
           <SAP-Room-In-Roof>
             <Floor-Area>100</Floor-Area>
             <Construction-Age-Band>B</Construction-Age-Band>
-            <Insulation>AB</Insulation>
-            <Roof-Room-Connected>N</Roof-Room-Connected>
           </SAP-Room-In-Roof>
         </SAP-Building-Part>
       </SAP-Building-Parts>

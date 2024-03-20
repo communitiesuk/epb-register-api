@@ -226,7 +226,6 @@ The Improved Energy Ratings that result from carrying out a Suggested Improvemen
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="Indicative-Cost" type="xs:string" minOccurs="0"/>
-			<xs:element name="Green-Deal-Category" type="GreenDealCategoryCode"/>
 		</xs:all>
 	</xs:complexType>
 	<xs:element name="PropertySummaryType" type="PropertySummaryType"/>

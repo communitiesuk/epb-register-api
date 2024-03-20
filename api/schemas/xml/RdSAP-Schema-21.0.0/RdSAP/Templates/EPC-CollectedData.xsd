@@ -187,6 +187,36 @@ This is actually the type differentiator for Property but only a limited number 
                     <xs:documentation>If MVHR from pcdb.</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element name="Kitchen-Room-Fans-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>MEV dc, number of fans in room, kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Non-Kitchen-Room-Fans-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>MEV dc, number of fans in room, rooms other than kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Kitchen-Duct-Fans-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>MEV dc, number of fans via duct, kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Non-Kitchen-Duct-Fans-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>MEV dc, number of fans via duct, rooms other than kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Kitchen-Wall-Fans-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>MEV dc, number of fans through wall, kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Non-Kitchen-Wall-Fans-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>MEV dc, number of fans through wall, rooms other than kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="Conservatory-Type" type="SAP-ConservatoryTypeCode">
                 <xs:annotation>
                     <xs:documentation>Type of Conservatory</xs:documentation>
@@ -223,6 +253,11 @@ This is actually the type differentiator for Property but only a limited number 
             <xs:element name="Insulated-Door-Count" type="Count" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Number of insulated external doors</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Draughtproofed-Door-Count" type="Count" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Number of draught proofed external doors</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Insulated-Door-U-Value" type="xs:decimal" minOccurs="0"/>
@@ -743,17 +778,6 @@ For the purpose of calculating the overall Energy Assessment for the property de
         <xs:all>
             <xs:element name="Floor-Area" type="Measurement"/>
             <xs:element name="Construction-Age-Band" type="ConstructionDateCode"/>
-            <xs:element name="Insulation" type="SAP-RoomInRoofInsulationCode" minOccurs="0"/>
-            <xs:element name="Roof-Room-Connected" type="Flag">
-                <xs:annotation>
-                    <xs:documentation>Whether the roof room is connected to another building part of the same dwelling</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="Roof-Insulation-Thickness" type="RoofInsulationThicknessCode" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Use ND when Room-In-Roof-Details is included</xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element name="Room-In-Roof-Details" type="Room-In-Roof-Details" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Omit when Room-In-Roof details not included</xs:documentation>
@@ -1000,6 +1024,11 @@ If the total peak power has been apportioned between different dwellings within 
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element name="Flat-Ceiling-Insulation-Location-1" type="RoofInsulationLocationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mutually exclusive with U-value and insulation type. Either U-value provided, or insulation type or location. To enable using table 16.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="Flat-Ceiling-Length-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Flat-Ceiling-Height-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Flat-Ceiling-U-Value-2" type="xs:decimal" minOccurs="0"/>
@@ -1011,6 +1040,11 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Flat-Ceiling-Insulation-Type-2" type="RinRInsulationTypeCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Flat-Ceiling-Insulation-Location-2" type="RoofInsulationLocationCode" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mutually exclusive with U-value and insulation type. Either U-value provided, or insulation type or location. To enable using table 16.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Stud-Wall-Length-1" type="Measurement" minOccurs="0"/>
@@ -1068,9 +1102,19 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Gable-Wall-Length-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Gable-Wall-Height-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Gable-Wall-U-Value-1" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="Gable-Wall-Type-1" type="GableType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or gable type to use table 4.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="Gable-Wall-Length-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Gable-Wall-Height-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Gable-Wall-U-Value-2" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="Gable-Wall-Type-2" type="GableType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or gable type to use table 4.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="Common-Wall-Length-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Common-Wall-Height-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Common-Wall-U-Value-1" type="xs:decimal" minOccurs="0"/>

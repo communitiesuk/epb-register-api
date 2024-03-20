@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--EPC Recommendations, RdSAP Addenda, Transaction Types, Tenures and Related Party Disclosure-->
 <EPC:ExternalDefinitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="EPC ExternalDefinitions.xsd" xmlns:EPC="EPC">
-  <Revision-Number>6.1</Revision-Number>
-  <Revision-Date>2019-06-11</Revision-Date>
+  <Revision-Number>8.0</Revision-Number>
+  <Revision-Date>2024-03-13</Revision-Date>
   <Country>
     <Country-Code>EAW</Country-Code>
     <Average-SAP-Rating>60</Average-SAP-Rating>
@@ -234,6 +234,24 @@
     <Recommendation>
       <Improvement-Number>29</Improvement-Number>
       <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
+      <Improvement-Description language="1">Gas condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso nwy</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>72</Improvement-Number>
+      <Improvement-Summary language="1">Add PV battery</Improvement-Summary>
+      <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
+      <Improvement-Description language="1">Gas condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso nwy</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>73</Improvement-Number>
+      <Improvement-Summary language="1">Add PV diverter</Improvement-Summary>
       <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
       <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
       <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
@@ -474,7 +492,7 @@
       <Improvement-Description language="1">High heat retention storage heaters</Improvement-Description>
       <Improvement-Description language="2">Gwresogyddion storio sy’n cadw llawer o wres</Improvement-Description>
     </Recommendation>
-	<Recommendation>
+    <Recommendation>
       <Improvement-Number>63</Improvement-Number>
       <Improvement-Summary language="1">Party wall insulation</Improvement-Summary>
       <Improvement-Summary language="2">Insiwleiddio muriau cyd</Improvement-Summary>
@@ -517,36 +535,24 @@
     </Transaction-Type>
     <Transaction-Type>
       <Display-Order>6</Display-Order>
-      <Transaction-Code>9</Transaction-Code>
-      <Transaction-Text>Assessment for Green Deal</Transaction-Text>
+      <Transaction-Code>16</Transaction-Code>
+      <Transaction-Text>Grant scheme</Transaction-Text>
       <In-RdSAP>true</In-RdSAP>
     </Transaction-Type>
     <Transaction-Type>
       <Display-Order>7</Display-Order>
-      <Transaction-Code>10</Transaction-Code>
-      <Transaction-Text>Following Green Deal</Transaction-Text>
+      <Transaction-Code>17</Transaction-Code>
+      <Transaction-Text>Non-grant scheme</Transaction-Text>
       <In-RdSAP>true</In-RdSAP>
     </Transaction-Type>
     <Transaction-Type>
       <Display-Order>8</Display-Order>
-      <Transaction-Code>11</Transaction-Code>
-      <Transaction-Text>FiT application</Transaction-Text>
+      <Transaction-Code>15</Transaction-Code>
+      <Transaction-Text>Re-mortgaging</Transaction-Text>
       <In-RdSAP>true</In-RdSAP>
     </Transaction-Type>
     <Transaction-Type>
       <Display-Order>9</Display-Order>
-      <Transaction-Code>12</Transaction-Code>
-      <Transaction-Text>RHI application</Transaction-Text>
-      <In-RdSAP>true</In-RdSAP>
-    </Transaction-Type>
-    <Transaction-Type>
-      <Display-Order>10</Display-Order>
-      <Transaction-Code>13</Transaction-Code>
-      <Transaction-Text>ECO assessment</Transaction-Text>
-      <In-RdSAP>true</In-RdSAP>
-    </Transaction-Type>
-    <Transaction-Type>
-      <Display-Order>11</Display-Order>
       <Transaction-Code>5</Transaction-Code>
       <Transaction-Text>None of the above</Transaction-Text>
       <In-RdSAP>true</In-RdSAP>
@@ -674,7 +680,7 @@
       <Improvement-Summary-2 language="1">Internal or external wall insulation</Improvement-Summary-2>
       <Improvement-Heading language="1">Internal or external wall insulation</Improvement-Heading>
       <Improvement-Description language="1">Internal or external wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that a building warrant is required for the installation of external wall insulation. Planning permission may also be required and that building regulations apply to external insulation so it is best to check with your local authority on both issues.
-	  </Improvement-Description>
+      </Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>8</Improvement-Number>
@@ -992,7 +998,7 @@
       <Improvement-Heading language="1">High heat retention storage heaters</Improvement-Heading>
       <Improvement-Description language="1">Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for high heat retention with automatic charge and output controls. Installations should be in accordance with the national wiring standards. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified electrical heating engineer. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
     </Recommendation>
-	<Recommendation>
+    <Recommendation>
       <Improvement-Number>63</Improvement-Number>
       <Improvement-Summary language="1">Party wall insulation</Improvement-Summary>
       <Improvement-Summary-2 language="1">Party wall insulation</Improvement-Summary-2>
@@ -1440,7 +1446,7 @@
       <Improvement-Heading language="1">High heat retention storage heaters</Improvement-Heading>
       <Improvement-Description language="1">Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for high heat retention heaters with automatic charge and output controls. As installations should be in accordance with the national wiring standards, only a qualified electrician should carry out the installation. It is best to obtain advice from a qualified electrical heating engineer. Ask a qualified electrical heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
     </Recommendation>
-	<Recommendation>
+    <Recommendation>
       <Improvement-Number>63</Improvement-Number>
       <Improvement-Summary language="1">Party wall insulation</Improvement-Summary>
       <Improvement-Heading language="1">Party wall insulation</Improvement-Heading>
@@ -1568,8 +1574,38 @@
     <Addendum-Text language="2">Nid yw’r math o danwydd y mae’r anheddiad yn ei ddefnyddio wedi ei restru yn yr opsiynau sydd ar gael. Defnyddiwyd y math cyfatebol tebycaf o danwydd ar gyfer yr asesiad.</Addendum-Text>
   </Addendum>
   <Addendum>
+    <Addendum-Number>13</Addendum-Number>
+    <Circumstances>13. Dwelling has a special energy saving feature </Circumstances>
+    <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
+    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+  </Addendum>
+  <Addendum>
     <Addendum-Number>14</Addendum-Number>
-    <Circumstances>14. Dwelling has a special energy saving feature </Circumstances>
+    <Circumstances>14. Conservation area </Circumstances>
+    <Addendum-Text language="1">Conservation area.</Addendum-Text>
+    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>15</Addendum-Number>
+    <Circumstances>15. PV recommended </Circumstances>
+    <Addendum-Text language="1">When considering the PV installation consider installing PV battery and PV diverter for water heating.</Addendum-Text>
+    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>16</Addendum-Number>
+    <Circumstances>16. PV-independent battery storage present </Circumstances>
+    <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
+    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>17</Addendum-Number>
+    <Circumstances>17. 'Phase changing' heat storage present </Circumstances>
+    <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
+    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>18</Addendum-Number>
+    <Circumstances>18. Party wall insulation </Circumstances>
     <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
     <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
   </Addendum>

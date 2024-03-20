@@ -461,6 +461,41 @@
 					<xs:documentation>Party wall insulation</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="65">
+				<xs:annotation>
+					<xs:documentation>Internal insulation with cavity wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="66">
+				<xs:annotation>
+					<xs:documentation>Heating controls for wet central heating system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="70">
+				<xs:annotation>
+					<xs:documentation>Water Heating Controls</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72">
+				<xs:annotation>
+					<xs:documentation>PV Battery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73">
+				<xs:annotation>
+					<xs:documentation>PV Diverter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="75">
+				<xs:annotation>
+					<xs:documentation>Ground source heat pump with radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="76">
+				<xs:annotation>
+					<xs:documentation>Ground source heat pump with underfloor heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="GreenDealCategoryCode">
