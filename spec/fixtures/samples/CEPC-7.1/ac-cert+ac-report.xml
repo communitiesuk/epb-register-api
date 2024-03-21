@@ -448,7 +448,7 @@
               <ACI-Recommendation>
                 <Seq-Number>1</Seq-Number>
                 <Code>OTHER</Code>
-                <Text>This refrigerant is considered satisfactory and not presently proposed to be banned or phased out. However the refrigerant is covered by the F Gas regulations and as such should be included on an F Gas Register which should be located on site.</Text>
+                <Text>R22 is an ODS (Ozone Depleting Substance)</Text>
               </ACI-Recommendation>
             </Guidance>
           </F-Gas-Inspection>

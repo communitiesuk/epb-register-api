@@ -51,6 +51,15 @@ describe "Acceptance::AssessmentSummary::AC-REPORT", set_with_timecop: true do
             end
           expect(filled_recommendations).not_to be_empty
         end
+
+        it "includes the guidance text from <F-Gas-Inspection> elements if they exist" do
+          # Only these schema versions have the <Guidance> nested in <F-Gas-Inspection>
+          if %w[CEPC-NI-8.0.0 CEPC-8.0.0 CEPC-7.1 CEPC-7.0].include? schema_name
+            expect(summary[:data][:coolingPlants][0][:refrigeration][:fGasInspection][:guidance]).to eq("R22 is an ODS (Ozone Depleting Substance)")
+          else
+            expect(summary[:data][:coolingPlants]).to eq([])
+          end
+        end
       end
     end
   end
