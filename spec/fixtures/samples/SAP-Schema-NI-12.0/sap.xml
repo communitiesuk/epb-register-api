@@ -75,7 +75,7 @@
         </SAP:Home-Inspector>
         <SAP:Transaction-Type>1</SAP:Transaction-Type>
         <SAP:Region-Code>2</SAP:Region-Code>
-        <SAP:Country-Code>EAW</SAP:Country-Code>
+        <SAP:Country-Code>NIR</SAP:Country-Code>
         <SAP:Property>
           <SAP:Address>
             <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>

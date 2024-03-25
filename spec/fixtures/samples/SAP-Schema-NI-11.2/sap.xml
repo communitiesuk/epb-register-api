@@ -80,7 +80,7 @@
           <SAP05:UPRN>0000000000</SAP05:UPRN>
         </SAP05:Property>
         <SAP05:Region-Code>2</SAP05:Region-Code>
-        <SAP05:Country-Code>EAW</SAP05:Country-Code>
+        <SAP05:Country-Code>NIR</SAP05:Country-Code>
       </SAP05:Report-Header>
       <SAP05:Energy-Assessment>
         <SAP05:Assessment-Date>2010-03-23</SAP05:Assessment-Date>
