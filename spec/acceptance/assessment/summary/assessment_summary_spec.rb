@@ -70,7 +70,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
       expect(cepc_rr_response[:data][:typeOfAssessment]).to eq("CEPC-RR")
     end
 
-    it "does not have the RR as the superseded EPC " do
+    it "does not have the RR as the superseded EPC" do
       expect(cepc_response[:data][:supersededBy]).to eq(nil)
     end
   end

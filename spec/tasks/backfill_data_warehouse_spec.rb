@@ -37,7 +37,7 @@ describe "backfill data warehouse" do
         expect { rake.invoke }.not_to raise_error
       end
 
-      it "raises an error when there is no start date " do
+      it "raises an error when there is no start date" do
         EnvironmentStub.remove(%w[start_date])
         expect { rake.invoke }.to raise_error(Boundary::ArgumentMissing)
       end

@@ -67,7 +67,7 @@ describe UseCase::ExportOpenDataDecrr, set_with_timecop: true do
         )
       end
 
-      it "returns the correct number of items (excluding the dec-rr) " do
+      it "returns the correct number of items (excluding the dec-rr)" do
         expect(exported_data.length).to eq(number_of_recommendations_expected)
       end
 

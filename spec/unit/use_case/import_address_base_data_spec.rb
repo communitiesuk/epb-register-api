@@ -294,7 +294,7 @@ describe UseCase::ImportAddressBaseData do
     end
   end
 
-  context "when importing the data for a commercial property" do
+  context "when importing the data for a non-domestic property" do
     use_case = described_class.new
     commercial_number_ten = number_ten.clone
     commercial_number_ten[5] = "C"
@@ -504,7 +504,7 @@ describe UseCase::ImportAddressBaseData do
     end
   end
 
-  context "when given a commercial address with duplicate locality information" do
+  context "when given a non-domestic address with duplicate locality information" do
     rhyl_address = [
       "100100946350",
       "13523952",

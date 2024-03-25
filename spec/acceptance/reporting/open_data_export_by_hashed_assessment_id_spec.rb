@@ -83,13 +83,13 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           let(:fixture_csv) { read_csv_fixture("domestic") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          it "returns the data exported to a csv object to match the .csv fixture" do
+          it "returns the data exported to a CSV object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
 
           2.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
               expect(
                 redact_lodgement_datetime(parsed_exported_data[i]) -
                   redact_lodgement_datetime(fixture_csv[i]),
@@ -124,7 +124,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
             HttpStub.s3_put_csv("open_data_export_by_hashed_assessment_id_sap-rdsap_#{Time.now.strftime('%F')}_1.csv")
           end
 
-          it "transfers the file to the S3 bucket with the correct filename, body and headers " do
+          it "transfers the file to the S3 bucket with the correct filename, body and headers" do
             get_task("open_data:export_assessments_by_hashed_assessment_id").invoke("71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6", "for_odc")
 
             expect(WebMock).to have_requested(
@@ -139,7 +139,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           end
 
           context "when running a test export" do
-            it "prefixes the csv filename with `test/` so it's stored in a separate folder in the S3 bucket" do
+            it "prefixes the CSV filename with `test/` so it's stored in a separate folder in the S3 bucket" do
               HttpStub.s3_put_csv(
                 "test/open_data_export_by_hashed_assessment_id_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
               )

@@ -1,4 +1,4 @@
-shared_context "when exporting NI epcs" do
+shared_context "when exporting NI EPCs" do
   def read_ni_csv_fixture(file_name, parse: true)
     fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
     fixture_path << "/fixtures/ni_export/"
@@ -15,9 +15,9 @@ end
 
 describe "Acceptance::Reports::ExportNIAssessments" do
   include RSpecRegisterApiServiceMixin
-  include_context "when exporting NI epcs"
+  include_context "when exporting NI EPCs"
 
-  context "when exporting the domestic data to a csv before the rake is called" do
+  context "when exporting the domestic data to a CSV before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
     let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway:) }
@@ -52,7 +52,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       allow(xml_gateway).to receive(:fetch).with("0000-0000-0000-0000-0002").and_return({ xml: domestic_ni_rdsap_xml.to_xml, schema_type: "RdSAP-Schema-NI-20.0.0" })
     end
 
-    it "returns a .csv of the correct number of rows " do
+    it "returns a .csv of the correct number of rows" do
       expect(parsed_exported_data.length).to eq(parsed_exported_data.length)
     end
 
@@ -61,7 +61,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     2.times do |i|
-      it "returns the data exported for row #{i + 1} object to match same row in the .csv fixture " do
+      it "returns the data exported for row #{i + 1} object to match same row in the .csv fixture" do
         expect(
           redact_ni_lodgement_datetime(parsed_exported_data[i]) -
             redact_ni_lodgement_datetime(fixture_csv[i]),
@@ -70,7 +70,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
   end
 
-  context "when exporting the commercial data to a csv before the rake is called" do
+  context "when exporting the non-domestic data to a CSV before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
     let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway:) }
@@ -116,7 +116,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     2.times do |i|
-      it "returns the data exported for row #{i + 1} object to match same row in the .csv fixture " do
+      it "returns the data exported for row #{i + 1} object to match same row in the .csv fixture" do
         expect(
           redact_ni_lodgement_datetime(parsed_exported_data[i]) -
             redact_ni_lodgement_datetime(fixture_csv[i]),
@@ -158,7 +158,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       HttpStub.s3_put_csv(file_name)
     end
 
-    it "sends the converted csv to the S3 bucket " do
+    it "sends the converted csv to the S3 bucket" do
       task.invoke("RdSAP-SAP")
 
       expect(WebMock).to have_requested(
@@ -171,7 +171,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
   end
 
-  context "when calling the rake to export the Northern Ireland commercial data" do
+  context "when calling the rake to export the Northern Ireland non-domestic data" do
     subject(:task) { get_task("data_export:ni_assessments") }
 
     let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
@@ -203,7 +203,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       HttpStub.s3_put_csv(file_name)
     end
 
-    it "sends the converted csv to the S3 bucket " do
+    it "sends the converted csv to the S3 bucket" do
       task.invoke("CEPC")
 
       expect(WebMock).to have_requested(

@@ -23,13 +23,13 @@ describe Gateway::OpenDataLogGateway do
       expect(latest_statistics["task_id"].to_i).to eq(3)
     end
 
-    it "returns the correct count in the statistics " do
+    it "returns the correct count in the statistics" do
       expect(statistics.count).to eq(3)
       expect(statistics[0]["num_rows"]).to eq(3)
       expect(statistics[1]["num_rows"]).to eq(2)
     end
 
-    it "returns the the today as the created at date " do
+    it "returns the the today as the created at date" do
       expect(statistics[0]["date_start"].to_time.strftime("%F")).to eq(
         Time.now.strftime("%F"),
       )

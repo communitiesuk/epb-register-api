@@ -35,7 +35,7 @@ describe UseCase::FindAssessorsByName do
       allow(assessor_gateway).to receive(:search_by).and_return(data)
     end
 
-    it "returns more than 20 rows " do
+    it "returns more than 20 rows" do
       expect(use_case.execute("Someone Person")[:data].length).to eq(25)
     end
   end

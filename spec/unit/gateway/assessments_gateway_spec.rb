@@ -1,4 +1,4 @@
-shared_context "when updating epc dates" do
+shared_context "when updating EPC dates" do
   def fetch_created_at(assessment_id)
     ActiveRecord::Base.connection.exec_query("SELECT created_at FROM assessments WHERE assessment_id='#{assessment_id}'").first["created_at"]
   end
@@ -8,7 +8,7 @@ describe Gateway::AssessmentsGateway do
   subject(:gateway) { described_class.new }
 
   include RSpecRegisterApiServiceMixin
-  include_context "when updating epc dates"
+  include_context "when updating EPC dates"
 
   describe "#fetch_assessments_by_date" do
     before do

@@ -60,7 +60,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
       expect(summary[:data][:optOut]).to eq true
     end
 
-    it "shows as opted out in commercial assessment summary JSON" do
+    it "shows as opted out in non-domestic assessment summary JSON" do
       scheme_id = add_scheme_and_get_id
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =

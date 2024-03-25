@@ -10,11 +10,11 @@ describe Domain::CountryLookup do
       expect(lookup.on_border?).to be false
     end
 
-    it "reports as being in england" do
+    it "reports as being in England" do
       expect(lookup.in_england?).to be true
     end
 
-    it "reports as being not in wales" do
+    it "reports as being not in Wales" do
       expect(lookup.in_wales?).to be false
     end
 
@@ -30,15 +30,15 @@ describe Domain::CountryLookup do
       expect(lookup.match?).to be true
     end
 
-    it "reports as being not in england" do
+    it "reports as being not in England" do
       expect(lookup.in_england?).to be false
     end
 
-    it "reports as being not in wales" do
+    it "reports as being not in Wales" do
       expect(lookup.in_wales?).to be false
     end
 
-    it "reports as being in northern ireland" do
+    it "reports as being in Northern Ireland" do
       expect(lookup.in_northern_ireland?).to be true
     end
 
@@ -47,22 +47,22 @@ describe Domain::CountryLookup do
     end
   end
 
-  context "when a result references both england and wales (as is in border area)" do
+  context "when a result references both England and Wales (as is in border area)" do
     subject(:lookup) { described_class.new country_codes: %w[W E] }
 
     it "is a match" do
       expect(lookup.match?).to be true
     end
 
-    it "reports as being in england" do
+    it "reports as being in England" do
       expect(lookup.in_england?).to be true
     end
 
-    it "reports as being in wales" do
+    it "reports as being in Wales" do
       expect(lookup.in_wales?).to be true
     end
 
-    it "reports as not being in northern ireland" do
+    it "reports as not being in Northern Ireland" do
       expect(lookup.in_northern_ireland?).to be false
     end
 
@@ -83,11 +83,11 @@ describe Domain::CountryLookup do
       expect(lookup.match?).to be false
     end
 
-    it "reports as being not in england" do
+    it "reports as being not in England" do
       expect(lookup.in_england?).to be false
     end
 
-    it "reports as being not in wales" do
+    it "reports as being not in Wales" do
       expect(lookup.in_wales?).to be false
     end
 
@@ -99,11 +99,11 @@ describe Domain::CountryLookup do
   describe "#uk_country_code" do
     subject(:lookup) { described_class.new country_codes: [:E] }
 
-    it "returns 1 for england" do
+    it "returns 1 for England" do
       expect(lookup.uk_country_code("ENG")).to eq 1
     end
 
-    it "returns 3 for WALES" do
+    it "returns 2 for Wales" do
       expect(lookup.uk_country_code("WLS")).to eq 2
     end
 

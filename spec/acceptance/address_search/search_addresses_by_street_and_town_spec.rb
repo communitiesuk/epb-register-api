@@ -468,7 +468,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         end
       end
 
-      context "when an address type of commercial is provided" do
+      context "when an address type of non-domestic is provided" do
         let(:response) do
           JSON.parse(
             assertive_get_in_search_scope(

@@ -153,7 +153,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
   end
 
-  context "when an epc has many related epc none which supersede it" do
+  context "when an EPC has many related EPCs, none which supersede it" do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
 
     before do

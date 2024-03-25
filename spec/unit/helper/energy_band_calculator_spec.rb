@@ -14,7 +14,7 @@ describe Helper::EnergyBandCalculator do
       expect(described_class.commercial(-1)).to eq("a+")
     end
 
-    it "returns a band of A for a rating of " do
+    it "returns a band of A for a rating of" do
       expect(described_class.commercial(0)).to eq("a")
     end
 

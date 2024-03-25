@@ -26,7 +26,7 @@ describe "Update assessments from landmark rake" do
     expect { described_class.invoke }.not_to raise_error
   end
 
-  it "prints the number of updated epcs" do
+  it "prints the number of updated EPCs" do
     expect { described_class.invoke }.to output(
       /5 assessments have been updated/,
     ).to_stdout

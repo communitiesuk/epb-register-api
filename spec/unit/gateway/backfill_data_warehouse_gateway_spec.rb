@@ -82,7 +82,7 @@ describe Gateway::BackfillDataWarehouseGateway do
       expect(result.sort).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0004])
     end
 
-    it "gets the assessment ids for any type until now " do
+    it "gets the assessment ids for any type until now" do
       result = gateway.get_assessments_id(start_date: "2020-05-01")
       expect(result.count).to eq(4)
     end

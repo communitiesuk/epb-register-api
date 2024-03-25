@@ -9,7 +9,7 @@ describe "monthly invoice export" do
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
     end
 
-    context "when invalid date range is passed " do
+    context "when invalid date range is passed" do
       it "raises a no data error" do
         expect { monthly_invoice_rake.invoke("22-08-01", "21-08-31", "scheme_name_type") }.to raise_error Boundary::NoData, "no data to be saved for: get assessment count by scheme name and type scheme_name_type"
       end
@@ -34,7 +34,7 @@ describe "monthly invoice export" do
         expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type") }.not_to raise_error
       end
 
-      it "posts the csv to slack" do
+      it "posts the CSV to Slack" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type")
         expect(WebMock).to have_requested(
           :post,
@@ -42,7 +42,7 @@ describe "monthly invoice export" do
         ).with(headers: { "Content-Type" => %r{multipart/form-data} })
       end
 
-      it "deletes the generated csv file" do
+      it "deletes the generated CSV file" do
         expect(File.exist?("scheme_name_type_invoice_report.csv")).to be false
       end
 
@@ -70,7 +70,7 @@ describe "monthly invoice export" do
         expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "region_type") }.not_to raise_error
       end
 
-      it "posts the csv to slack" do
+      it "posts the CSV to Slack" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31", "region_type")
         expect(WebMock).to have_requested(
           :post,
@@ -78,7 +78,7 @@ describe "monthly invoice export" do
         ).with(headers: { "Content-Type" => %r{multipart/form-data} })
       end
 
-      it "deletes the generated csv file" do
+      it "deletes the generated CSV file" do
         expect(File.exist?("region_type_invoice_report.csv")).to be false
       end
 
@@ -109,7 +109,7 @@ describe "monthly invoice export" do
         expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "rrn_scheme_type", 1) }.not_to raise_error
       end
 
-      it "posts the csv to slack" do
+      it "posts the CSV to Slack" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31", "rrn_scheme_type", 1)
         expect(WebMock).to have_requested(
           :post,
@@ -117,7 +117,7 @@ describe "monthly invoice export" do
         ).with(headers: { "Content-Type" => %r{multipart/form-data} })
       end
 
-      it "deletes the generated csv file" do
+      it "deletes the generated CSV file" do
         expect(File.exist?("rrn_scheme_type_1_invoice_report.csv")).to be false
       end
 
@@ -204,7 +204,7 @@ describe "monthly invoice export" do
     end
   end
 
-  context "when posting to slack fails" do
+  context "when posting to Slack fails" do
     let(:use_case) { instance_double(UseCase::GetAssessmentCountByRegionAndType) }
     let(:returned_data) { [{ number_of_assessments: 122, type_of_assessment: "AC-CERT", region: "Eastern" }, { number_of_assessments: 153, type_of_assessment: "CEPC", region: "Northern Ireland " }] }
 
@@ -227,7 +227,7 @@ describe "monthly invoice export" do
       expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type") }.to raise_error Boundary::SlackMessageError
     end
 
-    it "deletes the generated csv file" do
+    it "deletes the generated CSV file" do
       expect(File.exist?("scheme_name_type_invoice_report.csv")).to be false
     end
 

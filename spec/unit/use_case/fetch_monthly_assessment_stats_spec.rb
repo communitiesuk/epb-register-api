@@ -1,5 +1,5 @@
 describe UseCase::FetchMonthlyAssessmentStats do
-  context "when extracting month assessments report " do
+  context "when extracting month assessments report" do
     subject(:use_case) { described_class.new(stats_gateway) }
 
     let(:stats_gateway)  do

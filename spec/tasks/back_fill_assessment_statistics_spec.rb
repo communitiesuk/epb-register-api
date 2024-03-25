@@ -15,7 +15,7 @@ describe "back full daily statistics rake" do
     end
   end
 
-  context "when invoking the rake with correct argument " do
+  context "when invoking the rake with correct argument" do
     it "calls the use case to export daily assessments 5 times" do
       assessment_types = %w[SAP RdSAP CEPC DEC DEC-RR AC-CERT]
       back_fill_statistics.invoke(5)

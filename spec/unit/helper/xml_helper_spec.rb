@@ -8,8 +8,8 @@ describe Helper::XmlHelper do
     File.read File.join File.dirname(__FILE__), "xml/invalid.xml"
   end
 
-  context "when validating valid xml" do
-    it "loads a valid xml file" do
+  context "when validating valid XML" do
+    it "loads a valid XML file" do
       response = helper.convert_to_hash(xml, schema:)
 
       expect(response).to be_a Hash
@@ -47,7 +47,7 @@ describe Helper::XmlHelper do
     end
   end
 
-  context "when validating invalid xml" do
+  context "when validating invalid XML" do
     it "raises an error" do
       expect {
         helper.convert_to_hash(invalid_xml, schema:)

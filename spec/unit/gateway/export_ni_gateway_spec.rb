@@ -15,7 +15,7 @@ describe Gateway::ExportNiGateway do
     Timecop.return
   end
 
-  context "when extracting Northern Ireland data for export " do
+  context "when extracting Northern Ireland data for export" do
     it "call the gateway without error" do
       expect { gateway }.not_to raise_error
     end
@@ -135,7 +135,7 @@ describe Gateway::ExportNiGateway do
         expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
       end
 
-      it "exports commercial certificates that have a BT postcode and any CEPC schema" do
+      it "exports non-domestic certificates that have a BT postcode and any CEPC schema" do
         cepc_7 = { "assessment_id" => "9000-0000-0000-0000-2110",
                    "lodgement_date" => "2020-05-04",
                    "lodgement_datetime" => "2021-02-22 00:00:00",
@@ -210,11 +210,11 @@ describe Gateway::ExportNiGateway do
           expect(results[1]["cancelled"]).to eq(true)
         end
 
-        it "returns false for commercial certificate opt out " do
+        it "returns false for non-domestic certificate opt out" do
           expect(commercial_results.first["opt_out"]).to eq(false)
         end
 
-        it "returns false for commercial certificate cancelled " do
+        it "returns false for non-domestic certificate cancelled" do
           expect(commercial_results.first["cancelled"]).to eq(false)
         end
       end

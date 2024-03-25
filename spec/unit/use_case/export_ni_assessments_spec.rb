@@ -1,5 +1,5 @@
 describe UseCase::ExportNiAssessments do
-  context "when exporting NI data call the use case for domestic epcs" do
+  context "when exporting NI data call the use case for domestic EPCs" do
     subject(:use_case) do
       described_class.new(export_ni_gateway: ni_gateway, xml_gateway:)
     end
@@ -35,11 +35,11 @@ describe UseCase::ExportNiAssessments do
       expect(xml_gateway).to have_received(:fetch).exactly(3).times
     end
 
-    it "passes the xml to the view model" do
+    it "passes the XML to the view model" do
       expect { use_case.execute(type_of_assessment: %w[RdSAP SAP]) }.not_to raise_error
     end
 
-    it "returns a single hash in an array that include the nodes from both to_hash_ni and the database " do
+    it "returns a single hash in an array that include the nodes from both to_hash_ni and the database" do
       expect(use_case.execute(type_of_assessment: %w[RdSAP SAP]).first).to match a_hash_including(
         assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         address1: "1 Some Street",
@@ -52,7 +52,7 @@ describe UseCase::ExportNiAssessments do
     end
   end
 
-  context "when exporting NI data call the use case for commercial epcs" do
+  context "when exporting NI data call the use case for non-domestic EPCs" do
     subject(:use_case) do
       described_class.new(export_ni_gateway: ni_gateway_cepc, xml_gateway: xml_gateway_cepc)
     end
@@ -103,11 +103,11 @@ describe UseCase::ExportNiAssessments do
       expect(xml_gateway_cepc).to have_received(:fetch).exactly(2).times
     end
 
-    it "passes the xml to the view model" do
+    it "passes the XML to the view model" do
       expect { use_case.execute(type_of_assessment: %w[CEPC]) }.not_to raise_error
     end
 
-    it "returns a single hash in an array that include the nodes from both to_hash_ni and the database " do
+    it "returns a single hash in an array that include the nodes from both to_hash_ni and the database" do
       expect(use_case.execute(type_of_assessment: %w[CEPC]).first).to match a_hash_including(
         assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         lodgement_date: "2020-05-04",

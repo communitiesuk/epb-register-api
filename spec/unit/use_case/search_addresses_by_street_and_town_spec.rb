@@ -86,7 +86,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
       insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
     end
 
-    it "returns only one address for the relevant property " do
+    it "returns only one address for the relevant property" do
       result = use_case.execute(street: "1 Some Street", town: "Whitbury")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000000")
@@ -101,7 +101,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
       insert_into_address_base("000000000001", "SW1V 2SS", "2 Some Street", "", "London", "E")
     end
 
-    it "returns a single address line from address base " do
+    it "returns a single address line from address base" do
       result = use_case.execute(street: "2 Some Street", town: "London")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000001")

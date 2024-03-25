@@ -1,6 +1,6 @@
 describe Gateway::AssessmentMetaGateway do
   include RSpecRegisterApiServiceMixin
-  context "when extracting meta data for an assessment given a RRN " do
+  context "when extracting meta data for an assessment given a RRN" do
     subject(:gateway) { described_class.new }
 
     before do

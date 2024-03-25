@@ -37,7 +37,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType",
   end
 
   context "when there are no lodgements" do
-    it "returns an empty object if there are no lodgements in the time frame " do
+    it "returns an empty object if there are no lodgements in the time frame" do
       response =
         get_assessment_report(
           start_date: "2020-09-04",

@@ -127,7 +127,7 @@ describe Domain::AssessmentBusDetails do
       expect(domain.to_hash).to eq expected_data
     end
 
-    context "when the urpn contains an RRN " do
+    context "when the urpn contains an RRN" do
       before do
         bus_details["uprn"] = "RRN-0000-0000-0000-0000-0001"
         expected_data[:uprn] = nil

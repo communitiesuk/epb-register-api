@@ -69,7 +69,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       )
     end
 
-    it "returns a region if there is not region for the postcode " do
+    it "returns a region if there is not region for the postcode" do
       add_postcodes("A0 0AA", 51.5045, 0.0865)
       add_outcodes("A0", 51.5045, 0.4865, "London")
 
@@ -99,7 +99,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       )
     end
 
-    it "returns an empty object if there are no lodgements in the time frame " do
+    it "returns an empty object if there are no lodgements in the time frame" do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
 
       response =
@@ -126,7 +126,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       )
     end
 
-    it "returns a csv of different assessment types " do
+    it "returns a CSV of different assessment types" do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
 
       lodge_assessment_with_rrn(
@@ -208,7 +208,7 @@ def lodge_assessment_with_rrn(xml, rrn, schema_name, scheme_id, created_at)
   Timecop.freeze(created_at)
   doc = Nokogiri.XML xml
 
-  # Includes commercial certificates excluding DEC
+  # Includes non-domestic certificates excluding DEC
   if schema_name.include?("CEPC") && doc.at("Report-Type").nil?
     doc.at("//CEPC:RRN").content = rrn
   else

@@ -72,7 +72,7 @@ describe "OpenDataExportNotForPublication" do
       expect { task.invoke("for_odc") }.to output(/#{expected_message}/).to_stderr
     end
 
-    it "doesn't prefix csv filename with `test/` so it's stored in the main directory in the S3 bucket" do
+    it "doesn't prefix CSV filename with `test/` so it's stored in the main directory in the S3 bucket" do
       allow(Gateway::StorageGateway).to receive(:new).and_return(
         storage_gateway,
       )
@@ -86,7 +86,7 @@ describe "OpenDataExportNotForPublication" do
       )
     end
 
-    it "sends the converted csv to the S3 bucket " do
+    it "sends the converted CSV to the S3 bucket" do
       task.invoke("for_odc")
       expect(WebMock).to have_requested(
         :put,

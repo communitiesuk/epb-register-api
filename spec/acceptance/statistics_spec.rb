@@ -61,7 +61,7 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
     end
 
-    it "returns json that contains all the assessments aggregated data for England & wales" do
+    it "returns json that contains all the assessments aggregated data for England & Wales" do
       response = fetch_statistics(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
@@ -103,7 +103,7 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
     end
 
-    it "returns json that contains all the assessments aggregated data for England & wales" do
+    it "returns json that contains all the assessments aggregated data for England & Wales" do
       response = fetch_statistics_new(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],

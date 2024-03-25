@@ -52,7 +52,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "when CEPC and CEPC-NI are lodged for " do
+  context "when CEPC and CEPC-NI are lodged for" do
     let!(:docs_under_test) do
       [
         {

@@ -179,7 +179,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       expect(after_assessments[:data][:assessments][0]).to eq(nil)
     end
 
-    it "can filter for commercial results" do
+    it "can filter for non-domestic results" do
       setup_scheme_and_lodge(non_domestic: true)
 
       response =
@@ -433,7 +433,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       expect(response_json["data"]["assessments"].length).to eq(0)
     end
 
-    it "can filter for commercial assessments" do
+    it "can filter for non-domestic assessments" do
       setup_scheme_and_lodge(non_domestic: true)
       response =
         assessments_search_by_street_and_town(

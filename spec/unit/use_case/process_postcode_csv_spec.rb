@@ -63,12 +63,12 @@ describe UseCase::ProcessPostcodeCsv do
       expect { use_case.execute(postcode_csv) }.not_to raise_error
     end
 
-    it "sends expected args, excluding scottish postcodes, to insert_postcode_batch" do
+    it "sends expected args, excluding Scottish postcodes, to insert_postcode_batch" do
       use_case.execute(postcode_csv)
       expect(gateway).to have_received(:insert_postcode_batch).exactly(1).with(expected_data).times
     end
 
-    it "sends expected args, excluding scottish outcodes, to insert_outcodes" do
+    it "sends expected args, excluding Scottish outcodes, to insert_outcodes" do
       use_case.execute(postcode_csv)
       expect(gateway).to have_received(:insert_outcodes).exactly(1).with(expected_outcodes).times
     end

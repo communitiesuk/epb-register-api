@@ -54,7 +54,7 @@ describe "lodge_dev_assessments rake" do
       expect(exported_data.count { |row| row["type_of_assessment"] == "RdSAP" }).to eq(15)
     end
 
-    it "lodges data from updated xml into the assessments table", aggregate_failures: true do
+    it "lodges data from updated XML into the assessments table", aggregate_failures: true do
       first_result = exported_data.first
       expect(first_result["type_of_assessment"]).to eq("RdSAP")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
@@ -88,7 +88,7 @@ describe "lodge_dev_assessments rake" do
         expect(superseded_cert["address_id"]).to eq valid_cert["address_id"]
       end
 
-      it "creates a superseded and valid pair with different expiry dates " do
+      it "creates a superseded and valid pair with different expiry dates" do
         expect(superseded_cert["date_of_expiry"]).to be < valid_cert["date_of_expiry"]
       end
 
@@ -128,7 +128,7 @@ describe "lodge_dev_assessments rake" do
       end
     end
 
-    it "loads the xml from the factory" do
+    it "loads the XML from the factory" do
       expect { UseCase::AssessmentSummary::Fetch.new.execute("0000-0000-0000-0000-0001") }.not_to raise_error
     end
   end

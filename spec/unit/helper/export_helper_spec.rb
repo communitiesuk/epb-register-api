@@ -1,7 +1,7 @@
 describe Helper::ExportHelper do
   let(:helper) { described_class }
 
-  context "when turning exported data into a csv" do
+  context "when turning exported data into a CSV" do
     let(:expectation) do
       csv = <<~CSV
         ASSESSMENT_ID,ADDRESS1,COMMA_TEST_VALUES,LODGEMENT_DATE
@@ -28,7 +28,7 @@ describe Helper::ExportHelper do
       ]
     end
 
-    it "returns a csv that matches the expectation and is formatted correctly" do
+    it "returns a CSV that matches the expectation and is formatted correctly" do
       expect(expectation).to eq(helper.to_csv(test_data))
     end
   end

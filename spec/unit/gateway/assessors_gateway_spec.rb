@@ -25,7 +25,7 @@ describe Gateway::AssessorsGateway do
         end
       end
 
-      it "returns more than 20 items of the same name " do
+      it "returns more than 20 items of the same name" do
         expect(gateway.search_by(name: "Someone Person").length).to eq(21)
       end
     end

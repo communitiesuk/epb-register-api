@@ -9,7 +9,7 @@ describe UseCase::BackfillDataWarehouseByEvents do
     allow(data_warehouse_queues_gateway).to receive(:push_to_queue).with(any_args)
   end
 
-  context "when extracting RRNs from audit event logs for opt out " do
+  context "when extracting RRNs from audit event logs for opt out" do
     let(:data) do
       %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
     end
@@ -28,7 +28,7 @@ describe UseCase::BackfillDataWarehouseByEvents do
     end
   end
 
-  context "when extracting RRNs from audit event logs for opt ins " do
+  context "when extracting RRNs from audit event logs for opt ins" do
     let(:data) do
       %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
     end

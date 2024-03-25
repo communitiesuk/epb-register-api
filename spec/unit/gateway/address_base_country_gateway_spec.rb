@@ -9,19 +9,19 @@ describe Gateway::AddressBaseCountryGateway do
     end
 
     context "with a simple UPRN reference without the UPRN prefix or zero padding" do
-      it "gets a lookup that is a match and is known to be in wales", aggregate_failures: true do
+      it "gets a lookup that is a match and is known to be in Wales", aggregate_failures: true do
         lookup = gateway.lookup_from_uprn "12345"
         expect(lookup.match?).to be true
         expect(lookup.in_wales?).to be true
       end
 
-      it "gets a lookup that is a match and is known to be in england", aggregate_failures: true do
+      it "gets a lookup that is a match and is known to be in England", aggregate_failures: true do
         lookup = gateway.lookup_from_uprn "67890"
         expect(lookup.match?).to be true
         expect(lookup.in_england?).to be true
       end
 
-      it "gets a lookup that is a match and is known to be in northern ireland", aggregate_failures: true do
+      it "gets a lookup that is a match and is known to be in Northern Ireland", aggregate_failures: true do
         lookup = gateway.lookup_from_uprn "24680"
         expect(lookup.match?).to be true
         expect(lookup.in_northern_ireland?).to be true
@@ -53,8 +53,8 @@ describe Gateway::AddressBaseCountryGateway do
       add_address_base uprn: "86", postcode: "SW1A 1AA", country_code: "E"
     end
 
-    context "with a postcode that only sits in england" do
-      it "gets a result that reflects england only", aggregate_failures: true do
+    context "with a postcode that only sits in England" do
+      it "gets a result that reflects England only", aggregate_failures: true do
         lookup = gateway.lookup_from_postcode "SW1A 1AA"
         expect(lookup.match?).to be true
         expect(lookup.in_england?).to be true
@@ -62,8 +62,8 @@ describe Gateway::AddressBaseCountryGateway do
       end
     end
 
-    context "with a postcode that sits in england and wales" do
-      it "gets a result that reflects both england and wales" do
+    context "with a postcode that sits in England and Wales" do
+      it "gets a result that reflects both England and Wales" do
         lookup = gateway.lookup_from_postcode "HR3 6HW"
         expect(lookup.match?).to be true
         expect(lookup.in_england?).to be true

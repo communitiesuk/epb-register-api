@@ -31,7 +31,7 @@ describe Gateway::PostcodeGeolocationGateway do
       gateway.insert_postcode_batch(postcode_geolocation_buffer)
     end
 
-    it "saves the data into the postcode_geolocation_tmp table " do
+    it "saves the data into the postcode_geolocation_tmp table" do
       result = db.exec_query("SELECT * FROM postcode_geolocation_tmp")
       expect(result.length).to eq 1
       expect(result[0]["postcode"]).to eq "SW1 2AS"
@@ -56,7 +56,7 @@ describe Gateway::PostcodeGeolocationGateway do
       gateway.insert_outcodes(outcodes)
     end
 
-    it "saves the data into the postcode_outcode_geolocations_tmp table " do
+    it "saves the data into the postcode_outcode_geolocations_tmp table" do
       result = db.exec_query("SELECT * FROM postcode_outcode_geolocations_tmp")
       expect(result.length).to eq 2
       expect(result[0]["latitude"].to_s).to eq 54.977344.to_s
@@ -71,7 +71,7 @@ describe Gateway::PostcodeGeolocationGateway do
       expect { gateway.clean_up }.not_to raise_error
     end
 
-    it "tables have been deleted " do
+    it "tables have been deleted" do
       gateway.clean_up
       result = ActiveRecord::Base.connection.exec_query("SELECT EXISTS (SELECT FROM pg_tables
 WHERE tablename  in ('postcode_geolocation_tmp','postcode_geolocation_legacy','postcode_outcode_geolocations_tmp','postcode_outcode_geolocations_legacy'));")

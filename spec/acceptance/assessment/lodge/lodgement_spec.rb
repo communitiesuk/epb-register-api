@@ -525,8 +525,8 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
-    it "saves the country id to the assessment table " do
-      map_lookups_to_country_codes { %w[E] } # 'N
+    it "saves the country id to the assessment table" do
+      map_lookups_to_country_codes { %w[E] }
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
                        scopes: %w[assessment:lodge],

@@ -1,7 +1,7 @@
 describe UseCase::ExportOpenDataDec, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
-  context "when creating the open data reporting release " do
+  context "when creating the open data reporting release" do
     describe "for the DEC and reports" do
       expected_values = {
         assessment_id:

@@ -66,7 +66,7 @@ describe UseCase::ExportAssessmentAttributes do
         .and_return({ xml: sap_xml, schema_type: sap_schema })
     end
 
-    it "calls the execute method to extract xml data from the gateway" do
+    it "calls the execute method to extract XML data from the gateway" do
       export = use_case.execute(date_today)
 
       expect(export[0][:assessment_id]).to eq("0000-0000-0000-0000-0000")

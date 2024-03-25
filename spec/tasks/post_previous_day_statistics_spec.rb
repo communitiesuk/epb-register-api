@@ -21,7 +21,7 @@ describe "post previous days statistics rake" do
   end
 
   context "when calling the rake" do
-    it "posts the results to slack" do
+    it "posts the results to Slack" do
       expect(format_daily_stats_for_slack_use_case).to have_received(:execute)
       expect(Helper::SlackHelper).to have_received(:post_to_slack).with(text:, webhook_url:)
     end

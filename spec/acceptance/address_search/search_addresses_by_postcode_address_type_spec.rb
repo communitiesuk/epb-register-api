@@ -170,7 +170,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType",
       end
     end
 
-    context "when an address type of commercial is provided" do
+    context "when an address type of non-domestic is provided" do
       let(:response) do
         JSON.parse(
           assertive_get(

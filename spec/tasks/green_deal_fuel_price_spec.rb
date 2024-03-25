@@ -20,7 +20,7 @@ describe "rake maintenance:green_deal_update_fuel_data" do
     WebMock.disable!
   end
 
-  context "when calling the rake " do
+  context "when calling the rake" do
     it "calls the use case to make the request" do
       update_rake_task.invoke
       expect(use_case).to have_received(:execute).exactly(1).times
@@ -40,7 +40,7 @@ describe "rake maintenance:green_deal_update_fuel_data" do
       EnvironmentStub.remove(%w[EPB_TEAM_SLACK_URL])
     end
 
-    it "posts the error to slack" do
+    it "posts the error to Slack" do
       expect { update_rake_task.invoke }.to raise_error UseCase::ImportGreenDealFuelPrice::NoDataException
       expect(Helper::SlackHelper).to have_received(:post_to_slack).with({ text: ":alert_slow No Fuel Price data available from www.ncm-pcdb.org.uk", webhook_url: "https://slackurl.com" }).exactly(1).times
     ensure

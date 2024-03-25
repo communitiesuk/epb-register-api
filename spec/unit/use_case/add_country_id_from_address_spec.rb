@@ -14,12 +14,12 @@ describe UseCase::AddCountryIdFromAddress do
   end
 
   let(:countries) do
-    [{ country_code: "ENG", address_base_country_code: "[\"E\"]", country_id: 1, country_name: "England" },
-     { country_code: "EAW", address_base_country_code: "[\"E\", \"W\"]", country_id: 4, country_name: "England and Wales" },
-     { country_code: "WLS", address_base_country_code:  "[\"W\"]", country_id: 2, country_name: "Wales" },
-     { country_code: "NIR", address_base_country_code:  "[\"N\"]", country_id: 3, country_name: "Northern Ireland" },
-     { country_code: "NR", address_base_country_code: "", country_id: 5, country_name: "Not Recorded" },
-     { country_code: "UKN", address_base_country_code: "", country_id: 6, country_name: "Unknown" }]
+    [{ country_id: 1, country_code: "ENG", address_base_country_code: "[\"E\"]", country_name: "England" },
+     { country_id: 2, country_code: "WLS", address_base_country_code:  "[\"W\"]", country_name: "Wales" },
+     { country_id: 3, country_code: "NIR", address_base_country_code:  "[\"N\"]", country_name: "Northern Ireland" },
+     { country_id: 4, country_code: "EAW", address_base_country_code: "[\"E\", \"W\"]", country_name: "England and Wales" },
+     { country_id: 5, country_code: "NR", address_base_country_code: "", country_name: "Not Recorded" },
+     { country_id: 6, country_code: "UKN", address_base_country_code: "", country_name: "Unknown" }]
   end
 
   before do
@@ -56,7 +56,7 @@ describe UseCase::AddCountryIdFromAddress do
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
 
-      context "when schema version greater than 20 and on a border and the xml country code is england" do
+      context "when schema version greater than 20 and on a border and the XML country code is England" do
         let(:xml) { Samples.xml "RdSAP-Schema-21.0.0" }
 
         let(:lodgement_domain) { Domain::Lodgement.new(xml, "RdSAP-Schema-21.0.0") }
@@ -67,27 +67,27 @@ describe UseCase::AddCountryIdFromAddress do
         end
       end
 
-      context "when schema version greater than 20 and on a border and the xml country code is wales" do
+      context "when schema version greater than 20 and on a border and the XML country code is Wales" do
         let(:xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-21.0.0") }
 
         before do
           xml.at("Country-Code").children = "WLS"
         end
 
-        it "returns a 2 for Wales " do
+        it "returns a 2 for Wales" do
           lodgement_domain = Domain::Lodgement.new(xml.to_s, "RdSAP-Schema-21.0.0")
           use_case.execute(country_domain: border_domain, lodgement_domain:)
           expect(lodgement_domain.fetch_data.first[:country_id]).to eq 2
         end
       end
 
-      context "when it is a northern ireland epc" do
+      context "when it is a Northern Ireland EPC" do
         let(:xml) { Samples.xml("RdSAP-Schema-NI-20.0.0") }
 
         let(:lodgement_domain) { Domain::Lodgement.new(xml, "RdSAP-Schema-NI-20.0.0") }
         let(:country_domain) { Domain::CountryLookup.new(country_codes: [:N]) }
 
-        it "has a country_id for NI" do
+        it "has a country_id of 3 for NI" do
           use_case.execute(country_domain:, lodgement_domain:)
           expect(lodgement_domain.fetch_data.first[:country_id]).to eq 3
         end
@@ -100,18 +100,18 @@ describe UseCase::AddCountryIdFromAddress do
 
         let(:lodgement_domain) { Domain::Lodgement.new(xml, "SAP-Schema-18.0.0") }
 
-        it "returns a 4 for england & wales " do
+        it "returns a 4 for England & Wales" do
           use_case.execute(country_domain: border_domain, lodgement_domain:)
           expect(lodgement_domain.fetch_data.first[:country_id]).to eq 4
         end
       end
 
-      context "when a schema version greater than 18 on a border and the xml country code is england" do
+      context "when a schema version greater than 18 on a border and the XML country code is England" do
         let(:xml) { Samples.xml "SAP-Schema-19.1.0" }
 
         let(:lodgement_domain) { Domain::Lodgement.new(xml, "SAP-Schema-19.1.0") }
 
-        it "returns a 1 for england " do
+        it "returns a 1 for England" do
           use_case.execute(country_domain: border_domain, lodgement_domain:)
           expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
         end
@@ -126,30 +126,30 @@ describe UseCase::AddCountryIdFromAddress do
           xml.at("Country-Code").children = "NR"
         end
 
-        it "falls back to using the value from the xml " do
+        it "falls back to using the value from the XML" do
           use_case.execute(country_domain:, lodgement_domain:)
           expect(lodgement_domain.fetch_data.first[:country_id]).to eq 5
         end
       end
 
-      context "when the xml country code is null and the country code is null" do
+      context "when the XML country code is null and the country code is null" do
         let(:xml) { Nokogiri.XML Samples.xml("SAP-Schema-17.0") }
         let(:lodgement_domain) { Domain::Lodgement.new(xml.to_s, "SAP-Schema-17.0") }
         let(:country_domain) { Domain::CountryLookup.new(country_codes: []) }
 
-        it "falls back to using the value from the xml " do
+        it "falls back to using the value from the XML" do
           use_case.execute(country_domain:, lodgement_domain:)
           expect(lodgement_domain.fetch_data.first[:country_id]).to eq 6
         end
       end
     end
 
-    context "when passing a CEPC Dual lodgement" do
+    context "when passing a CEPC dual lodgement" do
       let(:xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
 
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
-      it "returns a 1 for england " do
+      it "returns a 1 for England" do
         use_case.execute(country_domain: english_domain, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
@@ -160,7 +160,7 @@ describe UseCase::AddCountryIdFromAddress do
 
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
-      it "returns a 1 for england " do
+      it "returns a 1 for England" do
         use_case.execute(country_domain: english_domain, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
@@ -171,7 +171,7 @@ describe UseCase::AddCountryIdFromAddress do
 
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
-      it "returns a 6 for not found " do
+      it "returns a 6 for not found" do
         use_case.execute(country_domain: nil, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 6
       end
@@ -182,7 +182,7 @@ describe UseCase::AddCountryIdFromAddress do
 
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
-      it "returns a 1 for england " do
+      it "returns a 1 for England" do
         use_case.execute(country_domain: english_domain, lodgement_domain:)
         expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
       end
@@ -193,7 +193,7 @@ describe UseCase::AddCountryIdFromAddress do
 
       let(:lodgement_domain) { Domain::Lodgement.new(xml, "CEPC-8.0.0") }
 
-      it "does not error and returns a nil " do
+      it "does not error and returns a nil" do
         allow(gateway).to receive(:fetch_countries).and_return [{ country_code: "ENG", address_base_country_code: "[\"E\"]", country_id: 1, country_name: "England" }]
 
         use_case.execute(country_domain: nil, lodgement_domain:)

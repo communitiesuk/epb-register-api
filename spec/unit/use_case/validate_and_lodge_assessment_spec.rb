@@ -127,7 +127,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
     end
 
-    it "validates SAP Schema version 19.1.0 " do
+    it "validates SAP Schema version 19.1.0" do
       valid_xml = Samples.xml "SAP-Schema-19.1.0"
       Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
       expect {
@@ -139,7 +139,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.not_to raise_exception
     end
 
-    it "validates SAP Schema version 19.0.0 " do
+    it "validates SAP Schema version 19.0.0" do
       valid_xml = Samples.xml "SAP-Schema-19.0.0"
       Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
       expect {
@@ -151,7 +151,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.not_to raise_exception
     end
 
-    it "validates SAP Schema version 18 " do
+    it "validates SAP Schema version 18" do
       valid_xml = Samples.xml "SAP-Schema-18.0.0"
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
       expect {
@@ -163,7 +163,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.not_to raise_exception
     end
 
-    it "validates RdSAP Schema version 21.0.0 " do
+    it "validates RdSAP Schema version 21.0.0" do
       valid_xml = Samples.xml "RdSAP-Schema-21.0.0"
       allow(ENV).to receive(:[])
       allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("RdSAP-Schema-21.0.0")

@@ -87,13 +87,13 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           let(:fixture_csv) { read_csv_fixture("domestic") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          it "returns the data exported to a csv object to match the .csv fixture" do
+          it "returns the data exported to a CSV object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
 
           2.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
               expect(
                 redact_lodgement_datetime(parsed_exported_data[i]) -
                   redact_lodgement_datetime(fixture_csv[i]),
@@ -130,13 +130,13 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           let(:fixture_csv) { read_csv_fixture("domestic_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          it "returns the data exported to a csv object to match the .csv fixture" do
+          it "returns the data exported to a CSV object to match the .csv fixture" do
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
           end
 
           4.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
               expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
                 [],
               )
@@ -170,7 +170,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
             HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
           end
 
-          it "transfers the file to the S3 bucket with the correct filename, body and headers " do
+          it "transfers the file to the S3 bucket with the correct filename, body and headers" do
             assessment_type = "SAP-RDSAP"
             date_to = "2021-07-01"
             date_from = test_start_date
@@ -344,14 +344,14 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
             expect(parsed_exported_data.length).to eq(3)
           end
 
-          it "returns the data exported for row 1 object to match same row in the .csv fixture " do
+          it "returns the data exported for row 1 object to match same row in the .csv fixture" do
             expect(
               redact_lodgement_datetime(first_commercial_assessment) -
                 redact_lodgement_datetime(fixture_csv[0]),
             ).to eq([])
           end
 
-          it "returns the data exported for row 2 object to match same row in the .csv fixture " do
+          it "returns the data exported for row 2 object to match same row in the .csv fixture" do
             expect(
               redact_lodgement_datetime(second_commercial_assessment) -
                 redact_lodgement_datetime(fixture_csv[1]),
@@ -377,7 +377,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           end
 
           5.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
               expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
                 [],
               )
@@ -541,19 +541,19 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
           let(:fixture_csv) { read_csv_fixture("dec") }
 
-          it "returns the data exported to a csv object to match the .csv fixture " do
+          it "returns the data exported to a csv object to match the .csv fixture" do
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
           end
 
-          it "returns the data exported for row 1 object to match same row in the .csv fixture " do
+          it "returns the data exported for row 1 object to match same row in the .csv fixture" do
             expect(
               redact_lodgement_datetime(first_dec_asssement) -
                 redact_lodgement_datetime(fixture_csv[0]),
             ).to eq([])
           end
 
-          it "returns the data exported for row 2 to match same row in the .csv fixture " do
+          it "returns the data exported for row 2 to match same row in the .csv fixture" do
             expect(
               redact_lodgement_datetime(second_dec_asssement) -
                 redact_lodgement_datetime(fixture_csv[1]),
@@ -574,13 +574,13 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           let(:fixture_csv) { read_csv_fixture("dec_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          it "returns the data exported to a csv object to match the .csv fixture " do
+          it "returns the data exported to a csv object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
 
           5.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
               expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
                 [],
               )
@@ -682,7 +682,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
     end
   end
 
-  context "when an assessment is lodged with lines breaks in the xml" do
+  context "when an assessment is lodged with lines breaks in the XML" do
     before do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
       add_outcodes("A0", 51.5045, 0.4865, "London")

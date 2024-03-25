@@ -2,7 +2,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do
-    describe "for the commercial certificates and reports" do
+    describe "for the non-domestic certificates and reports" do
       expected_values = {
         assessment_id:
           "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
