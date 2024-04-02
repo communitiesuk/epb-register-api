@@ -53,6 +53,8 @@ namespace :data_export do
 
     active_scheme_ids = ApiFactory.fetch_active_schemes_use_case.execute
     puts "Active Schemes: #{active_scheme_ids.join(', ')}"
+    puts "Start date: #{start_date}"
+    puts "end date: #{end_date}"
 
     active_scheme_ids.each do |scheme_id|
       raw_data = ApiFactory.get_assessment_rrns_by_scheme_type.execute(
@@ -67,6 +69,7 @@ namespace :data_export do
 
       message = "#{ENV['STAGE']} - Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{report_type}"
       message.concat(" - scheme_id = #{scheme_id}") unless scheme_id.nil?
+      puts message
 
       Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
       Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
