@@ -71,9 +71,11 @@ namespace :data_export do
       Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
       Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
     rescue Boundary::NoData => e
-      Sentry.capture_exception(e)  if defined?(Sentry)
+      puts e.message
     rescue Boundary::SlackMessageError => e
-      Sentry.capture_exception(e)  if defined?(Sentry)
+      puts e.message
+    rescue StandardError => e
+      puts e.message
     end
   end
 end
