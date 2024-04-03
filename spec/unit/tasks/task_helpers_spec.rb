@@ -1,3 +1,5 @@
+require "sentry-ruby"
+
 describe Tasks::TaskHelpers do
   describe "#quit_if_production" do
     context "when the stage is production" do
@@ -47,6 +49,21 @@ describe Tasks::TaskHelpers do
       it "returns the last day of the previous month" do
         expect(described_class.get_last_months_dates[:end_date]).to eq "2022-09-01"
       end
+    end
+  end
+
+  describe "#initialize_sentry" do
+    before do
+      EnvironmentStub.with("SENTRY_DSN", "https://454787979jlafkasl;dkasldksald.ingest.sentry.io/1234")
+      described_class.initialize_sentry
+    end
+
+    after do
+      EnvironmentStub.remove %w[SENTRY_DSN]
+    end
+
+    it "is loaded" do
+      expect(Sentry.configuration).not_to be_nil
     end
   end
 end

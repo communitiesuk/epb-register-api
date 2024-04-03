@@ -343,5 +343,4 @@ describe "monthly invoice export" do
       expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times
     end
   end
-
 end
