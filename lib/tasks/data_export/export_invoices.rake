@@ -47,7 +47,7 @@ namespace :data_export do
 
   desc "Export schema invoices on the 1st of the month every month"
   task :export_schema_invoices do
-    # Tasks::TaskHelpers.initialize_sentry
+    Tasks::TaskHelpers.initialize_sentry
 
     last_months_dates = Tasks::TaskHelpers.get_last_months_dates
     start_date  = ENV["start_date"] || last_months_dates[:start_date]
