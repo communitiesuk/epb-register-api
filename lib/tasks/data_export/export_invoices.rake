@@ -47,8 +47,6 @@ namespace :data_export do
 
   desc "Export schema invoices on the 1st of the month every month"
   task :export_schema_invoices do
-    Tasks::TaskHelpers.initialize_sentry
-
     last_months_dates = Tasks::TaskHelpers.get_last_months_dates
     start_date  = ENV["start_date"] || last_months_dates[:start_date]
     end_date    = ENV["end_date"] || last_months_dates[:end_date]
@@ -73,9 +71,9 @@ namespace :data_export do
       Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
       Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
     rescue Boundary::NoData => e
-      Sentry.capture_exception(e)  if defined?(Sentry)
+      report_to_sentry(e)
     rescue Boundary::SlackMessageError => e
-      Sentry.capture_exception(e)  if defined?(Sentry)
+      report_to_sentry(e)
     rescue StandardError => e
       puts e.message
     end

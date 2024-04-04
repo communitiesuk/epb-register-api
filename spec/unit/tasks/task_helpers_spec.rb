@@ -51,19 +51,4 @@ describe Tasks::TaskHelpers do
       end
     end
   end
-
-  describe "#initialize_sentry" do
-    before do
-      EnvironmentStub.with("SENTRY_DSN", "https://454787979jlafkasl;dkasldksald.ingest.sentry.io/1234")
-      described_class.initialize_sentry
-    end
-
-    after do
-      EnvironmentStub.remove %w[SENTRY_DSN]
-    end
-
-    it "is loaded" do
-      expect(Sentry.configuration).not_to be_nil
-    end
-  end
 end

@@ -1,5 +1,3 @@
-require "sentry-ruby"
-
 module Tasks
   module TaskHelpers
     def self.quit_if_production
@@ -13,17 +11,6 @@ module Tasks
       start_date = Date.yesterday.strftime("%Y-%m-01")
 
       { start_date:, end_date: }
-    end
-
-    def self.initialize_sentry
-      Sentry.init do |config|
-        config.dsn = ENV["SENTRY_DSN"]
-        config.breadcrumbs_logger = %i[sentry_logger http_logger]
-
-        # To activate performance monitoring, set one of these options.
-        # We recommend adjusting the value in production:
-        config.traces_sample_rate = 1.0
-      end
     end
   end
 end

@@ -5,6 +5,7 @@ require "active_support/core_ext"
 require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
 require "epb_view_models"
+require "sentry-ruby"
 
 unless defined?(TestLoader)
   require "zeitwerk"
@@ -30,6 +31,15 @@ end
 
 unless ActiveRecord::Base.connected?
   ActiveRecord::Base.connects_to(database: { writing: :primary, reading: :primary_replica })
+end
+
+def report_to_sentry(exception)
+  Sentry.capture_exception(exception) if defined?(Sentry)
+end
+
+Sentry.init do |config|
+  config.environment = ENV["STAGE"]
+  config.include_local_variables = true
 end
 
 begin
