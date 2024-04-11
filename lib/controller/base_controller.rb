@@ -88,6 +88,9 @@ module Controller
     end
 
     def request_body(schema)
+      if !ENV["STAGE"].nil? && ENV["STAGE"] == "test"
+        request.body.rewind
+      end
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
     end
 
