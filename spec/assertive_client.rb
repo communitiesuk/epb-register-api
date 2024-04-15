@@ -41,7 +41,7 @@ def assertive_put(
   scopes: [],
   should_authenticate: true
 )
-
+  header "Content-type", "application/json"
   assertive_request(
     accepted_responses:,
     should_authenticate:,
@@ -75,8 +75,10 @@ def assertive_post(
   scopes: [],
   auth_data: {},
   accepted_responses: [201],
-  json: true
+  json: true,
+  content_type_set: false
 )
+  header "Content-type", "application/json" unless content_type_set
   body = body.to_json if json
   assertive_request(
     accepted_responses:,
@@ -312,6 +314,7 @@ def lodge_assessment(
 
   unless schema_name.nil?
     header "Content-type", "application/xml+#{schema_name}"
+    content_type_set = true
   end
 
   headers.each { |key, value| header key.to_s, value.to_s }
@@ -324,6 +327,7 @@ def lodge_assessment(
     auth_data:,
     scopes:,
     json:,
+    content_type_set:,
   )
 end
 
@@ -336,7 +340,6 @@ def update_assessment_status(
   scopes: %w[assessment:lodge]
 )
   path = "api/assessments/#{assessment_id}/status"
-  header "Content-type", "application/json"
 
   assertive_post(
     path,

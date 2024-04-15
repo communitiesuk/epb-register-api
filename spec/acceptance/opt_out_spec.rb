@@ -186,6 +186,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
 
   it "returns 400 when body cannot be parsed to JSON" do
     request_body = " something wrong "
+    header "Content-type", "application/json"
     response = assertive_request(
       accepted_responses: [400],
       should_authenticate: true,
