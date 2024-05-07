@@ -116,6 +116,40 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
+    def fetch_assessment_id_by_date_and_type(date_from:, date_to:, assessment_types: nil)
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_from,
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_to,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+
+      sql = <<-SQL
+        SELECT assessment_id
+        FROM assessments a
+        WHERE a.date_registered BETWEEN $1 AND $2
+        AND country_id IS NULL
+      SQL
+
+      if assessment_types.is_a?(Array)
+        invalid_types = assessment_types - VALID_ASSESSMENT_TYPES
+        raise StandardError, "Invalid types" unless invalid_types.empty?
+
+        list_of_types = assessment_types.map { |n| "'#{n}'" }
+        sql += <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      end
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result["assessment_id"] }
+    end
+
     def update_created_at_from_landmark?(assessment_id, created_at)
       return false if created_at < "2006-01-01" || created_at > "2020-10-01"
 
