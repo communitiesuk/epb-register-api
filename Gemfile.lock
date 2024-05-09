@@ -46,6 +46,7 @@ GEM
     crack (1.0.0)
       bigdecimal
       rexml
+    csv (3.3.0)
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.1.0)
@@ -67,7 +68,9 @@ GEM
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
       net-http
-    geocoder (1.8.2)
+    geocoder (1.8.3)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     hashdiff (1.1.0)
     hashie (5.0.0)
     i18n (1.14.4)
@@ -247,7 +250,7 @@ DEPENDENCIES
   debase (~> 0.2, >= 0.2.5.beta2)
   epb-auth-tools (~> 1.1.0)
   epb_view_models (~> 2.0)
-  geocoder (~> 1.8.0)
+  geocoder (~> 1.8.3)
   json-schema (~> 4.3)
   mock_redis (~> 0.44.0)
   namecase (~> 2.0)
