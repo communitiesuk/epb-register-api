@@ -34,7 +34,7 @@ gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "rackup", "~> 2.1"
 gem "rake", "~> 13.2"
-gem "redis", "~> 5.1.0"
+gem "redis", "~> 5.2.0"
 gem "rubocop", "~> 1.62.1"
 gem "rubocop-govuk", "~> 4.16"
 gem "rubocop-performance", require: false
