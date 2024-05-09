@@ -27,7 +27,7 @@ module Gateway
                   FROM assessments AS a
             JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
             WHERE type_of_assessment IN ('SAP', 'RdSAP')
-            AND  a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+            AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
 
       SQL
     end

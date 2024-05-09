@@ -319,12 +319,12 @@ describe Gateway::DomesticEpcSearchGateway do
       expect(result[0].rrn).to eq("0000-0000-0000-0000-0002")
     end
 
-    it "only finds the 1 EPCs that has not been opted out", aggregate_failures: true do
+    it "includes the EPC that has been opted out", aggregate_failures: true do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = true WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
-      expect(result.length).to eq(1)
-      expect(result[0].rrn).to eq("0000-0000-0000-0000-0002")
+      expect(result.length).to eq(2)
+      expect(result.find { |epc| epc.rrn == "0000-0000-0000-0000-0001" }).to_not be_nil
     end
   end
 end
