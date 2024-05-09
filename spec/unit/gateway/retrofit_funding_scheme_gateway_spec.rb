@@ -1,4 +1,4 @@
-describe Gateway::RetrofitFundingSchemeGateway do
+describe Gateway::RetrofitFundingSchemeGateway, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   subject(:gateway) { described_class.new }
