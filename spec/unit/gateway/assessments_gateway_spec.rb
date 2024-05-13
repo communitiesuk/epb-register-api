@@ -111,6 +111,27 @@ describe Gateway::AssessmentsGateway do
     end
   end
 
+  describe "#fetch_location_by_assessment_id" do
+    before do
+      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
+      ActiveRecord::Base.connection.exec_query(
+        "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
+        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
+      )
+      ActiveRecord::Base.connection.exec_query(
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, postcode, address_id )
+        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50, 'BA1 2BD', 'UPRN-000000000123')",
+      )
+    end
+
+    it "returns the postcode and address_id" do
+      result = gateway.fetch_location_by_assessment_id("0000-0000-0000-0000-0000")
+      expect(result["assessment_id"]).to eq "0000-0000-0000-0000-0000"
+      expect(result["postcode"]).to eq "BA1 2BD"
+      expect(result["address_id"]).to eq "UPRN-000000000123"
+    end
+  end
+
   describe "#insert" do
     context "when inserting an assessment with data that already exists on the database" do
       before do

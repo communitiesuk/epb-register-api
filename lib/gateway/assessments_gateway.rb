@@ -150,6 +150,24 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result["assessment_id"] }
     end
 
+    def fetch_location_by_assessment_id(assessment_id)
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      sql = <<-SQL
+           SELECT assessment_id, postcode, address_id
+            FROM assessments a
+           WHERE a.assessment_id = $1
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).first
+    end
+
     def update_created_at_from_landmark?(assessment_id, created_at)
       return false if created_at < "2006-01-01" || created_at > "2020-10-01"
 
