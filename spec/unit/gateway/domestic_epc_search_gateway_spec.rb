@@ -324,7 +324,7 @@ describe Gateway::DomesticEpcSearchGateway do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = true WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
       expect(result.length).to eq(2)
-      expect(result.find { |epc| epc.rrn == "0000-0000-0000-0000-0001" }).to_not be_nil
+      expect(result.find { |epc| epc.rrn == "0000-0000-0000-0000-0001" }).not_to be_nil
     end
   end
 end
