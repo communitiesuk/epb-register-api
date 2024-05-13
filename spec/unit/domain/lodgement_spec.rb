@@ -61,6 +61,19 @@ describe Domain::Lodgement do
     end
   end
 
+  describe "#fetch_country_id" do
+    it "fetches the country_id from assessment data" do
+      domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
+      domain.add_country_id_to_data(1)
+      expect(domain.fetch_country_id).to eq 1
+    end
+
+    it "fetches nil from the country_id" do
+      domain_one = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
+      expect(domain_one.fetch_country_id).to eq nil
+    end
+  end
+
   describe "#country_code" do
     it "returns the country code from an RdSAP" do
       domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")

@@ -9,7 +9,6 @@ module Domain
 
     def initialize(data, schema_name)
       @data = Hash.from_xml(data).deep_symbolize_keys
-
       @raw_data = data
       @schema_name = schema_name.to_sym
       @assessment_data = []
@@ -24,6 +23,10 @@ module Domain
 
     def add_country_id_to_data(id)
       @assessment_data.each { |report| report[:country_id] = id }
+    end
+
+    def fetch_country_id
+      fetch_data[0][:country_id]
     end
 
     def country_code
