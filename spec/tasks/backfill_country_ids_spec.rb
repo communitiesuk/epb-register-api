@@ -55,6 +55,10 @@ describe "backfill assessments with country ids" do
       allow(use_case).to receive(:execute).and_raise Boundary::NoAssessments, " dates "
     end
 
+    after do
+      EnvironmentStub.remove(%w[DATE_FROM DATE_TO])
+    end
+
     it "prints the error to the standard output" do
       expect { rake.invoke }.to output(/no assessments found for/).to_stdout
     end
