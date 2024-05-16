@@ -104,5 +104,17 @@ module UseCase
     def self.cross_border_england_and_scotland_regex
       Regexp.new("^#{cross_border_england_and_scotland_outcodes.map { |fragment| "(#{fragment}\s)" }.join('|')}")
     end
+
+    def self.england_only_prefixes
+      %w[AL B BA BB BD BH BL BN BR BS CA CB CF CH CM CO CR CT CV CW DA DE DH DL DN DT DY E EC EN EX FY GL GU HA HD HG HP HR HU HX IG IP KT L LA LE LN LS LU M ME MK N NE NG NN NR NW OL OX PE PL PO PR RE RH RM S SE SG SK SL SM SN SO SP SR SS ST SW SY TA TF TN TQ TR TS TW UB W WA WC WD WF WN WR WS WV YO]
+    end
+
+    def self.england_only_outcodes
+      %w[CH2 CH3 CH41 CH42 CH43 CH44 CH45 CH46 CH47 CH48 CH49 CH60 CH61 CH62 CH63 CH64 CH65 CH66 HR1 HR4 HR6 HR7 HR8 HR9 SY1 SY2 SY3 SY4 SY6 SY7 SY8 SY9 SY11 SY12 SY13 SY14]
+    end
+
+    def self.in_england_only_regex
+      Regexp.new((england_only_prefixes.map { |fragment| "(^#{fragment}\\d)" } + england_only_outcodes.map { |fragment| "(#{fragment}\s)" }).join("|")).freeze
+    end
   end
 end

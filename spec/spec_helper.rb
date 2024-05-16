@@ -158,7 +158,10 @@ def add_countries
             INSERT INTO countries(country_code, country_name, address_base_country_code)
             VALUES ('ENG', 'England' ,'["E"]'::jsonb),
                    ('EAW', 'England and Wales', '["E", "W"]'::jsonb),
-                     ('UKN', 'Unknown', '{}'::jsonb)
+                     ('UKN', 'Unknown', '{}'::jsonb),
+                    ('NIR', 'Northern Ireland', '["N"]'::jsonb),
+                    ('SCT', 'Scotland', '["S"]'::jsonb),
+            ('', 'Channel Islands', '["L"]'::jsonb)
   SQL
   ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
 end

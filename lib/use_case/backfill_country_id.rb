@@ -8,8 +8,8 @@ module UseCase
       @add_country_id_from_address = add_country_id_from_address
     end
 
-    def execute(date_from:, date_to:)
-      assessments_ids = @assessment_ids_use_case.execute(date_from:, date_to:)
+    def execute(date_from:, date_to:, assessment_types: nil)
+      assessments_ids = @assessment_ids_use_case.execute(date_from:, date_to:, assessment_types:)
 
       assessments_ids.each do |assessment_id|
         assessment_location = @assessments_gateway.fetch_location_by_assessment_id(assessment_id)
