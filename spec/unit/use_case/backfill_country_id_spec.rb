@@ -22,10 +22,22 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
     UseCase::AddCountryIdFromAddress.new(Gateway::CountryGateway.new)
   end
 
-  let(:scheme_id) { add_scheme_and_get_id }
+  let(:args) do
+    {
+      date_from: "2020-01-01",
+      date_to: "2023-01-31",
+    }
+  end
 
-  let(:assessments) do
-    [
+  before(:all) do
+    add_countries
+    add_address_base uprn: "100020003000", postcode: "SW1 0AA", country_code: "E"
+    add_address_base uprn: "100020004000", postcode: "SW1 0AA", country_code: "E"
+    add_address_base uprn: "100020005000", postcode: "SW1 0AA", country_code: "E"
+    add_address_base uprn: "1000200099",   postcode: "SW1 0AA", country_code: "E"
+    add_address_base uprn: "199999999999", postcode: "BT1 2DE", country_code: "N"
+    add_address_base uprn: "999999999999", postcode: "XX1 1XX", country_code: "E"
+    assessments = [
       {
         rrn: "0000-0000-0000-0000-0000",
         schema_type: "RdSAP-Schema-20.0.0",
@@ -105,35 +117,21 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
         type: "ac-report",
         postcode: "SW1 0AA",
       },
-
+      {
+        rrn: "0000-0000-0000-0000-0014",
+        schema_type: "RdSAP-Schema-17.1",
+        country_code: "NR",
+      },
     ]
-  end
 
-  let(:args) do
-    {
-      date_from: "2020-01-01",
-      date_to: "2023-01-31",
-    }
-  end
-
-  before(:all) do
-    add_countries
-    add_address_base uprn: "100020003000", postcode: "SW1 0AA", country_code: "E"
-    add_address_base uprn: "100020004000", postcode: "SW1 0AA", country_code: "E"
-    add_address_base uprn: "100020005000", postcode: "SW1 0AA", country_code: "E"
-    add_address_base uprn: "1000200099",   postcode: "SW1 0AA", country_code: "E"
-    add_address_base uprn: "199999999999", postcode: "BT1 2DE", country_code: "N"
-    add_address_base uprn: "999999999999", postcode: "XX1 1XX", country_code: "E"
-  end
-
-  before do
+    scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
     assessments.each do |assessment|
       xml = assessment[:type].nil? ? (Nokogiri.XML Samples.xml assessment[:schema_type]) : (Nokogiri.XML Samples.xml assessment[:schema_type], assessment[:type])
       xml.at("//*[local-name() = 'RRN']").content = assessment[:rrn]
       xml.at("//*[local-name() = 'UPRN']").content = assessment[:uprn] if assessment[:uprn]
       xml.at("Registration-Date").content = assessment[:registered_date] if assessment[:registered_date]
-
+      xml.at("//*[local-name() = 'Country-Code']").content = assessment[:country_code] if assessment[:country_code]
       lodge_assessment(
         assessment_body: xml.to_xml,
         accepted_responses: [201],
@@ -150,7 +148,7 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
 
   it "updates every row in the assessments table within the date range with the relevant country_id(s)" do
     use_case.execute(**args)
-    number_in_range = (assessments.length - 1)
+    number_in_range = 14
     count = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments WHERE country_id IS NOT NULL").map { |rows| rows["cnt"] }.first
     expect(count).to eq number_in_range
   end
@@ -185,12 +183,17 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
     expect(get_country_for_assessment(assessment_id: "0000-0000-0000-0000-0012")).to eq "England"
   end
 
+  it "updates the country_id for RdSAp 17.1 where the xml country code is NR" do
+    use_case.execute(**args)
+    expect(get_country_for_assessment(assessment_id: "0000-0000-0000-0000-0014")).to eq "Not Recorded"
+  end
+
   context "when filtering by assessment_types" do
     it "updates the country_id only for the RdSAPs within the date range" do
       args[:assessment_types] = %w[RdSAP]
       use_case.execute(**args)
       result = ActiveRecord::Base.connection.exec_query("SELECT assessment_id  FROM assessments WHERE country_id IS NOT NULL and type_of_assessment='RdSAP'").map { |rows| rows["assessment_id"] }
-      expect(result.length).to eq 6
+      expect(result.length).to eq 7
     end
   end
 

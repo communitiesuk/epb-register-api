@@ -14,7 +14,8 @@ describe Gateway::CountryGateway do
        { country_code: "UKN", address_base_country_code: "{}", country_id: 3, country_name: "Unknown" },
        { country_code: "NIR", address_base_country_code: "[\"N\"]", country_id: 4, country_name: "Northern Ireland" },
        { country_code: "SCT", address_base_country_code: "[\"S\"]", country_id: 5, country_name: "Scotland" },
-       { country_code: "", address_base_country_code: "[\"L\"]", country_id: 6, country_name: "Channel Islands" }]
+       { country_code: "", address_base_country_code: "[\"L\"]", country_id: 6, country_name: "Channel Islands" },
+       { country_code: "NR", address_base_country_code: nil, country_id: 7, country_name: "Not Recorded" }]
     end
 
     it "returns all the expected data points" do
