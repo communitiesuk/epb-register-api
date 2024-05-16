@@ -13,7 +13,7 @@ module UseCase
                          @assessments_gateway.fetch_assessment_id_by_date_and_type(date_from:, date_to:, assessment_types:)
                        end
 
-      raise Boundary::NoData, "No assessments_ids to backfill" if assessment_ids.empty?
+      raise Boundary::NoAssessments, " dates: #{date_from} - #{date_to} and assessment_types: #{assessment_types}" if assessment_ids.empty?
 
       assessment_ids
     end

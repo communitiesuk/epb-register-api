@@ -193,4 +193,30 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
       expect(result.length).to eq 6
     end
   end
+
+  context "when no data is found" do
+    let(:args) do
+      {
+        date_from: "3025-01-01",
+        date_to: "3026-01-31",
+      }
+    end
+
+    it "raises a no assessment error" do
+      expect { use_case.execute(**args) }.to raise_error Boundary::NoAssessments
+    end
+  end
+
+  context "when the dates are out of bounds" do
+    let(:args) do
+      {
+        date_from: "2024-10-01",
+        date_to: "2024-01-31",
+      }
+    end
+
+    it "raises a no assessment error" do
+      expect { use_case.execute(**args) }.to raise_error Boundary::InvalidDates
+    end
+  end
 end
