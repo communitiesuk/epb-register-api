@@ -19,7 +19,7 @@ group :test do
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
 end
 
-gem "activerecord", "~> 7.1.2"
+gem "activerecord", "~> 7.1.3"
 gem "archive-zip"
 gem "aws-sdk-s3", "~> 1.149"
 gem "epb-auth-tools", "~> 1.1.0"
