@@ -21,8 +21,12 @@ module UseCase
         schema_type = assessment_data[:schema_type]
 
         country_lookup = @country_use_case.execute(rrn: assessment_id, postcode:, address_id:)
-        lodgement_domain = Domain::Lodgement.new(xml, schema_type)
-
+        begin
+          lodgement_domain = Domain::Lodgement.new(xml, schema_type)
+        rescue NoMethodError => e
+          puts "rrn: #{assessment_id} for #{e.message}"
+          next
+        end
         @add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain:)
         country_id = lodgement_domain.fetch_country_id
         @assessments_gateway.update_field(assessment_id, "country_id", country_id)
