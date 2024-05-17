@@ -213,7 +213,7 @@ class ApiFactory
   end
 
   def self.assessment_ids_use_case
-    @assessment_ids_use_case ||= UseCase::FetchAssessmentIdForCountryIdBackfill.new(assessments_gateway)
+    @assessment_ids_use_case ||= UseCase::FetchAssessmentIdForCountryIdBackfill.new(assessments_gateway:)
   end
 
   def self.get_country_for_candidate_assessment_use_case
