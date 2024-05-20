@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_06_155420) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_110407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -83,7 +83,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_155420) do
     t.index "lower((address_line4)::text)", name: "index_assessments_on_address_line4"
     t.index "lower((town)::text)", name: "index_assessments_on_town"
     t.index ["address_id"], name: "index_assessments_on_address_id"
-    t.index ["country_id"], name: "index_assessments_on_country_id"
     t.index ["created_at"], name: "index_assessments_on_created_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
@@ -239,10 +238,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_155420) do
     t.string "name"
     t.boolean "active", default: true
     t.index ["name"], name: "index_schemes_on_name", unique: true
-  end
-
-  create_table "search_address", primary_key: "assessment_id", id: :string, force: :cascade do |t|
-    t.text "address"
   end
 
   add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"

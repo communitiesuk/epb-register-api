@@ -13,13 +13,12 @@ module UseCase
 
       assessments_ids.each do |assessment_id|
         assessment_location = @assessments_gateway.fetch_location_by_assessment_id(assessment_id)
-        assessment_data = @assessments_xml_gateway.fetch(assessment_id)
 
         postcode = assessment_location["postcode"]
         address_id = assessment_location["address_id"]
-        xml = assessment_data[:xml]
-        schema_type = assessment_data[:schema_type]
 
+        xml = assessment_location["xml"]
+        schema_type = assessment_location["schema_type"]
         country_lookup = @country_use_case.execute(rrn: assessment_id, postcode:, address_id:)
         begin
           lodgement_domain = Domain::Lodgement.new(xml, schema_type)

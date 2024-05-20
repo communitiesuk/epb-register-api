@@ -160,8 +160,9 @@ module Gateway
       ]
 
       sql = <<-SQL
-           SELECT assessment_id, postcode, address_id
+           SELECT a.assessment_id, a.postcode, a.address_id, x.xml, x.schema_type
             FROM assessments a
+            JOIN assessments_xml x on x.assessment_id = a.assessment_id
            WHERE a.assessment_id = $1
       SQL
 

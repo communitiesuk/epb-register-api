@@ -113,22 +113,27 @@ describe Gateway::AssessmentsGateway do
 
   describe "#fetch_location_by_assessment_id" do
     before do
-      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
-        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, postcode, address_id )
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50, 'BA1 2BD', 'UPRN-000000000123')",
+      scheme_id = add_scheme_and_get_id
+      add_super_assessor(scheme_id:)
+      xml = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+      lodge_assessment(
+        assessment_body: xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        migrated: true,
+        schema_name: "RdSAP-Schema-20.0.0",
       )
     end
 
-    it "returns the postcode and address_id" do
+    it "returns the postcode and address_id", :aggregate_failures do
       result = gateway.fetch_location_by_assessment_id("0000-0000-0000-0000-0000")
       expect(result["assessment_id"]).to eq "0000-0000-0000-0000-0000"
-      expect(result["postcode"]).to eq "BA1 2BD"
-      expect(result["address_id"]).to eq "UPRN-000000000123"
+      expect(result["postcode"]).to eq "A0 0AA"
+      expect(result["address_id"]).to eq "UPRN-000000000000"
+      expect(Nokogiri.XML(result["xml"])).to be_a Nokogiri::XML::Document
+      expect(result["schema_type"]).to eq "RdSAP-Schema-20.0.0"
     end
   end
 
