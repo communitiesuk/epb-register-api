@@ -19,9 +19,9 @@ group :test do
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
 end
 
-gem "activerecord", "~> 7.1.2"
+gem "activerecord", "~> 7.1.3"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.149"
+gem "aws-sdk-s3", "~> 1.151"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.0"
 gem "geocoder", "~> 1.8.3"
@@ -45,4 +45,4 @@ gem "sinatra-activerecord", "~> 2.0.27"
 gem "sinatra-cross_origin", "~> 0.4.0"
 gem "unleash", "~> 5.0.1"
 gem "wisper", "~> 3.0.0.rc1"
-gem "zeitwerk", "~> 2.6.12"
+gem "zeitwerk", "~> 2.6.14"

@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.1.3.2)
-      activesupport (= 7.1.3.2)
-    activerecord (7.1.3.2)
-      activemodel (= 7.1.3.2)
-      activesupport (= 7.1.3.2)
+    activemodel (7.1.3.3)
+      activesupport (= 7.1.3.3)
+    activerecord (7.1.3.3)
+      activemodel (= 7.1.3.3)
+      activesupport (= 7.1.3.3)
       timeout (>= 0.4.0)
-    activesupport (7.1.3.2)
+    activesupport (7.1.3.3)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -23,16 +23,16 @@ GEM
       io-like (~> 0.3.0)
     ast (2.4.2)
     aws-eventstream (1.3.0)
-    aws-partitions (1.925.0)
-    aws-sdk-core (3.194.2)
+    aws-partitions (1.931.0)
+    aws-sdk-core (3.196.1)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.8)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.80.0)
+    aws-sdk-kms (1.81.0)
       aws-sdk-core (~> 3, >= 3.193.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.149.1)
+    aws-sdk-s3 (1.151.0)
       aws-sdk-core (~> 3, >= 3.194.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.8)
@@ -85,7 +85,7 @@ GEM
     language_server-protocol (3.17.0.3)
     method_source (1.1.0)
     mini_portile2 (2.8.6)
-    minitest (5.22.3)
+    minitest (5.23.0)
     mock_redis (0.44.0)
     multi_json (1.15.0)
     multi_xml (0.7.1)
@@ -98,7 +98,7 @@ GEM
     net-http (0.4.1)
       uri
     nio4r (2.7.3)
-    nokogiri (1.16.4)
+    nokogiri (1.16.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.9)
@@ -123,8 +123,8 @@ GEM
     public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.7.3)
-    rack (3.0.10)
+    racc (1.8.0)
+    rack (3.0.11)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -141,8 +141,9 @@ GEM
       redis-client (>= 0.22.0)
     redis-client (0.22.1)
       connection_pool
-    regexp_parser (2.9.0)
-    rexml (3.2.6)
+    regexp_parser (2.9.2)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -221,6 +222,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
+    strscan (3.1.0)
     tilt (2.3.0)
     timecop (0.9.8)
     timeout (0.4.1)
@@ -238,15 +240,15 @@ GEM
     webrick (1.8.1)
     wisper (3.0.0.rc1)
     wisper-rspec (1.1.0)
-    zeitwerk (2.6.13)
+    zeitwerk (2.6.14)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 7.1.2)
+  activerecord (~> 7.1.3)
   archive-zip
-  aws-sdk-s3 (~> 1.149)
+  aws-sdk-s3 (~> 1.151)
   database_cleaner
   debase (~> 0.2, >= 0.2.5.beta2)
   epb-auth-tools (~> 1.1.0)
@@ -280,7 +282,7 @@ DEPENDENCIES
   webmock (~> 3.23)
   wisper (~> 3.0.0.rc1)
   wisper-rspec (~> 1.0, >= 1.0.1)
-  zeitwerk (~> 2.6.12)
+  zeitwerk (~> 2.6.14)
 
 RUBY VERSION
    ruby 3.1.3p185
