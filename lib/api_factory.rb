@@ -206,7 +206,6 @@ class ApiFactory
     @backfill_country_id_use_case ||= UseCase::BackfillCountryId.new(
       assessment_ids_use_case:,
       assessments_gateway:,
-      assessments_xml_gateway:,
       country_use_case: get_country_for_candidate_backfill_use_case,
       add_country_id_from_address:,
     )

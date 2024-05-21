@@ -1,9 +1,8 @@
 module UseCase
   class BackfillCountryId
-    def initialize(assessment_ids_use_case:, assessments_gateway:, assessments_xml_gateway:, country_use_case:, add_country_id_from_address:)
+    def initialize(assessment_ids_use_case:, assessments_gateway:, country_use_case:, add_country_id_from_address:)
       @assessment_ids_use_case = assessment_ids_use_case
       @assessments_gateway = assessments_gateway
-      @assessments_xml_gateway = assessments_xml_gateway
       @country_use_case = country_use_case
       @add_country_id_from_address = add_country_id_from_address
     end

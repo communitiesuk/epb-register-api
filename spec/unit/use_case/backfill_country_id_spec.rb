@@ -10,7 +10,6 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
     described_class.new(
       assessment_ids_use_case: UseCase::FetchAssessmentIdForCountryIdBackfill.new(assessments_gateway: Gateway::AssessmentsGateway.new),
       assessments_gateway: Gateway::AssessmentsGateway.new,
-      assessments_xml_gateway: Gateway::AssessmentsXmlGateway.new,
       country_use_case: ApiFactory.get_country_for_candidate_backfill_use_case,
       add_country_id_from_address: add_country_use_case,
     )
