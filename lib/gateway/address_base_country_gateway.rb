@@ -1,5 +1,7 @@
 module Gateway
   class AddressBaseCountryGateway
+    include ReadOnlyDatabaseAccess
+
     ##
     # @param [String] uprn The UPRN to look up, either in "12345" or "UPRN-000000012345" format
     #
@@ -21,17 +23,22 @@ module Gateway
   private
 
     def do_lookup(sql:, param:)
-      Domain::CountryLookup.new country_codes: ActiveRecord::Base.connection.exec_query(
-        sql,
-        "sql",
-        [
-          ActiveRecord::Relation::QueryAttribute.new(
-            "param",
-            param,
-            ActiveRecord::Type::String.new,
-          ),
-        ],
-      ).map { |row| row["country_code"] }.compact
+      result = []
+      read_only do
+        result = ActiveRecord::Base.connection.exec_query(
+          sql,
+          "sql",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "param",
+              param,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        )
+      end
+
+      Domain::CountryLookup.new country_codes: result.map { |row| row["country_code"] }.compact
     end
 
     def normalise_uprn(uprn)

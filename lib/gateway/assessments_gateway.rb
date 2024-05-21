@@ -2,6 +2,8 @@
 
 module Gateway
   class AssessmentsGateway
+    include ReadOnlyDatabaseAccess
+
     class Assessment < ActiveRecord::Base; end
 
     class InvalidAssessmentType < StandardError; end
@@ -147,7 +149,12 @@ module Gateway
         SQL_TYPE_OF_ASSESSMENT
       end
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result["assessment_id"] }
+      result = []
+      read_only do
+        result = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+      end
+
+      result.map { |row| row["assessment_id"] }
     end
 
     def fetch_location_by_assessment_id(assessment_id)
@@ -166,7 +173,12 @@ module Gateway
            WHERE a.assessment_id = $1
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).first
+      result = {}
+      read_only do
+        result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
+      end
+
+      result.first
     end
 
     def update_created_at_from_landmark?(assessment_id, created_at)
