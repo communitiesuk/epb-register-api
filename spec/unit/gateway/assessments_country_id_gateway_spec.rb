@@ -11,4 +11,5 @@ describe Gateway::AssessmentsCountryIdGateway do
       expect(row).to eq expectation
     end
   end
+
 end

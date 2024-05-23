@@ -30,8 +30,6 @@ JSON_STRING="{\"awsvpcConfiguration\": {\"subnets\": ${SUBNET_GROUP_ID}, \"secur
 CONATINER_OVERRIDES="{\"containerOverrides\": [ {\"name\": \"${CONTAINER_NAME}\",  \"cpu\": 1024, \"memory\" :4096, \"command\" : [\"bundle\", \"exec\", \"rake\",\"maintenance:backfill_country_ids\" ], \"environment\" : [ {\"name\" : \"DATE_FROM\", \"value\": \"2017-01-01\"}, {\"name\" : \"DATE_TO\", \"value\": \"2017-12-31\"}]}]}"
 
 declare -a YEARS=(
- 2006
- 2007
  2008
  2009
  2010

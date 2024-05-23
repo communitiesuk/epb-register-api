@@ -88,17 +88,19 @@ describe Gateway::AssessmentsGateway do
       )
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, country_id)
-        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'SAP', '2024-01-05', '2024-01-05', '2024-01-05', '2034-01-05', 50, 1)",
+        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'SAP', '2024-01-05', '2024-01-05', '2024-01-05', '2034-01-05', 50, NULL)",
       )
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, country_id)
         VALUES ('0000-0000-0000-0000-0004', 'TEST123456', 'CEPC', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50, NULL)",
       )
+      Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id: "0000-0000-0000-0000-0002", country_id: 1)
     end
 
     it "returns expected list of assessment_ids between two dates" do
       expect(gateway.fetch_assessment_id_by_date_and_type(date_from: "2024-01-01", date_to: "2024-01-31")).to include("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0004")
     end
+
 
     context "when the schema type is passed" do
       it "returns expected only of assessment_ids between two dates of a certain schema_type" do

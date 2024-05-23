@@ -136,7 +136,7 @@ module Gateway
         SELECT assessment_id
         FROM assessments a
         WHERE a.date_registered BETWEEN $1 AND $2
-        AND country_id IS NULL
+        AND NOT EXISTS(SELECT * FROM assessments_country_ids ac WHERE a.assessment_id = ac.assessment_id)
       SQL
 
       if assessment_types.is_a?(Array)
