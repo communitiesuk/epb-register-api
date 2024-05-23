@@ -208,6 +208,7 @@ class ApiFactory
       assessments_gateway:,
       country_use_case: get_country_for_candidate_backfill_use_case,
       add_country_id_from_address:,
+      assessments_country_id_gateway:,
     )
   end
 
@@ -424,6 +425,10 @@ class ApiFactory
 
   def self.country_gateway
     @country_gateway ||= Gateway::CountryGateway.new
+  end
+
+  def self.assessments_country_id_gateway
+    @assessments_country_id_gateway ||= Gateway::AssessmentsCountryIdGateway.new
   end
 
   def self.storage_gateway(bucket_name:)

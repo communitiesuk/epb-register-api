@@ -1,6 +1,6 @@
 shared_context "when extracting the country" do
   def get_country_for_assessment(assessment_id:)
-    ActiveRecord::Base.connection.exec_query("SELECT country_name FROM assessments a join countries using(country_id) WHERE assessment_id='#{assessment_id}' ").map { |rows| rows["country_name"] }.first
+    ActiveRecord::Base.connection.exec_query("SELECT country_name FROM assessments_country_ids a join countries using(country_id) WHERE assessment_id='#{assessment_id}' ").map { |rows| rows["country_name"] }.first
   end
 end
 
@@ -12,6 +12,7 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
       assessments_gateway: Gateway::AssessmentsGateway.new,
       country_use_case: ApiFactory.get_country_for_candidate_backfill_use_case,
       add_country_id_from_address: add_country_use_case,
+      assessments_country_id_gateway: Gateway::AssessmentsCountryIdGateway.new,
     )
   end
 
@@ -148,7 +149,7 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
   it "updates every row in the assessments table within the date range with the relevant country_id(s)" do
     use_case.execute(**args)
     number_in_range = 14
-    count = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments WHERE country_id IS NOT NULL").map { |rows| rows["cnt"] }.first
+    count = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM  assessments_country_ids").map { |rows| rows["cnt"] }.first
     expect(count).to eq number_in_range
   end
 
@@ -191,7 +192,9 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
     it "updates the country_id only for the RdSAPs within the date range" do
       args[:assessment_types] = %w[RdSAP]
       use_case.execute(**args)
-      result = ActiveRecord::Base.connection.exec_query("SELECT assessment_id  FROM assessments WHERE country_id IS NOT NULL and type_of_assessment='RdSAP'").map { |rows| rows["assessment_id"] }
+      result = ActiveRecord::Base.connection.exec_query("SELECT assessment_id  FROM assessments a
+       WHERE EXISTS(SELECT * FROM assessments_country_ids ac
+     WHERE a.assessment_id = ac.assessment_id ) and type_of_assessment='RdSAP'").map { |rows| rows["assessment_id"] }
       expect(result.length).to eq 7
     end
   end

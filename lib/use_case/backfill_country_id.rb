@@ -1,10 +1,11 @@
 module UseCase
   class BackfillCountryId
-    def initialize(assessment_ids_use_case:, assessments_gateway:, country_use_case:, add_country_id_from_address:)
+    def initialize(assessment_ids_use_case:, assessments_gateway:, country_use_case:, add_country_id_from_address:, assessments_country_id_gateway:)
       @assessment_ids_use_case = assessment_ids_use_case
       @assessments_gateway = assessments_gateway
       @country_use_case = country_use_case
       @add_country_id_from_address = add_country_id_from_address
+      @assessments_country_id_gateway = assessments_country_id_gateway
     end
 
     def execute(date_from:, date_to:, assessment_types: nil)
@@ -27,7 +28,7 @@ module UseCase
         end
         @add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain:)
         country_id = lodgement_domain.fetch_country_id
-        @assessments_gateway.update_field(assessment_id, "country_id", country_id)
+        @assessments_country_id_gateway.insert(assessment_id:, country_id:)
       end
     end
   end
