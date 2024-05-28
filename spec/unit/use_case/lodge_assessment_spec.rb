@@ -11,6 +11,7 @@ describe UseCase::LodgeAssessment do
       get_canonical_address_id_use_case:,
       event_broadcaster: Events::Broadcaster.new,
       search_address_gateway:,
+      assessments_country_id_gateway:,
     )
   end
 
@@ -25,6 +26,7 @@ describe UseCase::LodgeAssessment do
     allow(use_case).to receive(:execute)
     use_case
   end
+  let(:assessments_country_id_gateway) { instance_double(Gateway::AssessmentsCountryIdGateway) }
 
   let(:data) do
     { type_of_assessment: "SAP",
@@ -201,7 +203,8 @@ describe UseCase::LodgeAssessment do
       mainheat_description: "Gas boiler, Gas boiler",
       extensions_count: nil,
       addendum: { stone_walls: true },
-      raw_data: "<SomeNode></SomeNode>" }
+      raw_data: "<SomeNode></SomeNode>",
+      country_id: 1 }
   end
 
   before do
@@ -210,6 +213,7 @@ describe UseCase::LodgeAssessment do
     allow(assessor).to receive(:domestic_sap_qualification).and_return("ACTIVE")
     allow(assessor).to receive(:scheme_assessor_id).and_return("SPEC000000")
     allow(search_address_gateway).to receive(:insert)
+    allow(assessments_country_id_gateway).to receive(:insert)
   end
 
   describe ".execute" do
@@ -252,6 +256,27 @@ describe UseCase::LodgeAssessment do
 
         it "raises a duplicate assessment ID error" do
           expect { use_case.execute(data, false, "SAP-Schema-18.0.0") }.to raise_error(described_class::DuplicateAssessmentIdException)
+        end
+      end
+
+      context "when there is a country_id" do
+        before do
+          use_case.execute(data, false, "SAP-Schema-20.0.0")
+        end
+
+        it "sends the country to the assessments_country_id gateway" do
+          expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id: data[:assessment_id], country_id: 1)
+        end
+      end
+
+      context "when there is no country_id" do
+        before do
+          data[:country_id] = nil
+          use_case.execute(data, false, "SAP-Schema-20.0.0")
+        end
+
+        it "sends the country to the assessments_country_id gateway" do
+          expect(assessments_country_id_gateway).not_to have_received(:insert)
         end
       end
     end

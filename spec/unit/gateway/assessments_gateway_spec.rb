@@ -101,7 +101,6 @@ describe Gateway::AssessmentsGateway do
       expect(gateway.fetch_assessment_id_by_date_and_type(date_from: "2024-01-01", date_to: "2024-01-31")).to include("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0004")
     end
 
-
     context "when the schema type is passed" do
       it "returns expected only of assessment_ids between two dates of a certain schema_type" do
         expect(gateway.fetch_assessment_id_by_date_and_type(date_from: "2024-01-01", date_to: "2024-01-31", assessment_types: %w[SAP])).to eq %w[0000-0000-0000-0000-0000]

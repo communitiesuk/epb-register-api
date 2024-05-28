@@ -21,7 +21,8 @@ module UseCase
       green_deal_plans_gateway:,
       get_canonical_address_id_use_case:,
       event_broadcaster:,
-      search_address_gateway:
+      search_address_gateway:,
+      assessments_country_id_gateway:
 
     )
       @assessments_gateway = assessments_gateway
@@ -34,6 +35,7 @@ module UseCase
       @get_canonical_address_id_use_case = get_canonical_address_id_use_case
       @event_broadcaster = event_broadcaster
       @search_address_gateway = search_address_gateway
+      @assessments_country_id_gateway = assessments_country_id_gateway
     end
 
     def execute(data, migrated, schema_name)
@@ -104,6 +106,8 @@ module UseCase
 
       search_address = Domain::SearchAddress.new(data).to_hash
       @search_address_gateway.insert search_address
+
+      insert_country_id(data[:assessment_id], data[:country_id])
 
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id
 
@@ -227,6 +231,10 @@ module UseCase
       else
         "adjusted_at_lodgement"
       end
+    end
+
+    def insert_country_id(assessment_id, country_id = nil)
+      @assessments_country_id_gateway.insert(assessment_id:, country_id:) unless country_id.nil?
     end
   end
 end

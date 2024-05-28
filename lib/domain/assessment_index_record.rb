@@ -105,7 +105,6 @@ module Domain
         address_line4: @address_line4,
         town: @town,
         hashed_assessment_id: @hashed_assessment_id,
-        country_id: @country_id,
       }
     end
 

@@ -143,13 +143,13 @@ describe UseCase::BackfillCountryId, set_with_timecop: true do
       )
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET postcode = '#{assessment[:postcode]}' WHERE assessment_id='#{assessment[:rrn]}'") if assessment[:postcode]
     end
-    ActiveRecord::Base.connection.exec_query("UPDATE assessments SET country_id = NULL")
+    Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.delete_all
   end
 
   it "updates every row in the assessments table within the date range with the relevant country_id(s)" do
     use_case.execute(**args)
     number_in_range = 14
-    count = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM  assessments_country_ids").map { |rows| rows["cnt"] }.first
+    count = Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.count
     expect(count).to eq number_in_range
   end
 

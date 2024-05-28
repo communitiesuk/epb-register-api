@@ -147,6 +147,7 @@ class ApiFactory
         get_canonical_address_id_use_case:,
         event_broadcaster:,
         search_address_gateway:,
+        assessments_country_id_gateway:,
       )
   end
 

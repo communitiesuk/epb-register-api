@@ -525,7 +525,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
-    it "saves the country id to the assessment table" do
+    it "saves the country id to the assessments_country_ids table" do
       map_lookups_to_country_codes { %w[E] }
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
@@ -534,10 +534,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                          scheme_ids: [scheme_id],
                        },
                        migrated: "false"
-
-      country_id = ActiveRecord::Base.connection.exec_query("SELECT country_id FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'").entries.first["country_id"]
-
-      expect(country_id).to eq(1)
+      old_country_id = ActiveRecord::Base.connection.exec_query("SELECT country_id FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000' ").first["country_id"]
+      result = Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: "0000-0000-0000-0000-0000")
+      expect(old_country_id).to eq(nil)
+      expect(result.country_id).to eq(1)
     end
 
     context "when given an assessment with an NI schema and a BT postcode" do
