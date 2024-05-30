@@ -285,7 +285,7 @@ DEPENDENCIES
   zeitwerk (~> 2.6.14)
 
 RUBY VERSION
-   ruby 3.1.3p185
+   ruby 3.1.4p223
 
 BUNDLED WITH
    2.4.13
