@@ -13,6 +13,7 @@ describe Gateway::AssessmentsGateway do
   describe "#fetch_assessments_by_date" do
     before do
       ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
+
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
         VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
@@ -74,25 +75,26 @@ describe Gateway::AssessmentsGateway do
   describe "#fetch_assessment_id_by_date_and_type" do
     before do
       ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
+
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
         VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
       )
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, country_id)
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50, NULL)",
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
+        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50)",
       )
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, country_id)
-        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2024-02-01', '2024-02-01', '2024-02-01', '2034-02-01', 50, NULL)",
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
+        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2024-02-01', '2024-02-01', '2024-02-01', '2034-02-01', 50)",
       )
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, country_id)
-        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'SAP', '2024-01-05', '2024-01-05', '2024-01-05', '2034-01-05', 50, NULL)",
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
+        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'SAP', '2024-01-05', '2024-01-05', '2024-01-05', '2034-01-05', 50)",
       )
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating, country_id)
-        VALUES ('0000-0000-0000-0000-0004', 'TEST123456', 'CEPC', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50, NULL)",
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
+        VALUES ('0000-0000-0000-0000-0004', 'TEST123456', 'CEPC', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50)",
       )
       Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id: "0000-0000-0000-0000-0002", country_id: 1)
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_23_081837) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_03_084423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -76,7 +76,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_081837) do
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.string "hashed_assessment_id"
-    t.bigint "country_id"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
@@ -94,8 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_081837) do
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
 
-  create_table "assessments_country_ids", id: false, force: :cascade do |t|
-    t.string "assessment_id"
+  create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.integer "country_id"
   end
 

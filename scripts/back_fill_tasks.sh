@@ -27,20 +27,10 @@ SECURITY_GROUP_ID=$(aws ec2 describe-security-groups --filter Name=group-name,Va
 #echo ${SECURITY_GROUP_ID}
 
 JSON_STRING="{\"awsvpcConfiguration\": {\"subnets\": ${SUBNET_GROUP_ID}, \"securityGroups\": [${SECURITY_GROUP_ID}],\"assignPublicIp\":\"DISABLED\"}}"
-CONATINER_OVERRIDES="{\"containerOverrides\": [ {\"name\": \"${CONTAINER_NAME}\",  \"cpu\": 1024, \"memory\" :4096, \"command\" : [\"bundle\", \"exec\", \"rake\",\"maintenance:backfill_country_ids\" ], \"environment\" : [ {\"name\" : \"DATE_FROM\", \"value\": \"2017-01-01\"}, {\"name\" : \"DATE_TO\", \"value\": \"2017-12-31\"}]}]}"
+#CONATINER_OVERRIDES="{\"containerOverrides\": [ {\"name\": \"${CONTAINER_NAME}\",  \"cpu\": 1024, \"memory\" :4096, \"command\" : [\"bundle\", \"exec\", \"rake\",\"maintenance:backfill_country_ids\" ], \"environment\" : [ {\"name\" : \"DATE_FROM\", \"value\": \"2017-01-01\"}, {\"name\" : \"DATE_TO\", \"value\": \"2017-12-31\"}]}]}"
 
 declare -a YEARS=(
- 2008
- 2009
- 2010
- 2011
- 2012
- 2013
- 2014
- 2015
- 2016
- 2018
- 2020
+2024
 )
 
 for i in ${YEARS[@]}; do
