@@ -3,12 +3,18 @@ module Gateway
     class AssessmentsCountryId < ActiveRecord::Base
     end
 
-    def insert(assessment_id:, country_id:)
-      sql = <<-SQL
+    def insert(assessment_id:, country_id:, upsert: false)
+      sql = if upsert
+              <<-SQL
         INSERT INTO assessments_country_ids (assessment_id,country_id) VALUES ($1, $2)
            ON CONFLICT(assessment_id)
         DO UPDATE SET country_id=$2
-      SQL
+              SQL
+            else
+              <<-SQL
+        INSERT INTO assessments_country_ids (assessment_id,country_id) VALUES ($1, $2)
+              SQL
+            end
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -26,8 +32,10 @@ module Gateway
       ActiveRecord::Base.transaction do
         ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       end
-    rescue ActiveRecord::StatementInvalid, ActiveRecord::ConnectionFailed
-      # ...which we ignore.
+    rescue ActiveRecord::RecordNotUnique
+      raise Gateway::AssessmentsGateway::AssessmentAlreadyExists
     end
+  rescue ActiveRecord::StatementInvalid, ActiveRecord::ConnectionFailed
+    raise
   end
 end

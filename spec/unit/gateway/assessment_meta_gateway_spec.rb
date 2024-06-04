@@ -5,7 +5,7 @@ describe Gateway::AssessmentMetaGateway do
 
     before do
       Timecop.freeze(2021, 6, 21, 12, 0, 0)
-
+      add_countries
       scheme_id = add_scheme_and_get_id
       domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       domestic_rdsap_xml.at("UPRN").children = "RRN-0000-0000-0000-0000-0000"
@@ -51,6 +51,7 @@ describe Gateway::AssessmentMetaGateway do
         schema_type: "RdSAP-Schema-20.0.0",
         created_at: Time.now.utc,
         hashed_assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        country_id: 1,
       }
     end
 

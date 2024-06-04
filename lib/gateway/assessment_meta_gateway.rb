@@ -15,10 +15,12 @@ module Gateway
       a.cancelled_at,
       a.not_for_issue_at,
       x.schema_type,
-      aai.address_id AS assessment_address_id
+      aai.address_id AS assessment_address_id,
+      ac.country_id
       FROM assessments a
       INNER JOIN assessments_xml x on a.assessment_id = x.assessment_id
       INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
+      LEFT JOIN assessments_country_ids ac ON a.assessment_id = ac.assessment_id
       WHERE a.assessment_id = $1
       SQL
 

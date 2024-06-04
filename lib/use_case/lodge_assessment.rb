@@ -84,9 +84,11 @@ module UseCase
 
       if migrated
         @assessments_gateway.insert_or_update assessment
+        insert_country_id(data[:assessment_id], data[:country_id], upsert: true)
       else
         begin
           @assessments_gateway.insert assessment
+          insert_country_id(data[:assessment_id], data[:country_id])
         rescue Gateway::AssessmentsGateway::AssessmentAlreadyExists
           raise DuplicateAssessmentIdException
         end
@@ -106,8 +108,6 @@ module UseCase
 
       search_address = Domain::SearchAddress.new(data).to_hash
       @search_address_gateway.insert search_address
-
-      insert_country_id(data[:assessment_id], data[:country_id])
 
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id
 
@@ -233,8 +233,8 @@ module UseCase
       end
     end
 
-    def insert_country_id(assessment_id, country_id = nil)
-      @assessments_country_id_gateway.insert(assessment_id:, country_id:) unless country_id.nil?
+    def insert_country_id(assessment_id, country_id = nil, upsert: false)
+      @assessments_country_id_gateway.insert(assessment_id:, country_id:, upsert:) unless country_id.nil?
     end
   end
 end

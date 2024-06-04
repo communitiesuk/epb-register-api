@@ -265,7 +265,7 @@ describe UseCase::LodgeAssessment do
         end
 
         it "sends the country to the assessments_country_id gateway" do
-          expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id: data[:assessment_id], country_id: 1)
+          expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id: data[:assessment_id], country_id: 1, upsert: false)
         end
       end
 
