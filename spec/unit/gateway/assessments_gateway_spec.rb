@@ -1,31 +1,30 @@
 shared_context "when updating EPC dates" do
   def fetch_created_at(assessment_id)
-    ActiveRecord::Base.connection.exec_query("SELECT created_at FROM assessments WHERE assessment_id='#{assessment_id}'").first["created_at"]
+    Gateway::AssessmentsGateway::Assessment.find_by(assessment_id:).created_at
   end
 end
 
 describe Gateway::AssessmentsGateway do
   subject(:gateway) { described_class.new }
 
+  let(:scheme_assessor_id) do
+    "TEST123456"
+  end
+  let(:scheme_id) do
+    "9999"
+  end
+
   include RSpecRegisterApiServiceMixin
   include_context "when updating EPC dates"
 
   describe "#fetch_assessments_by_date" do
     before do
-      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
+      Gateway::SchemesGateway::Scheme.create(scheme_id:)
+      Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: scheme_id)
 
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
-        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05', 50)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2010-01-01', '2010-01-01', '2010-01-02', '2070-01-02', 50)",
-      )
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry:  "2070-01-02", current_energy_efficiency_rating: 50)
     end
 
     it "returns the assessment data for a given day" do
@@ -45,10 +44,8 @@ describe Gateway::AssessmentsGateway do
     end
 
     it "allows to filter by assessment type" do
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry)
-        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'RdSAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05')",
-      )
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-02", current_energy_efficiency_rating: 50)
+
       expect(gateway.fetch_assessments_by_date(date: "2010-01-05", assessment_types: %w[SAP])).to match([
         a_hash_including(
           { "assessment_id" => "0000-0000-0000-0000-0000",
@@ -60,10 +57,7 @@ describe Gateway::AssessmentsGateway do
 
     it "returns data whose country is Northern Ireland" do
       today = Time.now.strftime("%Y-%m-%d")
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, postcode)
-        VALUES ('0000-0000-0000-0000-0005', 'TEST123456', 'SAP', '#{today}', '#{today}', '#{today}', '2070-01-05', 'BT1 1AA')",
-      )
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", postcode: "BT1 1AA")
 
       expect(gateway.fetch_assessments_by_date(date: today).first).to eq({ "assessment_id" => "0000-0000-0000-0000-0005",
                                                                            "type_of_assessment" => "SAP",
@@ -76,28 +70,17 @@ describe Gateway::AssessmentsGateway do
   describe "#fetch_assessment_id_by_date_and_type" do
     before do
       add_countries
-      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
+      Gateway::SchemesGateway::Scheme.create(scheme_id:)
+      Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: scheme_id)
 
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
-        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2024-02-01', '2024-02-01', '2024-02-01', '2034-02-01', 50)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'SAP', '2024-01-05', '2024-01-05', '2024-01-05', '2034-01-05', 50)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0004', 'TEST123456', 'CEPC', '2024-01-31', '2024-01-31', '2024-01-31', '2034-01-31', 50)",
-      )
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-01-31", date_registered: "2024-01-31", created_at: "2024-01-31", date_of_expiry:  "2034-01-31", current_energy_efficiency_rating: 50)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-02-01", date_registered: "2024-02-01", created_at: "2024-02-01", date_of_expiry:  "2034-02-01", current_energy_efficiency_rating: 50)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-01-05", date_registered: "2024-01-05", created_at: "2024-01-05", date_of_expiry:  "2034-01-05", current_energy_efficiency_rating: 50)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "CEPC", date_of_assessment: "2024-01-31", date_registered: "2024-01-31", created_at: "2024-01-31", date_of_expiry: "2034-01-05", current_energy_efficiency_rating: 50)
+
       Gateway::AssessmentsCountryIdGateway.new.insert(assessment_id: "0000-0000-0000-0000-0002", country_id: 1)
     end
 
@@ -145,15 +128,11 @@ describe Gateway::AssessmentsGateway do
   describe "#insert" do
     context "when inserting an assessment with data that already exists on the database" do
       before do
-        ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
-        ActiveRecord::Base.connection.exec_query(
-          "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
-        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
-        )
-        ActiveRecord::Base.connection.exec_query(
-          "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry)
-        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'RdSAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05')",
-        )
+        Gateway::SchemesGateway::Scheme.create(scheme_id: "TEST123456")
+        Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: "TEST123456")
+
+        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2024-01-04", date_registered: "2024-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
+
         allow(Gateway::AssessmentsGateway::Assessment).to receive(:exists?).and_return(false)
       end
 
@@ -191,14 +170,14 @@ describe Gateway::AssessmentsGateway do
 
     it "updates the fields with the expected value" do
       gateway.update_field("0000-0000-0000-0000-0000", "type_of_assessment", "SAP")
-      result = ActiveRecord::Base.connection.exec_query("SELECT type_of_assessment FROM assessments WHERE assessment_id='0000-0000-0000-0000-0000'").first["type_of_assessment"]
-      expect(result).to eq("SAP")
+      result = Gateway::AssessmentsGateway::Assessment.find_by(assessment_id: "0000-0000-0000-0000-0000")
+      expect(result.type_of_assessment).to eq("SAP")
     end
 
     it "updates the created_at with a correct date" do
       gateway.update_field("0000-0000-0000-0000-0000", "created_at", "2024-01-16 17:52:43.00000")
-      result = ActiveRecord::Base.connection.exec_query("SELECT created_at FROM assessments WHERE assessment_id='0000-0000-0000-0000-0000'").first["created_at"]
-      expect(result).to eq("2024-01-16 17:52:43.00000")
+      result = Gateway::AssessmentsGateway::Assessment.find_by(assessment_id: "0000-0000-0000-0000-0000")
+      expect(result.created_at).to eq("2024-01-16 17:52:43.00000")
     end
 
     it "does not raise an error when no ID is found" do
