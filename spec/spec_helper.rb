@@ -152,7 +152,7 @@ def add_uprns_to_address_base(*uprns)
 end
 
 def add_countries
-  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY", "SQL")
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE countries RESTART IDENTITY CASCADE", "SQL")
 
   insert_sql = <<-SQL
             INSERT INTO countries(country_code, country_name, address_base_country_code)

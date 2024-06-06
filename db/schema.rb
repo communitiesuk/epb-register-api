@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_03_084423) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_06_094342) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_084423) do
 
   create_table "assessments_country_ids", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.integer "country_id"
+    t.index ["country_id"], name: "index_assessments_country_ids_on_country_id"
   end
 
   create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
@@ -244,6 +245,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_084423) do
   end
 
   add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
+  add_foreign_key "assessments_country_ids", "countries", primary_key: "country_id", name: "fks_assessments_country_ids_countries"
   add_foreign_key "assessments_xml", "assessments", primary_key: "assessment_id"
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
   add_foreign_key "green_deal_assessments", "assessments", primary_key: "assessment_id", name: "fk_assessment_id_assessments"

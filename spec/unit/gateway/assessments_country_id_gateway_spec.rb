@@ -5,6 +5,7 @@ describe Gateway::AssessmentsCountryIdGateway do
     let(:assessment_id) { "0000-0000-0001-1234-0000" }
 
     before do
+      add_countries
       gateway.insert(assessment_id:, country_id: 5)
     end
 
