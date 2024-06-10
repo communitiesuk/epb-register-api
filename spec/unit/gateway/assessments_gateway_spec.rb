@@ -2,7 +2,6 @@ shared_context "when updating EPC dates" do
   def fetch_created_at(assessment_id)
     ActiveRecord::Base.connection.exec_query("SELECT created_at FROM assessments WHERE assessment_id='#{assessment_id}'").first["created_at"]
   end
-
 end
 
 describe Gateway::AssessmentsGateway do
@@ -11,10 +10,8 @@ describe Gateway::AssessmentsGateway do
   include RSpecRegisterApiServiceMixin
   include_context "when updating EPC dates"
 
-
   describe "#fetch_assessments_by_date" do
     before do
-
       ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
 
       ActiveRecord::Base.connection.exec_query(
@@ -62,8 +59,6 @@ describe Gateway::AssessmentsGateway do
     end
 
     it "returns data whose country is Northern Ireland" do
-
-
       today = Time.now.strftime("%Y-%m-%d")
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, postcode)
