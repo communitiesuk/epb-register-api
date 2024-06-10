@@ -237,6 +237,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
     end
 
     before(:all) do
+      add_countries
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
       add_outcodes("A0", 51.5045, 0.4865, "London")
       scheme_id = add_assessor_helper
@@ -250,8 +251,12 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
 
       lodge_epc_helper(scheme_id:, schema: "RdSAP-Schema-21.0.0", rrn: "0000-0000-0000-0000-1019", assessment_date: date_today)
       # created_at is now being used instead of date_registered for the date boundaries
-      ActiveRecord::Base
-        .connection.execute "UPDATE assessments SET created_at = '2017-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-1010', '0000-0000-0000-0000-0100')"
+      # updated_created_at
+      updated_created_at
+
+      Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.update_all country_id: 1
+      Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.update("0000-0000-0000-0000-0023", country_id: 2)
+      Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.update("0000-0000-0000-0000-1010", country_id: 4)
     end
 
     context "when exporting domestic certificates and reports" do

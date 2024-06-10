@@ -65,6 +65,8 @@ describe UseCase::ExportOpenDataDecrr, set_with_timecop: true do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+        add_countries
+        add_assessment_country_ids
       end
 
       it "returns the correct number of items (excluding the dec-rr)" do

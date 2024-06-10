@@ -191,10 +191,9 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           schema_name: "CEPC-8.0.0",
           migrated: true,
         )
-
-        # created_at is now being used instead of date_registered for the date boundaries
-        ActiveRecord::Base
-          .connection.execute "UPDATE assessments SET created_at = '2018-05-04 00:00:00.000000' WHERE  assessment_id = '0000-0000-0000-0000-0001'"
+        add_countries
+        add_assessment_country_ids
+        Gateway::AssessmentsGateway::Assessment.update "0000-0000-0000-0000-0001", created_at: "2018-05-04 00:00:00.000000"
       end
 
       it "returns the correct number of assessments in the CSV and the logs" do

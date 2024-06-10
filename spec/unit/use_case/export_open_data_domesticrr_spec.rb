@@ -99,10 +99,11 @@ describe UseCase::ExportOpenDataDomesticrr, set_with_timecop: true do
           schema_name: "SAP-Schema-NI-18.0.0",
           migrated: true,
         )
+        add_countries
+        add_assessment_country_ids
+        Gateway::AssessmentsGateway::Assessment.update("0000-0000-0000-0000-1010", created_at: "2018-05-02 00:00:00.000000")
 
         # created_at is now being used instead of date_registered for the date boundaries
-        ActiveRecord::Base
-          .connection.execute "UPDATE assessments SET created_at = '2018-05-02 00:00:00.000000' WHERE  assessment_id = '0000-0000-0000-0000-1010'"
       end
 
       it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do

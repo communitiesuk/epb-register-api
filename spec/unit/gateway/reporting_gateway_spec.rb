@@ -8,6 +8,10 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
     add_super_assessor(scheme_id:)
   end
 
+  before do
+    add_countries
+  end
+
   context "when extracting data from the reporting gateway" do
     subject(:gateway) { described_class.new }
 
@@ -185,6 +189,8 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
 
           add_postcodes("A0 0AA", 51.5045, 0.0865, "Whitbury")
           add_outcodes("A0", 51.5045, 0.4865, "Whitbury")
+          add_countries
+          add_assessment_country_ids
         end
 
         it "returns the valid Domestic certificates only" do

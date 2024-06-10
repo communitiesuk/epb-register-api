@@ -1,5 +1,7 @@
 module Gateway
   class ReportingGateway
+    ENGLAND_AND_WALES_CODES = %w[ENG EAW WLS].freeze
+
     def assessments_by_region_and_type(start_date, end_date)
       sql = <<~SQL
         SELECT
@@ -127,7 +129,7 @@ module Gateway
       sql = <<~SQL
         SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region
         FROM assessments a
-          LEFT JOIN
+        LEFT JOIN
             postcode_geolocation b
           ON(a.postcode = b.postcode)
           LEFT JOIN
@@ -137,9 +139,11 @@ module Gateway
             AND
             SUBSTRING(a.postcode FROM 1 FOR LENGTH(a.postcode) - 4) = c.outcode
           )
+        JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
+        JOIN countries co ON co.country_id = ac.country_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.created_at BETWEEN $1 AND $4
-        AND a.postcode NOT LIKE 'BT%'
+        AND co.country_code IN  (#{england_and_wales_codes})
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
                         AND task_id = $2 AND report_type = $3
@@ -153,7 +157,7 @@ module Gateway
 
         list_of_types = type_of_assessment.map { |n| "'#{n}'" }
         sql << <<~SQL_TYPE_OF_ASSESSMENT
-          AND type_of_assessment IN(#{list_of_types.join(',')})
+          AND type_of_assessment IN (#{list_of_types.join(',')})
         SQL_TYPE_OF_ASSESSMENT
       else
         valid_types = %w[CEPC DEC]
@@ -204,10 +208,12 @@ module Gateway
         SELECT  a.assessment_id, date_registered, la.linked_assessment_id
         FROM assessments a
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
+        JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
+        JOIN countries co ON co.country_id = ac.country_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.created_at BETWEEN $1 AND $4
         AND  type_of_assessment = $2
-        AND a.postcode NOT LIKE 'BT%'
+        AND co.country_code IN  (#{england_and_wales_codes})
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
                         AND task_id = $3 AND report_type = $2
@@ -266,8 +272,10 @@ module Gateway
             AND
             SUBSTRING(a.postcode FROM 1 FOR LENGTH(a.postcode) - 4) = c.outcode
           )
+        JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
+        JOIN countries co ON co.country_id = ac.country_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.postcode NOT LIKE 'BT%'
+        AND co.country_code IN  (#{england_and_wales_codes})
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
                         AND task_id = $1 AND report_type = $2
@@ -308,6 +316,10 @@ module Gateway
 
     def assessments_for_open_data_defaults
       { type_of_assessment: nil, schema_type: nil, batch: 1, start: 0 }
+    end
+
+    def england_and_wales_codes
+      ENGLAND_AND_WALES_CODES.map { |n| "'#{n}'" }.join(",")
     end
   end
 end

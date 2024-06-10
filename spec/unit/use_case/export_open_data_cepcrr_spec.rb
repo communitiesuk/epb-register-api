@@ -136,9 +136,10 @@ describe UseCase::ExportOpenDataCepcrr, set_with_timecop: true do
           migrated: true,
         )
 
-        # created_at is now being used instead of date_registered for the date boundaries
-        ActiveRecord::Base
-          .connection.execute "UPDATE assessments SET created_at = '2018-07-01 00:00:00.000000' WHERE  assessment_id IN ('1111-0000-0000-0000-0002', '1111-0000-0000-0000-0003')"
+        add_countries
+        add_assessment_country_ids
+
+        Gateway::AssessmentsGateway::Assessment.where(assessment_id: %w[1111-0000-0000-0000-0002 1111-0000-0000-0000-0003]).update(created_at: "2018-07-01 00:00:00.000000")
       end
 
       it "returns the correct number of recommendations excluding the cepc-rr, NI lodgements and any before the given date" do

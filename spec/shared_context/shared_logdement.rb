@@ -61,6 +61,11 @@ shared_context "when lodging XML" do
     )
   end
 
+  def updated_created_at
+    ActiveRecord::Base
+      .connection.execute "UPDATE assessments SET created_at = '2017-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-1010', '0000-0000-0000-0000-0100')"
+  end
+
   def assert_errors(expected_errors:, values: nil, new_nodes: [], country_code: [:E])
     country_lookup = Domain::CountryLookup.new(country_codes: country_code)
     docs_under_test.each do |doc|

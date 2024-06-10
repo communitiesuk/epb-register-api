@@ -68,6 +68,9 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           migrated: true,
           schema_name: "SAP-Schema-18.0.0",
         )
+
+        add_countries
+        add_assessment_country_ids
       end
 
       context "when it calls the use case to extract the data by hashed assessment id" do

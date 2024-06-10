@@ -69,9 +69,10 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           schema_name: "SAP-Schema-18.0.0",
         )
 
+        add_countries
+        add_assessment_country_ids
         # created_at is now being used instead of date_registered for the date boundaries
-        ActiveRecord::Base
-          .connection.execute "UPDATE assessments SET created_at = '2020-05-04 00:00:00.000000' WHERE  assessment_id = '0000-0000-0000-0000-1004'"
+        Gateway::AssessmentsGateway::Assessment.update "0000-0000-0000-0000-1004", created_at: "2020-05-04 00:00:00.000000"
       end
 
       context "when it calls the use case to extract the data" do
@@ -306,7 +307,9 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           schema_name: "CEPC-8.0.0",
         )
 
-        # created_at is now being used instead of date_registered for the date boundaries
+        add_countries
+        add_assessment_country_ids
+
         ActiveRecord::Base
           .connection.execute "UPDATE assessments SET created_at = '2019-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-0010', '1112-0000-0000-0000-0002', '1112-0000-0000-0000-0003')"
       end
@@ -512,8 +515,10 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           schema_name: "CEPC-8.0.0",
         )
 
-        ActiveRecord::Base
-          .connection.execute "UPDATE assessments SET created_at = '2019-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-0012', '1112-0000-0000-0000-0004', '1112-0000-0000-0000-0005')"
+        add_countries
+        add_assessment_country_ids
+
+        Gateway::AssessmentsGateway::Assessment.find(%w[0000-0000-0000-0000-0012 1112-0000-0000-0000-0004 1112-0000-0000-0000-0005]).each { |i| i.update(created_at: "2019-05-04 00:00:00.000000") }
       end
 
       context "when it calls the use case to extract the data" do
@@ -705,6 +710,8 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
         migrated: true,
         schema_name: "SAP-Schema-18.0.0",
       )
+      add_countries
+      add_assessment_country_ids
     end
 
     context "with the domestic assessments" do

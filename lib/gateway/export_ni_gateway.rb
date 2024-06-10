@@ -8,12 +8,15 @@ module Gateway
       a.created_at as lodgement_datetime,
       CASE WHEN UPPER(aa.address_id) NOT LIKE 'UPRN-%' THEN null ELSE
       aa.address_id END as uprn,
-     CASE WHEN opt_out IS NULL THEN false else opt_out end as opt_out,
+      CASE WHEN opt_out IS NULL THEN false else opt_out end as opt_out,
         CASE WHEN cancelled_at IS NOT NULL OR not_for_issue_at IS NOT NULL THEN true ELSE false end as cancelled
       FROM assessments a
-      INNER JOIN assessments_xml ax USING(assessment_id)
+      JOIN assessments_xml ax USING(assessment_id)
       LEFT JOIN assessments_address_id aa USING(assessment_id)
-      WHERE a.date_registered BETWEEN $1 AND $2 AND (a.postcode LIKE 'BT%' )
+      JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
+      JOIN countries co ON co.country_id = ac.country_id
+      WHERE a.date_registered BETWEEN $1 AND $2
+      AND co.country_code = 'NIR'
       SQL
 
       bindings = [

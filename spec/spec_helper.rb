@@ -255,6 +255,13 @@ def datetime_today
   Time.now.strftime("%F %H:%M:%S")
 end
 
+def add_assessment_country_ids
+  Gateway::AssessmentsGateway::Assessment.all.each do |i|
+    country_id = i[:postcode].start_with?("BT") ? 4 : 1
+    Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(assessment_id: i[:assessment_id], country_id:)
+  end
+end
+
 def load_green_deal_data
   fuel_price_mock = GreenDealFuelDataMock.new
   gateway = Gateway::GreenDealFuelPriceGateway.new

@@ -105,6 +105,12 @@ describe Gateway::ExportNiGateway do
           schema_name: "CEPC-7.1",
           migrated: true,
         )
+
+        add_countries
+        Gateway::AssessmentsGateway::Assessment.all.each do |i|
+          country_id = i[:postcode].start_with?("BT") ? 4 : 1
+          Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(assessment_id: i[:assessment_id], country_id:)
+        end
       end
 
       let(:domestic_expectation) do
@@ -263,6 +269,8 @@ describe Gateway::ExportNiGateway do
         schema_name: "CEPC-NI-8.0.0",
         migrated: true,
       )
+      add_countries
+      add_assessment_country_ids
     end
 
     let(:commercial_rr_expectation) do
