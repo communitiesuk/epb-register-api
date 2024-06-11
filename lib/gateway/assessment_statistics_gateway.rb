@@ -1,5 +1,8 @@
 module Gateway
   class AssessmentStatisticsGateway
+    class AssessmentStatistics < ActiveRecord::Base
+    end
+
     VALID_ASSESSMENT_TYPES = %w[
       RdSAP
       SAP

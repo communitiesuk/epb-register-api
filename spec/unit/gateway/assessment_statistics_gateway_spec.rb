@@ -116,33 +116,27 @@ describe Gateway::AssessmentStatisticsGateway do
   end
 
   describe "#save_daily_stats" do
+    let(:scheme_assessor_id) do
+      "TEST123456"
+    end
+    let(:scheme_id) do
+      "9999"
+    end
+
     before do
       today = Time.now.strftime("%Y-%m-%d")
-      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id) VALUES ('9999')")
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessors (scheme_assessor_id, first_name, last_name, date_of_birth, registered_by)
-        VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05', 50)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0007', 'TEST123456', 'SAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05', 20)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'RdSAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05',  20 )",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
-        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2010-01-01', '2010-01-01', '2010-01-02', '2070-01-02', 50)",
-      )
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, postcode)
-        VALUES ('0000-0000-0000-0000-0005', 'TEST123456', 'SAP', '#{today}', '#{today}', '#{today}', '2070-01-05', 'BT1 1AA')",
-      )
+      Gateway::SchemesGateway::Scheme.create(scheme_id:)
+      Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: scheme_id)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 20)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 20)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
+
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50, postcode: "BT1 1AA")
     end
 
     it "calls the method without error" do
@@ -154,46 +148,41 @@ describe Gateway::AssessmentStatisticsGateway do
     end
 
     it "does not import migrated data" do
-      results = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics")
-      ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, migrated)
-        VALUES ('0000-0000-0000-0000-1005', 'TEST123456', 'SAP', '#{date_today}', '#{date_today}', '#{date_today}', '2070-01-05', TRUE)",
-      )
+      count = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.count
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-1005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: date_today, date_registered: date_today, created_at: date_today, date_of_expiry: "2070-01-05", migrated: true)
       gateway.save_daily_stats(date: date_today)
-      results_after = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics")
-      expect(results.length).not_to eq(results_after.length)
+      count_after = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.count
+      expect(count_after).not_to be < count
     end
 
     it "saves the only the assessments lodged today for NI" do
       gateway.save_daily_stats(date: date_today)
-      results = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics")
+      results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.all
       expect(results.length).to eq(1)
       expect(results[0]["country"]).to eq("Northern Ireland")
     end
 
     it "saves the 2 SAP assessments lodged on the 2010-01-05" do
       gateway.save_daily_stats(date: "2010-01-05")
-      sap_results = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics WHERE assessment_type = 'SAP'")
-      expect(sap_results[0]["assessments_count"]).to eq(2)
-      expect(sap_results[0]["rating_average"]).to eq(35.0)
-      expect(sap_results.length).to eq(1)
+      sap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.find_by(assessment_type: "SAP")
+      expect(sap_results.assessments_count).to eq(2)
+      expect(sap_results.rating_average).to eq(35.0)
     end
 
     it "saves the 1 RdSAP assessments lodged on the 2010-01-05" do
       gateway.save_daily_stats(date: "2010-01-05")
-      rdsap_results = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics WHERE assessment_type = 'RdSAP'")
-      expect(rdsap_results[0]["assessments_count"]).to eq(1)
-      expect(rdsap_results[0]["rating_average"]).to eq(20)
-      expect(rdsap_results.length).to eq(1)
+      rdsap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.find_by(assessment_type: "RdSAP")
+      expect(rdsap_results.assessments_count).to eq(1)
+      expect(rdsap_results.rating_average).to eq(20)
     end
 
     it "saves the assessments for specific types (NOT RdSAP)" do
       types = %w[SAP CEPC DEC AC-CERT DEC-RR]
       gateway.save_daily_stats(date: "2010-01-05", assessment_types: types)
-      rdsap_results = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics WHERE assessment_type = 'RdSAP'")
-      expect(rdsap_results.length).to eq(0)
-      sap_results = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_statistics WHERE assessment_type = 'SAP'")
-      expect(sap_results.length).to eq(1)
+      rdsap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(assessment_type: "RdSAP").count
+      expect(rdsap_results).to eq 0
+      sap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(assessment_type: "SAP").count
+      expect(sap_results).to eq 1
     end
 
     it "raises an error if invalid assessment types are passed" do
