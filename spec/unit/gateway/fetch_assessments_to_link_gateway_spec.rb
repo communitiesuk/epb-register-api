@@ -36,6 +36,19 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
+      ac_cert_xml_1 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "ac-cert")
+      ac_cert_xml_1.at("RRN").content = "0000-0000-0000-0000-0012"
+      ac_cert_xml_1.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1, Commercial Street" }
+      ac_cert_xml_1.at("UPRN").content = "RRN-0000-0000-0000-0000-0012"
+      lodge_assessment(
+        assessment_body: ac_cert_xml_1.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
       cepc_xml_3 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
       cepc_xml_3.at("//CEPC:RRN").content = "0000-0000-0000-0000-0003"
       cepc_xml_3.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "14 Commercial Street" }
@@ -117,11 +130,11 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       )
     end
 
-    it "fetches all assessments with the same address name" do
+    it "fetches all assessments with the same address name, including those that vary by only punctuation" do
       result = gateway.fetch_assessments
-      expect(result.count).to eq 5
+      expect(result.count).to eq 6
       expect(result.columns).to eq %w[address postcode assessment_id address_id date_registered]
-      expect(result.rows.to_s).to include("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", "0000-0000-0000-0000-0002", "0000-0000-0000-0000-0003", "0000-0000-0000-0000-0004")
+      expect(result.rows.to_s).to include("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", "0000-0000-0000-0000-0012", "0000-0000-0000-0000-0002", "0000-0000-0000-0000-0003", "0000-0000-0000-0000-0004")
     end
 
     it "does not fetch correctly linked assessments" do
