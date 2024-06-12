@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 module Gateway
   class FetchAssessmentsToLinkGateway
-    def fetch_assessments
-      sql = <<-SQL
+    class TempLinkingTable < ActiveRecord::Base
+    end
+
+    FETCH_ASSESSMENTS_SQL = <<-SQL
         WITH addresses_we_want AS (
         WITH grouped_addresses AS (
         SELECT regexp_replace(address, '[[:punct:]]', '', 'g') as address, postcode, count(*) as ct, count (DISTINCT(aaid.address_id)) as cid
@@ -27,10 +31,21 @@ module Gateway
                             AND a.not_for_issue_at IS NULL)
         SELECT aww.address, aww.postcode, assessment_id, address_id, date_registered
         FROM addresses_we_want aww LEFT JOIN non_domestic_certs ndc ON (aww.address = ndc.address AND aww.postcode = ndc.postcode)
-        ORDER BY aww.address, aww.postcode;
-      SQL
+        ORDER BY aww.address, aww.postcode
+    SQL
+
+    def fetch_assessments
+      sql = FETCH_ASSESSMENTS_SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL")
+    end
+
+    def create_and_populate_temp_table
+      insert_sql = <<-SQL
+        SELECT * INTO temp_linking_tables FROM (#{FETCH_ASSESSMENTS_SQL}) AS temp
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
     end
   end
 end
