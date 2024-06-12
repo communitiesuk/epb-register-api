@@ -29,16 +29,9 @@ module Gateway
                             WHERE a.type_of_assessment IN ('CEPC', 'CEPC-RR', 'AC-CERT', 'AC-REPORT', 'DEC', 'DEC-RR')
                             AND a.cancelled_at IS NULL
                             AND a.not_for_issue_at IS NULL)
-        SELECT aww.address, aww.postcode, assessment_id, address_id, date_registered
+        SELECT aww.address, aww.postcode, assessment_id, address_id, date_registered, dense_rank() over (order by aww.address, aww.postcode) group_id
         FROM addresses_we_want aww LEFT JOIN non_domestic_certs ndc ON (aww.address = ndc.address AND aww.postcode = ndc.postcode)
-        ORDER BY aww.address, aww.postcode
     SQL
-
-    def fetch_assessments
-      sql = FETCH_ASSESSMENTS_SQL
-
-      ActiveRecord::Base.connection.exec_query(sql, "SQL")
-    end
 
     def create_and_populate_temp_table
       insert_sql = <<-SQL

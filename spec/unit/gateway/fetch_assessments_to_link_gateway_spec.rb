@@ -1,9 +1,7 @@
 describe Gateway::FetchAssessmentsToLinkGateway do
   include RSpecRegisterApiServiceMixin
 
-  let(:gateway) { described_class.new }
-
-  before do
+  before(:all) do
     insert_into_address_base("000000000001", "A0 0AA", "1 Commercial Street", "", "", "E")
     insert_into_address_base("000000000012", "A0 0AA", "4 Commercial Street", "", "", "E")
     insert_into_address_base("000000000016", "A0 0AA", "Some Unit", "", "", "E")
@@ -127,30 +125,32 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       schema_name: "CEPC-8.0.0",
       migrated: true,
     )
-  end
 
-  describe "#fetch_assessments" do
-    it "fetches all assessments with the same address name, including those that vary by only punctuation" do
-      result = gateway.fetch_assessments
-      expect(result.count).to eq 6
-      expect(result.columns).to eq %w[address postcode assessment_id address_id date_registered]
-      expect(result.rows.to_s).to include("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", "0000-0000-0000-0000-0012", "0000-0000-0000-0000-0002", "0000-0000-0000-0000-0003", "0000-0000-0000-0000-0004")
-    end
-
-    it "does not fetch correctly linked assessments" do
-      result = gateway.fetch_assessments
-      expect(result.rows.to_s).not_to include("0000-0000-0000-0000-0005", "0000-0000-0000-0000-0006", "1111-0000-0000-0000-0000", "1111-0000-0000-0000-0001")
-    end
+    described_class.new.create_and_populate_temp_table
   end
 
   describe "#create_and_populate_temp_table" do
-    it "creates a temporary table populated with the data from the query" do
-      gateway.create_and_populate_temp_table
+    it "creates a temporary table with the expected columns" do
       expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
-      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id date_registered])
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id date_registered group_id])
+    end
+
+    it "populates the temporary table with assessments with the same address name, including those that vary only by punctuation" do
       expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(6)
-      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.find_by(assessment_id: "0000-0000-0000-0000-0000")).not_to be(nil)
-      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.find_by(assessment_id: "0000-0000-0000-0000-0005")).to be(nil)
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id)).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0012 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
+    end
+
+    it "does not fetch correctly linked assessments" do
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id)).not_to include("0000-0000-0000-0000-0005", "0000-0000-0000-0000-0006", "1111-0000-0000-0000-0000", "1111-0000-0000-0000-0001")
+    end
+
+    it "assigns an id for each group of matching addresses" do
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(group_id: 1).pluck(:address).count).to eq(4)
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(group_id: 1).pluck(:address).uniq).to eq(["1 commercial street 2 lonely street some area some county"])
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(group_id: 1).pluck(:address_id)).to eq(%w[UPRN-000000000001 UPRN-000000000001 RRN-0000-0000-0000-0000-0002 RRN-0000-0000-0000-0000-0012])
+
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(group_id: 2).pluck(:address).count).to eq(2)
+      expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(group_id: 2).pluck(:address).uniq).to eq(["14 commercial street 2 lonely street some area some county"])
     end
   end
 end
