@@ -39,6 +39,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
         report_type: "3",
         renewable_sources: "Renewable sources test",
         region: "London",
+        country: "England",
       }
 
       let(:export_object) { described_class.new }

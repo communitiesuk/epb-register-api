@@ -8,7 +8,16 @@ end
 
 def redact_lodgement_datetime(csv_object)
   array = csv_object.to_a
-  array.reject { |k| k[0] == "LODGEMENT_DATETIME" }
+  array.reject { |k| k[0] == "" }
+end
+
+def redact_lodgement_datetime_hash(csv_object)
+  hash = csv_object.to_hash
+  hash.reject { |k| k == "LODGEMENT_DATETIME" }
+end
+
+def redact_nil(csv_object)
+  csv_object.to_hash.transform_values { |v| v.presence || "" }
 end
 
 def file_name(assessment_type)

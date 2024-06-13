@@ -33,6 +33,7 @@ module UseCase
           created_at: assessment["created_at"],
           outcode_region: assessment["outcode_region"],
           postcode_region: assessment["postcode_region"],
+          country: assessment["country"],
         }
         additional_data.compact!
 
@@ -45,7 +46,9 @@ module UseCase
           )
         next if wrapper.nil?
 
-        reports << wrapper.to_report
+        report = wrapper.to_report
+        report[:country] = assessment["country"]
+        reports << report
         @log_gateway.create(
           assessment["assessment_id"],
           new_task_id,

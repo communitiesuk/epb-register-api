@@ -4,7 +4,6 @@ describe UseCase::ExportOpenDataCepcrr, set_with_timecop: true do
   context "when creating the open data reporting release" do
     describe "for the CEPC recommendation reports" do
       let(:number_of_recommendations_returned) { 5 }
-      let(:expected_values) { Samples::ViewModels::CepRr.report_test_hash }
       let(:date_today) { Time.now.strftime("%F") }
 
       let(:export_object) { described_class.new }

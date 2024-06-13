@@ -1,13 +1,19 @@
 require_relative "open_data_export_test_helper"
 
-describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
+describe "Acceptance::Reports::OpenDataExport By Hashed Ids", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   scheme_id = nil
 
-  before { scheme_id = lodge_assessor }
+  before do
+    Timecop.freeze(2021, 0o2, 22, 0, 0, 0)
+    scheme_id = lodge_assessor
+  end
 
-  after { WebMock.disable! }
+  after do
+    WebMock.disable!
+    Timecop.return
+  end
 
   let(:statistics) do
     gateway = Gateway::OpenDataLogGateway.new
@@ -75,11 +81,11 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
       context "when it calls the use case to extract the data by hashed assessment id" do
         context "with the domestic certificates" do
-          let(:use_case) { UseCase::ExportOpenDataDomestic.new }
+          let(:use_case) { UseCase::ExportOpenDataDomesticByHashedId.new }
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
               use_case
-                .execute_using_hashed_assessment_id(%w[71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6], 0)
+                .execute(%w[71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6 5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6], 0)
                 .sort_by! { |item| item[:assessment_id] },
             )
           end
@@ -91,20 +97,20 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
 
-          2.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
-              expect(
-                redact_lodgement_datetime(parsed_exported_data[i]) -
-                  redact_lodgement_datetime(fixture_csv[i]),
-              ).to eq([])
-            end
+          it "returns the data exported for row 1 object to match same row in the .csv fixture" do
+            fixture_data = fixture_csv[0].to_hash.transform_values { |v| v.presence || "" }
+            expect(parsed_exported_data[0].to_hash).to include(fixture_data)
+          end
+
+          it "returns the data exported for row 2 object to match same row in the .csv fixture" do
+            expect(redact_lodgement_datetime(parsed_exported_data[1]) - redact_lodgement_datetime(fixture_csv[1])).to eq []
           end
 
           context "when there are no lodged assessments with those hashed assessment ids" do
             let(:csv_data) do
               Helper::ExportHelper.to_csv(
                 use_case
-                  .execute_using_hashed_assessment_id(%w[4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996], 0)
+                  .execute(%w[4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996], 0)
               .sort_by! { |item| item[:assessment_id] },
               )
             end

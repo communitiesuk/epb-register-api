@@ -1,8 +1,8 @@
 require "nokogiri"
-require "date"
+
 module UseCase
-  class ExportOpenDataDec
-    ASSESSMENT_TYPE = "DEC".freeze
+  class ExportOpenDataDomesticBase
+    ASSESSMENT_TYPE = %w[RdSAP SAP].freeze
 
     def initialize
       @gateway = Gateway::ReportingGateway.new
@@ -11,20 +11,15 @@ module UseCase
       @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
-    def execute(date_from, task_id = 0, date_to = Time.now.utc)
+  private
+
+    def fetch_and_format_data(assessments, new_task_id)
       reports = []
-      new_task_id = @log_gateway.fetch_new_task_id(task_id)
-
-      assessments =
-        @gateway.assessments_for_open_data(
-          date_from,
-          ASSESSMENT_TYPE,
-          new_task_id,
-          date_to,
-        )
-
-      assessments.each do |assessment|
+      assessments.each_with_index do |assessment, _index|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
+
+        next if xml_data[:schema_type].include?("NI")
+
         updated_address_id = @assessments_address_id_gateway.fetch(assessment["assessment_id"])[:address_id]
 
         additional_data = {
@@ -33,9 +28,10 @@ module UseCase
           created_at: assessment["created_at"],
           outcode_region: assessment["outcode_region"],
           postcode_region: assessment["postcode_region"],
-        }
-        additional_data.compact!
 
+        }
+
+        additional_data.compact!
         wrapper =
           ViewModel::Factory.new.create(
             xml_data[:xml],
@@ -43,11 +39,14 @@ module UseCase
             assessment["assessment_id"],
             additional_data,
           )
-
         report = wrapper.to_report
         report[:country] = assessment["country"]
         reports << report
-        @log_gateway.create(assessment["assessment_id"], new_task_id, "DEC")
+        @log_gateway.create(
+          assessment["assessment_id"],
+          new_task_id,
+          Helper::ExportHelper.report_type_to_s(ASSESSMENT_TYPE),
+        )
       end
 
       reports

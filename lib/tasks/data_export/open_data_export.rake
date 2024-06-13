@@ -83,9 +83,9 @@ namespace :open_data do
     type_of_export = args.type_of_export
     task_id = args.task_id
 
-    open_data_use_case = UseCase::ExportOpenDataDomestic.new
+    open_data_use_case = UseCase::ExportOpenDataDomesticByHashedId.new
 
-    data = open_data_use_case.execute_using_hashed_assessment_id(hashed_assessment_ids, task_id)
+    data = open_data_use_case.execute(hashed_assessment_ids, task_id)
 
     raise Boundary::OpenDataEmpty, "split_hashed_assessments_id: #{hashed_assessment_ids}, hashed_assessment_id_args: #{args.hashed_assessment_ids}data: #{data}" if data.empty?
 

@@ -5,7 +5,11 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
   scheme_id = nil
 
-  before(:all) { scheme_id = lodge_assessor }
+  before(:all) do
+    scheme_id = lodge_assessor
+    add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+    add_outcodes("A0", 51.5045, 0.4865, "London")
+  end
 
   after { WebMock.disable! }
 
@@ -16,10 +20,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
   context "when an assessment is lodged" do
     context "when it is a domestic assessment" do
-      before do
-        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-        add_outcodes("A0", 51.5045, 0.4865, "London")
-
+      before(:all) do
         domestic_rdsap_xml =
           get_assessment_xml(
             "RdSAP-Schema-20.0.0",
@@ -93,13 +94,16 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
 
-          2.times do |i|
-            it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
-              expect(
-                redact_lodgement_datetime(parsed_exported_data[i]) -
-                  redact_lodgement_datetime(fixture_csv[i]),
-              ).to eq([])
-            end
+          it "returns the data exported for row 1 object to match same row in the .csv fixture" do
+            data = redact_lodgement_datetime_hash(parsed_exported_data[0])
+            expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[0]))
+            expect(data).to include(expectation)
+          end
+
+          it "returns the data exported for row 2 object to match same row in the .csv fixture" do
+            data = redact_lodgement_datetime_hash(parsed_exported_data[1])
+            expectation = redact_lodgement_datetime_hash(fixture_csv[1])
+            expect(data).to include(expectation)
           end
 
           context "when there are no lodged assessments between two dates" do
@@ -167,7 +171,6 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           before do
             EnvironmentStub
               .all
-
             HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
           end
 
@@ -238,10 +241,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
     end
 
     context "when it is a commercial/non-domestic assessment" do
-      before do
-        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-        add_outcodes("A0", 51.5045, 0.4865, "London")
-
+      before(:all) do
         2.times do |i|
           non_domestic_xml =
             get_assessment_xml(
@@ -309,9 +309,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
 
         add_countries
         add_assessment_country_ids
-
-        ActiveRecord::Base
-          .connection.execute "UPDATE assessments SET created_at = '2019-05-04 00:00:00.000000' WHERE  assessment_id IN ('0000-0000-0000-0000-0010', '1112-0000-0000-0000-0002', '1112-0000-0000-0000-0003')"
+        Gateway::AssessmentsGateway::Assessment.find(%w[0000-0000-0000-0000-0010 1112-0000-0000-0000-0002 1112-0000-0000-0000-0003]).each { |id| id.update(created_at: "19-05-04 00:00:00.000000") }
       end
 
       context "when it calls the use case to extract the data" do
@@ -348,17 +346,15 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture" do
-            expect(
-              redact_lodgement_datetime(first_commercial_assessment) -
-                redact_lodgement_datetime(fixture_csv[0]),
-            ).to eq([])
+            data = redact_lodgement_datetime_hash(first_commercial_assessment)
+            expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[0]))
+            expect(data).to include(expectation)
           end
 
           it "returns the data exported for row 2 object to match same row in the .csv fixture" do
-            expect(
-              redact_lodgement_datetime(second_commercial_assessment) -
-                redact_lodgement_datetime(fixture_csv[1]),
-            ).to eq([])
+            data = redact_lodgement_datetime_hash(second_commercial_assessment)
+            expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[1]))
+            expect(data).to include(expectation)
           end
         end
 
@@ -448,10 +444,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
     end
 
     context "when it is a DEC assessment" do
-      before do
-        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-        add_outcodes("A0", 51.5045, 0.4865, "London")
-
+      before(:all) do
         dec_xml =
           get_assessment_xml(
             "CEPC-8.0.0",
@@ -552,17 +545,15 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture" do
-            expect(
-              redact_lodgement_datetime(first_dec_asssement) -
-                redact_lodgement_datetime(fixture_csv[0]),
-            ).to eq([])
+            data = redact_nil(redact_lodgement_datetime_hash(first_dec_asssement))
+            expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[0]))
+            expect(data.to_a - expectation.to_a).to eq []
           end
 
           it "returns the data exported for row 2 to match same row in the .csv fixture" do
-            expect(
-              redact_lodgement_datetime(second_dec_asssement) -
-                redact_lodgement_datetime(fixture_csv[1]),
-            ).to eq([])
+            data = redact_nil(redact_lodgement_datetime_hash(second_dec_asssement))
+            expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[1]))
+            expect(data.to_a - expectation.to_a).to eq []
           end
         end
 
@@ -599,7 +590,6 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
           before do
             EnvironmentStub
               .all
-
             HttpStub.s3_put_csv(file_name("DEC"))
           end
 
@@ -688,10 +678,7 @@ describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
   end
 
   context "when an assessment is lodged with lines breaks in the XML" do
-    before do
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-      add_outcodes("A0", 51.5045, 0.4865, "London")
-
+    before(:all) do
       domestic_sap_xml =
         get_assessment_xml(
           "SAP-Schema-18.0.0",

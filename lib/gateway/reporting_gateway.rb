@@ -127,7 +127,7 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region
+        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region, co.country_name as country
         FROM assessments a
         LEFT JOIN
             postcode_geolocation b
@@ -171,7 +171,6 @@ module Gateway
       end
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
-
       results.map { |result| result }
     end
 
@@ -260,7 +259,7 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region
+        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region, co.country_name as country
         FROM assessments a
           LEFT JOIN
             postcode_geolocation b

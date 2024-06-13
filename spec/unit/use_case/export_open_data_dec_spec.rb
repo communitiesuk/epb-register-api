@@ -50,6 +50,7 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
         report_type: "1",
         other_fuel: "other",
         estimated_aircon_kw_rating: 1,
+        country: "England",
       }
 
       let(:export_object) { described_class.new }
