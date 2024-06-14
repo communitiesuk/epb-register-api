@@ -18,8 +18,11 @@ class RegisterApiService < Controller::BaseController
     content_type :json
 
     {
-      links: {
-        apispec: "https://api-docs.epcregisters.net",
+      api: {
+        title: "Energy Performance of Buildings Register",
+        links: {
+          describedBy: "https://api-docs.epcregisters.net",
+        },
       },
     }.to_json
   end

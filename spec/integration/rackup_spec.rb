@@ -2,6 +2,21 @@ describe "Integration::Rackup" do
   include RSpecRegisterApiServiceMixin
 
   context "when rackup has started" do
+    context "when a request is made to /api/" do
+      let(:response) { get("/api") }
+
+      it "return a status of 200" do
+        expect(response.status).to eq(200)
+      end
+
+      it "returns JSON metadata" do
+        expect(response.content_type).to eq("application/json")
+        expect(response.body).to eq(
+          '{"api":{"title":"Energy Performance of Buildings Register","links":{"describedBy":"https://api-docs.epcregisters.net"}}}',
+        )
+      end
+    end
+
     context "when a request is made to /healthcheck" do
       let(:response) { get("/healthcheck") }
 
@@ -23,7 +38,7 @@ describe "Integration::Rackup" do
       end
     end
 
-    context "when a request is made to /api/schemes" do
+    context "when an authorized request is made to /api/schemes" do
       let(:response) do
         header("Authorization", "Bearer #{get_valid_jwt(%w[scheme:list])}")
         get("/api/schemes")
