@@ -32,13 +32,20 @@ module Gateway
         SELECT aww.address, aww.postcode, assessment_id, address_id, date_registered, dense_rank() over (order by aww.address, aww.postcode) group_id
         FROM addresses_we_want aww LEFT JOIN non_domestic_certs ndc ON (aww.address = ndc.address AND aww.postcode = ndc.postcode)
     SQL
-
     def create_and_populate_temp_table
       insert_sql = <<-SQL
         SELECT * INTO temp_linking_tables FROM (#{FETCH_ASSESSMENTS_SQL}) AS temp
       SQL
 
       ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
+    end
+
+    def fetch_by_group_id(group_id)
+      TempLinkingTable.where(group_id:).pluck(:assessment_id, :address_id, :date_registered)
+    end
+
+    def get_max_group_id
+      TempLinkingTable.maximum(:group_id)
     end
   end
 end
