@@ -13,6 +13,10 @@ module Gateway
       AssessmentsAddressId.find(assessment_id).as_json.symbolize_keys
     end
 
+    def fetch_by_address_id(address_id)
+      AssessmentsAddressId.where(address_id:).joins("LEFT JOIN ASSESSMENTS ON ASSESSMENTS.ASSESSMENT_ID = ASSESSMENTS_ADDRESS_ID.ASSESSMENT_ID").pluck(:assessment_id, :address_id, :date_registered)
+    end
+
     def send_to_db(record)
       existing_assessment_address_id =
         AssessmentsAddressId.find_by assessment_id: record[:assessment_id]
