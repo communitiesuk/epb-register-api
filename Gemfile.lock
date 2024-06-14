@@ -246,6 +246,7 @@ DEPENDENCIES
   activerecord (~> 7.1.3)
   archive-zip
   aws-sdk-s3 (~> 1.151)
+  csv (~> 3.3)
   database_cleaner
   epb-auth-tools (~> 1.1.0)
   epb_view_models (~> 2.0)
