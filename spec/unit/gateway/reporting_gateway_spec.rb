@@ -159,7 +159,7 @@ describe Gateway::ReportingGateway, set_with_timecop: true do
              "date_registered" => Time.utc(2020, 5, 4),
              "outcode_region" => nil,
              "postcode_region" => "Whitbury",
-              "country" => "England", }]
+             "country" => "England" }]
         end
 
         assessment2 = %w[0000-0000-0000-0000-0002]
