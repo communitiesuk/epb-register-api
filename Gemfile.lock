@@ -221,7 +221,7 @@ GEM
       version_gem (~> 1.1, >= 1.1.1)
     strscan (3.1.0)
     tilt (2.3.0)
-    timecop (0.9.9)
+    timecop (0.9.10)
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -274,7 +274,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.27)
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
-  timecop (~> 0.9.9)
+  timecop (~> 0.9.10)
   unleash (~> 5.0.1)
   webmock (~> 3.23)
   wisper (~> 3.0.0)
