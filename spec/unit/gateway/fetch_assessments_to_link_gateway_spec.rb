@@ -1,9 +1,10 @@
 describe Gateway::FetchAssessmentsToLinkGateway do
   include RSpecRegisterApiServiceMixin
-  let!(:gateway) { described_class.new }
+  let(:gateway) { described_class.new }
 
   context "when fetching non-domestic assessments for linking" do
-    before do
+    before(:all) do
+      gateway = described_class.new
       insert_into_address_base("000000000001", "A0 0AA", "1 Commercial Street", "", "", "E")
       insert_into_address_base("000000000012", "A0 0AA", "4 Commercial Street", "", "", "E")
       insert_into_address_base("000000000016", "A0 0AA", "Some Unit", "", "", "E")
@@ -129,7 +130,6 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
-
       gateway.create_and_populate_temp_table
     end
 

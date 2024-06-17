@@ -23,7 +23,7 @@ describe Gateway::AssessmentsAddressIdGateway do
           ["0000-0000-0000-0000-0001", "RRN-0000-0000-0000-0000-0001", Time.utc(2010, 0o1, 0o5)],
           ["0000-0000-0000-0000-0002", "RRN-0000-0000-0000-0000-0001", Time.utc(2010, 0o1, 0o5)],
         ]
-      expect(gateway.fetch_by_address_id("RRN-0000-0000-0000-0000-0001")).to eq(expected_result)
+      expect(gateway.fetch_by_address_id("RRN-0000-0000-0000-0000-0001").sort).to eq(expected_result)
     end
   end
 end
