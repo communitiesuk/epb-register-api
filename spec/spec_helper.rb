@@ -256,9 +256,10 @@ def datetime_today
 end
 
 def add_assessment_country_ids
-  Gateway::AssessmentsGateway::Assessment.all.each do |i|
-    country_id = i[:postcode].start_with?("BT") ? 4 : 1
-    Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(assessment_id: i[:assessment_id], country_id:)
+  Gateway::AssessmentsGateway::Assessment.all.each do |item|
+    item[:postcode] = item[:postcode].to_s
+    country_id = item[:postcode].start_with?("BT") ? 4 : 1
+    Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(assessment_id: item[:assessment_id], country_id:)
   end
 end
 

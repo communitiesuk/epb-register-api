@@ -18,6 +18,8 @@ describe "Perform end to end test of exporting and saving assessments as statist
           },
           override: true,
         )
+        add_countries
+        add_assessment_country_ids
       end
 
       Timecop.freeze(2021, 6, 22, 12, 0, 0) do
