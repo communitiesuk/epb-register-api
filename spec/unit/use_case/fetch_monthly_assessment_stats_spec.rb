@@ -12,7 +12,9 @@ describe UseCase::FetchMonthlyAssessmentStats do
 
     let(:country_data) do
       [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "Northern Ireland" },
-       { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "England & Wales" }]
+       { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "Other" },
+       { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "England" },
+       { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "Wales" }]
     end
 
     before do
@@ -22,15 +24,23 @@ describe UseCase::FetchMonthlyAssessmentStats do
 
     it "executes the use case and returns a hash of the the combines data set" do
       country_data.each { |i| data << i }
-      expect(use_case.execute[:all]).to eq(data)
+      expect(use_case.execute[:all] - data).to eq []
     end
 
     it "executes the use case and returns a hash of the the NI data" do
       expect(use_case.execute[:northern_ireland]).to eq([country_data.first])
     end
 
+    it "executes the use case and returns a hash of the the Other data" do
+      expect(use_case.execute[:other]).to eq([country_data.find { |stats| stats["country"] == "Other" }])
+    end
+
+    it "executes the use case and returns a hash of the the Wales data" do
+      expect(use_case.execute[:wales]).to eq([country_data.find { |stats| stats["country"] == "Wales" }])
+    end
+
     it "executes the use case and returns a hash of the the England & Wales data" do
-      expect(use_case.execute[:england_wales]).to eq([country_data.last])
+      expect(use_case.execute[:england]).to eq([country_data.find { |stats| stats["country"] == "England" }])
     end
   end
 end

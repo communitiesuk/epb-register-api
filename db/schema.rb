@@ -244,6 +244,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_06_094342) do
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end
 
+  create_table "search_address", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.text "address"
+  end
+
   add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
   add_foreign_key "assessments_country_ids", "countries", primary_key: "country_id", name: "fks_assessments_country_ids_countries"
   add_foreign_key "assessments_xml", "assessments", primary_key: "assessment_id"

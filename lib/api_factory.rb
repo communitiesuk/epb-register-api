@@ -177,6 +177,12 @@ class ApiFactory
     )
   end
 
+  def self.reload_assessment_statistics_use_case
+    @reload_assessment_statistics_use_case ||= UseCase::ReloadAssessmentStatistics.new(
+      gateway: assessment_statistics_gateway,
+    )
+  end
+
   def self.import_green_deal_fuel_price_use_case
     @import_green_deal_fuel_price_use_case ||= UseCase::ImportGreenDealFuelPrice.new(
       green_deal_fuel_price_gateway,

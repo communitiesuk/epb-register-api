@@ -3,6 +3,8 @@ module Gateway
     class AssessmentStatistics < ActiveRecord::Base
     end
 
+    COUNTRY_CODES = %w[ENG WLS NIR].freeze
+
     VALID_ASSESSMENT_TYPES = %w[
       RdSAP
       SAP
@@ -116,14 +118,18 @@ module Gateway
     def save_daily_stats(date:, assessment_types: nil)
       sql = <<-SQL
         INSERT INTO  assessment_statistics(assessments_count, assessment_type, rating_average, day_date, country)
-         SELECT COUNT(assessment_id),
+         SELECT COUNT(a.assessment_id),
                 type_of_assessment,
                 AVG(current_energy_efficiency_rating),
                  CAST(to_char(created_at, 'YYYY-MM-DD') AS Date),
-                CASE WHEN a.postcode LIKE 'BT%' THEN 'Northern Ireland' ELSE 'England & Wales' END as country
+                CASE WHEN co.country_code IN (#{country_codes}) THEN co.country_name
+                      WHEN co.country_code = 'EAW' then 'England'
+                  ELSE 'Other' END as country
            FROM assessments a
+           JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
+          JOIN countries co ON co.country_id = ac.country_id
            WHERE to_char(created_at, 'YYYY-MM-DD') = $1 AND migrated IS NOT TRUE
-
+          AND  co.country_code  IN (#{country_codes})
       SQL
 
       bindings = [
@@ -149,6 +155,34 @@ module Gateway
       SQL_GROUP
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
+
+    def reload_data
+      ActiveRecord::Base.connection.exec_query(
+        "TRUNCATE TABLE assessment_statistics",
+      )
+
+      sql = <<-SQL
+        INSERT INTO  assessment_statistics(assessments_count, assessment_type, rating_average, day_date, country)
+         SELECT COUNT(a.assessment_id),
+                type_of_assessment,
+                AVG(current_energy_efficiency_rating),
+                 CAST(to_char(created_at, 'YYYY-MM-DD') AS Date),
+                 CASE WHEN co.country_code IN (#{country_codes}) THEN co.country_name
+                      WHEN co.country_code = 'EAW' then 'England'
+                  ELSE 'Other' END as country
+           FROM assessments a
+           JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
+           JOIN countries co ON co.country_id = ac.country_id
+           WHERE to_char(created_at, 'YYYY-MM-DD') > '2020-10-01'
+          GROUP BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country;
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql)
+    end
+
+    def country_codes
+      COUNTRY_CODES.map { |n| "'#{n}'" }.join(",")
     end
   end
 end

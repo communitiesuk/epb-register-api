@@ -28,6 +28,8 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
     domestic_ni_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-NI-20.0.0")
     rrn = domestic_ni_rdsap_xml.at("RRN")
     rrn.children = "0000-0000-0000-0000-0003"
+    ni_postcode = domestic_ni_rdsap_xml.at("Postcode")
+    ni_postcode.children = "BT5 2SA"
 
     lodge_assessment(
       assessment_body: domestic_ni_rdsap_xml.to_xml,
@@ -39,8 +41,8 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       override: true,
     )
 
-    ActiveRecord::Base.connection.exec_query("UPDATE assessments SET Postcode = 'BT1 1AA' WHERE assessment_id = '0000-0000-0000-0000-0003' ")
-
+    add_countries
+    add_assessment_country_ids
     ApiFactory.save_daily_assessments_stats_use_case
               .execute(date: Time.now.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
   end
@@ -61,12 +63,12 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
     end
 
-    it "returns json that contains all the assessments aggregated data for England & Wales" do
+    it "returns json that contains all the assessments aggregated data for England" do
       response = fetch_statistics(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:englandWales]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England & Wales" }])
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:england]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England" }])
     end
 
     it "returns json that  contains the assessments aggregated data for Northern Ireland" do
@@ -103,12 +105,13 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
     end
 
-    it "returns json that contains all the assessments aggregated data for England & Wales" do
+    it "returns json that contains all the assessments aggregated data for England" do
       response = fetch_statistics_new(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:englandWales]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England & Wales" }])
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:england]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England" }])
     end
 
     it "returns json that  contains the assessments aggregated data for Northern Ireland" do

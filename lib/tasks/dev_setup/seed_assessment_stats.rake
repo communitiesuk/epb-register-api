@@ -17,17 +17,18 @@ namespace :dev_data do
 
     61.times do |i|
       date = Time.now.to_date - (i + 1).days
-      gateway.save(assessment_type: "RdSAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England & Wales")
+      gateway.save(assessment_type: "RdSAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England")
       gateway.save(assessment_type: "RdSAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Northern Ireland")
-      gateway.save(assessment_type: "SAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England & Wales")
+      gateway.save(assessment_type: "RdSAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Other")
+      gateway.save(assessment_type: "SAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England")
       gateway.save(assessment_type: "SAP", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Northern Ireland")
-      gateway.save(assessment_type: "CEPC", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England & Wales")
+      gateway.save(assessment_type: "CEPC", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England")
       gateway.save(assessment_type: "CEPC", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Northern Ireland")
-      gateway.save(assessment_type: "DEC", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England & Wales")
+      gateway.save(assessment_type: "DEC", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England")
       gateway.save(assessment_type: "DEC", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Northern Ireland")
-      gateway.save(assessment_type: "DEC-RR", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England & Wales")
+      gateway.save(assessment_type: "DEC-RR", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Wales")
       gateway.save(assessment_type: "DEC-RR", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Northern Ireland")
-      gateway.save(assessment_type: "AC-CERT", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "England & Wales")
+      gateway.save(assessment_type: "AC-CERT", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Wales")
       gateway.save(assessment_type: "AC-CERT", assessments_count: rand(50..90), rating_average: rand(10..92), day_date: date, transaction_type: rand(1..6), country: "Northern Ireland")
     end
 
