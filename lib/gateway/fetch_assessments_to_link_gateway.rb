@@ -40,8 +40,27 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
     end
 
-    def fetch_by_group_id(group_id)
-      TempLinkingTable.where(group_id:).pluck(:assessment_id, :address_id, :date_registered)
+    def fetch_assessments_by_group_id(group_id)
+      sql = <<-SQL
+        with uniq_address_ids AS (
+        SELECT distinct(address_id) as address_id
+        FROM temp_linking_tables
+        WHERE group_id = $1 )
+        SELECT a.assessment_id, aai.address_id, a.date_registered
+        from assessments a
+        join assessments_address_id aai on a.assessment_id = aai.assessment_id
+        join uniq_address_ids uai on uai.address_id = aai.address_id
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "group_id",
+          group_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
     end
 
     def get_max_group_id

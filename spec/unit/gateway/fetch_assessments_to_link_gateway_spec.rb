@@ -130,6 +130,20 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
+      # add an assessment which is linked to one of the others but has a different address line
+      cepc_xml_7 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_7.at("//CEPC:RRN").content = "0000-0000-0000-0000-0007"
+      cepc_xml_7.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "Unit 1 Commercial Street" }
+      cepc_xml_7.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0002"
+      lodge_assessment(
+        assessment_body: cepc_xml_7.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
       gateway.create_and_populate_temp_table
     end
 
@@ -158,16 +172,18 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
     end
 
-    describe "#fetch_by_group_id" do
-      it "returns the assessment_ids, address_ids and date_registered of assessments with the same group_id" do
+    describe "#fetch_assessments_by_group_id" do
+      it "return assessment id, address, id, and date registered with the same address_id found within the group" do
         group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).uniq[0]
         expected_result = [
-          ["0000-0000-0000-0000-0012", "RRN-0000-0000-0000-0000-0012", Time.utc(2020, 0o5, 20)],
-          ["0000-0000-0000-0000-0000", "UPRN-000000000001", Time.utc(2020, 0o5, 0o4)],
-          ["0000-0000-0000-0000-0001", "UPRN-000000000001", Time.utc(2020, 0o5, 0o5)],
-          ["0000-0000-0000-0000-0002", "RRN-0000-0000-0000-0000-0002", Time.utc(2020, 0o5, 0o4)],
-        ].sort
-        expect(gateway.fetch_by_group_id(group_id).sort).to eq expected_result
+          { "assessment_id" => "0000-0000-0000-0000-0012", "address_id" => "RRN-0000-0000-0000-0000-0012", "date_registered" => Time.utc(2020, 0o5, 20) },
+          { "assessment_id" => "0000-0000-0000-0000-0000", "address_id" => "UPRN-000000000001", "date_registered" => Time.utc(2020, 0o5, 0o4) },
+          { "assessment_id" => "0000-0000-0000-0000-0001", "address_id" => "UPRN-000000000001", "date_registered" => Time.utc(2020, 0o5, 0o5) },
+          { "assessment_id" => "0000-0000-0000-0000-0002", "address_id" => "RRN-0000-0000-0000-0000-0002", "date_registered" => Time.utc(2020, 0o5, 0o4) },
+          { "assessment_id" => "0000-0000-0000-0000-0007", "address_id" => "RRN-0000-0000-0000-0000-0002", "date_registered" => Time.utc(2020, 0o5, 0o4) },
+        ]
+        result = gateway.fetch_assessments_by_group_id(group_id)
+        expect(result - expected_result).to eq []
       end
     end
 
