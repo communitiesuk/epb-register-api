@@ -1,13 +1,20 @@
 describe UseCase::FetchMonthlyAssessmentStats do
+  subject(:use_case) { described_class.new(stats_gateway) }
+
+  let(:stats_gateway)  do
+    instance_double(Gateway::AssessmentStatisticsGateway)
+  end
+  let(:data) do
+    [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP" }]
+  end
+
+  before do
+    allow(stats_gateway).to receive(:fetch_monthly_stats).and_return(data)
+  end
+
   context "when extracting month assessments report" do
-    subject(:use_case) { described_class.new(stats_gateway) }
-
-    let(:stats_gateway)  do
-      instance_double(Gateway::AssessmentStatisticsGateway)
-    end
-
-    let(:data) do
-      [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP" }]
+    before do
+      allow(stats_gateway).to receive(:fetch_monthly_stats_by_country).and_return(country_data)
     end
 
     let(:country_data) do
@@ -15,11 +22,6 @@ describe UseCase::FetchMonthlyAssessmentStats do
        { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "Other" },
        { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "England" },
        { "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "Wales" }]
-    end
-
-    before do
-      allow(stats_gateway).to receive(:fetch_monthly_stats_by_country).and_return(country_data)
-      allow(stats_gateway).to receive(:fetch_monthly_stats).and_return(data)
     end
 
     it "executes the use case and returns a hash of the the combines data set" do
@@ -41,6 +43,20 @@ describe UseCase::FetchMonthlyAssessmentStats do
 
     it "executes the use case and returns a hash of the the England & Wales data" do
       expect(use_case.execute[:england]).to eq([country_data.find { |stats| stats["country"] == "England" }])
+    end
+  end
+
+  context "when extracting data from the old data structure" do
+    let(:country_data) do
+      [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "England & Wales" }]
+    end
+
+    before do
+      allow(stats_gateway).to receive(:fetch_monthly_stats_by_country).and_return(country_data)
+    end
+
+    it "executes the use case and returns a hash of the the England & Wales data" do
+      expect(use_case.execute.key?(:england_wales)).to eq true
     end
   end
 end

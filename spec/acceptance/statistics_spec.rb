@@ -89,6 +89,20 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
     end
   end
 
+  context "when calling the endpoint with England & Wales in the country for assessment statistics" do
+    before do
+      Gateway::AssessmentStatisticsGateway::AssessmentStatistics.update_all(country: "England & Wales")
+    end
+
+    it "returns json that  contains the assessments aggregated data for englandWales" do
+      response = fetch_statistics(
+        accepted_responses: [200],
+        scopes: %w[statistics:fetch],
+      )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].key?(:englandWales)).to eq true
+    end
+  end
+
   context "when calling the NEW statistics data end" do
     it "returns a 200 status" do
       fetch_statistics_new(
