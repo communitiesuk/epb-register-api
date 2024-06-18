@@ -43,8 +43,13 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
 
     add_countries
     add_assessment_country_ids
+    Helper::Toggles.set_feature("register-api-save-statistics-country-codes", true)
     ApiFactory.save_daily_assessments_stats_use_case
               .execute(date: Time.now.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
+  end
+
+  after(:all) do
+    Helper::Toggles.set_feature("register-api-save-statistics-country-codes", false)
   end
 
   context "when calling the statistics data end" do

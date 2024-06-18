@@ -46,7 +46,7 @@ describe UseCase::FetchMonthlyAssessmentStats do
     end
   end
 
-  context "when extracting data from the old data structure" do
+  context "when country is derived by the postcode  " do
     let(:country_data) do
       [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "England & Wales" }]
     end
