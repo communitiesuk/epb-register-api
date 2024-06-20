@@ -21,6 +21,10 @@ module Domain
       end
     end
 
-    attr_reader :best_address_id
+    def get_assessment_ids
+      @data.map { |assessment| assessment["assessment_id"] }
+    end
+
+    attr_reader :best_address_id, :data
   end
 end

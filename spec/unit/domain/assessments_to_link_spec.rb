@@ -13,10 +13,6 @@ describe Domain::AssessmentsToLink do
     ]
   end
 
-  it "test" do
-    expect { domain }.not_to raise_error
-  end
-
   describe "#sort_by_date" do
     it "orders the data by date registered" do
       expect(domain.sort_by_date.last["assessment_id"]).to eq "0000-0000-0000-0000-0012"
@@ -31,13 +27,14 @@ describe Domain::AssessmentsToLink do
     end
 
     context "when a valid UPRN is in the list of address_ids" do
-      it "selects the UPRN as the best address id" do
-        expect { domain.set_best_address_id(address_base_gateway:) }.not_to raise_error
+      before do
+        allow(address_base_gateway).to receive(:check_uprn_exists).and_return true
       end
 
       it "passes the correct UPRN to the gateway" do
         domain.set_best_address_id(address_base_gateway:)
         expect(address_base_gateway).to have_received(:check_uprn_exists).with("UPRN-000000000001").exactly(1).times
+        expect(domain.best_address_id).to eq "UPRN-000000000001"
       end
     end
 
@@ -68,6 +65,13 @@ describe Domain::AssessmentsToLink do
       it "the will select the RRN associated with the oldest assessment as the address_id" do
         expect(domain.best_address_id).to eq("RRN-0000-0000-0000-0000-0002")
       end
+    end
+  end
+
+  describe "#get_assessment_ids" do
+    it "returns the assessment ids from the data" do
+      expected_array = %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0007 0000-0000-0000-0000-0012]
+      expect(domain.get_assessment_ids - expected_array).to eq []
     end
   end
 end

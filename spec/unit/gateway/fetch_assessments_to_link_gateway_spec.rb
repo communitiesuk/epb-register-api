@@ -183,7 +183,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
           { "assessment_id" => "0000-0000-0000-0000-0007", "address_id" => "RRN-0000-0000-0000-0000-0002", "date_registered" => Time.utc(2020, 0o5, 0o4) },
         ]
         result = gateway.fetch_assessments_by_group_id(group_id)
-        expect(result - expected_result).to eq []
+        expect(result.data - expected_result).to eq []
       end
     end
 

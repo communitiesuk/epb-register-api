@@ -60,7 +60,7 @@ module Gateway
         ),
       ]
 
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
+      Domain::AssessmentsToLink.new(data: ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a)
     end
 
     def get_max_group_id
