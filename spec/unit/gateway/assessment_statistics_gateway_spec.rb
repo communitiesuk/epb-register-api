@@ -65,9 +65,9 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
     let(:expected_results) do
       [
         { "num_assessments" => 82, "rating_average" => 78.0, "month" => "2021-07", "assessment_type" => "SAP" },
-        { "num_assessments" => 24, "rating_average" => 28.0, "month" => "2021-08", "assessment_type" => "RdSAP"  },
-        { "num_assessments" => 81, "rating_average" => 60.5, "month" => "2021-09", "assessment_type" => "RdSAP"  },
-        { "num_assessments" => 138, "rating_average" => 53.5, "month" => "2021-09", "assessment_type" => "SAP" },
+        { "num_assessments" => 24, "rating_average" => 28.0, "month" => "2021-08", "assessment_type" => "RdSAP" },
+        { "num_assessments" => 81, "rating_average" => 60.98, "month" => "2021-09", "assessment_type" => "RdSAP" },
+        { "num_assessments" => 138, "rating_average" => 58.12, "month" => "2021-09", "assessment_type" => "SAP" },
 
       ]
     end
@@ -93,7 +93,7 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
 
     let(:expected_results) do
       [
-        { "assessment_type" => "SAP", "number_of_assessments" => 92, "rating_average" => 60.0 },
+        { "assessment_type" => "SAP", "number_of_assessments" => 92, "rating_average" => 75.65 },
         { "assessment_type" => "RdSAP", "number_of_assessments" => 24, "rating_average" => 28.0 },
         { "assessment_type" => "DEC", "number_of_assessments" => 5, "rating_average" => 0.0 },
         { "assessment_type" => "AC-CERT", "number_of_assessments" => 14, "rating_average" => 0.0 },

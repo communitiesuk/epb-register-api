@@ -72,12 +72,16 @@ module Gateway
 
     def fetch_monthly_stats
       sql = <<-SQL
-              SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'YYYY-MM') as month
-              FROM assessment_statistics a
-              WHERE to_char(day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
-              GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type
-              ORDER BY to_char(day_date, 'YYYY-MM') desc;
-
+       WITH counts as(
+         SELECT SUM(assessments_count) as total_certs, assessment_type, to_char(day_date, 'YYYY-MM') as month
+         FROM assessment_statistics
+          GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type )
+          SELECT SUM(assessments_count) as num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision as rating_average, month, a.assessment_type
+          FROM assessment_statistics a
+          JOIN counts ON counts.month = to_char(a.day_date, 'YYYY-MM') AND counts.assessment_type = a.assessment_type
+          WHERE to_char(a.day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
+          GROUP BY  to_char(a.day_date, 'YYYY-MM'), a.assessment_type, counts.total_certs, counts.month
+          ORDER BY month desc;
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)
@@ -85,11 +89,19 @@ module Gateway
 
     def fetch_daily_stats_by_date(date)
       sql = <<-SQL
-        SELECT assessment_type, SUM(assessments_count) as number_of_assessments, AVG(rating_average) as rating_average
-        FROM assessment_statistics a
-        WHERE day_date = $1
-        GROUP BY to_char(day_date, 'YYYY-MM-DD'), assessment_type
-        ORDER BY assessment_type DESC;
+
+       WITH counts as(
+         SELECT SUM(assessments_count) as total_certs, assessment_type, day_date
+         FROM assessment_statistics
+         WHERE day_date = $1
+         GROUP BY  assessment_type,  day_date )
+         SELECT a.assessment_type, SUM(assessments_count) as number_of_assessments,
+               ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision as rating_average
+         FROM assessment_statistics a
+         JOIN counts ON  counts.assessment_type = a.assessment_type AND a.day_date = counts.day_date
+         GROUP BY to_char(a.day_date, 'YYYY-MM-DD'), a.assessment_type, total_certs
+         ORDER BY assessment_type DESC;
+
       SQL
 
       binds = [
@@ -105,11 +117,16 @@ module Gateway
 
     def fetch_monthly_stats_by_country
       sql = <<-SQL
-              SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'YYYY-MM') as month, country
-              FROM assessment_statistics a
-              WHERE to_char(day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
-              GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type, country
-              ORDER BY to_char(day_date, 'YYYY-MM') desc;
+        WITH counts as(
+         SELECT SUM(assessments_count) as total_certs, assessment_type, to_char(day_date, 'YYYY-MM') as month, country
+         FROM assessment_statistics
+          GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type, country )
+        SELECT SUM(assessments_count) as num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision as rating_average, month, a.assessment_type, a.country
+        FROM assessment_statistics a
+        JOIN counts ON counts.month = to_char(a.day_date, 'YYYY-MM') AND counts.assessment_type = a.assessment_type AND a.country = counts.country
+        WHERE to_char(a.day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
+        GROUP BY  to_char(a.day_date, 'YYYY-MM'), a.assessment_type, counts.total_certs, counts.month, a.country
+        ORDER BY month desc;
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)
