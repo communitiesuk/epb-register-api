@@ -129,78 +129,8 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
   end
 
   describe "#save_daily_stats" do
-    context "when saving data using the postcode to determine the country" do
-      before do
-        today = Time.now.strftime("%Y-%m-%d")
-        Gateway::SchemesGateway::Scheme.create(scheme_id:)
-        Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: scheme_id)
-
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
-
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 20)
-
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 20)
-
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
-
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50, postcode: "BT1 1AA")
-      end
-
-      it "calls the method without error" do
-        expect { gateway.save_daily_stats(date: date_today) }.not_to raise_error
-      end
-
-      it "calls the method without error when no data to be saved" do
-        expect { gateway.save_daily_stats(date: "2020-01-28") }.not_to raise_error
-      end
-
-      it "does not import migrated data" do
-        count = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.count
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-1005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: date_today, date_registered: date_today, created_at: date_today, date_of_expiry: "2070-01-05", migrated: true)
-        gateway.save_daily_stats(date: date_today)
-        count_after = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.count
-        expect(count_after).not_to be < count
-      end
-
-      it "saves the only the assessments lodged today for NI" do
-        gateway.save_daily_stats(date: date_today)
-        results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.all
-        expect(results.length).to eq(1)
-        expect(results[0]["country"]).to eq("Northern Ireland")
-      end
-
-      it "saves the 2 SAP assessments lodged on the 2010-01-05" do
-        gateway.save_daily_stats(date: "2010-01-05")
-        sap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.find_by(assessment_type: "SAP")
-        expect(sap_results.assessments_count).to eq(2)
-        expect(sap_results.rating_average).to eq(35.0)
-      end
-
-      it "saves the 1 RdSAP assessments lodged on the 2010-01-05" do
-        gateway.save_daily_stats(date: "2010-01-05")
-        rdsap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.find_by(assessment_type: "RdSAP")
-        expect(rdsap_results.assessments_count).to eq(1)
-        expect(rdsap_results.rating_average).to eq(20)
-      end
-
-      it "saves the assessments for specific types (NOT RdSAP)" do
-        types = %w[SAP CEPC DEC AC-CERT DEC-RR]
-        gateway.save_daily_stats(date: "2010-01-05", assessment_types: types)
-        rdsap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(assessment_type: "RdSAP").count
-        expect(rdsap_results).to eq 0
-        sap_results = Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(assessment_type: "SAP").count
-        expect(sap_results).to eq 1
-      end
-
-      it "raises an error if invalid assessment types are passed" do
-        types =  %w[TEST CEPC DEC AC-CERT DEC-RR]
-        expect { gateway.save_daily_stats(date: "2010-01-05", assessment_types: types) }.to raise_error(StandardError, "Invalid types")
-      end
-    end
-
     context "when saving data using the country_id to determine the country" do
       before do
-        Helper::Toggles.set_feature("register-api-save-statistics-country-codes", true)
         add_assessor
         Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
 
@@ -214,10 +144,6 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
 
         add_countries
         add_assessment_country_ids
-      end
-
-      after do
-        Helper::Toggles.set_feature("register-api-save-statistics-country-codes", false)
       end
 
       it "calls the method without error" do

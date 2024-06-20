@@ -45,18 +45,4 @@ describe UseCase::FetchMonthlyAssessmentStats do
       expect(use_case.execute[:england]).to eq([country_data.find { |stats| stats["country"] == "England" }])
     end
   end
-
-  context "when country is derived by the postcode  " do
-    let(:country_data) do
-      [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021", "assessment_type" => "SAP", "country" => "England & Wales" }]
-    end
-
-    before do
-      allow(stats_gateway).to receive(:fetch_monthly_stats_by_country).and_return(country_data)
-    end
-
-    it "executes the use case and returns a hash of the the England & Wales data" do
-      expect(use_case.execute.key?(:england_wales)).to eq true
-    end
-  end
 end

@@ -116,7 +116,7 @@ module Gateway
     end
 
     def save_daily_stats(date:, assessment_types: nil)
-      sql = Helper::Toggles.enabled?("register-api-save-statistics-country-codes") ? save_daily_stats_sql : save_daily_stats_sql_old
+      sql = save_daily_stats_sql
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -188,19 +188,6 @@ module Gateway
           JOIN countries co ON co.country_id = ac.country_id
            WHERE to_char(created_at, 'YYYY-MM-DD') = $1 AND migrated IS NOT TRUE
           AND  co.country_code  IN (#{country_codes})
-      SQL
-    end
-
-    def save_daily_stats_sql_old
-      <<-SQL
-       INSERT INTO  assessment_statistics(assessments_count, assessment_type, rating_average, day_date, country)
-         SELECT COUNT(assessment_id),
-                type_of_assessment,
-                AVG(current_energy_efficiency_rating),
-                 CAST(to_char(created_at, 'YYYY-MM-DD') AS Date),
-                CASE WHEN a.postcode LIKE 'BT%' THEN 'Northern Ireland' ELSE 'England & Wales' END as country
-           FROM assessments a
-           WHERE to_char(created_at, 'YYYY-MM-DD') = $1 AND migrated IS NOT TRUE
       SQL
     end
   end
