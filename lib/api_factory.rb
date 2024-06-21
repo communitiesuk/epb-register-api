@@ -245,6 +245,19 @@ class ApiFactory
     )
   end
 
+  def self.bulk_link_assessments_use_case
+    @bulk_link_assessments_use_case ||=
+      UseCase::BulkLinkAssessments.new(
+        fetch_assessments_to_link_gateway:,
+        address_base_gateway: address_base_search_gateway,
+        assessments_address_id_gateway:,
+      )
+  end
+
+  def self.fetch_assessments_to_link_gateway
+    @fetch_assessments_to_link_gateway ||= Gateway::FetchAssessmentsToLinkGateway.new
+  end
+
   def self.green_deal_fuel_price_gateway
     @green_deal_fuel_price_gateway ||= Gateway::GreenDealFuelPriceGateway.new
   end

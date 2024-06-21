@@ -193,4 +193,24 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
     end
   end
+
+  context "when there are no non-domestic assessments for linking" do
+    before do
+      gateway.create_and_populate_temp_table
+    end
+
+    describe "#create_and_populate_temp_table" do
+      it "does not raise an error if there is no data", aggregate_failures: true do
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id date_registered group_id])
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(0)
+      end
+    end
+
+    describe "#get_max_group_id" do
+      it "returns nil" do
+        expect(gateway.get_max_group_id).to eq nil
+      end
+    end
+  end
 end

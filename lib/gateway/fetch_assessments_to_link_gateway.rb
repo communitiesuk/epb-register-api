@@ -33,11 +33,11 @@ module Gateway
         FROM addresses_we_want aww LEFT JOIN non_domestic_certs ndc ON (aww.address = ndc.address AND aww.postcode = ndc.postcode)
     SQL
     def create_and_populate_temp_table
-      insert_sql = <<-SQL
+      sql = <<-SQL
         SELECT * INTO temp_linking_tables FROM (#{FETCH_ASSESSMENTS_SQL}) AS temp
       SQL
 
-      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
+      ActiveRecord::Base.connection.exec_query(sql, "SQL")
     end
 
     def fetch_assessments_by_group_id(group_id)
@@ -65,6 +65,14 @@ module Gateway
 
     def get_max_group_id
       TempLinkingTable.maximum(:group_id)
+    end
+
+    def drop_table
+      sql = <<-SQL
+        DROP TABLE IF EXISTS temp_linking_tables
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL")
     end
   end
 end
