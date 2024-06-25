@@ -20,7 +20,6 @@ module Gateway
         WHERE ct > 1 AND cid >1),
         non_domestic_certs AS (SELECT a.assessment_id,
                                   regexp_replace(asa.address, '[[:punct:]]', '', 'g') as address,
-                                  a.date_registered,
                                   a.postcode,
                                   aaid.address_id
                             FROM assessments a
@@ -29,7 +28,7 @@ module Gateway
                             WHERE a.type_of_assessment IN ('CEPC', 'CEPC-RR', 'AC-CERT', 'AC-REPORT', 'DEC', 'DEC-RR')
                             AND a.cancelled_at IS NULL
                             AND a.not_for_issue_at IS NULL)
-        SELECT aww.address, aww.postcode, assessment_id, address_id, date_registered, dense_rank() over (order by aww.address, aww.postcode) group_id
+        SELECT aww.address, aww.postcode, assessment_id, address_id, dense_rank() over (order by aww.address, aww.postcode) group_id
         FROM addresses_we_want aww LEFT JOIN non_domestic_certs ndc ON (aww.address = ndc.address AND aww.postcode = ndc.postcode)
     SQL
     def create_and_populate_temp_table
@@ -59,8 +58,12 @@ module Gateway
           ActiveRecord::Type::String.new,
         ),
       ]
-
-      Domain::AssessmentsToLink.new(data: ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a)
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
+      if result.empty?
+        raise Boundary::NoData, "bulk linking assessment group_id: #{group_id}"
+      else
+        Domain::AssessmentsToLink.new(data: result)
+      end
     end
 
     def get_max_group_id

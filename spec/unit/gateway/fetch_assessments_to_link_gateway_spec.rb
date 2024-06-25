@@ -3,8 +3,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
   let(:gateway) { described_class.new }
 
   context "when fetching non-domestic assessments for linking" do
-    before(:all) do
-      gateway = described_class.new
+    before do
       insert_into_address_base("000000000001", "A0 0AA", "1 Commercial Street", "", "", "E")
       insert_into_address_base("000000000012", "A0 0AA", "4 Commercial Street", "", "", "E")
       insert_into_address_base("000000000016", "A0 0AA", "Some Unit", "", "", "E")
@@ -144,13 +143,14 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
+      gateway.drop_table
       gateway.create_and_populate_temp_table
     end
 
     describe "#create_and_populate_temp_table" do
       it "creates a temporary table with the expected columns", aggregate_failures: true  do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id date_registered group_id])
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
       end
 
       it "populates the temporary table with assessments with the same address name, including those that vary only by punctuation", aggregate_failures: true do
@@ -185,6 +185,13 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         result = gateway.fetch_assessments_by_group_id(group_id)
         expect(result.data - expected_result).to eq []
       end
+
+      context "when it is unable to fetch data" do
+        it "raises an error" do
+          out_of_range_id = 10
+          expect { gateway.fetch_assessments_by_group_id(out_of_range_id) }.to raise_error Boundary::NoData
+        end
+      end
     end
 
     describe "#get_max_group_id" do
@@ -195,14 +202,21 @@ describe Gateway::FetchAssessmentsToLinkGateway do
   end
 
   context "when there are no non-domestic assessments for linking" do
+    let(:gateway) { described_class.new }
+
     before do
+      gateway.drop_table
       gateway.create_and_populate_temp_table
+    end
+
+    after do
+      described_class.new.drop_table
     end
 
     describe "#create_and_populate_temp_table" do
       it "does not raise an error if there is no data", aggregate_failures: true do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id date_registered group_id])
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(0)
       end
     end
