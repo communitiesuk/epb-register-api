@@ -36,7 +36,7 @@ gem "rackup", "~> 2.1"
 gem "rake", "~> 13.2"
 gem "redis", "~> 5.2.0"
 gem "rubocop", "~> 1.64.1"
-gem "rubocop-govuk", "~> 4.18"
+gem "rubocop-govuk", "~> 5.0"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
 gem "sentry-ruby", "~> 5.17"
