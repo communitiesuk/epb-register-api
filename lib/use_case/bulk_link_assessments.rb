@@ -12,7 +12,10 @@ module UseCase
       max_group_id = @fetch_assessments_to_link_gateway.get_max_group_id
       return if max_group_id.nil?
 
-      (1..max_group_id).each do |group_id|
+      skip_group_ids = @fetch_assessments_to_link_gateway.fetch_duplicate_address_ids
+      groups_ids = [*1..max_group_id] - skip_group_ids
+
+      groups_ids.each do |group_id|
         begin
           domain_object = @fetch_assessments_to_link_gateway.fetch_assessments_by_group_id(group_id)
         rescue Boundary::NoData => e

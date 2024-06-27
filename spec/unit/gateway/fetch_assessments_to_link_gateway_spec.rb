@@ -143,6 +143,33 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
+      # add a group of assessments to be linked but one has an address_id in another group
+      cepc_xml_8 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_8.at("//CEPC:RRN").content = "0000-0000-0000-0000-0008"
+      cepc_xml_8.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "23 Sunny Avenue" }
+      cepc_xml_8.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0003"
+      lodge_assessment(
+        assessment_body: cepc_xml_8.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
+      cepc_xml_9 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_9.at("//CEPC:RRN").content = "0000-0000-0000-0000-0009"
+      cepc_xml_9.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "23 Sunny Avenue" }
+      cepc_xml_9.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0009"
+      lodge_assessment(
+        assessment_body: cepc_xml_9.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
       gateway.drop_table
       gateway.create_and_populate_temp_table
     end
@@ -154,9 +181,9 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
 
       it "populates the temporary table with assessments with the same address name, including those that vary only by punctuation", aggregate_failures: true do
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(6)
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(8)
         data = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id).sort
-        expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0012])
+        expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012])
       end
 
       it "does not fetch correctly linked assessments" do
@@ -196,7 +223,14 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
     describe "#get_max_group_id" do
       it "returns the largest group_id number" do
-        expect(gateway.get_max_group_id).to eq 2
+        expect(gateway.get_max_group_id).to eq 3
+      end
+    end
+
+    describe "#fetch_duplicate_address_ids" do
+      it "returns an array containing the group ids which have an address_id found in more than one group" do
+        expected_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0003").pluck(:group_id)
+        expect(gateway.fetch_duplicate_address_ids - expected_group_ids).to eq []
       end
     end
   end

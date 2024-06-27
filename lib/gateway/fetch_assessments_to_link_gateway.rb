@@ -39,6 +39,26 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL")
     end
 
+    def fetch_duplicate_address_ids
+      sql = <<~SQL
+        select distinct group_id
+        from (
+            with unique_address_id_groups as (
+                select distinct address_id, group_id
+                from temp_linking_tables
+                )
+            select group_id, count(address_id)
+            over (partition by address_id)
+            from unique_address_id_groups
+            group by address_id, group_id
+            ) as table_dupes
+        where count > 1
+        order by group_id asc
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |rows| rows["group_id"] }
+    end
+
     def fetch_assessments_by_group_id(group_id)
       sql = <<-SQL
         with uniq_address_ids AS (
