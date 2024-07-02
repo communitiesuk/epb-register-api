@@ -7,7 +7,7 @@ module UseCase
     end
 
     def execute
-      @fetch_assessments_to_link_gateway.drop_table
+      @fetch_assessments_to_link_gateway.drop_temp_table
       @fetch_assessments_to_link_gateway.create_and_populate_temp_table
       max_group_id = @fetch_assessments_to_link_gateway.get_max_group_id
       return if max_group_id.nil?

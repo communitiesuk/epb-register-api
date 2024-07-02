@@ -16,7 +16,7 @@ describe UseCase::BulkLinkAssessments do
   end
 
   before do
-    allow(fetch_gateway).to receive(:drop_table)
+    allow(fetch_gateway).to receive(:drop_temp_table)
     allow(fetch_gateway).to receive(:create_and_populate_temp_table)
     allow(fetch_gateway).to receive(:get_max_group_id).and_return(number_of_groups)
     allow(fetch_gateway).to receive(:fetch_duplicate_address_ids).and_return skip_group_ids

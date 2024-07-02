@@ -170,7 +170,20 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
-      gateway.drop_table
+      cepc_xml_10 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_10.at("//CEPC:RRN").content = "0000-0000-0000-0000-0010"
+      cepc_xml_10.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1.4 commercial street" }
+      cepc_xml_10.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0010"
+      lodge_assessment(
+        assessment_body: cepc_xml_10.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
+      gateway.drop_temp_table
       gateway.create_and_populate_temp_table
     end
 
@@ -180,7 +193,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
       end
 
-      it "populates the temporary table with assessments with the same address name, including those that vary only by punctuation", aggregate_failures: true do
+      it "populates the temp table with assessments with the same address name, removing punctuation that come after numbers and not between numbers", aggregate_failures: true do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(8)
         data = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id).sort
         expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012])
@@ -196,6 +209,10 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "14 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).uniq.length).to eq 1
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "14 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).length).to eq 2
+      end
+
+      it "does not fetch the address 1.4 commercial street, with punctuation between numbers" do
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(assessment_id: "0000-0000-0000-0000-0010")).not_to exist
       end
     end
 
@@ -239,12 +256,12 @@ describe Gateway::FetchAssessmentsToLinkGateway do
     let(:gateway) { described_class.new }
 
     before do
-      gateway.drop_table
+      gateway.drop_temp_table
       gateway.create_and_populate_temp_table
     end
 
     after do
-      described_class.new.drop_table
+      described_class.new.drop_temp_table
     end
 
     describe "#create_and_populate_temp_table" do
