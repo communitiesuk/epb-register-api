@@ -102,38 +102,4 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].key?(:englandWales)).to eq true
     end
   end
-
-  context "when calling the NEW statistics data end" do
-    it "returns a 200 status" do
-      fetch_statistics_new(
-        accepted_responses: [200],
-        scopes: %w[statistics:fetch],
-      )
-    end
-
-    it "produces a json object of the all aggregated data" do
-      response =   fetch_statistics_new(
-        accepted_responses: [200],
-        scopes: %w[statistics:fetch],
-      )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
-    end
-
-    it "returns json that contains all the assessments aggregated data for England" do
-      response = fetch_statistics_new(
-        accepted_responses: [200],
-        scopes: %w[statistics:fetch],
-      )
-
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:england]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England" }])
-    end
-
-    it "returns json that  contains the assessments aggregated data for Northern Ireland" do
-      response = fetch_statistics_new(
-        accepted_responses: [200],
-        scopes: %w[statistics:fetch],
-      )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:northernIreland]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 1, ratingAverage: 50.0, country: "Northern Ireland" }])
-    end
-  end
 end

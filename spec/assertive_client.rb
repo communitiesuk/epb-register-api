@@ -796,21 +796,6 @@ def fetch_statistics(
   )
 end
 
-def fetch_statistics_new(
-  scopes:, accepted_responses: [200],
-  authenticate: true,
-  auth_data: {}
-
-)
-  assertive_get(
-    "/api/statistics/new",
-    accepted_responses:,
-    should_authenticate: authenticate,
-    auth_data:,
-    scopes:,
-  )
-end
-
 def assertive_get_in_search_scope(path, accepted_responses: [200])
   assertive_get(
     path,
