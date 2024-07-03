@@ -211,34 +211,38 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
       add_assessor
       add_countries
       today = Time.now.strftime("%Y-%m-%d")
+      yesterday = Time.new(2023,12,31,0,0,0).strftime("%Y-%m-%d")
 
       # expect these to be deleted
       Gateway::AssessmentStatisticsGateway::AssessmentStatistics.create(assessments_count: 93, assessment_type: "RdSAP", rating_average: 42.0, day_date: "2020-01-01", country: "England & Wales")
       Gateway::AssessmentStatisticsGateway::AssessmentStatistics.create(assessments_count: 8, assessment_type: "SAP", rating_average: 42.0, day_date: "2020-01-01", country: "Northern & Ireland")
 
-      # this is out of range
+      # this is out of date range
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
 
-      # this is a valid epc in range in England
+      # this is a valid RdSAP in range in England
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2020-10-02", date_registered: "2020-10-02", created_at: "2020-10-02", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
 
-      # this is a valid rdsap in range in England
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0003", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
+      # this is a valid RdSAP in range in England
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0003", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
-      # this is a valid sap in range in Northern Ireland
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75, postcode: "BT1 1AA")
+      # this is a valid SAP in range in Northern Ireland
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75, postcode: "BT1 1AA")
 
-      # this is a valid sap in range in England
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      # this is a valid SAP in range in England
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
 
-      # this is a valid sap in range to be updated to Scotland 'other'
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0006", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      # this is a valid SAP in range to be updated to Scotland 'Other'
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0006", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
 
-      # this is a valid sap in range to be updated to Unknown 'other'
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      # this is a valid SAP in range to be updated to Unknown 'Other'
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
 
-      # this is a valid sap in range to be updated to England and Wales 'england'
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0008", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      # this is a valid SAP in range to be updated to England and Wales 'England'
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0008", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+
+      # this is lodged today so should not be included
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0009", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 82)
 
       add_assessment_country_ids
 
@@ -264,6 +268,10 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
       expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where("day_date <  '2020-10-01'").count).to eq 0
     end
 
+    it "does not insert the epc lodged today" do
+      expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where("day_date =  '#{today}'").count).to eq 0
+    end
+
     it "no longer contains a row for England & Wales" do
       expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(country: "England & Wales").count).to eq 0
     end
@@ -275,7 +283,8 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
 
     it "aggregate England and Wales into England and also counts England" do
       expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(country: "England").count).to eq 3
-      expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(country: "England").pluck(:assessments_count)).to eq [1, 1, 2]
+      expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(country: "England", assessment_type: "RdSAP").pluck(:assessments_count)).to eq [1, 1]
+      expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(country: "England", assessment_type: "SAP").pluck(:assessments_count)).to eq [2]
     end
   end
 end

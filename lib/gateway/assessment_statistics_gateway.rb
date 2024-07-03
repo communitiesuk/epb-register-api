@@ -177,8 +177,9 @@ module Gateway
            FROM assessments a
            JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
            JOIN countries co ON co.country_id = ac.country_id
-           WHERE to_char(created_at, 'YYYY-MM-DD') > '2020-10-01'
-          GROUP BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country;
+           WHERE to_char(created_at, 'YYYY-MM-DD') >= '2020-10-01' AND created_at < '#{Date.today}'
+          GROUP BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country
+          ORDER BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country;
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)
