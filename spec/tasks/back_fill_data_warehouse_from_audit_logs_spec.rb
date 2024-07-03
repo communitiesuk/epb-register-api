@@ -30,7 +30,7 @@ describe "backfill data warehouse from audit logs" do
       expect { rake.invoke }.not_to raise_error
     end
 
-    it "the use case is executed for each event type ", :aggregate_failures do
+    it "the use case is executed for each event type", :aggregate_failures do
       rake.invoke
       expect(use_case).to have_received(:execute).with(event_type: "opt_out", start_date: "2020-05-04", end_date: "2020-05-08").exactly(1).times
       expect(use_case).to have_received(:execute).with(event_type: "opt_in", start_date: "2020-05-04", end_date: "2020-05-08").exactly(1).times

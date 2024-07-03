@@ -348,7 +348,7 @@ describe "Acceptance::SearchForAssessor" do
         )
         response = assessors_search(postcode: "NE19SY", qualification: "domesticRdSap", accepted_responses: [404])
         response_json = JSON.parse(response.body)
-        expect(response_json.key?("errors")).to eq(true)
+        expect(response_json.key?("errors")).to be(true)
       end
     end
   end

@@ -2,8 +2,7 @@
 
 require "date"
 
-describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
-         set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::Supplement::RdSAP", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   green_deal_plan_id = "SPC123456SPC"

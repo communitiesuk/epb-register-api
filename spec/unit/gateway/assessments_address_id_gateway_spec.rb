@@ -29,7 +29,7 @@ describe Gateway::AssessmentsAddressIdGateway do
 
   describe "#update_assessments_address_id_mapping" do
     context "when there is not source argument" do
-      it "updates assessments to with a new address_id", aggregate_failures: true do
+      it "updates assessments to with a new address_id", :aggregate_failures do
         assessment_ids = %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
         gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000001")
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:address_id)).to eq %w[UPRN-000000000001]
@@ -40,7 +40,7 @@ describe Gateway::AssessmentsAddressIdGateway do
     end
 
     context "when a source argument is passed through" do
-      it "updates assessments with a new address_id source ", aggregate_failures: true do
+      it "updates assessments with a new address_id source", :aggregate_failures do
         assessment_ids = %w[0000-0000-0000-0000-0002]
         gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000002", "epb_bulk_linking")
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:address_id)).to eq %w[UPRN-000000000002]

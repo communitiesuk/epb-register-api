@@ -1,4 +1,4 @@
-describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
+describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
   subject(:gateway) { described_class.new }
 
   let(:scheme_assessor_id) do
@@ -211,7 +211,7 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
       add_assessor
       add_countries
       today = Time.now.strftime("%Y-%m-%d")
-      yesterday = Time.new(2023,12,31,0,0,0).strftime("%Y-%m-%d")
+      yesterday = Time.new(2023, 12, 31, 0, 0, 0).strftime("%Y-%m-%d")
 
       # expect these to be deleted
       Gateway::AssessmentStatisticsGateway::AssessmentStatistics.create(assessments_count: 93, assessment_type: "RdSAP", rating_average: 42.0, day_date: "2020-01-01", country: "England & Wales")
@@ -242,11 +242,11 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0008", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is lodged today so should not be included
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0009", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 82)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0009", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 82)
 
       # recommendation reports should not be counted
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0010", scheme_assessor_id:, type_of_assessment: "CEPC-RR", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05")
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0011", scheme_assessor_id:, type_of_assessment: "AC-REPORT", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05")
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0010", scheme_assessor_id:, type_of_assessment: "CEPC-RR", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05")
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0011", scheme_assessor_id:, type_of_assessment: "AC-REPORT", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05")
 
       add_assessment_country_ids
 

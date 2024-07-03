@@ -48,18 +48,18 @@ describe Gateway::DomesticDigestGateway do
     end
 
     context "when fetching by RRN" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.fetch_by_rrn("0000-0000-0000-0000-0000")
 
         expect(result["schema_type"]).to eq "RdSAP-Schema-20.0.0"
         expect(Hash.from_xml(result["xml"])).to eq Hash.from_xml(rdsap_xml.to_s)
       end
 
-      it "does not find and return the expected data when the rrn is for a NI cert", aggregate_failures: true do
+      it "does not find and return the expected data when the rrn is for a NI cert", :aggregate_failures do
         expect(gateway.fetch_by_rrn("0000-0000-0000-0000-0001")).to be_nil
       end
 
-      it "does not find and return the expected data when the rrn is for a CEPC cert", aggregate_failures: true do
+      it "does not find and return the expected data when the rrn is for a CEPC cert", :aggregate_failures do
         expect(gateway.fetch_by_rrn("0000-0000-0000-0000-0002")).to be_nil
       end
 

@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDomesticrr, set_with_timecop: true do
+describe UseCase::ExportOpenDataDomesticrr, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   context "when creating the open data domestic recommendations report release" do
     describe "for the domestic recommendation report" do

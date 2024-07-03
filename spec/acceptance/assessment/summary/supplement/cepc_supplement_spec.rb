@@ -1,5 +1,4 @@
-describe "Acceptance::AssessmentSummary::Supplement::CEPC",
-         set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::Supplement::CEPC", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   scheme_id = nil

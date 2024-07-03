@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch", set_with_timecop: true do
+describe "Acceptance::AddressSearch", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   context "with an invalid combination of parameters" do

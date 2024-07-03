@@ -13,7 +13,7 @@ describe LodgementRules::NiCommon do
   end
 
   describe "#validate" do
-    context "when schema is not  Northern Ireland" do
+    context "when schema is not Northern Ireland" do
       it "does not raise an error" do
         expect { ni_common.validate(schema_name: "RdSAP-Schema-20.0.0", address: england_address) }.not_to raise_error
       end
@@ -36,7 +36,7 @@ describe LodgementRules::NiCommon do
       end
     end
 
-    context "when validation  rule is overwritten by migrated=true" do
+    context "when validation rule is overwritten by migrated=true" do
       it "does not raise an error for NI Schemas" do
         expect { ni_common.validate(schema_name: "RdSAP-Schema-NI-20.0.0", address: england_address, migrated: true) }.not_to raise_error
       end

@@ -9,14 +9,14 @@ describe Gateway::PostcodeGeolocationGateway do
   describe "#create_postcode_table" do
     it "creates the required temp table" do
       expect { gateway.create_postcode_table }.not_to raise_error
-      expect(table_exists?("postcode_geolocation_tmp")).to eq true
+      expect(table_exists?("postcode_geolocation_tmp")).to be true
     end
   end
 
   describe "#create_outcode_table" do
     it "creates the required temp table" do
       expect { gateway.create_outcode_table }.not_to raise_error
-      expect(table_exists?("postcode_outcode_geolocations_tmp")).to eq true
+      expect(table_exists?("postcode_outcode_geolocations_tmp")).to be true
     end
   end
 
@@ -76,7 +76,7 @@ describe Gateway::PostcodeGeolocationGateway do
       result = ActiveRecord::Base.connection.exec_query("SELECT EXISTS (SELECT FROM pg_tables
 WHERE tablename  in ('postcode_geolocation_tmp','postcode_geolocation_legacy','postcode_outcode_geolocations_tmp','postcode_outcode_geolocations_legacy'));")
 
-      expect(result[0]["exists"]).to eq false
+      expect(result[0]["exists"]).to be false
     end
   end
 end

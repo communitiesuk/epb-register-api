@@ -25,10 +25,7 @@ describe "JsonExport" do
       allow($stdout).to receive(:puts)
 
       # Mocks all dependencies created directly in the task
-      allow(ApiFactory).to receive(:assessments_export_use_case).and_return(
-        export_usecase,
-      )
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      allow(ApiFactory).to receive_messages(assessments_export_use_case: export_usecase, storage_gateway:)
 
       # Define mock expectations
       allow(export_usecase).to receive(:execute).and_return(export)

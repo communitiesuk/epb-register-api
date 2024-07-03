@@ -10,7 +10,7 @@ describe UseCase::GetCountryForPostcode do
   context "when the postcode given is definitely within Wales only" do
     let(:postcode) { "CF10 1EP" }
 
-    it "returns a lookup that matches only Wales", aggregate_failures: true do
+    it "returns a lookup that matches only Wales", :aggregate_failures do
       lookup = use_case.execute(postcode:)
       expect(lookup.match?).to be true
       expect(lookup.in_wales?).to be true
@@ -21,7 +21,7 @@ describe UseCase::GetCountryForPostcode do
   context "when the postcode given has an outcode that marks it as being in Wales only" do
     let(:postcode) { "LL24 4EF" }
 
-    it "returns a lookup that matches only Wales without calling the gateway", aggregate_failures: true do
+    it "returns a lookup that matches only Wales without calling the gateway", :aggregate_failures do
       lookup = use_case.execute(postcode:)
       expect(lookup.match?).to be true
       expect(lookup.in_wales?).to be true
@@ -140,7 +140,7 @@ describe UseCase::GetCountryForPostcode do
   context "when the postcode starts with a Scotland only prefix" do
     let(:postcode) { "IV63 6TU" }
 
-    it "returns a lookup that matches only Scotland without calling the gateway", aggregate_failures: true do
+    it "returns a lookup that matches only Scotland without calling the gateway", :aggregate_failures do
       lookup = use_case.execute(postcode:)
       expect(lookup.match?).to be true
       expect(lookup.in_scotland?).to be true
@@ -152,7 +152,7 @@ describe UseCase::GetCountryForPostcode do
   context "when the postcode given has an outcode that marks it as being in Scotland only" do
     let(:postcode) { "TD14 5TY" }
 
-    it "returns a lookup that matches only Scotland without calling the gateway", aggregate_failures: true do
+    it "returns a lookup that matches only Scotland without calling the gateway", :aggregate_failures do
       lookup = use_case.execute(postcode:)
       expect(lookup.match?).to be true
       expect(lookup.in_scotland?).to be true

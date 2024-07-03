@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
+describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   require_relative "../../shared_context/shared_logdement"
   include_context "when lodging XML"
@@ -117,7 +117,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
       end
 
       it "returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN" do
-        expect(rdsap_assessment_with_rrn_building_ref).to eq(nil)
+        expect(rdsap_assessment_with_rrn_building_ref).to be_nil
       end
 
       it "contains the expected keys for RdSAP" do
@@ -131,7 +131,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
       end
 
       it "returns a hash with building_reference_number nil when a SAP is submitted when building_reference_number is not a UPRN" do
-        expect(sap_assessment_with_rrn_building_ref).to eq(nil)
+        expect(sap_assessment_with_rrn_building_ref).to be_nil
       end
 
       it "returns 5 rows when called with a different task_id" do

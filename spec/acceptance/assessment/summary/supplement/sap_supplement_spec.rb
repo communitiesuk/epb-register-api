@@ -2,8 +2,7 @@
 
 require "date"
 
-describe "Acceptance::AssessmentSummary::Supplement::SAP",
-         set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::Supplement::SAP", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   summary0000_when_sole_cert = nil

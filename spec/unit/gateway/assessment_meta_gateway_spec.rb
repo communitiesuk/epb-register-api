@@ -79,7 +79,7 @@ describe Gateway::AssessmentMetaGateway do
       end
 
       it "returns the expected data set with opt out property set to true" do
-        expect(gateway.fetch("0000-0000-0000-0000-0000")["opt_out"]).to eq(true)
+        expect(gateway.fetch("0000-0000-0000-0000-0000")["opt_out"]).to be(true)
       end
     end
 

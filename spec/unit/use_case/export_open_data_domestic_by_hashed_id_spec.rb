@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDomesticByHashedId, set_with_timecop: true do
+describe UseCase::ExportOpenDataDomesticByHashedId, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   require_relative "../../shared_context/shared_logdement"
   include_context "when lodging XML"

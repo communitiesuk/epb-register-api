@@ -1,5 +1,4 @@
-describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT",
-         set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let!(:scheme_id) { add_scheme_and_get_id }

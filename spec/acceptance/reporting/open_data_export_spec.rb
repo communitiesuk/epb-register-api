@@ -1,6 +1,6 @@
 require_relative "open_data_export_test_helper"
 
-describe "Acceptance::Reports::OpenDataExport", set_with_timecop: true do
+describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   scheme_id = nil

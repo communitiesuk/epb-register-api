@@ -34,7 +34,7 @@ shared_context "when testing non-domestic lodgements" do
   end
 end
 
-describe LodgementRules::NonDomestic, set_with_timecop: true do
+describe LodgementRules::NonDomestic, :set_with_timecop do
   include_context "when testing non-domestic lodgements"
 
   before do
@@ -277,7 +277,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"]], [error], country_code: [:E])
       end
 
-      it "returns an error if the address is England and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
+      it "returns an error if the address is England and SBEM version is 5 and the Transaction-Type is not 3", :aggregate_failures do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 1]], [error], country_code: [:E])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 2]], [error], country_code: [:E])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [], country_code: [:E])
@@ -286,7 +286,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 6]], [error], country_code: [:E])
       end
 
-      it "returns an error if the postcode between England & Wales and SBEM version is 5 and the Transaction-Type is not 3", aggregate_failures: true do
+      it "returns an error if the postcode between England & Wales and SBEM version is 5 and the Transaction-Type is not 3", :aggregate_failures do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [], country_code: %i[E W])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [error], country_code: %i[E W])
       end
@@ -309,7 +309,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v12.1.e, SBEM, v12.1.e.0"], ["Postcode", "CF23 9XX"], %w[Transaction-Type 3]], [error])
       end
 
-      it "does not return an error if the address is in a cross-border postcode and SBEM version 6", aggregate_failures: true do
+      it "does not return an error if the address is in a cross-border postcode and SBEM version 6", :aggregate_failures do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [], country_code: %i[E W])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [], country_code: %i[E W])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.e.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [], country_code: %i[E W])

@@ -254,7 +254,7 @@ describe UseCase::ImportAddressBaseData do
     use_case = described_class.new
     it "responds with nil because ponds are not certifiable" do
       hashed_data = Hash[headers.zip(pond)]
-      expect(use_case.execute(hashed_data)).to be nil
+      expect(use_case.execute(hashed_data)).to be_nil
     end
   end
 

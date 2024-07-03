@@ -1,7 +1,7 @@
 describe Gateway::AddressBaseHelper do
   context "when calling title_case_line with an address line from the address_base table" do
     it "is passed nil it should return nil" do
-      expect(described_class.title_case_line(nil)).to be nil
+      expect(described_class.title_case_line(nil)).to be_nil
     end
 
     it "is passed a line containing non-capitalised characters, the line is returned untransformed" do

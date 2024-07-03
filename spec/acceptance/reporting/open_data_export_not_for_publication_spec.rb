@@ -38,10 +38,7 @@ describe "OpenDataExportNotForPublication" do
   context "when correct bucket_name or instance_name are provided" do
     before do
       EnvironmentStub.all
-      allow(ApiFactory).to receive(:export_not_for_publication_use_case).and_return(
-        export_usecase,
-      )
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      allow(ApiFactory).to receive_messages(export_not_for_publication_use_case: export_usecase, storage_gateway:)
 
       # Define mock expectations
       allow(export_usecase).to receive(:execute).and_return(export)

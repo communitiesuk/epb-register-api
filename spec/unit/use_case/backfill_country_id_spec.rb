@@ -4,7 +4,7 @@ shared_context "when extracting the country" do
   end
 end
 
-describe UseCase::BackfillCountryId, set_with_timecop: true do
+describe UseCase::BackfillCountryId, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   subject(:use_case) do
     described_class.new(

@@ -17,7 +17,7 @@ describe Helper::RrnHelper do
         end
       end
 
-      describe "   1234-5678123-4567-81234    " do
+      describe "1234-5678123-4567-81234" do
         it "returns normalised RRN 1234-5678-1234-5678-1234" do
           expect(
             described_class.normalise_rrn_format(
@@ -27,7 +27,7 @@ describe Helper::RrnHelper do
         end
       end
 
-      describe "   1-2-3-4-5-6-7-8-1-2-3-4-5-6-7-8-1-2-3-4   " do
+      describe "1-2-3-4-5-6-7-8-1-2-3-4-5-6-7-8-1-2-3-4" do
         it "returns normalised RRN 1234-5678-1234-5678-1234" do
           expect(
             described_class.normalise_rrn_format(
@@ -103,19 +103,19 @@ describe Helper::RrnHelper do
     it "returns true for a valid RRN format" do
       expect(
         described_class.valid_format?("1234-5678-1234-5678-1234"),
-      ).to eq(true)
+      ).to be(true)
     end
 
     it "returns false for a wrong number of digits" do
       expect(
         described_class.valid_format?("1234-5678-1234-5678-1"),
-      ).to eq(false)
+      ).to be(false)
     end
 
     it "returns false for incorrectly placed hyphens" do
       expect(
         described_class.valid_format?("1234-5678-1234-56781234"),
-      ).to eq(false)
+      ).to be(false)
     end
   end
 end

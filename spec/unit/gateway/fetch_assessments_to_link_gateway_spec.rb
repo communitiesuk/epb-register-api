@@ -188,12 +188,12 @@ describe Gateway::FetchAssessmentsToLinkGateway do
     end
 
     describe "#create_and_populate_temp_table" do
-      it "creates a temporary table with the expected columns", aggregate_failures: true  do
+      it "creates a temporary table with the expected columns", :aggregate_failures do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
       end
 
-      it "populates the temp table with assessments with the same address name, removing punctuation that come after numbers and not between numbers", aggregate_failures: true do
+      it "populates the temp table with assessments with the same address name, removing punctuation that come after numbers and not between numbers", :aggregate_failures do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(8)
         data = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id).sort
         expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012])
@@ -203,7 +203,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id)).not_to include("0000-0000-0000-0000-0005", "0000-0000-0000-0000-0006", "1111-0000-0000-0000-0000", "1111-0000-0000-0000-0001")
       end
 
-      it "assign a group_id to assessments with matching addresses and postcodes", aggregate_failures: true do
+      it "assign a group_id to assessments with matching addresses and postcodes", :aggregate_failures do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).uniq.length).to eq 1
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).length).to eq 4
 
@@ -265,7 +265,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
     end
 
     describe "#create_and_populate_temp_table" do
-      it "does not raise an error if there is no data", aggregate_failures: true do
+      it "does not raise an error if there is no data", :aggregate_failures do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(0)
@@ -274,7 +274,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
     describe "#get_max_group_id" do
       it "returns nil" do
-        expect(gateway.get_max_group_id).to eq nil
+        expect(gateway.get_max_group_id).to be_nil
       end
     end
   end

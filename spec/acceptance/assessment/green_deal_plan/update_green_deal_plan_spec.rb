@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
-         set_with_timecop: true do
+describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   before do

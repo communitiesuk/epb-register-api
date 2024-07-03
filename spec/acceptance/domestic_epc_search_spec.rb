@@ -1,4 +1,4 @@
-describe "fetching domestic EPC search results from the API", set_with_timecop: true do
+describe "fetching domestic EPC search results from the API", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }

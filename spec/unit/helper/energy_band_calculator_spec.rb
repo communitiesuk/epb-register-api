@@ -5,7 +5,7 @@ describe Helper::EnergyBandCalculator do
     end
 
     it "returns nil for a nil rating" do
-      expect(described_class.domestic(nil)).to eq(nil)
+      expect(described_class.domestic(nil)).to be_nil
     end
   end
 
@@ -19,7 +19,7 @@ describe Helper::EnergyBandCalculator do
     end
 
     it "returns nil for a nil rating" do
-      expect(described_class.commercial(nil)).to eq(nil)
+      expect(described_class.commercial(nil)).to be_nil
     end
   end
 end

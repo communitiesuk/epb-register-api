@@ -15,10 +15,7 @@ describe "Update assessments from landmark rake" do
       .with("LANDMARK_DATA_BUCKET_NAME", "test-bucket")
       .with("FILE_NAME", file_name)
 
-    allow(ApiFactory).to receive(:update_assessments_from_landmark).and_return(
-      use_case,
-    )
-    allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+    allow(ApiFactory).to receive_messages(update_assessments_from_landmark: use_case, storage_gateway:)
     allow(use_case).to receive(:execute).and_return(5)
   end
 

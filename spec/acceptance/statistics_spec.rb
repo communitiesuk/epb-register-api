@@ -1,4 +1,4 @@
-describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
+describe "Acceptance::AssessmentStatistics", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do
@@ -71,7 +71,7 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:england]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England" }])
     end
 
-    it "returns json that  contains the assessments aggregated data for Northern Ireland" do
+    it "returns json that contains the assessments aggregated data for Northern Ireland" do
       response = fetch_statistics(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
@@ -94,12 +94,12 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       Gateway::AssessmentStatisticsGateway::AssessmentStatistics.update_all(country: "England & Wales")
     end
 
-    it "returns json that  contains the assessments aggregated data for englandWales" do
+    it "returns json that contains the assessments aggregated data for englandWales" do
       response = fetch_statistics(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].key?(:englandWales)).to eq true
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].key?(:englandWales)).to be true
     end
   end
 end

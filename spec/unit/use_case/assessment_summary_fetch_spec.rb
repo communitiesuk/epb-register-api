@@ -1,4 +1,4 @@
-describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
+describe "UseCase::AssessmentSummary::Fetch", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) do
@@ -191,7 +191,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     it "does not have a superseded rrn" do
-      expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to eq(nil)
+      expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to be_nil
     end
   end
 
@@ -310,7 +310,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     it "the 1-year DEC does not have a superseded rrn" do
-      expect(use_case.execute("0000-0000-0000-0000-0001")[:superseded_by]).to eq(nil)
+      expect(use_case.execute("0000-0000-0000-0000-0001")[:superseded_by]).to be_nil
     end
   end
 
@@ -336,7 +336,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     it "has nil values for subsequent years' data" do
       expect(
         use_case.execute("0005-0004-0003-0002-0001")[:year1_assessment][:energy_efficiency_band],
-      ).to eq(nil)
+      ).to be_nil
     end
   end
 

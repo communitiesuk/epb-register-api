@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDec, set_with_timecop: true do
+describe UseCase::ExportOpenDataDec, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do
@@ -218,7 +218,7 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
       end
 
       it "returns a hash with building_reference_number nil when building_reference_number is not a UPRN" do
-        expect(first_exported_dec[0][:building_reference_number]).to eq(nil)
+        expect(first_exported_dec[0][:building_reference_number]).to be_nil
       end
     end
   end

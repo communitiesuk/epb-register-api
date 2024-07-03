@@ -163,16 +163,16 @@ describe Gateway::ExportNiGateway do
         end
 
         it "return false for the 1st row which was not opted out" do
-          expect(results.first["opt_out"]).to eq(false)
+          expect(results.first["opt_out"]).to be(false)
         end
 
         it "return true for 2nd row which was opted out" do
-          expect(results[1]["opt_out"]).to eq(true)
+          expect(results[1]["opt_out"]).to be(true)
         end
 
         it "updates the opt_out value to false when it is null" do
           ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = null WHERE assessment_id = '0000-0000-0000-0000-0002'")
-          expect(results[1]["opt_out"]).to eq(false)
+          expect(results[1]["opt_out"]).to be(false)
         end
       end
 
@@ -186,11 +186,11 @@ describe Gateway::ExportNiGateway do
         end
 
         it "return false for the 1st row which was not cancelled" do
-          expect(results.first["cancelled"]).to eq(false)
+          expect(results.first["cancelled"]).to be(false)
         end
 
         it "return true for 2nd row which has been cancelled" do
-          expect(results[1]["cancelled"]).to eq(true)
+          expect(results[1]["cancelled"]).to be(true)
         end
       end
 
@@ -209,19 +209,19 @@ describe Gateway::ExportNiGateway do
         end
 
         it "return true for the 1st row which was been opted out" do
-          expect(results.first["cancelled"]).to eq(true)
+          expect(results.first["cancelled"]).to be(true)
         end
 
         it "return true for 2nd which was cancelled" do
-          expect(results[1]["cancelled"]).to eq(true)
+          expect(results[1]["cancelled"]).to be(true)
         end
 
         it "returns false for non-domestic certificate opt out" do
-          expect(commercial_results.first["opt_out"]).to eq(false)
+          expect(commercial_results.first["opt_out"]).to be(false)
         end
 
         it "returns false for non-domestic certificate cancelled" do
-          expect(commercial_results.first["cancelled"]).to eq(false)
+          expect(commercial_results.first["cancelled"]).to be(false)
         end
       end
 
@@ -230,7 +230,7 @@ describe Gateway::ExportNiGateway do
           ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET date_registered = '2021-08-04 00:00:00' WHERE assessment_id= '0000-0000-0000-0000-0002'")
         end
 
-        it "the export should only include the certificate lodged after  2021-08-01" do
+        it "the export should only include the certificate lodged after 2021-08-01" do
           expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from: "2021-08-01", date_to: "2021-08-28").length).to eq(1)
           expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from: "2021-08-01", date_to: "2021-08-28").first["assessment_id"]).to eq("0000-0000-0000-0000-0002")
         end

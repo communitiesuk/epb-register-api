@@ -210,8 +210,7 @@ describe UseCase::LodgeAssessment do
   before do
     allow(assessors_gateway).to receive(:fetch).with("SPEC000000").and_return(assessor)
     allow(assessors_gateway).to receive(:fetch).with("SPEC000000").and_return(assessor)
-    allow(assessor).to receive(:domestic_sap_qualification).and_return("ACTIVE")
-    allow(assessor).to receive(:scheme_assessor_id).and_return("SPEC000000")
+    allow(assessor).to receive_messages(domestic_sap_qualification: "ACTIVE", scheme_assessor_id: "SPEC000000")
     allow(search_address_gateway).to receive(:insert)
     allow(assessments_country_id_gateway).to receive(:insert)
   end

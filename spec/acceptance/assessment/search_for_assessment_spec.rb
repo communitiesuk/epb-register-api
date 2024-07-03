@@ -1,5 +1,4 @@
-describe "Acceptance::Assessment::SearchForAssessments",
-         set_with_timecop: true do
+describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }
@@ -106,7 +105,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           symbolize_names: true,
         )
 
-      expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
+      expect(before_assessments[:data][:assessments][0]).not_to be_nil
 
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
@@ -116,7 +115,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           symbolize_names: true,
         )
 
-      expect(after_assessments[:data][:assessments][0]).to eq(nil)
+      expect(after_assessments[:data][:assessments][0]).to be_nil
     end
 
     it "doesn't show cancelled assessments" do
@@ -127,7 +126,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           symbolize_names: true,
         )
 
-      expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
+      expect(before_assessments[:data][:assessments][0]).not_to be_nil
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
@@ -146,7 +145,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           symbolize_names: true,
         )
 
-      expect(after_assessments[:data][:assessments][0]).to eq(nil)
+      expect(after_assessments[:data][:assessments][0]).to be_nil
     end
 
     it "doesn't show not for issue assessments" do
@@ -157,7 +156,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           symbolize_names: true,
         )
 
-      expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
+      expect(before_assessments[:data][:assessments][0]).not_to be_nil
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
@@ -176,7 +175,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           symbolize_names: true,
         )
 
-      expect(after_assessments[:data][:assessments][0]).to eq(nil)
+      expect(after_assessments[:data][:assessments][0]).to be_nil
     end
 
     it "can filter for non-domestic results" do
@@ -200,7 +199,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       response = assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
 
-      expect(response_json["data"]["assessments"][0]).to eq(nil)
+      expect(response_json["data"]["assessments"][0]).to be_nil
     end
 
     it "rejects a missing postcode" do

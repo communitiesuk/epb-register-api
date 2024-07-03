@@ -299,9 +299,9 @@ RSpec.configure do |config|
     Gateway::DataWarehouseRedisHelper.redis_client_class = MockRedis
   end
 
-  config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 6, 21)) }
+  config.before(:all, :set_with_timecop) { Timecop.freeze(Time.utc(2021, 6, 21)) }
 
-  config.after(:all, set_with_timecop: true) { Timecop.return }
+  config.after(:all, :set_with_timecop) { Timecop.return }
 
   config.before { DatabaseCleaner.strategy = :transaction }
 

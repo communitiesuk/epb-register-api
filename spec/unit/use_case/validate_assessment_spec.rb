@@ -10,7 +10,7 @@ describe UseCase::ValidateAssessment do
           "api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd",
         )
 
-      expect(valid_xml_response).to eq(true)
+      expect(valid_xml_response).to be(true)
     end
   end
 end

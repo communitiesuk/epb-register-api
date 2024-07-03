@@ -1,4 +1,4 @@
-describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
+describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   subject(:use_case) { described_class.new }
@@ -157,7 +157,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
     end
   end
 
-  xcontext "when there are the more than one certificate for the same address", set_with_time_cop: true do
+  xcontext "when there are the more than one certificate for the same address", :set_with_time_cop do
     before do
       scheme_id = add_scheme_and_get_id
       add_assessor(

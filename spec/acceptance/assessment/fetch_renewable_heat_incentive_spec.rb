@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
-         set_with_timecop: true do
+describe "Acceptance::Assessment::FetchRenewableHeatIncentive", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
@@ -157,7 +156,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         end
 
         it "returns true for loftInsulation" do
-          expect(response[:data][:assessment][:loftInsulation]).to eq true
+          expect(response[:data][:assessment][:loftInsulation]).to be true
         end
       end
 
@@ -185,7 +184,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         end
 
         it "returns true for cavityWallInsulation" do
-          expect(response[:data][:assessment][:cavityWallInsulation]).to eq true
+          expect(response[:data][:assessment][:cavityWallInsulation]).to be true
         end
       end
     end
@@ -263,7 +262,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         end
 
         it "returns false for loftInsulation" do
-          expect(response[:data][:assessment][:loftInsulation]).to eq false
+          expect(response[:data][:assessment][:loftInsulation]).to be false
         end
       end
 
@@ -294,7 +293,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         it "returns false for loftInsulation" do
           expect(
             response[:data][:assessment][:cavityWallInsulation],
-          ).to eq false
+          ).to be false
         end
       end
 
@@ -405,11 +404,11 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
       end
 
       it "returns false for loftInsulation" do
-        expect(response[:data][:assessment][:loftInsulation]).to eq false
+        expect(response[:data][:assessment][:loftInsulation]).to be false
       end
 
       it "returns false for cavityWallInsulation" do
-        expect(response[:data][:assessment][:cavityWallInsulation]).to eq false
+        expect(response[:data][:assessment][:cavityWallInsulation]).to be false
       end
     end
 

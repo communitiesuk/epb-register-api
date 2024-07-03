@@ -146,7 +146,7 @@ describe UseCase::FetchAssessmentForEcoPlus do
 
     it "returns nil" do
       details = use_case.execute(rrn:)
-      expect(details).to eq(nil)
+      expect(details).to be_nil
     end
   end
 
@@ -164,7 +164,7 @@ describe UseCase::FetchAssessmentForEcoPlus do
 
     it "returns nil" do
       details = use_case.execute(rrn:)
-      expect(details).to eq(nil)
+      expect(details).to be_nil
     end
   end
 end

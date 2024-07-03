@@ -1,4 +1,4 @@
-describe "Acceptance::OptOut", set_with_timecop: true do
+describe "Acceptance::OptOut", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do
@@ -57,7 +57,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(summary[:data][:optOut]).to eq true
+      expect(summary[:data][:optOut]).to be true
     end
 
     it "shows as opted out in non-domestic assessment summary JSON" do
@@ -88,7 +88,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(summary[:data][:optOut]).to eq true
+      expect(summary[:data][:optOut]).to be true
     end
   end
 
@@ -152,7 +152,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(summary[:data][:optOut]).to eq true
+      expect(summary[:data][:optOut]).to be true
 
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000", opt_out: false)
 
@@ -162,7 +162,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(summary[:data][:optOut]).to eq false
+      expect(summary[:data][:optOut]).to be false
     end
   end
 

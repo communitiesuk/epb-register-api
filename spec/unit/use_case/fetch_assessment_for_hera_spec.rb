@@ -78,7 +78,7 @@ describe UseCase::FetchAssessmentForHera do
         })
       end
 
-      it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+      it "returns a domain object containing the expected HERA details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentHeraDetails
         expect(details.to_hash).to eq expected_latest
@@ -92,7 +92,7 @@ describe UseCase::FetchAssessmentForHera do
         })
       end
 
-      it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+      it "returns a domain object containing the expected HERA details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentHeraDetails
         expect(details.to_hash).to eq expected_not_latest
@@ -121,7 +121,7 @@ describe UseCase::FetchAssessmentForHera do
         })
       end
 
-      it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+      it "returns a domain object containing the expected HERA details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentHeraDetails
         expect(details.to_hash).to eq expected_with_nulls
@@ -179,7 +179,7 @@ describe UseCase::FetchAssessmentForHera do
       has_hot_water_cylinder: true,
     }
 
-    it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+    it "returns a domain object containing the expected HERA details", :aggregate_failures do
       details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentHeraDetails
       expect(details.to_hash).to eq expected
@@ -224,7 +224,7 @@ describe UseCase::FetchAssessmentForHera do
 
     }
 
-    it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+    it "returns a domain object containing the expected HERA details", :aggregate_failures do
       details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentHeraDetails
       expect(details.to_hash).to eq expected

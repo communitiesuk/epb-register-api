@@ -75,7 +75,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
         })
       end
 
-      it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
+      it "returns a domain object containing the expected Heat Pump Check details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentForHeatPumpCheck
         expect(details.to_hash).to eq expected_latest
@@ -89,7 +89,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
         })
       end
 
-      it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
+      it "returns a domain object containing the expected Heat Pump Check details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentForHeatPumpCheck
         expect(details.to_hash).to eq expected_not_latest
@@ -119,7 +119,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
         })
       end
 
-      it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
+      it "returns a domain object containing the expected Heat Pump Check details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentForHeatPumpCheck
         expect(details.to_hash).to eq expected_with_nulls
@@ -173,7 +173,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
       current_energy_efficiency_rating: 50,
     }
 
-    it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
+    it "returns a domain object containing the expected Heat Pump Check details", :aggregate_failures do
       details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentForHeatPumpCheck
       expect(details.to_hash).to eq expected
@@ -216,7 +216,7 @@ describe UseCase::FetchAssessmentForHeatPumpCheck do
       current_energy_efficiency_rating: 50,
     }
 
-    it "returns a domain object containing the expected Heat Pump Check details", aggregate_failures: true do
+    it "returns a domain object containing the expected Heat Pump Check details", :aggregate_failures do
       details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentForHeatPumpCheck
       expect(details.to_hash).to eq expected

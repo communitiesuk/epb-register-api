@@ -1,4 +1,4 @@
-describe Gateway::ReportingGateway, set_with_timecop: true do
+describe Gateway::ReportingGateway, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   scheme_id = nil

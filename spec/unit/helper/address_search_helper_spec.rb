@@ -14,7 +14,7 @@ describe Helper::AddressSearchHelper do
   end
 
   describe "#clean_building_identifier" do
-    it "returns a string of a with special chars removed", aggregate_failures: true do
+    it "returns a string of a with special chars removed", :aggregate_failures do
       expect(described_class.clean_building_identifier("1")).to eq("1")
       expect(described_class.clean_building_identifier("1() Some Street")).to eq("1 Some Street")
       expect(described_class.clean_building_identifier("1: Some Street")).to eq("1 Some Street")
@@ -28,7 +28,7 @@ describe Helper::AddressSearchHelper do
   end
 
   describe "#string_attribute" do
-    it "returns a Active record query attribute", aggregate_failures: true do
+    it "returns a Active record query attribute", :aggregate_failures do
       result = described_class.string_attribute("postcode", "A1 2SS")
       expect(result).to be_a(ActiveRecord::Relation::QueryAttribute)
       expect(result.name).to eq("postcode")
@@ -36,8 +36,8 @@ describe Helper::AddressSearchHelper do
     end
   end
 
-  describe "#bind_postcode_and_number", aggregate_failures: true do
-    it "returns a array of string attributes for regex address searches", aggregate_failures: true do
+  describe "#bind_postcode_and_number", :aggregate_failures do
+    it "returns a array of string attributes for regex address searches", :aggregate_failures do
       result = described_class.bind_postcode_and_number("A1 2SS", "12A Some Street")
       expect(result).to be_an(Array)
       expect(result.length).to eq(5)
@@ -51,8 +51,8 @@ describe Helper::AddressSearchHelper do
     end
   end
 
-  describe "#bind_postcode_and_name", aggregate_failures: true do
-    it "returns a array of string attributes for regex address searches", aggregate_failures: true do
+  describe "#bind_postcode_and_name", :aggregate_failures do
+    it "returns a array of string attributes for regex address searches", :aggregate_failures do
       result = described_class.bind_postcode_and_name("A1 2SS", "Some Name")
       expect(result).to be_an(Array)
       expect(result.length).to eq(2)

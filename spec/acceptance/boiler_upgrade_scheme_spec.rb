@@ -1,4 +1,4 @@
-describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_timecop: true do
+describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }

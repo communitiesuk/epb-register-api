@@ -1,4 +1,4 @@
-describe "Acceptance::AddressLinking", set_with_timecop: true do
+describe "Acceptance::AddressLinking", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do

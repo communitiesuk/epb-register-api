@@ -93,7 +93,7 @@ describe Domain::AssessmentsToLink do
     end
 
     it "returns true" do
-      expect(domain.data.empty?).to eq true
+      expect(domain.data.empty?).to be true
     end
   end
 end

@@ -1,6 +1,6 @@
 require_relative "../../shared_context/shared_logdement"
 
-describe LodgementRules::DomesticCommon, set_with_timecop: true do
+describe LodgementRules::DomesticCommon, :set_with_timecop do
   include_context "when lodging XML"
   let(:docs_under_test) { %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0] }
 
@@ -266,7 +266,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       }.freeze
     end
 
-    it "Rejects single meter with invalid  heating code" do
+    it "Rejects single meter with invalid heating code" do
       relevant_heating_codes = %w[401 402 404 408 409 421 422]
 
       relevant_heating_codes.each do |heating_code|

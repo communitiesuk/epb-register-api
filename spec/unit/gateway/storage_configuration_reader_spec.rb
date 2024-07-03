@@ -30,7 +30,7 @@ describe Gateway::StorageConfigurationReader do
 
     let(:config) { storage_configuration_reader.get_configuration }
 
-    it "provides a config that gives a credentials provider", aggregate_failures: true do
+    it "provides a config that gives a credentials provider", :aggregate_failures do
       credentials = config.credentials.credentials
       expect(credentials.access_key_id).to eq expected_access_key
       expect(credentials.secret_access_key).to eq expected_secret_access_key

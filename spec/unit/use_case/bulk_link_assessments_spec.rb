@@ -18,9 +18,7 @@ describe UseCase::BulkLinkAssessments do
   before do
     allow(fetch_gateway).to receive(:drop_temp_table)
     allow(fetch_gateway).to receive(:create_and_populate_temp_table)
-    allow(fetch_gateway).to receive(:get_max_group_id).and_return(number_of_groups)
-    allow(fetch_gateway).to receive(:fetch_duplicate_address_ids).and_return skip_group_ids
-    allow(fetch_gateway).to receive(:fetch_assessments_by_group_id).and_return domain
+    allow(fetch_gateway).to receive_messages(get_max_group_id: number_of_groups, fetch_duplicate_address_ids: skip_group_ids, fetch_assessments_by_group_id: domain)
     allow(Domain::AssessmentsToLink).to receive(:new).and_return(domain)
     allow(domain).to receive(:data).and_return data
     allow(domain).to receive(:set_best_address_id)
@@ -86,7 +84,7 @@ describe UseCase::BulkLinkAssessments do
     end
 
     it "returns nil" do
-      expect(use_case.execute).to eq nil
+      expect(use_case.execute).to be_nil
     end
 
     it "does not call the gateway to fetch assessments with the same address and postcode for each group" do
@@ -123,12 +121,12 @@ describe UseCase::BulkLinkAssessments do
       expect(fetch_gateway).to have_received(:fetch_assessments_by_group_id).exactly(number_of_groups).times
     end
 
-    it "send a no data error to sentry when fetching assessments to be linked " do
+    it "send a no data error to sentry when fetching assessments to be linked" do
       use_case.execute
       expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times
     end
 
-    it "calls the gateway to update the address_ids when there is data", aggregate_failures: true do
+    it "calls the gateway to update the address_ids when there is data", :aggregate_failures do
       use_case.execute
       expect(domain_2_result).to have_received(:set_best_address_id).exactly(1).times
       expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).exactly(1).times

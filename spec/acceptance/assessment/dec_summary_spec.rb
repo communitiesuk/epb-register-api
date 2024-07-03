@@ -1,4 +1,4 @@
-describe "Acceptance::DECSummary", set_with_timecop: true do
+describe "Acceptance::DECSummary", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }

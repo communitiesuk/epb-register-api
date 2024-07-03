@@ -150,11 +150,8 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       EnvironmentStub.all
 
       # Define mock expectations
-      allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
-        export_use_case,
-      )
       allow(export_use_case).to receive(:execute).and_return(export)
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      allow(ApiFactory).to receive_messages(ni_assessments_export_use_case: export_use_case, storage_gateway:)
       HttpStub.s3_put_csv(file_name)
     end
 
@@ -195,11 +192,8 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     before do
       EnvironmentStub.all
       # Define mock expectations
-      allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
-        export_use_case,
-      )
       allow(export_use_case).to receive(:execute).and_return(export)
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      allow(ApiFactory).to receive_messages(ni_assessments_export_use_case: export_use_case, storage_gateway:)
       HttpStub.s3_put_csv(file_name)
     end
 
@@ -240,11 +234,8 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     before do
       EnvironmentStub.all
       # Define mock expectations
-      allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
-        export_use_case,
-      )
       allow(export_use_case).to receive(:execute).with(any_args).and_return(export)
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      allow(ApiFactory).to receive_messages(ni_assessments_export_use_case: export_use_case, storage_gateway:)
       EnvironmentStub.with("type_of_assessments", "CEPC")
       EnvironmentStub.with("date_from", Time.now.strftime("%F"))
       HttpStub.s3_put_csv(file_name)
@@ -284,11 +275,8 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       Timecop.freeze(2021, 2, 1, 0, 0, 0)
       EnvironmentStub.all
       # Define mock expectations
-      allow(ApiFactory).to receive(:ni_assessments_export_use_case).and_return(
-        export_use_case,
-      )
       allow(export_use_case).to receive(:execute).with(any_args).and_return(export)
-      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+      allow(ApiFactory).to receive_messages(ni_assessments_export_use_case: export_use_case, storage_gateway:)
       EnvironmentStub.with("type_of_assessments", "CEPC")
       HttpStub.s3_put_csv(file_name)
     end

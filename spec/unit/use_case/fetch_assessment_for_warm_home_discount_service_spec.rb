@@ -57,7 +57,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
         })
       end
 
-      it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
+      it "returns a domain object containing the expected Warm Home Discount Service details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
         expect(details.to_hash).to eq expected_latest
@@ -71,7 +71,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
         })
       end
 
-      it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
+      it "returns a domain object containing the expected Warm Home Discount Service details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
         expect(details.to_hash).to eq expected_not_latest
@@ -95,7 +95,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
         })
       end
 
-      it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
+      it "returns a domain object containing the expected Warm Home Discount Service details", :aggregate_failures do
         details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
         expect(details.to_hash).to eq expected_with_nulls
@@ -137,7 +137,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       uprn: "000000000000",
     }
 
-    it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
+    it "returns a domain object containing the expected Warm Home Discount Service details", :aggregate_failures do
       details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
       expect(details.to_hash).to eq expected
@@ -176,7 +176,7 @@ describe UseCase::FetchAssessmentForWarmHomeDiscountService do
       uprn: "000000000000",
     }
 
-    it "returns a domain object containing the expected Warm Home Discount Service details", aggregate_failures: true do
+    it "returns a domain object containing the expected Warm Home Discount Service details", :aggregate_failures do
       details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentWarmHomeDiscountServiceDetails
       expect(details.to_hash).to eq expected

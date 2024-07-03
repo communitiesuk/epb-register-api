@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeExamples", set_with_timecop: true do
+describe "Acceptance::LodgeExamples", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:acic_acir_xml) do

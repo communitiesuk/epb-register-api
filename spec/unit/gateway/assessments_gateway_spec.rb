@@ -225,7 +225,7 @@ describe Gateway::AssessmentsGateway do
       expect(result).to be true
     end
 
-    it "updates only the row with specified RRN", aggregate_failure: true do
+    it "updates only the row with specified RRN", :aggregate_failure do
       gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0000", landmark_date)
       expect(fetch_created_at("0000-0000-0000-0000-0000")).to eq(landmark_date)
       expect(fetch_created_at("0000-0000-0000-0000-0001")).not_to eq(landmark_date)
@@ -235,7 +235,7 @@ describe Gateway::AssessmentsGateway do
       expect { gateway.update_created_at_from_landmark?("blah", landmark_date) }.not_to raise_error
     end
 
-    it "returns false if the date is not in range", aggregate_failure: true do
+    it "returns false if the date is not in range", :aggregate_failure do
       expect(gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "2024-01-16 17:52:43.00000")).to be false
       expect(gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", "1900-01-16 17:52:43.00000")).to be false
     end

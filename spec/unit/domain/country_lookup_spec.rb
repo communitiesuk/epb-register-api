@@ -68,7 +68,7 @@ describe Domain::CountryLookup do
 
     it "reports out its country codes in sorted order, as symbols" do
       expect(lookup.country_codes).to eq %i[E W]
-      expect(lookup.on_border?).to eq true
+      expect(lookup.on_border?).to be true
     end
 
     it "returns a country id of 4" do
@@ -92,7 +92,7 @@ describe Domain::CountryLookup do
     end
 
     it "returns a nil when there is no country_id" do
-      expect(lookup.country_id).to eq nil
+      expect(lookup.country_id).to be_nil
     end
   end
 

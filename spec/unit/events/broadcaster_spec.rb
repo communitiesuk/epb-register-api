@@ -10,7 +10,7 @@ describe Events::Broadcaster do
   end
 
   it "is a Wisper publisher" do
-    expect(broadcaster).to be_a_kind_of Wisper::Publisher
+    expect(broadcaster).to be_a Wisper::Publisher
   end
 
   context "when an event is broadcast", :aggregate_failures do

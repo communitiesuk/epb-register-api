@@ -1,4 +1,4 @@
-describe Gateway::SearchAddressGateway, set_with_timecop: true do
+describe Gateway::SearchAddressGateway, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   subject(:gateway) { described_class.new }

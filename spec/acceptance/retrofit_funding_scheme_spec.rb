@@ -1,4 +1,4 @@
-describe "fetching Retrofit Funding Scheme details from the API", set_with_timecop: true do
+describe "fetching Retrofit Funding Scheme details from the API", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }

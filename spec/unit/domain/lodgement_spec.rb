@@ -70,7 +70,7 @@ describe Domain::Lodgement do
 
     it "fetches nil from the country_id" do
       domain_one = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
-      expect(domain_one.fetch_country_id).to eq nil
+      expect(domain_one.fetch_country_id).to be_nil
     end
   end
 
@@ -108,34 +108,34 @@ describe Domain::Lodgement do
     it "returns true for RdSAP-Schema-21.0.0" do
       xml = Samples.xml "RdSAP-Schema-21.0.0"
       domain = described_class.new(xml, "RdSAP-Schema-21.0.0")
-      expect(domain.is_new_rdsap?).to eq true
+      expect(domain.is_new_rdsap?).to be true
     end
 
     it "returns false for RdSAP-Schema-20.0.0" do
       domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
-      expect(domain.is_new_rdsap?).to eq false
+      expect(domain.is_new_rdsap?).to be false
     end
 
     it "returns false for CPEC" do
       domain = described_class.new(cepc, "CEPC-8.0.0")
-      expect(domain.is_new_rdsap?).to eq false
+      expect(domain.is_new_rdsap?).to be false
     end
   end
 
   describe "#is_new_sap?" do
     it "returns true for SAP-Schema-19.0.0" do
       domain = described_class.new(sap_19, "SAP-Schema-19.0.0")
-      expect(domain.is_new_sap?).to eq true
+      expect(domain.is_new_sap?).to be true
     end
 
     it "returns false for SAP-Schema-18.0.0" do
       domain = described_class.new(sap_18, "SAP-Schema-18.0.0")
-      expect(domain.is_new_rdsap?).to eq false
+      expect(domain.is_new_rdsap?).to be false
     end
 
     it "returns false for RdSAP which contasin string 'SAP'" do
       domain = described_class.new(rdsap_20, "RdSAP-Schema-20.0.0")
-      expect(domain.is_new_rdsap?).to eq false
+      expect(domain.is_new_rdsap?).to be false
     end
   end
 end

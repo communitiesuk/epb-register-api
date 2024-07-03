@@ -1,4 +1,4 @@
-describe "syncing to data warehouse on various assessment data changes", set_with_timecop: true do
+describe "syncing to data warehouse on various assessment data changes", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:data_warehouse_queues_gateway) { instance_spy(Gateway::DataWarehouseQueuesGateway) }

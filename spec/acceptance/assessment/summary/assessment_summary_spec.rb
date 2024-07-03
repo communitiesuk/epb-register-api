@@ -2,7 +2,7 @@
 
 require "date"
 
-describe "Acceptance::AssessmentSummary", set_with_timecop: true do
+describe "Acceptance::AssessmentSummary", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   it "returns 404 for an assessment that doesnt exist" do
@@ -71,7 +71,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
     end
 
     it "does not have the RR as the superseded EPC" do
-      expect(cepc_response[:data][:supersededBy]).to eq(nil)
+      expect(cepc_response[:data][:supersededBy]).to be_nil
     end
   end
 
@@ -110,7 +110,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
-      expect(response[:supersededBy]).to eq(nil)
+      expect(response[:supersededBy]).to be_nil
     end
   end
 

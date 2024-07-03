@@ -65,7 +65,7 @@ describe Domain::AssessmentSearchResult do
       args_without_created_at[:created_at] = nil
       domain = described_class.new(**args_without_created_at)
 
-      expect(domain.to_hash[:created_at]).to eq(nil)
+      expect(domain.to_hash[:created_at]).to be_nil
     end
   end
 end

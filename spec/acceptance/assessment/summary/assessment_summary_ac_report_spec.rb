@@ -1,4 +1,4 @@
-describe "Acceptance::AssessmentSummary::AC-REPORT", set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::AC-REPORT", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   context "when requesting summary of a lodged AC-REPORT" do

@@ -22,7 +22,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     context "when searching by postcode and building identifier" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
@@ -46,12 +46,12 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
       it "returns nil when no match" do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "AB1 2CD", building_identifier: "2")
-        expect(result).to eq nil
+        expect(result).to be_nil
       end
     end
 
     context "when searching by UPRN" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_uprn("UPRN-000000000000")
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
@@ -63,7 +63,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     context "when searching by RRN" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_rrn("0000-0000-0000-0000-0000")
         expect(result["report_type"]).to eq "RdSAP"
       end
@@ -179,7 +179,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     context "when searching by postcode and building identifier" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
 
         expect(result.count).to eq 1
@@ -188,7 +188,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     context "when searching by UPRN" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_uprn("UPRN-000000000000")
 
         expect(result.count).to eq 1
@@ -215,7 +215,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     context "when searching by postcode and building identifier" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2")
 
         expect(result.count).to eq 1
@@ -224,7 +224,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     context "when searching by UPRN" do
-      it "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", :aggregate_failures do
         result = gateway.search_by_uprn("UPRN-000000000001")
 
         expect(result.count).to eq 1

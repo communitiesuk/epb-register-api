@@ -37,7 +37,7 @@ describe Gateway::DomesticEpcSearchGateway do
         epc_rrn: "0000-0000-0000-0000-0000" }
     end
 
-    it "finds one record using the postcode and building number", aggregate_failures: true do
+    it "finds one record using the postcode and building number", :aggregate_failures do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
       expect(result.length).to eq(1)
       expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
@@ -76,7 +76,7 @@ describe Gateway::DomesticEpcSearchGateway do
       }
     end
 
-    it "finds the latest EPC for that address (excluding the superseded)", aggregate_failures: true do
+    it "finds the latest EPC for that address (excluding the superseded)", :aggregate_failures do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
       expect(result.first.to_hash).to match a_hash_including(expected_result)
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Some Street")
@@ -311,7 +311,7 @@ describe Gateway::DomesticEpcSearchGateway do
       expect(result.length).to eq(2)
     end
 
-    it "only finds the 1 EPC that has not been cancelled", aggregate_failures: true do
+    it "only finds the 1 EPC that has not been cancelled", :aggregate_failures do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
@@ -319,7 +319,7 @@ describe Gateway::DomesticEpcSearchGateway do
       expect(result[0].rrn).to eq("0000-0000-0000-0000-0002")
     end
 
-    it "includes the EPC that has been opted out", aggregate_failures: true do
+    it "includes the EPC that has been opted out", :aggregate_failures do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = true WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")

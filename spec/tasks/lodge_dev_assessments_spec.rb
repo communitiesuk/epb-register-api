@@ -42,7 +42,7 @@ describe "lodge_dev_assessments rake" do
     let!(:exported_assessments_address_id) { table_data(table: "assessments_address_id") }
     let!(:exported_linked_assessments) { table_data(table: "linked_assessments") }
 
-    it "lodges seed data into the database", aggregate_failures: true do
+    it "lodges seed data into the database", :aggregate_failures do
       expect(exported_data.rows.length).to eq(63)
       expect(exported_data.count { |row| row["type_of_assessment"] == "CEPC-RR" }).to eq(6)
       expect(exported_data.count { |row| row["type_of_assessment"] == "CEPC" }).to eq(6)
@@ -54,7 +54,7 @@ describe "lodge_dev_assessments rake" do
       expect(exported_data.count { |row| row["type_of_assessment"] == "RdSAP" }).to eq(15)
     end
 
-    it "lodges data from updated XML into the assessments table", aggregate_failures: true do
+    it "lodges data from updated XML into the assessments table", :aggregate_failures do
       first_result = exported_data.first
       expect(first_result["type_of_assessment"]).to eq("RdSAP")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")

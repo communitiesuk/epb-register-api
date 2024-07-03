@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
+describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
@@ -137,7 +137,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
           ).body,
           symbolize_names: true,
         )
-        expect(response[:errors]).to eq(nil)
+        expect(response[:errors]).to be_nil
       end
 
       context "when a lodgement has a legacy address id" do
