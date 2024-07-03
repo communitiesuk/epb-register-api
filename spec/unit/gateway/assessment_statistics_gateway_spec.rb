@@ -244,6 +244,10 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
       # this is lodged today so should not be included
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0009", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 82)
 
+      # recommendation reports should not be counted
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0010", scheme_assessor_id:, type_of_assessment: "CEPC-RR", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05")
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0011", scheme_assessor_id:, type_of_assessment: "AC-REPORT", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05")
+
       add_assessment_country_ids
 
       Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.update("0000-0000-0000-0000-0007", country_id: 3)
@@ -270,6 +274,11 @@ describe Gateway::AssessmentStatisticsGateway, set_with_timecop: true do
 
     it "does not insert the epc lodged today" do
       expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where("day_date =  '#{today}'").count).to eq 0
+    end
+
+    it "does not include CEPC-RR or AC-REPORTs" do
+      expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(assessment_type: "CEPC-RR").count).to eq 0
+      expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(assessment_type: "AC-REPORT").count).to eq 0
     end
 
     it "no longer contains a row for England & Wales" do

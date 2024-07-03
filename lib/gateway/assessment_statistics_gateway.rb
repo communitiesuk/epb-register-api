@@ -178,6 +178,7 @@ module Gateway
            JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
            JOIN countries co ON co.country_id = ac.country_id
            WHERE to_char(created_at, 'YYYY-MM-DD') >= '2020-10-01' AND created_at < '#{Date.today}'
+           AND type_of_assessment IN('AC-CERT','CEPC','DEC','DEC-RR','RdSAP','SAP')
           GROUP BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country
           ORDER BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country;
       SQL
