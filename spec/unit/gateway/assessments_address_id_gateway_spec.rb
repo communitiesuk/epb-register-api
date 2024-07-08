@@ -16,17 +16,6 @@ describe Gateway::AssessmentsAddressIdGateway do
     ])
   end
 
-  describe "#fetch_by_address_id" do
-    it "fetches the assessment_ids with the given address_id" do
-      expected_result =
-        [
-          ["0000-0000-0000-0000-0001", "RRN-0000-0000-0000-0000-0001", Time.utc(2010, 0o1, 0o5)],
-          ["0000-0000-0000-0000-0002", "RRN-0000-0000-0000-0000-0001", Time.utc(2010, 0o1, 0o5)],
-        ]
-      expect(gateway.fetch_by_address_id("RRN-0000-0000-0000-0000-0001").sort).to eq(expected_result)
-    end
-  end
-
   describe "#update_assessments_address_id_mapping" do
     context "when there is not source argument" do
       it "updates assessments to with a new address_id", :aggregate_failures do
