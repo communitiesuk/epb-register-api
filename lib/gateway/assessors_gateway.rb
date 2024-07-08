@@ -203,7 +203,7 @@ module Gateway
             (#{qualification_selector})
             AND coalesce(a.latitude, d.latitude) BETWEEN ($1 - 1) AND ($1 + 1)
             AND coalesce(a.longitude, d.longitude) BETWEEN ($2 - 1) AND ($2 + 1)
-            AND c.active = true
+            AND c.active = TRUE
           ORDER BY distance LIMIT $3",
           "SQL",
           binds,
@@ -243,7 +243,7 @@ module Gateway
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
-          b.active = true
+          b.active = TRUE
       SQL
 
       if qualification_type.present?

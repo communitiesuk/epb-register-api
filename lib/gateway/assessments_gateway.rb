@@ -99,9 +99,9 @@ module Gateway
 
       sql = <<-SQL
            SELECT assessment_id, type_of_assessment, ae.registered_by AS scheme_id, current_energy_efficiency_rating,
-             CASE WHEN a.postcode LIKE 'BT%' THEN 'Northern Ireland' ELSE 'England & Wales' END as country
+             CASE WHEN a.postcode LIKE 'BT%' THEN 'Northern Ireland' ELSE 'England & Wales' END AS country
              FROM assessments a
-           JOIN assessors ae on a.scheme_assessor_id = ae.scheme_assessor_id
+           JOIN assessors ae ON a.scheme_assessor_id = ae.scheme_assessor_id
            WHERE to_char(created_at, 'YYYY-MM-DD') = $1 AND migrated IS NOT TRUE
       SQL
 
@@ -169,7 +169,7 @@ module Gateway
       sql = <<-SQL
            SELECT a.assessment_id, a.postcode, a.address_id, x.xml, x.schema_type
             FROM assessments a
-            JOIN assessments_xml x on x.assessment_id = a.assessment_id
+            JOIN assessments_xml x ON x.assessment_id = a.assessment_id
            WHERE a.assessment_id = $1
       SQL
 
@@ -187,8 +187,8 @@ module Gateway
       sql = <<-SQL
         UPDATE assessments
         SET created_at = $1
-        WHERE assessment_id = $2 AND migrated = true
-        RETURNING true as updated
+        WHERE assessment_id = $2 AND migrated = TRUE
+        RETURNING TRUE AS updated
       SQL
 
       bindings = [

@@ -21,13 +21,13 @@ module Gateway
         SELECT a.assessment_id AS epc_rrn,
                a.type_of_assessment AS report_type,
                a.date_of_expiry AS expiry_date,
-               '#{uprn}' as uprn,
+               '#{uprn}' AS uprn,
                row_number() over (PARTITION BY address_id ORDER BY date_of_expiry DESC, created_at DESC, date_of_assessment DESC, a.assessment_id DESC) rn
-      FROM assessments AS a
-      WHERE assessment_id IN (
-          SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
-        )
-      AND a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        FROM assessments AS a
+        WHERE assessment_id IN (
+            SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
+          )
+        AND a.opt_out = FALSE AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
       SQL
 
       sql = add_type_filter(sql, ASSESSMENT_TYPES)
@@ -53,7 +53,7 @@ module Gateway
           a.assessment_id AS epc_rrn,
           a.type_of_assessment AS report_type,
           a.date_of_expiry AS expiry_date,
-          aa.address_id as uprn
+          aa.address_id AS uprn
         FROM assessments a
         JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
         WHERE a.assessment_id = $1
@@ -75,12 +75,12 @@ module Gateway
             a.assessment_id AS epc_rrn,
             a.type_of_assessment AS report_type,
             a.date_of_expiry AS expiry_date,
-            aa.address_id as uprn,
+            aa.address_id AS uprn,
             row_number() over (PARTITION BY a.address_id ORDER BY date_of_expiry DESC, created_at DESC, date_of_assessment DESC, a.assessment_id DESC) rn
           FROM assessments AS a
           JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
           WHERE
-          a.opt_out = false
+          a.opt_out = FALSE
           AND a.cancelled_at IS NULL
             AND a.not_for_issue_at IS NULL
       SQL
@@ -108,11 +108,11 @@ module Gateway
             a.assessment_id AS epc_rrn,
             a.type_of_assessment AS report_type,
             a.date_of_expiry AS expiry_date,
-            aa.address_id as uprn
+            aa.address_id AS uprn
           FROM assessments AS a
           JOIN assessments_address_id aa ON a.assessment_id = aa.assessment_id
           WHERE
-          a.opt_out = false
+          a.opt_out = FALSE
           AND a.cancelled_at IS NULL
             AND a.not_for_issue_at IS NULL
       SQL

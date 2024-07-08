@@ -35,10 +35,10 @@ module Gateway
 
     def fetch_log_statistics
       sql = <<-SQL
-              SELECT task_id, Count(*) as num_rows, Min(created_at) as date_start, Max(created_at) as date_end, (Max(created_at) - Min(created_at)) as execution_time, report_type
+              SELECT task_id, COUNT(*) AS num_rows, MIN(created_at) AS date_start, MAX(created_at) AS date_end, (MAX(created_at) - MIN(created_at)) AS execution_time, report_type
               FROM open_data_logs
               GROUP BY task_id, report_type
-              ORDER BY  Max(created_at)
+              ORDER BY MAX(created_at)
       SQL
       results = ActiveRecord::Base.connection.exec_query(sql)
       results.map { |result| result }
@@ -46,9 +46,9 @@ module Gateway
 
     def fetch_latest_statistics
       sql = <<-SQL
-              SELECT  task_id, Count(*) as num_rows, Min(created_at) as date_start, Max(created_at) as date_end, (Max(created_at) - Min(created_at)) as execution_time
+              SELECT  task_id, COUNT(*) AS num_rows, MIN(created_at) AS date_start, MAX(created_at) AS date_end, (MAX(created_at) - MIN(created_at)) AS execution_time
               FROM open_data_logs
-              WHERE task_id = (SELECT Max(task_id) FROM open_data_logs)
+              WHERE task_id = (SELECT MAX(task_id) FROM open_data_logs)
               GROUP BY task_id
       SQL
 
@@ -59,7 +59,7 @@ module Gateway
       sql = <<-SQL
               SELECT  task_id
               FROM open_data_logs
-              WHERE task_id = (SELECT Max(task_id) FROM open_data_logs)
+              WHERE task_id = (SELECT MAX(task_id) FROM open_data_logs)
 
       SQL
 
@@ -70,7 +70,7 @@ module Gateway
       return task_id if task_id.is_a?(Integer) && task_id != 0
 
       sql = <<-SQL
-              SELECT Max(task_id)
+              SELECT MAX(task_id)
               FROM open_data_logs
       SQL
       task_id = ActiveRecord::Base.connection.exec_query(sql).first["max"]

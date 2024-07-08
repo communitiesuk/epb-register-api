@@ -37,7 +37,7 @@ module Gateway
         WHERE a.postcode = $1
         AND a.cancelled_at IS NULL
         AND a.not_for_issue_at IS NULL
-        AND a.opt_out = false
+        AND a.opt_out = FALSE
       SQL
 
       binds = [
@@ -78,7 +78,7 @@ module Gateway
     )
 
       sql_cte = <<-SQL
-        WITH cte as (
+        WITH cte AS (
           SELECT a.assessment_id,
           a.date_of_assessment,
           a.type_of_assessment,
@@ -97,7 +97,7 @@ module Gateway
           a.not_for_issue_at,
           a.scheme_assessor_id
         FROM assessments a
-        JOIN assessment_search_address sa on a.assessment_id = sa.assessment_id
+        JOIN assessment_search_address sa ON a.assessment_id = sa.assessment_id
         WHERE sa.address LIKE $1
       SQL
 
@@ -113,7 +113,7 @@ module Gateway
         sql_cte +=
           ' AND a.cancelled_at IS NULL
               AND a.not_for_issue_at IS NULL
-              AND a.opt_out = false'
+              AND a.opt_out = FALSE'
       end
 
       sql = sql_cte + <<-SQL

@@ -60,7 +60,7 @@ module Gateway
 
     def min_assessment_date
       sql = <<-SQL
-              SELECT MIN(a.day_date) as day_date
+              SELECT MIN(a.day_date) AS day_date
               FROM assessment_statistics a
       SQL
 
@@ -73,15 +73,15 @@ module Gateway
     def fetch_monthly_stats
       sql = <<-SQL
        WITH counts as(
-         SELECT SUM(assessments_count) as total_certs, assessment_type, to_char(day_date, 'YYYY-MM') as month
+         SELECT SUM(assessments_count) AS total_certs, assessment_type, to_char(day_date, 'YYYY-MM') AS month
          FROM assessment_statistics
           GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type )
-          SELECT SUM(assessments_count) as num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision as rating_average, month, a.assessment_type
+          SELECT SUM(assessments_count) AS num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision AS rating_average, month, a.assessment_type
           FROM assessment_statistics a
           JOIN counts ON counts.month = to_char(a.day_date, 'YYYY-MM') AND counts.assessment_type = a.assessment_type
           WHERE to_char(a.day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
           GROUP BY  to_char(a.day_date, 'YYYY-MM'), a.assessment_type, counts.total_certs, counts.month
-          ORDER BY month desc;
+          ORDER BY month DESC;
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)
@@ -91,12 +91,12 @@ module Gateway
       sql = <<-SQL
 
        WITH counts as(
-         SELECT SUM(assessments_count) as total_certs, assessment_type, day_date
+         SELECT SUM(assessments_count) AS total_certs, assessment_type, day_date
          FROM assessment_statistics
          WHERE day_date = $1
          GROUP BY  assessment_type,  day_date )
-         SELECT a.assessment_type, SUM(assessments_count) as number_of_assessments,
-               ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision as rating_average
+         SELECT a.assessment_type, SUM(assessments_count) AS number_of_assessments,
+               ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision AS rating_average
          FROM assessment_statistics a
          JOIN counts ON  counts.assessment_type = a.assessment_type AND a.day_date = counts.day_date
          GROUP BY to_char(a.day_date, 'YYYY-MM-DD'), a.assessment_type, total_certs
@@ -118,15 +118,15 @@ module Gateway
     def fetch_monthly_stats_by_country
       sql = <<-SQL
         WITH counts as(
-         SELECT SUM(assessments_count) as total_certs, assessment_type, to_char(day_date, 'YYYY-MM') as month, country
+         SELECT SUM(assessments_count) AS total_certs, assessment_type, to_char(day_date, 'YYYY-MM') AS month, country
          FROM assessment_statistics
           GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type, country )
-        SELECT SUM(assessments_count) as num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision as rating_average, month, a.assessment_type, a.country
+        SELECT SUM(assessments_count) AS num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision AS rating_average, month, a.assessment_type, a.country
         FROM assessment_statistics a
         JOIN counts ON counts.month = to_char(a.day_date, 'YYYY-MM') AND counts.assessment_type = a.assessment_type AND a.country = counts.country
         WHERE to_char(a.day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
         GROUP BY  to_char(a.day_date, 'YYYY-MM'), a.assessment_type, counts.total_certs, counts.month, a.country
-        ORDER BY month desc;
+        ORDER BY month DESC;
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)
@@ -173,7 +173,7 @@ module Gateway
                  CAST(to_char(created_at, 'YYYY-MM-DD') AS Date),
                  CASE WHEN co.country_code IN (#{country_codes}) THEN co.country_name
                       WHEN co.country_code = 'EAW' then 'England'
-                  ELSE 'Other' END as country
+                  ELSE 'Other' END AS country
            FROM assessments a
            JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
            JOIN countries co ON co.country_id = ac.country_id
@@ -201,7 +201,7 @@ module Gateway
                  CAST(to_char(created_at, 'YYYY-MM-DD') AS Date),
                 CASE WHEN co.country_code IN (#{country_codes}) THEN co.country_name
                       WHEN co.country_code = 'EAW' then 'England'
-                  ELSE 'Other' END as country
+                  ELSE 'Other' END AS country
            FROM assessments a
            JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
           JOIN countries co ON co.country_id = ac.country_id

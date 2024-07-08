@@ -4,12 +4,12 @@ module Gateway
       sql = <<-SQL
       SELECT
       a.assessment_id,
-      a.date_registered as lodgement_date,
-      a.created_at as lodgement_datetime,
-      CASE WHEN UPPER(aa.address_id) NOT LIKE 'UPRN-%' THEN null ELSE
-      aa.address_id END as uprn,
-      CASE WHEN opt_out IS NULL THEN false else opt_out end as opt_out,
-        CASE WHEN cancelled_at IS NOT NULL OR not_for_issue_at IS NOT NULL THEN true ELSE false end as cancelled
+      a.date_registered AS lodgement_date,
+      a.created_at AS lodgement_datetime,
+      CASE WHEN UPPER(aa.address_id) NOT LIKE 'UPRN-%' THEN NULL ELSE
+      aa.address_id END AS uprn,
+      CASE WHEN opt_out IS NULL THEN FALSE ELSE opt_out END AS opt_out,
+        CASE WHEN cancelled_at IS NOT NULL OR not_for_issue_at IS NOT NULL THEN TRUE ELSE FALSE END AS cancelled
       FROM assessments a
       JOIN assessments_xml ax USING(assessment_id)
       LEFT JOIN assessments_address_id aa USING(assessment_id)

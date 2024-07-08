@@ -45,7 +45,7 @@ module Gateway
                #{ranking_sql if building_name_number}
         FROM assessments a
                  LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
-                 INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
+                 INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
         WHERE postcode = $1
         AND cancelled_at IS NULL
         AND not_for_issue_at IS NULL
@@ -235,7 +235,7 @@ module Gateway
                #{ranking_sql}
         FROM assessments a
                LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
-               INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
+               INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
         WHERE (
               LOWER(town) LIKE $2
               OR

@@ -127,7 +127,7 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region, co.country_name as country
+        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region, co.country_name AS country
         FROM assessments a
         LEFT JOIN
             postcode_geolocation b
@@ -141,7 +141,7 @@ module Gateway
           )
         JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
         JOIN countries co ON co.country_id = ac.country_id
-        WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        WHERE a.opt_out = FALSE AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.created_at BETWEEN $1 AND $4
         AND co.country_code IN  (#{england_and_wales_codes})
         AND NOT EXISTS (SELECT * FROM open_data_logs l
@@ -209,7 +209,7 @@ module Gateway
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
         JOIN countries co ON co.country_id = ac.country_id
-        WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        WHERE a.opt_out = FALSE AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.created_at BETWEEN $1 AND $4
         AND  type_of_assessment = $2
         AND co.country_code IN  (#{england_and_wales_codes})
@@ -227,11 +227,11 @@ module Gateway
     def fetch_not_for_publication_assessments
       sql = <<~SQL
         SELECT assessment_id, type_of_assessment, address_id, address_line1, address_line2, address_line3,
-        town, postcode, to_char(date_registered, 'YYYY-MM-DD') as date_registered, opt_out, to_char(cancelled_at , 'YYYY-MM-DD HH24:MI:SS') as cancelled_at,
-        to_char(not_for_issue_at , 'YYYY-MM-DD HH24:MI:SS') as not_for_issue_at
+        town, postcode, to_char(date_registered, 'YYYY-MM-DD') AS date_registered, opt_out, to_char(cancelled_at , 'YYYY-MM-DD HH24:MI:SS') AS cancelled_at,
+        to_char(not_for_issue_at , 'YYYY-MM-DD HH24:MI:SS') AS not_for_issue_at
         FROM assessments
         WHERE type_of_assessment IN ('SAP', 'RdSAP', 'CEPC', 'DEC')
-        AND ( opt_out = true OR cancelled_at NOTNULL OR not_for_issue_at NOTNULL)
+        AND ( opt_out = TRUE OR cancelled_at NOTNULL OR not_for_issue_at NOTNULL)
       SQL
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
@@ -259,7 +259,7 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region, co.country_name as country
+        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region, co.country_name AS country
         FROM assessments a
           LEFT JOIN
             postcode_geolocation b
@@ -273,7 +273,7 @@ module Gateway
           )
         JOIN assessments_country_ids ac ON a.assessment_id= ac.assessment_id
         JOIN countries co ON co.country_id = ac.country_id
-        WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        WHERE a.opt_out = FALSE AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND co.country_code IN  (#{england_and_wales_codes})
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
