@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-SHELL := /bin/bash
+
 
 .PHONY: help
 help:
@@ -13,9 +13,9 @@ setup-db:
 	@bundle exec rake db:migrate
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
-	@echo ">>>>> Populating Test DB"
-	@bundle exec rake db:environment:set[development]
-	@bundle exec rake db:test:prepare
+	@if [ "${RACK_ENV}" != "production" ]; then\
+            echo ">>>>>Preparing DB for tests" && bundle exec rake db:environment:set[development] && bundle exec rake db:test:prepare ;\
+  fi
 	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake maintenance:green_deal_update_fuel_data'.\n"
 
 
