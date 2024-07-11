@@ -1,7 +1,7 @@
 require "sentry-ruby"
 
 describe UseCase::BulkLinkAssessments do
-  subject(:use_case) { described_class.new(fetch_assessments_to_link_gateway: fetch_gateway, address_base_gateway:, assessments_address_id_gateway:) }
+  subject(:use_case) { described_class.new(fetch_assessments_to_link_gateway: fetch_gateway, address_base_gateway:, assessments_address_id_gateway:, event_broadcaster: Events::Broadcaster.new) }
 
   let(:fetch_gateway) { instance_double Gateway::FetchAssessmentsToLinkGateway }
   let(:address_base_gateway) { instance_double Gateway::AddressBaseSearchGateway }
@@ -22,8 +22,8 @@ describe UseCase::BulkLinkAssessments do
     allow(Domain::AssessmentsToLink).to receive(:new).and_return(domain)
     allow(domain).to receive(:data).and_return data
     allow(domain).to receive(:set_best_address_id)
-    allow(domain).to receive(:best_address_id)
-    allow(domain).to receive(:get_assessment_ids)
+    allow(domain).to receive(:best_address_id).and_return("RRN-0000-0000-0000-0000-0003")
+    allow(domain).to receive(:get_assessment_ids).and_return(%w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
     allow(address_base_gateway).to receive(:check_uprn_exists).with("UPRN-000000000001").and_return true
     allow(assessments_address_id_gateway).to receive(:update_assessments_address_id_mapping)
   end
@@ -57,6 +57,26 @@ describe UseCase::BulkLinkAssessments do
 
     it "calls the gateway to update the address_id for each group" do
       expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).exactly(number_of_groups).times
+    end
+
+    describe "event examples" do
+      around do |test|
+        Events::Broadcaster.enable!
+        test.run
+        Events::Broadcaster.disable!
+      end
+
+      it "broadcasts an assessment_address_id_updated event" do
+        expect { use_case.execute }.to broadcast(
+          :assessment_address_id_updated,
+          assessment_id: "0000-0000-0000-0000-0003",
+          new_address_id: "RRN-0000-0000-0000-0000-0003",
+        ).and broadcast(
+          :assessment_address_id_updated,
+          assessment_id: "0000-0000-0000-0000-0004",
+          new_address_id: "RRN-0000-0000-0000-0000-0003",
+        )
+      end
     end
   end
 
@@ -92,7 +112,7 @@ describe UseCase::BulkLinkAssessments do
     end
   end
 
-  context "when fetching linked assessments return no data" do
+  context "when fetching linked assessments where one group returns no data" do
     let(:number_of_groups) { 2 }
     let(:data_2) do
       [
@@ -107,8 +127,8 @@ describe UseCase::BulkLinkAssessments do
       allow(fetch_gateway).to receive(:fetch_assessments_by_group_id).with(1).and_raise Boundary::NoData.new("bulk linking assessment group_id: 1")
       allow(fetch_gateway).to receive(:fetch_assessments_by_group_id).with(2).and_return domain_2_result
       allow(domain_2_result).to receive(:set_best_address_id)
-      allow(domain_2_result).to receive(:best_address_id)
-      allow(domain_2_result).to receive(:get_assessment_ids)
+      allow(domain_2_result).to receive(:best_address_id).and_return("RRN-0000-0000-0000-0000-0003")
+      allow(domain_2_result).to receive(:get_assessment_ids).and_return(%w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
       allow(Sentry).to receive(:capture_exception)
     end
 
@@ -126,7 +146,7 @@ describe UseCase::BulkLinkAssessments do
       expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times
     end
 
-    it "calls the gateway to update the address_ids when there is data", :aggregate_failures do
+    it "calls the gateway to update the address_ids for the group where there is data", :aggregate_failures do
       use_case.execute
       expect(domain_2_result).to have_received(:set_best_address_id).exactly(1).times
       expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).exactly(1).times

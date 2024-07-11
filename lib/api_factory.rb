@@ -251,6 +251,7 @@ class ApiFactory
         fetch_assessments_to_link_gateway:,
         address_base_gateway: address_base_search_gateway,
         assessments_address_id_gateway:,
+        event_broadcaster:,
       )
   end
 

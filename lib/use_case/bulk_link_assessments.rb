@@ -1,9 +1,10 @@
 module UseCase
   class BulkLinkAssessments
-    def initialize(fetch_assessments_to_link_gateway:, address_base_gateway:, assessments_address_id_gateway:)
+    def initialize(fetch_assessments_to_link_gateway:, address_base_gateway:, assessments_address_id_gateway:, event_broadcaster:)
       @fetch_assessments_to_link_gateway = fetch_assessments_to_link_gateway
       @address_base_gateway = address_base_gateway
       @assessments_address_id_gateway = assessments_address_id_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute
@@ -25,6 +26,12 @@ module UseCase
 
         assessments_to_link.set_best_address_id(address_base_gateway: @address_base_gateway)
         @assessments_address_id_gateway.update_assessments_address_id_mapping(assessments_to_link.get_assessment_ids, assessments_to_link.best_address_id, "epb_bulk_linking")
+
+        assessments_to_link.get_assessment_ids.each do |id|
+          @event_broadcaster.broadcast :assessment_address_id_updated,
+                                       assessment_id: id,
+                                       new_address_id: assessments_to_link.best_address_id
+        end
       end
     end
   end
