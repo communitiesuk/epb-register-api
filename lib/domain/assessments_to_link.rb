@@ -15,7 +15,8 @@ module Domain
         @best_address_id = "RRN-#{@data.first['assessment_id']}"
       else
         @best_address_id = find_uprn["address_id"]
-        unless address_base_gateway.check_uprn_exists(@best_address_id)
+        stripped_uprn = @best_address_id[5..]
+        unless address_base_gateway.check_uprn_exists(stripped_uprn)
           @best_address_id = "RRN-#{@data.first['assessment_id']}"
         end
       end

@@ -34,7 +34,7 @@ describe Domain::AssessmentsToLink do
 
         it "passes the correct UPRN to the gateway" do
           domain.set_best_address_id(address_base_gateway:)
-          expect(address_base_gateway).to have_received(:check_uprn_exists).with("UPRN-000000000001").exactly(1).times
+          expect(address_base_gateway).to have_received(:check_uprn_exists).with("000000000001").exactly(1).times
           expect(domain.best_address_id).to eq "UPRN-000000000001"
         end
       end
