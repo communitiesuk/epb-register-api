@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby "3.3.2"
+ruby "3.3.4"
 
 source "https://rubygems.org"
 group :development do
