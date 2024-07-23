@@ -191,7 +191,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sentry-ruby (5.18.1)
+    sentry-ruby (5.18.2)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     sinatra (4.0.0)
@@ -263,7 +263,7 @@ DEPENDENCIES
   rubocop-govuk (~> 5.0)
   rubocop-performance
   rubyzip (~> 2.3.2)
-  sentry-ruby (~> 5.17)
+  sentry-ruby (~> 5.18)
   sinatra (~> 4.0)
   sinatra-activerecord (~> 2.0.27)
   sinatra-contrib
