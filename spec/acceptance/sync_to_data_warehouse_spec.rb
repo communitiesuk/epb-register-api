@@ -108,7 +108,8 @@ describe "syncing to data warehouse on various assessment data changes", :set_wi
     end
 
     it "pushes the assessment ID to the assessments queue through the gateway" do
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
+      payload = "#{assessment_id}:#{new_address_id}"
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:assessments_address_update, payload)
     end
   end
 

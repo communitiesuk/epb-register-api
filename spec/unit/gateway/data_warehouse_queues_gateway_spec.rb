@@ -45,5 +45,13 @@ describe Gateway::DataWarehouseQueuesGateway do
         expect { erroring_gateway.push_to_queue(:assessments, ids) }.to raise_error Gateway::DataWarehouseQueuesGateway::PushFailedError
       end
     end
+
+    context "when writing to the assessments_address_update queue" do
+      it "can accept a colon delimited string" do
+        data = "9999-6666-7777-8888-9999:RRN-9999-6666-7777-8888-9999"
+        gateway.push_to_queue :assessments_address_update, data
+        expect(redis.lrange("assessments_address_update", 0, -1)).to eq [data]
+      end
+    end
   end
 end

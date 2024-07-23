@@ -8,15 +8,15 @@ module Gateway
 
     class InvalidRedisQueueNameError < StandardError; end
 
-    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt_outs].freeze
+    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt_outs assessments_address_update].freeze
 
     def initialize(redis_client: nil)
       @redis = redis_client
     end
 
-    def push_to_queue(queue_name, assessment_ids)
+    def push_to_queue(queue_name, payload)
       validate_queue_name(queue_name.to_sym)
-      redis.lpush(queue_name.to_s, assessment_ids)
+      redis.lpush(queue_name.to_s, payload)
     rescue Redis::BaseError => e
       raise PushFailedError, "Got Redis error #{e.class} when pushing to the queue: #{e.message}"
     end
