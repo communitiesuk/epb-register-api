@@ -167,7 +167,7 @@ This is actually the type differentiator for Property but only a limited number 
                     <xs:documentation>Mechanical ventilation duct insulation; if MVHR from PCDB.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="Mechanical-Ventilation-Duct-Insulation" type="SAP-DuctInsulationCode" minOccurs="0">
+            <xs:element name="Mechanical-Vent-Duct-Insulation" type="SAP-DuctInsulationCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Relevant when mechanical ventilation system is from PCDB.</xs:documentation>
                 </xs:annotation>
@@ -441,7 +441,12 @@ For the purpose of calculating the overall Energy Assessment for the property de
                 </xs:annotation>
             </xs:element>
             <xs:element name="SAP-Room-In-Roof" type="SAP-Room-In-Roof" minOccurs="0"/>
-            <xs:element name="SAP-Alternative-Wall" type="SAP-Alternative-Wall" minOccurs="0">
+            <xs:element name="SAP-Alternative-Wall-1" type="SAP-Alternative-Wall" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Included only for building parts that have an alternative wall</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SAP-Alternative-Wall-2" type="SAP-Alternative-Wall" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Included only for building parts that have an alternative wall</xs:documentation>
                 </xs:annotation>
@@ -452,7 +457,6 @@ For the purpose of calculating the overall Energy Assessment for the property de
     <xs:element name="SAP-Alternative-Wall" type="SAP-Alternative-Wall"/>
     <xs:complexType name="SAP-Alternative-Wall">
         <xs:all>
-            <xs:element name="Alternative-Wall-Number" type="AlternativeWallCount"/>
             <xs:element name="Wall-Construction" type="WallConstructionCode"/>
             <xs:element name="Wall-Insulation-Type" type="WallInsulationCode"/>
             <xs:element name="Wall-Area" type="Measurement"/>

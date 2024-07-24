@@ -185,7 +185,7 @@
       <Mechanical-Ventilation>6</Mechanical-Ventilation>
       <Mechanical-Vent-Duct-Type>3</Mechanical-Vent-Duct-Type>
       <Mechanical-Vent-Duct-Placement>2</Mechanical-Vent-Duct-Placement>
-      <Mechanical-Ventilation-Duct-Insulation>2</Mechanical-Ventilation-Duct-Insulation>
+      <Mechanical-Vent-Duct-Insulation>2</Mechanical-Vent-Duct-Insulation>
       <Mechanical-Vent-Duct-Insulation-Level>2</Mechanical-Vent-Duct-Insulation-Level>
       <Mechanical-Vent-Measured-Installation>false</Mechanical-Vent-Measured-Installation>
       <Solar-Water-Heating>N</Solar-Water-Heating>

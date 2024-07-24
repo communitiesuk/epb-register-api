@@ -2008,11 +2008,6 @@ Northern Ireland: 2014 onwards (TBA)</xs:documentation>
                     <xs:documentation>125mm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="125mm">
-                <xs:annotation>
-                    <xs:documentation>125mm</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="150mm">
                 <xs:annotation>
                     <xs:documentation>150mm</xs:documentation>
@@ -2180,12 +2175,6 @@ Northern Ireland: 2014 onwards (TBA)</xs:documentation>
         <xs:restriction base="xs:integer">
             <xs:minInclusive value="0"/>
             <xs:maxInclusive value="4"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="AlternativeWallCount">
-        <xs:restriction base="xs:integer">
-            <xs:minInclusive value="1"/>
-            <xs:maxInclusive value="2"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="SAP-OpeningDataSourceCode">
