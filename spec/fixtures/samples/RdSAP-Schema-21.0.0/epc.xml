@@ -236,6 +236,20 @@
             <Floor-Area>100</Floor-Area>
             <Construction-Age-Band>B</Construction-Age-Band>
           </SAP-Room-In-Roof>
+          <SAP-Alternative-Wall-1>
+            <Wall-Construction>4</Wall-Construction>
+            <Wall-Insulation-Type>2</Wall-Insulation-Type>
+            <Wall-Area>10.4</Wall-Area>
+            <Wall-Thickness-Measured>N</Wall-Thickness-Measured>
+            <Wall-Dry-Lined>N</Wall-Dry-Lined>
+          </SAP-Alternative-Wall-1>
+          <SAP-Alternative-Wall-2>
+            <Wall-Construction>4</Wall-Construction>
+            <Wall-Insulation-Type>2</Wall-Insulation-Type>
+            <Wall-Area>10.8</Wall-Area>
+            <Wall-Thickness-Measured>N</Wall-Thickness-Measured>
+            <Wall-Dry-Lined>N</Wall-Dry-Lined>
+          </SAP-Alternative-Wall-2>
         </SAP-Building-Part>
       </SAP-Building-Parts>
       <SAP-Heating>
