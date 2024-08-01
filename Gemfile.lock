@@ -23,8 +23,8 @@ GEM
       io-like (~> 0.3.0)
     ast (2.4.2)
     aws-eventstream (1.3.0)
-    aws-partitions (1.950.0)
-    aws-sdk-core (3.201.0)
+    aws-partitions (1.961.0)
+    aws-sdk-core (3.201.3)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.8)
@@ -32,11 +32,11 @@ GEM
     aws-sdk-kms (1.88.0)
       aws-sdk-core (~> 3, >= 3.201.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.156.0)
+    aws-sdk-s3 (1.157.0)
       aws-sdk-core (~> 3, >= 3.201.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
-    aws-sigv4 (1.8.0)
+    aws-sigv4 (1.9.1)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bigdecimal (3.1.8)
@@ -239,7 +239,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 7.1.3)
   archive-zip
-  aws-sdk-s3 (~> 1.156)
+  aws-sdk-s3 (~> 1.157)
   csv (~> 3.3)
   database_cleaner
   epb-auth-tools (~> 1.1.0)
