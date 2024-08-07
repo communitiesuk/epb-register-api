@@ -20,10 +20,8 @@ describe UseCase::BulkLinkAssessments do
     allow(fetch_gateway).to receive(:create_and_populate_temp_table)
     allow(fetch_gateway).to receive_messages(get_max_group_id: number_of_groups, fetch_duplicate_address_ids: skip_group_ids, fetch_assessments_by_group_id: domain)
     allow(Domain::AssessmentsToLink).to receive(:new).and_return(domain)
-    allow(domain).to receive(:data).and_return data
     allow(domain).to receive(:set_best_address_id)
-    allow(domain).to receive(:best_address_id).and_return("RRN-0000-0000-0000-0000-0003")
-    allow(domain).to receive(:get_assessment_ids).and_return(%w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
+    allow(domain).to receive_messages(data:, best_address_id: "RRN-0000-0000-0000-0000-0003", get_assessment_ids: %w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
     allow(address_base_gateway).to receive(:check_uprn_exists).with("UPRN-000000000001").and_return true
     allow(assessments_address_id_gateway).to receive(:update_assessments_address_id_mapping)
   end
@@ -127,8 +125,7 @@ describe UseCase::BulkLinkAssessments do
       allow(fetch_gateway).to receive(:fetch_assessments_by_group_id).with(1).and_raise Boundary::NoData.new("bulk linking assessment group_id: 1")
       allow(fetch_gateway).to receive(:fetch_assessments_by_group_id).with(2).and_return domain_2_result
       allow(domain_2_result).to receive(:set_best_address_id)
-      allow(domain_2_result).to receive(:best_address_id).and_return("RRN-0000-0000-0000-0000-0003")
-      allow(domain_2_result).to receive(:get_assessment_ids).and_return(%w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
+      allow(domain_2_result).to receive_messages(best_address_id: "RRN-0000-0000-0000-0000-0003", get_assessment_ids: %w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
       allow(Sentry).to receive(:capture_exception)
     end
 
