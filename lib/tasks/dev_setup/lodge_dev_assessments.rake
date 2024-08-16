@@ -1,3 +1,5 @@
+ActiveSupport.to_time_preserves_timezone = true
+
 namespace :dev_data do
   desc "Lodge assessments to the dev database for testing"
   task :lodge_dev_assessments do

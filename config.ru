@@ -11,6 +11,7 @@ loader.setup
 environment = ENV["STAGE"]
 
 ActiveRecord::Base.connects_to(database: { writing: :primary, reading: :primary_replica })
+ActiveSupport.to_time_preserves_timezone = true
 
 Sentry.init do |config|
   config.environment = environment
