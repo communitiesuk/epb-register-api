@@ -10,24 +10,24 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan", :set_with_
   describe "deleting a green deal plan" do
     context "when unauthenticated" do
       it "returns status 401" do
-        delete_green_deal_plan plan_id: "AD0000002312",
-                               accepted_responses: [401],
-                               authenticate: false
+        expect(delete_green_deal_plan(plan_id: "AD0000002312",
+                                      accepted_responses: [401],
+                                      authenticate: false).status).to eq(401)
       end
     end
 
     context "when unauthorised" do
       it "returns status 403" do
-        delete_green_deal_plan plan_id: "AD0000002312",
-                               accepted_responses: [403],
-                               scopes: %w[wrong:scope]
+        expect(delete_green_deal_plan(plan_id: "AD0000002312",
+                                      accepted_responses: [403],
+                                      scopes: %w[wrong:scope]).status).to eq(403)
       end
     end
 
     context "when a plan_id does not exists" do
       it "returns status 404" do
-        delete_green_deal_plan plan_id: "AD0000002311",
-                               accepted_responses: [404]
+        expect(delete_green_deal_plan(plan_id: "AD0000002311",
+                                      accepted_responses: [404]).status).to eq(404)
       end
     end
 
@@ -105,15 +105,15 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan", :set_with_
       end
 
       it "returns status code 204" do
-        delete_green_deal_plan plan_id: "ABC123456DEF",
-                               accepted_responses: [204]
+        expect(delete_green_deal_plan(plan_id: "ABC123456DEF",
+                                      accepted_responses: [204]).status).to eq(204)
       end
 
       it "deletes the green deal plan" do
         expect(response["data"]["greenDealPlan"]).not_to be_nil
 
-        delete_green_deal_plan plan_id: "ABC123456DEF",
-                               accepted_responses: [204]
+        expect(delete_green_deal_plan(plan_id: "ABC123456DEF",
+                                      accepted_responses: [204]).status).to eq(204)
 
         expect(response["data"]["greenDealPlan"]).to eq([])
       end

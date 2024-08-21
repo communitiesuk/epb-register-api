@@ -8,78 +8,13 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
   let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
   let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
 
-  before do
-    ActiveRecord::Base.connection.exec_query(
-      "INSERT INTO
-              address_base
-                (
-                  uprn,
-                  postcode,
-                  address_line1,
-                  address_line2,
-                  address_line3,
-                  address_line4,
-                  town,
-                  country_code
-                )
-            VALUES
-              (
-                '73546792',
-                'A0 0AA',
-                '5 Grimal Place',
-                'Skewit Road',
-                '',
-                '',
-                'London',
-                'E'
-              ),
-              (
-                '73546793',
-                'A0 0AA',
-                'The house Grimal Place',
-                'Skewit Road',
-                '',
-                '',
-                'London',
-                'E'
-              ),
-              (
-                '73546795',
-                'A0 0AA',
-                '2 Grimal Place',
-                '345 Skewit Road',
-                '',
-                '',
-                'London',
-                'E'
-              ),
-              (
-                '736042792',
-                'NE23 1TW',
-                '5 Grimiss Place',
-                'Suggton Road',
-                '',
-                '',
-                'Newcastle',
-                'E'
-              )",
-    )
 
-    add_assessor(
-      scheme_id:,
-      assessor_id: "SPEC000000",
-      body: AssessorStub.new.fetch_request_body(
-        non_domestic_nos3: "ACTIVE",
-        non_domestic_nos4: "ACTIVE",
-        non_domestic_nos5: "ACTIVE",
-        non_domestic_dec: "ACTIVE",
-        domestic_rd_sap: "ACTIVE",
-        domestic_sap: "ACTIVE",
-        non_domestic_sp3: "ACTIVE",
-        non_domestic_cc4: "ACTIVE",
-        gda: "ACTIVE",
-      ),
-    )
+  before do
+    insert_into_address_base("73546792", "A0 0AA", "5 Grimal Place", "Skewit Road", "London", "E")
+    insert_into_address_base("73546793", "A0 0AA", "The house Grimal Place", "Skewit Road", "London", "E")
+    insert_into_address_base("73546795", "A0 0AA", "2 Grimal Place", "345 Skewit Road", "London", "E")
+    insert_into_address_base("736042792", "NE23 1TW", "5 Grimiss Place", "Suggton Road", "Newcastle", "E")
+    add_super_assessor(scheme_id:)
 
     domestic_xml.at("UPRN").remove
 
@@ -106,13 +41,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
 
   describe "searching by postcode" do
     context "when an invalid address type is provided" do
-      it "returns status 422" do
-        assertive_get(
-          "/api/search/addresses?postcode=A0%200AA&addressType=asdf",
-          accepted_responses: [422],
-          scopes: %w[address:search],
-        )
-      end
+      it_behaves_like "assertive_get", path: "/api/search/addresses?postcode=A0%200AA&addressType=asdf", status_code: 422, scopes: %w[address:search]
     end
 
     context "when an address type of domestic is provided" do

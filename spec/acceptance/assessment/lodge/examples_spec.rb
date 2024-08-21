@@ -75,58 +75,58 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
     end
 
     it "can lodge the example AC-CERT+AC-REPORT" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: acic_acir_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example DEC" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: dec_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example DEC Advisory Report" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: ar_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example DEC+AR" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: dec_ar_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example AC-CERT+AC-REPORT NI" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: acic_acir_ni_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-NI-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     context "with an NI CEPC+RR NI" do
@@ -135,92 +135,92 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
       end
 
       it "can lodge" do
-        lodge_assessment(
+        expect(lodge_assessment(
           assessment_body: cepc_rr_ni_xml,
           accepted_responses: [201],
           auth_data: {
             scheme_ids: [scheme_id],
           },
           schema_name: "CEPC-NI-8.0.0",
-        )
+        ).status).to eq 201
       end
     end
 
     it "can lodge the example DEC NI" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: dec_ni_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-NI-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example DEC Advisory Report NI" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: ar_ni_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-NI-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example DEC+AR NI" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: dec_ar_ni_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-NI-8.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example RdSAP" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: rdsap_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "RdSAP-Schema-20.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example RdSAP NI" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: rdsap_ni_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "RdSAP-Schema-NI-20.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example SAP" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: sap_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-18.0.0",
-      )
+      ).status).to eq 201
     end
 
     it "can lodge the example SAP NI" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: sap_ni_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-NI-18.0.0",
-      )
+      ).status).to eq 201
     end
   end
 end

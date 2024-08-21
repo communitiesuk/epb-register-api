@@ -53,7 +53,8 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     it "returns a .csv of the correct number of rows" do
-      expect(parsed_exported_data.length).to eq(parsed_exported_data.length)
+      num_rows_minus_header = (fixture_csv.length - 1)
+      expect(parsed_exported_data.length).to eq(num_rows_minus_header)
     end
 
     it "returns the data exported to a csv object to match the .csv fixture" do

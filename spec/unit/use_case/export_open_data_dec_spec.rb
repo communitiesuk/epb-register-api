@@ -54,7 +54,7 @@ describe UseCase::ExportOpenDataDec, :set_with_timecop do
       }
 
       let(:export_object) { described_class.new }
-      let(:expected_values_1) do
+      let(:expected_row) do
         expected_values.merge(
           {
             assessment_id:
@@ -63,16 +63,7 @@ describe UseCase::ExportOpenDataDec, :set_with_timecop do
           },
         )
       end
-      let(:expected_values_2) do
-        expected_values.merge(
-          {
-            assessment_id:
-              "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6",
-            building_reference_number: nil,
-            lodgement_datetime: datetime_today,
-          },
-        )
-      end
+
       let(:exported_data) do
         described_class
           .new
@@ -190,7 +181,7 @@ describe UseCase::ExportOpenDataDec, :set_with_timecop do
         end
 
         it "returns the #{index} that matches the test data for the 2nd row" do
-          expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])
+          expect(exported_data[1][index.to_sym]).to eq(expected_row[index])
         end
       end
 

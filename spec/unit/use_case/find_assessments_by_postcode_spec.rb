@@ -2,7 +2,7 @@ describe UseCase::FindAssessmentsByPostcode do
   subject(:use_case) { described_class.new }
 
   let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
-  let(:assessment1) do
+  let(:first_assessment) do
     Domain::AssessmentSearchResult.new(
       type_of_assessment: "RdSAP",
       assessment_id: "0000-0000-0000-0000-0000",
@@ -21,7 +21,7 @@ describe UseCase::FindAssessmentsByPostcode do
       created_at: Time.utc(2030, 5, 4, 9, 0, 0),
     )
   end
-  let(:assessment2) do
+  let(:second_assessment) do
     Domain::AssessmentSearchResult.new(
       type_of_assessment: "RdSAP",
       assessment_id: "0000-0000-0000-0000-0001",
@@ -83,7 +83,7 @@ describe UseCase::FindAssessmentsByPostcode do
 
   before do
     allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_search_gateway)
-    allow(assessments_search_gateway).to receive(:search_by_postcode).with("A0 0AA", []).and_return([assessment1, assessment2])
+    allow(assessments_search_gateway).to receive(:search_by_postcode).with("A0 0AA", []).and_return([first_assessment, second_assessment])
   end
 
   describe ".execute" do

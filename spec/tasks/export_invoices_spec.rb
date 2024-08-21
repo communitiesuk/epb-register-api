@@ -266,9 +266,9 @@ describe "monthly invoice export" do
     let(:use_case) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
     let(:fetch_active_schemes_use_case) { instance_double(UseCase::FetchActiveSchemesId) }
     let(:active_scheme_ids) { [1, 2, 3] }
-    let(:rrn_use_case1) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
-    let(:rrn_use_case2) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
-    let(:rrn_use_case3) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case_one) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case_two) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case_three) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
     let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
 
     before do
@@ -276,11 +276,11 @@ describe "monthly invoice export" do
       WebMock.enable!
       allow($stdout).to receive(:puts)
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
-      allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case1, rrn_use_case2, rrn_use_case3)
+      allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case_one, rrn_use_case_two, rrn_use_case_three)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
-      allow(rrn_use_case1).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).and_return returned_data
-      allow(rrn_use_case2).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).and_return []
-      allow(rrn_use_case3).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).and_return returned_data
+      allow(rrn_use_case_one).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).and_return returned_data
+      allow(rrn_use_case_two).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).and_return []
+      allow(rrn_use_case_three).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).and_return returned_data
       allow(fetch_active_schemes_use_case).to receive(:execute).and_return active_scheme_ids
       allow(Sentry).to receive(:capture_exception)
       monthly_invoice_rake.invoke
@@ -292,9 +292,9 @@ describe "monthly invoice export" do
     end
 
     it "exports schemas with data" do
-      expect(rrn_use_case1).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).exactly(1).times
-      expect(rrn_use_case2).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).exactly(1).times
-      expect(rrn_use_case3).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).exactly(1).times
+      expect(rrn_use_case_one).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).exactly(1).times
+      expect(rrn_use_case_two).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 2).exactly(1).times
+      expect(rrn_use_case_three).to have_received(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 3).exactly(1).times
     end
 
     it "send a no data error to sentry for one of the schemas" do
@@ -307,9 +307,9 @@ describe "monthly invoice export" do
     let(:use_case) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
     let(:fetch_active_schemes_use_case) { instance_double(UseCase::FetchActiveSchemesId) }
     let(:active_scheme_ids) { [1, 2, 3] }
-    let(:rrn_use_case1) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
-    let(:rrn_use_case2) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
-    let(:rrn_use_case3) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case_one) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case_two) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
+    let(:rrn_use_case_three) { instance_double(UseCase::GetAssessmentRrnsBySchemeNameAndType) }
     let(:returned_data) { [{ type_of_assessment: "AC-CERT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 2 }, { type_of_assessment: "AC-REPORT", scheme_name: "Elmhurst Energy Systems Ltd", number_of_assessments: 3 }] }
 
     before do
@@ -318,11 +318,11 @@ describe "monthly invoice export" do
       WebMock.enable!
       allow($stdout).to receive(:puts)
       WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
-      allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case1, rrn_use_case2, rrn_use_case3)
+      allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case_one, rrn_use_case_two, rrn_use_case_three)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
-      allow(rrn_use_case1).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 1).and_return returned_data
-      allow(rrn_use_case2).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 2).and_return []
-      allow(rrn_use_case3).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 3).and_return returned_data
+      allow(rrn_use_case_one).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 1).and_return returned_data
+      allow(rrn_use_case_two).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 2).and_return []
+      allow(rrn_use_case_three).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 3).and_return returned_data
       allow(fetch_active_schemes_use_case).to receive(:execute).and_return active_scheme_ids
       allow(Sentry).to receive(:capture_exception)
       monthly_invoice_rake.invoke
@@ -334,9 +334,9 @@ describe "monthly invoice export" do
     end
 
     it "exports schemas with data" do
-      expect(rrn_use_case1).to have_received(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 1).exactly(1).times
-      expect(rrn_use_case2).to have_received(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 2).exactly(1).times
-      expect(rrn_use_case3).to have_received(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 3).exactly(1).times
+      expect(rrn_use_case_one).to have_received(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 1).exactly(1).times
+      expect(rrn_use_case_two).to have_received(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 2).exactly(1).times
+      expect(rrn_use_case_three).to have_received(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 3).exactly(1).times
     end
 
     it "send a no data error to sentry for one of the schemas" do

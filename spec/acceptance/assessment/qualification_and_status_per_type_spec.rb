@@ -19,16 +19,13 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType", :set_with_time
   end
 
   def get_lodgement(xml_name, response_code, schema_name)
-    JSON.parse(
-      lodge_assessment(
-        assessment_body: sample(xml_name, schema_name.to_s),
-        accepted_responses: response_code,
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: schema_name.to_s,
-      ).body,
-      symbolize_names: true,
+    lodge_assessment(
+      assessment_body: sample(xml_name, schema_name.to_s),
+      accepted_responses: response_code,
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: schema_name.to_s,
     )
   end
 
@@ -135,11 +132,13 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType", :set_with_time
           it "tries to lodge a #{assessment_name} with response code #{assessment_settings[:response_code].join(', ')}" do
             create_assessor(assessment_settings[:assessor_qualification])
 
-            get_lodgement(
+            expectation = get_lodgement(
               assessment_settings[:xml],
               assessment_settings[:response_code],
               schema_name,
             )
+
+            expect(expectation.status).to be 201
           end
 
           if assessment_settings[:dont_check_incorrect_assessor].nil?
@@ -158,9 +157,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType", :set_with_time
                 },
               )
 
-              lodgement_response =
-                get_lodgement(assessment_settings[:xml], [400], schema_name)
-
+              lodgement_response = JSON.parse(get_lodgement(assessment_settings[:xml], [400], schema_name).body).deep_symbolize_keys
               expect(lodgement_response[:errors][0][:title]).to eq(
                 "Assessor is not active.",
               )
@@ -190,7 +187,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType", :set_with_time
             expect(assessment_status[:data]).to eq({ status: "CANCELLED" })
 
             assessment_settings[:lodged_rrns].each do |rrn|
-              fetch_assessment_summary(id: rrn, accepted_responses: [410])
+              expect(fetch_assessment_summary(id: rrn, accepted_responses: [410]).status).to be 410
             end
           end
 
@@ -218,7 +215,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType", :set_with_time
             expect(assessment_status[:data]).to eq({ status: "NOT_FOR_ISSUE" })
 
             assessment_settings[:lodged_rrns].each do |rrn|
-              fetch_assessment_summary(id: rrn, accepted_responses: [410])
+              expect(fetch_assessment_summary(id: rrn, accepted_responses: [410]).status).to be 410
             end
           end
         end

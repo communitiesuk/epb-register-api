@@ -167,21 +167,15 @@ describe "Acceptance::OptOut", :set_with_timecop do
   end
 
   context "when opting out an assessment that doesnt exist" do
-    it "returns 404" do
-      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000", opt_out: true, accepted_responses: [404])
-    end
+    it_behaves_like "opt_out_assessment", rrn:  "0000-0000-0000-0000-0000", opt_out: true, status_code: 404
   end
 
   context "when opting out an assessment id that is not valid" do
-    it "returns 400" do
-      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000%23", opt_out: true, accepted_responses: [400])
-    end
+    it_behaves_like "opt_out_assessment", rrn:  "0000-0000-0000-0000-0000%23", opt_out: true, status_code: 400
   end
 
   context "when opt out value is not a boolean" do
-    it "returns 400" do
-      opt_out_assessment(assessment_id: "0000-0000-0000-0000-000023", opt_out: "true", accepted_responses: [400])
-    end
+    it_behaves_like "opt_out_assessment", rrn:  "0000-0000-0000-0000-000023", opt_out: "true", status_code: 400
   end
 
   it "returns 400 when body cannot be parsed to JSON" do

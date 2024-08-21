@@ -36,15 +36,15 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
   describe "security scenarios" do
     it "rejects a request without authentication" do
-      domestic_assessments_search_by_assessment_id("123", accepted_responses: [401], should_authenticate: false)
+      expect(domestic_assessments_search_by_assessment_id("123", accepted_responses: [401], should_authenticate: false).status).to eq(401)
     end
 
     it "rejects a request without the right scope" do
-      domestic_assessments_search_by_assessment_id(
+      expect(domestic_assessments_search_by_assessment_id(
         "123",
         accepted_responses: [403],
         scopes: %w[wrong:scope],
-      )
+      ).status).to eq(403)
     end
   end
 
@@ -243,14 +243,13 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
     end
 
     it "allows missing assessment types" do
-      assessments_search_by_postcode "A0 0AA",
-                                     assessment_types: []
+      expect(assessments_search_by_postcode("A0 0AA", assessment_types: []).status).to eq 200
     end
 
     it "rejects invalid assessment types" do
-      assessments_search_by_postcode "A0 0AA",
-                                     accepted_responses: [400],
-                                     assessment_types: %w[rdap]
+      expect(assessments_search_by_postcode("A0 0AA",
+                                            accepted_responses: [400],
+                                            assessment_types: %w[rdap]).status).to eq 400
     end
 
     it "sorts the results" do
@@ -386,9 +385,9 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
     end
 
     it "allows missing assessment types" do
-      assessments_search_by_street_and_town street: "Palmtree Road",
-                                            town: "Brighton",
-                                            assessment_types: []
+      expect(assessments_search_by_street_and_town(street: "Palmtree Road",
+                                                   town: "Brighton",
+                                                   assessment_types: []).status).to eq(200)
     end
 
     it "returns matching assessments" do

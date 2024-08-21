@@ -49,10 +49,10 @@ describe "Acceptance::AssessmentStatistics", :set_with_timecop do
 
   context "when calling the statistics data end" do
     it "returns a 200 status" do
-      fetch_statistics(
+      expect(fetch_statistics(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
-      )
+      ).status).to eq(200)
     end
 
     it "produces a json object of the aggregated data" do
@@ -82,10 +82,10 @@ describe "Acceptance::AssessmentStatistics", :set_with_timecop do
 
   context "when calling the calling the statistics data end point with the wrong token" do
     it "returns a 403 status" do
-      fetch_statistics(
+      expect(fetch_statistics(
         accepted_responses: [403],
         scopes: %w[assessments:fetch],
-      )
+      ).status).to eq(403)
     end
   end
 

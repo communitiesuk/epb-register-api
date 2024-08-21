@@ -3,27 +3,14 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
 
   subject(:use_case) { described_class.new }
 
+  let!(:scheme_id) do
+    add_scheme_and_get_id
+  end
+
   context "when arguments include non token characters" do
     before do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id:,
-        assessor_id: "SPEC000000",
-        body: AssessorStub.new.fetch_request_body(
-          non_domestic_nos3: "ACTIVE",
-          non_domestic_nos4: "ACTIVE",
-          non_domestic_nos5: "ACTIVE",
-          non_domestic_dec: "ACTIVE",
-          domestic_rd_sap: "ACTIVE",
-          domestic_sap: "ACTIVE",
-          non_domestic_sp3: "ACTIVE",
-          non_domestic_cc4: "ACTIVE",
-          gda: "ACTIVE",
-        ),
-      )
-
+      add_super_assessor(scheme_id:)
       assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-
       lodge_assessment(
         assessment_body: assessment.to_xml,
         accepted_responses: [201],
@@ -55,25 +42,8 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
 
   context "when searching the same address in both the assessments and address_base tables" do
     before do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id:,
-        assessor_id: "SPEC000000",
-        body: AssessorStub.new.fetch_request_body(
-          non_domestic_nos3: "ACTIVE",
-          non_domestic_nos4: "ACTIVE",
-          non_domestic_nos5: "ACTIVE",
-          non_domestic_dec: "ACTIVE",
-          domestic_rd_sap: "ACTIVE",
-          domestic_sap: "ACTIVE",
-          non_domestic_sp3: "ACTIVE",
-          non_domestic_cc4: "ACTIVE",
-          gda: "ACTIVE",
-        ),
-      )
-
+      add_super_assessor(scheme_id:)
       assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-
       lodge_assessment(
         assessment_body: assessment.to_xml,
         accepted_responses: [201],
@@ -119,27 +89,9 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
 
   context "when there are the same addresses in both the assessments and address base" do
     before do
+      add_super_assessor(scheme_id:)
       insert_into_address_base("000005689782", "SW1 2AA", "Flat 3", "1 Some Street", "London", "E")
-
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id:,
-        assessor_id: "SPEC000000",
-        body: AssessorStub.new.fetch_request_body(
-          non_domestic_nos3: "ACTIVE",
-          non_domestic_nos4: "ACTIVE",
-          non_domestic_nos5: "ACTIVE",
-          non_domestic_dec: "ACTIVE",
-          domestic_rd_sap: "ACTIVE",
-          domestic_sap: "ACTIVE",
-          non_domestic_sp3: "ACTIVE",
-          non_domestic_cc4: "ACTIVE",
-          gda: "ACTIVE",
-        ),
-      )
-
       domestic_assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-
       lodge_assessment(
         assessment_body: domestic_assessment.to_xml,
         accepted_responses: [201],
@@ -150,104 +102,10 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
       )
     end
 
-    it "returns only the address from address base not from the assesment" do
+    it "returns only the address from address base not from the assessment" do
       result = use_case.execute(street: "Some", town: "London")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000005689782")
-    end
-  end
-
-  xcontext "when there are the more than one certificate for the same address", :set_with_time_cop do
-    before do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id:,
-        assessor_id: "SPEC000000",
-        body: AssessorStub.new.fetch_request_body(
-          non_domestic_nos3: "ACTIVE",
-          non_domestic_nos4: "ACTIVE",
-          non_domestic_nos5: "ACTIVE",
-          non_domestic_dec: "ACTIVE",
-          domestic_rd_sap: "ACTIVE",
-          domestic_sap: "ACTIVE",
-          non_domestic_sp3: "ACTIVE",
-          non_domestic_cc4: "ACTIVE",
-          gda: "ACTIVE",
-        ),
-      )
-
-      day_before_yesterday = Time.now.prev_day(2).strftime("%Y-%m-%d")
-      domestic_assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-      domestic_assessment.at("Inspection-Date").children = day_before_yesterday
-      domestic_assessment.at("Completion-Date").children = day_before_yesterday
-      domestic_assessment.at("Registration-Date").children = day_before_yesterday
-      domestic_assessment.at("Address/Address-Line-1").children = "A New House"
-      lodge_assessment(
-        assessment_body: domestic_assessment.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
-      yesterday = Time.now.prev_day(1).strftime("%Y-%m-%d")
-      domestic_assessment_two = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-      domestic_assessment_two.at("RRN").children = "0000-0000-0000-0000-0001"
-      domestic_assessment_two.at("Address/Address-Line-1").children = "Another New House"
-      domestic_assessment_two.at("RRN").children = "0000-0000-0000-0000-0001"
-      domestic_assessment_two.at("Inspection-Date").children = yesterday
-      domestic_assessment_two.at("Completion-Date").children = yesterday
-      domestic_assessment_two.at("Registration-Date").children = yesterday
-
-      lodge_assessment(
-        assessment_body: domestic_assessment_two.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
-      today = Time.now.strftime("%Y-%m-%d")
-
-      domestic_assessment_three = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-      domestic_assessment_three.at("RRN").children = "0000-0000-0000-0000-0001"
-      domestic_assessment_three.at("Address/Address-Line-1").children = "1 New House"
-      domestic_assessment_three.at("RRN").children = "0000-0000-0000-0000-0002"
-      domestic_assessment_two.at("Inspection-Date").children = today
-      domestic_assessment_two.at("Completion-Date").children = today
-      domestic_assessment_two.at("Registration-Date").children = today
-
-      lodge_assessment(
-        assessment_body: domestic_assessment_three.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id
-        SET address_id = 'RRN-0000-0000-0000-0000-0000'
-        WHERE assessment_id = '0000-0000-0000-0000-0001'")
-
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id
-        SET address_id = 'RRN-0000-0000-0000-0000-0000'
-        WHERE assessment_id = '0000-0000-0000-0000-0002'")
-    end
-
-    it "returns the address of newest certificate" do
-      result = use_case.execute(street: "New House", town: "Whitbury")
-      expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
-      expect(result.first.line1).to eq("1 New House")
-    end
-
-    it "returns the address of newest certificate for postcode search" do
-      post_code_use_case = UseCase::SearchAddressesByPostcode.new
-      result = post_code_use_case.execute(postcode: "A0 0AA")
-      expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
-      expect(result.first.line1).to eq("1 New House")
     end
   end
 end

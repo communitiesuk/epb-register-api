@@ -29,25 +29,25 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan", :set_with_tim
   describe "creating a green deal plan" do
     context "when unauthenticated" do
       it "returns status 401" do
-        add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
-                            accepted_responses: [401],
-                            authenticate: false
+        expect(add_green_deal_plan(assessment_id: "1234-1234-1234-1234-1234",
+                                   accepted_responses: [401],
+                                   authenticate: false).status).to eq(401)
       end
     end
 
     context "when unauthorised" do
       it "returns status 401" do
-        add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
-                            accepted_responses: [403],
-                            scopes: %w[wrong:scope]
+        expect(add_green_deal_plan(assessment_id: "1234-1234-1234-1234-1234",
+                                   accepted_responses: [403],
+                                   scopes: %w[wrong:scope]).status).to eq(403)
       end
     end
 
     context "when an assessment does not exist" do
       it "returns status 404" do
-        add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
-                            body: valid_green_deal_plan_request_body,
-                            accepted_responses: [404]
+        expect(add_green_deal_plan(assessment_id: "1234-1234-1234-1234-1234",
+                                   body: valid_green_deal_plan_request_body,
+                                   accepted_responses: [404]).status).to eq(404)
       end
     end
 
@@ -250,9 +250,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan", :set_with_tim
         end
 
         it "returns status 410" do
-          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
-                              body: valid_green_deal_plan_request_body,
-                              accepted_responses: [410]
+          expect(add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
+                                     body: valid_green_deal_plan_request_body,
+                                     accepted_responses: [410]).status).to eq(410)
         end
       end
 
@@ -269,9 +269,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan", :set_with_tim
         end
 
         it "returns status 410" do
-          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
-                              body: valid_green_deal_plan_request_body,
-                              accepted_responses: [410]
+          expect(add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
+                                     body: valid_green_deal_plan_request_body,
+                                     accepted_responses: [410]).status).to eq(410)
         end
       end
 
@@ -297,9 +297,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan", :set_with_tim
         end
 
         it "returns status 400" do
-          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0001",
-                              body: valid_green_deal_plan_request_body,
-                              accepted_responses: [400]
+          expect(add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0001",
+                                     body: valid_green_deal_plan_request_body,
+                                     accepted_responses: [400]).status).to eq(400)
         end
       end
 

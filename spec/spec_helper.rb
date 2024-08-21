@@ -18,6 +18,8 @@ require "wisper/rspec/matchers"
 require "zeitwerk"
 require "webmock/rspec"
 
+require "shared_examples"
+
 class TestLoader
   def self.setup
     @loader = Zeitwerk::Loader.new

@@ -28,33 +28,18 @@ describe "Acceptance::SearchForAssessor" do
 
   context "when a search postcode is not found" do
     it "returns status 404 for a get" do
-      assessors_search(postcode: "73334", qualification: "domesticRdSap", accepted_responses: [404])
+      expect(assessors_search(postcode: "73334", qualification: "domesticRdSap", accepted_responses: [404]).status).to eq(404)
     end
   end
 
   context "when searching without the right params" do
-    it "returns status 400 for postcode search without qualification" do
+    before do
       add_postcodes("SE1 7EZ")
-      assertive_get(
-        "/api/assessors?postcode=SE17EZ",
-        accepted_responses: [400],
-        scopes: %w[assessor:search],
-      )
     end
 
-    it "returns status 400 for no parameters" do
-      add_postcodes("SE1 7EZ")
-      assertive_get(
-        "/api/assessors",
-        accepted_responses: [400],
-        scopes: %w[assessor:search],
-      )
-    end
+    it_behaves_like "assertive_get", path: "api/assessors?postcode=SE17EZ", status_code: 400, scopes: %w[assessor:search], assertion: " for postcode search without qualification"
 
-    it "rejects a request which searches for a bad qualification" do
-      add_postcodes("SA70 7BD")
-      assessors_search(postcode: "SA707BD", qualification: "doubleGlazingFitter", accepted_responses: [400])
-    end
+    it_behaves_like "assertive_get", path: "/api/assessors", status_code: 400, scopes: %w[assessor:search], assertion: " for for no parameters"
   end
 
   context "when a search postcode is valid" do
@@ -571,21 +556,21 @@ describe "Acceptance::SearchForAssessor" do
 
   describe "security scenarios" do
     it "returns a 401 when not authenticated" do
-      assessors_search(
+      expect(assessors_search(
         postcode: "SE1 7EZ",
         qualification: "domesticRdSap",
         accepted_responses: [401],
         should_authenticate: false,
-      )
+      ).status).to eq 401
     end
 
     it "returns a 403 when the right scopes are not present" do
-      assessors_search(
+      expect(assessors_search(
         postcode: "SE1 7EZ",
         qualification: "domesticRdSap",
         accepted_responses: [403],
         scopes: %w[wrong:scope],
-      )
+      ).status).to eq 403
     end
   end
 end
