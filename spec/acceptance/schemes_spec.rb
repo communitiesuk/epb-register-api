@@ -4,17 +4,17 @@ describe "Acceptance::Schemes" do
   context "when getting a list of schemes" do
     describe "security" do
       it "returns status 401 with no authentication" do
-        schemes_list(accepted_responses: [401], should_authenticate: false)
+        expect(schemes_list(accepted_responses: [401], should_authenticate: false).status).to eq 401
       end
 
       it "returns status 403 without the right scope" do
-        schemes_list(accepted_responses: [403], scopes: %w[wrong:scope])
+        expect(schemes_list(accepted_responses: [403], scopes: %w[wrong:scope]).status).to eq 403
       end
     end
 
     context "with no schemes" do
       it "returns status 200" do
-        schemes_list(accepted_responses: [200])
+        expect(schemes_list(accepted_responses: [200]).status).to eq 200
       end
 
       it "returns JSON" do
@@ -30,21 +30,21 @@ describe "Acceptance::Schemes" do
     context "when adding a scheme" do
       describe "security" do
         it "returns status 401 with no authentication" do
-          add_scheme(name: "TEST", accepted_responses: [401], should_authenticate: false)
+          expect(add_scheme(name: "TEST", accepted_responses: [401], should_authenticate: false).status).to eq 401
         end
 
         it "returns status 403 with wrong scopes" do
-          add_scheme(name: "TEST", accepted_responses: [403], scopes: %w[wrong:scope])
+          expect(add_scheme(name: "TEST", accepted_responses: [403], scopes: %w[wrong:scope]).status).to eq 403
         end
       end
 
       it "returns status 400 if supplied data doesn't match schema" do
         # Integer value for scheme name is invalid - should be a string
-        add_scheme(name: 123_456, accepted_responses: [400])
+        expect(add_scheme(name: 123_456, accepted_responses: [400]).status).to eq 400
       end
 
       it "returns status 201" do
-        add_scheme(name: "XYMZALERO", accepted_responses: [201])
+        expect(add_scheme(name: "XYMZALERO", accepted_responses: [201]).status).to eq 201
       end
 
       it "returns json" do
@@ -67,8 +67,8 @@ describe "Acceptance::Schemes" do
       end
 
       it "cannot have the same name twice" do
-        add_scheme(name: "XYMZALERO", accepted_responses: [201])
-        add_scheme(name: "XYMZALERO", accepted_responses: [400])
+        expect(add_scheme(name: "XYMZALERO", accepted_responses: [201]).status).to eq 201
+        expect(add_scheme(name: "XYMZALERO", accepted_responses: [400]).status).to eq 400
       end
     end
   end
@@ -76,21 +76,21 @@ describe "Acceptance::Schemes" do
   context "when updating a scheme" do
     describe "security" do
       it "returns status 401 with no authentication" do
-        update_scheme(scheme_id: 123, accepted_responses: [401], should_authenticate: false)
+        expect(update_scheme(scheme_id: 123, accepted_responses: [401], should_authenticate: false).status).to eq 401
       end
 
       it "returns status 403 without the right scope" do
-        update_scheme(scheme_id: 123, accepted_responses: [403], scopes: %w[wrong:scope])
+        expect(update_scheme(scheme_id: 123, accepted_responses: [403], scopes: %w[wrong:scope]).status).to eq 403
       end
     end
 
     it "returns 404 for a scheme that doesnt exist" do
-      update_scheme(scheme_id: 123, body: { name: "name", active: true }, accepted_responses: [404])
+      expect(update_scheme(scheme_id: 123, body: { name: "name", active: true }, accepted_responses: [404]).status).to eq 404
     end
 
     it "rejects a message without the required keys" do
       scheme_id = add_scheme_and_get_id(name: "My old scheme name")
-      update_scheme(scheme_id:, accepted_responses: [400])
+      expect(update_scheme(scheme_id:, accepted_responses: [400]).status).to eq 400
     end
 
     it "changes all of the details of an existing scheme" do

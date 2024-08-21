@@ -9,15 +9,15 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive", :set_with_timeco
 
   describe "security scenarios" do
     it "rejects a request that is not authenticated" do
-      fetch_renewable_heat_incentive assessment_id: "123",
-                                     accepted_responses: [401],
-                                     should_authenticate: false
+      expect(fetch_renewable_heat_incentive(assessment_id: "123",
+                                            accepted_responses: [401],
+                                            should_authenticate: false).status).to eq(401)
     end
 
     it "rejects a request with the wrong scopes" do
-      fetch_renewable_heat_incentive assessment_id: "124",
-                                     accepted_responses: [403],
-                                     scopes: %w[wrong:scope]
+      expect(fetch_renewable_heat_incentive(assessment_id: "124",
+                                            accepted_responses: [403],
+                                            scopes: %w[wrong:scope]).status).to eq(403)
     end
   end
 
@@ -30,7 +30,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive", :set_with_timeco
     end
 
     it "returns status 404 for a get" do
-      fetch_renewable_heat_incentive assessment_id: "DOESNT-EXIST", accepted_responses: [404]
+      expect(fetch_renewable_heat_incentive(assessment_id: "DOESNT-EXIST", accepted_responses: [404]).status).to eq(404)
     end
 
     it "returns the expected error response" do
@@ -519,18 +519,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive", :set_with_timeco
 
         # Update created_at so that we expect 0000-0000-0000-0000-0002 to be
         # the "latest"
-        ActiveRecord::Base.connection.exec_query(
-          "UPDATE assessments SET created_at = '2020-10-04 11:30:00'
-           WHERE assessment_id = '0000-0000-0000-0000-0001'",
-        )
-        ActiveRecord::Base.connection.exec_query(
-          "UPDATE assessments SET created_at = '2020-10-04 12:30:00'
-           WHERE assessment_id = '0000-0000-0000-0000-0003'",
-        )
-        ActiveRecord::Base.connection.exec_query(
-          "UPDATE assessments SET created_at = '2020-10-04 13:30:00'
-            WHERE assessment_id = '0000-0000-0000-0000-0002'",
-        )
+        Gateway::AssessmentsGateway::Assessment.update("0000-0000-0000-0000-0001", created_at: "2020-10-04 11:30:00")
+        Gateway::AssessmentsGateway::Assessment.update("0000-0000-0000-0000-0003", created_at: "2020-10-04 12:30:00")
+        Gateway::AssessmentsGateway::Assessment.update("0000-0000-0000-0000-0002", created_at: "2020-10-04 13:30:00")
       end
 
       it "returns the information for the assessment with latest created_at" do

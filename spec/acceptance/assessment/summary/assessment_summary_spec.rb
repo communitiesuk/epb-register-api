@@ -6,20 +6,20 @@ describe "Acceptance::AssessmentSummary", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   it "returns 404 for an assessment that doesnt exist" do
-    fetch_assessment_summary(id: "0000-0000-0000-0000-0000", accepted_responses: [404])
+    expect(fetch_assessment_summary(id: "0000-0000-0000-0000-0000", accepted_responses: [404]).status).to eq(404)
   end
 
   it "returns 400 for an assessment id that is not valid" do
-    fetch_assessment_summary(id: "0000-0000-0000-0000-0000%23", accepted_responses: [400])
+    expect(fetch_assessment_summary(id: "0000-0000-0000-0000-0000%23", accepted_responses: [400]).status).to eq(400)
   end
 
   describe "security scenarios" do
     it "rejects a request that is not authenticated" do
-      fetch_assessment_summary(id: "123", accepted_responses: [401], should_authenticate: false)
+      expect(fetch_assessment_summary(id: "123", accepted_responses: [401], should_authenticate: false).status).to eq(401)
     end
 
     it "rejects a request with the wrong scopes" do
-      fetch_assessment_summary(id: "124", accepted_responses: [403], scopes: %w[wrong:scope])
+      expect(fetch_assessment_summary(id: "124", accepted_responses: [403], scopes: %w[wrong:scope]).status).to eq(403)
     end
   end
 
@@ -101,7 +101,8 @@ describe "Acceptance::AssessmentSummary", :set_with_timecop do
     end
 
     it "Returns the summary for a URL without hyphens" do
-      fetch_assessment_summary(id: "00000000000000000000").body
+      body = JSON.parse(fetch_assessment_summary(id: "00000000000000000000").body).deep_symbolize_keys
+      expect(body[:data][:assessmentId]).to eq("0000-0000-0000-0000-0000")
     end
 
     it "contains the superseded_by key regardless if there is one" do

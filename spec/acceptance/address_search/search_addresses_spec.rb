@@ -17,52 +17,26 @@ describe "Acceptance::AddressSearch", :set_with_timecop do
 
     context "with an incorrect combination of parameters" do
       describe "building reference number and another parameter" do
-        it "returns a validation failure" do
-          assertive_get_in_search_scope(
-            "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0000&something=test",
-            accepted_responses: [422],
-          )
-        end
+        it_behaves_like "assertive_get", path:  "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0000&something=test", status_code: 422, scopes: %w[address:search], assertion: " validation failure"
       end
 
       describe "postcode and another parameter" do
-        it "returns a validation failure" do
-          assertive_get_in_search_scope(
-            "/api/search/addresses?postcode=A0%200AA&something=test",
-            accepted_responses: [422],
-          )
-        end
+        it_behaves_like "assertive_get", path:  "/api/search/addresses?postcode=A0%200AA&something=test", status_code: 422, scopes: %w[address:search], assertion: " validation failure"
       end
 
       describe "street, town and another parameter" do
-        it "returns a validation failure" do
-          assertive_get_in_search_scope(
-            "/api/search/addresses?street=place&town=place&something=test",
-            accepted_responses: [422],
-          )
-        end
+        it_behaves_like "assertive_get", path:  "/api/search/addresses?street=place&town=place&something=test", status_code: 422, scopes: %w[address:search], assertion: " validation failure"
       end
     end
   end
 
   context "with invalid auth details" do
     describe "with no authentication token" do
-      it "returns a 401" do
-        assertive_get(
-          "/api/search/addresses",
-          accepted_responses: [401],
-          should_authenticate: false,
-        )
-      end
+      it_behaves_like "assertive_get", path: "/api/search/addresses", status_code: 401, scopes: [], should_authenticate: false
     end
 
     describe "without the scope address:search" do
-      it "returns a 403" do
-        assertive_get(
-          "/api/search/addresses",
-          accepted_responses: [403],
-        )
-      end
+      it_behaves_like "assertive_get", path:  "/api/search/addresses?street=place&town=place&something=test", status_code: 403, scopes: []
     end
   end
 

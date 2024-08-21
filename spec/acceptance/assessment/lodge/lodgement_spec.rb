@@ -36,11 +36,11 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     end
 
     it "rejects an assessment with a schema that does not exist" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [400],
         schema_name: "MakeupSAP-20.0.0",
-      )
+      ).status).to eq(400)
     end
 
     it "rejects an assessment from an unregistered assessor" do
@@ -96,32 +96,32 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
     it "rejects an assessment where the ID already exists" do
       register_assessor
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+      ).status).to eq(201)
 
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [409],
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+      ).status).to eq(409)
     end
 
     it "rejects an assessment where the ID already exists but is cancelled" do
       register_assessor
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+      ).status).to eq(201)
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
@@ -134,24 +134,24 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         accepted_responses: [200],
       )
 
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [409],
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+      ).status).to eq(409)
     end
 
     it "rejects an assessment where the ID already exists but is not for issue" do
       register_assessor
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+      ).status).to eq(201)
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
@@ -501,39 +501,39 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-50"
 
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-      )
+      ).status).to eq(201)
     end
 
     it "accepts large current energy efficiency rating values for CEPC" do
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-267654"
 
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-      )
+      ).status).to eq(201)
     end
 
     it "saves the country id to the assessments_country_ids table" do
       map_lookups_to_country_codes { %w[E] }
-      lodge_assessment assessment_body: valid_rdsap_xml,
-                       accepted_responses: [201],
-                       scopes: %w[assessment:lodge],
-                       auth_data: {
-                         scheme_ids: [scheme_id],
-                       },
-                       migrated: "false"
+      expect(lodge_assessment(assessment_body: valid_rdsap_xml,
+                              accepted_responses: [201],
+                              scopes: %w[assessment:lodge],
+                              auth_data: {
+                                scheme_ids: [scheme_id],
+                              },
+                              migrated: "false").status).to eq(201)
 
       result = Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.find_by(assessment_id: "0000-0000-0000-0000-0000")
 
@@ -547,14 +547,14 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       it "accepts the lodgement" do
         xml_doc = Nokogiri.XML(valid_cepc_ni_xml)
-        lodge_assessment(
+        expect(lodge_assessment(
           assessment_body: xml_doc.to_xml,
           accepted_responses: [201],
           auth_data: {
             scheme_ids: [scheme_id],
           },
           schema_name: "CEPC-NI-8.0.0",
-        )
+        ).status).to eq(201)
       end
     end
 
@@ -876,13 +876,13 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
     context "when migrating the same assessment ID" do
       before do
-        lodge_assessment assessment_body: valid_rdsap_xml,
+        lodge_assessment(assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],
                          auth_data: {
                            scheme_ids: [scheme_id],
                          },
-                         migrated: true
+                         migrated: true)
       end
 
       it "is true in migrated column" do
@@ -906,18 +906,18 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       end
 
       it "is true in migrated column" do
-        lodge_assessment assessment_body: rdsap_xml,
-                         accepted_responses: [201],
-                         scopes: %w[assessment:lodge migrate:assessment],
-                         auth_data: {
-                           scheme_ids: [scheme_id],
-                         },
-                         migrated: true
+        expect(lodge_assessment(assessment_body: rdsap_xml,
+                                accepted_responses: [201],
+                                scopes: %w[assessment:lodge migrate:assessment],
+                                auth_data: {
+                                  scheme_ids: [scheme_id],
+                                },
+                                migrated: true).status).to eq 201
       end
     end
 
     it "rejects a migration from a client without migration role" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
         scopes: %w[assessment:lodge],
@@ -925,7 +925,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           scheme_ids: [scheme_id],
         },
         migrated: true,
-      )
+      ).status).to eq(403)
     end
   end
 
@@ -933,14 +933,14 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     it "rejects the assessment with a 400" do
       superseded_version = "RdSAP-Schema-19.0"
 
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: Samples.xml(superseded_version),
         accepted_responses: [400],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: superseded_version,
-      )
+      ).status).to eq(400)
     end
   end
 
@@ -958,14 +958,14 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
     it "rejects the assessment with a 400" do
       register_assessor
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: bad_sap_1900_data_version_xml,
         accepted_responses: [400],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-19.0.0",
-      )
+      ).status).to eq(400)
     end
   end
 
@@ -983,35 +983,35 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
     it "rejects the assessment with a 400" do
       register_assessor
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: bad_sap_1910_data_version_xml,
         accepted_responses: [400],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: "SAP-Schema-19.1.0",
-      )
+      ).status).to eq 400
     end
   end
 
   describe "security" do
     it "returns 401 with no authentication" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: "body",
         accepted_responses: [401],
         authenticate: false,
-      )
+      ).status).to eq 401
     end
 
     it "returns 403 with incorrect scopes" do
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: "body",
         accepted_responses: [403],
         auth_data: {
           scheme_ids: {},
         },
         scopes: %w[wrong:scope],
-      )
+      ).status).to eq 403
     end
 
     it "returns 403 if it is being lodged by the wrong scheme" do
@@ -1019,13 +1019,13 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id(name: "BADSCHEME")
 
-      lodge_assessment(
+      expect(lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
         auth_data: {
           scheme_ids: [different_scheme_id],
         },
-      )
+      ).status).to eq 403
     end
   end
 

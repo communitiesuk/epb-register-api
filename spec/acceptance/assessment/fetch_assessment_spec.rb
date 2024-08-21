@@ -16,11 +16,11 @@ describe "Acceptance::Assessment", :set_with_timecop do
 
   describe "security scenarios" do
     it "rejects a request that is not authenticated" do
-      fetch_assessment(id: "123", accepted_responses: [401], should_authenticate: false)
+      expect(fetch_assessment(id: "123", accepted_responses: [401], should_authenticate: false).status).to eq(401)
     end
 
     it "rejects a request with the wrong scopes" do
-      fetch_assessment(id: "124", accepted_responses: [403], scopes: %w[wrong:scope])
+      expect(fetch_assessment(id: "124", accepted_responses: [403], scopes: %w[wrong:scope]).status).to eq(403)
     end
   end
 
@@ -30,7 +30,7 @@ describe "Acceptance::Assessment", :set_with_timecop do
     end
 
     it "returns status 404 for a get" do
-      fetch_assessment(id: "9999-9999-9999-9999-9999", accepted_responses: [404])
+      expect(fetch_assessment(id: "9999-9999-9999-9999-9999", accepted_responses: [404]).status).to eq(404)
     end
 
     it "returns an error message structure" do
@@ -48,7 +48,7 @@ describe "Acceptance::Assessment", :set_with_timecop do
     let(:response) { JSON.parse fetch_assessment(id: "NOT-AN-RRN", accepted_responses: [400]).body }
 
     it "returns status 400 for a get" do
-      fetch_assessment(id: "NOT-AN-RRN", accepted_responses: [400])
+      expect(fetch_assessment(id: "NOT-AN-RRN", accepted_responses: [400]).status).to eq(400)
     end
 
     it "returns an error message structure" do
@@ -126,7 +126,7 @@ describe "Acceptance::Assessment", :set_with_timecop do
     end
 
     it "does not allow another scheme to download another schemes lodged data" do
-      fetch_assessment(
+      expect(fetch_assessment(
         id: "0000-0000-0000-0000-0000",
         accepted_responses: [403],
         auth_data: { 'scheme_ids': [other_scheme_id] },
@@ -134,7 +134,7 @@ describe "Acceptance::Assessment", :set_with_timecop do
         headers: {
           "Accept": "application/xml",
         },
-      )
+      ).status).to eq(403)
     end
   end
 end

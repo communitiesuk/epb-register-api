@@ -119,25 +119,25 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan", :set_with_
 
     context "when unauthenticated" do
       it "returns status 401" do
-        update_green_deal_plan plan_id: "AD0000002312",
-                               accepted_responses: [401],
-                               authenticate: false
+        expect(update_green_deal_plan(plan_id: "AD0000002312",
+                                      accepted_responses: [401],
+                                      authenticate: false).status).to eq(401)
       end
     end
 
     context "when unauthorised" do
       it "returns status 403" do
-        update_green_deal_plan plan_id: "AD0000002312",
-                               accepted_responses: [403],
-                               scopes: %w[wrong:scope]
+        expect(update_green_deal_plan(plan_id: "AD0000002312",
+                                      accepted_responses: [403],
+                                      scopes: %w[wrong:scope]).status).to eq(403)
       end
     end
 
     context "when plan does not exist" do
       it "returns status 404" do
-        update_green_deal_plan plan_id: "AD0000002312",
-                               body: valid_green_deal_plan_request_body,
-                               accepted_responses: [404]
+        expect(update_green_deal_plan(plan_id: "AD0000002312",
+                                      body: valid_green_deal_plan_request_body,
+                                      accepted_responses: [404]).status).to eq(404)
       end
     end
 

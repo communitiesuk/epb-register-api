@@ -44,7 +44,7 @@ describe "Acceptance::LodgementRules", :set_with_timecop do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
         xml_doc.at("//CEPC:Issue-Date").children = (Date.today << 12 * 5).to_s
 
-        lodge_assessment(
+        expect(lodge_assessment(
           assessment_body: xml_doc.to_xml,
           accepted_responses: [201],
           scopes: %w[assessment:lodge migrate:assessment],
@@ -53,7 +53,7 @@ describe "Acceptance::LodgementRules", :set_with_timecop do
           },
           migrated: true,
           schema_name: "CEPC-8.0.0",
-        )
+        ).status).to eq(201)
       end
     end
 
