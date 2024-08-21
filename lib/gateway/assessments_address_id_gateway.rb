@@ -25,7 +25,7 @@ module Gateway
       assessment_ids,
       new_address_id,
       new_source = "epb_team_update",
-      address_updated_at = DateTime.now()
+      address_updated_at = Time.now
     )
       ActiveRecord::Base.transaction do
         assessment_ids.each do |assessment_id|
@@ -40,7 +40,7 @@ module Gateway
       assessment_id,
       new_address_id,
       new_source = "epb_team_update",
-      address_updated_at = DateTime.now()
+      address_updated_at = Time.now
     )
       assessment_address_id_row =
         AssessmentsAddressId.find_by(assessment_id:)

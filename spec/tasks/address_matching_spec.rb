@@ -1,15 +1,6 @@
 require "rspec"
 
-shared_context "when address matching" do
-  def get_address_matching_csv
-    "lprn,uprn,quality,duplicated\n" \
-      "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
-      "LPRN-0000000002,UPRN-0000000022,GOOD,false\n"
-  end
-end
-
 describe "AddressMatching" do
-  include_context "when address matching"
   include RSpecRegisterApiServiceMixin
 
   before(:all) do
@@ -38,6 +29,58 @@ describe "AddressMatching" do
   let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
   let(:assessment_search_gateway) { Gateway::AssessmentsSearchGateway.new }
 
+  context "when we call the import_address_matching task" do
+    before do
+      allow($stdout).to receive(:puts)
+      EnvironmentStub
+        .all
+        .with("bucket_name", "test-bucket")
+        .with("file_name", "uprn_matching.csv")
+      HttpStub.s3_get_object("uprn_matching.csv", get_address_matching_csv)
+    end
+
+    context "with two addresses using an LPRN belong to the same property" do
+      it "Then both address IDs are updated" do
+        get_task("oneoff:address_matching:import_address_matching").invoke
+
+        assessment1 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0001",
+          ).first
+        assessment2 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0002",
+          ).first
+        expect(assessment1.get("address_id")).to eq("UPRN-0000000011")
+        expect(assessment2.get("address_id")).to eq("UPRN-0000000011")
+      end
+    end
+
+    context "with an address ID was previously updated by EPBR" do
+      before do
+        add_address_base(uprn: 91)
+        update_assessment_address_id(
+          assessment_id: "0000-0000-0000-0000-0001",
+          new_address_id: "UPRN-0000000091",
+        )
+      end
+
+      it "then the related assessment is not updated" do
+        get_task("oneoff:address_matching:import_address_matching").invoke
+
+        assessment1 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0001",
+          ).first
+        assessment2 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0002",
+          ).first
+        expect(assessment1.get("address_id")).to eq("UPRN-0000000091")
+        expect(assessment2.get("address_id")).to eq("UPRN-0000000011")
+      end
+    end
+  end
 
   context "when we call the update_address_lines task" do
     before { allow($stdout).to receive(:puts) }
@@ -86,6 +129,10 @@ describe "AddressMatching" do
   end
 end
 
+private
 
-
-
+def get_address_matching_csv
+  "lprn,uprn,quality,duplicated\n" \
+    "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
+    "LPRN-0000000002,UPRN-0000000022,GOOD,false\n"
+end

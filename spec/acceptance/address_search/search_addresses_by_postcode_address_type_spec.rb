@@ -8,7 +8,6 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
   let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
   let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
 
-
   before do
     insert_into_address_base("73546792", "A0 0AA", "5 Grimal Place", "Skewit Road", "London", "E")
     insert_into_address_base("73546793", "A0 0AA", "The house Grimal Place", "Skewit Road", "London", "E")
