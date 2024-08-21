@@ -4,8 +4,8 @@ info:
   title: Energy Performance of Buildings Register API
   description: Public API for EPBR integrations
   contact:
-    name: DLUHC Digital helpdesk (prefix email subject with "EPB")
-    email: dluhc.digital-services@levellingup.gov.uk
+    name: MHCLG Digital helpdesk (prefix email subject with "EPB")
+    email: mhclg.digital-services@communities.gov.uk
   version: 1.2.2
 
 servers:
