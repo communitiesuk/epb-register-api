@@ -204,7 +204,9 @@ describe "Acceptance::AddressSearch::ByBuildingReference", :set_with_timecop do
   end
 
   context "when the address ID is in an invalid format" do
-    it_behaves_like "address_search_by_id_error", argument: "DOESNTEXIST", status_code: 422
+    it "returns status 422" do
+      expect(address_search_by_id("DOESNTEXIST", accepted_responses: [422]).status).to eq 422
+    end
   end
 
   context "when an address has reports lodged using UPRN" do

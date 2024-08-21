@@ -40,7 +40,13 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
 
   describe "searching by postcode" do
     context "when an invalid address type is provided" do
-      it_behaves_like "assertive_get", path: "/api/search/addresses?postcode=A0%200AA&addressType=asdf", status_code: 422, scopes: %w[address:search]
+      it "returns status 422" do
+        expect(assertive_get(
+          "/api/search/addresses?postcode=A0%200AA&addressType=asdf",
+          accepted_responses: [422],
+          scopes: %w[address:search],
+        ).status).to eq(422)
+      end
     end
 
     context "when an address type of domestic is provided" do

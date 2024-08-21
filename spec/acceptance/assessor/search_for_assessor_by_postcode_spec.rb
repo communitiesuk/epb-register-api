@@ -37,9 +37,21 @@ describe "Acceptance::SearchForAssessor" do
       add_postcodes("SE1 7EZ")
     end
 
-    it_behaves_like "assertive_get", path: "api/assessors?postcode=SE17EZ", status_code: 400, scopes: %w[assessor:search], assertion: " for postcode search without qualification"
+    it "returns a 400 for postcode search without qualification" do
+      expect(assertive_get(
+        "api/assessors?postcode=SE17EZ",
+        accepted_responses: [400],
+        scopes: %w[assessor:search],
+      ).status).to eq 400
+    end
 
-    it_behaves_like "assertive_get", path: "/api/assessors", status_code: 400, scopes: %w[assessor:search], assertion: " for for no parameters"
+    it "returns a 400 or no parameters" do
+      expect(assertive_get(
+        "/api/assessors",
+        accepted_responses: [400],
+        scopes: %w[assessor:search],
+      ).status).to eq 400
+    end
   end
 
   context "when a search postcode is valid" do
