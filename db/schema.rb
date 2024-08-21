@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_06_094342) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_19_144800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -90,6 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_06_094342) do
   create_table "assessments_address_id", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.string "address_id"
     t.string "source"
+    t.datetime "address_updated_at"
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
 

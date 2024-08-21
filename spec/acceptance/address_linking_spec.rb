@@ -248,6 +248,17 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
         ],
       ).to eq "0000-0000-0000-0000-0000"
     end
+
+    it "updates the address updated at column in assessment address id" do
+      update_assessment_address_id(
+        assessment_id: "0000-0000-0000-0000-0000",
+        new_address_id: "UPRN-000073546793",
+      )
+
+      response = ActiveRecord::Base.connection.exec_query("SELECT *  FROM assessments_address_id").first["address_updated_at"]
+
+      expect(response).to eq "2021-06-21 00:00:00 UTC"
+    end
   end
 
   context "when two assessments exist" do

@@ -6,6 +6,7 @@ module AddressTableHelper
       db.create_table :assessments_address_id_backup, primary_key: :assessment_id, id: :string do |t|
         t.string :address_id, index: true
         t.string :source
+        t.datetime :address_updated_at
       end
       puts "[#{Time.now}] Created empty assessments_address_id_backup table"
     end

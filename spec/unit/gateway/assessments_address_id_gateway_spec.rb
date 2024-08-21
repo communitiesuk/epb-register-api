@@ -18,6 +18,14 @@ describe Gateway::AssessmentsAddressIdGateway do
 
   describe "#update_assessments_address_id_mapping" do
     context "when there is not source argument" do
+      before do
+        Timecop.freeze(2024, 12, 22, 0, 0, 0)
+      end
+
+      after do
+        Timecop.return
+      end
+
       it "updates assessments to with a new address_id", :aggregate_failures do
         assessment_ids = %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
         gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000001")
@@ -25,6 +33,8 @@ describe Gateway::AssessmentsAddressIdGateway do
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0003").pluck(:address_id)).to eq %w[RRN-0000-0000-0000-0000-0002]
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:source)).to eq %w[epb_team_update]
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0003").pluck(:source)).to eq %w[lodgement]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:address_updated_at)).to eq [DateTime.parse("2024-12-22 00:00:00.000000000 +0000")]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0003").pluck(:address_updated_at)).to eq [nil]
       end
     end
 

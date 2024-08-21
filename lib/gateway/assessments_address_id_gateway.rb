@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "date"
+
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.uncountable "assessments_address_id"
 end
@@ -22,11 +24,12 @@ module Gateway
     def update_assessments_address_id_mapping(
       assessment_ids,
       new_address_id,
-      new_source = "epb_team_update"
+      new_source = "epb_team_update",
+      address_updated_at = DateTime.now()
     )
       ActiveRecord::Base.transaction do
         assessment_ids.each do |assessment_id|
-          update_address_id(assessment_id, new_address_id, new_source)
+          update_address_id(assessment_id, new_address_id, new_source, address_updated_at)
         end
       end
     end
@@ -36,12 +39,13 @@ module Gateway
     def update_address_id(
       assessment_id,
       new_address_id,
-      new_source = "epb_team_update"
+      new_source = "epb_team_update",
+      address_updated_at = DateTime.now()
     )
       assessment_address_id_row =
         AssessmentsAddressId.find_by(assessment_id:)
       assessment_address_id_row.update(
-        { "address_id" => new_address_id, "source" => new_source },
+        { "address_id" => new_address_id, "source" => new_source, "address_updated_at" => address_updated_at },
       )
     end
   end
