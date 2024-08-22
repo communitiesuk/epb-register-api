@@ -1,4 +1,21 @@
+shared_context "when calling the storage gateway" do
+  def stub_file_response(client)
+    client.stub_responses(
+      :get_object,
+      lambda do |context|
+        if context.params[:key] == "my-file" &&
+          context.params[:bucket] == "my-bucket"
+          { body: "Hello!" }
+        else
+          "NoSuchKey"
+        end
+      end,
+    )
+  end
+end
+
 describe Gateway::StorageGateway do
+  include_context "when calling the storage gateway"
   context "when storage is initialised" do
     subject(:storage_gateway) do
       described_class.new(
@@ -24,18 +41,4 @@ describe Gateway::StorageGateway do
       }.to raise_error Aws::S3::Errors::NoSuchKey
     end
   end
-end
-
-def stub_file_response(client)
-  client.stub_responses(
-    :get_object,
-    lambda do |context|
-      if context.params[:key] == "my-file" &&
-           context.params[:bucket] == "my-bucket"
-        { body: "Hello!" }
-      else
-        "NoSuchKey"
-      end
-    end,
-  )
 end

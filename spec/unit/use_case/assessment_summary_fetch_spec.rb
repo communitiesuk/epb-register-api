@@ -1,5 +1,15 @@
+shared_context "when fetching an assessment summary" do
+  def set_xml_date(epc_xml, date)
+    epc_xml.at("Inspection-Date").children = date
+    epc_xml.at("Completion-Date").children = date
+    epc_xml.at("Registration-Date").children = date
+    epc_xml
+  end
+end
+
 describe "UseCase::AssessmentSummary::Fetch", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
+  include_context "when fetching an assessment summary"
 
   let(:scheme_id) do
     add_scheme_and_get_id
@@ -386,11 +396,4 @@ describe "UseCase::AssessmentSummary::Fetch", :set_with_timecop do
       expect(results).to eq(SummaryStub.fetch_summary_sap_19(scheme_id))
     end
   end
-end
-
-def set_xml_date(epc_xml, date)
-  epc_xml.at("Inspection-Date").children = date
-  epc_xml.at("Completion-Date").children = date
-  epc_xml.at("Registration-Date").children = date
-  epc_xml
 end

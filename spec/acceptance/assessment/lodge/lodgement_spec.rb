@@ -1,7 +1,64 @@
 # frozen_string_literal: true
 
+shared_context "when lodging EPCS" do
+  def lodge_and_fetch_assessment(rrn_node:, uprn_node:, xml: valid_rdsap_xml, ensure_uprns: true)
+    assessment = Nokogiri.XML(xml)
+    assessment.at("RRN").children = rrn_node
+    assessment.at("UPRN").children = uprn_node
+
+    lodge_assessment(
+      assessment_body: assessment.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      ensure_uprns:,
+    )
+
+    get_assessment_summary(rrn_node)
+  end
+
+  def lodge_and_fetch_non_domestic_assessment(
+    rrn_node:,
+    uprn_node:,
+    related_rrn_node:,
+    ensure_uprns: true
+  )
+    assessment = Nokogiri.XML(valid_cepc_rr_xml)
+    assessment.xpath("//CEPC:RRN").children.first.content = rrn_node
+    assessment.xpath("//CEPC:RRN").children.last.content = related_rrn_node
+
+    assessment.xpath("//CEPC:UPRN").children.first.content = uprn_node
+    assessment.xpath("//CEPC:UPRN").children.last.content = uprn_node
+
+    assessment.xpath("//CEPC:Related-RRN").children.first.content =
+      related_rrn_node
+    assessment.xpath("//CEPC:Related-RRN").children.last.content = rrn_node
+
+    lodge_assessment(
+      assessment_body: assessment.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: "CEPC-8.0.0",
+      ensure_uprns:,
+    )
+
+    get_assessment_summary(rrn_node)
+  end
+
+  def get_assessment_summary(assessment_id)
+    JSON.parse(
+      fetch_assessment_summary(id: assessment_id).body,
+      symbolize_names: true,
+    )
+  end
+end
+
 describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
+  include_context "when lodging EPCS"
 
   before do
     add_countries
@@ -1027,59 +1084,5 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         },
       ).status).to eq 403
     end
-  end
-
-  def lodge_and_fetch_assessment(rrn_node:, uprn_node:, xml: valid_rdsap_xml, ensure_uprns: true)
-    assessment = Nokogiri.XML(xml)
-    assessment.at("RRN").children = rrn_node
-    assessment.at("UPRN").children = uprn_node
-
-    lodge_assessment(
-      assessment_body: assessment.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      ensure_uprns:,
-    )
-
-    get_assessment_summary(rrn_node)
-  end
-
-  def lodge_and_fetch_non_domestic_assessment(
-    rrn_node:,
-    uprn_node:,
-    related_rrn_node:,
-    ensure_uprns: true
-  )
-    assessment = Nokogiri.XML(valid_cepc_rr_xml)
-    assessment.xpath("//CEPC:RRN").children.first.content = rrn_node
-    assessment.xpath("//CEPC:RRN").children.last.content = related_rrn_node
-
-    assessment.xpath("//CEPC:UPRN").children.first.content = uprn_node
-    assessment.xpath("//CEPC:UPRN").children.last.content = uprn_node
-
-    assessment.xpath("//CEPC:Related-RRN").children.first.content =
-      related_rrn_node
-    assessment.xpath("//CEPC:Related-RRN").children.last.content = rrn_node
-
-    lodge_assessment(
-      assessment_body: assessment.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      schema_name: "CEPC-8.0.0",
-      ensure_uprns:,
-    )
-
-    get_assessment_summary(rrn_node)
-  end
-
-  def get_assessment_summary(assessment_id)
-    JSON.parse(
-      fetch_assessment_summary(id: assessment_id).body,
-      symbolize_names: true,
-    )
   end
 end

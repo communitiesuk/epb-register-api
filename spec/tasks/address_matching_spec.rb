@@ -1,7 +1,16 @@
 require "rspec"
 
+shared_context "when address matching" do
+  def get_address_matching_csv
+    "lprn,uprn,quality,duplicated\n" \
+      "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
+      "LPRN-0000000002,UPRN-0000000022,GOOD,false\n"
+  end
+end
+
 describe "AddressMatching" do
   include RSpecRegisterApiServiceMixin
+  include_context "when address matching"
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
@@ -127,12 +136,4 @@ describe "AddressMatching" do
       end
     end
   end
-end
-
-private
-
-def get_address_matching_csv
-  "lprn,uprn,quality,duplicated\n" \
-    "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
-    "LPRN-0000000002,UPRN-0000000022,GOOD,false\n"
 end

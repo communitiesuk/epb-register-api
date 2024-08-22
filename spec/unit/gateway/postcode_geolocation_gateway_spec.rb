@@ -1,4 +1,11 @@
+shared_context "when calling the postcode geolocation gateway" do
+  def table_exists?(table_name)
+    ActiveRecord::Base.connection.exec_query("SELECT EXISTS (SELECT FROM pg_tables WHERE tablename  in ('#{table_name}'));")[0]["exists"]
+  end
+end
+
 describe Gateway::PostcodeGeolocationGateway do
+  include_context "when calling the postcode geolocation gateway"
   let(:gateway) { described_class.new }
   let(:db) { ActiveRecord::Base.connection }
 
@@ -79,8 +86,4 @@ WHERE tablename  in ('postcode_geolocation_tmp','postcode_geolocation_legacy','p
       expect(result[0]["exists"]).to be false
     end
   end
-end
-
-def table_exists?(table_name)
-  ActiveRecord::Base.connection.exec_query("SELECT EXISTS (SELECT FROM pg_tables WHERE tablename  in ('#{table_name}'));")[0]["exists"]
 end
