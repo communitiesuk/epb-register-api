@@ -1,3 +1,4 @@
+# select all private subnets when running the task in the console to update the data warehouse
 namespace :maintenance do
   desc "Link non domestic "
   task :bulk_link_assessments do
