@@ -7,29 +7,14 @@ describe Domain::Lodgement do
     Domain::CountryLookup.new(country_codes: [:E])
   end
 
-  let!(:rdsap_twenty) do
-    Samples.xml "RdSAP-Schema-20.0.0"
-  end
-
-  let!(:rdsap_twenty_one) do
-    Samples.xml "RdSAP-Schema-21.0.0"
-  end
-
-  let!(:cepc) do
+  let(:cepc) do
     Samples.xml "CEPC-8.0.0", "dec-rr"
-  end
-
-  let!(:sap_nineteen) do
-    Samples.xml "SAP-Schema-19.0.0"
-  end
-
-  let!(:sap_eighteen) do
-    Samples.xml "SAP-Schema-18.0.0"
   end
 
   describe "#fetch_data" do
     context "when an RdSAP is passed" do
-      let(:domain) { described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0") }
+      let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
+      let(:domain) { described_class.new(xml, "RdSAP-Schema-20.0.0") }
 
       it "returns an assessment hash in an array" do
         expect(domain.fetch_data).to be_a Array
@@ -61,26 +46,30 @@ describe Domain::Lodgement do
   end
 
   describe "#fetch_country_id" do
+    let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
+
     it "fetches the country_id from assessment data" do
-      domain = described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0")
+      domain = described_class.new(xml, "RdSAP-Schema-20.0.0")
       domain.add_country_id_to_data(1)
       expect(domain.fetch_country_id).to eq 1
     end
 
     it "fetches nil from the country_id" do
-      domain_one = described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0")
+      domain_one = described_class.new(xml, "RdSAP-Schema-20.0.0")
       expect(domain_one.fetch_country_id).to be_nil
     end
   end
 
   describe "#country_code" do
     it "returns the country code from an RdSAP" do
-      domain = described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0")
+      xml = Samples.xml "RdSAP-Schema-20.0.0"
+      domain = described_class.new(xml, "RdSAP-Schema-20.0.0")
       expect(domain.country_code).to eq("EAW")
     end
 
     it "returns the country code from an RdSAP 21.0.0" do
-      domain = described_class.new(rdsap_twenty_one, "RdSAP-Schema-21.0.0")
+      xml = Samples.xml "RdSAP-Schema-21.0.0"
+      domain = described_class.new(xml, "RdSAP-Schema-21.0.0")
       expect(domain.country_code).to eq("ENG")
     end
 
@@ -92,8 +81,10 @@ describe Domain::Lodgement do
   end
 
   describe "#schema_version" do
+    let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
+
     it "returns decimal of the RdSAP schema version" do
-      domain = described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0")
+      domain = described_class.new(xml, "RdSAP-Schema-20.0.0")
       expect(domain.schema_version).to eq 20.0
     end
 
@@ -111,7 +102,8 @@ describe Domain::Lodgement do
     end
 
     it "returns false for RdSAP-Schema-20.0.0" do
-      domain = described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0")
+      xml = Samples.xml "RdSAP-Schema-20.0.0"
+      domain = described_class.new(xml, "RdSAP-Schema-20.0.0")
       expect(domain.is_new_rdsap?).to be false
     end
 
@@ -123,17 +115,20 @@ describe Domain::Lodgement do
 
   describe "#is_new_sap?" do
     it "returns true for SAP-Schema-19.0.0" do
-      domain = described_class.new(sap_nineteen, "SAP-Schema-19.0.0")
+      xml = Samples.xml "SAP-Schema-19.0.0"
+      domain = described_class.new(xml, "SAP-Schema-19.0.0")
       expect(domain.is_new_sap?).to be true
     end
 
     it "returns false for SAP-Schema-18.0.0" do
-      domain = described_class.new(sap_eighteen, "SAP-Schema-18.0.0")
+      xml = Samples.xml "SAP-Schema-18.0.0"
+      domain = described_class.new(xml, "SAP-Schema-18.0.0")
       expect(domain.is_new_rdsap?).to be false
     end
 
     it "returns false for RdSAP which contasin string 'SAP'" do
-      domain = described_class.new(rdsap_twenty, "RdSAP-Schema-20.0.0")
+      xml = Samples.xml "RdSAP-Schema-20.0.0"
+      domain = described_class.new(xml, "RdSAP-Schema-20.0.0")
       expect(domain.is_new_rdsap?).to be false
     end
   end

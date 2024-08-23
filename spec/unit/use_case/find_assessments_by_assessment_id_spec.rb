@@ -2,7 +2,7 @@ describe UseCase::FindAssessmentsByAssessmentId do
   subject(:use_case) { described_class.new }
 
   let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
-  let(:first_assessment1) do
+  let(:first_assessment) do
     Domain::AssessmentSearchResult.new(
       type_of_assessment: "RdSAP",
       assessment_id: "0000-0000-0000-0000-0000",
@@ -67,7 +67,7 @@ describe UseCase::FindAssessmentsByAssessmentId do
 
   before do
     allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_search_gateway)
-    allow(assessments_search_gateway).to receive(:search_by_assessment_id).with("0000-0000-0000-0000-0000", { restrictive: false }).and_return([first_assessment1])
+    allow(assessments_search_gateway).to receive(:search_by_assessment_id).with("0000-0000-0000-0000-0000", { restrictive: false }).and_return([first_assessment])
     allow(assessments_search_gateway).to receive(:search_by_assessment_id).with("0000-0000-0000-0000-0001", { restrictive: false }).and_return([second_assessment])
   end
 
