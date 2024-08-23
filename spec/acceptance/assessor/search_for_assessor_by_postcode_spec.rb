@@ -52,6 +52,11 @@ describe "Acceptance::SearchForAssessor" do
         scopes: %w[assessor:search],
       ).status).to eq 400
     end
+
+    it "rejects a request which searches for a bad qualification" do
+      add_postcodes("SA70 7BD")
+      expect(assessors_search(postcode: "SA707BD", qualification: "doubleGlazingFitter", accepted_responses: [400]).status).to eq 400
+    end
   end
 
   context "when a search postcode is valid" do
