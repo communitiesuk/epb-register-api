@@ -14,18 +14,15 @@ describe Gateway::AssessmentsAddressIdGateway do
       { assessment_id: "0000-0000-0000-0000-0002", address_id: "RRN-0000-0000-0000-0000-0001", source: "lodgement" },
       { assessment_id: "0000-0000-0000-0000-0003", address_id: "RRN-0000-0000-0000-0000-0002", source: "lodgement" },
     ])
+    Timecop.freeze(2024, 12, 22, 0, 0, 0)
+  end
+
+  after(:all) do
+    Timecop.return
   end
 
   describe "#update_assessments_address_id_mapping" do
     context "when there is not source argument" do
-      before do
-        Timecop.freeze(2024, 12, 22, 0, 0, 0)
-      end
-
-      after do
-        Timecop.return
-      end
-
       it "updates assessments to with a new address_id", :aggregate_failures do
         assessment_ids = %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
         gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000001")
@@ -44,6 +41,28 @@ describe Gateway::AssessmentsAddressIdGateway do
         gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000002", "epb_bulk_linking")
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:address_id)).to eq %w[UPRN-000000000002]
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:source)).to eq %w[epb_bulk_linking]
+      end
+    end
+  end
+
+  describe "#fetch_updated_group_count" do
+    context "when fetching updated group count" do
+      it "returns the number of updated address groups" do
+        assessment_ids = %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
+        gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000001", "epb_bulk_linking")
+        number_of_groups = gateway.fetch_updated_group_count(Time.now)
+        expect(number_of_groups).to eq 1
+      end
+    end
+  end
+
+  describe "#fetch_updated_address_id_count" do
+    context "when fetching updated address id count" do
+      it "returns the number of updated address ids" do
+        assessment_ids = %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
+        gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000001", "epb_bulk_linking")
+        number_of_address_ids = gateway.fetch_updated_address_id_count(Time.now)
+        expect(number_of_address_ids).to eq 2
       end
     end
   end

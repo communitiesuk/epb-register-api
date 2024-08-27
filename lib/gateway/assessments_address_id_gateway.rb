@@ -34,6 +34,44 @@ module Gateway
       end
     end
 
+    def fetch_updated_group_count(day_date)
+      sql = <<-SQL
+      SELECT COUNT(DISTINCT address_id) as cnt FROM assessments_address_id
+      WHERE source = 'epb_bulk_linking'
+      AND to_char(address_updated_at, 'YYYY-MM-dd') = $1;
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "day_date",
+          day_date,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
+      result.map { |rows| rows["cnt"] }.first
+    end
+
+    def fetch_updated_address_id_count(day_date)
+      sql = <<-SQL
+      SELECT COUNT(*) as cnt FROM assessments_address_id
+      WHERE source = 'epb_bulk_linking'
+      AND to_char(address_updated_at, 'YYYY-MM-dd') = $1;
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "day_date",
+          day_date,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
+      result.map { |rows| rows["cnt"] }.first
+    end
+
   private
 
     def update_address_id(
