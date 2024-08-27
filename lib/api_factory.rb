@@ -255,6 +255,10 @@ class ApiFactory
       )
   end
 
+  def self.fetch_address_id_update_stats
+    @fetch_address_id_update_stats ||= UseCase::FetchAddressIdUpdateStats.new(assessments_address_id_gateway)
+  end
+
   def self.fetch_assessments_to_link_gateway
     @fetch_assessments_to_link_gateway ||= Gateway::FetchAssessmentsToLinkGateway.new
   end

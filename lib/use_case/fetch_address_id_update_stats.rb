@@ -5,10 +5,11 @@ module UseCase
     end
 
     def execute(day_date)
-      {
-        address_count: @gateway.fetch_updated_address_id_count(day_date),
-        group_count: @gateway.fetch_updated_group_count(day_date),
-      }
+      address_count = @gateway.fetch_updated_address_id_count(day_date)
+      group_count = @gateway.fetch_updated_group_count(day_date)
+
+      return "This week: #{group_count} groups of addresses were linked, #{address_count} address ids were updated"
+
     end
   end
 end
