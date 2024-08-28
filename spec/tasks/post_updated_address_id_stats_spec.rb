@@ -13,17 +13,33 @@ describe "post weekly address id update stats rake" do
     allow(ApiFactory).to receive(:fetch_address_id_update_stats).and_return(fetch_address_id_update_stats)
     allow(fetch_address_id_update_stats).to receive(:execute).and_return(text)
     allow(Helper::SlackHelper).to receive(:post_to_slack)
-    post_updated_address_id_stats.invoke
+    Timecop.freeze(2024, 12, 22, 0, 0, 0)
   end
 
   after do
     EnvironmentStub.remove(%w[EPB_TEAM_SLACK_URL])
+    Timecop.return
   end
 
   context "when calling the rake" do
     it "posts the results to Slack" do
-      expect(fetch_address_id_update_stats).to have_received(:execute)
+    post_updated_address_id_stats.invoke
       expect(Helper::SlackHelper).to have_received(:post_to_slack).with(text:, webhook_url:)
+      expect(fetch_address_id_update_stats).to have_received(:execute).with("2024-12-21")
     end
   end
+
+  context "when passing in the day_date" do
+    before do
+      EnvironmentStub.with("DAY_DATE", "2024-02-03")
+    end
+    after do
+      EnvironmentStub.remove(%w[DAY_DATE])
+    end
+    it "it posts the results to Slack for the specific day" do
+      post_updated_address_id_stats.invoke
+      expect(fetch_address_id_update_stats).to have_received(:execute).with("2024-02-03")
+    end
+  end
+
 end
