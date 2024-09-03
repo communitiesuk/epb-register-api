@@ -477,6 +477,10 @@ class ApiFactory
     @audit_logs_gateway ||= Gateway::AuditLogsGateway.new
   end
 
+  def self.slack_gateway(slack_web_client: nil)
+    @slack_gateway ||= Gateway::SlackGateway.new(slack_web_client:)
+  end
+
   def self.logger
     return @logger unless @logger.nil?
 

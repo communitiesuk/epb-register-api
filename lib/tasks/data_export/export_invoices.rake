@@ -28,6 +28,7 @@ namespace :data_export do
                    scheme_id,
                  )
                else
+
                  assessment_use_case.execute(
                    Date.parse(start_date),
                    Date.parse(end_date),
@@ -41,8 +42,17 @@ namespace :data_export do
     message = "#{ENV['STAGE']} - Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{report_type}"
     message.concat(" - scheme_id = #{scheme_id}") unless scheme_id.nil?
 
-    Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
-    Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
+    begin
+      Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
+      ApiFactory.slack_gateway.upload_file(file_path: zip_file, message:)
+    rescue Boundary::NoData => e
+      report_to_sentry(e)
+    rescue Boundary::SlackMessageError => e
+      report_to_sentry(e)
+    rescue StandardError => e
+      puts e.message
+    end
+    File.delete(zip_file) if File.exist?(zip_file)
   end
 
   desc "Export schema invoices on the 1st of the month every month"
@@ -68,14 +78,19 @@ namespace :data_export do
       message = "#{ENV['STAGE']} - Invoice report for #{Date.parse(start_date).strftime('%B %Y')} #{report_type}"
       message.concat(" - scheme_id = #{scheme_id}")
 
-      Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
-      Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
-    rescue Boundary::NoData => e
-      report_to_sentry(e)
-    rescue Boundary::SlackMessageError => e
-      report_to_sentry(e)
-    rescue StandardError => e
-      puts e.message
+      begin
+        Helper::ExportInvoicesHelper.save_file(raw_data, csv_file, file_name)
+        # Helper::ExportInvoicesHelper.send_to_slack(zip_file, message)
+        ApiFactory.slack_gateway.upload_file(file_path: zip_file, message:)
+      rescue Boundary::NoData => e
+        report_to_sentry(e)
+      rescue Boundary::SlackMessageError => e
+        report_to_sentry(e)
+      rescue StandardError => e
+        puts e.message
+      end
+
+      File.delete(zip_file) if File.exist?(zip_file)
     end
   end
 end

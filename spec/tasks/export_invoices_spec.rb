@@ -1,17 +1,35 @@
 require "sentry-ruby"
+require "slack"
 
 describe "monthly invoice export" do
   let(:monthly_invoice_rake) { get_task("data_export:export_invoices") }
+  let(:slack_gateway) { instance_double(Gateway::SlackGateway) }
+  let(:slack_web_client) { instance_double(Slack::Web::Client) }
+  let(:slack_external_url_body) { { "upload_url" => "https://files.slack.com/upload/v1/Ad4FoJN1mC67CgACFF", "file_id" => "F07KB41F4P7", "ok" => true } }
+
+  before do
+    WebMock.enable!
+    WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
+    allow(ApiFactory).to receive(:slack_gateway).and_return(slack_gateway)
+    allow(Gateway::SlackGateway).to receive(:new).and_return(slack_gateway)
+    allow(slack_gateway).to receive_messages(upload_file: true, post_file: true)
+    allow(slack_web_client).to receive_messages(files_getUploadURLExternal: slack_external_url_body, files_completeUploadExternal: true)
+  end
+
+  after do
+    Timecop.return
+    WebMock.disable!
+  end
 
   context "when two arguments are passed to the rake" do
-    before do
-      WebMock.enable!
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
-    end
-
     context "when invalid date range is passed" do
+      before do
+        allow(Sentry).to receive(:capture_exception)
+      end
+
       it "raises a no data error" do
-        expect { monthly_invoice_rake.invoke("22-08-01", "21-08-31", "scheme_name_type") }.to raise_error Boundary::NoData, "no data to be saved for: get assessment count by scheme name and type scheme_name_type"
+        monthly_invoice_rake.invoke("22-08-01", "21-08-31", "scheme_name_type")
+        expect(Sentry).to have_received(:capture_exception).with(Boundary::NoData).exactly(1).times
       end
     end
 
@@ -36,10 +54,7 @@ describe "monthly invoice export" do
 
       it "posts the CSV to Slack" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type")
-        expect(WebMock).to have_requested(
-          :post,
-          "https://slack.com/api/files.upload",
-        ).with(headers: { "Content-Type" => %r{multipart/form-data} })
+        expect(slack_gateway).to have_received(:upload_file).with(file_path: "scheme_name_type_invoice.zip", message: "test - Invoice report for August 2022 scheme_name_type").exactly(1).times
       end
 
       it "deletes the generated CSV file" do
@@ -72,10 +87,7 @@ describe "monthly invoice export" do
 
       it "posts the CSV to Slack" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31", "region_type")
-        expect(WebMock).to have_requested(
-          :post,
-          "https://slack.com/api/files.upload",
-        ).with(headers: { "Content-Type" => %r{multipart/form-data} })
+        expect(slack_gateway).to have_received(:upload_file).exactly(1).times
       end
 
       it "deletes the generated CSV file" do
@@ -111,10 +123,7 @@ describe "monthly invoice export" do
 
       it "posts the CSV to Slack" do
         monthly_invoice_rake.invoke("22-08-01", "22-08-31", "rrn_scheme_type", 1)
-        expect(WebMock).to have_requested(
-          :post,
-          "https://slack.com/api/files.upload",
-        ).with(headers: { "Content-Type" => %r{multipart/form-data} })
+        expect(slack_gateway).to have_received(:upload_file).exactly(1).times
       end
 
       it "deletes the generated CSV file" do
@@ -130,7 +139,7 @@ describe "monthly invoice export" do
   context "when passing environmental variables to the rake" do
     before do
       WebMock.enable!
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
+      allow(ApiFactory).to receive_messages(get_assessment_count_by_scheme_name_type: use_case, slack_gateway:)
     end
 
     context "when getting the assessment count by scheme name and type" do
@@ -211,20 +220,15 @@ describe "monthly invoice export" do
     before do
       allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
       allow(use_case).to receive(:execute).and_return returned_data
-      WebMock.enable!
+
+      allow(slack_gateway).to receive(:post_file).and_raise Boundary::SlackMessageError
+      allow(slack_gateway).to receive(:upload_file).and_raise Boundary::SlackMessageError
+      allow(Sentry).to receive(:capture_exception)
+      monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type")
     end
 
-    it "raises a boundary error message with bad json" do
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, body: { ok: false }.to_json)
-      expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type") }.to raise_error Boundary::SlackMessageError
-    end
-
-    it "raises a boundary error message with no data" do
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 500, body: {
-        ok: false,
-        error: "unknown_method",
-      }.to_json)
-      expect { monthly_invoice_rake.invoke("22-08-01", "22-08-31", "scheme_name_type") }.to raise_error Boundary::SlackMessageError
+    it "sends a message to sentry" do
+      expect(Sentry).to have_received(:capture_exception).with(Boundary::SlackMessageError).exactly(1).times
     end
 
     it "deletes the generated CSV file" do
@@ -243,17 +247,15 @@ describe "monthly invoice export" do
     before do
       Timecop.freeze(2024, 2, 1, 7, 0, 0)
       EnvironmentStub.with("report_type", "scheme_name_type")
-      EnvironmentStub.with("scheme_id", "1")
       allow(ApiFactory).to receive(:get_assessment_count_by_scheme_name_type).and_return(use_case)
       allow(use_case).to receive(:execute).and_return returned_data
       allow(Helper::ExportInvoicesHelper).to receive(:save_file)
-      allow(Helper::ExportInvoicesHelper).to receive(:send_to_slack)
       monthly_invoice_rake.invoke
     end
 
     after do
       Timecop.return
-      EnvironmentStub.remove(%w[report_type scheme_id])
+      EnvironmentStub.remove(%w[report_type])
     end
 
     it "passes this month's start and end dates to the use case" do
@@ -275,7 +277,6 @@ describe "monthly invoice export" do
       Timecop.freeze(2024, 2, 1, 0, 0, 0)
       WebMock.enable!
       allow($stdout).to receive(:puts)
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
       allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case_one, rrn_use_case_two, rrn_use_case_three)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
       allow(rrn_use_case_one).to receive(:execute).with("2024-01-01".to_date, "2024-02-01".to_date, 1).and_return returned_data
@@ -317,7 +318,6 @@ describe "monthly invoice export" do
       EnvironmentStub.with("end_date",   "2024-04-01")
       WebMock.enable!
       allow($stdout).to receive(:puts)
-      WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
       allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case_one, rrn_use_case_two, rrn_use_case_three)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
       allow(rrn_use_case_one).to receive(:execute).with("2024-03-01".to_date, "2024-04-01".to_date, 1).and_return returned_data
