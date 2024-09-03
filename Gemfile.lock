@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.2.0)
-      activesupport (= 7.2.0)
-    activerecord (7.2.0)
-      activemodel (= 7.2.0)
-      activesupport (= 7.2.0)
+    activemodel (7.2.1)
+      activesupport (= 7.2.1)
+    activerecord (7.2.1)
+      activemodel (= 7.2.1)
+      activesupport (= 7.2.1)
       timeout (>= 0.4.0)
-    activesupport (7.2.0)
+    activesupport (7.2.1)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.3.1)
@@ -88,10 +88,10 @@ GEM
     jwt (2.8.2)
       base64
     language_server-protocol (3.17.0.3)
-    logger (1.6.0)
+    logger (1.6.1)
     method_source (1.1.0)
     mini_portile2 (2.8.7)
-    minitest (5.25.0)
+    minitest (5.25.1)
     mock_redis (0.44.0)
     multi_json (1.15.0)
     multi_xml (0.7.1)
@@ -253,7 +253,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 7.2.0)
+  activerecord (~> 7.2.1)
   archive-zip
   aws-sdk-s3 (~> 1.158)
   csv (~> 3.3)
