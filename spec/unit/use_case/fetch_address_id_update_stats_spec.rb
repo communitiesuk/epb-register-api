@@ -17,7 +17,7 @@ describe UseCase::FetchAddressIdUpdateStats do
   context "when fetching updated address id stats" do
     it "executes the use case and returns a hash of the the combines data set" do
       day_date = Time.now
-      expect(use_case.execute(day_date)).to eq("This week: 1 groups of addresses were linked, 2 address ids were updated")
+      expect(use_case.execute(day_date)).to eq("The bulk linking rake has been run. On 22-DEC-2024 1 groups of addresses were linked, 2 address ids were updated")
     end
   end
 end

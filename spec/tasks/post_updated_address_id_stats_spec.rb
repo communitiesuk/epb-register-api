@@ -5,7 +5,7 @@ describe "post weekly address id update stats rake" do
   let(:post_updated_address_id_stats) { get_task("maintenance:post_updated_address_id_stats") }
 
   let(:fetch_address_id_update_stats) { instance_double(UseCase::FetchAddressIdUpdateStats) }
-  let(:text) { "This week: 1 groups of addresses were linked, 2 address ids were updated" }
+  let(:text) { "The bulk linking rake has been run. On 22-DEC-2024 1 groups of addresses were linked, 2 address ids were updated" }
   let(:webhook_url) { "https://slackurl.com" }
 
   before do
@@ -23,7 +23,7 @@ describe "post weekly address id update stats rake" do
 
   context "when calling the rake" do
     it "posts the results to Slack" do
-    post_updated_address_id_stats.invoke
+      post_updated_address_id_stats.invoke
       expect(Helper::SlackHelper).to have_received(:post_to_slack).with(text:, webhook_url:)
       expect(fetch_address_id_update_stats).to have_received(:execute).with("2024-12-21")
     end
@@ -33,13 +33,14 @@ describe "post weekly address id update stats rake" do
     before do
       EnvironmentStub.with("DAY_DATE", "2024-02-03")
     end
+
     after do
       EnvironmentStub.remove(%w[DAY_DATE])
     end
-    it "it posts the results to Slack for the specific day" do
+
+    it "posts the results to Slack for the specific day" do
       post_updated_address_id_stats.invoke
       expect(fetch_address_id_update_stats).to have_received(:execute).with("2024-02-03")
     end
   end
-
 end
