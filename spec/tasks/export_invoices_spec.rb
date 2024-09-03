@@ -9,7 +9,6 @@ describe "monthly invoice export" do
 
   before do
     WebMock.enable!
-    WebMock.stub_request(:post, "https://slack.com/api/files.upload").to_return(status: 200, headers: {}, body: { ok: true }.to_json)
     allow(ApiFactory).to receive(:slack_gateway).and_return(slack_gateway)
     allow(Gateway::SlackGateway).to receive(:new).and_return(slack_gateway)
     allow(slack_gateway).to receive_messages(upload_file: true, post_file: true)
@@ -17,8 +16,8 @@ describe "monthly invoice export" do
   end
 
   after do
-    Timecop.return
     WebMock.disable!
+    Timecop.return
   end
 
   context "when two arguments are passed to the rake" do
@@ -138,7 +137,6 @@ describe "monthly invoice export" do
 
   context "when passing environmental variables to the rake" do
     before do
-      WebMock.enable!
       allow(ApiFactory).to receive_messages(get_assessment_count_by_scheme_name_type: use_case, slack_gateway:)
     end
 
@@ -254,8 +252,8 @@ describe "monthly invoice export" do
     end
 
     after do
-      Timecop.return
       EnvironmentStub.remove(%w[report_type])
+      Timecop.return
     end
 
     it "passes this month's start and end dates to the use case" do
@@ -275,7 +273,6 @@ describe "monthly invoice export" do
 
     before do
       Timecop.freeze(2024, 2, 1, 0, 0, 0)
-      WebMock.enable!
       allow($stdout).to receive(:puts)
       allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case_one, rrn_use_case_two, rrn_use_case_three)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
@@ -289,7 +286,6 @@ describe "monthly invoice export" do
 
     after do
       Timecop.return
-      WebMock.disable!
     end
 
     it "exports schemas with data" do
@@ -316,7 +312,6 @@ describe "monthly invoice export" do
     before do
       EnvironmentStub.with("start_date", "2024-03-01")
       EnvironmentStub.with("end_date",   "2024-04-01")
-      WebMock.enable!
       allow($stdout).to receive(:puts)
       allow(ApiFactory).to receive(:get_assessment_rrns_by_scheme_type).and_return(rrn_use_case_one, rrn_use_case_two, rrn_use_case_three)
       allow(ApiFactory).to receive(:fetch_active_schemes_use_case).and_return(fetch_active_schemes_use_case)
@@ -330,7 +325,6 @@ describe "monthly invoice export" do
 
     after do
       EnvironmentStub.remove(%w[start_date end_date report_type])
-      WebMock.disable!
     end
 
     it "exports schemas with data" do

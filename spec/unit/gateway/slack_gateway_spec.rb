@@ -8,7 +8,7 @@ describe Gateway::SlackGateway, :set_with_timecop do
   before do
     EnvironmentStub.with("SLACK_EPB_BOT_TOKEN", "12345")
     HttpStub.enable_webmock
-    WebMock.stub_request(:post, slack_external_url_body["upload_url"]).to_return(status: 200, headers: {}, body: { ok: true }.to_json)
+    WebMock.stub_request(:post, slack_external_url_body["upload_url"]).to_return(status: 200, headers: {}, body: "OK - 534")
     allow(slack_web_client).to receive_messages(files_getUploadURLExternal: slack_external_url_body, files_completeUploadExternal: true)
   end
 
@@ -48,7 +48,7 @@ describe Gateway::SlackGateway, :set_with_timecop do
 
       context "when the upload fails" do
         it "raises an SlackMessageError error with a 200 where body: ok" do
-          WebMock.stub_request(:post, slack_external_url_body["upload_url"]).to_return(status: 200, headers: {}, body: { ok: false }.to_json)
+          WebMock.stub_request(:post, slack_external_url_body["upload_url"]).to_return(status: 200, headers: {}, body: { test: false }.to_json)
           expect { gateway.post_file(url: slack_external_url_body["upload_url"], file_path:, filename: "postcodes_test.csv") }.to raise_error Boundary::SlackMessageError
         end
 

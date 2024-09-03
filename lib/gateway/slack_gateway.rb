@@ -46,7 +46,7 @@ module Gateway
         http.request(req)
       end
 
-      unless response.is_a?(Net::HTTPSuccess) && JSON.parse(response.body)["ok"] == true
+      unless response.is_a?(Net::HTTPSuccess) && response.body.include?("OK")
         raise Boundary::SlackMessageError, "Slack error: #{response.body}"
       end
     end
