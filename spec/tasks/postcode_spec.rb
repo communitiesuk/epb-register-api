@@ -27,6 +27,10 @@ describe "Postcode Rake to import ONS postcode lookups" do
       HttpStub.s3_get_object(file_name, get_postcode_csv)
     end
 
+    after do
+      EnvironmentStub.remove(%w[ONS_POSTCODE_BUCKET_NAME FILE_NAME])
+    end
+
     it "Then we can fetch an existing postcode" do
       described_class.invoke
 
@@ -45,6 +49,51 @@ describe "Postcode Rake to import ONS postcode lookups" do
       expect(postcodes.first).to eq(
         { outcode: "BR8", longitude: 0.1474355, latitude: 51.401588000000004 },
       )
+    end
+  end
+
+  context "when the rake does not run" do
+    before do
+      allow($stdout).to receive(:puts)
+    end
+
+    context "when the bucket_name has not been passed" do
+      it "raises a Boundary::ArgumentMissing" do
+        expect { described_class.invoke }.to raise_error Boundary::ArgumentMissing, "A required argument is missing: bucket_name"
+      end
+    end
+
+    context "when the file name has not been passed" do
+      before do
+        EnvironmentStub
+          .all
+          .with("ONS_POSTCODE_BUCKET_NAME", "test-bucket")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[ONS_POSTCODE_BUCKET_NAME])
+      end
+
+      it "raises a Boundary::ArgumentMissing error" do
+        expect { described_class.invoke }.to raise_error Boundary::ArgumentMissing, /file_name/
+      end
+    end
+
+    context "when the file name is not correct" do
+      before do
+        EnvironmentStub
+          .all
+          .with("ONS_POSTCODE_BUCKET_NAME", "test-bucket")
+          .with("FILE_NAME", "ONSPD_AUG_2024_UK.csv.zip")
+      end
+
+      after do
+        EnvironmentStub.remove(%w[ONS_POSTCODE_BUCKET_NAME FILE_NAME])
+      end
+
+      it "raises a Boundary::InvalidArgument error" do
+        expect { described_class.invoke }.to raise_error Boundary::InvalidArgument, "A required argument is is invalid: file name ONSPD_AUG_2024_UK.csv.zip must start with 'NSPL'"
+      end
     end
   end
 end

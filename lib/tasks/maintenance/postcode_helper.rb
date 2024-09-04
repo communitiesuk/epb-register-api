@@ -1,10 +1,14 @@
 module PostcodeHelper
   def self.check_task_requirements(file_name:, bucket_name:)
     if bucket_name.nil?
-      abort("Please set the bucket_name")
+      raise Boundary::ArgumentMissing, "bucket_name"
     end
     if file_name.nil?
-      abort("Please set the file_name argument")
+      raise Boundary::ArgumentMissing, "file_name"
+    end
+
+    unless file_name.start_with?("NSPL")
+      raise Boundary::InvalidArgument, "file name #{file_name} must start with 'NSPL'"
     end
   end
 
