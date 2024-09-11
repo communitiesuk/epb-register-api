@@ -16,6 +16,10 @@ describe "bulk link assessments rake" do
     Timecop.freeze(2024, 12, 22, 0, 0, 0)
   end
 
+  after do
+    Timecop.return
+  end
+
   it "calls the bulk linking use case" do
     bulk_link_assessments.invoke
     expect(bulk_link_assessments_use_case).to have_received(:execute)
