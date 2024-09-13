@@ -26,7 +26,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
             VALUES
               (
                 '73546792',
-                'A0 0AA',
+                'SW1A 2AA',
                 '5 Grimal Place',
                 'Skewit Road',
                 '',
@@ -36,7 +36,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
               ),
               (
                 '73546793',
-                'A0 0AA',
+                'SW1A 2AA',
                 'The house Grimal Place',
                 'Skewit Road',
                 '',
@@ -46,7 +46,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
               ),
               (
                 '73546795',
-                'A0 0AA',
+                'SW1A 2AA',
                 '2 Grimal Place',
                 '345 Skewit Road',
                 '',
@@ -150,7 +150,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
         let(:response) do
           JSON.parse(
             assertive_get_in_search_scope(
-              "/api/search/addresses?postcode=A0%200AA",
+              "/api/search/addresses?postcode=SW1A%202AA",
             ).body,
             symbolize_names: true,
           )
@@ -182,7 +182,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -200,7 +200,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?postcode=A0%200AA",
+              "/api/search/addresses?postcode=SW1A%202AA",
               scopes: %w[address:search],
             ).body,
             symbolize_names: true,
@@ -249,7 +249,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?postcode=A0%200AA",
+              "/api/search/addresses?postcode=SW1A%202AA",
               scopes: %w[address:search],
             ).body,
             symbolize_names: true,
@@ -301,7 +301,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
 
           let(:response) do
             JSON.parse assertive_get_in_search_scope(
-              "/api/search/addresses?postcode=A0+0AA&address_type=COMMERCIAL",
+              "/api/search/addresses?postcode=SW1A+2AA&address_type=COMMERCIAL",
             ).body,
                        symbolize_names: true
           end
@@ -333,7 +333,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A00AA",
+            "/api/search/addresses?postcode=SW1A2AA",
             scopes: %w[address:search],
           ).body,
           symbolize_names: true,
@@ -362,7 +362,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
       let(:response) do
         JSON.parse(
           assertive_get_in_search_scope(
-            "/api/search/addresses?postcode=a00aa",
+            "/api/search/addresses?postcode=sw1a2aa",
           ).body,
           symbolize_names: true,
         )
@@ -393,7 +393,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
             line3: nil,
             line4: nil,
             town: "Whitbury",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {

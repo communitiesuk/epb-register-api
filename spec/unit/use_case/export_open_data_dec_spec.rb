@@ -11,7 +11,7 @@ describe UseCase::ExportOpenDataDec, :set_with_timecop do
         address2: "2 Lonely Street",
         address3: "Some Area",
         posttown: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
         current_operational_rating: 1,
         yr1_operational_rating: 24,
         yr2_operational_rating: 40,

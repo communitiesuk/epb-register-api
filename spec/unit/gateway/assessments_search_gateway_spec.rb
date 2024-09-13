@@ -20,7 +20,7 @@ describe Gateway::AssessmentsSearchGateway do
 
   describe "#search_by_postcode" do
     it "returns the expected data" do
-      result = gateway.search_by_postcode("A0 0AA")
+      result = gateway.search_by_postcode("SW1A 2AA")
 
       expect(result.count).to eq(1)
       expect(result.first).to be_a(Domain::AssessmentSearchResult)

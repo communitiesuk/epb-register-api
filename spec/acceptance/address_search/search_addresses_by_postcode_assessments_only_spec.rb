@@ -10,7 +10,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource", :set_with_ti
     let(:response) do
       JSON.parse(
         assertive_get(
-          "/api/search/addresses?postcode=A0%200AA",
+          "/api/search/addresses?postcode=SW1A%202AA",
           scopes: %w[address:search],
         ).body,
         symbolize_names: true,
@@ -59,7 +59,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource", :set_with_ti
             line2: nil,
             line3: nil,
             line4: nil,
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             town: "Whitbury",
             addressId: "RRN-0000-0000-0000-0000-0000",
             source: "PREVIOUS_ASSESSMENT",
@@ -110,7 +110,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource", :set_with_ti
             line2: "2 Lonely Street",
             line3: "Some Area",
             line4: "Some County",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             town: "Whitbury",
             addressId: "RRN-0000-0000-0000-0000-0000",
             source: "PREVIOUS_ASSESSMENT",

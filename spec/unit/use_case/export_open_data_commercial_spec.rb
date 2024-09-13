@@ -10,7 +10,7 @@ describe UseCase::ExportOpenDataCommercial, :set_with_timecop do
         address2: "2 Lonely Street",
         address3: "Some Area",
         posttown: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
         building_reference_number: "UPRN-000000000001",
         asset_rating: 80,
         asset_rating_band: "d",
@@ -76,8 +76,8 @@ describe UseCase::ExportOpenDataCommercial, :set_with_timecop do
       end
 
       before(:all) do
-        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-        add_outcodes("A0", 51.5045, 0.4865, "London")
+        add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
+        add_outcodes("SW1A", 51.5045, 0.4865, "London")
 
         scheme_id = add_scheme_and_get_id
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")

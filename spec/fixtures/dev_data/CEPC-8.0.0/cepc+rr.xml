@@ -20,7 +20,7 @@
         <CEPC:Name>TEST NAME BOI</CEPC:Name>
         <CEPC:Accreditation-Scheme-Name>TESTSCHEME</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
-        <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
+        <CEPC:Trading-Address>123 My Street, My City, M7 1AA</CEPC:Trading-Address>
         <CEPC:Company-Name>Trillian Certificates Plc</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
@@ -36,7 +36,7 @@
           <CEPC:Address-Line-3>Some Area</CEPC:Address-Line-3>
           <CEPC:Address-Line-4>Some County</CEPC:Address-Line-4>
           <CEPC:Post-Town>Whitbury</CEPC:Post-Town>
-          <CEPC:Postcode>A0 0AA</CEPC:Postcode>
+          <CEPC:Postcode>B6 4AB</CEPC:Postcode>
         </CEPC:Property-Address>
         <CEPC:Property-Type>B1 Offices and Workshop businesses</CEPC:Property-Type>
         <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
@@ -370,7 +370,7 @@
           <CEPC:Address-Line-3>Some Area</CEPC:Address-Line-3>
           <CEPC:Address-Line-4>Some County</CEPC:Address-Line-4>
           <CEPC:Post-Town>Whitbury</CEPC:Post-Town>
-          <CEPC:Postcode>A0 0AA</CEPC:Postcode>
+          <CEPC:Postcode>B6 4AB</CEPC:Postcode>
         </CEPC:Property-Address>
         <CEPC:Property-Type>B1 Offices and Workshop businesses</CEPC:Property-Type>
       </CEPC:Property-Details>

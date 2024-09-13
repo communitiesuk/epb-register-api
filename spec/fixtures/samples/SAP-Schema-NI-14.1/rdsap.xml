@@ -51,19 +51,19 @@
           <HIP:Contact-Address>
             <HIP:Address-Line-1>3 Some Street</HIP:Address-Line-1>
             <HIP:Post-Town>Fulchester</HIP:Post-Town>
-            <HIP:Postcode>A0 0AA</HIP:Postcode>
+            <HIP:Postcode>SW1A 2AA</HIP:Postcode>
           </HIP:Contact-Address>
           <HIP:Certification-Scheme>
             <HIP:Scheme-Name>SPEC</HIP:Scheme-Name>
             <HIP:Complaints-Address>
               <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>
               <HIP:Post-Town>Whitbury</HIP:Post-Town>
-              <HIP:Postcode>A0 0AA</HIP:Postcode>
+              <HIP:Postcode>SW1A 2AA</HIP:Postcode>
             </HIP:Complaints-Address>
             <HIP:Contact-Address>
               <HIP:Address-Line-1>3 Some Street</HIP:Address-Line-1>
               <HIP:Post-Town>Fulchester</HIP:Post-Town>
-              <HIP:Postcode>A0 0AA</HIP:Postcode>
+              <HIP:Postcode>SW1A 2AA</HIP:Postcode>
             </HIP:Contact-Address>
             <HIP:Web-Site>http://www.scheme.example.com</HIP:Web-Site>
             <HIP:E-Mail>d@e.f</HIP:E-Mail>
@@ -84,7 +84,7 @@
             <HIP:Address-Line-2>Some Area</HIP:Address-Line-2>
             <HIP:Address-Line-3>Some County</HIP:Address-Line-3>
             <HIP:Post-Town>Whitbury</HIP:Post-Town>
-            <HIP:Postcode>BT1 0AA</HIP:Postcode>
+            <HIP:Postcode>BT4 3SR</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>
         </Property>

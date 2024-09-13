@@ -26,7 +26,7 @@
       <Contact-Address>
         <Address-Line-1>1 Some Assessor's Street</Address-Line-1>
         <Post-Town>Fulchester</Post-Town>
-        <Postcode>A0 0AA</Postcode>
+        <Postcode>SW1A 2AA</Postcode>
       </Contact-Address>
       <Web-Site>www.example.com</Web-Site>
       <E-Mail>a@b.c</E-Mail>
@@ -45,7 +45,7 @@
         <Address-Line-2>Some Area</Address-Line-2>
         <Address-Line-3>Some County</Address-Line-3>
         <Post-Town>Whitbury</Post-Town>
-        <Postcode>A0 0AA</Postcode>
+        <Postcode>SW1A 2AA</Postcode>
       </Address>
       <UPRN>UPRN-000000000000</UPRN>
     </Property>

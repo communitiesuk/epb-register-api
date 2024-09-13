@@ -31,7 +31,7 @@ describe UseCase::GetCountryForPostcodeBackfill do
   end
 
   context "when the postcode given is in Northern Ireland" do
-    let(:postcode) { "BT1 1AA" }
+    let(:postcode) { "BT4 3SR" }
 
     it "returns a lookup that matches only Northern Ireland without calling the gateway" do
       lookup = use_case.execute(postcode:)
@@ -251,8 +251,8 @@ describe UseCase::GetCountryForPostcodeBackfill do
     end
   end
 
-  context "when the postcode is not found but in address base" do
-    let(:postcode) { "A0 0AA" }
+  context "when the postcode is not found but is in address base" do
+    let(:postcode) { "X0 0XX" }
 
     before do
       allow(address_base_country_gateway).to receive(:lookup_from_postcode).and_return(Domain::CountryLookup.new(country_codes: [:E]))
@@ -268,7 +268,7 @@ describe UseCase::GetCountryForPostcodeBackfill do
   end
 
   context "when the postcode is not found" do
-    let(:postcode) { "A0 0AA" }
+    let(:postcode) { "X0 0XX" }
 
     before do
       allow(address_base_country_gateway).to receive(:lookup_from_postcode).and_return(Domain::CountryLookup.new(country_codes: []))

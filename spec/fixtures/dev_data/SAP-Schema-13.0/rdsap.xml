@@ -49,7 +49,7 @@
             <HIP:Address-Line-2/>
             <HIP:Address-Line-3/>
             <HIP:Post-Town/>
-            <HIP:Postcode>A0 0AA</HIP:Postcode>
+            <HIP:Postcode>SW1A 2AA</HIP:Postcode>
           </HIP:Contact-Address>
           <HIP:Web-Site>www.abc.co.uk</HIP:Web-Site>
           <HIP:E-Mail>a@b.c</HIP:E-Mail>
@@ -70,14 +70,14 @@
               <HIP:Address-Line-2/>
               <HIP:Address-Line-3/>
               <HIP:Post-Town/>
-              <HIP:Postcode>A0 0AA</HIP:Postcode>
+              <HIP:Postcode>SW1A 2AA</HIP:Postcode>
             </HIP:Complaints-Address>
             <HIP:Contact-Address>
               <HIP:Address-Line-1/>
               <HIP:Address-Line-2/>
               <HIP:Address-Line-3/>
               <HIP:Post-Town/>
-              <HIP:Postcode>A0 0AA</HIP:Postcode>
+              <HIP:Postcode>SW1A 2AA</HIP:Postcode>
             </HIP:Contact-Address>
             <HIP:Web-Site>www.abc.co.uk</HIP:Web-Site>
             <HIP:E-Mail>enquiries@abc.co.uk</HIP:E-Mail>

@@ -9,9 +9,9 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
   let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
 
   before do
-    insert_into_address_base("73546792", "A0 0AA", "5 Grimal Place", "Skewit Road", "London", "E")
-    insert_into_address_base("73546793", "A0 0AA", "The house Grimal Place", "Skewit Road", "London", "E")
-    insert_into_address_base("73546795", "A0 0AA", "2 Grimal Place", "345 Skewit Road", "London", "E")
+    insert_into_address_base("73546792", "SW1A 2AA", "5 Grimal Place", "Skewit Road", "London", "E")
+    insert_into_address_base("73546793", "SW1A 2AA", "The house Grimal Place", "Skewit Road", "London", "E")
+    insert_into_address_base("73546795", "SW1A 2AA", "2 Grimal Place", "345 Skewit Road", "London", "E")
     insert_into_address_base("736042792", "NE23 1TW", "5 Grimiss Place", "Suggton Road", "Newcastle", "E")
     add_super_assessor(scheme_id:)
 
@@ -42,7 +42,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
     context "when an invalid address type is provided" do
       it "returns status 422" do
         expect(assertive_get(
-          "/api/search/addresses?postcode=A0%200AA&addressType=asdf",
+          "/api/search/addresses?postcode=SW1A%202AA&addressType=asdf",
           accepted_responses: [422],
           scopes: %w[address:search],
         ).status).to eq(422)
@@ -53,7 +53,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA&addressType=DOMESTIC",
+            "/api/search/addresses?postcode=SW1A%202AA&addressType=DOMESTIC",
             scopes: %w[address:search],
           ).body,
           symbolize_names: true,
@@ -71,7 +71,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
             line2: "Skewit Road",
             line3: nil,
             line4: nil,
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             town: "London",
             addressId: "UPRN-000073546792",
             source: "GAZETTEER",
@@ -89,7 +89,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
             line3: nil,
             line4: nil,
             town: "Whitbury",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {
@@ -107,7 +107,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA&addressType=COMMERCIAL",
+            "/api/search/addresses?postcode=SW1A%202AA&addressType=COMMERCIAL",
             accepted_responses: [200],
             scopes: %w[address:search],
           ).body,
@@ -126,7 +126,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
             line2: "Skewit Road",
             line3: nil,
             line4: nil,
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             town: "London",
             addressId: "UPRN-000073546792",
             source: "GAZETTEER",
@@ -144,7 +144,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType", :set_with_tim
             line3: "Some Area",
             line4: "Some County",
             town: "Whitbury",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {

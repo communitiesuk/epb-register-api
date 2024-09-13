@@ -11,14 +11,14 @@ class SummaryStub
       address_line3: "",
       address_line4: "",
       town: "Whitbury",
-      postcode: "A0 0AA",
+      postcode: "SW1A 2AA",
       address: { address_id: nil, # Set at lodgement, which this unit test doesn't exercise
                  address_line1: "1 Some Street",
                  address_line2: "",
                  address_line3: "",
                  address_line4: "",
                  town: "Whitbury",
-                 postcode: "A0 0AA" },
+                 postcode: "SW1A 2AA" },
       assessor: { first_name: "Someone",
                   last_name: "Person",
                   registered_by: { name: "test scheme", scheme_id: },
@@ -187,7 +187,7 @@ class SummaryStub
       address_line3: "Some County",
       address_line4: nil,
       town: "Whitbury",
-      postcode: "A0 0AA",
+      postcode: "SW1A 2AA",
       address:
          { address_id: nil, # Set at lodgement, which this unit test doesn't exercise
            address_line1: "1 Some Street",
@@ -195,7 +195,7 @@ class SummaryStub
            address_line3: "Some County",
            address_line4: nil,
            town: "Whitbury",
-           postcode: "A0 0AA" },
+           postcode: "SW1A 2AA" },
       assessor:
        { first_name: "Someone",
          last_name: "Person",

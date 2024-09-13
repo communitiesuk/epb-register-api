@@ -7,8 +7,8 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
 
   before(:all) do
     scheme_id = lodge_assessor
-    add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-    add_outcodes("A0", 51.5045, 0.4865, "London")
+    add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
+    add_outcodes("SW1A", 51.5045, 0.4865, "London")
   end
 
   after { WebMock.disable! }

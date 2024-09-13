@@ -32,20 +32,20 @@ describe Gateway::DomesticEpcSearchGateway do
                    addressLine2: "",
                    addressLine3: "",
                    addressLine4: "",
-                   postcode: "A0 0AA",
+                   postcode: "SW1A 2AA",
                    town: "Whitbury" },
         epc_rrn: "0000-0000-0000-0000-0000" }
     end
 
     it "finds one record using the postcode and building number", :aggregate_failures do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.length).to eq(1)
       expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
       expect(result.first.to_hash).to eq(expected_result)
     end
 
     it "finds one record using the postcode and building name" do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Some Street")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1 Some Street")
       expect(result.first.to_hash).to eq(expected_result)
     end
   end
@@ -71,15 +71,15 @@ describe Gateway::DomesticEpcSearchGateway do
       {
         epc_rrn: "0000-0000-0000-0000-9999",
         address: {
-          addressLine1: "1 Some Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
+          addressLine1: "1 Some Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "SW1A 2AA", town: "Whitbury"
         },
       }
     end
 
     it "finds the latest EPC for that address (excluding the superseded)", :aggregate_failures do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.first.to_hash).to match a_hash_including(expected_result)
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Some Street")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1 Some Street")
       expect(result.first.to_hash).to match a_hash_including(expected_result)
     end
   end
@@ -133,36 +133,36 @@ describe Gateway::DomesticEpcSearchGateway do
       [{
         epc_rrn: "0000-0000-0000-0000-0000",
         address: {
-          addressLine1: "1 Some Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
+          addressLine1: "1 Some Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "SW1A 2AA", town: "Whitbury"
         },
       },
        {
          epc_rrn: "0000-0000-0000-0000-9999",
          address: {
-           addressLine1: "1 Another Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
+           addressLine1: "1 Another Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "SW1A 2AA", town: "Whitbury"
          },
        },
        {
          epc_rrn: "8989-0000-0000-0000-9999",
          address: {
-           addressLine1: "1 Domestic Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
+           addressLine1: "1 Domestic Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: "", postcode: "SW1A 2AA", town: "Whitbury"
          },
        }]
     end
 
     it "finds the 3 domestic EPCs for that address" do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.sort_by(&:rrn).map(&:to_hash)).to eq(expected_result)
     end
 
     it "has the assessments results in alpha order of address line 1" do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.length).to eq(3)
       expect(result.map(&:to_hash).first[:address][:addressLine1]).to eq("1 Another Street")
     end
 
     it "does not find a CEPC for that address" do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Commercial Street")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1 Commercial Street")
       expect(result).to eq []
     end
   end
@@ -191,14 +191,14 @@ describe Gateway::DomesticEpcSearchGateway do
       {
         epc_rrn: "3333-4444-5555-6666-7777",
         address: {
-          addressLine1: "Flat 12A Street Lane", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
+          addressLine1: "Flat 12A Street Lane", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "SW1A 2AA", town: "Whitbury"
         },
       }
     end
 
     context "when searching using correct original casing" do
       it "returns the expected BUS details" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12A")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "12A")
 
         expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
         expect(result.first.to_hash).to eq expected_result
@@ -207,14 +207,14 @@ describe Gateway::DomesticEpcSearchGateway do
 
     context "when searching using incorrect original casing" do
       it "returns the expected BUS details regardless of casing" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12a")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "12a")
         expect(result.first.to_hash).to eq expected_result
       end
     end
 
     context "when searching using just the correct number" do
       it "finds and returns the expected results" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "12")
 
         expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
         expect(result.length).to eq 1
@@ -223,7 +223,7 @@ describe Gateway::DomesticEpcSearchGateway do
 
     context "when searching using part of the number" do
       it "does not match an address with the full number" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "2")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "2")
 
         expect(result).to eq []
       end
@@ -231,7 +231,7 @@ describe Gateway::DomesticEpcSearchGateway do
 
     context "when searching using a number which is a numeric superset of an address's street line number" do
       it "does not match BUS details for an address with the full number" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "212")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "212")
 
         expect(result).to eq []
       end
@@ -239,14 +239,14 @@ describe Gateway::DomesticEpcSearchGateway do
 
     context "when searching using a number which is a numeric superset of an address's street line number in the middle of an address line" do
       it "does not match for an address with the full number" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
         expect(result).to eq []
       end
     end
 
     context "when searching using a building name that is part of a street line" do
       it "finds and returns the expected result" do
-        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12A STREET")
+        result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "12A STREET")
         expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
         expect(result.first.to_hash).to eq expected_result
       end
@@ -267,12 +267,12 @@ describe Gateway::DomesticEpcSearchGateway do
     end
 
     it "finds the EPC for that building number" do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.length).to eq(1)
     end
 
     it "finds the EPC for the same building name" do
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Some Street")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1 Some Street")
       expect(result.length).to eq(1)
     end
   end
@@ -307,14 +307,14 @@ describe Gateway::DomesticEpcSearchGateway do
 
     it "only finds the 2 EPC that has not been cancelled" do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.length).to eq(2)
     end
 
     it "only finds the 1 EPC that has not been cancelled", :aggregate_failures do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.length).to eq(1)
       expect(result[0].rrn).to eq("0000-0000-0000-0000-0002")
     end
@@ -322,7 +322,7 @@ describe Gateway::DomesticEpcSearchGateway do
     it "includes the EPC that has been opted out", :aggregate_failures do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = true WHERE assessment_id = '0000-0000-0000-0000-0001' ", "SQL")
-      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.fetch_by_address(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.length).to eq(2)
       expect(result.find { |epc| epc.rrn == "0000-0000-0000-0000-0001" }).not_to be_nil
     end

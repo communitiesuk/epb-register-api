@@ -51,7 +51,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
   context "when searching by postcode" do
     it "can handle a lowercase postcode" do
       setup_scheme_and_lodge
-      response = assessments_search_by_postcode("A00aa")
+      response = assessments_search_by_postcode("sw1a2aa")
 
       response_json = JSON.parse(response.body)
 
@@ -60,7 +60,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
     it "can handle a postcode with excessive whitespace" do
       setup_scheme_and_lodge
-      response = assessments_search_by_postcode("  A0 0AA    ")
+      response = assessments_search_by_postcode("  SW1A 2AA    ")
 
       response_json = JSON.parse(response.body)
 
@@ -69,7 +69,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
     it "returns matching assessments" do
       setup_scheme_and_lodge
-      response = assessments_search_by_postcode("A0 0AA")
+      response = assessments_search_by_postcode("SW1A 2AA")
       response_json = JSON.parse(response.body)
       expected_response =
         JSON.parse(
@@ -81,7 +81,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
             currentEnergyEfficiencyRating: 50,
             currentEnergyEfficiencyBand: "e",
             optOut: false,
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             dateOfExpiry: "2030-05-03",
             town: "Whitbury",
             addressId: "UPRN-000000000000",
@@ -101,7 +101,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
       setup_scheme_and_lodge
       before_assessments =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -111,7 +111,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
       after_assessments =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -122,7 +122,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
       scheme_id = setup_scheme_and_lodge
       before_assessments =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -141,7 +141,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
       after_assessments =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -152,7 +152,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
       scheme_id = setup_scheme_and_lodge
       before_assessments =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -171,7 +171,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
       after_assessments =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -183,7 +183,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
       response =
         assessments_search_by_postcode(
-          "A0 0AA",
+          "SW1A 2AA",
           assessment_types: %w[CEPC],
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
@@ -196,7 +196,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
     it "can filter for domestic results" do
       setup_scheme_and_lodge(non_domestic: true)
 
-      response = assessments_search_by_postcode("A0 0AA")
+      response = assessments_search_by_postcode("SW1A 2AA")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to be_nil
@@ -243,11 +243,11 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
     end
 
     it "allows missing assessment types" do
-      expect(assessments_search_by_postcode("A0 0AA", assessment_types: []).status).to eq 200
+      expect(assessments_search_by_postcode("SW1A 2AA", assessment_types: []).status).to eq 200
     end
 
     it "rejects invalid assessment types" do
-      expect(assessments_search_by_postcode("A0 0AA",
+      expect(assessments_search_by_postcode("SW1A 2AA",
                                             accepted_responses: [400],
                                             assessment_types: %w[rdap]).status).to eq 400
     end
@@ -269,7 +269,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
 
       response =
         assessments_search_by_postcode(
-          "A0 0AA",
+          "SW1A 2AA",
           assessment_types: %w[RdSAP],
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
@@ -318,7 +318,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
             currentEnergyEfficiencyRating: 50,
             optOut: false,
             currentEnergyEfficiencyBand: "e",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             dateOfExpiry: "2030-05-03",
             town: "Whitbury",
             addressId: "UPRN-000000000000",
@@ -346,7 +346,7 @@ describe "Acceptance::Assessment::SearchForAssessments", :set_with_timecop do
           currentEnergyEfficiencyRating: 50,
           currentEnergyEfficiencyBand: "e",
           optOut: false,
-          postcode: "A0 0AA",
+          postcode: "SW1A 2AA",
           dateOfExpiry: "2030-05-03",
           town: "Whitbury",
           addressId: "UPRN-000000000000",

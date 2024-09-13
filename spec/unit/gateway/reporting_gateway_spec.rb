@@ -26,7 +26,7 @@ describe Gateway::ReportingGateway, :set_with_timecop do
             "address_line2" => "",
             "address_line3" => "",
             "town" => "Whitbury",
-            "postcode" => "A0 0AA",
+            "postcode" => "SW1A 2AA",
             "date_registered" => "2020-05-04",
             "address_id" => "UPRN-000000000000",
             "not_for_issue_at" => nil,
@@ -74,7 +74,7 @@ describe Gateway::ReportingGateway, :set_with_timecop do
             "address_line2" => "2 Lonely Street",
             "address_line3" => "Some Area",
             "town" => "Whitbury",
-            "postcode" => "A0 0AA",
+            "postcode" => "SW1A 2AA",
             "date_registered" => "2020-05-04",
             "address_id" => "UPRN-000000000001",
             "not_for_issue_at" => nil,
@@ -188,8 +188,8 @@ describe Gateway::ReportingGateway, :set_with_timecop do
           assessment_gateway.update_statuses(assessment2, cancelled, time)
           assessment_gateway.update_statuses(assessment3, not_for_issue, time)
 
-          add_postcodes("A0 0AA", 51.5045, 0.0865, "Whitbury")
-          add_outcodes("A0", 51.5045, 0.4865, "Whitbury")
+          add_postcodes("SW1A 2AA", 51.5045, 0.0865, "Whitbury")
+          add_outcodes("SW1A", 51.5045, 0.4865, "Whitbury")
           add_countries
           add_assessment_country_ids
         end

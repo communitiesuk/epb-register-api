@@ -61,7 +61,7 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
     before(:all) do
       # Timecop.freeze(2020, 5, 5, 0, 0, 0)
       add_countries
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
       add_outcodes("A0", 51.5045, 0.4865, "London")
       scheme_id = add_assessor_helper
       lodge_epc_helper(scheme_id:, schema: "RdSAP-Schema-20.0.0", rrn: "0000-0000-0000-0000-0100", assessment_date: "2017-05-04")

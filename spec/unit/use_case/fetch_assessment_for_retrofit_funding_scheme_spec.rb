@@ -17,7 +17,7 @@ describe UseCase::FetchAssessmentForRetrofitFundingScheme do
       current_energy_efficiency_band: "e",
       date_of_registration: "2020-05-04",
       date_of_expiry: Time.new(2030, 5, 3).to_date,
-      postcode: "A0 0AA",
+      postcode: "SW1A 2AA",
       town: "Whitbury",
     }]
   end
@@ -43,7 +43,7 @@ describe UseCase::FetchAssessmentForRetrofitFundingScheme do
         address_line3: "",
         address_line4: "",
         town: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
       },
       uprn: "000000000000",
       lodgement_date: "2020-05-04",

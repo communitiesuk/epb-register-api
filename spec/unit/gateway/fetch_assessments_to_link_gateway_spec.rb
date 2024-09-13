@@ -4,9 +4,9 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
   context "when fetching non-domestic assessments for linking" do
     before do
-      insert_into_address_base("000000000001", "A0 0AA", "1 Commercial Street", "", "", "E")
-      insert_into_address_base("000000000012", "A0 0AA", "4 Commercial Street", "", "", "E")
-      insert_into_address_base("000000000016", "A0 0AA", "Some Unit", "", "", "E")
+      insert_into_address_base("000000000001", "SW1A 2AA", "1 Commercial Street", "", "", "E")
+      insert_into_address_base("000000000012", "SW1A 2AA", "4 Commercial Street", "", "", "E")
+      insert_into_address_base("000000000016", "SW1A 2AA", "Some Unit", "", "", "E")
 
       scheme_id = add_scheme_and_get_id
       add_super_assessor(scheme_id:)
@@ -204,11 +204,11 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
 
       it "assign a group_id to assessments with matching addresses and postcodes", :aggregate_failures do
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).uniq.length).to eq 1
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).length).to eq 4
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq.length).to eq 1
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).length).to eq 4
 
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "14 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).uniq.length).to eq 1
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "14 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).length).to eq 2
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "14 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq.length).to eq 1
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "14 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).length).to eq 2
       end
 
       it "does not fetch the address 1.4 commercial street, with punctuation between numbers" do
@@ -218,7 +218,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
     describe "#fetch_assessments_by_group_id" do
       it "return assessment id, address, id, and date registered with the same address_id found within the group" do
-        group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "A0 0AA").pluck(:group_id).uniq[0]
+        group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
         expected_result = [
           { "assessment_id" => "0000-0000-0000-0000-0012", "address_id" => "RRN-0000-0000-0000-0000-0012", "date_registered" => Time.utc(2020, 0o5, 20) },
           { "assessment_id" => "0000-0000-0000-0000-0000", "address_id" => "UPRN-000000000001", "date_registered" => Time.utc(2020, 0o5, 0o4) },

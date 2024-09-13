@@ -23,8 +23,8 @@ describe "Acceptance::Reports::OpenDataExport By Hashed Ids", :set_with_timecop 
   context "when an assessment is lodged" do
     context "when it is a domestic assessment" do
       before do
-        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-        add_outcodes("A0", 51.5045, 0.4865, "London")
+        add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
+        add_outcodes("SW1A", 51.5045, 0.4865, "London")
 
         domestic_rdsap_xml =
           get_assessment_xml(

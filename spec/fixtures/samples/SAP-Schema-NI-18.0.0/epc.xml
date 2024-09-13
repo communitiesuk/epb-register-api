@@ -36,12 +36,12 @@
         <Complaints-Address>
           <Address-Line-1>123 Some Street</Address-Line-1>
           <Post-Town>Fulchester</Post-Town>
-          <Postcode>A0 0AA</Postcode>
+          <Postcode>SW1A 2AA</Postcode>
         </Complaints-Address>
         <Contact-Address>
           <Address-Line-1>321 Some Street</Address-Line-1>
           <Post-Town>Whitbury</Post-Town>
-          <Postcode>A0 0AA</Postcode>
+          <Postcode>SW1A 2AA</Postcode>
         </Contact-Address>
         <Web-Site>http://www.scheme.example.com</Web-Site>
         <E-Mail>a@b.c</E-Mail>
@@ -59,7 +59,7 @@
         <Address-Line-2>Some Area</Address-Line-2>
         <Address-Line-3>Some County</Address-Line-3>
         <Post-Town>Whitbury</Post-Town>
-        <Postcode>BT1 0AA</Postcode>
+        <Postcode>BT4 3SR</Postcode>
       </Address>
       <UPRN>UPRN-000000000000</UPRN>
     </Property>

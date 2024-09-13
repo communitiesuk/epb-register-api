@@ -31,7 +31,7 @@ describe UseCase::GetCountryForPostcode do
   end
 
   context "when the postcode given is in Northern Ireland" do
-    let(:postcode) { "BT1 1AA" }
+    let(:postcode) { "BT4 3SR" }
 
     it "returns a lookup that matches only Northern Ireland without calling the gateway" do
       lookup = use_case.execute(postcode:)

@@ -26,7 +26,7 @@ describe "fetching Retrofit Funding Scheme details from the API", :set_with_time
         addressLine3: "",
         addressLine4: "",
         town: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
       },
       uprn: "000000000000",
       lodgementDate: "2020-05-04",

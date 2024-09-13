@@ -23,14 +23,14 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", :aggregate_failures do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "1")
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
       end
 
       context "with a postcode not canonically formed" do
         it "returns the relevant assessments" do
-          result = gateway.search_by_postcode_and_building_identifier postcode: "a00aa", building_identifier: "1"
+          result = gateway.search_by_postcode_and_building_identifier postcode: "sw1a2aa", building_identifier: "1"
           expect(result.count).to eq 1
           expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
         end
@@ -38,7 +38,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
       context "with a building name or number containing an unexpected character like a colon" do
         it "returns the relevant assessments" do
-          result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1:"
+          result = gateway.search_by_postcode_and_building_identifier postcode: "SW1A 2AA", building_identifier: "1:"
           expect(result.count).to eq 1
           expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
         end
@@ -102,7 +102,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when performing a postcode and building identifier lookup" do
       it "returns the details for all the assessments at that address" do
-        result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1"
+        result = gateway.search_by_postcode_and_building_identifier postcode: "SW1A 2AA", building_identifier: "1"
         expect(result.count).to eq 2
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
         expect(result[1]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
@@ -154,7 +154,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when performing a postcode and building identifier lookup" do
       it "returns the most recent, non superseded result" do
-        result = gateway.search_by_postcode_and_building_identifier postcode: "A0 0AA", building_identifier: "1"
+        result = gateway.search_by_postcode_and_building_identifier postcode: "SW1A 2AA", building_identifier: "1"
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
       end
@@ -180,7 +180,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", :aggregate_failures do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "1")
 
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
@@ -216,7 +216,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching by postcode and building identifier" do
       it "finds and returns the expected data when one match exists", :aggregate_failures do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "2")
 
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0000"
@@ -255,7 +255,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using correct original casing" do
       it "returns the expected BUS details" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12A")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "12A")
 
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
@@ -264,7 +264,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using incorrect original casing" do
       it "returns the expected BUS details regardless of casing" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12a")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "12a")
 
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
@@ -273,7 +273,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using just the correct number" do
       it "finds and returns the expected BUS details" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "12")
 
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
@@ -282,7 +282,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using part of the number" do
       it "does not match BUS details for an address with the full number" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "2")
 
         expect(result).to be_nil
       end
@@ -290,7 +290,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using a number which is a numeric superset of an address's street line number" do
       it "does not match BUS details for an address with the full number" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "212")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "212")
 
         expect(result).to be_nil
       end
@@ -298,7 +298,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using a number which is a numeric superset of an address's street line number in the middle of an address line" do
       it "does not match BUS details for an address with the full number" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "1")
 
         expect(result).to be_nil
       end
@@ -306,7 +306,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using a building name that is part of a street line" do
       it "finds and returns the expected BUS details" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12A STREET")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "12A STREET")
 
         expect(result.count).to eq 1
         expect(result[0]["epc_rrn"]).to eq "3333-4444-5555-6666-7777"
@@ -357,7 +357,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     end
 
     it "only finds the 2 EPC that have not been cancelled when searching by postcode and building identifier" do
-      result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
+      result = gateway.search_by_postcode_and_building_identifier(postcode: "SW1A 2AA", building_identifier: "1")
       expect(result.count).to eq(2)
       expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0003"
       expect(result[1]["epc_rrn"]).to eq "0000-0000-0000-0000-0004"

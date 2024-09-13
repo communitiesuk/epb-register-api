@@ -57,7 +57,7 @@ describe Gateway::AssessmentsGateway do
 
     it "returns data whose country is Northern Ireland" do
       today = Time.now.strftime("%Y-%m-%d")
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", postcode: "BT1 1AA")
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", postcode: "BT4 3SR")
 
       expect(gateway.fetch_assessments_by_date(date: today).first).to eq({ "assessment_id" => "0000-0000-0000-0000-0005",
                                                                            "type_of_assessment" => "SAP",
@@ -118,7 +118,7 @@ describe Gateway::AssessmentsGateway do
     it "returns the postcode and address_id", :aggregate_failures do
       result = gateway.fetch_location_by_assessment_id("0000-0000-0000-0000-0000")
       expect(result["assessment_id"]).to eq "0000-0000-0000-0000-0000"
-      expect(result["postcode"]).to eq "A0 0AA"
+      expect(result["postcode"]).to eq "SW1A 2AA"
       expect(result["address_id"]).to eq "UPRN-000000000000"
       expect(Nokogiri.XML(result["xml"])).to be_a Nokogiri::XML::Document
       expect(result["schema_type"]).to eq "RdSAP-Schema-20.0.0"

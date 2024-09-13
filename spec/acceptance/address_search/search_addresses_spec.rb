@@ -29,7 +29,7 @@ describe "Acceptance::AddressSearch", :set_with_timecop do
       describe "postcode and another parameter" do
         it "returns a validation error" do
           expect(assertive_get(
-            "/api/search/addresses?postcode=A0%200AA&something=test",
+            "/api/search/addresses?postcode=SW1A%202AA&something=test",
             accepted_responses: [422],
             scopes: %w[address:search],
           ).status).to eq 422
@@ -78,7 +78,7 @@ describe "Acceptance::AddressSearch", :set_with_timecop do
       let(:response) do
         JSON.parse(
           assertive_get_in_search_scope(
-            "/api/search/addresses?postcode=A0%200AA",
+            "/api/search/addresses?postcode=SW1A%202AA",
           ).body,
           symbolize_names: true,
         )

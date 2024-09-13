@@ -21,7 +21,7 @@
         <Name>Test Assessor Name</Name>
         <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
-        <Trading-Address>111 Twotwotwo Street, Mytown, MT7 1AA</Trading-Address>
+        <Trading-Address>111 Twotwotwo Street, Mytown, M7 1AA</Trading-Address>
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
@@ -36,7 +36,7 @@
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>Whitbury</Post-Town>
-          <Postcode>A0 0AA</Postcode>
+          <Postcode>B6 4AB</Postcode>
         </Property-Address>
         <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>
@@ -64,7 +64,7 @@
           <Address-Line-3 />
           <Address-Line-4 />
           <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Postcode>B6 4AB</Postcode>
         </Registered-Address>
       </Equipment-Owner>
       <Equipment-Operator>
@@ -77,7 +77,7 @@
           <Address-Line-3 />
           <Address-Line-4 />
           <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Postcode>B6 4AB</Postcode>
         </Registered-Address>
       </Equipment-Operator>
       <Building-Name>A. Shop</Building-Name>
@@ -116,7 +116,7 @@
         <Name>Test Assessor Name</Name>
         <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
-        <Trading-Address>111 Twotwotwo Street, Mytown, MT7 1AA</Trading-Address>
+        <Trading-Address>111 Twotwotwo Street, Mytown, M7 1AA</Trading-Address>
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
@@ -131,7 +131,7 @@
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>Whitbury</Post-Town>
-          <Postcode>A0 0AA</Postcode>
+          <Postcode>B6 4AB</Postcode>
         </Property-Address>
         <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>

@@ -18,7 +18,7 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
             VALUES
               (
                 '73546792',
-                'A0 0AA',
+                'SW1A 2AA',
                 '5 Grimal Place',
                 'Skewit Road',
                 '',
@@ -28,7 +28,7 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
               ),
               (
                 '73546793',
-                'A0 0AA',
+                'SW1A 2AA',
                 'The house Grimal Place',
                 'Skewit Road',
                 '',
@@ -38,7 +38,7 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
               ),
               (
                 '73546795',
-                'A0 0AA',
+                'SW1A 2AA',
                 '2 Grimal Place',
                 '345 Skewit Road',
                 '',
@@ -232,7 +232,7 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
       )
       response =
         JSON.parse(
-          address_search_by_postcode("A0 0AA").body,
+          address_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 

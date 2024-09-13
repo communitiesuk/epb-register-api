@@ -30,7 +30,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
             VALUES
               (
                 '73546792',
-                'A0 0AA',
+                'SW1A 2AA',
                 '5 Grimal Place',
                 'Skewit Road',
                 '',
@@ -40,7 +40,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
               ),
               (
                 '73546793',
-                'A0 0AA',
+                'SW1A 2AA',
                 'The house Grimal Place',
                 'Skewit Road',
                 '',
@@ -50,7 +50,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
               ),
               (
                 '73546795',
-                'A0 0AA',
+                'SW1A 2AA',
                 '2 Grimal Place',
                 'Skewit Road',
                 '',
@@ -60,7 +60,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
               ),
               (
                 '73546595',
-                'A0 0AA',
+                'SW1A 2AA',
                 'The Cottage',
                 '345 Skewit Road',
                 '',
@@ -133,7 +133,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=The%20Huose",
+            "/api/search/addresses?postcode=SW1A%202AA&buildingNameNumber=The%20Huose",
             accepted_responses: [200],
             scopes: %w[address:search],
           ).body,
@@ -171,7 +171,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
     context "when buildingNameNumber param includes non token characters" do
       it "returns the expected amount of addresses" do
         response = JSON.parse(assertive_get_in_search_scope(
-          "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=2():*!&",
+          "/api/search/addresses?postcode=SW1A%202AA&buildingNameNumber=2():*!&",
           accepted_responses: [200],
         ).body, symbolize_names: true)
 
@@ -182,7 +182,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
     context "when postcode has a space" do
       it "removes the whitespace from a postcode" do
         response = JSON.parse(assertive_get_in_search_scope(
-          "/api/search/addresses?postcode= A00AA",
+          "/api/search/addresses?postcode= SW1A2AA",
           accepted_responses: [200],
         ).body, symbolize_names: true)
         expect(response[:data][:addresses].length).to eq(7)
@@ -193,7 +193,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=2",
+            "/api/search/addresses?postcode=SW1A%202AA&buildingNameNumber=2",
             accepted_responses: [200],
             scopes: %w[address:search],
           ).body,
@@ -232,7 +232,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams", :set_with_ti
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=345",
+            "/api/search/addresses?postcode=SW1A%202AA&buildingNameNumber=345",
             accepted_responses: [200],
             scopes: %w[address:search],
           ).body,

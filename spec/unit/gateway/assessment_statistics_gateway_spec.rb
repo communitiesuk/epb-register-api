@@ -140,7 +140,7 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
 
         Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
 
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50, postcode: "BT1 1AA")
+        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50, postcode: "BT4 3SR")
 
         add_countries
         add_assessment_country_ids
@@ -191,7 +191,7 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
       end
 
       it "saves the assessments correct number for the different countries", :aggregate_failures do
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "9000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 20, postcode: "BT1 1AA")
+        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "9000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 20, postcode: "BT4 3SR")
         Gateway::AssessmentsCountryIdGateway::AssessmentsCountryId.create(assessment_id: "9000-0000-0000-0000-0002", country_id: 4)
         gateway.save_daily_stats(date: "2010-01-05")
         expect(Gateway::AssessmentStatisticsGateway::AssessmentStatistics.where(country: "England").count).to eq 2
@@ -227,7 +227,7 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0003", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is a valid SAP in range in Northern Ireland
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75, postcode: "BT1 1AA")
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75, postcode: "BT4 3SR")
 
       # this is a valid SAP in range in England
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)

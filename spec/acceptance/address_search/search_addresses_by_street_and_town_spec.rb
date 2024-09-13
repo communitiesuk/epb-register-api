@@ -195,7 +195,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -232,7 +232,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -337,7 +337,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -373,7 +373,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
                 line3: nil,
                 line4: nil,
                 town: "Whitbury",
-                postcode: "A0 0AA",
+                postcode: "SW1A 2AA",
                 source: "PREVIOUS_ASSESSMENT",
                 existingAssessments: [
                   {
@@ -411,7 +411,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -491,7 +491,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -528,7 +528,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line3: nil,
               line4: nil,
               town: "Whitbury",
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {

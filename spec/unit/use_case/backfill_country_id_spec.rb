@@ -94,16 +94,19 @@ describe UseCase::BackfillCountryId, :set_with_timecop do
         rrn: "0000-0000-0000-0000-0009",
         schema_type: "RdSAP-Schema-19.0",
         uprn: "1000200066",
+        postcode: "CH1 4LT",
       },
       {
         rrn: "0000-0000-0000-0000-0010",
         schema_type: "SAP-Schema-11.0",
         type: "sap",
+        postcode: "CH1 4LT",
       },
       {
         rrn: "0000-0000-0000-0000-0011",
         schema_type: "SAP-Schema-10.2",
         type: "rdsap",
+        postcode: "",
       },
       {
         rrn: "0000-0000-0000-0000-0012",
@@ -121,6 +124,7 @@ describe UseCase::BackfillCountryId, :set_with_timecop do
         rrn: "0000-0000-0000-0000-0014",
         schema_type: "RdSAP-Schema-17.1",
         country_code: "NR",
+        postcode: "",
       },
     ]
 

@@ -25,7 +25,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             VALUES
               (
                 '73546792',
-                'A0 0AA',
+                'SW1A 2AA',
                 '5 Grimal Place',
                 'Skewit Road',
                 '',
@@ -35,7 +35,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
               ),
               (
                 '73546793',
-                'A0 0AA',
+                'SW1A 2AA',
                 'The house Grimal Place',
                 'Skewit Road',
                 '',
@@ -45,7 +45,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
               ),
               (
                 '73546795',
-                'A0 0AA',
+                'SW1A 2AA',
                 '2 Grimal Place',
                 '345 Skewit Road',
                 '',
@@ -108,7 +108,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA",
+            "/api/search/addresses?postcode=SW1A%202AA",
             scopes: %w[address:search],
           ).body,
           symbolize_names: true,
@@ -139,7 +139,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line2: "Skewit Road",
             line3: nil,
             line4: nil,
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             town: "London",
             addressId: "UPRN-000073546792",
             source: "GAZETTEER",
@@ -157,7 +157,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line3: nil,
             line4: nil,
             town: "Whitbury",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {
@@ -175,7 +175,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?postcode=A0%200AA",
+            "/api/search/addresses?postcode=SW1A%202AA",
             scopes: %w[address:search],
           ).body,
           symbolize_names: true,
@@ -206,7 +206,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line2: "Skewit Road",
             line3: nil,
             line4: nil,
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             town: "London",
             addressId: "UPRN-000073546792",
             source: "GAZETTEER",
@@ -224,7 +224,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line3: nil,
             line4: nil,
             town: "Whitbury",
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {

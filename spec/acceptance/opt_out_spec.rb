@@ -22,7 +22,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
       response =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -32,7 +32,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
       response =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -107,7 +107,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
       response =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -117,7 +117,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
       response =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 
@@ -127,7 +127,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
       response =
         JSON.parse(
-          assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("SW1A 2AA").body,
           symbolize_names: true,
         )
 

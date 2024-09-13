@@ -3,9 +3,9 @@ describe Helper::RegexHelper do
     let(:postcode_regex) { Regexp.new described_class::POSTCODE }
 
     context "with a valid postcode" do
-      describe "A0 0AA" do
+      describe "SW1A 2AA" do
         it "validates" do
-          expect(postcode_regex.match?("A0 0AA")).to be true
+          expect(postcode_regex.match?("SW1A 2AA")).to be true
         end
       end
 

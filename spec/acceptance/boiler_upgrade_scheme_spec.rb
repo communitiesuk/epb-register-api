@@ -36,7 +36,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         addressLine3: "",
         addressLine4: "",
         town: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
       },
       dwellingType: "Mid-terrace house",
       lodgementDate: "2020-05-04",
@@ -66,7 +66,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         addressLine3: "Some County",
         addressLine4: "",
         town: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
       },
       dwellingType: "Mid-terrace house",
       lodgementDate: "2020-05-04",
@@ -96,7 +96,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         addressLine3: "Some Area",
         addressLine4: "Some County",
         town: "Whitbury",
-        postcode: "A0 0AA",
+        postcode: "SW1A 2AA",
       },
       dwellingType: "B1 Offices and Workshop businesses",
       lodgementDate: "2020-05-04",
@@ -253,7 +253,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       it "returns the matching assessment BUS details in the expected format" do
         response = JSON.parse(
           bus_details_by_address(
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             building_name_or_number: "1",
           ).body,
           symbolize_names: true,
@@ -266,7 +266,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         it "returns the matching assessment BUS details in the expected format" do
           response = JSON.parse(
             bus_details_by_address(
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               building_name_or_number: "1:",
             ).body,
             symbolize_names: true,
@@ -284,7 +284,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         it "receives an appropriate error with a 404" do
           response = JSON.parse(
             bus_details_by_address(
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               building_name_or_number: "1:",
               accepted_responses: [404],
             ).body,
@@ -302,7 +302,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         it "receives an appropriate error with a 404" do
           response = JSON.parse(
             bus_details_by_address(
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               building_name_or_number: "1:",
               accepted_responses: [404],
             ).body,
@@ -320,7 +320,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
         it "receives an appropriate error with a 404" do
           response = JSON.parse(
             bus_details_by_address(
-              postcode: "A0 0AA",
+              postcode: "SW1A 2AA",
               building_name_or_number: "1:",
               accepted_responses: [404],
             ).body,
@@ -361,7 +361,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       it "returns the matching assessment BUS details in the expected format" do
         response = JSON.parse(
           bus_details_by_address(
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             building_name_or_number: "1",
           ).body,
           symbolize_names: true,
@@ -400,7 +400,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       it "returns a list of assessment references with a 300 status code" do
         response = JSON.parse(
           bus_details_by_address(
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             building_name_or_number: "1",
             accepted_responses: [300],
           ).body,
@@ -419,7 +419,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       it "receives an error response with a 404" do
         response = JSON.parse(
           bus_details_by_address(
-            postcode: "A0 0AA",
+            postcode: "SW1A 2AA",
             building_name_or_number: "1",
             accepted_responses: [404],
           ).body,
@@ -449,7 +449,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       it "receives an appropriate error with a 400" do
         response = JSON.parse(
           bus_details_by_arbitrary_params(
-            params: { postcode: "A0 0AA" },
+            params: { postcode: "SW1A 2AA" },
             accepted_responses: [400],
           ).body,
           symbolize_names: true,

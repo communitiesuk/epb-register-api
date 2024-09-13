@@ -20,7 +20,7 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
         ensure_uprns: false,
       )
 
-      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
+      insert_into_address_base("000000000000", "SW1A 2AA", "1 Some Street", "", "Whitbury", "E")
     end
 
     it "returns only one address for the relevant property" do
@@ -29,7 +29,7 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
       expect(result.first.address_id).to eq("UPRN-000000000000")
       expect(result.first.line1).to eq("1 Some Street")
       expect(result.first.town).to eq("Whitbury")
-      expect(result.first.postcode).to eq("A0 0AA")
+      expect(result.first.postcode).to eq("SW1A 2AA")
     end
 
     it "returns an error when the params are shorter than 2 after sanitising" do
@@ -53,7 +53,7 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
         ensure_uprns: false,
       )
 
-      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury", "E")
+      insert_into_address_base("000000000000", "SW1A 2AA", "1 Some Street", "", "Whitbury", "E")
     end
 
     it "returns only one address for the relevant property" do
@@ -62,7 +62,7 @@ describe UseCase::SearchAddressesByStreetAndTown, :set_with_timecop do
       expect(result.first.address_id).to eq("UPRN-000000000000")
       expect(result.first.line1).to eq("1 Some Street")
       expect(result.first.town).to eq("Whitbury")
-      expect(result.first.postcode).to eq("A0 0AA")
+      expect(result.first.postcode).to eq("SW1A 2AA")
     end
   end
 

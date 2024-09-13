@@ -8,7 +8,7 @@ describe UseCase::FindAssessmentsByPostcode do
       assessment_id: "0000-0000-0000-0000-0000",
       current_energy_efficiency_rating: 50,
       opt_out: false,
-      postcode: "A0 0AA",
+      postcode: "SW1A 2AA",
       date_of_expiry: Time.new(2030, 5, 3).to_date,
       date_registered: Time.new(2020, 5, 4).to_date,
       address_id: "UPRN-000000000123",
@@ -27,7 +27,7 @@ describe UseCase::FindAssessmentsByPostcode do
       assessment_id: "0000-0000-0000-0000-0001",
       current_energy_efficiency_rating: 50,
       opt_out: false,
-      postcode: "A0 0AA",
+      postcode: "SW1A 2AA",
       date_of_expiry: Time.new(2030, 5, 3).to_date,
       date_registered: Time.new(2020, 5, 4).to_date,
       address_id: "UPRN-000000000123",
@@ -56,7 +56,7 @@ describe UseCase::FindAssessmentsByPostcode do
           date_of_expiry: "2030-05-03",
           date_of_registration: "2020-05-04",
           opt_out: false,
-          postcode: "A0 0AA",
+          postcode: "SW1A 2AA",
           status: "ENTERED",
           town: "Whitbury",
           type_of_assessment: "RdSAP" },
@@ -73,22 +73,22 @@ describe UseCase::FindAssessmentsByPostcode do
           date_of_expiry: "2030-05-03",
           date_of_registration: "2020-05-04",
           opt_out: false,
-          postcode: "A0 0AA",
+          postcode: "SW1A 2AA",
           status: "ENTERED",
           town: "Whitbury",
           type_of_assessment: "RdSAP" },
       ],
-      searchQuery: "A0 0AA" }
+      searchQuery: "SW1A 2AA" }
   end
 
   before do
     allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_search_gateway)
-    allow(assessments_search_gateway).to receive(:search_by_postcode).with("A0 0AA", []).and_return([first_assessment, second_assessment])
+    allow(assessments_search_gateway).to receive(:search_by_postcode).with("SW1A 2AA", []).and_return([first_assessment, second_assessment])
   end
 
   describe ".execute" do
     it "returns the expected data" do
-      expect(use_case.execute("A0 0AA")).to eq(expected_data)
+      expect(use_case.execute("SW1A 2AA")).to eq(expected_data)
     end
 
     it "raises an error when postcode is not provided" do

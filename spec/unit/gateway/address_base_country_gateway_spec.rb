@@ -5,7 +5,7 @@ describe Gateway::AddressBaseCountryGateway do
     before do
       add_address_base uprn: "12345", postcode: "SA1 1AA", country_code: "W"
       add_address_base uprn: "67890", postcode: "LS1 1AA", country_code: "E"
-      add_address_base uprn: "24680", postcode: "BT1 1AA", country_code: "N"
+      add_address_base uprn: "24680", postcode: "BT4 3SR", country_code: "N"
     end
 
     context "with a simple UPRN reference without the UPRN prefix or zero padding" do

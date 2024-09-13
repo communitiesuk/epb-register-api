@@ -335,7 +335,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
 
     it "rejects a BT postcode without an NI Schema" do
-      rdsap.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "BT1 0AA" }
+      rdsap.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "BT4 3SR" }
       expect {
         use_case.execute assessment_xml: rdsap.to_s,
                          schema_name: "RdSAP-Schema-20.0.0",

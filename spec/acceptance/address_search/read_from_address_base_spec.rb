@@ -5,7 +5,7 @@ describe "reading out from address_base table" do
     before do
       insert_into_address_base(
         "UPRN-1234123412341234",
-        "A0 0AA",
+        "SW1A 2AA",
         "1 MCDONALD ROAD",
         "O'BRIENSTOWN",
         "ANYTOWN",

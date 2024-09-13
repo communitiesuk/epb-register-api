@@ -44,7 +44,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     after { Timecop.return }
 
     it "returns a CSV with headers and data included" do
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
 
       expect(response).to eq(
         "number_of_assessments,type_of_assessment,region\n1,RdSAP,London\n",
@@ -52,8 +52,8 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "returns a region if there is a outcode match but not a postcode match" do
-      add_postcodes("A0 0EK", 51.5045, 0.0865, "London")
-      add_outcodes("A0", 51.5045, 0.4865, "Belfast")
+      add_postcodes("SW1A 0EK", 51.5045, 0.0865, "London")
+      add_outcodes("SW1A", 51.5045, 0.4865, "Belfast")
 
       expect(response).to eq(
         "number_of_assessments,type_of_assessment,region\n1,RdSAP,Belfast\n",
@@ -70,8 +70,8 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "returns a region if there is not region for the postcode" do
-      add_postcodes("A0 0AA", 51.5045, 0.0865)
-      add_outcodes("A0", 51.5045, 0.4865, "London")
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865)
+      add_outcodes("SW1A", 51.5045, 0.4865, "London")
 
       expect(response).to eq(
         "number_of_assessments,type_of_assessment,region\n1,RdSAP,London\n",
@@ -79,7 +79,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "returns only assessments registered during the given time frame" do
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0001"
@@ -100,7 +100,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "returns an empty object if there are no lodgements in the time frame" do
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
 
       response =
         get_assessment_report(start_date: "2020-09-04", end_date: "2020-09-05")
@@ -127,7 +127,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "returns a CSV of different assessment types" do
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
 
       lodge_assessment_with_rrn(
         valid_sap_xml,

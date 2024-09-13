@@ -15,7 +15,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
                                      addressLine2: "",
                                      addressLine3: "",
                                      addressLine4: "",
-                                     postcode: "A0 0AA",
+                                     postcode: "SW1A 2AA",
                                      town: "Whitbury" },
                           epcRrn: "0000-0000-0000-0000-0000" }] }
       end
@@ -34,7 +34,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
 
       it "returns the assessment by search using a postcode and exact building number" do
         response = JSON.parse(find_domestic_epcs_with_params(
-          params: { postcode: "A0 0AA",
+          params: { postcode: "SW1A 2AA",
                     buildingNameOrNumber: "1" },
           accepted_responses: [200],
         ).body,
@@ -45,7 +45,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
 
       it "returns the assessment by search using a postcode and building name" do
         response = JSON.parse(find_domestic_epcs_with_params(
-          params: { postcode: "A0 0AA",
+          params: { postcode: "SW1A 2AA",
                     buildingNameOrNumber: "1 Some" },
           accepted_responses: [200],
         ).body,
@@ -57,7 +57,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
       it "returns the assessment even if it has been opted out" do
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
         response = JSON.parse(find_domestic_epcs_with_params(
-          params: { postcode: "A0 0AA",
+          params: { postcode: "SW1A 2AA",
                     buildingNameOrNumber: "1" },
           accepted_responses: [200],
         ).body,
@@ -73,7 +73,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
                                      addressLine2: "",
                                      addressLine3: "",
                                      addressLine4: "",
-                                     postcode: "A0 0AA",
+                                     postcode: "SW1A 2AA",
                                      town: "Whitbury" },
                           epcRrn: "0000-0000-0000-0000-0000" }] }
       end
@@ -92,7 +92,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
 
       it "returns the assessment by search using a postcode only" do
         response = JSON.parse(find_domestic_epcs_with_params(
-          params: { postcode: "A0 0AA" },
+          params: { postcode: "SW1A 2AA" },
           accepted_responses: [200],
         ).body,
                               symbolize_names: true)
@@ -135,7 +135,7 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
     context "when passing the incorrect scopes" do
       it "returns a 403 UNAUTHORISED response" do
         response = JSON.parse(find_domestic_epcs_with_params(
-          params: { postcode: "A0 0AA",
+          params: { postcode: "SW1A 2AA",
                     buildingNameOrNumber: "1 Some" },
           accepted_responses: [403],
           scopes: %w[wrong:scope],
