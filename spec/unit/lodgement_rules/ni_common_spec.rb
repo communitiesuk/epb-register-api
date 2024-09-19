@@ -20,8 +20,11 @@ describe LodgementRules::NiCommon do
 
       it "raise an error with a NI postcode", :aggregate_failures do
         expect { ni_common.validate(schema_name: "RdSAP-Schema-20.0.0", address: ni_address) }.to raise_error Boundary::InvalidNiAssessment, /Assessment with a Northern Ireland postcode must be lodged with a NI Schema/
-        expect { ni_common.validate(schema_name: "RdSAP-Schema-20.0.0", address: { postcode: "BT4 3SR" }) }.to raise_error Boundary::InvalidNiAssessment
         expect { ni_common.validate(schema_name: "RdSAP-Schema-20.0.0", address: { postcode: " BT3 1AA" }) }.to raise_error Boundary::InvalidNiAssessment
+      end
+
+      it "raise an error with a NI postcode regardless of case" do
+        expect { ni_common.validate(schema_name: "RdSAP-Schema-20.0.0", address: { postcode: "bt4 3sr" }) }.to raise_error Boundary::InvalidNiAssessment
       end
     end
 
