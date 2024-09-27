@@ -3852,7 +3852,7 @@ components:
           $ref: '#/components/schemas/AssessmentType'
         ratingAverage:
           type: number
-          example: 74.35
+          example: 74
         month:
           type: string
           example: '2021-07'

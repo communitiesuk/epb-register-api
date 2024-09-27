@@ -64,10 +64,10 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
 
     let(:expected_results) do
       [
-        { "num_assessments" => 82, "rating_average" => 78.0, "month" => "2021-07", "assessment_type" => "SAP" },
-        { "num_assessments" => 24, "rating_average" => 28.0, "month" => "2021-08", "assessment_type" => "RdSAP" },
-        { "num_assessments" => 81, "rating_average" => 60.98, "month" => "2021-09", "assessment_type" => "RdSAP" },
-        { "num_assessments" => 138, "rating_average" => 58.12, "month" => "2021-09", "assessment_type" => "SAP" },
+        { "num_assessments" => 82, "rating_average" => 78, "month" => "2021-07", "assessment_type" => "SAP" },
+        { "num_assessments" => 24, "rating_average" => 28, "month" => "2021-08", "assessment_type" => "RdSAP" },
+        { "num_assessments" => 81, "rating_average" => 61, "month" => "2021-09", "assessment_type" => "RdSAP" },
+        { "num_assessments" => 138, "rating_average" => 58, "month" => "2021-09", "assessment_type" => "SAP" },
 
       ]
     end
@@ -93,10 +93,10 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
 
     let(:expected_results) do
       [
-        { "assessment_type" => "SAP", "number_of_assessments" => 92, "rating_average" => 75.65 },
-        { "assessment_type" => "RdSAP", "number_of_assessments" => 24, "rating_average" => 28.0 },
-        { "assessment_type" => "DEC", "number_of_assessments" => 5, "rating_average" => 0.0 },
-        { "assessment_type" => "AC-CERT", "number_of_assessments" => 14, "rating_average" => 0.0 },
+        { "assessment_type" => "SAP", "number_of_assessments" => 92, "rating_average" => 76 },
+        { "assessment_type" => "RdSAP", "number_of_assessments" => 24, "rating_average" => 28 },
+        { "assessment_type" => "DEC", "number_of_assessments" => 5, "rating_average" => 0 },
+        { "assessment_type" => "AC-CERT", "number_of_assessments" => 14, "rating_average" => 0 },
       ]
     end
 
@@ -116,10 +116,10 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
     end
 
     let(:expected_results) do
-      [{ "num_assessments" => 82, "rating_average" => 78.0, "month" => "2021-07", "assessment_type" => "SAP", "country" => "England & Wales" },
-       { "num_assessments" => 93, "rating_average" => 62.0, "month" => "2021-09", "assessment_type" => "RdSAP",  "country" => "England & Wales" },
-       { "num_assessments" => 5, "rating_average" => 50.0, "month" => "2021-09", "assessment_type" => "RdSAP",   "country" => "Northern Ireland" },
-       { "num_assessments" => 10, "rating_average" => 42.0, "month" => "2021-09", "assessment_type" => "SAP", "country" => "Northern Ireland" }]
+      [{ "num_assessments" => 82, "rating_average" => 78, "month" => "2021-07", "assessment_type" => "SAP", "country" => "England & Wales" },
+       { "num_assessments" => 93, "rating_average" => 62, "month" => "2021-09", "assessment_type" => "RdSAP",  "country" => "England & Wales" },
+       { "num_assessments" => 5, "rating_average" => 50, "month" => "2021-09", "assessment_type" => "RdSAP",   "country" => "Northern Ireland" },
+       { "num_assessments" => 10, "rating_average" => 42, "month" => "2021-09", "assessment_type" => "SAP", "country" => "Northern Ireland" }]
     end
 
     it "returns the expected aggregate data by country" do

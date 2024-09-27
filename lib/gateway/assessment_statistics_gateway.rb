@@ -76,7 +76,7 @@ module Gateway
          SELECT SUM(assessments_count) AS total_certs, assessment_type, to_char(day_date, 'YYYY-MM') AS month
          FROM assessment_statistics
           GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type )
-          SELECT SUM(assessments_count) AS num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision AS rating_average, month, a.assessment_type
+          SELECT SUM(assessments_count) AS num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs))::integer AS rating_average, month, a.assessment_type
           FROM assessment_statistics a
           JOIN counts ON counts.month = to_char(a.day_date, 'YYYY-MM') AND counts.assessment_type = a.assessment_type
           WHERE to_char(a.day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
@@ -96,7 +96,7 @@ module Gateway
          WHERE day_date = $1
          GROUP BY  assessment_type,  day_date )
          SELECT a.assessment_type, SUM(assessments_count) AS number_of_assessments,
-               ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision AS rating_average
+               ROUND((SUM(assessments_count * rating_average)/total_certs))::integer AS rating_average
          FROM assessment_statistics a
          JOIN counts ON  counts.assessment_type = a.assessment_type AND a.day_date = counts.day_date
          GROUP BY to_char(a.day_date, 'YYYY-MM-DD'), a.assessment_type, total_certs
@@ -121,7 +121,7 @@ module Gateway
          SELECT SUM(assessments_count) AS total_certs, assessment_type, to_char(day_date, 'YYYY-MM') AS month, country
          FROM assessment_statistics
           GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type, country )
-        SELECT SUM(assessments_count) AS num_assessments, ROUND((SUM(assessments_count * rating_average)/total_certs)::numeric, 2)::double precision AS rating_average, month, a.assessment_type, a.country
+        SELECT SUM(assessments_count) AS num_assessments,ROUND((SUM(assessments_count * rating_average)/total_certs))::integer AS rating_average, month, a.assessment_type, a.country
         FROM assessment_statistics a
         JOIN counts ON counts.month = to_char(a.day_date, 'YYYY-MM') AND counts.assessment_type = a.assessment_type AND a.country = counts.country
         WHERE to_char(a.day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
