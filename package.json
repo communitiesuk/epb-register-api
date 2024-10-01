@@ -13,10 +13,10 @@
     "fmt": "npx standard --fix",
     "lint": "npx standard",
     "test": "jest --forceExit",
-    "update-address-base": "node lib/tasks/maintenance/address-base.js update -i -v",
-    "update-address-base-auto": "node lib/tasks/maintenance/address-base.js update -v",
-    "full-address-base-reload": "node lib/tasks/maintenance/address-base.js update -f -v",
-    "specify-address-base-version": "node lib/tasks/maintenance/address-base.js specify-version",
+    "update-address-base": "npm i && node lib/tasks/maintenance/address-base.js update -i -v",
+    "update-address-base-auto": "npm i && node lib/tasks/maintenance/address-base.js update -v",
+    "full-address-base-reload": "npm i && node lib/tasks/maintenance/address-base.js update -f -v",
+    "specify-address-base-version": "npm i && node lib/tasks/maintenance/address-base.js specify-version",
     "build": "echo \"DO NOT DELETE - I am here as a placeholder to help prevent the Paketo Jammy Full Builder from complaining that I'm missing, see EPBR-3174\""
   },
   "repository": {
