@@ -15,6 +15,7 @@
     "test": "jest --forceExit",
     "update-address-base": "npm i && node lib/tasks/maintenance/address-base.js update -i -v",
     "update-address-base-auto": "npm i && node lib/tasks/maintenance/address-base.js update -v",
+    "update-address-base-specific-version": "npm i && node lib/tasks/maintenance/address-base.js update -v -s",
     "full-address-base-reload": "npm i && node lib/tasks/maintenance/address-base.js update -f -v",
     "specify-address-base-version": "npm i && node lib/tasks/maintenance/address-base.js specify-version",
     "build": "echo \"DO NOT DELETE - I am here as a placeholder to help prevent the Paketo Jammy Full Builder from complaining that I'm missing, see EPBR-3174\""

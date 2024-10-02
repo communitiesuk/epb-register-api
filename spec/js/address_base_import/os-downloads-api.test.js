@@ -1,6 +1,6 @@
 jest.mock('node-fetch', () => require('fetch-mock-jest').sandbox())
 const fetchMock = require('node-fetch')
-const { newerVersions, latestVersion, parseVersionNumber, downloadFileUrlForVersionUrl } = require('../../../lib/js/address_base_import/os-downloads-api.js')
+const { newerVersions, latestVersion, specificVersion, parseVersionNumber, downloadFileUrlForVersionUrl } = require('../../../lib/js/address_base_import/os-downloads-api.js')
 
 const apiKey = process.env.OS_DATA_HUB_API_KEY
 
@@ -517,6 +517,213 @@ describe('when checking which newer versions of the AddressBase data are availab
       )
 
     expect(newerVersions(existingVersionString)).rejects.toEqual(new Error('Access to Ordnance Survey Downloads API not authorised - are you using a current API key?'))
+  })
+})
+
+describe('when fetching a specific version of the AddressBase data', () => {
+  test('it gives one version when there is a matching version', async () => {
+    const versionNumber = '90'
+    const dataPackages = [
+      {
+        id: '0040146690',
+        name: 'EPBR - AddressBase Plus (FULL)',
+        url: `https://api.os.uk/downloads/v1/dataPackages/0040146690?key=${encodeURI(apiKey)}`,
+        createdOn: '2021-01-08',
+        productId: 'ABFLATSLA',
+        productName: 'AddressBase Plus',
+        versions: [
+          {
+            id: '5668491',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5668491?key=${encodeURI(apiKey)}`,
+            createdOn: '2022-01-27',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E93 May 2022 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5587961',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5587961?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-12-09',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E92 April 2022 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5527646',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5527646?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-10-29',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E91 March 2022 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5468716',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5468716?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-09-16',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E90 January 2022 Update',
+            format: 'CSV'
+          }
+        ]
+      },
+      {
+        id: '0040143634',
+        name: 'EPBR - AddressBase Plus (FULL)',
+        url: `https://api.os.uk/downloads/v1/dataPackages/0040143634?key=${encodeURI(apiKey)}`,
+        createdOn: '2020-08-13',
+        productId: 'ABPLISSLA',
+        productName: 'AddressBase Plus - Islands',
+        versions: [
+          {
+            id: '5668869',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5668869?key=${encodeURI(apiKey)}`,
+            createdOn: '2022-01-27',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E93 May 2022 Update\t', // test we handle erroneous whitespace!
+            format: 'CSV'
+          },
+          {
+            id: '5587319',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5587319?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-12-09',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E92 April 2022 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5527712',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5527712?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-10-29',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E91 March 2022 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5469630',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5469630?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-09-17',
+            reason: 'UPDATE',
+            supplyType: 'Full',
+            productVersion: 'E90 January 2022 Update',
+            format: 'CSV'
+          }
+        ]
+      },
+      {
+        id: '0040146690',
+        name: 'EPBR - AddressBase Plus (COU)',
+        url: `https://api.os.uk/downloads/v1/dataPackages/0040146690?key=${encodeURI(apiKey)}`,
+        createdOn: '2021-01-08',
+        productId: 'ABFLATSLA',
+        productName: 'AddressBase Plus',
+        versions: [
+          {
+            id: '5668491',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5668491?key=${encodeURI(apiKey)}`,
+            createdOn: '2022-01-27',
+            reason: 'UPDATE',
+            supplyType: 'Change Only Update',
+            productVersion: 'E90 January 2022 Update\t', // test we handle erroneous whitespace!
+            format: 'CSV'
+          },
+          {
+            id: '5587961',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5587961?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-12-09',
+            reason: 'UPDATE',
+            supplyType: 'Change Only Update',
+            productVersion: 'E89 December 2021 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5527646',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5527646?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-10-29',
+            reason: 'UPDATE',
+            supplyType: 'Change Only Update',
+            productVersion: 'E88 October 2021 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5468716',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5468716?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-09-16',
+            reason: 'INITIAL',
+            supplyType: 'Full',
+            productVersion: 'E87 September 2021 Update',
+            format: 'CSV'
+          }
+        ]
+      },
+      {
+        id: '0040143634',
+        name: 'EPBR - AddressBase Plus (COU)',
+        url: `https://api.os.uk/downloads/v1/dataPackages/0040143634?key=${encodeURI(apiKey)}`,
+        createdOn: '2020-08-13',
+        productId: 'ABPLISSLA',
+        productName: 'AddressBase Plus - Islands',
+        versions: [
+          {
+            id: '5668869',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5668869?key=${encodeURI(apiKey)}`,
+            createdOn: '2022-01-27',
+            reason: 'UPDATE',
+            supplyType: 'Change Only Update',
+            productVersion: 'E90 January 2022 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5587319',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5587319?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-12-09',
+            reason: 'UPDATE',
+            supplyType: 'Change Only Update',
+            productVersion: 'E89 December 2021 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5527712',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5527712?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-10-29',
+            reason: 'UPDATE',
+            supplyType: 'Change Only Update',
+            productVersion: 'E88 October 2021 Update',
+            format: 'CSV'
+          },
+          {
+            id: '5469630',
+            url: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5469630?key=${encodeURI(apiKey)}`,
+            createdOn: '2021-09-17',
+            reason: 'INITIAL',
+            supplyType: 'Full',
+            productVersion: 'E87 September 2021 Update',
+            format: 'CSV'
+          }
+        ]
+      }
+    ]
+
+    fetchMock
+      .get(
+        `https://api.os.uk/downloads/v1/dataPackages?key=${encodeURI(apiKey)}`,
+        dataPackages
+      )
+
+    expect(await specificVersion(versionNumber)).toEqual([
+      {
+        gbUrl: `https://api.os.uk/downloads/v1/dataPackages/0040146690/versions/5668491?key=${encodeURI(apiKey)}`,
+        islandsUrl: `https://api.os.uk/downloads/v1/dataPackages/0040143634/versions/5668869?key=${encodeURI(apiKey)}`,
+        productVersion: 'E90 January 2022 Update',
+        isDelta: true
+      }
+    ])
   })
 })
 
