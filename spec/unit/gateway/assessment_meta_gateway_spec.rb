@@ -33,8 +33,7 @@ describe Gateway::AssessmentMetaGateway do
         },
         override: true,
       )
-
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET address_id='UPRN-000000000123'")
+      Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.update_all(address_id: "UPRN-000000000123")
     end
 
     after do
@@ -65,7 +64,7 @@ describe Gateway::AssessmentMetaGateway do
 
     context "when the certificate has been cancelled" do
       before do
-        ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET cancelled_at= '#{Time.now.utc}'")
+        Gateway::AssessmentsGateway::Assessment.update_all(cancelled_at: Time.now.utc)
       end
 
       it "returns the expected data set with the cancelled at date to be now" do
@@ -75,7 +74,7 @@ describe Gateway::AssessmentMetaGateway do
 
     context "when the certificate has been opted_out" do
       before do
-        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out= true")
+        Gateway::AssessmentsGateway::Assessment.update_all(opt_out: true)
       end
 
       it "returns the expected data set with opt out property set to true" do
@@ -85,21 +84,11 @@ describe Gateway::AssessmentMetaGateway do
 
     context "when the certificate has been marked as not for issue" do
       before do
-        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at='#{Time.now.utc}'")
+        Gateway::AssessmentsGateway::Assessment.update_all(not_for_issue_at: Time.now.utc)
       end
 
       it "returns the expected data set with the not for issue at datetime to be now" do
         expect(gateway.fetch("0000-0000-0000-0000-0000")["not_for_issue_at"]).to eq(Time.now)
-      end
-    end
-
-    context "when the certificate is marked as migrated" do
-      before do
-        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated=true")
-      end
-
-      it "returns the expected data set with the created_at property set as null" do
-        expect(gateway.fetch("0000-0000-0000-0000-0000")["created_at"]).to be_nil
       end
     end
   end

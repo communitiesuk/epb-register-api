@@ -9,9 +9,7 @@ module Gateway
       a.type_of_assessment,
       a.opt_out,
       a.hashed_assessment_id,
-      CASE WHEN a.migrated=TRUE THEN NULL
-           ELSE a.created_at
-      END AS created_at,
+      a.created_at,
       a.cancelled_at,
       a.not_for_issue_at,
       x.schema_type,
