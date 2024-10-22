@@ -9,7 +9,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "mock_redis", "~> 0.44.0"
+  gem "mock_redis", "~> 0.45"
   gem "pry", "~> 0.14.2"
   gem "rack-test", "~> 2.1.0"
   gem "rspec", "~>3.12"
@@ -20,7 +20,7 @@ end
 
 gem "activerecord", "~> 7.2.1"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.167"
+gem "aws-sdk-s3", "~> 1.169"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.0"
@@ -46,4 +46,4 @@ gem "sinatra-cross_origin", "~> 0.4.0"
 gem "slack-ruby-client"
 gem "unleash", "~> 5.0.5"
 gem "wisper", "~> 3.0.0"
-gem "zeitwerk", "~> 2.6.17"
+gem "zeitwerk", "~> 2.7.1"
