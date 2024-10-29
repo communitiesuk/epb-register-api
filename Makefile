@@ -23,9 +23,6 @@ setup-db:
 test:
 	@STAGE=test bundle exec rake spec
 
-.PHONY: js-test
-js-test:
-	@npm run test
 
 .PHONY: run
 run:

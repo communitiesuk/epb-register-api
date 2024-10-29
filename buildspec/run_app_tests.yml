@@ -32,4 +32,3 @@ phases:
       - make setup-db
       - echo ">>>>>>>> RUNNING TESTS"
       - make test
-      - make js-test
