@@ -49,7 +49,7 @@ module Gateway
           "assessment_id",
           assessment_id,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first

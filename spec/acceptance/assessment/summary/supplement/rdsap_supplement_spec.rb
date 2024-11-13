@@ -20,7 +20,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP", :set_with_timecop d
         domestic_sap: "ACTIVE",
       )
     add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
-
+    add_countries
     # DATA SETUP:
     # 0000 = RdSAP with address ID UPRN-000000000000
     # 0001 = RdSAP with address ID UPRN-000000000000, no contact details
@@ -138,6 +138,14 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP", :set_with_timecop d
 
     it "does not add a green deal plan for a subsequent certificate for a different address" do
       expect(summary0002.dig(:data, :greenDealPlan)).to eq []
+    end
+  end
+
+  context "when getting the country id" do
+    it "returns the country id" do
+      country_id = summary0000[:data][:countryId]
+
+      expect(country_id).to eq 2
     end
   end
 end

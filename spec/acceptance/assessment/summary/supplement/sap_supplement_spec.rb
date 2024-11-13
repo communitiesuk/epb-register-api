@@ -17,6 +17,7 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP", :set_with_timecop do
         domestic_sap: "ACTIVE",
       )
     add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
+    add_countries
 
     # DATA SETUP:
     # 0000 = SAP with address ID UPRN-000000000000
@@ -114,6 +115,14 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP", :set_with_timecop do
       it "returns an empty list when there are no related assessments" do
         expect(summary0002.dig(:data, :relatedAssessments)).to eq([])
       end
+    end
+  end
+
+  context "when getting the country id" do
+    it "returns the country id" do
+      country_id = summary0000_when_sole_cert[:data][:countryId]
+
+      expect(country_id).to eq 2
     end
   end
 end
