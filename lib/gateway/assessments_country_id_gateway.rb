@@ -35,6 +35,26 @@ module Gateway
     rescue ActiveRecord::RecordNotUnique
       raise Gateway::AssessmentsGateway::AssessmentAlreadyExists
     end
+
+    def fetch(assessment_id)
+      sql = <<-SQL
+        SELECT
+        country_id AS country_id
+        FROM assessments_country_ids
+        WHERE assessment_id = $1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first
+    end
+
   rescue ActiveRecord::StatementInvalid, ActiveRecord::ConnectionFailed
     raise
   end
