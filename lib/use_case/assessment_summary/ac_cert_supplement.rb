@@ -15,6 +15,7 @@ module UseCase
         registered_by!(hash)
         related_party_disclosure!(hash)
         related_assessments!(hash)
+        add_country_id!(hash)
         hash
       end
     end

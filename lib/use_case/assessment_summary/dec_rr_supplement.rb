@@ -19,6 +19,7 @@ module UseCase
         registered_by!(hash)
         related_assessments!(hash)
         related_cert_energy_band!(hash)
+        add_country_id!(hash)
         hash
       end
     end

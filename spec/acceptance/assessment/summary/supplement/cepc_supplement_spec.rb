@@ -39,6 +39,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC", :set_with_timecop do
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE")
     add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
+    add_countries
   end
 
   context "when getting the assessor data supplement" do
@@ -69,6 +70,14 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC", :set_with_timecop do
       it "returns an empty list when there are no related assessments" do
         expect(third_summary.dig(:data, :relatedAssessments)).to eq([])
       end
+    end
+  end
+
+  context "when getting the country id" do
+    it "returns the country id" do
+      country_id = regular_summary[:data][:countryId]
+
+      expect(country_id).to eq 3
     end
   end
 end

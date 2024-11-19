@@ -43,6 +43,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR", :set_with_timecop d
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_dec: "ACTIVE")
     add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
+    add_countries
   end
 
   context "when getting the assessor data supplement" do
@@ -91,7 +92,16 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR", :set_with_timecop d
       ).to eq("a")
     end
   end
+
+  context "when getting the country id" do
+    it "returns the country id" do
+      country_id = regular_summary[:data][:countryId]
+
+      expect(country_id).to eq 1
+    end
+  end
 end
+
 
 def lodge_dec_rr(xml, scheme_id)
   lodge_assessment(

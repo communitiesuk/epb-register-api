@@ -34,7 +34,7 @@ module UseCase
         related_assessments!(hash)
         related_cert_energy_band!(hash)
         related_party_disclosure!(hash)
-
+        add_country_id!(hash)
         hash
       end
     end

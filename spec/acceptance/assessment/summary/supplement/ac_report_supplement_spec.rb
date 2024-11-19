@@ -3,6 +3,10 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timec
 
   let!(:scheme_id) { add_scheme_and_get_id }
 
+  before(:all) do
+    add_countries
+  end
+
   let!(:regular_summary) do
     assessor =
       AssessorStub.new.fetch_request_body(
@@ -73,6 +77,14 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timec
       expect(related_assessments.first[:assessmentId]).to eq(
         "0000-0000-0000-0000-0001",
       )
+    end
+  end
+
+  context "when getting the country id" do
+    it "returns the country id" do
+      country_id = regular_summary[:data][:countryId]
+
+      expect(country_id).to eq 1
     end
   end
 end

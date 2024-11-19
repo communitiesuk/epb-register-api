@@ -39,6 +39,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR", :set_with_timecop
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE")
     add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
+    add_countries
   end
 
   context "when getting the related party disclosure" do
@@ -92,6 +93,14 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR", :set_with_timecop
       expect(
         regular_summary.dig(:data, :energyBandFromRelatedCertificate),
       ).to eq("d")
+    end
+  end
+
+  context "when getting the country id" do
+    it "returns the country id" do
+      country_id = regular_summary[:data][:countryId]
+
+      expect(country_id).to eq 3
     end
   end
 end
