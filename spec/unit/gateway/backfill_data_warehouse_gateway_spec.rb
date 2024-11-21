@@ -65,6 +65,18 @@ describe Gateway::BackfillDataWarehouseGateway do
       },
       migrated: true,
     )
+
+    ac_report = Nokogiri.XML Samples.xml "CEPC-8.0.0", "ac-report"
+    ac_report.at("RRN").children = "0000-0000-0000-0000-0030"
+    lodge_assessment(
+      assessment_body: ac_report.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      migrated: true,
+      schema_name: "CEPC-8.0.0",
+    )
   end
 
   after do
@@ -80,6 +92,11 @@ describe Gateway::BackfillDataWarehouseGateway do
     it "gets the assessment ids for any schema" do
       result = gateway.get_assessments_id(start_date: "2020-05-01", end_date: "2020-05-04")
       expect(result.sort).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0004])
+    end
+
+    it "does not return the id for ac-report" do
+      result = gateway.get_assessments_id(start_date: "2020-05-01", end_date: "2020-05-04")
+      expect(result).not_to include("0000-0000-0000-0000-0030")
     end
 
     it "gets the assessment ids for any type until now" do

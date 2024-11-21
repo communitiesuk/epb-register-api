@@ -38,11 +38,15 @@ module Gateway
           ActiveRecord::Type::DateTime.new,
         ),
       ]
-      unless type_of_assessment.nil?
-        sql << <<~SQL_TYPE_OF_ASSESSMENT
-          AND type_of_assessment = '#{type_of_assessment}'
-        SQL_TYPE_OF_ASSESSMENT
-      end
+      sql << if type_of_assessment.nil?
+               <<~SQL_TYPE_OF_ASSESSMENT
+                 AND type_of_assessment != 'AC-REPORT'
+               SQL_TYPE_OF_ASSESSMENT
+             else
+               <<~SQL_TYPE_OF_ASSESSMENT
+                 AND type_of_assessment = '#{type_of_assessment}'
+               SQL_TYPE_OF_ASSESSMENT
+             end
 
       result = ActiveRecord::Base.connection.exec_query sql, "SQL", attributes
       result.map { |rows| rows["assessment_id"] }
