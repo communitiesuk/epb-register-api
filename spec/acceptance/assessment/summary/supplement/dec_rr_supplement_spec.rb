@@ -102,7 +102,6 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR", :set_with_timecop d
   end
 end
 
-
 def lodge_dec_rr(xml, scheme_id)
   lodge_assessment(
     assessment_body: xml,

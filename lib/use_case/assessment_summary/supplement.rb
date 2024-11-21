@@ -64,10 +64,9 @@ module UseCase
         assessment_id = hash[:assessment_id]
         response = Gateway::AssessmentsCountryIdGateway.new.fetch(assessment_id)
 
-        unless response == nil
-          hash[:country_id] =  response["country_id"]
+        unless response.nil?
+          hash[:country_id] = response["country_id"]
         end
-
       end
 
     private

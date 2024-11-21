@@ -2,11 +2,6 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timec
   include RSpecRegisterApiServiceMixin
 
   let!(:scheme_id) { add_scheme_and_get_id }
-
-  before(:all) do
-    add_countries
-  end
-
   let!(:regular_summary) do
     assessor =
       AssessorStub.new.fetch_request_body(
@@ -21,7 +16,6 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timec
       symbolize_names: true,
     )
   end
-
   let!(:second_summary) do
     second_assessment =
       Nokogiri.XML(Samples.xml("CEPC-8.0.0", "ac-cert+ac-report"))
@@ -40,6 +34,10 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timec
       fetch_assessment_summary(id: "0000-0000-0000-0000-0003").body,
       symbolize_names: true,
     )
+  end
+
+  before(:all) do
+    add_countries
   end
 
   context "when getting the assessor data supplement" do
