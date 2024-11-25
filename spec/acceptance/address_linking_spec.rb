@@ -171,9 +171,8 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
       ) { put("/api/assessments/0000-0000-0000-0000-0000/address-id", request_body) }
 
       error = JSON.parse(response.body, symbolize_names: true)[:errors].first
-
       expect(error[:code]).to eq("INVALID_REQUEST")
-      expect(error[:title]).to include("unexpected token at '{ \"addressId\": \"UPRN-010033533123\" \" }'")
+      expect(error[:title]).to include("JSON did not parse. Error: unexpected token")
     end
 
     it "changes the address id for to a valid addressId (UPRN- identifier)" do
