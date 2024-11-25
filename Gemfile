@@ -18,7 +18,7 @@ group :test do
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
 end
 
-gem "activerecord", "~> 7.2.1"
+gem "activerecord", "~> 7.2.2"
 gem "archive-zip"
 gem "aws-sdk-s3", "~> 1.169"
 gem "csv", "~> 3.3"
@@ -40,7 +40,7 @@ gem "rubocop-govuk", "~> 5.0"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
 gem "sentry-ruby", "~> 5.19"
-gem "sinatra", "~> 4.0"
+gem "sinatra", "~> 4.1"
 gem "sinatra-activerecord", "~> 2.0.27"
 gem "sinatra-cross_origin", "~> 0.4.0"
 gem "slack-ruby-client"
