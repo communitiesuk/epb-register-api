@@ -18,6 +18,10 @@ module UseCase
 
       groups_ids.each do |group_id|
         begin
+          if @fetch_assessments_to_link_gateway.contains_manually_set_address_ids(group_id)
+            next
+          end
+
           assessments_to_link = @fetch_assessments_to_link_gateway.fetch_assessments_by_group_id(group_id)
         rescue Boundary::NoData => e
           report_to_sentry(e)

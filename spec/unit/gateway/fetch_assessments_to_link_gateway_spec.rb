@@ -183,6 +183,48 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
+      # Does not fetch assessments when the team has already manually updated one
+      cepc_xml_13 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_13.at("//CEPC:RRN").content = "0000-0000-0000-0000-0013"
+      cepc_xml_13.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Commercial Street" }
+      cepc_xml_13.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0013"
+      lodge_assessment(
+        assessment_body: cepc_xml_13.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
+      cepc_xml_14 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_14.at("//CEPC:RRN").content = "0000-0000-0000-0000-0014"
+      cepc_xml_14.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Commercial Street" }
+      cepc_xml_14.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0014"
+      lodge_assessment(
+        assessment_body: cepc_xml_14.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
+      cepc_xml_15 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml_15.at("//CEPC:RRN").content = "0000-0000-0000-0000-0015"
+      cepc_xml_15.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Commercial Street" }
+      cepc_xml_15.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0015"
+      lodge_assessment(
+        assessment_body: cepc_xml_15.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        migrated: true,
+      )
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET source = 'epb_team_update' WHERE assessment_id = '0000-0000-0000-0000-0002' ")
+
       gateway.drop_temp_table
       gateway.create_and_populate_temp_table
     end
@@ -190,13 +232,13 @@ describe Gateway::FetchAssessmentsToLinkGateway do
     describe "#create_and_populate_temp_table" do
       it "creates a temporary table with the expected columns", :aggregate_failures do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id source group_id])
       end
 
       it "populates the temp table with assessments with the same address name, removing punctuation that come after numbers and not between numbers", :aggregate_failures do
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(8)
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(11)
         data = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id).sort
-        expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012])
+        expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012 0000-0000-0000-0000-0013 0000-0000-0000-0000-0014 0000-0000-0000-0000-0015])
       end
 
       it "does not fetch correctly linked assessments" do
@@ -213,6 +255,20 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
       it "does not fetch the address 1.4 commercial street, with punctuation between numbers" do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(assessment_id: "0000-0000-0000-0000-0010")).not_to exist
+      end
+    end
+
+    describe "#contains_manually_set_address_ids" do
+      it "returns true if any of the assessments in the group have had their address ids manually linked in the past" do
+        group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "2 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
+        result = gateway.contains_manually_set_address_ids(group_id)
+        expect(result).to be true
+      end
+
+      it "returns false if none of the assessments in the group have had their address ids manually linked in the past" do
+        group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
+        result = gateway.contains_manually_set_address_ids(group_id)
+        expect(result).to be false
       end
     end
 
@@ -240,7 +296,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
 
     describe "#get_max_group_id" do
       it "returns the largest group_id number" do
-        expect(gateway.get_max_group_id).to eq 3
+        expect(gateway.get_max_group_id).to eq 4
       end
     end
 
@@ -267,7 +323,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
     describe "#create_and_populate_temp_table" do
       it "does not raise an error if there is no data", :aggregate_failures do
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.table_exists?).to be(true)
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id group_id])
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.column_names).to eq(%w[address postcode assessment_id address_id source group_id])
         expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(0)
       end
     end

@@ -22,7 +22,8 @@ module Gateway
                            SELECT a.assessment_id,
                                   REGEXP_REPLACE(asa.address, '(?<=[^[:digit:]])[[:punct:]](?=[^[:digit:]])|(?<=[[:digit:]])[[:punct:]](?=[^[:digit:]])|''', '', 'g') AS address,
                                   a.postcode,
-                                  aaid.address_id
+                                  aaid.address_id,
+                                  aaid.source
                             FROM assessments a
                                      JOIN assessments_address_id aaid ON a.assessment_id = aaid.assessment_id
                                      JOIN assessment_search_address asa ON a.assessment_id = asa.assessment_id
@@ -30,7 +31,7 @@ module Gateway
                             AND a.cancelled_at IS NULL
                             AND a.not_for_issue_at IS NULL
                            )
-        SELECT aww.address, aww.postcode, assessment_id, address_id, dense_rank() over (ORDER BY aww.address, aww.postcode) group_id
+        SELECT aww.address, aww.postcode, assessment_id, address_id, source, dense_rank() over (ORDER BY aww.address, aww.postcode) group_id
         FROM addresses_we_want aww LEFT JOIN non_domestic_certs ndc ON (aww.address = ndc.address AND aww.postcode = ndc.postcode)
     SQL
     def create_and_populate_temp_table
@@ -58,6 +59,22 @@ module Gateway
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |rows| rows["group_id"] }
+    end
+
+    def contains_manually_set_address_ids(group_id)
+      sql = <<~SQL
+        SELECT * FROM temp_linking_tables WHERE source = 'epb_team_update' AND group_id = $1
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "group_id",
+          group_id,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
+      result.empty? ? true : false
     end
 
     def fetch_assessments_by_group_id(group_id)
