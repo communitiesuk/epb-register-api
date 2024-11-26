@@ -83,7 +83,7 @@ module Gateway
         SELECT DISTINCT(address_id) AS address_id
         FROM temp_linking_tables
         WHERE group_id = $1 )
-        SELECT a.assessment_id, aai.address_id, a.date_registered
+        SELECT a.assessment_id, aai.address_id, a.date_registered, aai.source
         FROM assessments a
         JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
         JOIN uniq_address_ids uai ON uai.address_id = aai.address_id

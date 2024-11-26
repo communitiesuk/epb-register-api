@@ -10,14 +10,19 @@ module Domain
     end
 
     def set_best_address_id(address_base_gateway:)
-      find_uprn = @data.find { |assessment| assessment["address_id"].start_with?("UPRN") }
-      if find_uprn.nil?
-        @best_address_id = "RRN-#{@data.first['assessment_id']}"
+      find_manually_set_id = @data.find { |assessment| assessment["source"] == "epb_team_update" }
+      if !find_manually_set_id.nil?
+        @best_address_id = find_manually_set_id["address_id"]
       else
-        @best_address_id = find_uprn["address_id"]
-        stripped_uprn = @best_address_id[5..]
-        unless address_base_gateway.check_uprn_exists(stripped_uprn)
+        find_uprn = @data.find { |assessment| assessment["address_id"].start_with?("UPRN") }
+        if find_uprn.nil?
           @best_address_id = "RRN-#{@data.first['assessment_id']}"
+        else
+          @best_address_id = find_uprn["address_id"]
+          stripped_uprn = @best_address_id[5..]
+          unless address_base_gateway.check_uprn_exists(stripped_uprn)
+            @best_address_id = "RRN-#{@data.first['assessment_id']}"
+          end
         end
       end
     end
