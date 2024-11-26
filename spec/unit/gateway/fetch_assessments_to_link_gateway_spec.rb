@@ -223,7 +223,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET source = 'epb_team_update' WHERE assessment_id = '0000-0000-0000-0000-0002' ")
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET source = 'epb_team_update' WHERE assessment_id = '0000-0000-0000-0000-0013' ")
 
       gateway.drop_temp_table
       gateway.create_and_populate_temp_table

@@ -74,7 +74,7 @@ module Gateway
         ),
       ]
       result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
-      result.empty? ? true : false
+      result.empty? ? false : true
     end
 
     def fetch_assessments_by_group_id(group_id)
