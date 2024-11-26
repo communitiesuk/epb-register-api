@@ -42,9 +42,9 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL")
     end
 
-    def fetch_duplicate_address_ids
+    def fetch_groups_to_skip
       sql = <<~SQL
-        SELECT DISTINCT group_id
+        (SELECT DISTINCT group_id
         FROM (
             WITH unique_address_id_groups AS (
                 SELECT DISTINCT address_id, group_id
@@ -55,26 +55,12 @@ module Gateway
             GROUP BY address_id, group_id
             ) AS table_dupes
         WHERE count > 1
-        ORDER BY group_id ASC
+        ORDER BY group_id ASC)
+        UNION
+        SELECT group_id from temp_linking_tables WHERE source = 'epb_team_update'
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |rows| rows["group_id"] }
-    end
-
-    def contains_manually_set_address_ids(group_id)
-      sql = <<~SQL
-        SELECT * FROM temp_linking_tables WHERE source = 'epb_team_update' AND group_id = $1
-      SQL
-
-      binds = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "group_id",
-          group_id,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
-      result = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
-      result.empty? ? false : true
     end
 
     def fetch_assessments_by_group_id(group_id)

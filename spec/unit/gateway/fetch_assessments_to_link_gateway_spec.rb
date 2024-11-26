@@ -258,20 +258,6 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
     end
 
-    describe "#contains_manually_set_address_ids" do
-      it "returns true if any of the assessments in the group have had their address ids manually linked in the past" do
-        group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "2 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
-        result = gateway.contains_manually_set_address_ids(group_id)
-        expect(result).to be true
-      end
-
-      it "returns false if none of the assessments in the group have had their address ids manually linked in the past" do
-        group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
-        result = gateway.contains_manually_set_address_ids(group_id)
-        expect(result).to be false
-      end
-    end
-
     describe "#fetch_assessments_by_group_id" do
       it "return assessment id, address, id, and date registered with the same address_id found within the group" do
         group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
@@ -300,10 +286,11 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
     end
 
-    describe "#fetch_duplicate_address_ids" do
-      it "returns an array containing the group ids which have an address_id found in more than one group" do
-        expected_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0003").pluck(:group_id)
-        expect(gateway.fetch_duplicate_address_ids - expected_group_ids).to eq []
+    describe "#fetch_groups_to_skip" do
+      it "returns an array containing the group ids which either have an address_id found in more than one group, or have been manually updated" do
+        expected_duplicate_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0003").pluck(:group_id)
+        expected_manually_updated_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0013").pluck(:group_id)
+        expect(gateway.fetch_groups_to_skip - expected_duplicate_group_ids - expected_manually_updated_group_ids).to eq []
       end
     end
   end

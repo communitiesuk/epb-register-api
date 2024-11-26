@@ -19,7 +19,7 @@ describe UseCase::BulkLinkAssessments do
   before do
     allow(fetch_gateway).to receive(:drop_temp_table)
     allow(fetch_gateway).to receive(:create_and_populate_temp_table)
-    allow(fetch_gateway).to receive_messages(get_max_group_id: number_of_groups, fetch_duplicate_address_ids: skip_group_ids, contains_manually_set_address_ids:, fetch_assessments_by_group_id: domain)
+    allow(fetch_gateway).to receive_messages(get_max_group_id: number_of_groups, fetch_groups_to_skip: skip_group_ids, fetch_assessments_by_group_id: domain)
     allow(Domain::AssessmentsToLink).to receive(:new).and_return(domain)
     allow(domain).to receive(:set_best_address_id)
     allow(domain).to receive_messages(data:, best_address_id: "RRN-0000-0000-0000-0000-0003", get_assessment_ids: %w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0004])
@@ -43,11 +43,7 @@ describe UseCase::BulkLinkAssessments do
     end
 
     it "calls the gateway and fetches an group_ids to skip" do
-      expect(fetch_gateway).to have_received(:fetch_duplicate_address_ids)
-    end
-
-    it "calls the gateway to check if the group contains any assessments with manually set address ids" do
-      expect(fetch_gateway).to have_received(:contains_manually_set_address_ids).exactly(number_of_groups).times
+      expect(fetch_gateway).to have_received(:fetch_groups_to_skip)
     end
 
     it "calls the gateway to fetch assessments with the same address and postcode for each group" do
@@ -80,29 +76,6 @@ describe UseCase::BulkLinkAssessments do
           new_address_id: "RRN-0000-0000-0000-0000-0003",
         )
       end
-    end
-  end
-
-  context "when a group contains assessments which have had their address id set manually" do
-    let(:number_of_groups) { 2 }
-
-    before do
-      allow(fetch_gateway).to receive(:contains_manually_set_address_ids).with(1).and_return false
-      allow(fetch_gateway).to receive(:contains_manually_set_address_ids).with(2).and_return true
-      use_case.execute
-    end
-
-    it "does not fetch that groups assessments for the group that contains manually set address ids" do
-      expect(fetch_gateway).to have_received(:fetch_assessments_by_group_id).with(1)
-      expect(fetch_gateway).not_to have_received(:fetch_assessments_by_group_id).with(2)
-    end
-
-    it "set the address_id for groups that don't contains manually set address ids" do
-      expect(domain).to have_received(:set_best_address_id).exactly(1).times
-    end
-
-    it "calls the gateway to update the address_id for groups that don't contains manually set address ids" do
-      expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).exactly(1).times
     end
   end
 

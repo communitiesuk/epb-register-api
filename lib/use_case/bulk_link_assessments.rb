@@ -13,15 +13,11 @@ module UseCase
       max_group_id = @fetch_assessments_to_link_gateway.get_max_group_id
       return if max_group_id.nil?
 
-      skip_group_ids = @fetch_assessments_to_link_gateway.fetch_duplicate_address_ids
+      skip_group_ids = @fetch_assessments_to_link_gateway.fetch_groups_to_skip
       groups_ids = [*1..max_group_id] - skip_group_ids
 
       groups_ids.each do |group_id|
         begin
-          if @fetch_assessments_to_link_gateway.contains_manually_set_address_ids(group_id)
-            next
-          end
-
           assessments_to_link = @fetch_assessments_to_link_gateway.fetch_assessments_by_group_id(group_id)
         rescue Boundary::NoData => e
           report_to_sentry(e)
