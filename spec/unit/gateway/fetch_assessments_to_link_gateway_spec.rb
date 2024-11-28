@@ -210,21 +210,10 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
-      cepc_xml_15 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
-      cepc_xml_15.at("//CEPC:RRN").content = "0000-0000-0000-0000-0015"
-      cepc_xml_15.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Commercial Street" }
-      cepc_xml_15.at("//CEPC:UPRN").content = "RRN-0000-0000-0000-0000-0015"
-      lodge_assessment(
-        assessment_body: cepc_xml_15.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
-        migrated: true,
-      )
-      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET source = 'epb_team_update' WHERE assessment_id = '0000-0000-0000-0000-0013' ")
-
+      # To provide an example of a group where all the address_ids have been updated by the epb team
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET source = 'epb_team_update' WHERE assessment_id IN ('0000-0000-0000-0000-0013', '0000-0000-0000-0000-0014') ")
+      # To provide an example of a group where only one of the address_ids have been updated by the epb team
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET source = 'epb_team_update' WHERE assessment_id = '0000-0000-0000-0000-0000' ")
       gateway.drop_temp_table
       gateway.create_and_populate_temp_table
     end
@@ -236,9 +225,9 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       end
 
       it "populates the temp table with assessments with the same address name, removing punctuation that come after numbers and not between numbers", :aggregate_failures do
-        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(11)
+        expect(Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.count).to eq(10)
         data = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.pluck(:assessment_id).sort
-        expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012 0000-0000-0000-0000-0013 0000-0000-0000-0000-0014 0000-0000-0000-0000-0015])
+        expect(data).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0003 0000-0000-0000-0000-0004 0000-0000-0000-0000-0008 0000-0000-0000-0000-0009 0000-0000-0000-0000-0012 0000-0000-0000-0000-0013 0000-0000-0000-0000-0014])
       end
 
       it "does not fetch correctly linked assessments" do
@@ -263,13 +252,13 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         group_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address: "1 commercial street 2 lonely street some area some county", postcode: "SW1A 2AA").pluck(:group_id).uniq[0]
         expected_result = [
           { "assessment_id" => "0000-0000-0000-0000-0012", "address_id" => "RRN-0000-0000-0000-0000-0012", "date_registered" => Time.utc(2020, 0o5, 20), "source" => "lodgement" },
-          { "assessment_id" => "0000-0000-0000-0000-0000", "address_id" => "UPRN-000000000001", "date_registered" => Time.utc(2020, 0o5, 0o4), "source" => "lodgement" },
+          { "assessment_id" => "0000-0000-0000-0000-0000", "address_id" => "UPRN-000000000001", "date_registered" => Time.utc(2020, 0o5, 0o4), "source" => "epb_team_update" },
           { "assessment_id" => "0000-0000-0000-0000-0001", "address_id" => "UPRN-000000000001", "date_registered" => Time.utc(2020, 0o5, 0o5), "source" => "lodgement" },
           { "assessment_id" => "0000-0000-0000-0000-0002", "address_id" => "RRN-0000-0000-0000-0000-0002", "date_registered" => Time.utc(2020, 0o5, 0o4), "source" => "lodgement" },
           { "assessment_id" => "0000-0000-0000-0000-0007", "address_id" => "RRN-0000-0000-0000-0000-0002", "date_registered" => Time.utc(2020, 0o5, 0o4), "source" => "lodgement" },
         ]
         result = gateway.fetch_assessments_by_group_id(group_id)
-        expect(result.data - expected_result).to eq []
+        expect(expected_result - result.data).to eq []
       end
 
       context "when it is unable to fetch data" do
@@ -287,10 +276,17 @@ describe Gateway::FetchAssessmentsToLinkGateway do
     end
 
     describe "#fetch_groups_to_skip" do
-      it "returns an array containing the group ids which either have an address_id found in more than one group, or have been manually updated" do
+      let(:result) { gateway.fetch_groups_to_skip }
+
+      it "returns an array containing the group ids which either have an address_id found in more than one group, or all address_ids have been manually updated" do
         expected_duplicate_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0003").pluck(:group_id)
         expected_manually_updated_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0013").pluck(:group_id)
-        expect(gateway.fetch_groups_to_skip - expected_duplicate_group_ids - expected_manually_updated_group_ids).to eq []
+        expect((expected_duplicate_group_ids + expected_manually_updated_group_ids) - result).to eq []
+      end
+
+      it "does not return groups where only one of the address_ids in a group have been updated manually by the epb team" do
+        group_with_one_updated_address_id = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0000").pluck(:group_id)
+        expect(result.include?(group_with_one_updated_address_id)).to be false
       end
     end
   end

@@ -57,7 +57,15 @@ module Gateway
         WHERE count > 1
         ORDER BY group_id ASC)
         UNION
-        SELECT group_id from temp_linking_tables WHERE source = 'epb_team_update'
+        SELECT group_id from
+        (WITH unique_source_groups AS (
+        SELECT DISTINCT group_id, source
+        FROM temp_linking_tables)
+        SELECT group_id, source, COUNT(unique_source_groups.source) over (partition BY group_id)
+        FROM unique_source_groups
+        GROUP BY group_id, unique_source_groups.source) as id_sources
+        WHERE count = 1
+        AND source = 'epb_team_update'
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL").map { |rows| rows["group_id"] }

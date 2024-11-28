@@ -8,7 +8,6 @@ describe UseCase::BulkLinkAssessments do
   let(:assessments_address_id_gateway) { instance_double Gateway::AssessmentsAddressIdGateway }
   let(:domain) { instance_double Domain::AssessmentsToLink }
   let(:skip_group_ids) { [] }
-  let(:contains_manually_set_address_ids) { false }
   let(:data) do
     [
       { "assessment_id" => "0000-0000-0000-0000-0003", "address_id" => "RRN-0000-0000-0000-0000-0003", "date_registered" => Time.utc(2020, 0o5, 0o4) },
