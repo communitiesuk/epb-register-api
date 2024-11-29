@@ -1,9 +1,8 @@
 describe Gateway::AssessmentsCountryIdGateway do
   let(:gateway) { described_class.new }
+  let(:assessment_id) { "0000-0000-0001-1234-0000" }
 
   describe "#insert" do
-    let(:assessment_id) { "0000-0000-0001-1234-0000" }
-
     before do
       add_countries
       gateway.insert(assessment_id:, country_id: 5)
@@ -29,8 +28,6 @@ describe Gateway::AssessmentsCountryIdGateway do
   end
 
   describe "#fetch" do
-    let(:assessment_id) { "0000-0000-0001-1234-0000" }
-
     before do
       add_countries
       gateway.insert(assessment_id:, country_id: 5)
@@ -39,6 +36,18 @@ describe Gateway::AssessmentsCountryIdGateway do
     it "gets the country_id" do
       response = gateway.fetch("0000-0000-0001-1234-0000")
       expect(response["country_id"]).to eq 5
+    end
+  end
+
+  describe "fetch_country_name" do
+    before do
+      add_countries
+      gateway.insert(assessment_id:, country_id: 1)
+    end
+
+    it "gets the country name" do
+      response = gateway.fetch_country_name("0000-0000-0001-1234-0000")
+      expect(response["country_name"]).to eq "England"
     end
   end
 end

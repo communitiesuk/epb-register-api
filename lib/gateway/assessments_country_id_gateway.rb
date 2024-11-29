@@ -55,6 +55,26 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first
     end
 
+    def fetch_country_name(assessment_id)
+      sql = <<-SQL
+        SELECT
+        country_name AS country_name
+        FROM assessments_country_ids
+        JOIN countries on assessments_country_ids.country_id = countries.country_id
+        WHERE assessment_id = $1
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first
+    end
+
   rescue ActiveRecord::StatementInvalid, ActiveRecord::ConnectionFailed
     raise
   end
