@@ -121,8 +121,14 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP", :set_with_timecop do
   context "when getting the country id" do
     it "returns the country id" do
       country_id = summary0000_when_sole_cert[:data][:countryId]
-
       expect(country_id).to eq 2
+    end
+  end
+
+  context "when getting the country name" do
+    it "returns the country name" do
+      country_name = summary0000_when_sole_cert[:data][:countryName]
+      expect(country_name).to eq "England and Wales"
     end
   end
 end

@@ -144,8 +144,14 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP", :set_with_timecop d
   context "when getting the country id" do
     it "returns the country id" do
       country_id = summary0000[:data][:countryId]
-
       expect(country_id).to eq 2
+    end
+  end
+
+  context "when getting the country name" do
+    it "returns the country name" do
+      country_name = summary0000[:data][:countryName]
+      expect(country_name).to eq "England and Wales"
     end
   end
 end

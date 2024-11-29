@@ -15,10 +15,6 @@ describe "UseCase::AssessmentSummary::Fetch", :set_with_timecop do
     add_scheme_and_get_id
   end
 
-  before do
-    add_countries
-  end
-
   context "when extracting summary assessment data for a single certificate" do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway:, xml_gateway:) }
 
@@ -392,7 +388,6 @@ describe "UseCase::AssessmentSummary::Fetch", :set_with_timecop do
 
     before do
       add_super_assessor(scheme_id:)
-      add_countries
       allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
       allow(xml_gateway).to receive(:fetch).and_return(xml_data)
     end
