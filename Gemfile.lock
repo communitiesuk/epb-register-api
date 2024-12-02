@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.2.2)
-      activesupport (= 7.2.2)
-    activerecord (7.2.2)
-      activemodel (= 7.2.2)
-      activesupport (= 7.2.2)
+    activemodel (8.0.0)
+      activesupport (= 8.0.0)
+    activerecord (8.0.0)
+      activemodel (= 8.0.0)
+      activesupport (= 8.0.0)
       timeout (>= 0.4.0)
-    activesupport (7.2.2)
+    activesupport (8.0.0)
       base64
       benchmark (>= 0.3)
       bigdecimal
@@ -19,6 +19,7 @@ GEM
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
+      uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     archive-zip (0.12.0)
@@ -256,7 +257,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 7.2.2)
+  activerecord (~> 8.0.0)
   archive-zip
   aws-sdk-s3 (~> 1.169)
   csv (~> 3.3)
