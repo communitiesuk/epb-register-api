@@ -27,18 +27,6 @@ describe Gateway::AssessmentsCountryIdGateway do
     end
   end
 
-  describe "#fetch" do
-    before do
-      add_countries
-      gateway.insert(assessment_id:, country_id: 5)
-    end
-
-    it "gets the country_id" do
-      response = gateway.fetch("0000-0000-0001-1234-0000")
-      expect(response["country_id"]).to eq 5
-    end
-  end
-
   describe "fetch_country_name" do
     before do
       add_countries

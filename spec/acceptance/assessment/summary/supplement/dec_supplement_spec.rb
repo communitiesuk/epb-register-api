@@ -79,14 +79,6 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC", :set_with_timecop do
       end
     end
   end
-
-  context "when getting the country id" do
-    it "returns the country id" do
-      country_id = regular_summary[:data][:countryId]
-
-      expect(country_id).to eq 3
-    end
-  end
 end
 
 def lodge_dec(xml, scheme_id)

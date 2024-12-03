@@ -77,14 +77,6 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT", :set_with_timec
       )
     end
   end
-
-  context "when getting the country id" do
-    it "returns the country id" do
-      country_id = regular_summary[:data][:countryId]
-
-      expect(country_id).to eq 1
-    end
-  end
 end
 
 def lodge_ac_report(xml, scheme_id)

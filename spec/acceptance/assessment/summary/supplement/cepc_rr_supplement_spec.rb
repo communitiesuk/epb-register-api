@@ -95,14 +95,6 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR", :set_with_timecop
       ).to eq("d")
     end
   end
-
-  context "when getting the country id" do
-    it "returns the country id" do
-      country_id = regular_summary[:data][:countryId]
-
-      expect(country_id).to eq 3
-    end
-  end
 end
 
 def lodge_cepc_rr(xml, scheme_id)

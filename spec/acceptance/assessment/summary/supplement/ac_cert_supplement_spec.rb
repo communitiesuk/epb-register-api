@@ -79,14 +79,6 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT", :set_with_timecop
       )
     end
   end
-
-  context "when getting the country id" do
-    it "returns the country id" do
-      country_id = regular_summary[:data][:countryId]
-
-      expect(country_id).to eq 1
-    end
-  end
 end
 
 def lodge_ac_cert(xml, scheme_id)

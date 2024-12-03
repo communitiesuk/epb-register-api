@@ -60,15 +60,6 @@ module UseCase
         hash[:related_assessments] = other_assessments_without_self_or_opted_out
       end
 
-      def add_country_id!(hash)
-        assessment_id = hash[:assessment_id]
-        response = Gateway::AssessmentsCountryIdGateway.new.fetch(assessment_id)
-
-        unless response.nil?
-          hash[:country_id] = response["country_id"]
-        end
-      end
-
       def add_country_name!(hash)
         assessment_id = hash[:assessment_id]
         response = Gateway::AssessmentsCountryIdGateway.new.fetch_country_name(assessment_id)

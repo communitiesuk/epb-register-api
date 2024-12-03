@@ -5,7 +5,6 @@ module UseCase
         set_assessor!(hash)
         related_assessments!(hash)
         add_green_deal!(hash)
-        add_country_id!(hash)
         add_country_name!(hash)
         hash
       end
