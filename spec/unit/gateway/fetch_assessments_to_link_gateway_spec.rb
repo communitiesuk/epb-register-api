@@ -183,7 +183,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
         schema_name: "CEPC-8.0.0",
         migrated: true,
       )
-      # Does not fetch assessments when the team has already manually updated one
+      # Does not fetch assessments when the team has already manually updated all assessments
       cepc_xml_13 = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
       cepc_xml_13.at("//CEPC:RRN").content = "0000-0000-0000-0000-0013"
       cepc_xml_13.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "2 Commercial Street" }
