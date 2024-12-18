@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws --version
+
+
+  build:
+    commands:
+      - bash ./buildspec/assume_role.sh arn:aws:iam::$AWS_ACCOUNT_ID:role/ci-server this_profile
+      - bash ./scripts/check_deployment_status.sh this_profile $CLUSTER_NAME $SERVICE_NAME
