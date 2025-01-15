@@ -18,7 +18,7 @@ group :test do
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
 end
 
-gem "activerecord", "~> 7.2.2"
+gem "activerecord", "~> 8.0.1"
 gem "archive-zip"
 gem "aws-sdk-s3", "~> 1.169"
 gem "csv", "~> 3.3"
@@ -35,7 +35,7 @@ gem "puma", "~> 6.4"
 gem "rackup", "~> 2.1"
 gem "rake", "~> 13.2"
 gem "redis", "~> 5.3.0"
-gem "rubocop", "~> 1.64.1"
+gem "rubocop", "~> 1.69.2"
 gem "rubocop-govuk", "~> 5.0"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
