@@ -10,6 +10,8 @@ module UseCase
                        get_unknown_country
                      elsif (lodgement_domain.is_new_rdsap? || lodgement_domain.is_new_sap?) && country_domain.on_border?
                        get_country_id(lodgement_domain.country_code)
+                     elsif lodgement_domain.is_sap_17_or_18? && country_domain.country_codes.include?(:E) && country_domain.country_codes.include?(:W) && (lodgement_domain.country_code != "EAW")
+                       get_country_id(lodgement_domain.country_code)
                      else
                        country_domain.country_codes.any? ? get_country_id_by_address_base_code(country_domain.country_codes) : get_country_id(lodgement_domain.country_code)
                      end

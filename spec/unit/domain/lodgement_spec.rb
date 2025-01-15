@@ -132,4 +132,42 @@ describe Domain::Lodgement do
       expect(domain.is_new_rdsap?).to be false
     end
   end
+
+  describe "#is_sap_17_or_18?" do
+    it "returns true for SAP-Schema-18.0.0" do
+      xml = Samples.xml "SAP-Schema-18.0.0"
+      domain = described_class.new(xml, "SAP-Schema-18.0.0")
+      expect(domain.is_sap_17_or_18?).to be true
+    end
+
+    it "returns true for SAP-Schema-17.0" do
+      xml = Samples.xml "SAP-Schema-17.0"
+      domain = described_class.new(xml, "SAP-Schema-17.0")
+      expect(domain.is_sap_17_or_18?).to be true
+    end
+
+    it "returns false for SAP-Schema-19.0.0" do
+      xml = Samples.xml "SAP-Schema-19.0.0"
+      domain = described_class.new(xml, "SAP-Schema-19.0.0")
+      expect(domain.is_sap_17_or_18?).to be false
+    end
+
+    it "returns false for SAP-Schema-16.0" do
+      xml = Samples.xml("SAP-Schema-16.0", "sap")
+      domain = described_class.new(xml, "SAP-Schema-16.0")
+      expect(domain.is_sap_17_or_18?).to be false
+    end
+
+    it "returns false for RdSAP which contains string 'SAP'" do
+      xml = Samples.xml "RdSAP-Schema-18.0"
+      domain = described_class.new(xml, "RdSAP-Schema-18.0")
+      expect(domain.is_sap_17_or_18?).to be false
+    end
+
+    it "returns false for SAP-Schema-NI-18.0.0" do
+      xml = Samples.xml "SAP-Schema-NI-18.0.0"
+      domain = described_class.new(xml, "SAP-Schema-NI-18.0.0")
+      expect(domain.is_sap_17_or_18?).to be false
+    end
+  end
 end

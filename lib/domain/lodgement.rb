@@ -45,6 +45,10 @@ module Domain
       @schema_name.to_s.match?(/^SAP/) && schema_version > 18
     end
 
+    def is_sap_17_or_18?
+      @schema_name.to_s.match?(/^SAP/) && schema_version >= 17 && schema_version < 19 && !@schema_name.to_s.match?(/NI/)
+    end
+
   private
 
     def set_data
