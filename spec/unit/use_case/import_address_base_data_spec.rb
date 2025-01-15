@@ -1,3 +1,5 @@
+require 'ostruct'
+
 describe UseCase::ImportAddressBaseData do
   headers =
     %w[

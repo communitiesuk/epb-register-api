@@ -1,3 +1,5 @@
+require 'ostruct'
+
 describe Gateway::AddressBaseSearchGateway do
   context "when given a UPRN to check existence" do
     it "returns false if there are no results from a UPRN search" do
