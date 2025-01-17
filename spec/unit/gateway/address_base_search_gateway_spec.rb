@@ -1,4 +1,4 @@
-require 'ostruct'
+require "ostruct"
 
 describe Gateway::AddressBaseSearchGateway do
   context "when given a UPRN to check existence" do

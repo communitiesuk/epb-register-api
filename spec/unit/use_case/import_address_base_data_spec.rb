@@ -1,4 +1,4 @@
-require 'ostruct'
+require "ostruct"
 
 describe UseCase::ImportAddressBaseData do
   headers =
