@@ -1,5 +1,5 @@
 module UseCase
-  # to be used with logic specifically for the back filling of countr_yid in assessment
+  # to be used with logic specifically for the back filling of country_id in assessment
   class GetCountryForPostcodeBackfill
     IN_WALES_ONLY_REGEX = UseCase::PostcodeData.in_wales_only.freeze
     CROSS_BORDER_ENGLAND_AND_WALES_REGEX = UseCase::PostcodeData.cross_border_eaw_regex.freeze
