@@ -21,7 +21,7 @@ describe UseCase::UpdateCountryId, :set_with_timecop do
     UseCase::AddCountryIdFromAddress.new(Gateway::CountryGateway.new)
   end
 
-  let(:assessments_ids) { %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0000] }
+  let(:assessments_ids) { "0000-0000-0000-0000-0001, 0000-0000-0000-0000-0000" }
 
   before(:all) do
     add_countries

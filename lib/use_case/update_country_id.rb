@@ -8,7 +8,8 @@ module UseCase
     end
 
     def execute(assessments_ids:)
-      assessments_ids.each do |assessment_id|
+      assessments_ids_array = assessments_ids.gsub(/[[:space:]]/, "").split(",")
+      assessments_ids_array.each do |assessment_id|
         assessment_location = @assessments_gateway.fetch_location_by_assessment_id(assessment_id)
         postcode = assessment_location["postcode"]
         address_id = assessment_location["address_id"]
