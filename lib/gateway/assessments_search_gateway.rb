@@ -76,7 +76,6 @@ module Gateway
       restrictive: true,
       limit: nil
     )
-
       sql_cte = <<-SQL
         WITH cte AS (
           SELECT a.assessment_id,

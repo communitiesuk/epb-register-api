@@ -225,7 +225,6 @@ module Gateway
       loose_match: false,
       exclude: []
     )
-
       sql = <<-SQL
         SELECT
           first_name, last_name, middle_names, registered_by,

@@ -88,7 +88,6 @@ describe UseCase::UpdateCountryId, :set_with_timecop do
         ActiveRecord::Base.connection.exec_query(update_eaw, "SQL")
       end
 
-
       it "updates to Wales" do
         use_case.execute(assessments_ids:)
         expect(get_country_for_assessment(assessment_id:)).to eq "Wales"
