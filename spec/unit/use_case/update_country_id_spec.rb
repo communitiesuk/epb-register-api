@@ -25,11 +25,6 @@ describe UseCase::UpdateCountryId, :set_with_timecop do
 
   before(:all) do
     add_countries
-    insert_wales = <<-SQL
-            INSERT INTO countries(country_code, country_name, address_base_country_code)
-            VALUES ('WLS', 'Wales' ,'["W"]'::jsonb)
-    SQL
-    ActiveRecord::Base.connection.exec_query(insert_wales, "SQL")
     add_address_base uprn: "100020003000", postcode: "NP16 5UB", country_code: "W"
     add_address_base uprn: "100020004000", postcode: "SW1 0AA", country_code: "E"
 

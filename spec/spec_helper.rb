@@ -162,7 +162,8 @@ def add_countries
                     ('NIR', 'Northern Ireland', '["N"]'::jsonb),
                     ('SCT', 'Scotland', '["S"]'::jsonb),
             ('', 'Channel Islands', '["L"]'::jsonb),
-                ('NR', 'Not Recorded', null)
+                ('NR', 'Not Recorded', null),
+                ('WAL', 'Wales', '["W"]'::jsonb)
 
   SQL
   ActiveRecord::Base.connection.exec_query(insert_sql, "SQL")
