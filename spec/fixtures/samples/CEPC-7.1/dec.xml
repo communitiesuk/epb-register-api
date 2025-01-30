@@ -307,12 +307,11 @@
         <Other-Fuel-Description>other</Other-Fuel-Description>
       </Technical-Information>
       <AC-Questionnaire>
-        <AC-Estimated-Output>1</AC-Estimated-Output>
         <AC-Present>Yes</AC-Present>
         <AC-Rated-Output>
           <AC-kW-Rating>1</AC-kW-Rating>
-
         </AC-Rated-Output>
+        <AC-Estimated-Output>1</AC-Estimated-Output>
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
       </AC-Questionnaire>
       <This-Assessment>
