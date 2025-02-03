@@ -1,4 +1,4 @@
-module UseCase
+module Helper
   module DomesticDigestHelper
     def get_domestic_digest(rrn:)
       result = domestic_digest_gateway.fetch_by_rrn rrn

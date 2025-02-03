@@ -1,6 +1,6 @@
 module UseCase
   class FetchAssessmentForRetrofitFundingScheme
-    include DomesticDigestHelper
+    include Helper::DomesticDigestHelper
 
     def initialize(retrofit_funding_scheme_gateway:, assessments_search_gateway:, domestic_digest_gateway:)
       @retrofit_funding_scheme_gateway = retrofit_funding_scheme_gateway

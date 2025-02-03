@@ -1,6 +1,6 @@
 module UseCase
   class FetchAssessmentForEcoPlus
-    include DomesticDigestHelper
+    include Helper::DomesticDigestHelper
 
     def initialize(domestic_digest_gateway:, assessments_search_gateway:)
       @domestic_digest_gateway = domestic_digest_gateway

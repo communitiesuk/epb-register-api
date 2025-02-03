@@ -18,6 +18,7 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", :se
 
   let(:rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
   let(:sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
+  let(:sap_102_xml) { Samples.xml "SAP-Schema-10.2", "rdsap" }
 
   let(:expected_rdsap_details) do
     {
@@ -54,6 +55,8 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", :se
         "mainHeatingDescription": "boiler with radiators or underfloor heating",
         "mainFuelType": "mains gas (not community)",
         "hasHotWaterCylinder": false,
+        "photoSupply": 0,
+        "mainHeatingControls": ["Programmer, room thermostat and TRVs", "Time and temperature zone control"],
       },
     }
   end
@@ -93,6 +96,49 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", :se
         "mainHeatingDescription": "heat pump with warm air distribution",
         "mainFuelType": "Electricity: electricity sold to grid",
         "hasHotWaterCylinder": true,
+        "photoSupply": nil,
+        "mainHeatingControls": %w[Thermostat Thermostat],
+      },
+    }
+  end
+
+  let(:expected_sap_102_details) do
+    {
+      "assessment": {
+        "typeOfAssessment": "RdSAP",
+        "address": {
+          addressLine1: "1 Some Street",
+          addressLine2: "Some Area",
+          addressLine3: "Some County",
+          addressLine4: "",
+          town: "Whitbury",
+          postcode: "SW1A 2AA",
+        },
+        "lodgementDate": "2020-05-04",
+        "isLatestAssessmentForAddress": true,
+        "propertyType": nil,
+        "builtForm": "Detached",
+        "propertyAgeBand": nil,
+        "wallsDescription": [
+          "Brick walls",
+          "Brick walls",
+        ],
+        "floorDescription": [
+          "Tiled floor",
+          "Tiled floor",
+        ],
+        "roofDescription": [
+          "Slate roof",
+          "slate roof",
+        ],
+        "windowsDescription": [
+          "Glass window",
+        ],
+        "mainHeatingDescription": nil,
+        "mainFuelType": "electricity",
+        "hasHotWaterCylinder": false,
+        "photoSupply": 0,
+        "mainHeatingControls": %w[Thermostat],
       },
     }
   end
@@ -139,6 +185,29 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", :se
         )
 
         expect(response[:data]).to eq expected_sap_details
+      end
+    end
+
+    context "when the RRN is associated with an older SAP assessment that HERA details can be sent for" do
+      before do
+        lodge_assessment(
+          assessment_body: sap_102_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-10.2",
+          migrated: true,
+        )
+      end
+
+      it "returns the matching assessment HERA details in the expected format" do
+        response = JSON.parse(
+          hera_details_by_rrn("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+
+        expect(response[:data]).to eq expected_sap_102_details
       end
     end
 

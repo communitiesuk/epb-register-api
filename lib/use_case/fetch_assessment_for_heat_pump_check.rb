@@ -1,6 +1,6 @@
 module UseCase
   class FetchAssessmentForHeatPumpCheck
-    include DomesticDigestHelper
+    include Helper::DomesticDigestHelper
 
     def initialize(domestic_digest_gateway:, summary_use_case:)
       @domestic_digest_gateway = domestic_digest_gateway

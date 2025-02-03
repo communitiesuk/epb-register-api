@@ -29,10 +29,10 @@ tags:
     description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
   - name: Boiler Upgrade Scheme
     description: Endpoints used by the Boiler Upgrade Scheme
-  - name: Energy Company Obligation (ECO)
-    description: Endpoints used by the Energy Company Obligation (ECO) Scheme
-  - name: Home Energy Retrofit Advice
-    description: Endpoints used by the Home Energy Retrofit Advice service
+  - name: Great British Insulation Scheme
+    description: Endpoints used by the Great British Insulation Scheme Scheme (previously known as the Energy Company Obligation (ECO) Scheme)
+  - name: Find Ways to Save Energy
+    description: Endpoints used by the Find Ways to Save Energy service (previously known as the Home Energy Retrofit Advice service)
   - name: Home Energy Retrofit Funding
     description: Endpoints used by the Home Energy Retrofit Funding service
   - name: Heat Pump Check
@@ -612,8 +612,8 @@ paths:
     get:
       tags:
         - Search
-        - Energy Company Obligation (ECO)
-        - Home Energy Retrofit Advice
+        - Great British Insulation Scheme
+        - Find Ways to Save Energy
         - Heat Pump Check
         - Warm Home Discount
       summary: Search for domestic EPCs by address
@@ -1439,9 +1439,9 @@ paths:
   /ecoplus/assessments/{assessmentId}:
     get:
       tags:
-        - Energy Company Obligation (ECO)
+        - Great British Insulation Scheme
       summary: Get domestic EPC details for the supplied RRN
-      description: 'Get the ECO details from the domestic EPC with reference {assessmentId}'
+      description: 'Get the Great British Insulation Scheme details (previously Energy Company Obligation (ECO) Plus) from the domestic EPC with reference {assessmentId}'
       operationId: get-assessment-ecoplus
       security:
         - oauth:
@@ -1455,7 +1455,7 @@ paths:
             $ref: '#/components/schemas/AssessmentId'
       responses:
         '200':
-          description: Domestic EPC data for the ECO service
+          description: Domestic EPC data for the Great British Insulation Scheme details (previously Energy Company Obligation (ECO) Plus service)
           content:
             application/json:
               schema:
@@ -1498,9 +1498,9 @@ paths:
   /retrofit-advice/assessments/{assessmentId}:
     get:
       tags:
-        - Home Energy Retrofit Advice
+        - Find Ways to Save Energy
       summary: Get domestic EPC details for the supplied RRN
-      description: 'Get the Home Energy Retrofit Advice details from the domestic EPC
+      description: 'Get the Find Ways to Save Energy (previously known as Home Energy Retrofit Advice) details from the domestic EPC
                 with reference {assessmentId}'
       operationId: get-assessment-retrofit-advice
       security:
@@ -1515,7 +1515,7 @@ paths:
             $ref: '#/components/schemas/AssessmentId'
       responses:
         '200':
-          description: Domestic EPC data for the Home Energy Retrofit Advice service
+          description: Domestic EPC data for the Find Ways to Save Energy service
           content:
             application/json:
               schema:
@@ -2357,7 +2357,7 @@ components:
             'report:assessor:status': Get a report of changes to assessors status for a given date
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
-            'retrofit-advice:assessment:fetch': Carry out Home Energy Retrofit Advice lookup for latest domestic EPC data
+            'retrofit-advice:assessment:fetch': Carry out Find Ways to Save Energy lookup for latest domestic EPC data
             'heat-pump-check:assessment:fetch': Carry out Heat Pump Check lookup for latest domestic EPC data
             'warm-home-discount:assessment:fetch': Carry out Warm Home Discount lookup for latest domestic EPC data
 
@@ -3236,7 +3236,7 @@ components:
                 $ref: '#/components/schemas/AssessmentId'
               example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
 
-    # ECO Plus
+    # Great British Insulation Scheme (previously Energy Company Obligation (ECO) Plus service)
     ECOAssessmentDetails:
       type: object
       properties:
@@ -3307,7 +3307,7 @@ components:
           description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available) is semantically different to 'false' here."
 
 
-    # Home Energy Retrofit Advice
+    # Find Ways to Save Energy previously known as Home Energy Retrofit Advice
     RetrofitAdviceAssessmentDetails:
       type: object
       properties:
@@ -3373,6 +3373,17 @@ components:
           description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
           example: true
+        photoSupply:
+          description: Percentage of photovoltaic area as a percentage of total roof area. 0% indicates that a Photovoltaic Supply is not present in the property.
+          type: integer
+          nullable: true
+          example: 20
+        mainHeatingControls:
+          description: Type of main heating controls. Includes both main heating systems if there are two.
+          type: array
+          items:
+            type: string
+          example: ["Programmer, room thermostat and TRVs", "Time and temperature zone control"]
 
     # Home Energy Retrofit Funding
     RetrofitFundingAssessmentDetails:
