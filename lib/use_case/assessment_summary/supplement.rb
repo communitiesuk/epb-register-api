@@ -21,7 +21,7 @@ module UseCase
         end
       end
 
-      def set_assessor!(hash)
+      def set_assessor!(hash, method = "to_hash")
         assessor_id = hash[:assessor][:scheme_assessor_id]
         assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)&.to_hash || { contact_details: {} }
 
@@ -33,6 +33,15 @@ module UseCase
         unless hash.dig(:assessor, :contact_details, :telephone).blank?
           assessor[:contact_details][:telephone_number] =
             hash.dig(:assessor, :contact_details, :telephone)
+        end
+
+        if method == "to_certificate_summary"
+          assessor.delete(:search_results_comparison_postcode)
+          assessor.delete(:company_details)
+          assessor.delete(:address)
+          assessor.delete(:qualifications)
+          assessor.delete(:middle_names)
+          assessor.delete(:date_of_birth)
         end
 
         hash[:assessor] = assessor

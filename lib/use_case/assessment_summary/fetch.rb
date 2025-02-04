@@ -10,7 +10,7 @@ module UseCase
         @xml_gateway = xml_gateway || Gateway::AssessmentsXmlGateway.new
       end
 
-      def execute(assessment_id)
+      def execute(assessment_id, method = "to_hash")
         assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
           @search_gateway
@@ -37,7 +37,11 @@ module UseCase
           )
         assessment_table_values = assessment.to_hash
 
-        summary_data = lodged_values.to_hash
+        summary_data = if method == "to_certificate_summary"
+                         lodged_values.to_certificate_summary
+                       else
+                         lodged_values.to_hash
+                       end
         # Update *both* address_id places as they are both used at different points in code elsewhere
         summary_data[:address] = (summary_data[:address] || {}).merge(address_id: assessment_table_values[:address_id])
         summary_data[:address_id] = assessment_table_values[:address_id]
@@ -57,9 +61,9 @@ module UseCase
         when :DEC_RR
           DecRrSupplement.new.add_data!(summary_data)
         when :SAP
-          SapSupplement.new.add_data!(summary_data)
+          SapSupplement.new.add_data!(summary_data, method)
         when :RdSAP
-          RdSapSupplement.new.add_data!(summary_data)
+          RdSapSupplement.new.add_data!(summary_data, method)
         else
           summary_data
         end
