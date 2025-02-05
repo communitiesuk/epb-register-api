@@ -243,8 +243,8 @@ Northern Ireland: 2014 onwards</xs:documentation>
             <xs:enumeration value="M">
                 <xs:annotation>
                     <xs:documentation>England and Wales: 2022 onwards;
-Scotland: 2023 onwards (TBA);
-Northern Ireland: 2014 onwards (TBA)</xs:documentation>
+Scotland: 2024 onwards;
+Northern Ireland: 2023 onwards</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="0">
@@ -336,6 +336,11 @@ Northern Ireland: 2014 onwards (TBA)</xs:documentation>
                     <xs:documentation>triple glazing, installed during or after 2022 in EAW, 2023 in SCT, 2022 NI</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="15">
+                <xs:annotation>
+                    <xs:documentation>single glazing, known data</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="GlazedAreaCode">
@@ -413,6 +418,105 @@ Northern Ireland: 2014 onwards (TBA)</xs:documentation>
     </xs:simpleType>
     <xs:simpleType name="RoofInsulationThicknessCode">
         <xs:restriction base="xs:string">
+            <xs:enumeration value="NI">
+                <xs:annotation>
+                    <xs:documentation>unknown</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>None</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12mm">
+                <xs:annotation>
+                    <xs:documentation>12mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="25mm">
+                <xs:annotation>
+                    <xs:documentation>25mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50mm">
+                <xs:annotation>
+                    <xs:documentation>50mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75mm">
+                <xs:annotation>
+                    <xs:documentation>75mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100mm">
+                <xs:annotation>
+                    <xs:documentation>100mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="125mm">
+                <xs:annotation>
+                    <xs:documentation>125mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="150mm">
+                <xs:annotation>
+                    <xs:documentation>150mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="175mm">
+                <xs:annotation>
+                    <xs:documentation>175mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="200mm">
+                <xs:annotation>
+                    <xs:documentation>200mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="225mm">
+                <xs:annotation>
+                    <xs:documentation>225mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="250mm">
+                <xs:annotation>
+                    <xs:documentation>250mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="270mm">
+                <xs:annotation>
+                    <xs:documentation>270mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="300mm">
+                <xs:annotation>
+                    <xs:documentation>300mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="350mm">
+                <xs:annotation>
+                    <xs:documentation>350mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="400mm+">
+                <xs:annotation>
+                    <xs:documentation>400mm or more</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ND">
+                <xs:annotation>
+                    <xs:documentation>Not Defined</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+        <xs:simpleType name="RoofRoomInsulationThicknessCode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AB">
+                <xs:annotation>
+                    <xs:documentation>as built</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="NI">
                 <xs:annotation>
                     <xs:documentation>unknown</xs:documentation>
@@ -2944,6 +3048,11 @@ This is a very similar concept to XML ID datatype but is locally defined because
             <xs:enumeration value="37">
                 <xs:annotation>
                     <xs:documentation>appliances able to use mineral oil or liquid biofuel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="38">
+                <xs:annotation>
+                    <xs:documentation>Gas: bottled LPG (for secondary heating)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="51">
