@@ -999,7 +999,7 @@ If the total peak power has been apportioned between different dwellings within 
     <xs:element name="PV-Batteries" type="PV-Batteries"/>
     <xs:complexType name="PV-Batteries">
         <xs:sequence>
-            <xs:element name="PV-Battery" type="PV-Battery" maxOccurs="20"/>
+            <xs:element name="PV-Battery" type="PV-Battery" maxOccurs="4"/>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="PV-Battery" type="PV-Battery"/>
@@ -1018,7 +1018,7 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Flat-Ceiling-Length-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Flat-Ceiling-Height-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Flat-Ceiling-U-Value-1" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Flat-Ceiling-Insulation-Thickness-1" type="RoofInsulationThicknessCode" minOccurs="0">
+            <xs:element name="Flat-Ceiling-Insulation-Thickness-1" type="RoofRoomInsulationThicknessCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
@@ -1036,7 +1036,7 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Flat-Ceiling-Length-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Flat-Ceiling-Height-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Flat-Ceiling-U-Value-2" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Flat-Ceiling-Insulation-Thickness-2" type="RoofInsulationThicknessCode" minOccurs="0">
+            <xs:element name="Flat-Ceiling-Insulation-Thickness-2" type="RoofRoomInsulationThicknessCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
@@ -1054,7 +1054,7 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Stud-Wall-Length-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Stud-Wall-Height-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Stud-Wall-U-Value-1" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Stud-Wall-Insulation-Thickness-1" type="RoofInsulationThicknessCode" minOccurs="0">
+            <xs:element name="Stud-Wall-Insulation-Thickness-1" type="RoofRoomInsulationThicknessCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
@@ -1067,7 +1067,7 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Stud-Wall-Length-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Stud-Wall-Height-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Stud-Wall-U-Value-2" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Stud-Wall-Insulation-Thickness-2" type="RoofInsulationThicknessCode" minOccurs="0">
+            <xs:element name="Stud-Wall-Insulation-Thickness-2" type="RoofRoomInsulationThicknessCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
@@ -1080,7 +1080,7 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Slope-Length-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Slope-Height-1" type="Measurement" minOccurs="0"/>
             <xs:element name="Slope-U-Value-1" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Slope-Insulation-Thickness-1" type="RoofInsulationThicknessCode" minOccurs="0">
+            <xs:element name="Slope-Insulation-Thickness-1" type="RoofRoomInsulationThicknessCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
@@ -1093,7 +1093,7 @@ If the total peak power has been apportioned between different dwellings within 
             <xs:element name="Slope-Length-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Slope-Height-2" type="Measurement" minOccurs="0"/>
             <xs:element name="Slope-U-Value-2" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Slope-Insulation-Thickness-2" type="RoofInsulationThicknessCode" minOccurs="0">
+            <xs:element name="Slope-Insulation-Thickness-2" type="RoofRoomInsulationThicknessCode" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Mutually exclusive with U-value. Either U-value provided, or thickness.</xs:documentation>
                 </xs:annotation>
