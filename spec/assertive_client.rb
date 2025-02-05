@@ -448,6 +448,18 @@ def fetch_assessment_summary(
   )
 end
 
+def fetch_certificate_summary(
+  id:,
+  scopes: %w[assessment:fetch],
+  **assertive_kwargs
+)
+  assertive_get(
+    "api/assessments/#{id}/certificate-summary",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def fetch_dec_summary(
   assessment_id:,
   scopes: %w[dec_summary:fetch],

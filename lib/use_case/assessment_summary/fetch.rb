@@ -43,7 +43,9 @@ module UseCase
                          lodged_values.to_hash
                        end
         # Update *both* address_id places as they are both used at different points in code elsewhere
-        summary_data[:address] = (summary_data[:address] || {}).merge(address_id: assessment_table_values[:address_id])
+        if method == "to_hash"
+          summary_data[:address] = (summary_data[:address] || {}).merge(address_id: assessment_table_values[:address_id])
+        end
         summary_data[:address_id] = assessment_table_values[:address_id]
         summary_data[:opt_out] = assessment_table_values[:opt_out]
 

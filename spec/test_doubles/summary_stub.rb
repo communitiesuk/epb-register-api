@@ -366,8 +366,7 @@ class SummaryStub
       date_of_expiry: "2030-05-03",
       date_of_assessment: "2020-05-04",
       date_of_registration: "2020-05-04",
-      address: { address_id: nil, # Set at lodgement, which this unit test doesn't exercise
-                 address_line1: "1 Some Street",
+      address: { address_line1: "1 Some Street",
                  address_line2: "",
                  address_line3: "",
                  address_line4: nil,
@@ -512,8 +511,7 @@ class SummaryStub
       date_of_registration: "2022-05-09",
       address_id: nil,
       address:
-        { address_id: nil, # Set at lodgement, which this unit test doesn't exercise
-          address_line1: "1 Some Street",
+        { address_line1: "1 Some Street",
           address_line2: "Some Area",
           address_line3: "Some County",
           address_line4: nil,
