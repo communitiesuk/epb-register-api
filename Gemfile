@@ -18,7 +18,7 @@ group :test do
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
 end
 
-gem "activerecord", "~> 7.2.2"
+gem "activerecord", "~> 8.0.1"
 gem "archive-zip"
 gem "aws-sdk-s3", "~> 1.181"
 gem "csv", "~> 3.3"
