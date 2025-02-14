@@ -9,7 +9,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "mock_redis", "~> 0.45"
+  gem "mock_redis", "~> 0.49"
   gem "pry", "~> 0.14.2"
   gem "rack-test", "~> 2.1.0"
   gem "rspec", "~>3.12"
@@ -40,7 +40,7 @@ gem "rubocop", "~> 1.70.0"
 gem "rubocop-govuk", "~> 5.0"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
-gem "sentry-ruby", "~> 5.19"
+gem "sentry-ruby", "~> 5.22"
 gem "sinatra", "~> 4.1"
 gem "sinatra-activerecord", "~> 2.0.27"
 gem "sinatra-cross_origin", "~> 0.4.0"

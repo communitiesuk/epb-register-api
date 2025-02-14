@@ -172,7 +172,7 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
 
       error = JSON.parse(response.body, symbolize_names: true)[:errors].first
       expect(error[:code]).to eq("INVALID_REQUEST")
-      expect(error[:title]).to include("JSON did not parse. Error: unexpected token")
+      expect(error[:title]).to include("JSON did not parse. Error: expected ',' or '}'")
     end
 
     it "changes the address id for to a valid addressId (UPRN- identifier)" do

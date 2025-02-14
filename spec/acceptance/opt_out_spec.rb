@@ -197,6 +197,6 @@ describe "Acceptance::OptOut", :set_with_timecop do
     error = JSON.parse(response.body, symbolize_names: true)[:errors].first
 
     expect(error[:code]).to eq("INVALID_REQUEST")
-    expect(error[:title]).to include("unexpected token at 'something wrong '")
+    expect(error[:title]).to include("unexpected character: 'something wrong '")
   end
 end
