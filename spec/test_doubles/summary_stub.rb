@@ -491,8 +491,9 @@ class SummaryStub
       related_party_disclosure_text: "No related party",
       total_floor_area: 55.0,
       status: "ENTERED",
-      co2_emissions_current_per_floor_area: "20",
-      country_code: "EAW",
+      "environmental_impact_current": 52,
+      "environmental_impact_potential": 74,
+      "primary_energy_use": "230",
       addendum: { addendum_number: [1, 8], stone_walls: true, system_build: true },
       address_id: nil, # Set at lodgement, which this unit test doesn't exercise
       opt_out: nil,
@@ -612,13 +613,14 @@ class SummaryStub
       related_party_disclosure_text: nil,
       total_floor_area: 165.0,
       status: "ENTERED",
-      co2_emissions_current_per_floor_area: "5.6",
+      "environmental_impact_current": 94,
+      "environmental_impact_potential": 96,
+      "primary_energy_use": "59",
       addendum: { stone_walls: true },
       opt_out: nil,
       superseded_by: nil,
       related_assessments: [],
       gas_smart_meter_present: true,
-      electricity_smart_meter_present: false,
-      country_code: "ENG" }
+      electricity_smart_meter_present: false }
   end
 end

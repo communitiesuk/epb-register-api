@@ -226,7 +226,9 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
           "relatedPartyDisclosureText": "No related party",
           "totalFloorArea": "55.0",
           "status": "ENTERED",
-          "co2EmissionsCurrentPerFloorArea": "20",
+          "environmentalImpactCurrent": 52,
+          "environmentalImpactPotential": 74,
+          "primaryEnergyUse": "230",
           "addendum": {
             "addendumNumber": [
               1,
@@ -237,7 +239,6 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
           },
           "gasSmartMeterPresent": nil,
           "electricitySmartMeterPresent": nil,
-          "countryCode": "EAW",
           "addressId": "UPRN-000000000000",
           "optOut": false,
           "supersededBy": nil,
