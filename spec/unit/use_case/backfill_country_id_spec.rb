@@ -1,8 +1,4 @@
-shared_context "when extracting the country" do
-  def get_country_for_assessment(assessment_id:)
-    ActiveRecord::Base.connection.exec_query("SELECT country_name FROM assessments_country_ids a join countries using(country_id) WHERE assessment_id='#{assessment_id}' ").map { |rows| rows["country_name"] }.first
-  end
-end
+require_relative "../../shared_context/country_selection"
 
 describe UseCase::BackfillCountryId, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
@@ -16,7 +12,7 @@ describe UseCase::BackfillCountryId, :set_with_timecop do
     )
   end
 
-  include_context "when extracting the country"
+  include_context "when selecting a country"
 
   let!(:add_country_use_case) do
     UseCase::AddCountryIdFromAddress.new(Gateway::CountryGateway.new)
