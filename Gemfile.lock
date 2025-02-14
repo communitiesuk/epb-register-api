@@ -207,7 +207,7 @@ GEM
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    rubyzip (2.3.2)
+    rubyzip (2.4.1)
     securerandom (0.4.1)
     sentry-ruby (5.22.4)
       bigdecimal
@@ -289,7 +289,7 @@ DEPENDENCIES
   rubocop (~> 1.70.0)
   rubocop-govuk (~> 5.0)
   rubocop-performance
-  rubyzip (~> 2.3.2)
+  rubyzip (~> 2.4.1)
   sentry-ruby (~> 5.22)
   sinatra (~> 4.1)
   sinatra-activerecord (~> 2.0.27)
