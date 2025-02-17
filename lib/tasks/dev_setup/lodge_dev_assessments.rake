@@ -1,4 +1,4 @@
-ActiveSupport.to_time_preserves_timezone = true
+ActiveSupport.to_time_preserves_timezone = :zone
 
 namespace :dev_data do
   desc "Lodge assessments to the dev database for testing"
