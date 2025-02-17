@@ -10,8 +10,8 @@ end
 group :test do
   gem "database_cleaner"
   gem "mock_redis", "~> 0.49"
-  gem "pry", "~> 0.14.2"
-  gem "rack-test", "~> 2.1.0"
+  gem "pry", "~> 0.15.2"
+  gem "rack-test", "~> 2.2.0"
   gem "rspec", "~>3.12"
   gem "timecop", "~> 0.9.10"
   gem "webmock", "~> 3.23"
@@ -20,7 +20,7 @@ end
 
 gem "activerecord", "~> 7.2.2"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.169"
+gem "aws-sdk-s3", "~> 1.181"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.0.11"
@@ -39,7 +39,7 @@ gem "rexml", "~> 3.3.9"
 gem "rubocop", "~> 1.70.0"
 gem "rubocop-govuk", "~> 5.0"
 gem "rubocop-performance", require: false
-gem "rubyzip", "~> 2.3.2"
+gem "rubyzip", "~> 2.4.1"
 gem "sentry-ruby", "~> 5.22"
 gem "sinatra", "~> 4.1"
 gem "sinatra-activerecord", "~> 2.0.27"
