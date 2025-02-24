@@ -26,17 +26,17 @@ GEM
       io-like (~> 0.3.0)
     ast (2.4.2)
     aws-eventstream (1.3.1)
-    aws-partitions (1.1050.0)
-    aws-sdk-core (3.218.1)
+    aws-partitions (1.1054.0)
+    aws-sdk-core (3.219.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
       base64
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.98.0)
+    aws-sdk-kms (1.99.0)
       aws-sdk-core (~> 3, >= 3.216.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.181.0)
+    aws-sdk-s3 (1.182.0)
       aws-sdk-core (~> 3, >= 3.216.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
@@ -112,7 +112,7 @@ GEM
     net-http (0.6.0)
       uri
     nio4r (2.7.4)
-    nokogiri (1.18.2)
+    nokogiri (1.18.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth2 (2.0.9)
@@ -159,7 +159,7 @@ GEM
     redis-client (0.23.2)
       connection_pool
     regexp_parser (2.10.0)
-    rexml (3.3.9)
+    rexml (3.4.1)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -230,7 +230,7 @@ GEM
       sinatra (= 4.1.1)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
-    slack-ruby-client (2.5.1)
+    slack-ruby-client (2.5.2)
       faraday (>= 2.0)
       faraday-mashify
       faraday-multipart
@@ -251,14 +251,14 @@ GEM
     unleash (5.1.1)
       murmurhash3 (~> 0.1.7)
     uri (1.0.2)
-    version_gem (1.1.4)
+    version_gem (1.1.6)
     webmock (3.25.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     wisper (3.0.0)
     wisper-rspec (1.1.0)
-    zeitwerk (2.7.1)
+    zeitwerk (2.7.2)
 
 PLATFORMS
   ruby
@@ -266,7 +266,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 8.0.1)
   archive-zip
-  aws-sdk-s3 (~> 1.181)
+  aws-sdk-s3 (~> 1.182)
   csv (~> 3.3)
   database_cleaner
   epb-auth-tools (~> 1.1.0)
@@ -275,7 +275,7 @@ DEPENDENCIES
   json-schema (~> 5.0)
   mock_redis (~> 0.49)
   namecase (~> 2.0)
-  nokogiri (~> 1.16)
+  nokogiri (~> 1.18)
   ougai (~> 2.0)
   parallel (~> 1.26)
   pg (~> 1.5)
@@ -301,7 +301,7 @@ DEPENDENCIES
   webmock (~> 3.23)
   wisper (~> 3.0.0)
   wisper-rspec (~> 1.0, >= 1.0.1)
-  zeitwerk (~> 2.7.1)
+  zeitwerk (~> 2.7.2)
 
 RUBY VERSION
    ruby 3.3.4p94
