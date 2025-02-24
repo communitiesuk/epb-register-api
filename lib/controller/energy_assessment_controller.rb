@@ -223,8 +223,6 @@ module Controller
           "INVALID_REQUEST",
           e.message,
         )
-      when REXML::ParseException
-        error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
         json_response(
           {

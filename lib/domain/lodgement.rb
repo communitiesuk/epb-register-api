@@ -8,7 +8,6 @@ module Domain
     attr_reader :raw_data
 
     def initialize(data, schema_name)
-      @data = Hash.from_xml(data).deep_symbolize_keys
       @raw_data = data
       @schema_name = schema_name.to_sym
       @assessment_data = []
