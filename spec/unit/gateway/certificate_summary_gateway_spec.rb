@@ -23,7 +23,6 @@ describe Gateway::CertificateSummaryGateway do
   describe "#fetch" do
     it "returns the expected data" do
       result = gateway.fetch("0000-0000-0000-0000-0000")
-      pp result
       expect(result.count).to eq(1)
     end
   end
@@ -37,7 +36,6 @@ describe Gateway::CertificateSummaryGateway do
         green_deal_plan_id: "ABC654321DEF",
         )
       result = gateway.fetch("0000-0000-0000-0000-1111")
-      pp result
       expect(result.count).to eq(1)
     end
   end
