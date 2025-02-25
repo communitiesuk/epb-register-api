@@ -815,3 +815,50 @@ def assertive_get_in_search_scope(path, accepted_responses: [200])
     accepted_responses:,
   )
 end
+
+def add_assessment_with_green_deal(
+  type: "RdSAP",
+  assessment_id: "0000-0000-0000-0000-0000",
+  registration_date: "2020-05-04",
+  green_deal_plan_id: "ABC123456DEF",
+  address_id: "RRN-0000-0000-0000-0000-0000",
+  schema_version: "RdSAP-Schema-20.0.0"
+)
+  case type
+  when "RdSAP"
+    assessor_qualifications = { domestic_rd_sap: "ACTIVE" }
+    xml = Samples.xml(schema_version)
+    xml_schema = schema_version
+  when "SAP"
+    assessor_qualifications = { domestic_sap: "ACTIVE" }
+    xml = Samples.xml("SAP-Schema-18.0.0")
+    xml_schema = "SAP-Schema-18.0.0"
+  end
+
+  xml = Nokogiri.XML xml
+  assessment_id_node = xml.at("RRN")
+  assessment_id_node.children = assessment_id
+  date = xml.at("Registration-Date")
+  date.children = registration_date
+  address_id_node = xml.at("UPRN")
+  address_id_node.children = address_id
+
+  assessor = AssessorStub.new.fetch_request_body(**assessor_qualifications)
+  add_assessor scheme_id:, assessor_id: "SPEC000000", body: assessor
+
+  lodge_assessment(
+    assessment_body: xml.to_xml,
+    auth_data: {
+      scheme_ids: [scheme_id],
+    },
+    schema_name: xml_schema,
+    migrated: true,
+    )
+
+  if type == "RdSAP"
+    add_green_deal_plan(
+      assessment_id:,
+      body: GreenDealPlanStub.new.request_body(green_deal_plan_id),
+      )
+  end
+end
