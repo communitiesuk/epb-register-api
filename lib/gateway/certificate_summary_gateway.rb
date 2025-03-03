@@ -17,8 +17,8 @@ module Gateway
       ass.registered_by AS scheme_id,
       s.name AS scheme_name,
       x.schema_type,
-      x.xml,
-      gda.green_deal_plan_id
+      gda.green_deal_plan_id,
+      x.xml
       FROM assessments a
       LEFT OUTER JOIN green_deal_assessments gda ON a.assessment_id = gda.assessment_id
       INNER JOIN assessors ass ON a.scheme_assessor_id = ass.scheme_assessor_id
