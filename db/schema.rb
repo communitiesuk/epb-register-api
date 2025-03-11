@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_19_144800) do
+ActiveRecord::Schema[8.0].define(version: 2024_08_19_144800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
-  enable_extension "plpgsql"
 
   create_table "address_base", primary_key: "uprn", id: :string, force: :cascade do |t|
     t.string "postcode"
@@ -26,10 +26,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_19_144800) do
     t.string "classification_code", limit: 6
     t.string "address_type", limit: 15
     t.string "country_code", limit: 1
-    t.index ["address_line1"], name: "index_address_base_on_address_line1"
-    t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
-    t.index ["town"], name: "index_address_base_on_town"
+  end
+
+  create_table "address_base_legacy", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "postcode"
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
+    t.string "town"
+    t.string "classification_code", limit: 6
+    t.string "address_type", limit: 15
+    t.string "country_code", limit: 1
+    t.index ["postcode"], name: "index_address_base_legacy_on_postcode"
   end
 
   create_table "address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
