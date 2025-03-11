@@ -853,12 +853,12 @@ def add_assessment_with_green_deal(
     },
     schema_name: xml_schema,
     migrated: true,
-    )
+  )
 
   if type == "RdSAP"
     add_green_deal_plan(
       assessment_id:,
       body: GreenDealPlanStub.new.request_body(green_deal_plan_id),
-      )
+    )
   end
 end

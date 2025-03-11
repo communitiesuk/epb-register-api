@@ -1,7 +1,6 @@
 module UseCase
   module CertificateSummary
     class Fetch
-
       class AssessmentUnavailable < StandardError; end
       class NotFoundException < AssessmentUnavailable; end
       class AssessmentGone < AssessmentUnavailable; end
@@ -19,14 +18,14 @@ module UseCase
             .fetch(assessment_id).to_hash
 
         if assessment
-          if assessment["not_for_issue_at"] != nil || assessment["cancelled_at"] != nil
+          if !assessment["not_for_issue_at"].nil? || !assessment["cancelled_at"].nil?
             raise AssessmentGone
           end
         else
           raise NotFoundException
         end
 
-        unless assessment["green_deal_plan_id"] == nil
+        unless assessment["green_deal_plan_id"].nil?
           green_deal_plan = @green_deal_plans_gateway.fetch(assessment_id)
           assessment["green_deal_plan"] = green_deal_plan
         end

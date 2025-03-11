@@ -10,7 +10,6 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
   end
 
   context "when extracting a certificate summary data for a single certificate" do
-
     subject(:use_case) { UseCase::CertificateSummary::Fetch.new(certificate_summary_gateway:, green_deal_plans_gateway:) }
 
     let(:certificate_summary_gateway) do
@@ -23,22 +22,22 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
 
     let(:xml_data) do
       {
-       "created_at"=>"2021-02-22 00:00:00 UTC",
-       "opt_out"=>false,
-       "cancelled_at"=>nil,
-       "not_for_issue_at"=>nil,
-       "assessment_address_id"=>"UPRN-000000000000",
-       "country_id"=>3,
-       "scheme_assessor_id"=>"SPEC000000",
-       "assessor_first_name"=>"Someone",
-       "assessor_last_name"=>"Person",
-       "assessor_telephone_number"=>"010199991010101",
-       "assessor_email"=>"person@person.com",
-       "scheme_id"=>1,
-       "scheme_name"=>"test scheme",
-       "schema_type"=>"RdSAP-Schema-20.0.0",
-       "green_deal_plan_id"=>nil,
-       "xml" => xml_fixture
+        "created_at" => "2021-02-22 00:00:00 UTC",
+        "opt_out" => false,
+        "cancelled_at" => nil,
+        "not_for_issue_at" => nil,
+        "assessment_address_id" => "UPRN-000000000000",
+        "country_id" => 3,
+        "scheme_assessor_id" => "SPEC000000",
+        "assessor_first_name" => "Someone",
+        "assessor_last_name" => "Person",
+        "assessor_telephone_number" => "010199991010101",
+        "assessor_email" => "person@person.com",
+        "scheme_id" => 1,
+        "scheme_name" => "test scheme",
+        "schema_type" => "RdSAP-Schema-20.0.0",
+        "green_deal_plan_id" => nil,
+        "xml" => xml_fixture,
       }
     end
 
@@ -55,15 +54,15 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
           "providerDetails": {
             "name": "HOME ENERGY AND LIFESTYLE MANAGEMENT",
             "telephone": "01010100000",
-            "email": "admin@office.co.uk"
+            "email": "admin@office.co.uk",
           },
           "interest": {
             "rate": "8.07",
-            "fixed": true
+            "fixed": true,
           },
           "chargeUplift": {
             "amount": "0.0",
-            "date": nil
+            "date": nil,
           },
           "ccaRegulated": true,
           "structureChanged": false,
@@ -71,30 +70,30 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
           "measures": [
             {
               "product": "Solar photovoltaic panels",
-              "repaidDate": "2032-01-15 00:00:00.000000"
-            }
+              "repaidDate": "2032-01-15 00:00:00.000000",
+            },
           ],
           "charges": [
             {
               "endDate": "2032-01-12 00:00:00.000000",
               "startDate": "2012-01-16 00:00:00.000000",
-              "dailyCharge": 1.01
+              "dailyCharge": 1.01,
             },
             {
               "endDate": "2032-01-13 00:00:00.000000",
               "startDate": "2032-01-13 00:00:00.000000",
-              "dailyCharge": 0.8
-            }
+              "dailyCharge": 0.8,
+            },
           ],
           "savings": [
             {
               "fuelCode": "39",
               "fuelSaving": 2572,
-              "standingChargeFraction": 0
-            }
+              "standingChargeFraction": 0,
+            },
           ],
-          "estimatedSavings": 622
-        }
+          "estimatedSavings": 622,
+        },
       ]
     end
 
@@ -123,5 +122,4 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
       expect(results["green_deal_plan"]).to eq(green_deal_data)
     end
   end
-
 end

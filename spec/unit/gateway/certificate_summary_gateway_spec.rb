@@ -1,4 +1,4 @@
-describe Gateway::CertificateSummaryGateway, :set_with_timecop  do
+describe Gateway::CertificateSummaryGateway, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   subject(:gateway) { described_class.new }
@@ -18,7 +18,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop  do
         scheme_ids: [scheme_id],
       },
       migrated: true,
-      )
+    )
     lodge_assessment(
       assessment_body: domestic_sap_xml.to_xml,
       accepted_responses: [201],
@@ -27,7 +27,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop  do
       },
       schema_name: "SAP-Schema-19.0.0",
       migrated: true,
-      )
+    )
     load_green_deal_data
   end
 
@@ -56,7 +56,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop  do
         assessment_id: "0000-0000-0000-0000-1111",
         registration_date: "2024-10-10",
         green_deal_plan_id: "ABC654321DEF",
-        )
+      )
       result = gateway.fetch("0000-0000-0000-0000-1111")
       expect(result.count).to eq(16)
     end
