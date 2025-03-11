@@ -252,7 +252,7 @@ GEM
       murmurhash3 (~> 0.1.7)
     uri (1.0.2)
     version_gem (1.1.6)
-    webmock (3.25.0)
+    webmock (3.25.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -298,7 +298,7 @@ DEPENDENCIES
   slack-ruby-client
   timecop (~> 0.9.10)
   unleash (~> 5.1.1)
-  webmock (~> 3.23)
+  webmock (~> 3.25)
   wisper (~> 3.0.0)
   wisper-rspec (~> 1.0, >= 1.0.1)
   zeitwerk (~> 2.7.2)
