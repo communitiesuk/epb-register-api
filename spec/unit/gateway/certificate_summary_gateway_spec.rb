@@ -68,7 +68,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
 
     it "returns the expected data when there is no related assessment" do
       result = gateway.fetch("0000-0000-0000-0000-0000")
-      expect(result["matching_assessment_address_id"]).to eq(1)
+      expect(result["count_address_id_assessments"]).to eq(1)
     end
 
     it "returns the expected data when there is a related assessment" do
@@ -84,7 +84,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
         migrated: true,
       )
       result = gateway.fetch("0000-0000-0000-0000-0002")
-      expect(result["matching_assessment_address_id"]).to eq(2)
+      expect(result["count_address_id_assessments"]).to eq(2)
     end
   end
 end

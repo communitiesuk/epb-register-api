@@ -22,7 +22,7 @@ module Gateway
       (SELECT count(*)
        FROM assessments_address_id
        WHERE address_id =
-             (SELECT address_id from assessments_address_id where assessment_id = $1)) AS matching_assessment_address_id
+             (SELECT address_id from assessments_address_id where assessment_id = $1)) AS count_address_id_assessments
       FROM assessments a
       LEFT OUTER JOIN green_deal_assessments gda ON a.assessment_id = gda.assessment_id
       INNER JOIN assessors ass ON a.scheme_assessor_id = ass.scheme_assessor_id
