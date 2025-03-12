@@ -286,7 +286,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       EnvironmentStub.remove(%w[type_of_assessments date_from])
     end
 
-    it "passes the first and last dates of the previous month tgo the use case" do
+    it "passes the first and last dates of the previous month to the use case" do
       task.invoke
       expect(export_use_case).to have_received(:execute).with(type_of_assessment: %w[CEPC], date_from: "2021-01-01", date_to: "2021-02-01")
     end
