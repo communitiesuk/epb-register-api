@@ -17,8 +17,12 @@ module Gateway
       ass.registered_by AS scheme_id,
       s.name AS scheme_name,
       x.schema_type,
+      x.xml,
       gda.green_deal_plan_id,
-      x.xml
+      (SELECT count(*)
+       FROM assessments_address_id
+       WHERE address_id =
+             (SELECT address_id from assessments_address_id where assessment_id = $1)) AS matching_assessment_address_id
       FROM assessments a
       LEFT OUTER JOIN green_deal_assessments gda ON a.assessment_id = gda.assessment_id
       INNER JOIN assessors ass ON a.scheme_assessor_id = ass.scheme_assessor_id

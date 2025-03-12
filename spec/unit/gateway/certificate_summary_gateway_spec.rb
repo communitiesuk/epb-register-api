@@ -42,12 +42,17 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
   describe "#fetch" do
     it "returns the expected data for a RdSAP certificate" do
       result = gateway.fetch("0000-0000-0000-0000-0000")
-      expect(result.count).to eq(16)
+      expect(result.count).to eq(17)
     end
 
     it "returns the expected data for a SAP certificate" do
       result = gateway.fetch("0000-0000-0000-0000-0001")
-      expect(result.count).to eq(16)
+      expect(result.count).to eq(17)
+    end
+
+    it "returns the expected data where no green deal is present" do
+      result = gateway.fetch("0000-0000-0000-0000-0000")
+      expect(result["green_deal_plan_id"]).to be_nil
     end
 
     it "returns the expected data where a green deal is present" do
@@ -58,7 +63,28 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
         green_deal_plan_id: "ABC654321DEF",
       )
       result = gateway.fetch("0000-0000-0000-0000-1111")
-      expect(result.count).to eq(16)
+      expect(result["green_deal_plan_id"]).to eq("ABC654321DEF")
+    end
+
+    it "returns the expected data when there is no related assessment" do
+      result = gateway.fetch("0000-0000-0000-0000-0000")
+      expect(result["matching_assessment_address_id"]).to eq(1)
+    end
+
+    it "returns the expected data when there is a related assessment" do
+      rdsap2_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      rdsap2_xml.at("RRN").children = "0000-0000-0000-0000-0002"
+      rdsap2_xml.at("Registration-Date").children = "2020-05-02"
+      lodge_assessment(
+        assessment_body: rdsap2_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        migrated: true,
+      )
+      result = gateway.fetch("0000-0000-0000-0000-0002")
+      expect(result["matching_assessment_address_id"]).to eq(2)
     end
   end
 end
