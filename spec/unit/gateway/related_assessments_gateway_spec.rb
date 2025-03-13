@@ -24,8 +24,14 @@ describe Gateway::RelatedAssessmentsGateway do
       end
     end
 
-    it "returns related assessment reference objects when calling by_address_id" do
-      expect(gateway.by_address_id(address_id).map { |assessment| assessment.to_hash[:assessment_id] }.sort).to eq related_assessment_ids
+    describe "#by_address_id" do
+      it "returns related assessment reference objects when calling by_address_id" do
+        expect(gateway.by_address_id(address_id).map { |assessment| assessment.to_hash[:assessment_id] }.sort).to eq related_assessment_ids
+      end
+
+      it "returns the expected object" do
+        expect(gateway.by_address_id(address_id).first).to be_an_instance_of Domain::RelatedAssessment
+      end
     end
 
     it "returns related assessment IDs when calling related_assessment_ids" do
