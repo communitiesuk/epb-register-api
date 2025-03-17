@@ -5,6 +5,10 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
+  let(:xml_fixture) do
+    Samples.xml("RdSAP-Schema-20.0.0")
+  end
+
   before do
     add_countries
     add_super_assessor(scheme_id:)
@@ -41,8 +45,29 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
 
   describe "#fetch" do
     it "returns the expected data for a RdSAP certificate" do
+      expected_data_without_xml = {
+        "created_at" => Time.utc(2021, 2, 22),
+        "opt_out" => false,
+        "cancelled_at" => nil,
+        "not_for_issue_at" => nil,
+        "assessment_address_id" => "UPRN-000000000000",
+        "country_name" => "Unknown",
+        "scheme_assessor_id" => "SPEC000000",
+        "scheme_id" => scheme_id,
+        "assessor_first_name" => "Someone",
+        "assessor_last_name" => "Person",
+        "assessor_telephone_number" => "010199991010101",
+        "assessor_email" => "person@person.com",
+        "scheme_name" => "test scheme",
+        "schema_type" => "RdSAP-Schema-20.0.0",
+        "green_deal_plan_id" => nil,
+        "count_address_id_assessments" => 1,
+      }
+
       result = gateway.fetch("0000-0000-0000-0000-0000")
       expect(result.count).to eq(17)
+      expect(result["xml"]).to be_a String
+      expect(result).to include expected_data_without_xml
     end
 
     it "returns the expected data for a SAP certificate" do

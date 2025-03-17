@@ -8,7 +8,7 @@ module Gateway
       a.cancelled_at,
       a.not_for_issue_at,
       aai.address_id AS assessment_address_id,
-      ac.country_id,
+      c.country_name,
       a.scheme_assessor_id,
       ass.first_name AS assessor_first_name,
       ass.last_name AS assessor_last_name,
@@ -29,7 +29,8 @@ module Gateway
       INNER JOIN schemes s ON ass.registered_by = s.scheme_id
       INNER JOIN assessments_xml x ON a.assessment_id = x.assessment_id
       INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
-      LEFT JOIN assessments_country_ids ac ON a.assessment_id = ac.assessment_id
+      LEFT JOIN assessments_country_ids aci ON a.assessment_id = aci.assessment_id
+      LEFT JOIN countries c ON aci.country_id = c.country_id
       WHERE a.assessment_id = $1
       SQL
 
