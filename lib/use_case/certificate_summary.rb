@@ -25,16 +25,19 @@ module UseCase
           raise NotFoundException
         end
 
+        certificate_summary = Domain::CertificateSummary.new(assessment:,
+                                                             assessment_id:).certificate_summary_data
+
         unless assessment["green_deal_plan_id"].nil?
           green_deal_plan = @green_deal_plans_gateway.fetch(assessment_id)
-          assessment["green_deal_plan"] = green_deal_plan
+          certificate_summary["green_deal_plan"] = green_deal_plan
         end
 
         if assessment["count_address_id_assessments"] > 1
           related_assessments = @related_assessments_gateway.by_address_id(assessment_id)
-          assessment["related_assessments"] = related_assessments
+          certificate_summary["related_assessments"] = related_assessments
         end
-        assessment
+        certificate_summary
       end
     end
   end
