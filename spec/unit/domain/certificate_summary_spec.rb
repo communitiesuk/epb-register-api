@@ -17,7 +17,7 @@ describe Domain::CertificateSummary do
       "schema_type" => "RdSAP-Schema-20.0.0",
       "xml" => xml_fixture,
       "green_deal_plan_id" => nil,
-      "count_address_id_assessments" => 1,
+      "count_address_id_assessments" => 2,
     }
   end
   let(:xml_fixture) do
@@ -218,6 +218,58 @@ describe Domain::CertificateSummary do
     }
   end
 
+  let(:rdsap) do
+    {
+      assessment_id: "0000-0000-0000-0000-0000",
+      assessment_status: "ENTERED",
+      assessment_type: "RdSAP",
+      assessment_expiry_date: Time.new(2030, 0o1, 30).utc.to_date,
+      opt_out: false,
+    }
+  end
+  let(:sap) do
+    {
+      assessment_id: "0000-0000-0000-0000-0002",
+      assessment_status: "ENTERED",
+      assessment_type: "SAP",
+      assessment_expiry_date: Time.new(2030, 0o1, 30).utc.to_date,
+      opt_out: false,
+    }
+  end
+  let(:related_assessment_rdsap) { Domain::RelatedAssessment.new(**rdsap) }
+  let(:related_assessment_sap) { Domain::RelatedAssessment.new(**sap) }
+  let(:related_assessments) do
+    [related_assessment_rdsap,
+     related_assessment_sap]
+  end
+  let(:expected_assessments) do
+    [related_assessment_sap]
+  end
+  let(:sap_assessment) do
+    {
+      "created_at" => Time.utc(2021, 2, 22),
+      "opt_out" => false,
+      "cancelled_at" => nil,
+      "not_for_issue_at" => nil,
+      "assessment_address_id" => "UPRN-000000000000",
+      "country_name" => "England",
+      "scheme_assessor_id" => "SPEC000000",
+      "assessor_first_name" => "Someone",
+      "assessor_last_name" => "Person",
+      "assessor_telephone_number" => "010199991010101",
+      "assessor_email" => "person@person.com",
+      "scheme_id" => 1,
+      "scheme_name" => "test scheme",
+      "schema_type" => "SAP-Schema-19.0.0",
+      "xml" => xml_sap_fixture,
+      "green_deal_plan_id" => nil,
+      "count_address_id_assessments" => 2,
+    }
+  end
+  let(:xml_sap_fixture) do
+    Samples.xml "SAP-Schema-19.0.0"
+  end
+
   let(:expected_data) do
     {
       "type_of_assessment": "RdSAP",
@@ -410,22 +462,24 @@ describe Domain::CertificateSummary do
       "electricity_smart_meter_present": nil,
       "address_id": "UPRN-000000000000",
       "opt_out": false,
+      "superseded_by": nil,
+      "related_assessments": expected_assessments,
       "country_name": "England",
     }
   end
 
   it "does not raise an error" do
-    expect { described_class.new(assessment:, assessment_id:) }.not_to raise_error
+    expect { described_class.new(assessment:, assessment_id:, related_assessments:) }.not_to raise_error
   end
 
   it "returns the expected certificate_summary_data" do
-    result = described_class.new(assessment:, assessment_id:)
+    result = described_class.new(assessment:, assessment_id:, related_assessments:)
     expect(result.certificate_summary_data).to eq expected_data
   end
 
   describe "#certificate_summary" do
     it "returns the expected certificate summary" do
-      result = described_class.new(assessment:, assessment_id:)
+      result = described_class.new(assessment:, assessment_id:, related_assessments:)
       expect(result.certificate_summary_data).to include expected_view_model_data
     end
 
@@ -434,22 +488,50 @@ describe Domain::CertificateSummary do
 
   describe "#update_address_id" do
     it "updates the certificate summary with an address_id" do
-      result = described_class.new(assessment:, assessment_id:)
+      result = described_class.new(assessment:, assessment_id:, related_assessments:)
       expect(result.certificate_summary_data[:address_id]).to eq "UPRN-000000000000"
     end
   end
 
   describe "#update_opt_out_status" do
     it "updates the certificate summary with opt_out_status" do
-      result = described_class.new(assessment:, assessment_id:)
+      result = described_class.new(assessment:, assessment_id:, related_assessments:)
       expect(result.certificate_summary_data[:opt_out]).to be false
     end
   end
 
   describe "#update_country_name" do
     it "updates the certificate summary with an country_name" do
-      result = described_class.new(assessment:, assessment_id:)
+      result = described_class.new(assessment:, assessment_id:, related_assessments:)
       expect(result.certificate_summary_data[:country_name]).to eq "England"
+    end
+  end
+
+  describe "#update_related_assessments" do
+    it "updates the certificate summary with related_assessments" do
+      result = described_class.new(assessment:, assessment_id:, related_assessments:)
+      expect(result.certificate_summary_data[:related_assessments]).to eq expected_assessments
+      expect(result.certificate_summary_data[:superseded_by]).to be_nil
+    end
+
+    context "when there are no related assessments" do
+      it "returns an empty array for related_assessments" do
+        result = described_class.new(assessment:, assessment_id:, related_assessments: [])
+        expect(result.certificate_summary_data[:related_assessments]).to eq []
+      end
+
+      it "returns nil for superseded_by" do
+        result = described_class.new(assessment:, assessment_id:, related_assessments: [])
+        expect(result.certificate_summary_data[:superseded_by]).to be_nil
+      end
+    end
+
+    context "when there is a superseded assessment" do
+      it "updates the certificate summary with superseded" do
+        assessment_id = "0000-0000-0000-0000-0002"
+        result = described_class.new(assessment:, assessment_id:, related_assessments:)
+        expect(result.certificate_summary_data[:superseded_by]).to eq "0000-0000-0000-0000-0000"
+      end
     end
   end
 end

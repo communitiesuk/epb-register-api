@@ -372,6 +372,31 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
       }
     end
 
+    let(:rdsap) do
+      {
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status: "ENTERED",
+        assessment_type: "RdSAP",
+        assessment_expiry_date: Time.new(2030, 0o1, 30).utc.to_date,
+        opt_out: false,
+      }
+    end
+    let(:sap) do
+      {
+        assessment_id: "0000-0000-0000-0000-0002",
+        assessment_status: "ENTERED",
+        assessment_type: "SAP",
+        assessment_expiry_date: Time.new(2030, 0o1, 30).utc.to_date,
+        opt_out: false,
+      }
+    end
+    let(:related_assessment_rdsap) { Domain::RelatedAssessment.new(**rdsap) }
+    let(:related_assessment_sap) { Domain::RelatedAssessment.new(**sap) }
+    let(:related_assessments) do
+      [related_assessment_rdsap,
+       related_assessment_sap]
+    end
+
     before do
       add_super_assessor(scheme_id:)
       allow(certificate_summary_gateway).to receive(:fetch).and_return(gateway_data)
@@ -436,7 +461,7 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
     context "when there are related assessments" do
       before do
         allow(certificate_summary_gateway).to receive(:fetch).and_return(xml_data_related_assessments)
-        allow(related_assessments_gateway).to receive(:by_address_id)
+        allow(related_assessments_gateway).to receive(:by_address_id).and_return(related_assessments)
       end
 
       it "does call the related assessments gateway when there are related assessments" do

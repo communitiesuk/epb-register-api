@@ -2,15 +2,18 @@ module Domain
   class CertificateSummary
     def initialize(
       assessment:,
-      assessment_id:
+      assessment_id:,
+      related_assessments:
     )
       @assessment = assessment
       @assessment_id = assessment_id
+      @related_assessments = related_assessments
       @certificate_summary_data = nil
 
       certificate_summary
       update_address_id
       update_opt_out_status
+      update_related_assessments
       update_country_name
     end
 
@@ -34,6 +37,20 @@ module Domain
 
     def update_opt_out_status
       @certificate_summary_data[:opt_out] = @assessment["opt_out"]
+    end
+
+    def update_related_assessments
+      if @related_assessments.empty?
+        @certificate_summary_data[:related_assessments] = []
+        @certificate_summary_data[:superseded_by] = nil
+      else
+        type_of_assessment = @certificate_summary_data[:type_of_assessment]
+        related_assessments = Domain::RelatedAssessments.new(assessment_id: @assessment_id,
+                                                             type_of_assessment:,
+                                                             assessments: @related_assessments)
+        @certificate_summary_data[:related_assessments] = related_assessments.assessments
+        @certificate_summary_data[:superseded_by] = related_assessments.superseded_by
+      end
     end
 
     # not used for non-dom certs
