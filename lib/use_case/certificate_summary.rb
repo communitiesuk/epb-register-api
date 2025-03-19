@@ -17,6 +17,13 @@ module UseCase
           @certificate_summary_gateway
             .fetch(assessment_id).to_hash
 
+        schema_type = assessment["schema_type"]
+
+        # placeholder logic until non-dom to_certificate_summary_created
+        unless schema_type.start_with?("RdSAP", "SAP")
+          raise Boundary::InvalidAssessment, schema_type
+        end
+
         if assessment
           if !assessment["not_for_issue_at"].nil? || !assessment["cancelled_at"].nil?
             raise AssessmentGone
@@ -37,6 +44,7 @@ module UseCase
           related_assessments = @related_assessments_gateway.by_address_id(assessment_id)
           certificate_summary["related_assessments"] = related_assessments
         end
+
         certificate_summary
       end
     end

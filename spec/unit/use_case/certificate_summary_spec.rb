@@ -46,6 +46,28 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
       }
     end
 
+    let(:cepc_data) do
+      {
+        "created_at" => Time.utc(2021, 2, 22),
+        "opt_out" => false,
+        "cancelled_at" => nil,
+        "not_for_issue_at" => nil,
+        "assessment_address_id" => "UPRN-000000000000",
+        "country_name" => "England",
+        "scheme_assessor_id" => "SPEC000000",
+        "assessor_first_name" => "Someone",
+        "assessor_last_name" => "Person",
+        "assessor_telephone_number" => "010199991010101",
+        "assessor_email" => "person@person.com",
+        "scheme_id" => 1,
+        "scheme_name" => "test scheme",
+        "schema_type" => "CEPC-8.0.0",
+        "xml" => xml_cepc_fixture,
+        "green_deal_plan_id" => nil,
+        "count_address_id_assessments" => 1,
+      }
+    end
+
     let(:gateway_data_with_green_deal) do
       {
         "created_at" => Time.utc(2021, 2, 22),
@@ -92,6 +114,10 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
 
     let(:xml_fixture) do
       Samples.xml "RdSAP-Schema-20.0.0"
+    end
+
+    let(:xml_cepc_fixture) do
+      Samples.xml("CEPC-8.0.0", "cepc")
     end
 
     let(:green_deal_data) do
@@ -351,32 +377,26 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
       allow(certificate_summary_gateway).to receive(:fetch).and_return(gateway_data)
     end
 
-    it "can load the class as expected" do
-      expect { use_case }.not_to raise_error
-    end
-
     it "does not raise and error" do
       expect { use_case.execute("0000-0000-0000-0000-0000") }.not_to raise_error
     end
 
-    it "does something with the XML" do
+    it "creates the certificate summary" do
       results = use_case.execute("0000-0000-0000-0000-0000")
       expect(results).to include(expected_view_model_data)
-    end
-
-    it "the certificate data include the address_id" do
-      results = use_case.execute("0000-0000-0000-0000-0000")
       expect(results[:address_id]).to eq "UPRN-000000000000"
-    end
-
-    it "the certificate data opt out data" do
-      results = use_case.execute("0000-0000-0000-0000-0000")
       expect(results[:opt_out]).to be false
+      expect(results[:country_name]).to eq "England"
     end
 
-    it "the certificate data country data" do
-      results = use_case.execute("0000-0000-0000-0000-0000")
-      expect(results[:country_name]).to eq "England"
+    context "when an non-dom certificate is passed to the use_case" do
+      before do
+        allow(certificate_summary_gateway).to receive(:fetch).with("0000-0000-0000-0000-0001").and_return(cepc_data)
+      end
+
+      it "raises an error for a non-dom certificate" do
+        expect { use_case.execute("0000-0000-0000-0000-0001") }.to raise_error Boundary::InvalidAssessment
+      end
     end
 
     context "when there is no green deal plan" do
