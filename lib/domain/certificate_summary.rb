@@ -3,18 +3,26 @@ module Domain
     def initialize(
       assessment:,
       assessment_id:,
-      related_assessments:
+      related_assessments:,
+      green_deal_plan:
     )
       @assessment = assessment
       @assessment_id = assessment_id
       @related_assessments = related_assessments
+      @green_deal_plan = green_deal_plan
       @certificate_summary_data = nil
+      @type_of_assessment = nil
 
       certificate_summary
+      @type_of_assessment = @certificate_summary_data[:type_of_assessment]
       update_address_id
       update_opt_out_status
       update_related_assessments
       update_country_name
+
+      if @type_of_assessment == "RdSAP"
+        update_green_deal
+      end
     end
 
     attr_reader :certificate_summary_data
@@ -44,9 +52,8 @@ module Domain
         @certificate_summary_data[:related_assessments] = []
         @certificate_summary_data[:superseded_by] = nil
       else
-        type_of_assessment = @certificate_summary_data[:type_of_assessment]
         related_assessments = Domain::RelatedAssessments.new(assessment_id: @assessment_id,
-                                                             type_of_assessment:,
+                                                             type_of_assessment: @type_of_assessment,
                                                              assessments: @related_assessments)
         @certificate_summary_data[:related_assessments] = related_assessments.assessments
         @certificate_summary_data[:superseded_by] = related_assessments.superseded_by
@@ -60,6 +67,14 @@ module Domain
 
     # not used for non-dom certs
     def set_assessor; end
+
+    def update_green_deal
+      @certificate_summary_data[:green_deal_plan] = if @green_deal_plan.nil?
+                                                      []
+                                                    else
+                                                      @green_deal_plan
+                                                    end
+    end
 
     def lodged_values_from_xml(xml, schema_type, assessment_id)
       view_model =

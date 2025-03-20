@@ -38,16 +38,16 @@ module UseCase
                                 []
                               end
 
-        certificate_summary = Domain::CertificateSummary.new(assessment:,
-                                                             assessment_id:,
-                                                             related_assessments:).certificate_summary_data
+        green_deal_plan = if assessment["green_deal_plan_id"].nil?
+                            nil
+                          else
+                            @green_deal_plans_gateway.fetch(assessment_id)
+                          end
 
-        unless assessment["green_deal_plan_id"].nil?
-          green_deal_plan = @green_deal_plans_gateway.fetch(assessment_id)
-          certificate_summary["green_deal_plan"] = green_deal_plan
-        end
-
-        certificate_summary
+        Domain::CertificateSummary.new(assessment:,
+                                       assessment_id:,
+                                       related_assessments:,
+                                       green_deal_plan:).certificate_summary_data
       end
     end
   end
