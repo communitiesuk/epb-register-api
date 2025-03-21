@@ -298,7 +298,7 @@ describe Domain::CertificateSummary do
         "last_name": "Person",
         "scheme_assessor_id": "SPEC000000",
         "contact_details":
-          { "email": "a@b.c", "telephone": "0555 497 2848" },
+          { "email": "a@b.c", "telephone_number": "0555 497 2848" },
       },
       "current_carbon_emission": 2.4,
       "current_energy_efficiency_band": "e",
@@ -604,7 +604,7 @@ describe Domain::CertificateSummary do
             "last_name": "Person",
             "scheme_assessor_id": "SPEC000000",
             "contact_details":
-              { "email": "a@b.c", "telephone": "0555 497 2848" },
+              { "email": "a@b.c", "telephone_number": "0555 497 2848" },
           },
         )
       end
@@ -639,7 +639,7 @@ describe Domain::CertificateSummary do
         domestic_rdsap_xml.gsub!("0555 497 2848", "")
       end
 
-      it "returns the assessor information - when the data is not in the xml" do
+      it "returns the email and telephone details from the assessors table" do
         result = described_class.new(assessment: assessment_xml_missing_contact_details, assessment_id:, related_assessments:, green_deal_plan:)
         expect(result.certificate_summary_data[:assessor]).to eq(
           {
@@ -648,7 +648,7 @@ describe Domain::CertificateSummary do
             "last_name": "Person",
             "scheme_assessor_id": "SPEC000000",
             "contact_details":
-              { "email": "person@person.com", "telephone": "010199991010101" },
+              { "email": "person@person.com", "telephone_number": "010199991010101" },
           },
         )
       end

@@ -411,7 +411,7 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
           "last_name": "Person",
           "scheme_assessor_id": "SPEC000000",
           "contact_details":
-            { "email": "a@b.c", "telephone": "0555 497 2848" },
+            { "email": "a@b.c", "telephone_number": "0555 497 2848" },
         },
       )
     end

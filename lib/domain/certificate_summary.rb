@@ -79,12 +79,15 @@ module Domain
         @certificate_summary_data[:assessor][:contact_details][:email] = @assessment["assessor_email"]
       end
 
-      if @certificate_summary_data.dig(:assessor, :contact_details, :telephone).blank?
-        @certificate_summary_data[:assessor][:contact_details][:telephone] = @assessment["assessor_telephone_number"]
-      end
+      @certificate_summary_data[:assessor][:contact_details][:telephone_number] = if @certificate_summary_data.dig(:assessor, :contact_details, :telephone).blank?
+                                                                                    @assessment["assessor_telephone_number"]
+                                                                                  else
+                                                                                    @certificate_summary_data[:assessor][:contact_details][:telephone]
+                                                                                  end
 
       # view model may not need to return this for domestic certificates
       @certificate_summary_data[:assessor].delete(:name)
+      @certificate_summary_data[:assessor][:contact_details].delete(:telephone)
     end
 
     def update_green_deal
