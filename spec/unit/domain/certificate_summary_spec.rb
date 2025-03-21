@@ -25,7 +25,7 @@ describe Domain::CertificateSummary do
   end
   let(:assessment_id) { "0000-0000-0000-0000-0000" }
 
-  let(:expected_view_model_data) do
+  let(:expected_certificate_summary_without_assessor_details) do
     {
       "type_of_assessment": "RdSAP",
       "assessment_id": "0000-0000-0000-0000-0000",
@@ -39,14 +39,6 @@ describe Domain::CertificateSummary do
         "address_line4": nil,
         "town": "Whitbury",
         "postcode": "SW1A 2AA",
-      },
-      "assessor": {
-        "scheme_assessor_id": "SPEC000000",
-        "name": "Testa Sessor",
-        "contact_details": {
-          "email": "a@b.c",
-          "telephone": "0555 497 2848",
-        },
       },
       "current_carbon_emission": 2.4,
       "current_energy_efficiency_band": "e",
@@ -218,6 +210,7 @@ describe Domain::CertificateSummary do
     }
   end
 
+  # set up for the related assessments
   let(:rdsap) do
     {
       assessment_id: "0000-0000-0000-0000-0000",
@@ -245,32 +238,46 @@ describe Domain::CertificateSummary do
   let(:expected_assessments) do
     [related_assessment_sap]
   end
-  let(:sap_assessment) do
-    {
-      "created_at" => Time.utc(2021, 2, 22),
-      "opt_out" => false,
-      "cancelled_at" => nil,
-      "not_for_issue_at" => nil,
-      "assessment_address_id" => "UPRN-000000000000",
-      "country_name" => "England",
-      "scheme_assessor_id" => "SPEC000000",
-      "assessor_first_name" => "Someone",
-      "assessor_last_name" => "Person",
-      "assessor_telephone_number" => "010199991010101",
-      "assessor_email" => "person@person.com",
-      "scheme_id" => 1,
-      "scheme_name" => "test scheme",
-      "schema_type" => "SAP-Schema-19.0.0",
-      "xml" => xml_sap_fixture,
-      "green_deal_plan_id" => nil,
-      "count_address_id_assessments" => 2,
-    }
+
+  # set up for green deal plan
+  let(:arguments) do
+    { green_deal_plan_id: "ABC654321DEF",
+      start_date: Time.new(2020, 0o1, 30).utc.to_date,
+      end_date: Time.new(2030, 0o2, 28).utc.to_date,
+      provider_name: "The Bank",
+      provider_telephone: "0800 0000000",
+      provider_email: "lender@example.com",
+      interest_rate: 12.3,
+      fixed_interest_rate: true,
+      charge_uplift_amount: 1.25,
+      charge_uplift_date: Time.new(2025, 0o3, 29).utc.to_date,
+      cca_regulated: true,
+      structure_changed: false,
+      measures_removed: false,
+      charges: [{ end_date: "2030-03-29",
+                  sequence: 0,
+                  start_date: "2020-03-29",
+                  daily_charge: 0.34 }],
+      measures: [{ product: "WarmHome lagging stuff (TM)",
+                   sequence: 0,
+                   repaid_date: "2025-03-29",
+                   measure_type: "Loft insulation" }],
+      savings: [{ fuel_code: "39",
+                  fuel_saving: 23_253,
+                  standing_charge_fraction: 0 },
+                { fuel_code: "40",
+                  fuel_saving: -6331,
+                  standing_charge_fraction: -0.9 },
+                { fuel_code: "41",
+                  fuel_saving: -15_561,
+                  standing_charge_fraction: 0 }],
+      estimated_savings: 1566 }
   end
-  let(:xml_sap_fixture) do
-    Samples.xml "SAP-Schema-19.0.0"
+  let(:green_deal_plan) do
+    [Domain::GreenDealPlan.new(**arguments)]
   end
 
-  let(:expected_data) do
+  let(:expected_certificate_summary) do
     {
       "type_of_assessment": "RdSAP",
       "assessment_id": "0000-0000-0000-0000-0000",
@@ -286,12 +293,12 @@ describe Domain::CertificateSummary do
         "postcode": "SW1A 2AA",
       },
       "assessor": {
+        "registered_by": { "name": "test scheme", "scheme_id": 1 },
+        "first_name": "Someone",
+        "last_name": "Person",
         "scheme_assessor_id": "SPEC000000",
-        "name": "Testa Sessor",
-        "contact_details": {
-          "email": "a@b.c",
-          "telephone": "0555 497 2848",
-        },
+        "contact_details":
+          { "email": "a@b.c", "telephone": "0555 497 2848" },
       },
       "current_carbon_emission": 2.4,
       "current_energy_efficiency_band": "e",
@@ -469,57 +476,19 @@ describe Domain::CertificateSummary do
     }
   end
 
-  let(:arguments) do
-    { green_deal_plan_id: "ABC654321DEF",
-      start_date: Time.new(2020, 0o1, 30).utc.to_date,
-      end_date: Time.new(2030, 0o2, 28).utc.to_date,
-      provider_name: "The Bank",
-      provider_telephone: "0800 0000000",
-      provider_email: "lender@example.com",
-      interest_rate: 12.3,
-      fixed_interest_rate: true,
-      charge_uplift_amount: 1.25,
-      charge_uplift_date: Time.new(2025, 0o3, 29).utc.to_date,
-      cca_regulated: true,
-      structure_changed: false,
-      measures_removed: false,
-      charges: [{ end_date: "2030-03-29",
-                  sequence: 0,
-                  start_date: "2020-03-29",
-                  daily_charge: 0.34 }],
-      measures: [{ product: "WarmHome lagging stuff (TM)",
-                   sequence: 0,
-                   repaid_date: "2025-03-29",
-                   measure_type: "Loft insulation" }],
-      savings: [{ fuel_code: "39",
-                  fuel_saving: 23_253,
-                  standing_charge_fraction: 0 },
-                { fuel_code: "40",
-                  fuel_saving: -6331,
-                  standing_charge_fraction: -0.9 },
-                { fuel_code: "41",
-                  fuel_saving: -15_561,
-                  standing_charge_fraction: 0 }],
-      estimated_savings: 1566 }
-  end
-
-  let(:green_deal_plan) do
-    [Domain::GreenDealPlan.new(**arguments)]
-  end
-
   it "does not raise an error" do
     expect { described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:) }.not_to raise_error
   end
 
   it "returns the expected certificate_summary_data" do
     result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-    expect(result.certificate_summary_data).to eq expected_data
+    expect(result.certificate_summary_data).to eq expected_certificate_summary
   end
 
   describe "#certificate_summary" do
     it "returns the expected certificate summary" do
       result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-      expect(result.certificate_summary_data).to include expected_view_model_data
+      expect(result.certificate_summary_data).to include expected_certificate_summary_without_assessor_details
     end
 
     # add a test when an Argument is raised
@@ -592,9 +561,96 @@ describe Domain::CertificateSummary do
     end
 
     context "when the assessment type is not RdSAP" do
+      let(:sap_assessment) do
+        {
+          "created_at" => Time.utc(2021, 2, 22),
+          "opt_out" => false,
+          "cancelled_at" => nil,
+          "not_for_issue_at" => nil,
+          "assessment_address_id" => "UPRN-000000000000",
+          "country_name" => "England",
+          "scheme_assessor_id" => "SPEC000000",
+          "assessor_first_name" => "Someone",
+          "assessor_last_name" => "Person",
+          "assessor_telephone_number" => "010199991010101",
+          "assessor_email" => "person@person.com",
+          "scheme_id" => 1,
+          "scheme_name" => "test scheme",
+          "schema_type" => "SAP-Schema-19.0.0",
+          "xml" => xml_sap_fixture,
+          "green_deal_plan_id" => nil,
+          "count_address_id_assessments" => 2,
+        }
+      end
+      let(:xml_sap_fixture) do
+        Samples.xml "SAP-Schema-19.0.0"
+      end
+
       it "does not have a green_deal_plan attribute on certificate_summary_data" do
         result = described_class.new(assessment: sap_assessment, assessment_id: "0000-0000-0000-0000-0002", related_assessments:, green_deal_plan: nil)
         expect(result.certificate_summary_data.key?(:green_deal_plan)).to be false
+      end
+    end
+  end
+
+  describe "#update_assessor" do
+    context "when there is email and telephone data in the xml" do
+      it "returns the assessor information using the email and telephone data from the xml" do
+        result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
+        expect(result.certificate_summary_data[:assessor]).to eq(
+          {
+            "registered_by": { "name": "test scheme", "scheme_id": 1 },
+            "first_name": "Someone",
+            "last_name": "Person",
+            "scheme_assessor_id": "SPEC000000",
+            "contact_details":
+              { "email": "a@b.c", "telephone": "0555 497 2848" },
+          },
+        )
+      end
+    end
+
+    context "when there is no email or telephone data in the xml" do
+      let(:assessment_xml_missing_contact_details) do
+        {
+          "created_at" => Time.utc(2021, 2, 22),
+          "opt_out" => false,
+          "cancelled_at" => nil,
+          "not_for_issue_at" => nil,
+          "assessment_address_id" => "UPRN-000000000000",
+          "country_name" => "England",
+          "scheme_assessor_id" => "SPEC000000",
+          "assessor_first_name" => "Someone",
+          "assessor_last_name" => "Person",
+          "assessor_telephone_number" => "010199991010101",
+          "assessor_email" => "person@person.com",
+          "scheme_id" => 1,
+          "scheme_name" => "test scheme",
+          "schema_type" => "RdSAP-Schema-20.0.0",
+          "xml" => xml_missing_contact_details,
+          "green_deal_plan_id" => nil,
+          "count_address_id_assessments" => 2,
+        }
+      end
+
+      let(:xml_missing_contact_details) do
+        domestic_rdsap_xml = Samples.xml("RdSAP-Schema-20.0.0")
+        domestic_rdsap_xml.gsub!("a@b.c", "")
+        domestic_rdsap_xml.gsub!("0555 497 2848", "")
+      end
+
+      it "returns the assessor information - when the data is not in the xml" do
+        result = described_class.new(assessment: assessment_xml_missing_contact_details, assessment_id:, related_assessments:, green_deal_plan:)
+        expect(result.certificate_summary_data[:assessor]).to eq(
+          {
+            "registered_by": { "name": "test scheme", "scheme_id": 1 },
+            "first_name": "Someone",
+            "last_name": "Person",
+            "scheme_assessor_id": "SPEC000000",
+            "contact_details":
+              { "email": "person@person.com", "telephone": "010199991010101" },
+          },
+        )
       end
     end
   end

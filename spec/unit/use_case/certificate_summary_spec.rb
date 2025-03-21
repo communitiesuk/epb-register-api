@@ -179,7 +179,7 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
       add_scheme_and_get_id
     end
 
-    let(:expected_view_model_data) do
+    let(:expected_data_without_assessor_details) do
       {
         "type_of_assessment": "RdSAP",
         "assessment_id": "0000-0000-0000-0000-0000",
@@ -193,14 +193,6 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
           "address_line4": nil,
           "town": "Whitbury",
           "postcode": "SW1A 2AA",
-        },
-        "assessor": {
-          "scheme_assessor_id": "SPEC000000",
-          "name": "Testa Sessor",
-          "contact_details": {
-            "email": "a@b.c",
-            "telephone": "0555 497 2848",
-          },
         },
         "current_carbon_emission": 2.4,
         "current_energy_efficiency_band": "e",
@@ -408,10 +400,20 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
 
     it "creates the certificate summary" do
       results = use_case.execute("0000-0000-0000-0000-0000")
-      expect(results).to include(expected_view_model_data)
+      expect(results).to include(expected_data_without_assessor_details)
       expect(results[:address_id]).to eq "UPRN-000000000000"
       expect(results[:opt_out]).to be false
       expect(results[:country_name]).to eq "England"
+      expect(results[:assessor]).to eq(
+        {
+          "registered_by": { "name": "test scheme", "scheme_id": 1 },
+          "first_name": "Someone",
+          "last_name": "Person",
+          "scheme_assessor_id": "SPEC000000",
+          "contact_details":
+            { "email": "a@b.c", "telephone": "0555 497 2848" },
+        },
+      )
     end
 
     context "when an non-dom certificate is passed to the use_case" do

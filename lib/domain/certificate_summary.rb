@@ -19,6 +19,7 @@ module Domain
       update_opt_out_status
       update_related_assessments
       update_country_name
+      update_assessor
 
       if @type_of_assessment == "RdSAP"
         update_green_deal
@@ -65,8 +66,26 @@ module Domain
       @certificate_summary_data[:country_name] = @assessment["country_name"]
     end
 
-    # not used for non-dom certs
-    def set_assessor; end
+    # based on the set_assessor method for domestic certs
+    def update_assessor
+      @certificate_summary_data[:assessor][:first_name] = @assessment["assessor_first_name"]
+      @certificate_summary_data[:assessor][:last_name] = @assessment["assessor_last_name"]
+      @certificate_summary_data[:assessor][:registered_by] = {
+        name: @assessment["scheme_name"],
+        scheme_id: @assessment["scheme_id"],
+      }
+
+      if @certificate_summary_data.dig(:assessor, :contact_details, :email).blank?
+        @certificate_summary_data[:assessor][:contact_details][:email] = @assessment["assessor_email"]
+      end
+
+      if @certificate_summary_data.dig(:assessor, :contact_details, :telephone).blank?
+        @certificate_summary_data[:assessor][:contact_details][:telephone] = @assessment["assessor_telephone_number"]
+      end
+
+      # view model may not need to return this for domestic certificates
+      @certificate_summary_data[:assessor].delete(:name)
+    end
 
     def update_green_deal
       @certificate_summary_data[:green_deal_plan] = if @green_deal_plan.nil?
