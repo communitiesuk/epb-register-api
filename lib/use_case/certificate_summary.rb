@@ -15,14 +15,7 @@ module UseCase
         assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
           @certificate_summary_gateway
-            .fetch(assessment_id).to_hash
-
-        schema_type = assessment["schema_type"]
-
-        # placeholder logic until non-dom to_certificate_summary_created
-        unless schema_type.start_with?("RdSAP", "SAP")
-          raise Boundary::InvalidAssessment, schema_type
-        end
+            .fetch(assessment_id)
 
         if assessment
           if !assessment["not_for_issue_at"].nil? || !assessment["cancelled_at"].nil?
@@ -30,6 +23,15 @@ module UseCase
           end
         else
           raise NotFoundException
+        end
+
+        assessment = assessment.to_hash
+
+        schema_type = assessment["schema_type"]
+
+        # placeholder logic until non-dom to_certificate_summary_created
+        unless schema_type.start_with?("RdSAP", "SAP")
+          raise Boundary::InvalidAssessment, schema_type
         end
 
         related_assessments = if assessment["count_address_id_assessments"] > 1

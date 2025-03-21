@@ -5,16 +5,16 @@ module Controller
     get "/api/assessments/:assessment_id/certificate-summary",
         auth_token_has_all: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
-      summary = UseCase::AssessmentSummary::Fetch.new.execute(assessment_id, "to_certificate_summary")
+      summary = UseCase::CertificateSummary::Fetch.new.execute(assessment_id)
 
       json_api_response(data: summary)
     rescue StandardError => e
       case e
-      when UseCase::AssessmentSummary::Fetch::NotFoundException
+      when UseCase::CertificateSummary::Fetch::NotFoundException
         not_found_error("No matching assessment found")
       when ArgumentError
         error_response(400, "INVALID_QUERY", e.message)
-      when UseCase::AssessmentSummary::Fetch::AssessmentGone
+      when UseCase::CertificateSummary::Fetch::AssessmentGone
         gone_error("Assessment not for issue")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")

@@ -23,9 +23,10 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
     end
   end
 
-  context "when Improvement-Heading and Improvement-Summary elements exist" do
-    it "returns the Improvement-Heading value as the improvementTitle and falls back to Improvement-Summary" do
+  context "when requesting an RdSAP assessment" do
+    it "returns the expected response" do
       scheme_id = add_scheme_and_get_id
+      add_countries
       assessor =
         AssessorStub.new.fetch_request_body(
           domestic_rd_sap: "ACTIVE",
@@ -242,6 +243,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
           "addressId": "UPRN-000000000000",
           "optOut": false,
           "supersededBy": nil,
+          "countryName": "Unknown",
           "relatedAssessments": [],
           "greenDealPlan": [],
         },
