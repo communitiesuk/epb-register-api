@@ -25,8 +25,6 @@ module UseCase
           raise NotFoundException
         end
 
-        assessment = assessment.to_hash
-
         schema_type = assessment["schema_type"]
 
         # placeholder logic until non-dom to_certificate_summary_created
@@ -35,7 +33,7 @@ module UseCase
         end
 
         related_assessments = if assessment["count_address_id_assessments"] > 1
-                                @related_assessments_gateway.by_address_id(assessment_id)
+                                @related_assessments_gateway.by_address_id(assessment["assessment_address_id"])
                               else
                                 []
                               end
