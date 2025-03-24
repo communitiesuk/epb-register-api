@@ -35,25 +35,25 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
     before do
       add_countries
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
-      domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
-      lodge_assessment(
-        assessment_body: domestic_rdsap_xml.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        migrated: true,
-      )
     end
 
     context "when a certificate has been cancelled" do
       it "raises the AssessmentGone Error" do
+        domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+        lodge_assessment(
+          assessment_body: domestic_rdsap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          migrated: true,
+        )
         ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
         expect(fetch_certificate_summary(id: "0000-0000-0000-0000-0000", accepted_responses: [410]).status).to eq(410)
       end
     end
 
-    context "when requesting an RdSAP assessment" do
+    context "when requesting a RdSAP assessment" do
       let(:related_assessment) { [] }
       let(:green_deal_plan) { [] }
       let(:superseded_by) { nil }
@@ -268,6 +268,18 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
         }
       end
 
+      before do
+        domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+        lodge_assessment(
+          assessment_body: domestic_rdsap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          migrated: true,
+        )
+      end
+
       it "returns the expected response" do
         response =
           JSON.parse(
@@ -400,6 +412,142 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
           # gets decoded to a string with the .to_json method
           expect(response).to eq(expected_response)
         end
+      end
+    end
+
+    context "when requesting a SAP assessment" do
+      let(:related_assessment) { [] }
+      let(:superseded_by) { nil }
+      let(:date_of_expiry) { "2030-05-03" }
+      let(:date_of_registration) { "2020-05-04" }
+      let(:assessment_id) { "0000-0000-0000-0000-0000" }
+      let(:expected_response) do
+        { data:
+            { addendum: { stoneWalls: true },
+              address: { addressLine1: "1 Some Street",
+                         addressLine2: "Some Area",
+                         addressLine3: "Some County",
+                         addressLine4: nil,
+                         postcode: "SW1A 2AA",
+                         town: "Whitbury" },
+              addressId: "UPRN-000000000000",
+              assessmentId: "0000-0000-0000-0000-0001",
+              assessor: { contactDetails: { email: "a@b.c", telephoneNumber: "111222333" },
+                          firstName: "Someone",
+                          lastName: "Person",
+                          registeredBy: { name: "test scheme", schemeId: scheme_id },
+                          schemeAssessorId: "SPEC000000" },
+              countryName: "Unknown",
+              currentCarbonEmission: "2.4",
+              currentEnergyEfficiencyBand: "e",
+              currentEnergyEfficiencyRating: 50,
+              dateOfAssessment: "2020-05-04",
+              dateOfExpiry: "2030-05-03",
+              dateOfRegistration: "2020-05-04",
+              dwellingType: "Mid-terrace house",
+              electricitySmartMeterPresent: nil,
+              environmentalImpactCurrent: 52,
+              environmentalImpactPotential: 74,
+              estimatedEnergyCost: "689.83",
+              gasSmartMeterPresent: nil,
+              heatDemand: { currentSpaceHeatingDemand: 13_120, currentWaterHeatingDemand: 2285 },
+              heatingCostCurrent: "365.98",
+              heatingCostPotential: "250.34",
+              hotWaterCostCurrent: "200.40",
+              hotWaterCostPotential: "180.43",
+              lightingCostCurrent: "123.45",
+              lightingCostPotential: "84.23",
+              lzcEnergySources: nil,
+              optOut: false,
+              potentialCarbonEmission: "1.4",
+              potentialEnergyEfficiencyBand: "c",
+              potentialEnergyEfficiencyRating: 72,
+              potentialEnergySaving: "174.83",
+              primaryEnergyUse: "230",
+              propertySummary:
+                [{ description: "Brick walls",
+                   energyEfficiencyRating: 0,
+                   environmentalEfficiencyRating: 0,
+                   name: "walls" },
+                 { description: "Brick walls", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "walls" },
+                 { description: "Slate roof", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "roof" },
+                 { description: "slate roof", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "roof" },
+                 { description: "Tiled floor", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "floor" },
+                 { description: "Tiled floor", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "floor" },
+                 { description: "Glass window", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "windows" },
+                 { description: "Gas boiler", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "main_heating" },
+                 { description: "Gas boiler", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "main_heating" },
+                 { description: "Thermostat", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "main_heating_controls" },
+                 { description: "Thermostat", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "main_heating_controls" },
+                 { description: "Electric heater", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "secondary_heating" },
+                 { description: "Gas boiler", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "hot_water" },
+                 { description: "Energy saving bulbs", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "lighting" },
+                 { description: "Draft Exclusion", energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "air_tightness" }],
+              recommendedImprovements:
+                [{ energyPerformanceBandImprovement: "e",
+                   energyPerformanceRatingImprovement: 50,
+                   environmentalImpactRatingImprovement: 50,
+                   greenDealCategoryCode: "1",
+                   improvementCategory: "6",
+                   improvementCode: "5",
+                   improvementDescription: nil,
+                   improvementTitle: "",
+                   improvementType: "Z3",
+                   indicativeCost: "£100 - £350",
+                   sequence: 1,
+                   typicalSaving: "360" },
+                 { energyPerformanceBandImprovement: "d", energyPerformanceRatingImprovement: 60, environmentalImpactRatingImprovement: 64, greenDealCategoryCode: "3", improvementCategory: "2", improvementCode: nil, improvementDescription: "Improvement desc", improvementTitle: "", improvementType: "Z2", indicativeCost: "2000", sequence: 2, typicalSaving: "99" }],
+              relatedAssessments: [],
+              relatedPartyDisclosureNumber: 1,
+              relatedPartyDisclosureText: nil,
+              status: "ENTERED",
+              supersededBy: nil,
+              totalFloorArea: "69.0",
+              typeOfAssessment: "SAP" },
+          "meta": {} }
+      end
+
+      before do
+        sap_schema = "SAP-Schema-18.0.0"
+        sap_xml = Nokogiri.XML(Samples.xml(sap_schema))
+        sap_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+        lodge_assessment(
+          assessment_body: sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: sap_schema,
+          migrated: true,
+        )
+      end
+
+      it "returns data without the green deal plan" do
+        response =
+          JSON.parse(
+            fetch_certificate_summary(id: "0000-0000-0000-0000-0001").body,
+            symbolize_names: true,
+          )
+        expect(response).to eq(expected_response)
+      end
+    end
+
+    context "when requesting a CEPC assessment" do
+      before do
+        cepc_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+        lodge_assessment(
+          assessment_body: cepc_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-8.0.0",
+          migrated: true,
+        )
+      end
+
+      it "raises a 400 error" do
+        expect(fetch_certificate_summary(id: "0000-0000-0000-0000-0000", accepted_responses: [400]).status).to eq(400)
       end
     end
   end

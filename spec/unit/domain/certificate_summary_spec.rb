@@ -490,8 +490,6 @@ describe Domain::CertificateSummary do
       result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
       expect(result.certificate_summary_data).to include expected_certificate_summary_without_assessor_details
     end
-
-    # add a test when an Argument is raised
   end
 
   describe "#update_address_id" do

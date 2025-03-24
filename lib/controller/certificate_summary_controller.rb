@@ -18,6 +18,8 @@ module Controller
         gone_error("Assessment not for issue")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+      when Boundary::InvalidAssessment
+        error_response(400, "INVALID_QUERY", e.message)
       else
         server_error(e)
       end
