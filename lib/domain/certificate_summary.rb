@@ -67,6 +67,8 @@ module Domain
     end
 
     # based on the set_assessor method for domestic certs
+    # - should be able to use this for non-dom certs
+
     def update_assessor
       @certificate_summary_data[:assessor][:first_name] = @assessment["assessor_first_name"]
       @certificate_summary_data[:assessor][:last_name] = @assessment["assessor_last_name"]

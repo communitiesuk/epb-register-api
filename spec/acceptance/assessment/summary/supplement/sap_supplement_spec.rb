@@ -71,7 +71,7 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP", :set_with_timecop do
       expect(scheme[:schemeId]).to be_a(Integer)
     end
 
-    it "Returns the assessor contact details from the database" do
+    it "Returns the assessor contact details from the XML" do
       contact_details =
         summary0000_when_sole_cert.dig(:data, :assessor, :contactDetails)
       expect(contact_details).to eq(
