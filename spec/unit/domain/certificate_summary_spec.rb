@@ -476,67 +476,60 @@ describe Domain::CertificateSummary do
     }
   end
 
-  it "does not raise an error" do
-    expect { described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:) }.not_to raise_error
-  end
+  let(:domain) { described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:) }
 
   it "returns the expected certificate_summary_data" do
-    result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-    expect(result.certificate_summary_data).to eq expected_certificate_summary
+    expect(domain.certificate_summary_data).to eq expected_certificate_summary
   end
 
   describe "#certificate_summary" do
     it "returns the expected certificate summary" do
-      result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-      expect(result.certificate_summary_data).to include expected_certificate_summary_without_assessor_details
+      expect(domain.certificate_summary_data).to include expected_certificate_summary_without_assessor_details
     end
   end
 
   describe "#update_address_id" do
     it "updates the certificate summary with an address_id" do
-      result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-      expect(result.certificate_summary_data[:address_id]).to eq "UPRN-000000000000"
+      expect(domain.certificate_summary_data[:address_id]).to eq "UPRN-000000000000"
     end
   end
 
   describe "#update_opt_out_status" do
     it "updates the certificate summary with opt_out_status" do
-      result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-      expect(result.certificate_summary_data[:opt_out]).to be false
+      expect(domain.certificate_summary_data[:opt_out]).to be false
     end
   end
 
   describe "#update_country_name" do
     it "updates the certificate summary with an country_name" do
-      result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-      expect(result.certificate_summary_data[:country_name]).to eq "England"
+      expect(domain.certificate_summary_data[:country_name]).to eq "England"
     end
   end
 
   describe "#update_related_assessments" do
     it "updates the certificate summary with related_assessments" do
-      result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-      expect(result.certificate_summary_data[:related_assessments]).to eq expected_assessments
-      expect(result.certificate_summary_data[:superseded_by]).to be_nil
+      expect(domain.certificate_summary_data[:related_assessments]).to eq expected_assessments
+      expect(domain.certificate_summary_data[:superseded_by]).to be_nil
     end
 
     context "when there are no related assessments" do
+      let(:domain) { described_class.new(assessment:, assessment_id:, related_assessments: [], green_deal_plan:) }
+
       it "returns an empty array for related_assessments" do
-        result = described_class.new(assessment:, assessment_id:, related_assessments: [], green_deal_plan:)
-        expect(result.certificate_summary_data[:related_assessments]).to eq []
+        expect(domain.certificate_summary_data[:related_assessments]).to eq []
       end
 
       it "returns nil for superseded_by" do
-        result = described_class.new(assessment:, assessment_id:, related_assessments: [], green_deal_plan:)
-        expect(result.certificate_summary_data[:superseded_by]).to be_nil
+        expect(domain.certificate_summary_data[:superseded_by]).to be_nil
       end
     end
 
     context "when there is a superseded assessment" do
+      let(:assessment_id) { "0000-0000-0000-0000-0002" }
+      let(:domain) { described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:) }
+
       it "updates the certificate summary with superseded" do
-        assessment_id = "0000-0000-0000-0000-0002"
-        result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-        expect(result.certificate_summary_data[:superseded_by]).to eq "0000-0000-0000-0000-0000"
+        expect(domain.certificate_summary_data[:superseded_by]).to eq "0000-0000-0000-0000-0000"
       end
     end
   end
@@ -545,15 +538,15 @@ describe Domain::CertificateSummary do
     context "when the assessment type is RdSAP" do
       context "when there is data" do
         it "updates the certificate summary with green_deal_data" do
-          result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-          expect(result.certificate_summary_data[:green_deal_plan]).to eq green_deal_plan
+          expect(domain.certificate_summary_data[:green_deal_plan]).to eq green_deal_plan
         end
       end
 
       context "when there is no data" do
+        let(:domain) { described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan: nil) }
+
         it "updates the certificate summary with green_deal_data with an empty array" do
-          result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan: nil)
-          expect(result.certificate_summary_data[:green_deal_plan]).to eq []
+          expect(domain.certificate_summary_data[:green_deal_plan]).to eq []
         end
       end
     end
@@ -583,10 +576,10 @@ describe Domain::CertificateSummary do
       let(:xml_sap_fixture) do
         Samples.xml "SAP-Schema-19.0.0"
       end
+      let(:domain) { described_class.new(assessment: sap_assessment, assessment_id: "0000-0000-0000-0000-0002", related_assessments:, green_deal_plan: nil) }
 
       it "does not have a green_deal_plan attribute on certificate_summary_data" do
-        result = described_class.new(assessment: sap_assessment, assessment_id: "0000-0000-0000-0000-0002", related_assessments:, green_deal_plan: nil)
-        expect(result.certificate_summary_data.key?(:green_deal_plan)).to be false
+        expect(domain.certificate_summary_data.key?(:green_deal_plan)).to be false
       end
     end
   end
@@ -594,8 +587,7 @@ describe Domain::CertificateSummary do
   describe "#update_assessor" do
     context "when there is email and telephone data in the xml" do
       it "returns the assessor information using the email and telephone data from the xml" do
-        result = described_class.new(assessment:, assessment_id:, related_assessments:, green_deal_plan:)
-        expect(result.certificate_summary_data[:assessor]).to eq(
+        expect(domain.certificate_summary_data[:assessor]).to eq(
           {
             "registered_by": { "name": "test scheme", "scheme_id": 1 },
             "first_name": "Someone",
@@ -637,9 +629,10 @@ describe Domain::CertificateSummary do
         domestic_rdsap_xml.gsub!("0555 497 2848", "")
       end
 
+      let(:domain) { described_class.new(assessment: assessment_xml_missing_contact_details, assessment_id:, related_assessments:, green_deal_plan:) }
+
       it "returns the email and telephone details from the assessors table" do
-        result = described_class.new(assessment: assessment_xml_missing_contact_details, assessment_id:, related_assessments:, green_deal_plan:)
-        expect(result.certificate_summary_data[:assessor]).to eq(
+        expect(domain.certificate_summary_data[:assessor]).to eq(
           {
             "registered_by": { "name": "test scheme", "scheme_id": 1 },
             "first_name": "Someone",
