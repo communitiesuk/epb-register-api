@@ -36,7 +36,7 @@ gem "rackup", "~> 2.1"
 gem "rake", "~> 13.2"
 gem "redis", "~> 5.3.0"
 
-gem "rubocop", "~> 1.70.0"
+gem "rubocop", "~> 1.74.0"
 gem "rubocop-govuk", "~> 5.0"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.4.1"
