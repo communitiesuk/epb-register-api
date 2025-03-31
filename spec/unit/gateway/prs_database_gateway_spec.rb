@@ -5,7 +5,7 @@ describe Gateway::PrsDatabaseGateway do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  let(:expected_response_rrn) {
+  let(:expected_response_rrn) do
     {
       "address_line1" => "1 Some Street",
       "address_line2" => "",
@@ -15,11 +15,11 @@ describe Gateway::PrsDatabaseGateway do
       "postcode" => "SW1A 2AA",
       "current_energy_efficiency_rating" => 50,
       "epc_rrn" => "0000-0000-0000-0000-0000",
-      "expiry_date" => "2030-05-03 00:00:00.000000000 +0000"
+      "expiry_date" => "2030-05-03 00:00:00.000000000 +0000",
     }
-  }
+  end
 
-  let(:expected_response_uprn) {
+  let(:expected_response_uprn) do
     {
       "address_line1" => "1 Some Street",
       "address_line2" => "",
@@ -30,9 +30,9 @@ describe Gateway::PrsDatabaseGateway do
       "current_energy_efficiency_rating" => 50,
       "epc_rrn" => "0000-0000-0000-0000-0002",
       "expiry_date" => "2035-05-03 00:00:00.000000000 +0000",
-      "rn" => 1
+      "rn" => 1,
     }
-  }
+  end
 
   context "when expecting to find one RdSAP assessment" do
     before do
@@ -48,7 +48,7 @@ describe Gateway::PrsDatabaseGateway do
         },
         schema_name: "CEPC-8.0.0",
         migrated: true,
-        )
+      )
 
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       do_lodgement = lambda {
@@ -59,7 +59,7 @@ describe Gateway::PrsDatabaseGateway do
             scheme_ids: [scheme_id],
           },
           migrated: true,
-          )
+        )
       }
 
       do_lodgement.call
@@ -70,7 +70,6 @@ describe Gateway::PrsDatabaseGateway do
 
       do_lodgement.call
     end
-
 
     context "when searching by UPRN" do
       it "finds and returns the expected data when one match exists", :aggregate_failures do

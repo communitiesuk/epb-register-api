@@ -79,16 +79,15 @@ module Gateway
       results.first
     end
 
-  # private
+    # private
 
-    #
     def do_search(sql:, binds:)
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
       return nil if results.count.zero?
 
       results
     end
-    #
+
     def add_type_filter(sql, assessment_types)
       list_of_types = assessment_types.map { |n| "'#{n}'" }.join(",")
       sql << <<~SQL_TYPE_OF_ASSESSMENT
