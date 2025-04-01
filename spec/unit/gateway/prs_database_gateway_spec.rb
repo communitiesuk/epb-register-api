@@ -19,6 +19,25 @@ describe Gateway::PrsDatabaseGateway do
       "address_id" => "UPRN-000000000000",
       "cancelled_at" => nil,
       "not_for_issue_at" => nil,
+      "type_of_assessment" => "RdSAP",
+    }
+  end
+
+  let(:expected_response_non_dom_rrn) do
+    {
+      "address_line1" => "Some Unit",
+      "address_line2" => "2 Lonely Street",
+      "address_line3" => "Some Area",
+      "address_line4" => "Some Area",
+      "town" => "Whitbury",
+      "postcode" => "SW1A 2AA",
+      "current_energy_efficiency_rating" => 80,
+      "epc_rrn" => "0000-0000-0000-0000-0001",
+      "expiry_date" => "2026-05-04 00:00:00.000000000 +0000",
+      "address_id" => "UPRN-000000000001",
+      "cancelled_at" => nil,
+      "not_for_issue_at" => nil,
+      "type_of_assessment" => "CEPC",
     }
   end
 
@@ -36,6 +55,7 @@ describe Gateway::PrsDatabaseGateway do
       "rn" => 1,
       "cancelled_at" => nil,
       "not_for_issue_at" => nil,
+      "type_of_assessment" => "RdSAP",
     }
   end
 
@@ -98,8 +118,9 @@ describe Gateway::PrsDatabaseGateway do
         expect(gateway.search_by_rrn("0000-1111-2222-3333-4444")).to be_nil
       end
 
-      it "returns nil when the rrn is for a non-dom certificate" do
-        expect(gateway.search_by_rrn("0000-0000-0000-0000-0001")).to be_nil
+      it "finds and returns the expected data when one match exists for a non-dom certificate" do
+        result = gateway.search_by_rrn("0000-0000-0000-0000-0001")
+        expect(result).to eq expected_response_non_dom_rrn
       end
     end
   end

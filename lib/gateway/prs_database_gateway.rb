@@ -1,10 +1,5 @@
 module Gateway
   class PrsDatabaseGateway
-    ASSESSMENT_TYPES = %w[
-      RdSAP
-      SAP
-    ].freeze
-
     def search_by_uprn(uprn)
       sql = <<-SQL
       WITH assessment_cte as(
@@ -21,15 +16,13 @@ module Gateway
                a.town AS town,
                a.postcode AS postcode,
                a.current_energy_efficiency_rating AS current_energy_efficiency_rating,
+               a.type_of_assessment AS type_of_assessment,
                row_number() over (PARTITION BY address_id ORDER BY date_of_expiry DESC, created_at DESC, date_of_assessment DESC, a.assessment_id DESC) rn
         FROM assessments AS a
         WHERE assessment_id IN (
             SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
           )
       SQL
-
-      sql = add_type_filter(sql, ASSESSMENT_TYPES)
-
       sql << <<-SQL
         )
         SELECT *
@@ -59,11 +52,11 @@ module Gateway
           a.town AS town,
           a.postcode AS postcode,
           a.current_energy_efficiency_rating AS current_energy_efficiency_rating,
+          a.type_of_assessment AS type_of_assessment,
           aai.address_id AS address_id
         FROM assessments a
         INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
         WHERE a.assessment_id = $1
-        AND a.type_of_assessment IN ('RdSAP', 'SAP')
       SQL
       binds =
         [Helper::AddressSearchHelper.string_attribute("rrn", rrn)]
