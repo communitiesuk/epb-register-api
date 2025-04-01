@@ -16,6 +16,7 @@ describe Gateway::PrsDatabaseGateway do
       "current_energy_efficiency_rating" => 50,
       "epc_rrn" => "0000-0000-0000-0000-0000",
       "expiry_date" => "2030-05-03 00:00:00.000000000 +0000",
+      "address_id" => "UPRN-000000000000",
     }
   end
 

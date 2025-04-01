@@ -5,15 +5,6 @@ module Gateway
       SAP
     ].freeze
 
-    # def search_by_postcode_and_building_identifier(postcode:, building_identifier:)
-    #   identifier = Helper::AddressSearchHelper.clean_building_identifier building_identifier
-    #   if identifier.match?(/^\d+$/)
-    #     search_by_postcode_and_building_number postcode:, building_number: identifier, assessment_types: ASSESSMENT_TYPES
-    #   else
-    #     search_by_postcode_and_building_name postcode:, building_name: identifier, assessment_types: ASSESSMENT_TYPES
-    #   end
-    # end
-
     def search_by_uprn(uprn)
       sql = <<-SQL
       WITH assessment_cte as(
@@ -63,8 +54,10 @@ module Gateway
           a.address_line3 AS address_line4,
           a.town AS town,
           a.postcode AS postcode,
-          a.current_energy_efficiency_rating AS current_energy_efficiency_rating
+          a.current_energy_efficiency_rating AS current_energy_efficiency_rating,
+          aai.address_id AS address_id
         FROM assessments a
+        INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
         WHERE a.assessment_id = $1
         AND a.cancelled_at IS NULL
         AND a.not_for_issue_at IS NULL
@@ -79,7 +72,7 @@ module Gateway
       results.first
     end
 
-    # private
+  private
 
     def do_search(sql:, binds:)
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
