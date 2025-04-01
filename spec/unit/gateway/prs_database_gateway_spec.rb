@@ -17,6 +17,8 @@ describe Gateway::PrsDatabaseGateway do
       "epc_rrn" => "0000-0000-0000-0000-0000",
       "expiry_date" => "2030-05-03 00:00:00.000000000 +0000",
       "address_id" => "UPRN-000000000000",
+      "cancelled_at" => nil,
+      "not_for_issue_at" => nil,
     }
   end
 
@@ -32,6 +34,8 @@ describe Gateway::PrsDatabaseGateway do
       "epc_rrn" => "0000-0000-0000-0000-0002",
       "expiry_date" => "2035-05-03 00:00:00.000000000 +0000",
       "rn" => 1,
+      "cancelled_at" => nil,
+      "not_for_issue_at" => nil,
     }
   end
 

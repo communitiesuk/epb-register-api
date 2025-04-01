@@ -8,7 +8,10 @@ module Gateway
     def search_by_uprn(uprn)
       sql = <<-SQL
       WITH assessment_cte as(
-        SELECT a.assessment_id AS epc_rrn,
+        SELECT
+               a.cancelled_at,
+               a.not_for_issue_at,
+               a.assessment_id AS epc_rrn,
                a.date_of_expiry AS expiry_date,
                a.date_of_expiry AS expiry_date,
                a.address_line1 AS address_line1,
@@ -23,7 +26,6 @@ module Gateway
         WHERE assessment_id IN (
             SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
           )
-        AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
       SQL
 
       sql = add_type_filter(sql, ASSESSMENT_TYPES)
@@ -46,6 +48,8 @@ module Gateway
     def search_by_rrn(rrn)
       sql = <<-SQL
         SELECT
+          a.cancelled_at,
+          a.not_for_issue_at,
           a.assessment_id AS epc_rrn,
           a.date_of_expiry AS expiry_date,
           a.address_line1 AS address_line1,
@@ -59,8 +63,6 @@ module Gateway
         FROM assessments a
         INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
         WHERE a.assessment_id = $1
-        AND a.cancelled_at IS NULL
-        AND a.not_for_issue_at IS NULL
         AND a.type_of_assessment IN ('RdSAP', 'SAP')
       SQL
       binds =
