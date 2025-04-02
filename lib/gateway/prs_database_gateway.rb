@@ -23,6 +23,7 @@ module Gateway
         WHERE assessment_id IN (
             SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
           )
+      AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
       SQL
       sql << <<-SQL
         )
