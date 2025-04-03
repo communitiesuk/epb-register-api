@@ -4,8 +4,6 @@ module Gateway
       sql = <<-SQL
       WITH assessment_cte as(
         SELECT
-               a.cancelled_at,
-               a.not_for_issue_at,
                a.assessment_id AS epc_rrn,
                a.date_of_expiry AS expiry_date,
                a.date_of_expiry AS expiry_date,

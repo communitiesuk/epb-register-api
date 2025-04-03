@@ -54,8 +54,6 @@ describe Gateway::PrsDatabaseGateway do
       "expiry_date" => "2035-05-03 00:00:00.000000000 +0000",
       "latest_epc_rrn_for_address" => "0000-0000-0000-0000-0002",
       "rn" => 1,
-      "cancelled_at" => nil,
-      "not_for_issue_at" => nil,
       "type_of_assessment" => "RdSAP",
     }
   end
