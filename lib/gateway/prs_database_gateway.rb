@@ -6,7 +6,6 @@ module Gateway
         SELECT
                a.assessment_id AS epc_rrn,
                a.date_of_expiry AS expiry_date,
-               a.date_of_expiry AS expiry_date,
                a.address_line1 AS address_line1,
                a.address_line2 AS address_line2,
                a.address_line3 AS address_line3,
