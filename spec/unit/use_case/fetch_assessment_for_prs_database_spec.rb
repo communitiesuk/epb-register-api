@@ -45,8 +45,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   end
 
   let(:prs_gateway_response_uprn) do
-    {
-      "address_line1" => "1 Some Street",
+    [{"address_line1" => "1 Some Street",
       "address_line2" => "",
       "address_line3" => "",
       "address_line4" => "",
@@ -59,8 +58,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
       "cancelled_at" => nil,
       "not_for_issue_at" => nil,
       "type_of_assessment" => "RdSAP",
-      "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789",
-    }
+      "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789"}]
   end
 
   context "when fetching details for an domestic RRN that exists" do
@@ -74,7 +72,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
 
   context "when fetching details for a UPRN that exists" do
     it "returns the expected domain object" do
-      allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return prs_gateway_response_rrn
+      allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return prs_gateway_response_uprn
       result = use_case.execute({ uprn: "UPRN-000000000000" })
 
       expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails

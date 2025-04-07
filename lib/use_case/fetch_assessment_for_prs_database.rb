@@ -26,7 +26,7 @@ module UseCase
       end
 
       if identifier.key?(:uprn)
-        gateway_response = @prs_database_gateway.search_by_uprn(identifier[:uprn])[0]
+        gateway_response = @prs_database_gateway.search_by_uprn(identifier[:uprn]).first
         raise NotFoundException unless gateway_response
         raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? gateway_response["type_of_assessment"]
 
