@@ -48,4 +48,5 @@ class RegisterApiService < Controller::BaseController
   use Controller::DomesticInitiativesController
   use Controller::RetrofitFundingSchemeController
   use Controller::CertificateSummaryController
+  use Controller::PrsDatabaseController
 end

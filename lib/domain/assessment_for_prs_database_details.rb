@@ -7,7 +7,7 @@ module Domain
     def to_hash
       {
         address: {
-          address_line1: @gateway_response["address_line1"],
+          address_line1: @gateway_response["address_line1"] || "",
           address_line2: @gateway_response["address_line2"] || "",
           address_line3: @gateway_response["address_line3"] || "",
           address_line4: @gateway_response["address_line4"] || "",

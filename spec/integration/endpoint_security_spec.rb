@@ -27,7 +27,7 @@ describe "Integration::EndpointSecurity" do
     routes_to_test |= route_definitions
   end
 
-  total_route_definitions = 41
+  total_route_definitions = 43
 
   it "has a total of #{total_route_definitions} route definitions to test" do
     expect(routes_to_test.length).to eq total_route_definitions

@@ -610,6 +610,30 @@ def eco_plus_details_by_rrn(
   )
 end
 
+def prs_database_details_by_rrn(
+  rrn,
+  scopes: %w[prsdatabase:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/prsdatabase/assessments/search?rrn=#{rrn}",
+    scopes:,
+    **assertive_kwargs,
+    )
+end
+
+def prs_database_details_by_uprn(
+  uprn,
+  scopes: %w[prsdatabase:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/prsdatabase/assessments/search?uprn=#{uprn}",
+    scopes:,
+    **assertive_kwargs,
+    )
+end
+
 def retrofit_funding_details_by_uprn(
   uprn,
   scopes: %w[retrofit-funding:assessment:fetch],

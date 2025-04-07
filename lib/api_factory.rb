@@ -78,6 +78,10 @@ class ApiFactory
       Gateway::BackfillDataWarehouseGateway.new
   end
 
+  def self.prs_database_gateway
+    @prs_database_gateway ||= Gateway::PrsDatabaseGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -395,6 +399,13 @@ class ApiFactory
         domestic_digest_gateway:,
         assessments_search_gateway:,
       )
+  end
+
+  def self.fetch_assessment_for_prs_database_use_case
+    @fetch_assessment_for_prs_database_use_case ||=
+      UseCase::FetchAssessmentForPrsDatabase.new(
+        prs_database_gateway:
+        )
   end
 
   def self.backfill_data_warehouse_use_case
