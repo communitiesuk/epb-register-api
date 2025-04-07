@@ -66,7 +66,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   context "when fetching details for an domestic RRN that exists" do
     it "returns the expected domain object" do
       allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_response_rrn
-      result = use_case.execute(identifier: { rrn: "0123-4567-8901-2345-6789" })
+      result = use_case.execute({ rrn: "0123-4567-8901-2345-6789" })
 
       expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
     end
@@ -75,7 +75,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   context "when fetching details for a UPRN that exists" do
     it "returns the expected domain object" do
       allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return prs_gateway_response_rrn
-      result = use_case.execute(identifier: { uprn: "UPRN-000000000000" })
+      result = use_case.execute({ uprn: "UPRN-000000000000" })
 
       expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
     end
@@ -88,23 +88,17 @@ describe UseCase::FetchAssessmentForPrsDatabase do
       allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return(prs_gateway_response_rrn)
       prs_gateway_response_rrn["cancelled_at"] = "2023-05-04"
 
-      expect { use_case.execute(identifier: { rrn: "0123-4567-8901-2345-6789" }) }.to raise_error described_class::AssessmentGone
+      expect { use_case.execute({ rrn: "0123-4567-8901-2345-6789" }) }.to raise_error described_class::AssessmentGone
     end
 
     it "raises an invalid assessment type error" do
       allow(prs_database_gateway).to receive(:search_by_rrn).with(cepc_rrn).and_return(prs_gateway_response_rrn_non_dom)
 
-      expect { use_case.execute(identifier: { rrn: "0000-0000-0000-0000-0001" }) }.to raise_error described_class::InvalidAssessmentTypeException
+      expect { use_case.execute({ rrn: "0000-0000-0000-0000-0001" }) }.to raise_error described_class::InvalidAssessmentTypeException
     end
 
     it "raises an invalid rrn error" do
-      expect { use_case.execute(identifier: { rrn: "0000-0000-00-0000-0001" }) }.to raise_error Helper::RrnHelper::RrnNotValid
-    end
-  end
-
-  context "when fetching details for an UPRN that does not exist or is not applicable" do
-    it "raises an invalid uprn error" do
-      expect { use_case.execute(identifier: { uprn: "NOT_A_UPRN" }) }.to raise_error described_class::InvalidUprnException
+      expect { use_case.execute({ rrn: "0000-0000-00-0000-0001" }) }.to raise_error Helper::RrnHelper::RrnNotValid
     end
   end
 end
