@@ -45,20 +45,20 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   end
 
   let(:prs_gateway_response_uprn) do
-    [{"address_line1" => "1 Some Street",
-      "address_line2" => "",
-      "address_line3" => "",
-      "address_line4" => "",
-      "town" => "Whitbury",
-      "postcode" => "SW1A 2AA",
-      "current_energy_efficiency_rating" => 50,
-      "epc_rrn" => "0123-4567-8901-2345-6789",
-      "expiry_date" => "2035-05-03 00:00:00.000000000 +0000",
-      "rn" => 1,
-      "cancelled_at" => nil,
-      "not_for_issue_at" => nil,
-      "type_of_assessment" => "RdSAP",
-      "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789"}]
+    [{ "address_line1" => "1 Some Street",
+       "address_line2" => "",
+       "address_line3" => "",
+       "address_line4" => "",
+       "town" => "Whitbury",
+       "postcode" => "SW1A 2AA",
+       "current_energy_efficiency_rating" => 50,
+       "epc_rrn" => "0123-4567-8901-2345-6789",
+       "expiry_date" => "2035-05-03 00:00:00.000000000 +0000",
+       "rn" => 1,
+       "cancelled_at" => nil,
+       "not_for_issue_at" => nil,
+       "type_of_assessment" => "RdSAP",
+       "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789" }]
   end
 
   context "when fetching details for an domestic RRN that exists" do

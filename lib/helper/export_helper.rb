@@ -19,7 +19,7 @@ module Helper
         view_model_array.each do |hash|
           csv << columns.map do |key, _value|
             if hash[key.to_sym].is_a?(String)
-              (hash[key.to_sym]).to_s
+              hash[key.to_sym].to_s
             else
               hash[key.to_sym]
             end

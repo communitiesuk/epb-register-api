@@ -619,7 +619,7 @@ def prs_database_details_by_rrn(
     "/api/prsdatabase/assessments/search?rrn=#{rrn}",
     scopes:,
     **assertive_kwargs,
-    )
+  )
 end
 
 def prs_database_details_by_uprn(
@@ -631,7 +631,7 @@ def prs_database_details_by_uprn(
     "/api/prsdatabase/assessments/search?uprn=#{uprn}",
     scopes:,
     **assertive_kwargs,
-    )
+  )
 end
 
 def retrofit_funding_details_by_uprn(

@@ -404,8 +404,8 @@ class ApiFactory
   def self.fetch_assessment_for_prs_database_use_case
     @fetch_assessment_for_prs_database_use_case ||=
       UseCase::FetchAssessmentForPrsDatabase.new(
-        prs_database_gateway:
-        )
+        prs_database_gateway:,
+      )
   end
 
   def self.backfill_data_warehouse_use_case
