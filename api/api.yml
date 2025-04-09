@@ -1733,6 +1733,87 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /prsdatabase/assessments/search:
+    get:
+      tags:
+        - PRS database
+      summary: Search for assessments exposing details for the PRS database team
+      description: |-
+        Search for an assessment by  _either_:
+         - an address ID (UPRN); _or_
+         - an assessment reference number (RRN)
+
+        in each case returning the requested details of the most recent
+        Energy Performance Certificate (EPC) for the property.
+      operationId: prsdatabase-search-assessments
+      security:
+        - oauth:
+            - 'prsdatabase:assessment:search'
+      parameters:
+        - in: query
+          name: uprn
+          description: The UPRN of the property being searched for
+          schema:
+            $ref: '#/components/schemas/AddressUprn'
+          example: 'UPRN-000456789012'
+        - in: query
+          name: rrn
+          description: The RRN of the assessment being searched for
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+          example: '1234-2345-3456-4567-6789'
+      responses:
+        '200':
+          description: PRS database requested data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/AssessmentPRSDatabaseDetails'
+        '400':
+          description: 'Badly formed request - error response message will contain the details.
+                        This could be
+                        * Bad combination of query parameters
+                        * Invalid postcode
+                        * Badly formed address ID
+                        * Badly formed assessment ID
+                        * No valid query parameters'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No matching EPCs found for the given query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /greendeal/assessments/{assessmentId}:
     get:
       tags:
