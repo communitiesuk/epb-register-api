@@ -130,7 +130,7 @@ GEM
     ostruct (0.6.1)
     ougai (2.0.0)
       oj (~> 3.10)
-    parallel (1.26.3)
+    parallel (1.27.0)
     parser (3.3.7.4)
       ast (~> 2.4.1)
       racc
@@ -285,7 +285,7 @@ DEPENDENCIES
   namecase (~> 2.0)
   nokogiri (~> 1.18)
   ougai (~> 2.0)
-  parallel (~> 1.26)
+  parallel (~> 1.27)
   pg (~> 1.5)
   pry (~> 0.15.2)
   puma (~> 6.4)
