@@ -240,6 +240,202 @@ module Controller
       end
     end
 
+    post "/api/scotland/assessments", auth_token_has_all: %w[assessment:lodge] do
+      correlation_id = rand
+      migrated = boolean_parameter_true?("migrated")
+      overridden = boolean_parameter_true?("override")
+
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
+      if migrated && !env[:auth_token].scopes?(%w[migrate:assessment])
+        forbidden(
+          "UNAUTHORISED",
+          "You are not authorised to perform this request",
+        )
+      end
+      logit_char_limit = 500
+
+      sanitised_xml =
+        Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
+
+      @events.event(
+        false,
+        {
+          event_type: :lodgement_attempt,
+          correlation_id:,
+          client_id: env[:auth_token].sub,
+          request_body: sanitised_xml.slice(0..logit_char_limit),
+          request_headers: headers,
+          request_body_truncated: sanitised_xml.length > logit_char_limit,
+        },
+        raw: true,
+      )
+
+      sup = env[:auth_token].supplemental("scheme_ids")
+      validate_and_lodge_assessment = ApiFactory.validate_and_lodge_assessment_use_case
+
+      xml_schema_type =
+        if request.env["CONTENT_TYPE"]
+          request.env["CONTENT_TYPE"].split("+")[1]
+        else
+          ""
+        end
+      scheme_ids = sup
+
+      results =
+        validate_and_lodge_assessment.execute(
+          assessment_xml: sanitised_xml,
+          schema_name: xml_schema_type,
+          scheme_ids:,
+          migrated:,
+          overridden:,
+          is_scottish: true,
+        )
+
+      results.each do |result|
+        @events.event(
+          false,
+          {
+            event_type: :lodgement_successful,
+            client_id: env[:auth_token].sub,
+            correlation_id:,
+            assessment_id: result.get(:assessment_id),
+            schema: xml_schema_type,
+          },
+          raw: true,
+        )
+      end
+
+      if request.env["HTTP_ACCEPT"] == "application/xml"
+        builder =
+          Nokogiri::XML::Builder.new do |document|
+            document.response do
+              document.data do
+                document.assessments do
+                  results.map do |result|
+                    document.assessment result.get(:assessment_id)
+                  end
+                end
+              end
+              document.meta do
+                document.links do
+                  document.assessments do
+                    results.map do |result|
+                      document.assessment "/api/assessments/#{result.get(:assessment_id)}"
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+        xml_response builder.to_xml, 201
+      else
+        json_api_response code: 201,
+                          data: {
+                            assessments:
+                              results.map { |id| id.get(:assessment_id) },
+                          },
+                          meta: {
+                            links: {
+                              assessments:
+                                results.map do |id|
+                                  "/api/assessments/#{id.get(:assessment_id)}"
+                                end,
+                            },
+                          }
+      end
+    rescue StandardError => e
+      @events.event(
+        false,
+        {
+          event_type: :lodgement_failed,
+          correlation_id:,
+          client_id: env[:auth_token]&.sub,
+          error_message: e.to_s,
+          schema: xml_schema_type.nil? ? "Schema not defined" : xml_schema_type,
+        },
+        raw: true,
+      )
+
+      case e
+      when UseCase::ValidateAssessment::InvalidXmlException
+        error_response(400, "INVALID_REQUEST", e.message)
+      when UseCase::ValidateAndLodgeAssessment::SupersededSchemaException
+        error_response(400, "INVALID_REQUEST", "This schema version has been superseded.")
+      when UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
+        error_response(400, "INVALID_REQUEST", "Schema is not supported.")
+      when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
+        error_response(400, "INVALID_REQUEST", "Assessor is not registered.")
+      when UseCase::ValidateAndLodgeAssessment::SchemaNotDefined
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
+        )
+      when UseCase::ValidateAndLodgeAssessment::SoftwareNotApprovedError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The calculation software used to create the assessment is not on the approved list.",
+        )
+      when UseCase::ValidateAndLodgeAssessment::UnauthorisedToLodgeAsThisSchemeException
+        error_response(
+          403,
+          "UNAUTHORISED",
+          "Not authorised to lodge reports as this scheme",
+        )
+      when UseCase::LodgeAssessment::InactiveAssessorException
+        error_response(400, "INVALID_REQUEST", "Assessor is not active.")
+      when UseCase::LodgeAssessment::DuplicateAssessmentIdException
+        error_response(409, "INVALID_REQUEST", "Assessment ID already exists.")
+      when UseCase::ValidateAndLodgeAssessment::RelatedReportError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Related RRNs must reference each other.",
+        )
+      when UseCase::ValidateAndLodgeAssessment::AddressIdsDoNotMatch
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Both parts of a dual lodgement must share the same address id.",
+        )
+      when UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Lodgement rule cannot be overridden: #{e.message}",
+        )
+      when UseCase::ValidateAndLodgeAssessment::InvalidSapDataVersionError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The version number #{e.invalid_version_value} for the node #{e.failed_node} is invalid for the #{e.schema_name} schema",
+        )
+      when UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          e.message,
+        )
+      when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
+        json_response(
+          {
+            errors: e.errors,
+            meta: {
+              links: {
+                override: "/api/assessments?override=true",
+              },
+            },
+          },
+          400,
+        )
+      else
+        server_error(e)
+      end
+    end
+
     get "/api/assessments/:assessment_id",
         auth_token_has_all: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]

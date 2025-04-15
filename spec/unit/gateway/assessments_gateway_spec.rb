@@ -150,6 +150,28 @@ describe Gateway::AssessmentsGateway do
         expect { gateway.insert assessment }.to raise_error described_class::AssessmentAlreadyExists
       end
     end
+
+    context "when lodging a scottish assessment before adding the scottish schema to the database" do
+      before do
+        Gateway::SchemesGateway::Scheme.create(scheme_id: "TEST123456")
+        Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: "TEST123456")
+        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2024-01-04", date_registered: "2024-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
+      end
+
+      it "raises an active record statement invalid error" do
+        assessment = Domain::AssessmentIndexRecord.new(
+          assessment_id: "0000-0000-0000-0000-0002",
+          type_of_assessment: "RdSAP",
+          date_of_assessment: "2010-01-04",
+          date_registered: "2010-01-05",
+          date_of_expiry: "2010-01-05",
+          assessor: Domain::Assessor.new(scheme_assessor_id: "TEST123456"),
+          current_energy_efficiency_rating: 60,
+          potential_energy_efficiency_rating: 75,
+          )
+        expect { gateway.insert(assessment, is_scottish: true) }.to raise_error(ActiveRecord::StatementInvalid, /schema "scotland" does not exist/)
+      end
+    end
   end
 
   describe "#update_field" do

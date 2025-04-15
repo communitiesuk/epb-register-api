@@ -4,7 +4,13 @@ module Gateway
   class AssessmentsGateway
     include ReadOnlyDatabaseAccess
 
-    class Assessment < ActiveRecord::Base; end
+    class Assessment < ActiveRecord::Base
+      self.table_name = 'public.assessments'
+    end
+
+    class ScotlandAssessment < ActiveRecord::Base
+      self.table_name = 'scotland.assessments'
+    end
 
     class InvalidAssessmentType < StandardError; end
 
@@ -26,9 +32,9 @@ module Gateway
       send_update_to_db assessment
     end
 
-    def insert(assessment)
+    def insert(assessment, is_scottish: false)
       check_valid_energy_ratings assessment
-      send_insert_to_db assessment
+      send_insert_to_db(assessment, is_scottish)
     end
 
     def update_statuses(assessments_ids, status, value)
@@ -209,10 +215,14 @@ module Gateway
 
   private
 
-    def send_insert_to_db(assessment)
+    def send_insert_to_db(assessment, is_scottish)
       ActiveRecord::Base.transaction do
         begin
-          Assessment.create assessment.to_record
+          if is_scottish
+            ScotlandAssessment.create assessment.to_record
+          else
+            Assessment.create assessment.to_record
+          end
         rescue ActiveRecord::RecordNotUnique
           raise AssessmentAlreadyExists
         end

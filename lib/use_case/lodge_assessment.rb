@@ -23,7 +23,6 @@ module UseCase
       event_broadcaster:,
       search_address_gateway:,
       assessments_country_id_gateway:
-
     )
       @assessments_gateway = assessments_gateway
       @assessments_search_gateway = assessments_search_gateway
@@ -38,7 +37,7 @@ module UseCase
       @assessments_country_id_gateway = assessments_country_id_gateway
     end
 
-    def execute(data, migrated, schema_name)
+    def execute(data, migrated, schema_name, is_scottish: false)
       assessment_id = data[:assessment_id]
 
       if !migrated && find_assessment_by_id(assessment_id)
@@ -87,7 +86,7 @@ module UseCase
         insert_country_id(data[:assessment_id], data[:country_id], upsert: true)
       else
         begin
-          @assessments_gateway.insert assessment
+          @assessments_gateway.insert(assessment, is_scottish:)
           insert_country_id(data[:assessment_id], data[:country_id])
         rescue Gateway::AssessmentsGateway::AssessmentAlreadyExists
           raise DuplicateAssessmentIdException

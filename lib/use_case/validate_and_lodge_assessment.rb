@@ -81,7 +81,7 @@ module UseCase
       @country_use_case = country_use_case
     end
 
-    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:)
+    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:, is_scottish: false)
       raise SchemaNotDefined unless schema_name
 
       unless Helper::SchemaListHelper.new(schema_name).schema_exists?
@@ -174,6 +174,7 @@ module UseCase
                 assessment_data,
                 migrated,
                 schema_name,
+                is_scottish: is_scottish,
               ),
             )
           end
