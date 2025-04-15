@@ -301,6 +301,7 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   context "when validating Northern Ireland assessments" do
+    let(:rdsap_ni_21) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-21.0.0")) }
     let(:rdsap_ni) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")) }
     let(:rdsap) { Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")) }
 
@@ -343,6 +344,16 @@ describe UseCase::ValidateAndLodgeAssessment do
                          migrated: false,
                          overridden: false
       }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /must be lodged with a NI Schema/
+    end
+
+    it "accepts a RdSAP NI 21 schema" do
+      expect {
+        use_case.execute assessment_xml: rdsap_ni_21.to_xml,
+                         schema_name: "RdSAP-Schema-NI-21.0.0",
+                         scheme_ids: "1",
+                         migrated: true,
+                         overridden: false
+      }.not_to raise_exception
     end
   end
 
