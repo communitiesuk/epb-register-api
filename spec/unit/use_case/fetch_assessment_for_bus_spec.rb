@@ -5,7 +5,8 @@ describe UseCase::FetchAssessmentForBus do
   let(:summary_use_case) { instance_double UseCase::AssessmentSummary::Fetch }
   let(:domestic_digest_gateway) { instance_double Gateway::DomesticDigestGateway }
 
-  let(:rrn) { "0123-4567-8901-2345-6789" }
+  let(:rrn) { "0000-1111-2222-3333-4444" }
+  let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   let(:bus_details) do
     {
@@ -72,7 +73,7 @@ describe UseCase::FetchAssessmentForBus do
   end
 
   let(:domestic_digest) do
-    { "main_fuel_type": "Electricity: electricity sold to grid" }
+    { "main_fuel_type": "mains gas (not community)" }
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for an RRN that exists" do
@@ -87,7 +88,10 @@ describe UseCase::FetchAssessmentForBus do
     before do
       allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return bus_details
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
-      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+                                                                                      "xml" => xml,
+                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
+                                                                                    })
     end
 
     it "returns an assessment bus details object" do
@@ -98,7 +102,7 @@ describe UseCase::FetchAssessmentForBus do
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for an RRN that does not exist or is not applicable" do
-    let(:rrn) { "0000-1111-2222-3333-4444" }
+    let(:rrn) { "0000-1111-2222-3333-5555" }
 
     before do
       allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return nil
@@ -116,7 +120,10 @@ describe UseCase::FetchAssessmentForBus do
       allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return bus_details
       assessment_summary[:superseded_by] = later_rrn
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
-      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+                                                                                      "xml" => xml,
+                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
+                                                                                    })
     end
 
     it "returns the assessment reference passed to it from the gateway" do

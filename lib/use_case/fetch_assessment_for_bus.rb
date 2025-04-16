@@ -1,5 +1,6 @@
 module UseCase
   class FetchAssessmentForBus
+    include Helper::DomesticDigestHelper
     class InvalidAssessmentTypeException < StandardError
     end
 
@@ -17,8 +18,7 @@ module UseCase
 
       assessment_summary = @summary_use_case.execute(rrn)
       return nil if assessment_summary.nil?
-
-      domestic_digest = @domestic_digest_gateway.fetch_by_rrn(rrn)
+      domestic_digest = get_domestic_digest(rrn:)
 
       assessment_details = Domain::AssessmentBusDetails.new(
         bus_details:,
@@ -30,5 +30,9 @@ module UseCase
 
       later_rrn ? Domain::AssessmentReference.new(rrn: later_rrn) : assessment_details
     end
+
+    private
+
+    attr_reader :domestic_digest_gateway
   end
 end

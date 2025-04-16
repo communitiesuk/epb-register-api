@@ -8,6 +8,7 @@ describe UseCase::FindAssessmentsForBusByAddress do
   let(:rrn) { "0123-4567-8901-2345-6789" }
   let(:building_identifier) { "42" }
   let(:postcode) { "AB1 2CD" }
+  let(:xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   let(:bus_details) do
     {
@@ -74,7 +75,7 @@ describe UseCase::FindAssessmentsForBusByAddress do
   end
 
   let(:domestic_digest) do
-    { "main_fuel_type": "Electricity: electricity sold to grid" }
+    { "main_fuel_type": "mains gas (not community)" }
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for address where one relevant assessment exists" do
@@ -91,7 +92,10 @@ describe UseCase::FindAssessmentsForBusByAddress do
                               .with(postcode:, building_identifier:)
                               .and_return [bus_details]
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
-      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+                                                                                      "xml" => xml,
+                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
+                                                                                    })
     end
 
     it "returns an assessment bus details object" do
@@ -119,8 +123,14 @@ describe UseCase::FindAssessmentsForBusByAddress do
                               .and_return [bus_details, bus_details2]
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
       allow(summary_use_case).to receive(:execute).with(rrn2).and_return assessment_summary
-      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return domestic_digest
-      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn2).and_return domestic_digest
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+                                                                                      "xml" => xml,
+                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
+                                                                                    })
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn2).and_return({
+                                                                                      "xml" => xml,
+                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
+                                                                                    })
     end
 
     it "returns the reference list object" do

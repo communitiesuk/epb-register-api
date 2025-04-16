@@ -1,5 +1,6 @@
 module UseCase
   class FindAssessmentsForBusByAddress
+    include Helper::DomesticDigestHelper
     def initialize(bus_gateway:, summary_use_case:, domestic_digest_gateway:)
       @bus_gateway = bus_gateway
       @summary_use_case = summary_use_case
@@ -16,8 +17,8 @@ module UseCase
       details_list = bus_details.map do |bus_detail|
         assessment_summary = @summary_use_case.execute(bus_detail["epc_rrn"])
         return nil if assessment_summary.nil?
-
-        domestic_digest = @domestic_digest_gateway.fetch_by_rrn(bus_detail["epc_rrn"])
+        rrn = bus_detail["epc_rrn"]
+        domestic_digest = get_domestic_digest(rrn:)
 
         Domain::AssessmentBusDetails.new(
           bus_details: bus_detail,
@@ -35,5 +36,9 @@ module UseCase
         Domain::AssessmentReferenceList.new(*details_list.map(&:rrn))
       end
     end
+
+    private
+
+    attr_reader :domestic_digest_gateway
   end
 end
