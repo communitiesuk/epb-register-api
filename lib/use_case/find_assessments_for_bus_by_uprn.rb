@@ -16,7 +16,12 @@ module UseCase
       assessment_summary = @summary_use_case.execute(bus_details["epc_rrn"])
       return nil if assessment_summary.nil?
       rrn = bus_details["epc_rrn"]
-      domestic_digest = get_domestic_digest(rrn: rrn)
+
+      if bus_details["report_type"] == "CEPC"
+        domestic_digest = nil
+      else
+        domestic_digest = get_domestic_digest(rrn:)
+      end
 
       Domain::AssessmentBusDetails.new(
         bus_details:,
