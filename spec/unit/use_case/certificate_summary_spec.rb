@@ -343,7 +343,7 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
             "energy_performance_band_improvement": "d",
           },
         ],
-        "lzc_energy_sources": nil,
+        "lzc_energy_sources": [1],
         "related_party_disclosure_number": nil,
         "related_party_disclosure_text": "No related party",
         "total_floor_area": 55.0,

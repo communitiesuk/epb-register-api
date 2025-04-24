@@ -163,6 +163,9 @@
       <Stone-Walls>true</Stone-Walls>
       <System-Build>true</System-Build>
     </Addendum>
+    <LZC-Energy-Sources>
+      <LZC-Energy-Source>1</LZC-Energy-Source>
+    </LZC-Energy-Sources>
   </Energy-Assessment>
   <SAP-Data>
     <SAP-Property-Details>

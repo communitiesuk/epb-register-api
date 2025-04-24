@@ -49,6 +49,7 @@ module Domain
         total_roof_area: @assessment_summary.key?(:total_roof_area) ? @assessment_summary[:total_roof_area].to_i : nil,
         current_energy_efficiency_rating: @assessment_summary[:current_energy_efficiency_rating],
         hot_water_description: fetch_property_description(node_name: "hot_water"),
+        lzc_energy_sources: !@domestic_digest.nil? ? @domestic_digest[:lzc_energy_sources] : nil,
       }
     end
 

@@ -74,7 +74,7 @@ describe UseCase::FindAssessmentsForBusByUprn do
   end
 
   let(:domestic_digest) do
-    { "main_fuel_type": "mains gas (not community)" }
+    { "main_fuel_type": "mains gas (not community)", "lzc_energy_sources": [1] }
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for a UPRN that has a relevant assessment associated" do

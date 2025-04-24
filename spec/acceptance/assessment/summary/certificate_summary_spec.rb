@@ -239,7 +239,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
                 "energyPerformanceBandImprovement": "d",
               },
             ],
-            "lzcEnergySources": nil,
+            "lzcEnergySources": [1],
             "relatedPartyDisclosureNumber": nil,
             "relatedPartyDisclosureText": "No related party",
             "totalFloorArea": "55.0",

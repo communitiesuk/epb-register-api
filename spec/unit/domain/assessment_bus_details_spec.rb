@@ -87,7 +87,7 @@ describe Domain::AssessmentBusDetails do
   end
 
   let(:domestic_digest) do
-    { "main_fuel_type": "Electricity: electricity, unspecified tariff" }
+    { "main_fuel_type": "Electricity: electricity, unspecified tariff", lzc_energy_sources: [1] }
   end
 
   let(:expected_data) do
@@ -117,6 +117,7 @@ describe Domain::AssessmentBusDetails do
       total_roof_area: nil,
       current_energy_efficiency_rating: 72,
       hot_water_description: "From main system, waste water heat recovery",
+      lzc_energy_sources: [1],
     }
   end
 
@@ -237,6 +238,7 @@ describe Domain::AssessmentBusDetails do
 
       before do
         expected_data[:main_fuel_type] = nil
+        expected_data[:lzc_energy_sources] = nil
       end
 
       it "returns the information for the property type without the main fuel type" do

@@ -49,6 +49,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       totalRoofArea: nil,
       currentEnergyEfficiencyRating: 50,
       hotWaterDescription: "From main system",
+      lzcEnergySources: [1],
     }
   end
 
@@ -79,6 +80,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       totalRoofArea: 0,
       currentEnergyEfficiencyRating: 50,
       hotWaterDescription: "Gas boiler",
+      lzcEnergySources: nil,
     }
   end
 
@@ -109,6 +111,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       totalRoofArea: nil,
       currentEnergyEfficiencyRating: 80,
       hotWaterDescription: nil,
+      lzcEnergySources: nil,
     }
   end
 
