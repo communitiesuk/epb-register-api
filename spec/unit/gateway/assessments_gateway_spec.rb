@@ -168,7 +168,7 @@ describe Gateway::AssessmentsGateway do
           assessor: Domain::Assessor.new(scheme_assessor_id: "TEST123456"),
           current_energy_efficiency_rating: 60,
           potential_energy_efficiency_rating: 75,
-          )
+        )
         expect { gateway.insert(assessment, is_scottish: true) }.to raise_error(ActiveRecord::StatementInvalid, /schema "scotland" does not exist/)
       end
     end
@@ -204,6 +204,10 @@ describe Gateway::AssessmentsGateway do
 
     it "does not raise an error when no ID is found" do
       expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000") }.not_to raise_error
+    end
+
+    it "errors when updating an assessment that is scottish as we haven't yet set up the new schema" do
+      expect { gateway.update_field("0000-0000-0000-0000-0000", "type_of_assessment", "SAP", is_scottish: true) }.to raise_error(ActiveRecord::StatementInvalid, /relation "scotland.assessments" does not exist/)
     end
   end
 

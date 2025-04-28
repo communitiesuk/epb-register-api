@@ -5,11 +5,11 @@ module Gateway
     include ReadOnlyDatabaseAccess
 
     class Assessment < ActiveRecord::Base
-      self.table_name = 'public.assessments'
+      self.table_name = "public.assessments"
     end
 
     class ScotlandAssessment < ActiveRecord::Base
-      self.table_name = 'scotland.assessments'
+      self.table_name = "scotland.assessments"
     end
 
     class InvalidAssessmentType < StandardError; end
@@ -37,17 +37,23 @@ module Gateway
       send_insert_to_db(assessment, is_scottish)
     end
 
-    def update_statuses(assessments_ids, status, value)
+    def update_statuses(assessments_ids, status, value, is_scottish: false)
       ActiveRecord::Base.transaction do
         assessments_ids.each do |assessment_id|
-          update_field(assessment_id, status, value)
+          update_field(assessment_id, status, value, is_scottish:)
         end
       end
     end
 
-    def update_field(assessment_id, field, value)
+    def update_field(assessment_id, field, value, is_scottish: false)
+      table = if is_scottish
+                "scotland.assessments"
+              else
+                "public.assessments"
+              end
+
       sql =
-        "UPDATE assessments SET #{ActiveRecord::Base.connection.quote_column_name(field)} = #{ActiveRecord::Base.connection.quote(value)} WHERE assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}"
+        "UPDATE #{table} SET #{ActiveRecord::Base.connection.quote_column_name(field)} = #{ActiveRecord::Base.connection.quote(value)} WHERE assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}"
 
       Assessment.connection.exec_query(sql)
     end
