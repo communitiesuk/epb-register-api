@@ -19,12 +19,11 @@ module UseCase
       assessment_summary = @summary_use_case.execute(rrn)
       return nil if assessment_summary.nil?
 
-      if bus_details["report_type"] == "CEPC"
-        domestic_digest = nil
-      else
-        domestic_digest = get_domestic_digest(rrn:)
-      end
-
+      domestic_digest = if bus_details["report_type"] == "CEPC"
+                          nil
+                        else
+                          get_domestic_digest(rrn:)
+                        end
 
       assessment_details = Domain::AssessmentBusDetails.new(
         bus_details:,
@@ -37,7 +36,7 @@ module UseCase
       later_rrn ? Domain::AssessmentReference.new(rrn: later_rrn) : assessment_details
     end
 
-    private
+  private
 
     attr_reader :domestic_digest_gateway
   end

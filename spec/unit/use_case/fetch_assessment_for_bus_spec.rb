@@ -89,9 +89,9 @@ describe UseCase::FetchAssessmentForBus do
       allow(bus_gateway).to receive(:search_by_rrn).with(rrn).and_return bus_details
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
       allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
-                                                                                      "xml" => xml,
-                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
-                                                                                    })
+        "xml" => xml,
+        "schema_type" => "RdSAP-Schema-20.0.0",
+      })
     end
 
     it "returns an assessment bus details object" do
@@ -121,9 +121,9 @@ describe UseCase::FetchAssessmentForBus do
       assessment_summary[:superseded_by] = later_rrn
       allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
       allow(domestic_digest_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
-                                                                                      "xml" => xml,
-                                                                                      "schema_type" => "RdSAP-Schema-20.0.0",
-                                                                                    })
+        "xml" => xml,
+        "schema_type" => "RdSAP-Schema-20.0.0",
+      })
     end
 
     it "returns the assessment reference passed to it from the gateway" do

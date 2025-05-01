@@ -3304,6 +3304,14 @@ components:
           type: string
           example: "From main system, waste water heat recovery"
           nullable: true
+        lzcEnergySources:
+          type: array
+          items:
+            type: integer
+            example: 11
+          nullable: true
+          description: Low and zero carbon energy sources for the property
+          example: [ 11 ]
 
     MultipleBUSMatchesList:
       type: object
