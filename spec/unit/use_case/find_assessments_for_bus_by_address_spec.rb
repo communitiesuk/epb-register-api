@@ -105,6 +105,34 @@ describe UseCase::FindAssessmentsForBusByAddress do
     end
   end
 
+  context "when fetching BUS (Boiler Upgrade Scheme) details with an UPRN for a CEPC" do
+    let(:expected_response) do
+      Domain::AssessmentBusDetails.new(
+        bus_details:,
+        assessment_summary:,
+        domestic_digest:,
+      )
+    end
+
+    before do
+      bus_details["report_type"] = "CEPC"
+      allow(bus_gateway).to receive(:search_by_postcode_and_building_identifier)
+                                  .with(postcode:, building_identifier:).and_return [bus_details]
+      allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn)
+    end
+
+    it "does not call the domestic digest gateway" do
+      use_case.execute(postcode:, building_identifier:)
+      expect(domestic_digest_gateway).not_to have_received(:fetch_by_rrn)
+    end
+
+    it "returns nil for main_fuel_type" do
+      result = use_case.execute(postcode:, building_identifier:)
+      expect(result.to_hash[:main_fuel_type]).to be_nil
+    end
+  end
+
   context "when fetching BUS (Boiler Upgrade Scheme) details for address where multiple assessments can be found" do
     let(:rrn2) { "0000-0000-0000-0000-0001" }
     let(:reference_list) { Domain::AssessmentReferenceList.new(rrn, rrn2) }

@@ -102,6 +102,33 @@ describe UseCase::FindAssessmentsForBusByUprn do
     end
   end
 
+  context "when fetching BUS (Boiler Upgrade Scheme) details with an UPRN for a CEPC" do
+    let(:expected_response) do
+      Domain::AssessmentBusDetails.new(
+        bus_details:,
+        assessment_summary:,
+        domestic_digest:,
+      )
+    end
+
+    before do
+      bus_details["report_type"] = "CEPC"
+      allow(bus_gateway).to receive(:search_by_uprn).with(uprn).and_return [bus_details]
+      allow(summary_use_case).to receive(:execute).with(rrn).and_return assessment_summary
+      allow(domestic_digest_gateway).to receive(:fetch_by_rrn)
+    end
+
+    it "does not call the domestic digest gateway" do
+      use_case.execute(uprn:)
+      expect(domestic_digest_gateway).not_to have_received(:fetch_by_rrn)
+    end
+
+    it "returns nil for main_fuel_type" do
+      result = use_case.execute(uprn:)
+      expect(result.to_hash[:main_fuel_type]).to be_nil
+    end
+  end
+
   context "when fetching BUS (Boiler Upgrade Scheme) details for a UPRN that does not exist or has no relevant assessments associated" do
     let(:uprn) { "UPRN-000001111123" }
 
