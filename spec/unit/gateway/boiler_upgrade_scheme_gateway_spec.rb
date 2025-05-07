@@ -72,6 +72,51 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         expect(gateway.search_by_rrn("0000-1111-2222-3333-4444")).to be_nil
       end
     end
+
+    context "when there are multiple linked assessments for the same property but they were lodged with different UPRNs" do
+      before do
+        rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+        rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+        rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Another Street" }
+        rdsap_xml.at("UPRN").content = "UPRN-100099997678"
+        rdsap_xml.at("Completion-Date").content = "2023-05-05"
+        rdsap_xml.at("Registration-Date").content = "2023-05-05"
+
+        do_lodgement = lambda {
+          lodge_assessment(
+            assessment_body: rdsap_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            migrated: true,
+          )
+        }
+
+        do_lodgement.call
+
+        update_assessment_address_id(
+          assessment_id: "0000-0000-0000-0000-0001",
+          new_address_id: "UPRN-000000000000",
+        )
+      end
+
+      context "when performing a postcode and building identifier lookup" do
+        it "returns the details for the most recent assessment at that address" do
+          result = gateway.search_by_postcode_and_building_identifier postcode: "SW1A 2AA", building_identifier: "1"
+          expect(result.count).to eq 1
+          expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
+        end
+      end
+
+      context "when performing a uprn lookup" do
+        it "returns the details for the most recent assessment at that address" do
+          result = gateway.search_by_uprn("UPRN-000000000000")
+          expect(result.count).to eq 1
+          expect(result[0]["epc_rrn"]).to eq "0000-0000-0000-0000-0001"
+        end
+      end
+    end
   end
 
   context "when there are multiple assessments for the same address but different uprns" do

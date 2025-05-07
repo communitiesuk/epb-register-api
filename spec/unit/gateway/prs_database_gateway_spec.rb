@@ -105,6 +105,41 @@ describe Gateway::PrsDatabaseGateway do
       it "returns nil when no match" do
         expect(gateway.search_by_uprn("UPRN-012345678912")).to be_nil
       end
+
+      context "when the UPRN was different at lodgement for the same property" do
+        before do
+          rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+
+          rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0003"
+          rdsap_xml.at("UPRN").content = "UPRN-100099997678"
+          rdsap_xml.at("Completion-Date").content = "2018-05-05"
+          rdsap_xml.at("Registration-Date").content = "2018-05-05"
+
+          do_lodgement = lambda {
+            lodge_assessment(
+              assessment_body: rdsap_xml.to_xml,
+              accepted_responses: [201],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              migrated: true,
+            )
+          }
+
+          do_lodgement.call
+
+          update_assessment_address_id(
+            assessment_id: "0000-0000-0000-0000-0003",
+            new_address_id: "UPRN-000000000000",
+          )
+        end
+
+        it "returns the most recent assessment" do
+          result = gateway.search_by_uprn("UPRN-000000000000")
+          expect(result.count).to eq 1
+          expect(result[0]).to eq expected_response_uprn
+        end
+      end
     end
 
     context "when searching by RRN" do

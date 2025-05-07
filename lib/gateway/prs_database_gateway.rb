@@ -15,9 +15,10 @@ module Gateway
                a.current_energy_efficiency_rating AS current_energy_efficiency_rating,
                a.type_of_assessment AS type_of_assessment,
                a.assessment_id AS latest_epc_rrn_for_address,
-               row_number() over (PARTITION BY address_id ORDER BY date_of_expiry DESC, created_at DESC, date_of_assessment DESC, a.assessment_id DESC) rn
+               row_number() over (PARTITION BY aai.address_id ORDER BY date_of_expiry DESC, created_at DESC, date_of_assessment DESC, a.assessment_id DESC) rn
         FROM assessments AS a
-        WHERE assessment_id IN (
+        join assessments_address_id aai on a.assessment_id = aai.assessment_id
+        WHERE a.assessment_id IN (
             SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
           )
       AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
