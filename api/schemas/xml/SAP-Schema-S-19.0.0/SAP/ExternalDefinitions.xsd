@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns="EPC"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="EPC"
+  attributeFormDefault="unqualified"
+  version="EPC-1.4"
+>
+	<xs:annotation>
+		<xs:documentation>
+			This schema is used to provide 
+				(a) the texts of recommendations on EPCs (by country)
+				(b) addenda that may appear on RdSAP EPCs (same for all countries)
+				(c) the options for Related Party Disclosure (same for all countries)
+				(d) the options for Tenure (same for all countries)
+				(e) the options for Transaction Type (by country)
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ExternalDefinitions" type="ExternalDefinitions"/>
+	<xs:complexType name="ExternalDefinitions">
+		<xs:sequence>
+			<xs:element name="Revision-Number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version number of the latest revision to any of the texts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Revision-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date of the latest revision to any of the texts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="Country" maxOccurs="3"/>
+			<xs:element name="Addendum" type="Addendum" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Tenure" type="Tenure" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element name="Related-Party-Disclosure" type="Related-Party-Disclosure" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>List of possible texts for Related Party Disclosure on EPCs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Country">
+		<xs:sequence>
+			<xs:element name="Country-Code" type="UKCountryCode"/>
+			<xs:element name="Average-SAP-Rating" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The average SAP rating for the country, to be shown on the EPC. If not used on the EPC, it may be 0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Average-EI-Rating" type="EnergyRatingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The average Environmental Impact rating for the country, to be shown on the EPC. If not used on the EPC, it may be 0 or omitted</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Recommendation" type="Recommendation" maxOccurs="unbounded"/>
+			<xs:element name="Footnote-Text" type="Sentence" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="Transaction-Type" type="Transaction-Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Transaction types are given separately for each country since the list may differ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Recommendation">
+		<xs:sequence>
+			<xs:element name="Improvement-Number" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Recommendations are selected by recommendation number according to the criteria in Appendix T of the SAP specification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Summary" type="Sentence" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>A short description of the improvement.  English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Summary-2" type="Sentence" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>A short description of the improvement.  English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Heading" type="Sentence" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Text to precede the improvement description. English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Description" type="Sentence" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Detailed description of the improvement.  English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Footnote" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If true the Footnote-Text appears at the bottom of the page.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Addendum">
+		<xs:annotation>
+			<xs:documentation>Addendum-Number is unique for the text concerned. If an addendum is deleted the number will not be re-used.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Addendum-Number" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>The text of an addendum is picked up via the Addendum-Number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Circumstances" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The circumstances under which this addendum should be included.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Addendum-Text" type="Sentence" minOccurs="2" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Text to be included on the EPC (English and Welsh versions).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Tenure">
+		<xs:sequence>
+			<xs:element name="Tenure-Code" type="TenureCode"></xs:element>
+			<xs:element name="Tenure-Text" type="xs:string"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TenureCode">
+		<xs:annotation>
+			<xs:documentation>TenureCode = 0 (unknown) is applicable only in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Owner-occupied</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Rented (social)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Rented (private)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ND">
+				<xs:annotation>
+					<xs:documentation>Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Related-Party-Disclosure">
+		<xs:annotation>
+			<xs:documentation>List of possible texts for Related Party Disclosure on EPCs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Disclosure-Code" type="xs:positiveInteger"/>
+			<xs:element name="Disclosure-Text" type="Sentence" minOccurs="2" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Transaction-Type">
+		<xs:annotation>
+			<xs:documentation>List of possible Transaction Types for EPCs. The transaction type indicates the reason for creating the EPC</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Display-Order" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Number indicating the order in which the transaction types are to be presented to a software user.  
+						These numbers might not be consecutive. The transaction types are to be shown with the lowest display number first through to the highest shown last</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transaction-Code" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Code to be used for Transaction-Type in the lodgement XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transaction-Text" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+			<xs:element name="In-RdSAP" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>If false, transaction type is to be omitted when RdSAP is being used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LanguageCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>English</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UKCountryCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the country within the UK, taken from BS 6879.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EAW">
+				<xs:annotation>
+					<xs:documentation>England and Wales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SCT">
+				<xs:annotation>
+					<xs:documentation>Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIR">
+				<xs:annotation>
+					<xs:documentation>Northern Ireland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Sentence" type="Sentence"/>
+	<xs:complexType name="Sentence">
+		<xs:annotation>
+			<xs:documentation>String value with a language code for natural-language text.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="language" type="LanguageCode" use="required">
+					<xs:annotation>
+						<xs:documentation>Identifies the language that the sentence is recorded in.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="EnergyRatingType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

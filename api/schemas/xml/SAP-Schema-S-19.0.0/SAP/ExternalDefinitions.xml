@@ -1,0 +1,1352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--EPC Recommendations, RdSAP Addenda, Transaction Types, Tenures and Related Party Disclosure-->
+<EPC:ExternalDefinitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="EPC ExternalDefinitions.xsd" xmlns:EPC="EPC">
+  <Revision-Number>4.6</Revision-Number>
+  <Revision-Date>2012-12-10</Revision-Date>
+  <Country>
+    <Country-Code>EAW</Country-Code>
+    <Average-SAP-Rating>60</Average-SAP-Rating>
+    <Recommendation>
+      <Improvement-Number>1</Improvement-Number>
+      <Improvement-Summary language="1">Insulate hot water cylinder with 80 mm jacket</Improvement-Summary>
+      <Improvement-Summary language="2">Inswleiddio’r silindr dŵr poeth gyda siaced 80 mm</Improvement-Summary>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddiad silindr dŵr poeth</Improvement-Heading>
+      <Improvement-Description language="1">Insulate hot water cylinder with 80 mm jacket</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddiad silindr dŵr poeth</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>2</Improvement-Number>
+      <Improvement-Summary language="1">Increase hot water cylinder insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Cynyddu inswleiddiad dŵr poeth</Improvement-Summary>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddiad silindr dŵr poeth</Improvement-Heading>
+      <Improvement-Description language="1">Increase hot water cylinder insulation</Improvement-Description>
+      <Improvement-Description language="2">Cynyddu inswleiddiad dŵr poeth</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>3</Improvement-Number>
+      <Improvement-Summary language="1">Add additional 80 mm jacket to hot water cylinder</Improvement-Summary>
+      <Improvement-Summary language="2">Ychwanegu siaced 80 mm ychwanegol i’r siaced dŵr poeth</Improvement-Summary>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddiad silindr dŵr poeth</Improvement-Heading>
+      <Improvement-Description language="1">Add additional 80 mm jacket to hot water cylinder</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddiad silindr dŵr poeth</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>4</Improvement-Number>
+      <Improvement-Summary language="1">Hot water cylinder thermostat</Improvement-Summary>
+      <Improvement-Summary language="2">Thermostat silindr dŵr poeth</Improvement-Summary>
+      <Improvement-Heading language="1">Cylinder thermostat</Improvement-Heading>
+      <Improvement-Heading language="2">Thermostat silindr</Improvement-Heading>
+      <Improvement-Description language="1">Hot water cylinder thermostat</Improvement-Description>
+      <Improvement-Description language="2">Thermostat silindr dŵr poeth</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>5</Improvement-Number>
+      <Improvement-Summary language="1">Increase loft insulation to 270 mm</Improvement-Summary>
+      <Improvement-Summary language="2">Cynyddu inswleiddiad croglofft i 270 mm</Improvement-Summary>
+      <Improvement-Heading language="1">Loft insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddiad croglofft</Improvement-Heading>
+      <Improvement-Description language="1">Increase loft insulation to 270 mm</Improvement-Description>
+      <Improvement-Description language="2">Cynyddu inswleiddiad croglofft i 270 mm</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>6</Improvement-Number>
+      <Improvement-Summary language="1">Cavity wall insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Inswleiddio waliau ceudod</Improvement-Summary>
+      <Improvement-Heading language="1">Cavity wall insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddio waliau ceudod</Improvement-Heading>
+      <Improvement-Description language="1">Cavity wall insulation</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau ceudod</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>7</Improvement-Number>
+      <Improvement-Summary language="1">Internal or external wall insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Inswleiddio waliau mewnol neu allanol</Improvement-Summary>
+      <Improvement-Heading language="1">Internal or external wall insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddio waliau mewnol neu allanol</Improvement-Heading>
+      <Improvement-Description language="1">Internal or external wall insulation</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau mewnol neu allanol</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>8</Improvement-Number>
+      <Improvement-Summary language="1">Replace single glazed windows with low-E double glazing</Improvement-Summary>
+      <Improvement-Summary language="2">Newid ffenestri gwydr sengl am rai gwydr dwbl E-isel</Improvement-Summary>
+      <Improvement-Heading language="1">Double glazing</Improvement-Heading>
+      <Improvement-Heading language="2">Gwydr dwbl</Improvement-Heading>
+      <Improvement-Description language="1">Double glazing</Improvement-Description>
+      <Improvement-Description language="2">Gwydr dwbl</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>9</Improvement-Number>
+      <Improvement-Summary language="1">Secondary glazing to single glazed windows</Improvement-Summary>
+      <Improvement-Summary language="2">Gwydriad eilaidd i ffenestri gwydr sengl</Improvement-Summary>
+      <Improvement-Heading language="1">Secondary glazing</Improvement-Heading>
+      <Improvement-Heading language="2">Gwydriad eilaidd</Improvement-Heading>
+      <Improvement-Description language="1">Secondary glazing to single glazed windows</Improvement-Description>
+      <Improvement-Description language="2">Gwydriad eilaidd i ffenestri gwydr sengl</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>10</Improvement-Number>
+      <Improvement-Summary language="1">Draught proofing</Improvement-Summary>
+      <Improvement-Summary language="2">Atal drafftiau</Improvement-Summary>
+      <Improvement-Heading language="1">Draught proofing</Improvement-Heading>
+      <Improvement-Heading language="2">Atal drafftiau</Improvement-Heading>
+      <Improvement-Description language="1">Draught proofing</Improvement-Description>
+      <Improvement-Description language="2">Atal drafftiau</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>11</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (programmer, room thermostat and TRVs)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwres (rhaglennydd, thermostat ystafell a TRVs)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (programmer, thermostat, TRVs)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>12</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (room thermostat and TRVs)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwres (thermostat ystafell a falfiau rheiddiadur thermostatig)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (room thermostat and TRVs)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>13</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (thermostatic radiator valves)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwresogi (falfiau rheiddiadur thermostatig)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (TRVs)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>14</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (room thermostat)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwres (thermostat ystafell)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (room thermostat)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>15</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (programmer and TRVs)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwresogi (rhaglennydd a falfiau rheiddiadur thermostatig)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (programmer and TRVs)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>16</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (time and temperature zone control)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwresogi (rheolydd amser a pharth gwres)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (zone control)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>17</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (programmer and room thermostat)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwresogi (rhaglennydd a thermostat ystafell)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwresogi</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (programmer and thermostat)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwresogi</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>18</Improvement-Number>
+      <Improvement-Summary language="1">Heating controls (room thermostat)</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwresogi (thermostat ystafell)</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwresogi</Improvement-Heading>
+      <Improvement-Description language="1">Heating controls (room thermostat)</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwresogi</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>19</Improvement-Number>
+      <Improvement-Summary language="1">Solar water heating</Improvement-Summary>
+      <Improvement-Summary language="2">Gwresogi dŵr solar</Improvement-Summary>
+      <Improvement-Heading language="1">Solar water heating</Improvement-Heading>
+      <Improvement-Heading language="2">Gwresogi dŵr solar</Improvement-Heading>
+      <Improvement-Description language="1">Solar water heating</Improvement-Description>
+      <Improvement-Description language="2">Gwresogi dŵr solar</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>20</Improvement-Number>
+      <Improvement-Summary language="1">Replace boiler with new condensing boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Cyfnewid y bwyler am fwyler cyddwyso newydd</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso newydd</Improvement-Heading>
+      <Improvement-Description language="1">Condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso newydd</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>22</Improvement-Number>
+      <Improvement-Summary language="1">Replace boiler with biomass boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Cyfnewid bwyler am fwyler biomas</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler biomas</Improvement-Heading>
+      <Improvement-Description language="1">Biomass boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler biomas</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>23</Improvement-Number>
+      <Improvement-Summary language="1">Wood pellet stove with boiler and radiators</Improvement-Summary>
+      <Improvement-Summary language="2">Ffwrn pelennau coed gyda bwyler a rheiddiaduron </Improvement-Summary>
+      <Improvement-Heading language="1">Biomass stove with boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Ffwrn biomas gyda bwyler</Improvement-Heading>
+      <Improvement-Description language="1">Biomass stove with boiler</Improvement-Description>
+      <Improvement-Description language="2">Ffwrn biomas gyda bwyler</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>24</Improvement-Number>
+      <Improvement-Summary language="1">Fan assisted storage heaters and dual immersion cylinder</Improvement-Summary>
+      <Improvement-Summary language="2">Gwresogyddion stôr â chymorth ffan a silindr trochi deuol</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Heading language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Heading>
+      <Improvement-Description language="1">Fan assisted storage heaters</Improvement-Description>
+      <Improvement-Description language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>25</Improvement-Number>
+      <Improvement-Summary language="1">Fan-assisted storage heaters</Improvement-Summary>
+      <Improvement-Summary language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Heading language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Heading>
+      <Improvement-Description language="1">Fan assisted storage heaters</Improvement-Description>
+      <Improvement-Description language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>26</Improvement-Number>
+      <Improvement-Summary language="1">Replacement warm air unit</Improvement-Summary>
+      <Improvement-Summary language="2">Cyfnewid uned aer poeth</Improvement-Summary>
+      <Improvement-Heading language="1">Replacement warm air unit</Improvement-Heading>
+      <Improvement-Heading language="2">Cyfnewid uned aer poeth</Improvement-Heading>
+      <Improvement-Description language="1">Replacement warm air unit</Improvement-Description>
+      <Improvement-Description language="2">Cyfnewid uned aer poeth</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>27</Improvement-Number>
+      <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
+      <Improvement-Description language="1">Gas condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso nwy</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>28</Improvement-Number>
+      <Improvement-Summary language="1">Condensing oil boiler with radiators</Improvement-Summary>
+      <Improvement-Summary language="2">Bwyler cyddwyso olew gyda rheiddiaduron</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing oil boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso olew</Improvement-Heading>
+      <Improvement-Description language="1">Condensing oil boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso olew</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>29</Improvement-Number>
+      <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
+      <Improvement-Description language="1">Gas condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso nwy</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>30</Improvement-Number>
+      <Improvement-Summary language="1">Fan assisted storage heaters and dual immersion cylinder</Improvement-Summary>
+      <Improvement-Summary language="2">Gwresogyddion stôr â chymorth ffan a silindr trochi deuol</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Heading language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Heading>
+      <Improvement-Description language="1">Fan assisted storage heaters</Improvement-Description>
+      <Improvement-Description language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>31</Improvement-Number>
+      <Improvement-Summary language="1">Fan-assisted storage heaters</Improvement-Summary>
+      <Improvement-Summary language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Heading language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Heading>
+      <Improvement-Description language="1">Fan assisted storage heaters</Improvement-Description>
+      <Improvement-Description language="2">Gwresogyddion stôr â chymorth ffan</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>34</Improvement-Number>
+      <Improvement-Summary language="1">Solar photovoltaic panels, 2.5 kWp</Improvement-Summary>
+      <Improvement-Summary language="2">Paneli solar ffotofoltäig, 2.5 kWp</Improvement-Summary>
+      <Improvement-Heading language="1">Solar photovoltaic panels</Improvement-Heading>
+      <Improvement-Heading language="2">Paneli solar ffotofoltäig</Improvement-Heading>
+      <Improvement-Description language="1">Solar photovoltaic panels</Improvement-Description>
+      <Improvement-Description language="2">Paneli solar ffotofoltäig</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>35</Improvement-Number>
+      <Improvement-Summary language="1">Low energy lighting for all fixed outlets</Improvement-Summary>
+      <Improvement-Summary language="2">Goleuo ynni isel ar gyfer yr holl osodiadau sefydlog</Improvement-Summary>
+      <Improvement-Heading language="1">Low energy lighting</Improvement-Heading>
+      <Improvement-Heading language="2">Goleuo ynni isel</Improvement-Heading>
+      <Improvement-Description language="1">Low energy lighting</Improvement-Description>
+      <Improvement-Description language="2">Goleuo ynni isel</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>36</Improvement-Number>
+      <Improvement-Summary language="1">Replace heating unit with condensing unit</Improvement-Summary>
+      <Improvement-Summary language="2">Cyfnewid uned wresogi am uned gyddwyso newydd</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing heating unit</Improvement-Heading>
+      <Improvement-Heading language="2">Gosod uned wresogi gyddwyso</Improvement-Heading>
+      <Improvement-Description language="1">Condensing heating unit</Improvement-Description>
+      <Improvement-Description language="2">Gosod uned wresogi gyddwyso</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>37</Improvement-Number>
+      <Improvement-Summary language="1">Condensing boiler (separate from the range cooker)</Improvement-Summary>
+      <Improvement-Summary language="2">Gosod bwyler cyddwyso (ar wahân i’r popty estynedig)</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Gosod bwyler cyddwyso</Improvement-Heading>
+      <Improvement-Description language="1">Condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Gosod bwyler cyddwyso</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>38</Improvement-Number>
+      <Improvement-Summary language="1">Condensing boiler (separate from the range cooker)</Improvement-Summary>
+      <Improvement-Summary language="2">Gosod bwyler cyddwyso (ar wahân i’r cwcer estynedig)</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Gosod bwyler cyddwyso</Improvement-Heading>
+      <Improvement-Description language="1">Condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Gosod bwyler cyddwyso</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>39</Improvement-Number>
+      <Improvement-Summary language="1">Wood pellet stove with boiler and radiators</Improvement-Summary>
+      <Improvement-Summary language="2">Stôf pelenni pren gyda bwyler a rheiddiaduron</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass stove with boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Stôf biomas gyda bwyler</Improvement-Heading>
+      <Improvement-Description language="1">Biomass stove with boiler</Improvement-Description>
+      <Improvement-Description language="2">Stôf biomas gyda bwyler</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>40</Improvement-Number>
+      <Improvement-Summary language="1">Change room heaters to condensing boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Newid gwresogyddion ystafell i fwyler cyddwyso</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Bwyler cyddwyso</Improvement-Heading>
+      <Improvement-Description language="1">Condensing boiler</Improvement-Description>
+      <Improvement-Description language="2">Bwyler cyddwyso</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>42</Improvement-Number>
+      <Improvement-Summary language="1">Replace heating unit with mains gas condensing unit</Improvement-Summary>
+      <Improvement-Summary language="2">Cyfnewid uned wresogi am uned gyddwyso prif gyflenwad nwy</Improvement-Summary>
+      <Improvement-Heading language="1">Mains gas condensing heating unit</Improvement-Heading>
+      <Improvement-Heading language="2">Uned wresogi gyddwyso prif gyflenwad nwy</Improvement-Heading>
+      <Improvement-Description language="1">Mains gas condensing heating unit</Improvement-Description>
+      <Improvement-Description language="2">Uned wresogi gyddwyso prif gyflenwad nwy</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>44</Improvement-Number>
+      <Improvement-Summary language="1">Wind turbine</Improvement-Summary>
+      <Improvement-Summary language="2">Tyrbin gwynt</Improvement-Summary>
+      <Improvement-Heading language="1">Wind turbine</Improvement-Heading>
+      <Improvement-Heading language="2">Tyrbin gwynt</Improvement-Heading>
+      <Improvement-Description language="1">Wind turbine</Improvement-Description>
+      <Improvement-Description language="2">Tyrbin gwynt</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>45</Improvement-Number>
+      <Improvement-Summary language="1">Flat roof insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Insiwleiddio to fflat</Improvement-Summary>
+      <Improvement-Heading language="1">Flat roof insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Insiwleiddio to fflat</Improvement-Heading>
+      <Improvement-Description language="1">Flat roof insulation</Improvement-Description>
+      <Improvement-Description language="2">Insiwleiddio to fflat</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>46</Improvement-Number>
+      <Improvement-Summary language="1">Room-in-roof insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Insiwleiddio ystafell-yn-y-to</Improvement-Summary>
+      <Improvement-Heading language="1">Room-in-roof insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Insiwleiddio ystafell-yn-y-to</Improvement-Heading>
+      <Improvement-Description language="1">Room-in-roof insulation</Improvement-Description>
+      <Improvement-Description language="2">Insiwleiddio ystafell-yn-y-to</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>47</Improvement-Number>
+      <Improvement-Summary language="1">Floor insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Insiwleiddio llawr</Improvement-Summary>
+      <Improvement-Heading language="1">Floor insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Insiwleiddio llawr</Improvement-Heading>
+      <Improvement-Description language="1">Floor insulation</Improvement-Description>
+      <Improvement-Description language="2">Insiwleiddio llawr</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>48</Improvement-Number>
+      <Improvement-Summary language="1">High performance external doors</Improvement-Summary>
+      <Improvement-Summary language="2">Drysau allanol perfformiad uchel</Improvement-Summary>
+      <Improvement-Heading language="1">High performance external doors</Improvement-Heading>
+      <Improvement-Heading language="2">Drysau allanol perfformiad uchel</Improvement-Heading>
+      <Improvement-Description language="1">High performance external doors</Improvement-Description>
+      <Improvement-Description language="2">Drysau allanol perfformiad uchel</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>49</Improvement-Number>
+      <Improvement-Summary language="1">Heat recovery system for mixer showers</Improvement-Summary>
+      <Improvement-Summary language="2">System adfer gwres ar gyfer cawodydd cymysgu</Improvement-Summary>
+      <Improvement-Heading language="1">Heat recovery system for mixer showers</Improvement-Heading>
+      <Improvement-Heading language="2">System adfer gwres ar gyfer cawodydd cymysgu</Improvement-Heading>
+      <Improvement-Description language="1">Heat recovery system for mixer showers</Improvement-Description>
+      <Improvement-Description language="2">System adfer gwres ar gyfer cawodydd cymysgu</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>50</Improvement-Number>
+      <Improvement-Summary language="1">Flue gas heat recovery device in conjunction with boiler</Improvement-Summary>
+      <Improvement-Summary language="2">Dyfais adfer gwres nwyon ffliw ar y cyd â boeler</Improvement-Summary>
+      <Improvement-Heading language="1">Flue gas heat recovery</Improvement-Heading>
+      <Improvement-Heading language="2">Adfer gwres nwyon ffliw</Improvement-Heading>
+      <Improvement-Description language="1">Flue gas heat recovery</Improvement-Description>
+      <Improvement-Description language="2">Adfer gwres nwyon ffliw</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>51</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump</Improvement-Summary>
+      <Improvement-Summary language="2">Pwmp gwres o’r aer neu’r ddaear</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump</Improvement-Heading>
+      <Improvement-Heading language="2">Pwmp gwres o’r aer neu’r ddaear</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>52</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
+      <Improvement-Summary language="2">Pwmp gwres o’r aer neu’r ddaear gyda gwresogi tanlawr</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
+      <Improvement-Heading language="2">Pwmp gwres o’r aer neu’r ddaear gyda gwresogi tanlawr</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>53</Improvement-Number>
+      <Improvement-Summary language="1">Micro CHP</Improvement-Summary>
+      <Improvement-Summary language="2">CHP meicro</Improvement-Summary>
+      <Improvement-Heading language="1">Micro CHP</Improvement-Heading>
+      <Improvement-Heading language="2">CHP meicro</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>54</Improvement-Number>
+      <Improvement-Summary language="1">Biomass boiler (Exempted Appliance if in Smoke Control Area)</Improvement-Summary>
+      <Improvement-Summary language="2">Boeler biomàs (Cyfarpar wedi’i Eithrio os mewn Ardal Reoli Mwg)</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass boiler</Improvement-Heading>
+      <Improvement-Heading language="2">Boeler biomàs</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>55</Improvement-Number>
+      <Improvement-Summary language="1">External insulation with cavity wall insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Insiwleiddio allanol gydag insiwleiddio waliau ceudod</Improvement-Summary>
+      <Improvement-Heading language="1">External and cavity wall insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Insiwleiddio waliau ceudod ac allanol</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Footnote-Text language="1"/>
+    <Footnote-Text language="2"/>
+    <Transaction-Type>
+      <Display-Order>1</Display-Order>
+      <Transaction-Code>6</Transaction-Code>
+      <Transaction-Text>New dwelling</Transaction-Text>
+      <In-RdSAP>false</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>2</Display-Order>
+      <Transaction-Code>1</Transaction-Code>
+      <Transaction-Text>Marketed sale</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>3</Display-Order>
+      <Transaction-Code>2</Transaction-Code>
+      <Transaction-Text>Non-marketed sale</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>4</Display-Order>
+      <Transaction-Code>8</Transaction-Code>
+      <Transaction-Text>Rental</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>5</Display-Order>
+      <Transaction-Code>9</Transaction-Code>
+      <Transaction-Text>Assessment for Green Deal</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>6</Display-Order>
+      <Transaction-Code>10</Transaction-Code>
+      <Transaction-Text>Following Green Deal</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>7</Display-Order>
+      <Transaction-Code>11</Transaction-Code>
+      <Transaction-Text>FiT application</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>8</Display-Order>
+      <Transaction-Code>5</Transaction-Code>
+      <Transaction-Text>None of the above</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+  </Country>
+  <Country>
+    <Country-Code>SCT</Country-Code>
+    <Average-SAP-Rating>61</Average-SAP-Rating>
+    <Average-EI-Rating>59</Average-EI-Rating>
+    <Recommendation>
+      <Improvement-Number>1</Improvement-Number>
+      <Improvement-Summary language="1">Insulate hot water cylinder with 80 mm jacket </Improvement-Summary>
+      <Improvement-Summary-2 language="1">Insulate hot water cylinder with 80 mm jacket </Improvement-Summary-2>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Description language="1">Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>2</Improvement-Number>
+      <Improvement-Summary language="1">Increase hot water cylinder insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Increase hot water cylinder insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Description language="1">Increasing the thickness of existing insulation around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. An additional cylinder jacket or other suitable insulation layer can be used. The insulation should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>3</Improvement-Number>
+      <Improvement-Summary language="1">Add additional 80 mm jacket to hot water cylinder</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Add additional 80 mm jacket to hot water cylinder</Improvement-Summary-2>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Description language="1">Increasing the thickness of existing insulation by adding an 80 mm cylinder jacket around the hot water cylinder will help maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. The jacket should be fitted over the top of the existing foam insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>4</Improvement-Number>
+      <Improvement-Summary language="1">Hot water cylinder thermostat</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Hot water cylinder thermostat</Improvement-Summary-2>
+      <Improvement-Heading language="1">Cylinder thermostat</Improvement-Heading>
+      <Improvement-Description language="1">A hot water cylinder thermostat enables the boiler to switch off when the water in the cylinder reaches the required temperature; this minimises the amount of energy that is used and lowers fuel bills. The thermostat is a temperature sensor that sends a signal to the boiler when the required temperature is reached. To be fully effective it needs to be sited in the correct position and hard wired in place, so it should be installed by a competent plumber or heating engineer. Building regulations apply to this work, so it is best to check with your local authority building standards department whether a building warrant will be required.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>5</Improvement-Number>
+      <Improvement-Summary language="1">Increase loft insulation to 270 mm</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Increase loft insulation to 270 mm</Improvement-Summary-2>
+      <Improvement-Heading language="1">Loft insulation</Improvement-Heading>
+      <Improvement-Description language="1">Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>6</Improvement-Number>
+      <Improvement-Summary language="1">Cavity wall insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Cavity wall insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Cavity wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. The insulation material is pumped into the gap through small holes that are drilled into the outer walls, and the holes are made good afterwards. As specialist machinery is used to fill the cavity, a professional installation company should carry out this work, and they should carry out a thorough survey before commencing work to ensure that this type of insulation is suitable for this home and its exposure. They should also provide a guarantee for the work and handle any building standards issues. Further information about cavity wall insulation and details of local installers can be obtained from the Building Standards Division’s section of the Scottish Government website (www.scotland.gov.uk/Topics/Built-Environment/Building/Building-standards/publications/pubguide/cavitywallinsul) or the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>7</Improvement-Number>
+      <Improvement-Summary language="1">Internal or external wall insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Internal or external wall insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Internal or external wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">Internal or external wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that planning permission might be required and that building regulations apply to this work so it is best to check with your local authority whether a building warrant or planning permission will be required.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>8</Improvement-Number>
+      <Improvement-Summary language="1">Replace single glazed windows with low-E double glazing</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Double glazing</Improvement-Summary-2>
+      <Improvement-Heading language="1">Double glazing</Improvement-Heading>
+      <Improvement-Description language="1">Double glazing is the term given to a system where two panes of glass are made up into a sealed unit. Replacing existing single-glazed windows with double glazing will improve comfort in the home by reducing draughts and cold spots near windows. Double-glazed windows may also reduce noise, improve security and combat problems with condensation. Building regulations apply to this work and planning permission may also be required, so it is best to check with your local authority on what standards need to be met. A building warrant is not required if the windows comply with the current requirements.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>9</Improvement-Number>
+      <Improvement-Summary language="1">Secondary glazing to single glazed windows</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Secondary glazing to single glazed windows</Improvement-Summary-2>
+      <Improvement-Heading language="1">Secondary glazing</Improvement-Heading>
+      <Improvement-Description language="1">Secondary glazing is the addition of a second pane of glass inside the existing window. Adding secondary glazing will improve comfort in the home by reducing draughts and cold spots near windows. It may also reduce noise and combat problems with condensation. Installation can be carried out by a competent DIY enthusiast. Building regulations may apply to this work, so it is best to check this with your local authority building standards department.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>10</Improvement-Number>
+      <Improvement-Summary language="1">Draughtproofing</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Draughtproofing</Improvement-Summary-2>
+      <Improvement-Heading language="1">Draughtproofing</Improvement-Heading>
+      <Improvement-Description language="1">Fitting draughtproofing, strips of insulation around windows and doors, will improve the comfort in the home. A contractor can be employed but draughtproofing can be installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>11</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (programmer, thermostat, TRVs)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (programmer, room thermostat and thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system would benefit from a programmer and room thermostat to allow you to set the temperature and programme when you want the heating and hot water to switch on and off; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Radiator valves should be fitted to every radiator except one – the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>12</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (room thermostat and TRVs)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (room thermostat and thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">A room thermostat will increase the efficiency of the heating system by enabling the boiler to switch off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>13</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (TRVs)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">Thermostatic radiator valves allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves. Thermostatic radiator valves should be fitted to every radiator except the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required. Building regulations generally apply to this work, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>14</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (room thermostat)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (room thermostat)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system should have a room thermostat to enable the boiler to switch off when no heat is required. A competent heating engineer should be asked to do this work. Insist that the thermostat switches off the boiler as well as the pump and that the thermostatic radiator valve is removed from any radiator in the same room as the thermostat. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>15</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (programmer and TRVs)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (programmer and thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system would benefit from a programmer to provide better comfort through automatic control of the system. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating and/or hot water patterns to be set for weekdays and weekends and holidays. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>16</Improvement-Number>
+      <Improvement-Summary language="1">Time and temperature zone control</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (zone control)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (time and temperature zone control)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system controls should be improved so that both the temperature and time of heating can be set differently in separate areas of your house; this will reduce the amount of energy used and lower fuel bills. For example, it is possible to have cooler temperatures in the bedrooms than in the living room provided internal doors are kept closed, and to have a longer heating period for the living room. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>17</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (programmer and thermostat)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (programmer and room thermostat)</Improvement-Heading>
+      <Improvement-Description language="1">The warm air heating system would benefit from the addition of a programmer and room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating patterns to be set for weekdays and weekends and holidays. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>18</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heating controls (room thermostat)</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heating controls (room thermostat)</Improvement-Heading>
+      <Improvement-Description language="1">The warm air heating system in this home would benefit from the addition of a room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>19</Improvement-Number>
+      <Improvement-Summary language="1">Solar water heating</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Solar water heating</Improvement-Summary-2>
+      <Improvement-Heading language="1">Solar water heating</Improvement-Heading>
+      <Improvement-Description language="1">A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This can significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. Planning permission might be required, building regulations generally apply to this work and a building warrant may be required, so it is best to check these with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>20</Improvement-Number>
+      <Improvement-Summary language="1">Replace boiler with new condensing boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Condensing boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property. This improvement is most appropriate when the existing central heating boiler needs repair or replacement, however there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>22</Improvement-Number>
+      <Improvement-Summary language="1">Replace boiler with biomass boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Biomass boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Biomass boiler</Improvement-Heading>
+      <Improvement-Description language="1">Modern boilers are cleaner burning and more efficient than the boiler in this home and cost less to run. A biomass boiler burns renewable fuel such as wood logs or pellets and therefore is less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check this with your local authority building standards department and also seek advice from a qualified heating engineer. Provisions under the Clean Air Act may determine if you can install such an appliance in your area so check this with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>23</Improvement-Number>
+      <Improvement-Summary language="1">Wood pellet stove with boiler and radiators</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Biomass stove with boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Biomass stove with boiler</Improvement-Heading>
+      <Improvement-Description language="1">A closed-in solid fuel stove (also called a room heater) is about twice as efficient as an open fire. Modern heaters with glass doors are clean, easy to use and provide an attractive source of heating. A biomass boiler burns renewable fuel such as wood pellets and therefore is much less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check this with your local authority building standards department and also seek advice from a qualified heating engineer. Provisions under the Clean Air Act may determine if you can install such an appliance in your area so check this with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>24</Improvement-Number>
+      <Improvement-Summary language="1">Fan assisted storage heaters and dual immersion cylinder</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Fan assisted storage heaters</Improvement-Summary-2>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are smaller and easier to control than the older type in this property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. Installations should be in accordance with the current regulations covering electrical wiring. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>25</Improvement-Number>
+      <Improvement-Summary language="1">Fan-assisted storage heaters</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Fan assisted storage heaters</Improvement-Summary-2>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are smaller and easier to control than the older type in this property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. Installations should be in accordance with the current regulations covering electrical wiring. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>26</Improvement-Number>
+      <Improvement-Summary language="1">Replacement warm air unit</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Replacement warm air unit</Improvement-Summary-2>
+      <Improvement-Heading language="1">Replacement warm air unit</Improvement-Heading>
+      <Improvement-Description language="1">A modern warm air unit is capable of higher efficiency than older types, meaning it will burn less fuel for heating and (if fitted) the hot water system in your property. This improvement is most appropriate when the existing central heating warm air unit or hot water service needs repair or replacement. Building regulations may apply to this work, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>27</Improvement-Number>
+      <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Gas condensing boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer. It is also recommended to change the electricity tariff to standard tariff when off-peak is no longer used.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>28</Improvement-Number>
+      <Improvement-Summary language="1">Condensing oil boiler with radiators</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Condensing oil boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Condensing oil boiler</Improvement-Heading>
+      <Improvement-Description language="1">Condensing boilers have a much higher efficiency than other types of heating appliance, meaning they will burn less fuel to heat the property. This option is best taken up when the present warm air unit requires repair or replacement. Building regulations generally apply to this work, and require replacement oil boilers to be of the condensing type, unless there are exceptional circumstances. As a building warrant may be required it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>29</Improvement-Number>
+      <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Gas condensing boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>30</Improvement-Number>
+      <Improvement-Summary language="1">Fan assisted storage heaters and dual immersion cylinder</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Fan assisted storage heaters</Improvement-Summary-2>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. Installations should be in accordance with the national wiring standards. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified electrical heating engineer. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>31</Improvement-Number>
+      <Improvement-Summary language="1">Fan-assisted storage heaters</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Fan assisted storage heaters</Improvement-Summary-2>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. Installations should be in accordance with the national wiring standards. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>34</Improvement-Number>
+      <Improvement-Summary language="1">Solar photovoltaic panels, 2.5 kWp</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Solar photovoltaic (PV) panels</Improvement-Summary-2>
+      <Improvement-Heading language="1">Solar photovoltaic (PV) panels</Improvement-Heading>
+      <Improvement-Description language="1">A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. Planning permission might be required, building regulations generally apply to this work and a building warrant may be required, so it is best to check these with your local authority. The assessment does not include the effect of any Feed-in Tariff which could appreciably increase the savings that are shown on this EPC for solar photovoltaic panels, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>35</Improvement-Number>
+      <Improvement-Summary language="1">Low energy lighting for all fixed outlets</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Low energy lighting</Improvement-Summary-2>
+      <Improvement-Heading language="1">Low energy lighting</Improvement-Heading>
+      <Improvement-Description language="1">Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>36</Improvement-Number>
+      <Improvement-Summary language="1">Replace heating unit with condensing unit</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Condensing heating unit</Improvement-Summary-2>
+      <Improvement-Heading language="1">Condensing heating unit</Improvement-Heading>
+      <Improvement-Description language="1">A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>37</Improvement-Number>
+      <Improvement-Summary language="1">Condensing boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Condensing boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Condensing boiler (separate from the range cooker)</Improvement-Heading>
+      <Improvement-Description language="1">A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>38</Improvement-Number>
+      <Improvement-Summary language="1">Condensing boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Condensing boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Condensing boiler (separate from the range cooker)</Improvement-Heading>
+      <Improvement-Description language="1">A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>39</Improvement-Number>
+      <Improvement-Summary language="1">Wood pellet stove with boiler and radiators</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Biomass stove with boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Biomass stove with boiler</Improvement-Heading>
+      <Improvement-Description language="1">A biomass stove (also called a room heater) burns renewable fuel such as wood pellets and therefore is less damaging to the environment than the solid fuel room heater in this home. This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check this with your local authority building standards department and also seek advice from a qualified heating engineer. Provisions under the Clean Air Act may determine if you can install such an appliance in your area so check this with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>40</Improvement-Number>
+      <Improvement-Summary language="1">Change room heaters to condensing boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Condensing boiler</Improvement-Summary-2>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">A full central heating system using a condensing boiler will provide space and water heating at greater efficiency than gas room heaters, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>42</Improvement-Number>
+      <Improvement-Summary language="1">Replace heating unit with mains gas condensing unit</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Mains gas condensing heating unit</Improvement-Summary-2>
+      <Improvement-Heading language="1">Mains gas condensing heating unit</Improvement-Heading>
+      <Improvement-Description language="1">Changing the heating to use a mains gas heating unit will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing units need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>44</Improvement-Number>
+      <Improvement-Summary language="1">Wind turbine</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Wind turbine</Improvement-Summary-2>
+      <Improvement-Heading language="1">Wind turbine</Improvement-Heading>
+      <Improvement-Description language="1">A wind turbine provides electricity from wind energy. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. Wind turbines are not suitable for all properties. The system’s effectiveness depends on local wind speeds and the presence of nearby obstructions, and a site survey should be undertaken by an accredited installer. Planning permission might be required and building regulations generally apply to this work and a building warrant may be required, so it is best to check these with your local authority. The assessment does not include the effect of any Feed-in Tariff which could appreciably increase the savings that are shown on this EPC for a wind turbine, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>45</Improvement-Number>
+      <Improvement-Summary language="1">Flat roof insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Flat roof insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Flat roof insulation</Improvement-Heading>
+      <Improvement-Description language="1">Insulating a flat roof will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation can be placed on top of the roof under the waterproof membrane and should particularly be considered when the waterproofing needs to be replaced. Further information about roof insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). Building regulations generally apply to this work so it is best to check this with your local authority building standards department.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>46</Improvement-Number>
+      <Improvement-Summary language="1">Room-in-roof insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Room-in-roof insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Room-in-roof insulation</Improvement-Heading>
+      <Improvement-Description language="1">Insulating roof rooms will significantly reduce heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. If it has a flat ceiling insulation can usually be added above the ceiling, and sloping ceilings and walls of roof rooms can be insulated using an internal lining board. Roof voids must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about roof room insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). Building regulations generally apply to this work so it is best to check this with your local authority building standards department.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>47</Improvement-Number>
+      <Improvement-Summary language="1">Floor insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Floor insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Floor insulation</Improvement-Heading>
+      <Improvement-Description language="1">Insulation of a floor will significantly reduce heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. Suspended floors can often be insulated from below but must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about floor insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). Building regulations generally apply to this work so it is best to check this with your local authority building standards department.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>48</Improvement-Number>
+      <Improvement-Summary language="1">High performance external doors</Improvement-Summary>
+      <Improvement-Summary-2 language="1">High performance external doors</Improvement-Summary-2>
+      <Improvement-Heading language="1">High performance external doors</Improvement-Heading>
+      <Improvement-Description language="1">High performance external doors contain insulation and lose heat at about half the rate of conventional external doors. Building regulations generally apply to this work, so it is best to check this with your local authority building standards department.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>49</Improvement-Number>
+      <Improvement-Summary language="1">Heat recovery system for mixer showers</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Heat recovery system for mixer showers</Improvement-Summary-2>
+      <Improvement-Heading language="1">Heat recovery system for mixer showers</Improvement-Heading>
+      <Improvement-Description language="1">A shower heat recovery system extracts heat from the water in the shower drain and transfers it to incoming cold water. This reduces the amount of energy needed per shower. You should seek advice from a qualified plumber. Building regulations generally apply to this work, so it is best to check this with your local authority building standards department.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>50</Improvement-Number>
+      <Improvement-Summary language="1">Flue gas heat recovery device in conjunction with boiler</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Flue gas heat recovery</Improvement-Summary-2>
+      <Improvement-Heading language="1">Flue gas heat recovery</Improvement-Heading>
+      <Improvement-Description language="1">A flue gas heat recovery system extracts heat from the boiler flue gases and transfers it to the incoming cold water so that the boiler needs to supply less heat. It is suitable for use only with modern condensing gas boiler and should be fitted when a replacement boiler is installed. You should seek advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>51</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">Air or ground source heat pump</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>52</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>53</Improvement-Number>
+      <Improvement-Summary language="1">Micro CHP</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">Micro CHP</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>54</Improvement-Number>
+      <Improvement-Summary language="1">Biomass boiler (Exempted Appliance if in Smoke Control Area)</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">Biomass boiler</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>55</Improvement-Number>
+      <Improvement-Summary language="1">External insulation with cavity wall insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">External and cavity wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Transaction-Type>
+      <Display-Order>1</Display-Order>
+      <Transaction-Code>6</Transaction-Code>
+      <Transaction-Text>New dwelling</Transaction-Text>
+      <In-RdSAP>false</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>2</Display-Order>
+      <Transaction-Code>1</Transaction-Code>
+      <Transaction-Text>Marketed sale</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>3</Display-Order>
+      <Transaction-Code>2</Transaction-Code>
+      <Transaction-Text>Non-marketed sale</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>4</Display-Order>
+      <Transaction-Code>8</Transaction-Code>
+      <Transaction-Text>Rental</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>5</Display-Order>
+      <Transaction-Code>9</Transaction-Code>
+      <Transaction-Text>Assessment for Green Deal</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>6</Display-Order>
+      <Transaction-Code>10</Transaction-Code>
+      <Transaction-Text>Following Green Deal</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>7</Display-Order>
+      <Transaction-Code>11</Transaction-Code>
+      <Transaction-Text>FiT application</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>8</Display-Order>
+      <Transaction-Code>5</Transaction-Code>
+      <Transaction-Text>None of the above</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+  </Country>
+  <Country>
+    <Country-Code>NIR</Country-Code>
+    <Average-SAP-Rating>57</Average-SAP-Rating>
+    <Recommendation>
+      <Improvement-Number>1</Improvement-Number>
+      <Improvement-Summary language="1">Insulate hot water cylinder with 80 mm jacket</Improvement-Summary>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Description language="1">Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness (or to suit the space available) for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>2</Improvement-Number>
+      <Improvement-Summary language="1">Increase hot water cylinder insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Description language="1">Increasing the thickness of existing insulation around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. An additional cylinder jacket or other suitable insulation layer can be used. The insulation should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness (or to suit the space available) for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>3</Improvement-Number>
+      <Improvement-Summary language="1">Add additional 80 mm jacket to hot water cylinder</Improvement-Summary>
+      <Improvement-Heading language="1">Hot water cylinder insulation</Improvement-Heading>
+      <Improvement-Description language="1">Increasing the thickness of existing insulation by adding an 80 mm cylinder jacket around the hot water cylinder will help maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. The jacket should be fitted over the top of the existing foam insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness (or to suit the space available) for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>4</Improvement-Number>
+      <Improvement-Summary language="1">Hot water cylinder thermostat</Improvement-Summary>
+      <Improvement-Heading language="1">Cylinder thermostat</Improvement-Heading>
+      <Improvement-Description language="1">A hot water cylinder thermostat enables the boiler to switch off when the water in the cylinder reaches the required temperature; this minimises the amount of energy that is used and lowers fuel bills. The thermostat is a temperature sensor that sends a signal to the boiler when the required temperature is reached. To be fully effective it needs to be sited in the correct position and hard wired in place, so it should be installed by a competent plumber or heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>5</Improvement-Number>
+      <Improvement-Summary language="1">Increase loft insulation to 270 mm</Improvement-Summary>
+      <Improvement-Heading language="1">Loft insulation</Improvement-Heading>
+      <Improvement-Description language="1">Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank; any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure (particularly if installing insulation between rafters because a vapour control layer and ventilation above the insulation are required). Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>6</Improvement-Number>
+      <Improvement-Summary language="1">Cavity wall insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Cavity wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. The insulation material is pumped into the gap through small holes that are drilled into the outer walls, and the holes are made good afterwards. As specialist machinery is used to fill the cavity, a professional installation company should carry out this work, and they should carry out a thorough survey before commencing work to ensure that this type of insulation is suitable for this home. They should also provide a guarantee for the work and handle any building control issues. Further information about cavity wall insulation and details of local installers can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>7</Improvement-Number>
+      <Improvement-Summary language="1">50 mm internal or external wall insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Internal or external wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">Solid wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating and can be installed by a competent DIY enthusiast. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>8</Improvement-Number>
+      <Improvement-Summary language="1">Replace single glazed windows with low-E double glazing</Improvement-Summary>
+      <Improvement-Heading language="1">Double glazing</Improvement-Heading>
+      <Improvement-Description language="1">Double glazing is the term given to a system where two panes of glass are made up into a sealed unit. Replacing existing single-glazed windows with double glazing will improve comfort in the home by reducing draughts and cold spots near windows. Double-glazed windows may also reduce noise, improve security and combat problems with condensation.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>9</Improvement-Number>
+      <Improvement-Summary language="1">Secondary glazing to single glazed windows</Improvement-Summary>
+      <Improvement-Heading language="1">Secondary glazing</Improvement-Heading>
+      <Improvement-Description language="1">Secondary glazing is the addition of a second pane of glass inside the existing window. Adding secondary glazing will improve comfort in the home by reducing draughts and cold spots near windows. It may also reduce noise and combat problems with condensation. Installation can be carried out by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>10</Improvement-Number>
+      <Improvement-Summary language="1">Draught proof single-glazed windows</Improvement-Summary>
+      <Improvement-Heading language="1">Draught proofing</Improvement-Heading>
+      <Improvement-Description language="1">Fitting draught proofing, strips of insulation around windows and doors, will improve the comfort in the home. A contractor can be employed but draught proofing can be installed by a competent DIY enthusiast.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>11</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (programmer, room thermostat and thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system would benefit from a programmer and room thermostat to enable the boiler to switch off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except one – the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>12</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (room thermostat and thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">A room thermostat will increase the efficiency of the heating system by enabling the boiler to switch off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>13</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">Thermostatic radiator valves allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves. Thermostatic radiator valves should be fitted to every radiator except the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>14</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (room thermostat)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system should have a room thermostat to enable the boiler to switch off when no heat is required. A competent heating engineer should be asked to do this work. Insist that the thermostat switches off the boiler as well as the pump and that the thermostatic radiator valve is removed from any radiator in the same room as the thermostat. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>15</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (programmer and thermostatic radiator valves)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system would benefit from a programmer to provide better comfort through automatic control of the system. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating and/or hot water patterns to be set for weekdays and weekends and holidays. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>16</Improvement-Number>
+      <Improvement-Summary language="1">Time and temperature zone control</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (time and temperature zone control)</Improvement-Heading>
+      <Improvement-Description language="1">The heating system controls should be improved so that both the temperature and time of heating can be set differently in separate areas of your house; this will reduce the amount of energy used and lower fuel bills. For example, it is possible to have cooler temperatures in the bedrooms than in the living room provided internal doors are kept closed, and to have a longer heating period for the living room. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>17</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (programmer and room thermostat)</Improvement-Heading>
+      <Improvement-Description language="1">The warm air heating system would benefit from the addition of a programmer and room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating patterns to be set for weekdays and weekends and holidays. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>18</Improvement-Number>
+      <Improvement-Summary language="1">Upgrade heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Heating controls (room thermostat)</Improvement-Heading>
+      <Improvement-Description language="1">The warm air heating system in this home would benefit from the addition of a room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>19</Improvement-Number>
+      <Improvement-Summary language="1">Solar water heating</Improvement-Summary>
+      <Improvement-Heading language="1">Solar water heating</Improvement-Heading>
+      <Improvement-Description language="1">A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>20</Improvement-Number>
+      <Improvement-Summary language="1">Replace boiler with new condensing boiler</Improvement-Summary>
+      <Improvement-Heading language="1">New condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property. This improvement is most appropriate when the existing central heating boiler needs repair or replacement, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>22</Improvement-Number>
+      <Improvement-Summary language="1">Replace boiler with biomass boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass boiler</Improvement-Heading>
+      <Improvement-Description language="1">Modern boilers are cleaner burning and more efficient than the boiler in this home and cost less to run. A biomass boiler burns renewable fuel such as wood pellets and therefore is less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Provisions under the Clean Air Act apply to this work. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>23</Improvement-Number>
+      <Improvement-Summary language="1">Wood pellet stove with boiler and radiators</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass stove with boiler</Improvement-Heading>
+      <Improvement-Description language="1">A closed-in solid fuel stove (also called a room heater) is about twice as efficient as an open fire. Modern heaters with glass doors are clean, easy to use and provide an attractive source of heating. A biomass boiler burns renewable fuel such as wood pellets and therefore is much less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Provisions under the Clean Air Act apply to this work. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>24</Improvement-Number>
+      <Improvement-Summary language="1">Fan assisted storage heaters and dual immersion cylinder</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are smaller and easier to control than the older type in the property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. As installations should be in accordance with the current regulations covering electrical wiring, only a qualified electrician should carry out the installation. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>25</Improvement-Number>
+      <Improvement-Summary language="1">Fan-assisted storage heaters</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are smaller and easier to control than the older type in the property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. As installations should be in accordance with the current regulations covering electrical wiring, only a qualified electrician should carry out the installation. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>26</Improvement-Number>
+      <Improvement-Summary language="1">Replacement warm air unit</Improvement-Summary>
+      <Improvement-Heading language="1">Replacement warm air unit</Improvement-Heading>
+      <Improvement-Description language="1">A modern warm air unit is capable of higher efficiency than older types, meaning it will burn less fuel for heating and (if fitted) the hot water system in your property. This improvement is most appropriate when the existing central heating warm air unit or hot water service needs repair or replacement. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>27</Improvement-Number>
+      <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options. It is also recommended to change the electricity tariff to standard tariff when off-peak is no longer used.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>28</Improvement-Number>
+      <Improvement-Summary language="1">Condensing oil boiler with radiators</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing oil boiler</Improvement-Heading>
+      <Improvement-Description language="1">Condensing boilers have a much higher efficiency than other types of heating appliance, meaning they will burn less fuel to heat the property. This option is best taken up when the present warm air unit requires repair or replacement. Building Regulations require replacement oil boilers to be of the condensing type unless there are exceptional circumstances. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>29</Improvement-Number>
+      <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>30</Improvement-Number>
+      <Improvement-Summary language="1">Fan assisted storage heaters and dual immersion cylinder</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. As installations should be in accordance with the national wiring standards, only a qualified electrician should carry out the installation. Ask a qualified electrical heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>31</Improvement-Number>
+      <Improvement-Summary language="1">Fan-assisted storage heaters</Improvement-Summary>
+      <Improvement-Heading language="1">Fan assisted storage heaters</Improvement-Heading>
+      <Improvement-Description language="1">Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. As installations should be in accordance with the national wiring standards, only a qualified electrician should carry out the installation. It is best to obtain advice from a qualified electrical heating engineer. Ask a qualified electrical heating engineer to explain the options, which might also include switching to other forms of electric heating.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>34</Improvement-Number>
+      <Improvement-Summary language="1">Solar photovoltaic panels, 2.5 kWp</Improvement-Summary>
+      <Improvement-Heading language="1">Solar photovoltaic (PV) panels</Improvement-Heading>
+      <Improvement-Description language="1">A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Photovoltaic Association has up-to-date information on local installers who are qualified electricians. It is best to obtain advice from a qualified electrician. Ask the electrician to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>35</Improvement-Number>
+      <Improvement-Summary language="1">Low energy lighting for all fixed outlets</Improvement-Summary>
+      <Improvement-Heading language="1">Low energy lighting</Improvement-Heading>
+      <Improvement-Description language="1">Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>36</Improvement-Number>
+      <Improvement-Summary language="1">Replace heating unit with condensing unit</Improvement-Summary>
+      <Improvement-Heading language="1">Install condensing heating unit</Improvement-Heading>
+      <Improvement-Description language="1">A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>37</Improvement-Number>
+      <Improvement-Summary language="1">Install condensing boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Install condensing boiler (separate from the range cooker)</Improvement-Heading>
+      <Improvement-Description language="1">A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>38</Improvement-Number>
+      <Improvement-Summary language="1">Install condensing boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Install condensing boiler (separate from the range cooker)</Improvement-Heading>
+      <Improvement-Description language="1">A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>39</Improvement-Number>
+      <Improvement-Summary language="1">Wood pellet stove with boiler and radiators</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass stove with boiler</Improvement-Heading>
+      <Improvement-Description language="1">A biomass stove (also called a room heater) burns renewable fuel such as wood pellets and therefore is less damaging to the environment than the solid fuel room heater in this home. This improvement is most appropriate when the existing heating system needs repair or replacement. Provisions under the Clean Air Act apply to this work. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>40</Improvement-Number>
+      <Improvement-Summary language="1">Change room heaters to condensing boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Condensing boiler</Improvement-Heading>
+      <Improvement-Description language="1">A full central heating system using a condensing boiler will provide space and water heating at greater efficiency than gas room heaters, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>42</Improvement-Number>
+      <Improvement-Summary language="1">Replace heating unit with mains gas condensing unit</Improvement-Summary>
+      <Improvement-Heading language="1">Mains gas condensing heating unit</Improvement-Heading>
+      <Improvement-Description language="1">Changing the heating to use a mains gas heating unit will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing units need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>44</Improvement-Number>
+      <Improvement-Summary language="1">Wind turbine</Improvement-Summary>
+      <Improvement-Heading language="1">Wind turbine</Improvement-Heading>
+      <Improvement-Description language="1">A wind turbine provides electricity from wind energy. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Wind Energy Association has up-to-date information on suppliers of small-scale wind systems. Wind turbines are not suitable for all properties. The system’s effectiveness depends on local wind speeds and the presence of nearby obstructions, and a site survey should be undertaken by an accredited installer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>45</Improvement-Number>
+      <Improvement-Summary language="1">Flat roof insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Flat roof insulation</Improvement-Heading>
+      <Improvement-Description language="1">Insulation of a flat roof will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Where the weatherproof membrane is sound and the roof construction is appropriate, suitable insulation can be placed on top of the roof membrane (inverted roof). Alternatively, where the weatherproof membrane needs to be replaced insulation can be provided under the weatherproof membrane (warm roof). Further information about roof insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>46</Improvement-Number>
+      <Improvement-Summary language="1">Room-in-roof insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Room-in-roof insulation</Improvement-Heading>
+      <Improvement-Description language="1">Insulating roof rooms will significantly reduce heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. If it has a flat ceiling insulation can usually be added above the ceiling, and sloping ceilings and walls of roof rooms can be insulated using an internal lining board. Further information about roof room insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>47</Improvement-Number>
+      <Improvement-Summary language="1">Floor insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Floor insulation</Improvement-Heading>
+      <Improvement-Description language="1">Insulation of a floor will significantly reduce heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. Suspended floors can sometimes be insulated from below which means that the floor does not need to be lifted to install the insulation. Further information about floor insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>48</Improvement-Number>
+      <Improvement-Summary language="1">High performance external doors</Improvement-Summary>
+      <Improvement-Heading language="1">High performance external doors</Improvement-Heading>
+      <Improvement-Description language="1">High performance external doors contain insulation and lose heat at about half the rate of conventional external doors.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>49</Improvement-Number>
+      <Improvement-Summary language="1">Heat recovery system for mixer showers</Improvement-Summary>
+      <Improvement-Heading language="1">Heat recovery system for mixer showers</Improvement-Heading>
+      <Improvement-Description language="1">A shower heat recovery system extracts heat from the water in the shower drain and transfers it to incoming cold water. This reduces the amount of energy needed per shower.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>50</Improvement-Number>
+      <Improvement-Summary language="1">Flue gas heat recovery in conjunction with boiler</Improvement-Summary>
+      <Improvement-Heading language="1">Flue gas heat recovery</Improvement-Heading>
+      <Improvement-Description language="1">A flue gas heat recovery system extracts heat from the boiler flue gases and transfers it to the incoming cold water so that the boiler needs to supply less heat. It is suitable for use only with a modern condensing gas boiler and should be fitted when a replacement boiler is installed.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>51</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>52</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>53</Improvement-Number>
+      <Improvement-Summary language="1">Micro CHP</Improvement-Summary>
+      <Improvement-Heading language="1">Micro CHP</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>54</Improvement-Number>
+      <Improvement-Summary language="1">Biomass boiler (Exempted Appliance if in Smoke Control Area)</Improvement-Summary>
+      <Improvement-Heading language="1">Biomass boiler</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>55</Improvement-Number>
+      <Improvement-Summary language="1">External insulation with cavity wall insulation</Improvement-Summary>
+      <Improvement-Heading language="1">External and cavity wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Transaction-Type>
+      <Display-Order>1</Display-Order>
+      <Transaction-Code>6</Transaction-Code>
+      <Transaction-Text>New dwelling</Transaction-Text>
+      <In-RdSAP>false</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>2</Display-Order>
+      <Transaction-Code>1</Transaction-Code>
+      <Transaction-Text>Marketed sale</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>3</Display-Order>
+      <Transaction-Code>2</Transaction-Code>
+      <Transaction-Text>Non-marketed sale</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>4</Display-Order>
+      <Transaction-Code>8</Transaction-Code>
+      <Transaction-Text>Rental</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>8</Display-Order>
+      <Transaction-Code>5</Transaction-Code>
+      <Transaction-Text>None of the above</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+  </Country>
+  <Addendum>
+    <Addendum-Number>1</Addendum-Number>
+    <Circumstances>1. Wall type does not correspond to options available in RdSAP</Circumstances>
+    <Addendum-Text language="1">The dwelling has a type of wall that is not included in the available options. The nearest equivalent type was used for the assessment.</Addendum-Text>
+    <Addendum-Text language="2">Mae gan yr annedd fath o wal sydd heb ei gynnwys yn yr opsiynau sydd ar gael. Defnyddiwyd y math cyfatebol agosaf ar gyfer yr asesiad.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>4</Addendum-Number>
+    <Circumstances>4. Dwelling has a swimming pool</Circumstances>
+    <Addendum-Text language="1">The energy assessment for the dwelling does not include energy used to heat the swimming pool.</Addendum-Text>
+    <Addendum-Text language="2">Dydy asesiad ynni’r annedd ddim yn cynnwys yr ynni a gaiff ei ddefnyddio i wresogi’r pwll nofio.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>5</Addendum-Number>
+    <Circumstances>5. Dwelling has micro-CHP not found in database</Circumstances>
+    <Addendum-Text language="1">The performance characteristics of the micro-CHP system in this dwelling are not known and default values were used for the assessment.</Addendum-Text>
+    <Addendum-Text language="2">Nid yw nodweddion perfformiad y system CHP meicro yn yr annedd hon yn hysbys a chafodd gwerthoedd diofyn eu defnyddio at yr asesiad.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>6</Addendum-Number>
+    <Circumstances>6. Storage heater or dual immersion, and single electric meter</Circumstances>
+    <Addendum-Text language="1">A dual rate appliance(s) is present with a single-rate supply. A single-rate appliance has been used for the assessment. Changing the electricity tariff to an off-peak (dual rate) supply is likely to reduce fuel costs and improve the energy rating.</Addendum-Text>
+    <Addendum-Text language="2">Mae yma gyfarpar cyfradd ddeuol a chyflenwad cyfradd sengl. At ddibenion yr asesiad, cyfarpar cyfradd sengl sydd wedi’i ddefnyddio. Mae’n debyg y byddai newid y tariff trydan i gyflenwad heblaw’r cyflenwad oriau brig (cyfradd ddeuol) yn lleihau costau tanwydd ac yn gwella’r cyfraddiad ynni.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>8</Addendum-Number>
+    <Circumstances>8. PVs or wind turbine present on the property (England, Wales or Scotland)</Circumstances>
+    <Addendum-Text language="1">The assessment does not include any feed-in tariffs that may be applicable to this property.</Addendum-Text>
+    <Addendum-Text language="2">Dydy’r asesiad ddim yn cynnwys unrhyw dariff dechreuol a allai fod yn gymwys ar gyfer yr eiddo hwn.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>9</Addendum-Number>
+    <Circumstances>9. Two main heating systems and heating system upgrade is recommended</Circumstances>
+    <Addendum-Text language="1">As there is more than one heating system, you should seek professional advice on the most cost-effective option for upgrading the systems.</Addendum-Text>
+    <Addendum-Text language="2">Gan fod mwy nag un system wresogi, dylech ofyn am gyngor proffesiynol am y dewis mwyaf cost-effeithiol i uwchraddio’r systemau.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>10</Addendum-Number>
+    <Circumstances>10. Dual electricity meter selected but there is also an electricity meter for standard tariff</Circumstances>
+    <Addendum-Text language="1">The assessment has been done on the basis of an off-peak electricity tariff. However some heating or hot water appliances may be on the standard domestic tariff.</Addendum-Text>
+    <Addendum-Text language="2">Cyflawnwyd yr asesiad ar sail y tariff trydan am gyfnodau tawel. Fodd bynnag, gall rhai mathau o offer gwresogi neu ddwr poeth fod ar y tariff domestig safonol.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>11</Addendum-Number>
+    <Circumstances>11. Single electricity meter selected but there is also an electricity meter for an off-peak tariff</Circumstances>
+    <Addendum-Text language="1">The assessment has been done on the basis of the standard domestic electricity tariff. However some heating or hot water appliances may be on an off-peak tariff.</Addendum-Text>
+    <Addendum-Text language="2">Cyflawnwyd yr asesiad ar sail y tariff trydan domestig safonol. Fodd bynnag, gall rhai mathau o offer gwresogi neu ddwr poeth fod ar y tariff am gyfnodau tawel.</Addendum-Text>
+  </Addendum>
+  <Addendum>
+    <Addendum-Number>12</Addendum-Number>
+    <Circumstances>12. Dwelling is using a biomass fuel that is not in the RdSAP fuel options </Circumstances>
+    <Addendum-Text language="1">The dwelling uses a type of fuel that is not included in the available options. The nearest equivalent fuel type was used for the assessment.</Addendum-Text>
+    <Addendum-Text language="2">Nid yw’r math o danwydd y mae’r anheddiad yn ei ddefnyddio wedi ei restru yn yr opsiynau sydd ar gael. Defnyddiwyd y math cyfatebol tebycaf o danwydd ar gyfer yr asesiad.</Addendum-Text>
+  </Addendum>
+  <Tenure>
+    <Tenure-Code>1</Tenure-Code>
+    <Tenure-Text>Owner-occupied</Tenure-Text>
+  </Tenure>
+  <Tenure>
+    <Tenure-Code>2</Tenure-Code>
+    <Tenure-Text>Rented (social)</Tenure-Text>
+  </Tenure>
+  <Tenure>
+    <Tenure-Code>3</Tenure-Code>
+    <Tenure-Text>Rented (private)</Tenure-Text>
+  </Tenure>
+  <Tenure>
+    <Tenure-Code>ND</Tenure-Code>
+    <Tenure-Text>Unknown</Tenure-Text>
+  </Tenure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>1</Disclosure-Code>
+    <Disclosure-Text language="1">No related party</Disclosure-Text>
+    <Disclosure-Text language="2">Dim parti perthnasol</Disclosure-Text>
+  </Related-Party-Disclosure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>2</Disclosure-Code>
+    <Disclosure-Text language="1">Relative of homeowner or of occupier of the property</Disclosure-Text>
+    <Disclosure-Text language="2">Perthynas i berchennog y cartref neu ddeiliad yr eiddo</Disclosure-Text>
+  </Related-Party-Disclosure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>3</Disclosure-Code>
+    <Disclosure-Text language="1">Residing at the property</Disclosure-Text>
+    <Disclosure-Text language="2">Yn byw yn yr eiddo</Disclosure-Text>
+  </Related-Party-Disclosure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>4</Disclosure-Code>
+    <Disclosure-Text language="1">Financial interest in the property</Disclosure-Text>
+    <Disclosure-Text language="2">Buddiant ariannol yn yr eiddo</Disclosure-Text>
+  </Related-Party-Disclosure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>5</Disclosure-Code>
+    <Disclosure-Text language="1">Owner or Director of the organisation dealing with the property transaction </Disclosure-Text>
+    <Disclosure-Text language="2">Perchennog neu Gyfarwyddwr y corff sy’n delio â’r trafodyn eiddo</Disclosure-Text>
+  </Related-Party-Disclosure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>6</Disclosure-Code>
+    <Disclosure-Text language="1">Employed by the professional dealing with the property transaction </Disclosure-Text>
+    <Disclosure-Text language="2">Wedi’i gyflogi gan y person proffesiynol sy’n delio â’r trafodyn eiddo</Disclosure-Text>
+  </Related-Party-Disclosure>
+  <Related-Party-Disclosure>
+    <Disclosure-Code>7</Disclosure-Code>
+    <Disclosure-Text language="1">Relative of the professional dealing with the property transaction</Disclosure-Text>
+    <Disclosure-Text language="2">Perthynas i’r person proffesiynol sy’n delio â’r trafodyn eiddo</Disclosure-Text>
+  </Related-Party-Disclosure>
+</EPC:ExternalDefinitions>
