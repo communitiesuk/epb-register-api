@@ -57,6 +57,9 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
   let(:sap_s_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-S-19.0.0.xml"
   end
+  let(:rdsap_s_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-S-19.0.xml"
+  end
   let(:scheme_id) { add_scheme_and_get_id }
 
   describe "when trying to lodge an example XML" do
@@ -235,6 +238,18 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
                    scheme_ids: [scheme_id],
                  },
                  schema_name: "SAP-Schema-S-19.0.0",
+                 migrated: true,
+                 ).status).to eq 201
+      end
+
+      it "can lodge the example RdSAP" do
+        expect(lodge_assessment(
+                 assessment_body: rdsap_s_xml,
+                 accepted_responses: [201],
+                 auth_data: {
+                   scheme_ids: [scheme_id],
+                 },
+                 schema_name: "RdSAP-Schema-S-19.0",
                  migrated: true,
                  ).status).to eq 201
       end

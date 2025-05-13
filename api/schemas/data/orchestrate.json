@@ -183,6 +183,10 @@
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-17.0/RdSAP/Templates/RdSAP-Report.xsd"
   },
+  "RdSAP-Schema-S-19.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-S-19.0/RdSAP/Templates/RdSAP-Report.xsd"
+  },
   "CEPC-8.0.0": {
     "schema_path": "api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
   },
