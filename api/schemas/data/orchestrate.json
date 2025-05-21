@@ -216,5 +216,8 @@
   },
   "CEPC-3.1": {
     "schema_path": "api/schemas/xml/CEPC-3.1/Reports/CEPC-Reports.xsd"
+  },
+  "CEPC-S-7.1": {
+    "schema_path": "api/schemas/xml/CEPC-S-7.1/Reports/CEPC-Reports.xsd"
   }
 }

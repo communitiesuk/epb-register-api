@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC"
+           elementFormDefault="qualified" version="LIG-16.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="./BaseDataTypes.xsd"/>
+	<!--xs:include schemaLocation="./HCR-Domains.xsd"/-->
+	<!--<xs:include schemaLocation="../Templates/Property.xsd"/>-->
+	<xs:include schemaLocation="./Property.xsd"/>
+	<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
+  <xs:complexType name="Energy-Assessor">
+    <xs:annotation>
+      <xs:documentation>
+        A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Membership-Number" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The unique identifier assigned to the Energy Assessor by the Approved Organisation by which they can be identified throughout their membership of the scheme.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The name by which the Energy Assessor is registered. This is a structured name containing prefix, first name + surname.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Approved-Organisation-Name" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The name of the Approved Organisation that certified the Energy Assessor.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Approved-Organisation-Web-Address" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The web address of the Approved Organisation that certified the Energy Assessor.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Trading-Address" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The address that any written correspondence can be sent to. This is not the same as the Registered Address because it may, of course, be a Post Office Box.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Company-Name" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The Name of the Company that the Energy Assessor is empolyed by.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Status" type="EAStatusCode" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The Status of the Energy Assessor - at the time of producing and lodging a report this shoudl be "Registered" but any of the values can be present on the  EA Register itself.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="E-Mail" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Optional e-mail address for the Energy Assessor</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Telephone-Number" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="Base-Postcode-Location" type="PostcodeType" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The full postcode that the Energy Assessor works from.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="EAStatusCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Inactive">
+        <xs:annotation>
+          <xs:documentation>Inactive</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Registered">
+        <xs:annotation>
+          <xs:documentation>Registered</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Struck-Off">
+        <xs:annotation>
+          <xs:documentation>Struck Off</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Suspended">
+        <xs:annotation>
+          <xs:documentation>Suspended</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InspectorTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Home Inspector</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Domestic Energy Assessor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Mortgage-Lender" type="Mortgage-Lender"/>
+	<xs:complexType name="Mortgage-Lender">
+		<xs:annotation>
+			<xs:documentation>A Mortgage Lender is an organisation that may lend money to the Buyer for the purpose of purchasing the Property.
+
+As part of this decision making the Mortgage Lender may use an Automated Valuation Model (AVM) to value the Property and requires access to the underlying data in the Home Condition Report or the content of the Energy Performance Certificate in order to complete this valuation.</xs:documentation>
+		</xs:annotation>
+		<xs:all/>
+	</xs:complexType>
+	<xs:simpleType name="Postcode-CoverageType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="500"/>
+			<xs:pattern value="[A-Z]{1,2}[0-9]{0,2}(,[A-Z]{1,2}[0-9]{0,2})*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Certification-Scheme" type="Certification-Scheme"/>
+	<xs:complexType name="Certification-Scheme">
+		<xs:annotation>
+			<xs:documentation>The Certification Scheme is the "regulatory" body responsible for regulating the activities of the Home Inspectors.
+
+A Certification Scheme will carry out certain primary functions in accordance with the standards, focussed around certifying, managing and regulating Home Inspectors and registering Home Condition Reports.
+
+Although covered by a different regulatory regime a Certification Scheme is synonymous with the role of an Accreditation Body in the production of an Energy Performance Certificate.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Scheme-Name" type="xs:string"/>
+			<xs:element name="Complaints-Address" type="AddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The address to which any complaints should be sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact-Address" type="AddressType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The address that any written correspondence can be sent to. This is not the same as the Registered Address because it may, of course, be a Post Office Box.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Web-Site" type="xs:string"/>
+			<xs:element name="E-Mail" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>the E-Mail address that the Authorised User can be contacted at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registered-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The public name by which the Authorised User is known by - this is either a personal name (e.g. "Mr John Smith") built up from the components of the Person Name if the Authorised User is an individual such as a Home Inspector or a Company Name if the Authorised User is an organisation.
+
+In the case of a individual the name may not be unique (e.g. there may be many thousands of people called "Mr John Smith") so this is information about the Authorised User rather than an identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fax" type="PhoneNumberType"/>
+			<xs:element name="Telephone" type="PhoneNumberType"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="CertificationSchemeKeyFields" type="CertificationSchemeKeyFields"/>
+	<xs:complexType name="CertificationSchemeKeyFields">
+		<xs:annotation>
+			<xs:documentation>Key field definition for the Certification Scheme class.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Registered-Name" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PhoneNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9\-\.\)\(\+ ]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

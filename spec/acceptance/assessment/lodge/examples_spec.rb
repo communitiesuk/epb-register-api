@@ -60,6 +60,10 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
   let(:rdsap_s_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-S-19.0.xml"
   end
+  let(:cepc_s_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-S-7.1(EPC-RR).xml"
+  end
   let(:scheme_id) { add_scheme_and_get_id }
 
   describe "when trying to lodge an example XML" do
@@ -250,6 +254,18 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
                    scheme_ids: [scheme_id],
                  },
                  schema_name: "RdSAP-Schema-S-19.0",
+                 migrated: true,
+                 ).status).to eq 201
+      end
+
+      it "can lodge the example CEPC" do
+        expect(lodge_assessment(
+                 assessment_body: cepc_s_xml,
+                 accepted_responses: [201],
+                 auth_data: {
+                   scheme_ids: [scheme_id],
+                 },
+                 schema_name: "CEPC-S-7.1",
                  migrated: true,
                  ).status).to eq 201
       end

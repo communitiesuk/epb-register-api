@@ -1,0 +1,365 @@
+<!-- EPCgen version: v6.1.e.0 End Version -->
+<!-- Date: Fri Aug 04 13:22:51 2023 -->
+<CEPC:LodgementReportRequest xmlns:CEPC="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xsi:schemaLocation="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC ../../../../api/schemas/xml/CEPC-S-7.1/Reports/CEPC-Reports.xsd">
+  <!-- This XML message is for an EPC in Scotland. -->
+  <CEPC:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
+      <CEPC:Inspection-Date>2023-07-11</CEPC:Inspection-Date>
+      <CEPC:Report-Type>3</CEPC:Report-Type>
+      <CEPC:Completion-Date>2023-08-04</CEPC:Completion-Date>
+      <CEPC:Registration-Date>2023-08-04</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Restricted-Access>0</CEPC:Restricted-Access>
+      <CEPC:Transaction-Type>1</CEPC:Transaction-Type>
+      <CEPC:Seller-Commission-Report>Y</CEPC:Seller-Commission-Report>
+      <CEPC:Property-Type>
+        <CEPC:Short-Description>Hotel</CEPC:Short-Description>
+        <CEPC:Long-Description>Hotels</CEPC:Long-Description>
+      </CEPC:Property-Type>
+      <CEPC:Energy-Assessor>
+        <CEPC:Membership-Number>SPEC000000</CEPC:Membership-Number>
+        <CEPC:Name>Testa Sessor</CEPC:Name>
+        <CEPC:Approved-Organisation-Name>Accreditation schema</CEPC:Approved-Organisation-Name>
+        <CEPC:Approved-Organisation-Web-Address />
+        <CEPC:Trading-Address>6 Unit Business Park Town</CEPC:Trading-Address>
+        <CEPC:Company-Name>EPC R Us Ltd</CEPC:Company-Name>
+        <CEPC:Status>Registered</CEPC:Status>
+        <CEPC:E-Mail>sessor@email.co.uk</CEPC:E-Mail>
+        <CEPC:Telephone-Number>00000000073</CEPC:Telephone-Number>
+      </CEPC:Energy-Assessor>
+      <CEPC:Property>
+        <CEPC:Address>
+          <CEPC:Address-Line-1>Non-dom Property</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2>Some Street</CEPC:Address-Line-2>
+          <CEPC:Address-Line-3>Bigger Line</CEPC:Address-Line-3>
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>FK1 1XE</CEPC:Postcode>
+        </CEPC:Address>
+        <CEPC:UPRN>0000000001</CEPC:UPRN>
+      </CEPC:Property>
+      <CEPC:Calculation-Details>
+        <CEPC:Methodology>SBEM</CEPC:Methodology>
+        <CEPC:Calculation-Tool>DesignBuilder Software Ltd, DesignBuilder SBEM, v7.2.0, SBEM, v6.1.e.0</CEPC:Calculation-Tool>
+        <CEPC:Output-Engine>EPCgen, v6.1.e.0</CEPC:Output-Engine>
+        <CEPC:Inspection-Type>Physical</CEPC:Inspection-Type>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Summary-Of-Performance>
+      <CEPC:Building-Data>
+        <CEPC:Analysis-Type>ACTUAL</CEPC:Analysis-Type>
+        <CEPC:Area>109.16</CEPC:Area>
+        <CEPC:Area-Exterior>230.1</CEPC:Area-Exterior>
+        <CEPC:Weather>GLA</CEPC:Weather>
+        <CEPC:Q50-Infiltration>25</CEPC:Q50-Infiltration>
+        <CEPC:Building-W-K>323.443</CEPC:Building-W-K>
+        <CEPC:Building-W-M2K>1.40566</CEPC:Building-W-M2K>
+        <CEPC:Building-Alpha>10.2321</CEPC:Building-Alpha>
+        <CEPC:Activities>
+          <CEPC:Activity>
+            <CEPC:ID>1023</CEPC:ID>
+            <CEPC:Area>1.56</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1016</CEPC:ID>
+            <CEPC:Area>22.51</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1028</CEPC:ID>
+            <CEPC:Area>27.93</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1014</CEPC:ID>
+            <CEPC:Area>57.16</CEPC:Area>
+          </CEPC:Activity>
+        </CEPC:Activities>
+        <CEPC:Primary-Energy-Indicator>616</CEPC:Primary-Energy-Indicator>
+        <CEPC:Approximate-Energy-Use>523</CEPC:Approximate-Energy-Use>
+        <CEPC:Global-Performance>
+          <CEPC:KWH-M2-Heating>313.154</CEPC:KWH-M2-Heating>
+          <CEPC:KWH-M2-Cooling>0</CEPC:KWH-M2-Cooling>
+          <CEPC:KWH-M2-Auxiliary>31.3881</CEPC:KWH-M2-Auxiliary>
+          <CEPC:KWH-M2-Lighting>22.4009</CEPC:KWH-M2-Lighting>
+          <CEPC:KWH-M2-DHW>155.748</CEPC:KWH-M2-DHW>
+          <CEPC:KWH-M2-Equipment>23.6358</CEPC:KWH-M2-Equipment>
+          <CEPC:KWH-M2-Natural-Gas>0</CEPC:KWH-M2-Natural-Gas>
+          <CEPC:KWH-M2-LPG>468.903</CEPC:KWH-M2-LPG>
+          <CEPC:KWH-M2-Biogas>0</CEPC:KWH-M2-Biogas>
+          <CEPC:KWH-M2-Oil>0</CEPC:KWH-M2-Oil>
+          <CEPC:KWH-M2-Coal>0</CEPC:KWH-M2-Coal>
+          <CEPC:KWH-M2-Anthracite>0</CEPC:KWH-M2-Anthracite>
+          <CEPC:KWH-M2-Smokeless>0</CEPC:KWH-M2-Smokeless>
+          <CEPC:KWH-M2-Dual-Fuel>0</CEPC:KWH-M2-Dual-Fuel>
+          <CEPC:KWH-M2-Biomass>0</CEPC:KWH-M2-Biomass>
+          <CEPC:KWH-M2-Supplied>53.789</CEPC:KWH-M2-Supplied>
+          <CEPC:KWH-M2-Waste-Heat>0</CEPC:KWH-M2-Waste-Heat>
+          <CEPC:KWH-M2-District-Heating>0</CEPC:KWH-M2-District-Heating>
+          <CEPC:KWH-M2-Displaced>0</CEPC:KWH-M2-Displaced>
+          <CEPC:KWH-M2-PVS>0</CEPC:KWH-M2-PVS>
+          <CEPC:KWH-M2-Wind>0</CEPC:KWH-M2-Wind>
+          <CEPC:KWH-M2-CHP>0</CEPC:KWH-M2-CHP>
+          <CEPC:KWH-M2-SES>0</CEPC:KWH-M2-SES>
+        </CEPC:Global-Performance>
+        <CEPC:HVAC-Systems>
+          <CEPC:HVAC-System-Data>
+            <CEPC:Area>109.16</CEPC:Area>
+            <CEPC:Type>Central heating using water: radiators</CEPC:Type>
+            <CEPC:Heat-Source>LTHW boiler</CEPC:Heat-Source>
+            <CEPC:Fuel-Type>LPG</CEPC:Fuel-Type>
+            <CEPC:MJ-M2-Heating-Dem>997.71</CEPC:MJ-M2-Heating-Dem>
+            <CEPC:MJ-M2-Cooling-Dem>72.8559</CEPC:MJ-M2-Cooling-Dem>
+            <CEPC:KWH-M2-Heating>313.154</CEPC:KWH-M2-Heating>
+            <CEPC:KWH-M2-Cooling>0</CEPC:KWH-M2-Cooling>
+            <CEPC:KWH-M2-Auxiliary>31.3881</CEPC:KWH-M2-Auxiliary>
+            <CEPC:Heating-SSEFF>0.885</CEPC:Heating-SSEFF>
+            <CEPC:Cooling-SSEER>0</CEPC:Cooling-SSEER>
+            <CEPC:Heating-Gen-SEFF>0.992</CEPC:Heating-Gen-SEFF>
+            <CEPC:Cooling-Gen-SEER>0</CEPC:Cooling-Gen-SEER>
+            <CEPC:Activities>
+              <CEPC:Activity>
+                <CEPC:ID>1023</CEPC:ID>
+                <CEPC:Area>1.56</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1016</CEPC:ID>
+                <CEPC:Area>22.51</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1028</CEPC:ID>
+                <CEPC:Area>27.93</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1014</CEPC:ID>
+                <CEPC:Area>57.16</CEPC:Area>
+              </CEPC:Activity>
+            </CEPC:Activities>
+          </CEPC:HVAC-System-Data>
+        </CEPC:HVAC-Systems>
+      </CEPC:Building-Data>
+      <CEPC:Building-Data>
+        <CEPC:Analysis-Type>NOTIONAL</CEPC:Analysis-Type>
+        <CEPC:Area>109.16</CEPC:Area>
+        <CEPC:Area-Exterior>230.1</CEPC:Area-Exterior>
+        <CEPC:Weather>GLA</CEPC:Weather>
+        <CEPC:Q50-Infiltration>4</CEPC:Q50-Infiltration>
+        <CEPC:Building-W-K>79.961</CEPC:Building-W-K>
+        <CEPC:Building-W-M2K>0.347505</CEPC:Building-W-M2K>
+        <CEPC:Building-Alpha>45.5163</CEPC:Building-Alpha>
+        <CEPC:Activities>
+          <CEPC:Activity>
+            <CEPC:ID>1023</CEPC:ID>
+            <CEPC:Area>1.56</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1016</CEPC:ID>
+            <CEPC:Area>22.51</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1028</CEPC:ID>
+            <CEPC:Area>27.93</CEPC:Area>
+          </CEPC:Activity>
+          <CEPC:Activity>
+            <CEPC:ID>1014</CEPC:ID>
+            <CEPC:Area>57.16</CEPC:Area>
+          </CEPC:Activity>
+        </CEPC:Activities>
+        <CEPC:Primary-Energy-Indicator>301</CEPC:Primary-Energy-Indicator>
+        <CEPC:Approximate-Energy-Use>523</CEPC:Approximate-Energy-Use>
+        <CEPC:Global-Performance>
+          <CEPC:KWH-M2-Heating>84.9379</CEPC:KWH-M2-Heating>
+          <CEPC:KWH-M2-Cooling>0</CEPC:KWH-M2-Cooling>
+          <CEPC:KWH-M2-Auxiliary>17.2505</CEPC:KWH-M2-Auxiliary>
+          <CEPC:KWH-M2-Lighting>6.36637</CEPC:KWH-M2-Lighting>
+          <CEPC:KWH-M2-DHW>180.298</CEPC:KWH-M2-DHW>
+          <CEPC:KWH-M2-Equipment>23.6358</CEPC:KWH-M2-Equipment>
+          <CEPC:KWH-M2-Natural-Gas>264.037</CEPC:KWH-M2-Natural-Gas>
+          <CEPC:KWH-M2-LPG>0</CEPC:KWH-M2-LPG>
+          <CEPC:KWH-M2-Biogas>0</CEPC:KWH-M2-Biogas>
+          <CEPC:KWH-M2-Oil>0</CEPC:KWH-M2-Oil>
+          <CEPC:KWH-M2-Coal>0</CEPC:KWH-M2-Coal>
+          <CEPC:KWH-M2-Anthracite>0</CEPC:KWH-M2-Anthracite>
+          <CEPC:KWH-M2-Smokeless>0</CEPC:KWH-M2-Smokeless>
+          <CEPC:KWH-M2-Dual-Fuel>0</CEPC:KWH-M2-Dual-Fuel>
+          <CEPC:KWH-M2-Biomass>0</CEPC:KWH-M2-Biomass>
+          <CEPC:KWH-M2-Supplied>24.8151</CEPC:KWH-M2-Supplied>
+          <CEPC:KWH-M2-Waste-Heat>0</CEPC:KWH-M2-Waste-Heat>
+          <CEPC:KWH-M2-District-Heating>0</CEPC:KWH-M2-District-Heating>
+          <CEPC:KWH-M2-Displaced>22.5171</CEPC:KWH-M2-Displaced>
+          <CEPC:KWH-M2-PVS>22.5171</CEPC:KWH-M2-PVS>
+          <CEPC:KWH-M2-Wind>0</CEPC:KWH-M2-Wind>
+          <CEPC:KWH-M2-CHP>0</CEPC:KWH-M2-CHP>
+          <CEPC:KWH-M2-SES>0</CEPC:KWH-M2-SES>
+        </CEPC:Global-Performance>
+        <CEPC:HVAC-Systems>
+          <CEPC:HVAC-System-Data>
+            <CEPC:Area>109.16</CEPC:Area>
+            <CEPC:Type>Central heating using water: radiators</CEPC:Type>
+            <CEPC:Heat-Source>LTHW boiler</CEPC:Heat-Source>
+            <CEPC:Fuel-Type>Natural Gas</CEPC:Fuel-Type>
+            <CEPC:MJ-M2-Heating-Dem>284.372</CEPC:MJ-M2-Heating-Dem>
+            <CEPC:MJ-M2-Cooling-Dem>128.829</CEPC:MJ-M2-Cooling-Dem>
+            <CEPC:KWH-M2-Heating>84.9379</CEPC:KWH-M2-Heating>
+            <CEPC:KWH-M2-Cooling>0</CEPC:KWH-M2-Cooling>
+            <CEPC:KWH-M2-Auxiliary>9.29617</CEPC:KWH-M2-Auxiliary>
+            <CEPC:Heating-SSEFF>0.93</CEPC:Heating-SSEFF>
+            <CEPC:Cooling-SSEER>0</CEPC:Cooling-SSEER>
+            <CEPC:Heating-Gen-SEFF>0</CEPC:Heating-Gen-SEFF>
+            <CEPC:Cooling-Gen-SEER>0</CEPC:Cooling-Gen-SEER>
+            <CEPC:Activities>
+              <CEPC:Activity>
+                <CEPC:ID>1023</CEPC:ID>
+                <CEPC:Area>1.56</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1016</CEPC:ID>
+                <CEPC:Area>22.51</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1028</CEPC:ID>
+                <CEPC:Area>27.93</CEPC:Area>
+              </CEPC:Activity>
+              <CEPC:Activity>
+                <CEPC:ID>1014</CEPC:ID>
+                <CEPC:Area>57.16</CEPC:Area>
+              </CEPC:Activity>
+            </CEPC:Activities>
+          </CEPC:HVAC-System-Data>
+        </CEPC:HVAC-Systems>
+      </CEPC:Building-Data>
+    </CEPC:Summary-Of-Performance>
+    <CEPC:Unstructured-Data>
+      <!-- The Interface Input Data encoded in base64. -->
+      <CEPC:Data-Blob>
+        <CEPC:File-Location/>
+        <CEPC:Data/>
+      </CEPC:Data-Blob>
+      <!-- The Calculation Engine Input Data encoded in base64. -->
+      <CEPC:Data-Blob>
+        <CEPC:File-Location/>
+        <CEPC:Data/>
+      </CEPC:Data-Blob>
+      <!-- The EPCgen Input Data encoded in base64. -->
+      <CEPC:Data-Blob>
+        <CEPC:File-Location/>
+        <CEPC:File-Type>inp</CEPC:File-Type>
+        <CEPC:Data/>
+        <!-- original secure hash: 1f361b53523f9d0ac903f1497f1c3e1c // Original file from SBEM was correctly validated. -->
+        <!-- epcgen updated secure hash: 33d6fb39280ab7ffb4cd738004760bd6 -->
+      </CEPC:Data-Blob>
+    </CEPC:Unstructured-Data>
+    <CEPC:Insurance-Details>
+      <CEPC:Insurer>Insurance Company</CEPC:Insurer>
+      <CEPC:Policy-No>POL000000</CEPC:Policy-No>
+      <CEPC:Effective-Date>2022-10-22</CEPC:Effective-Date>
+      <CEPC:Expiry-Date>2023-10-21</CEPC:Expiry-Date>
+      <CEPC:PI-Limit>5000000</CEPC:PI-Limit>
+    </CEPC:Insurance-Details>
+    <CEPC:Energy-Performance-Certificate>
+      <CEPC:Transaction-Type>1</CEPC:Transaction-Type>
+      <CEPC:Renewable-Energy-Sources>
+        <CEPC:Renewable-Energy-Source>None</CEPC:Renewable-Energy-Source>
+      </CEPC:Renewable-Energy-Sources>
+      <CEPC:Electricity-Sources>
+        <CEPC:Electricity-Source>Grid supplied</CEPC:Electricity-Source>
+      </CEPC:Electricity-Sources>
+      <CEPC:EPC-Rating>
+        <CEPC:Asset-Rating>120</CEPC:Asset-Rating>
+        <CEPC:Potential-Rating>17</CEPC:Potential-Rating>
+        <CEPC:New-Build-Benchmark>56</CEPC:New-Build-Benchmark>
+        <CEPC:Energy-Band>G</CEPC:Energy-Band>
+        <CEPC:Potential-Band>B+</CEPC:Potential-Band>
+        <CEPC:New-Build-Benchmark-Band>D</CEPC:New-Build-Benchmark-Band>
+        <CEPC:BER>120.47</CEPC:BER>
+        <CEPC:TER>55.93</CEPC:TER>
+      </CEPC:EPC-Rating>
+      <CEPC:EPC-Rating-Scale>
+        <CEPC:Upper-Number-A-Scale>15</CEPC:Upper-Number-A-Scale>
+        <CEPC:Lower-Number-B-Scale>16</CEPC:Lower-Number-B-Scale>
+        <CEPC:Upper-Number-B-Scale>30</CEPC:Upper-Number-B-Scale>
+        <CEPC:Lower-Number-C-Scale>31</CEPC:Lower-Number-C-Scale>
+        <CEPC:Upper-Number-C-Scale>45</CEPC:Upper-Number-C-Scale>
+        <CEPC:Lower-Number-D-Scale>46</CEPC:Lower-Number-D-Scale>
+        <CEPC:Upper-Number-D-Scale>60</CEPC:Upper-Number-D-Scale>
+        <CEPC:Lower-Number-E-Scale>61</CEPC:Lower-Number-E-Scale>
+        <CEPC:Upper-Number-E-Scale>80</CEPC:Upper-Number-E-Scale>
+        <CEPC:Lower-Number-F-Scale>81</CEPC:Lower-Number-F-Scale>
+        <CEPC:Upper-Number-F-Scale>100</CEPC:Upper-Number-F-Scale>
+        <CEPC:Lowest-Number-G-Scale>100</CEPC:Lowest-Number-G-Scale>
+      </CEPC:EPC-Rating-Scale>
+      <CEPC:Comparative-Rating>
+        <CEPC:Comparative-Asset-Rating>65</CEPC:Comparative-Asset-Rating>
+        <CEPC:Comparative-Energy-Band>C</CEPC:Comparative-Energy-Band>
+      </CEPC:Comparative-Rating>
+      <CEPC:TER-2002>118.01</CEPC:TER-2002>
+      <CEPC:Compliant-2002>N</CEPC:Compliant-2002>
+      <CEPC:Technical-Information>
+        <CEPC:Main-Heating-Fuel>LPG</CEPC:Main-Heating-Fuel>
+        <CEPC:Building-Environment>Heating and Natural Ventilation</CEPC:Building-Environment>
+        <CEPC:Floor-Area>109</CEPC:Floor-Area>
+      </CEPC:Technical-Information>
+    </CEPC:Energy-Performance-Certificate>
+    <CEPC:Recommendations-Report>
+      <CEPC:RR-Recommendations>
+        <!-- Short paybacks -->
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-H7</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Add optimum start/stop to the heating system.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-H8</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Add weather compensation controls to heating system.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-H5</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Add local time control to heating system.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-V1</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>In some spaces, the solar gain limit defined in the NCM is exceeded, which might cause overheating. Consider solar control measures such as the application of reflective coating or shading devices to windows.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-E3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Some solid walls are poorly insulated - introduce or improve internal wall insulation.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-F4</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider switching from oil or LPG to biomass.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-E7</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Carry out a pressure test, identify and treat identified air leakage. Enter result in EPC calculation.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>EPC-E8</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Some glazing is poorly insulated. Replace/improve glazing and/or frames. </CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <!-- Medium paybacks -->
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>EPC-E2</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Roof is poorly insulated. Install or improve insulation of roof.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <!-- Long paybacks -->
+        <!-- Other paybacks -->
+      </CEPC:RR-Recommendations>
+      <CEPC:Technical-Information>
+        <CEPC:Building-Environment>Heating and Natural Ventilation</CEPC:Building-Environment>
+        <CEPC:Floor-Area>109</CEPC:Floor-Area>
+      </CEPC:Technical-Information>
+    </CEPC:Recommendations-Report>
+  </CEPC:Report>
+  <!-- System date: Fri Aug 04 13:22:51 2023
+ -->
+</CEPC:LodgementReportRequest>
+        <!-- Removing this line, EPC message secure hash: 49e9540a92f276dfd93d3a37b733ef97 -->

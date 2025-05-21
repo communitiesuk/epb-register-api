@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:CEPC="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.0">
+	<!--xs:import namespace="http://www.est.org.uk/epc/estcrV1/DCLG-HIP" schemaLocation="./SharedDomains.xsd"/-->
+	<!--xs:include schemaLocation="./HCR-Domains.xsd"/-->
+	<xs:include schemaLocation="./UserManagement.xsd"/>
+	<xs:include schemaLocation="./BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="./Property.xsd"/>
+	<xs:element name="Property-Details" type="Property-Details"/>
+	<xs:complexType name="Property-Details"/>
+	<xs:element name="AddressType" type="AddressType"/>
+	<xs:element name="Report-Header" type="Report-Header"/>
+	<xs:complexType name="Report-Header">
+		<xs:annotation>
+			<xs:documentation>Report Header contains all the identification and searchable details for the Report.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RRN" type="RRNType">
+				<xs:annotation>
+					<xs:documentation>Report Reference Number is the unique report Identifier that the report will be publicly known by.
+
+The RRN is allocated to the Report at the point that it is registered and will be algorithmically derived from the natural key characteristics of the Home Condition Report i.e. The Unique Property Reference Number (UPRN) and Inspection Date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspection-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the inspection was actually carried out by the Home Inspector.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Report-Type" type="ReportTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of Home Inspection that was carried out.
+
+Initially the only allowed type will be a Home Condition Report inspection but this may be extended in the future to cover Energy Assessment Only inspections.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Completion-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the Home Inspector completed the report. This will be after the Inspection Date but generally before the Registration Date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registration-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the report was submitted to the HCR Registration Organisation for lodging in the HCR Register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="ReportStatusCode">
+				<xs:annotation>
+					<xs:documentation>The Status of the Report.
+
+A Home Condition Report can have a number of distinct states depending on whereabouts in its overall lifecycle the HCR is - see Home Condition Report Statechart for more details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language-Code" type="LanguageCode">
+				<xs:annotation>
+					<xs:documentation>The language that the report is written in. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Restricted-Access" type="RestrictedAccessCode">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Seller wants to restrict access to the Home Condition Report to General Public / Unregistered Users only.
+
+Some members of the public have a moral / religious objection to money lending and hence may not want to let Mortgage Lenders have access to the data. When set to "Yes" retrieval of the structured (XML) data will be blocked.
+
+However anyone with access to the Report Reference Number (RRN) can retrieve the PDF version of the Home Condition Report via the public access mechanism which cannot be restricted in this way.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transaction-Type" type="TransactionType"/>
+			<xs:element name="Seller-Commission-Report" type="Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that the HCR was commissioned by the Seller of the Property or their Agent. This is required in order to differentiate these reports from Buyer commisioned reports  which are not eligible for inclusion in a Home Information Pack</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Type" type="Building-Type">
+				<xs:annotation>
+					<xs:documentation>Describes the type of Property that is being inspected. This should be the same as the Property-Type recorded in the Property-Details section.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
+			<xs:element name="Property" type="Property"/>
+			<xs:element name="Calculation-Details">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Methodology" type="xs:string"/>
+						<xs:element name="Calculation-Tool" type="xs:string"/>
+						<xs:element name="Output-Engine" type="xs:string"/>
+						<xs:element name="Inspection-Type" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ReportTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Energy Performance Certificate (Non Domestic)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Recommendation Report (Non Domestic)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReportStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cancelled">
+				<xs:annotation>
+					<xs:documentation>Cancelled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="entered">
+				<xs:annotation>
+					<xs:documentation>entered on the register</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="appeal">
+				<xs:annotation>
+					<xs:documentation>under appeal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="removed">
+				<xs:annotation>
+					<xs:documentation>removed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rejected">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="under investigation">
+				<xs:annotation>
+					<xs:documentation>under investigation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="not for issue">
+				<xs:annotation>
+					<xs:documentation>not for issue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RestrictedAccessCode">
+		<xs:annotation>
+			<xs:documentation>Set of access codes identifying any restrictions on the retrieval of the electronic HCR.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>No restriction</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Exclude mortgage lenders</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Mortgage lenders only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>No access allowed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Building-Type">
+		<xs:sequence>
+				<xs:element name="Short-Description" type="xs:string"></xs:element>
+				<xs:element name="Long-Description" type="xs:string"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
