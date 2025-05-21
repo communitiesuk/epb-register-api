@@ -78,6 +78,7 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
+    ffi (1.16.3)
     geocoder (1.8.5)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
@@ -107,7 +108,6 @@ GEM
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
-    murmurhash3 (0.1.7)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
     namecase (2.0.0)
@@ -259,8 +259,10 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    unleash (5.1.1)
-      murmurhash3 (~> 0.1.7)
+    unleash (6.3.0)
+      base64 (~> 0.2.0)
+      logger (~> 1.6)
+      yggdrasil-engine (~> 1.0.3)
     uri (1.0.3)
     version_gem (1.1.8)
     webmock (3.25.1)
@@ -269,10 +271,12 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     wisper (3.0.0)
     wisper-rspec (1.1.0)
+    yggdrasil-engine (1.0.3-x86_64-linux)
+      ffi (~> 1.16.3)
     zeitwerk (2.7.3)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   activerecord (~> 8.0.1)
@@ -308,7 +312,7 @@ DEPENDENCIES
   sinatra-cross_origin (~> 0.4.0)
   slack-ruby-client
   timecop (~> 0.9.10)
-  unleash (~> 5.1.1)
+  unleash (~> 6.3.0)
   webmock (~> 3.23)
   wisper (~> 3.0.0)
   wisper-rspec (~> 1.0, >= 1.0.1)
