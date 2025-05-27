@@ -12,7 +12,7 @@ group :test do
   gem "mock_redis", "~> 0.49"
   gem "pry", "~> 0.15.2"
   gem "rack-test", "~> 2.2.0"
-  gem "rspec", "~>3.12"
+  gem "rspec", "~>3.13"
   gem "timecop", "~> 0.9.10"
   gem "webmock", "~> 3.23"
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
