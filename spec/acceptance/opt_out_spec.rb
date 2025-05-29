@@ -7,9 +7,10 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
-  context "when opting out an assessment" do
-    it "removes them from the certificate search" do
-      scheme_id = add_scheme_and_get_id
+  let(:scheme_id) { add_scheme_and_get_id }
+
+  context "when opting out a domestic assessment" do
+    before do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment(
@@ -19,7 +20,23 @@ describe "Acceptance::OptOut", :set_with_timecop do
           scheme_ids: [scheme_id],
         },
       )
+    end
 
+    it "requests an opt in and gets the expected response" do
+      expect(opt_out_assessment(
+        assessment_id: "0000-0000-0000-0000-0000",
+        opt_out: false,
+      ).body.force_encoding("UTF-8")).to include "Your opt in request for RRN 0000-0000-0000-0000-0000 was successful"
+    end
+
+    it "requests an opt in and gets the expected response" do
+      expect(opt_out_assessment(
+        assessment_id: "0000-0000-0000-0000-0000",
+        opt_out: true,
+      ).body.force_encoding("UTF-8")).to include "Your opt out request for RRN 0000-0000-0000-0000-0000 was successful"
+    end
+
+    it "removes them from the certificate search" do
       response =
         JSON.parse(
           assessments_search_by_postcode("SW1A 2AA").body,
@@ -40,15 +57,6 @@ describe "Acceptance::OptOut", :set_with_timecop do
     end
 
     it "shows as opted out in the assessment summary JSON" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-      )
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
       summary =
@@ -59,8 +67,10 @@ describe "Acceptance::OptOut", :set_with_timecop do
 
       expect(summary[:data][:optOut]).to be true
     end
+  end
 
-    it "shows as opted out in non-domestic assessment summary JSON" do
+  context "when opting out a non-domestic assessment" do
+    it "shows as opted out in summary JSON" do
       scheme_id = add_scheme_and_get_id
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =

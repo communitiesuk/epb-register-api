@@ -239,7 +239,7 @@ module Controller
             !Date.valid_date?(
               *Array
                 .new(3)
-                .zip((params[:dateOfBirth]&.split("-") || []))
+                .zip(params[:dateOfBirth]&.split("-") || [])
                 .map(&:last)
                 .map(&:to_i),
             )
