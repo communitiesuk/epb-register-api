@@ -176,7 +176,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment", :set_
 
           address_ids =
             JSON.parse(response, symbolize_names: true)[:data][:assessment][
-              :addressIdentifiers
+              :addressIdentifiers,
             ]
 
           expect(address_ids).to include "LPRN-1234567890"
@@ -198,7 +198,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment", :set_
 
           address_ids =
             JSON.parse(response, symbolize_names: true)[:data][:assessment][
-              :addressIdentifiers
+              :addressIdentifiers,
             ]
 
           expect(address_ids[0]).to eq "UPRN-129308571212"

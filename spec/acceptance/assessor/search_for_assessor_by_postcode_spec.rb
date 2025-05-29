@@ -379,7 +379,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("SAP_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "domesticSap"
+            "domesticSap",
           ],
         ).to eq("ACTIVE")
       end
@@ -407,7 +407,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("AC__123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticSp3"
+            "nonDomesticSp3",
           ],
         ).to eq("ACTIVE")
       end
@@ -436,7 +436,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("DEC_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticDec"
+            "nonDomesticDec",
           ],
         ).to eq("ACTIVE")
       end
@@ -465,7 +465,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("NOS_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticNos3"
+            "nonDomesticNos3",
           ],
         ).to eq("ACTIVE")
       end
@@ -494,7 +494,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("NOS_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticNos4"
+            "nonDomesticNos4",
           ],
         ).to eq("ACTIVE")
       end
@@ -523,7 +523,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("NOS_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticNos5"
+            "nonDomesticNos5",
           ],
         ).to eq("ACTIVE")
       end

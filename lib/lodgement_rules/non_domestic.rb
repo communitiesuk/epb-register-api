@@ -203,7 +203,7 @@ module LodgementRules
     end
 
     def self.wrong_sbem_version_for_wales?(lookup, calc_tool, transaction_type)
-      true if (lookup.in_wales? && !lookup.in_england?) && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6])) && transaction_type != "3"
+      true if lookup.in_wales? && !lookup.in_england? && !((calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) || (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales_5_6])) && transaction_type != "3"
     end
 
     def self.wrong_sbem_version_for_england?(lookup, calc_tool, transaction_type)

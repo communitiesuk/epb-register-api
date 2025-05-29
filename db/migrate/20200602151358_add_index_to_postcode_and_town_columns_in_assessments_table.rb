@@ -1,5 +1,5 @@
 class AddIndexToPostcodeAndTownColumnsInAssessmentsTable < ActiveRecord::Migration[
-  6.0
+  6.0,
 ]
   def change
     add_index :assessments, :postcode

@@ -1,5 +1,5 @@
 class AddAssessmentsTableRelationToGreenDealsTable < ActiveRecord::Migration[
-  6.0
+  6.0,
 ]
   def change
     add_column :green_deal_plans, :assessment_id, :string

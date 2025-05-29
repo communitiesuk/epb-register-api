@@ -291,7 +291,13 @@ module Controller
 
       ApiFactory.opt_out_assessment_use_case.execute(assessment_id, new_opt_out_status)
 
-      json_api_response(code: 200, data: "Your opt out request was successful")
+      response_text = if new_opt_out_status == true
+                        "Your opt out request for RRN #{params[:assessment_id]} was successful"
+                      else
+                        "Your opt in request for RRN #{params[:assessment_id]} was successful"
+                      end
+
+      json_api_response(code: 200, data: response_text)
     rescue StandardError => e
       case e
       when UseCase::OptOutAssessment::AssessmentNotFound

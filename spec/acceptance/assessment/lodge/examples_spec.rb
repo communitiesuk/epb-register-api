@@ -236,38 +236,38 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
     context "with an Scotland XML" do
       it "can lodge the example SAP" do
         expect(lodge_assessment(
-                 assessment_body: sap_s_xml,
-                 accepted_responses: [201],
-                 auth_data: {
-                   scheme_ids: [scheme_id],
-                 },
-                 schema_name: "SAP-Schema-S-19.0.0",
-                 migrated: true,
-                 ).status).to eq 201
+          assessment_body: sap_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-S-19.0.0",
+          migrated: true,
+        ).status).to eq 201
       end
 
       it "can lodge the example RdSAP" do
         expect(lodge_assessment(
-                 assessment_body: rdsap_s_xml,
-                 accepted_responses: [201],
-                 auth_data: {
-                   scheme_ids: [scheme_id],
-                 },
-                 schema_name: "RdSAP-Schema-S-19.0",
-                 migrated: true,
-                 ).status).to eq 201
+          assessment_body: rdsap_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-S-19.0",
+          migrated: true,
+        ).status).to eq 201
       end
 
       it "can lodge the example CEPC" do
         expect(lodge_assessment(
-                 assessment_body: cepc_s_xml,
-                 accepted_responses: [201],
-                 auth_data: {
-                   scheme_ids: [scheme_id],
-                 },
-                 schema_name: "CEPC-S-7.1",
-                 migrated: true,
-                 ).status).to eq 201
+          assessment_body: cepc_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-S-7.1",
+          migrated: true,
+        ).status).to eq 201
       end
     end
   end

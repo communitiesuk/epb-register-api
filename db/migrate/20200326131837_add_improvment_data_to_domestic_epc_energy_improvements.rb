@@ -1,5 +1,5 @@
 class AddImprovmentDataToDomesticEpcEnergyImprovements < ActiveRecord::Migration[
-  6.0
+  6.0,
 ]
   def change
     add_column :domestic_epc_energy_improvements, :improvement_code, :string

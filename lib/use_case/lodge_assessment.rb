@@ -167,7 +167,7 @@ module UseCase
 
       # related_certificate: CEPC-RR
       related_rrn = wrapper_hash[:related_certificate] unless wrapper_hash[
-        :related_certificate
+        :related_certificate,
       ].nil?
 
       # administrative_information->related_rrn: DEC

@@ -1,5 +1,5 @@
 class RenameDomesticEpcsToDomesticEnergyAssessments < ActiveRecord::Migration[
-  6.0
+  6.0,
 ]
   def self.up
     rename_table :domestic_epcs, :domestic_energy_assessments

@@ -239,11 +239,11 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
         response[:data][:addresses].find { |address|
           address[:addressId] == "UPRN-000073546793"
         }[
-          :existingAssessments
+          :existingAssessments,
         ][
-          0
+          0,
         ][
-          :assessmentId
+          :assessmentId,
         ],
       ).to eq "0000-0000-0000-0000-0000"
     end

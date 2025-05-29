@@ -372,7 +372,7 @@ describe "Acceptance::Assessor" do
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
           )[
-            "data"
+            "data",
           ]
 
         expected_response =
@@ -419,7 +419,7 @@ describe "Acceptance::Assessor" do
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
           )[
-            "data"
+            "data",
           ]
 
         expected_response =
@@ -465,7 +465,7 @@ describe "Acceptance::Assessor" do
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
           )[
-            "data"
+            "data",
           ]
 
         expected_response =
@@ -511,7 +511,7 @@ describe "Acceptance::Assessor" do
           JSON.parse(
             add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
           )[
-            "data"
+            "data",
           ]
 
         expected_response =
@@ -573,7 +573,7 @@ describe "Acceptance::Assessor" do
               body: assessor_without_key(:middleNames),
             ).body,
           )[
-            "data"
+            "data",
           ]
 
         expected_response =
