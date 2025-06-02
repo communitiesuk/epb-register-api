@@ -161,9 +161,9 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
         rdsap21_expectation[:transaction_type] = "Non-grant scheme (e.g. MEES)"
         rdsap21_expectation[:glazed_area] = nil
         rdsap21_expectation[:glazed_type] = nil
-        rdsap21_expectation[:low_energy_lighting] = nil
-        rdsap21_expectation[:fixed_lighting_outlets_count] = nil
-        rdsap21_expectation[:low_energy_fixed_lighting_outlets_count] = nil
+        rdsap21_expectation[:low_energy_lighting] = 100
+        rdsap21_expectation[:fixed_lighting_outlets_count] = 31
+        rdsap21_expectation[:low_energy_fixed_lighting_outlets_count] = 31
         rdsap21_expectation[:number_open_fireplaces] = nil
         rdsap21_expectation[:mechanical_ventilation] = "positive input from outside"
 
