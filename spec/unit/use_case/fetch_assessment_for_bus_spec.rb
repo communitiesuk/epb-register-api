@@ -73,7 +73,7 @@ describe UseCase::FetchAssessmentForBus do
   end
 
   let(:domestic_digest) do
-    { "main_fuel_type": "mains gas (not community)", "lzc_energy_sources": [1] }
+    { "main_fuel_type": "mains gas (not community)", "lzc_energy_sources": [1], "main_heating_category": "boiler with radiators or underfloor heating" }
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for an RRN that exists" do

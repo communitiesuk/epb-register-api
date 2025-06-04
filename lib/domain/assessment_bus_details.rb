@@ -50,6 +50,7 @@ module Domain
         current_energy_efficiency_rating: @assessment_summary[:current_energy_efficiency_rating],
         hot_water_description: fetch_property_description(node_name: "hot_water"),
         lzc_energy_sources: !@domestic_digest.nil? ? @domestic_digest[:lzc_energy_sources] : nil,
+        main_heating_description: !@domestic_digest.nil? ? @domestic_digest[:main_heating_category] : nil,
       }
     end
 

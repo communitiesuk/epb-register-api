@@ -50,6 +50,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       currentEnergyEfficiencyRating: 50,
       hotWaterDescription: "From main system",
       lzcEnergySources: [1],
+      mainHeatingDescription: "boiler with radiators or underfloor heating",
     }
   end
 
@@ -81,6 +82,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       currentEnergyEfficiencyRating: 50,
       hotWaterDescription: "Gas boiler",
       lzcEnergySources: nil,
+      mainHeatingDescription: "heat pump with warm air distribution",
     }
   end
 
@@ -112,6 +114,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       currentEnergyEfficiencyRating: 80,
       hotWaterDescription: nil,
       lzcEnergySources: nil,
+      mainHeatingDescription: nil,
     }
   end
 
