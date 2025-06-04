@@ -1,0 +1,41 @@
+{
+  "$id": "https://epbr.digital.communities.gov.uk/green-deal-update.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Payload definition for updates to Green Deal Plan information to be disclosed on EPCs",
+  "type": "object",
+  "properties": {
+    "greenDealPlanId": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "charges": {
+      "type": "array",
+      "items": {
+        "type" : "object",
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "dailyCharge": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [ "sequence", "startDate", "endDate", "dailyCharge" ]
+      }
+    }
+  },
+  "required": [ "greenDealPlanId", "endDate", "charges" ]
+}
