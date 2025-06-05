@@ -60,7 +60,7 @@ describe UseCase::ExportOpenDataDomesticByHashedId, :set_with_timecop do
 
       it "returns the correct data", :aggregate_failures do
         exported_assessment = exported_data.select { |assessment| assessment[:assessment_id] == "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
-        expect(exported_assessment.first.to_a - rdsap_odc_hash.to_a).to eq []
+        expect(exported_assessment.first).to eq rdsap_odc_hash
       end
     end
   end
