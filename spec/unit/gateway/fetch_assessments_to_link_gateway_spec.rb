@@ -258,7 +258,7 @@ describe Gateway::FetchAssessmentsToLinkGateway do
           { "assessment_id" => "0000-0000-0000-0000-0007", "address_id" => "RRN-0000-0000-0000-0000-0002", "date_registered" => Time.utc(2020, 0o5, 0o4), "source" => "lodgement" },
         ]
         result = gateway.fetch_assessments_by_group_id(group_id)
-        expect(expected_result - result.data).to eq []
+        expect((expected_result - result.data) | (result.data - expected_result)).to be_empty
       end
 
       context "when it is unable to fetch data" do
@@ -281,7 +281,8 @@ describe Gateway::FetchAssessmentsToLinkGateway do
       it "returns an array containing the group ids which either have an address_id found in more than one group, or all address_ids have been manually updated" do
         expected_duplicate_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0003").pluck(:group_id)
         expected_manually_updated_group_ids = Gateway::FetchAssessmentsToLinkGateway::TempLinkingTable.where(address_id: "RRN-0000-0000-0000-0000-0013").pluck(:group_id)
-        expect((expected_duplicate_group_ids + expected_manually_updated_group_ids) - result).to eq []
+        group_ids = (expected_duplicate_group_ids + expected_manually_updated_group_ids)
+        expect((group_ids - result) | (result - group_ids)).to be_empty
       end
 
       it "does not return groups where only one of the address_ids in a group have been updated manually by the epb team" do

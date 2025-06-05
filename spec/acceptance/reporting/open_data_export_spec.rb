@@ -91,19 +91,19 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
 
           it "returns the data exported to a CSV object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture" do
             data = redact_lodgement_datetime_hash(parsed_exported_data[0])
             expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[0]))
-            expect(data).to include(expectation)
+            expect(data).to eq expectation
           end
 
           it "returns the data exported for row 2 object to match same row in the .csv fixture" do
             data = redact_lodgement_datetime_hash(parsed_exported_data[1])
             expectation = redact_lodgement_datetime_hash(fixture_csv[1])
-            expect(data).to include(expectation)
+            expect(data).to eq expectation
           end
 
           context "when there are no lodged assessments between two dates" do
@@ -136,15 +136,13 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
           it "returns the data exported to a CSV object to match the .csv fixture" do
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
           end
 
           4.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
-              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
-                [],
-              )
+              expect(parsed_exported_data[i].to_hash).to eq fixture_csv[i].to_hash
             end
           end
 
@@ -341,7 +339,7 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
           end
 
           it "returns the data exported to a csv object to match the .csv fixture" do
-            expect(fixture_csv.headers - parsed_exported_data.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
             expect(parsed_exported_data.length).to eq(3)
           end
 
@@ -369,17 +367,13 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
           it "returns the data exported to a csv object to match the .csv fixture" do
-            # parsed_exported_data.map {|it| pp it}
-            # fixture_csv.map {|it| pp it}
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
           end
 
           5.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
-              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
-                [],
-              )
+              expect(parsed_exported_data[i].to_hash).to eq fixture_csv[i].to_hash
             end
           end
         end
@@ -540,20 +534,20 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
           let(:fixture_csv) { read_csv_fixture("dec") }
 
           it "returns the data exported to a csv object to match the .csv fixture" do
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture" do
             data = redact_nil(redact_lodgement_datetime_hash(first_dec_asssement))
             expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[0]))
-            expect(data.to_a - expectation.to_a).to eq []
+            expect(data).to eq expectation
           end
 
           it "returns the data exported for row 2 to match same row in the .csv fixture" do
             data = redact_nil(redact_lodgement_datetime_hash(second_dec_asssement))
             expectation = redact_nil(redact_lodgement_datetime_hash(fixture_csv[1]))
-            expect(data.to_a - expectation.to_a).to eq []
+            expect(data).to eq expectation
           end
         end
 
@@ -572,14 +566,12 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
 
           it "returns the data exported to a csv object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
           end
 
           5.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture" do
-              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
-                [],
-              )
+              expect(parsed_exported_data[i].to_hash).to eq fixture_csv[i].to_hash
             end
           end
         end
@@ -705,19 +697,22 @@ describe "Acceptance::Reports::OpenDataExport", :set_with_timecop do
       let(:use_case) { UseCase::ExportOpenDataDomestic.new }
       let(:data) do
         use_case
-           .execute(test_start_date, 0, "2021-02-28")
+           .execute(test_start_date, 0, datetime_today)
            .sort_by! { |item| item[:assessment_id] }
       end
       let(:cleaned_data) { Helper::ExportHelper.remove_line_breaks_from_hash_values(data) }
       let(:csv_data) { Helper::ExportHelper.to_csv(cleaned_data) }
       let(:fixture_csv) { read_csv_fixture("domestic_remove_line_break") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+      let(:cleaned_up_data) do
+        parsed_exported_data.find do |item|
+          item["ASSESSMENT_ID"] ==
+            "71fdb53a3a3da2cf98ae87c819dfc958866ead832a214cc960da52d2edaaaad6"
+        end
+      end
 
       it "returns the csv values with no line breaks" do
-        expect(
-          redact_lodgement_datetime(parsed_exported_data[0]) -
-            redact_lodgement_datetime(fixture_csv[0]),
-        ).to eq([])
+        expect(cleaned_up_data.to_hash).to eq fixture_csv[0].to_hash
       end
     end
 

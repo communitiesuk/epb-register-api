@@ -42,7 +42,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
 
     before do
       domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
-      domestic_ni_rdsap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
+      domestic_ni_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-NI-20.0.0")
       allow(ni_gateway).to receive(:fetch_assessments).with(type_of_assessment: %w[RdSAP SAP], date_from: "1990-01-01", date_to: Time.now).and_return([
         { "assessment_id" => "0000-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000001", "opt_out" => false, "cancelled" => false },
         { "assessment_id" => "0000-0000-0000-0000-0002", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000000", "opt_out" => false, "cancelled" => false },
@@ -58,15 +58,12 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     it "returns the data exported to a csv object to match the .csv fixture" do
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
     end
 
     2.times do |i|
       it "returns the data exported for row #{i + 1} object to match same row in the .csv fixture" do
-        expect(
-          redact_ni_lodgement_datetime(parsed_exported_data[i]) -
-            redact_ni_lodgement_datetime(fixture_csv[i]),
-        ).to eq([])
+        expect(parsed_exported_data[i].to_hash).to eq fixture_csv[i].to_hash
       end
     end
   end
@@ -113,15 +110,12 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     it "returns the data exported to a csv object to match the .csv fixture" do
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
     end
 
     2.times do |i|
       it "returns the data exported for row #{i + 1} object to match same row in the .csv fixture" do
-        expect(
-          redact_ni_lodgement_datetime(parsed_exported_data[i]) -
-            redact_ni_lodgement_datetime(fixture_csv[i]),
-        ).to eq([])
+        expect(parsed_exported_data[i].to_hash).to eq fixture_csv[i].to_hash
       end
     end
   end

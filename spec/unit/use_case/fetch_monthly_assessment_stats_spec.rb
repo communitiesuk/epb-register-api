@@ -26,7 +26,7 @@ describe UseCase::FetchMonthlyAssessmentStats do
 
     it "executes the use case and returns a hash of the the combines data set" do
       country_data.each { |i| data << i }
-      expect(use_case.execute[:all] - data).to eq []
+      expect((use_case.execute[:all] - data) | (data - use_case.execute[:all])).to be_empty
     end
 
     it "executes the use case and returns a hash of the the NI data" do

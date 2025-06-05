@@ -94,16 +94,16 @@ describe "Acceptance::Reports::OpenDataExport By Hashed Ids", :set_with_timecop 
 
           it "returns the data exported to a CSV object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect((parsed_exported_data.headers - fixture_csv.headers) | (fixture_csv.headers - parsed_exported_data.headers)).to be_empty
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture" do
             fixture_data = fixture_csv[0].to_hash.transform_values { |v| v.presence || "" }
-            expect(parsed_exported_data[0].to_hash).to include(fixture_data)
+            expect(parsed_exported_data[0].to_hash).to eq(fixture_data)
           end
 
           it "returns the data exported for row 2 object to match same row in the .csv fixture" do
-            expect(redact_lodgement_datetime(parsed_exported_data[1]) - redact_lodgement_datetime(fixture_csv[1])).to eq []
+            expect(parsed_exported_data[1].to_hash).to eq fixture_csv[1].to_hash
           end
 
           context "when there are no lodged assessments with those hashed assessment ids" do
