@@ -19,7 +19,8 @@ module UseCase
             xml_data[:schema_type],
             assessment["assessment_id"],
           )
-        view_model_data = type_of_assessment == %w[CEPC] ? view_model.to_report : view_model.to_hash_ni
+
+        view_model_data = type_of_assessment.any?{ |x| %w[CEPC DEC].include?(x) } ? view_model.to_report : view_model.to_hash_ni
         combined_data = view_model_data.merge(assessment.symbolize_keys)
         combined_data[:assessment_id] = Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
         assessments_array << combined_data

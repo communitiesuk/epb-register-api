@@ -118,4 +118,71 @@ describe UseCase::ExportNiAssessments do
       )
     end
   end
+
+  context "when exporting NI data call the use case for DECs" do
+    subject(:use_case) do
+      described_class.new(export_ni_gateway: ni_gateway, xml_gateway: xml_gateway)
+    end
+
+    let(:ni_gateway) do
+      instance_double(Gateway::ExportNiGateway)
+    end
+
+    let(:xml_gateway) do
+      instance_double(Gateway::AssessmentsXmlGateway)
+    end
+
+    before(:all) do
+      Timecop.freeze(2021, 2, 22, 0, 0, 0)
+    end
+
+    after(:all) do
+      Timecop.return
+    end
+
+    before do
+      dec_ni_xml = Nokogiri.XML Samples.xml("CEPC-NI-8.0.0", "dec")
+      dec_xml_old = Nokogiri.XML Samples.xml("CEPC-7.1", "dec")
+      non_domestic_assessment_id = dec_xml_old.at("RRN")
+      non_domestic_assessment_id.children = "9000-0000-0000-0000-2110"
+      allow(ni_gateway).to receive(:fetch_assessments)
+                                  .with(type_of_assessment: %w[DEC], date_from: "1990-01-01", date_to: Time.now)
+                                  .and_return([{ "assessment_id" => "0000-0000-0000-0000-0000",
+                                                 "lodgement_date" =>
+                                                   "2020-05-04",
+                                                 "lodgement_datetime" => "2021-02-22 00:00:00",
+                                                 "uprn" => "UPRN-000000000001",
+                                                 "opt_out" => false,
+                                                 "cancelled" => false },
+                                               { "assessment_id" => "9000-0000-0000-0000-2110",
+                                                 "lodgement_date" =>
+                                                   "2020-05-04",
+                                                 "lodgement_datetime" => "2021-02-22 00:00:00",
+                                                 "uprn" => "UPRN-000000000001",
+                                                 "opt_out" => false,
+                                                 "cancelled" => false }])
+      allow(xml_gateway).to receive(:fetch).with("0000-0000-0000-0000-0000").and_return({ xml: dec_ni_xml.to_xml, schema_type: "CEPC-NI-8.0.0" })
+      allow(xml_gateway).to receive(:fetch).with("9000-0000-0000-0000-2110").and_return({ xml: dec_xml_old.to_xml, schema_type: "CEPC-7.1" })
+    end
+
+    it "loops over the lodged assessments and extract the correct certificates" do
+      use_case.execute(type_of_assessment: %w[DEC])
+      expect(xml_gateway).to have_received(:fetch).exactly(2).times
+    end
+
+    it "passes the XML to the view model" do
+      expect { use_case.execute(type_of_assessment: %w[DEC]) }.not_to raise_error
+    end
+
+    it "returns a single hash in an array that include the nodes from both to_hash_ni and the database" do
+      expect(use_case.execute(type_of_assessment: %w[DEC]).first).to match a_hash_including(
+                                                                              assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+                                                                              lodgement_date: "2020-05-04",
+                                                                              lodgement_datetime: "2021-02-22 00:00:00",
+                                                                              uprn: "UPRN-000000000001",
+                                                                              opt_out: false,
+                                                                              cancelled: false,
+                                                                              )
+    end
+  end
 end
