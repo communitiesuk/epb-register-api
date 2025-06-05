@@ -4,15 +4,21 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
   include_context "when lodging XML"
 
   context "when creating the open data reporting release" do
+    let(:date) do
+      Time.utc(2021, 6, 21).strftime("%F")
+    end
+    let(:date_time) do
+      Time.utc(2021, 6, 21).strftime("%F %H:%M:%S")
+    end
     let(:export_object) { described_class.new }
     let(:rdsap_odc_hash) do
       expected_rdsap_values.merge(
-        { lodgement_date: date_today, lodgement_datetime: datetime_today },
+        { lodgement_date: date, lodgement_datetime: date_time },
       )
     end
     let(:sap_odc_hash) do
       expected_sap_values.merge(
-        { lodgement_date: date_today, lodgement_datetime: datetime_today },
+        { lodgement_date: date, lodgement_datetime: date_time, mechanical_ventilation: nil, extension_count: nil },
       )
     end
     let(:exported_data) do
@@ -57,9 +63,16 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
         end
       expected_data_hash.first[:building_reference_number]
     end
+    let(:rdsap_21_assessment) do
+      expected_data_hash =
+        exported_data.select do |hash|
+          hash[:assessment_id] ==
+            "5b151ee72cc5503688f48e56ff32df4d1205655413e327bf3a071a081d23750c"
+        end
+      expected_data_hash.first
+    end
 
     before(:all) do
-      # Timecop.freeze(2020, 5, 5, 0, 0, 0)
       add_countries
       add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
 
@@ -112,8 +125,7 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
       end
 
       it "returns the expected RdSAP values" do
-        Timecop.freeze(2020, 5, 4, 0, 0, 0)
-        expect(rdsap_odc_hash.to_a - expected_rdsap_values.to_a).to eq []
+        expect(rdsap_assessment).to eq rdsap_odc_hash
       end
 
       it "returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN" do
@@ -121,17 +133,19 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
       end
 
       it "contains the expected keys for RdSAP" do
-        expect(exported_data[0].keys - rdsap_odc_hash.keys).to be_empty
+        expect((rdsap_assessment.keys - rdsap_odc_hash.keys) | (rdsap_odc_hash.keys - rdsap_assessment.keys)).to be_empty
       end
 
-      it "returns the expected values" do
-        Timecop.freeze(2020, 5, 4, 0, 0, 0)
-        sap = expected_sap_values.reject { |k| rejected_keys.include? k }
-        expect(sap.to_a - sap_odc_hash.to_a).to eq []
+      it "returns the expected SAP values" do
+        expect(sap_assessment).to eq sap_odc_hash
       end
 
       it "returns a hash with building_reference_number nil when a SAP is submitted when building_reference_number is not a UPRN" do
         expect(sap_assessment_with_rrn_building_ref).to be_nil
+      end
+
+      it "contains the expected keys for SAP" do
+        expect((sap_assessment.keys - sap_odc_hash.keys) | (sap_odc_hash.keys - sap_assessment.keys)).to be_empty
       end
 
       it "returns 5 rows when called with a different task_id" do
@@ -150,13 +164,11 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
       end
 
       it "returns the correct values for rdsSAP 21.0.0" do
-        Timecop.freeze(2021, 6, 21, 0, 0, 0)
         hash_rrn = "5b151ee72cc5503688f48e56ff32df4d1205655413e327bf3a071a081d23750c"
-        rdsap21 = exported_data.find { |key| key[:assessment_id] == hash_rrn }
         rdsap21_expectation = rdsap_odc_hash
         rdsap21_expectation[:assessment_id] = hash_rrn
         rdsap21_expectation[:inspection_date] = "2023-12-01"
-        rdsap21_expectation[:lodgement_datetime] = "2021-06-21 00:00:00"
+        rdsap21_expectation[:lodgement_datetime] = date_time
         rdsap21_expectation[:construction_age_band] = "England and Wales: 2022 onwards"
         rdsap21_expectation[:transaction_type] = "Non-grant scheme (e.g. MEES)"
         rdsap21_expectation[:glazed_area] = nil
@@ -167,7 +179,7 @@ describe UseCase::ExportOpenDataDomestic, :set_with_timecop do
         rdsap21_expectation[:number_open_fireplaces] = nil
         rdsap21_expectation[:mechanical_ventilation] = "positive input from outside"
 
-        expect(rdsap21.to_a - rdsap21_expectation.to_a).to eq []
+        expect(rdsap_21_assessment).to eq rdsap21_expectation
       end
     end
   end

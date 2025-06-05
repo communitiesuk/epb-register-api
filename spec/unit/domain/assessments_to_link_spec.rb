@@ -104,7 +104,7 @@ describe Domain::AssessmentsToLink do
     describe "#get_assessment_ids" do
       it "returns the assessment ids from the data" do
         expected_array = %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0007 0000-0000-0000-0000-0012]
-        expect(domain.get_assessment_ids - expected_array).to eq []
+        expect((domain.get_assessment_ids - expected_array) | (expected_array - domain.get_assessment_ids)).to be_empty
       end
     end
   end
