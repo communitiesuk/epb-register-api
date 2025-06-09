@@ -2,6 +2,7 @@ module UseCase
   class ExportOpenDataDomesticrr
     def initialize
       @gateway = Gateway::ReportingGateway.new
+      @ni_gateway = Gateway::ExportNiGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
@@ -14,20 +15,33 @@ module UseCase
       improvement_code: "improvement_id",
     }.freeze
 
-    def execute(date_from, task_id = 0, date_to = Time.now.utc)
+    def execute(date_from, task_id = 0, date_to = Time.now.utc, is_ni = false)
       recommendations = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
-      assessments =
-        @gateway.assessments_for_open_data(
-          date_from,
-          %w[RdSAP SAP],
-          new_task_id,
-          date_to,
-        )
+
+      if is_ni == false
+        assessments =
+          @gateway.assessments_for_open_data(
+            date_from,
+            %w[RdSAP SAP],
+            new_task_id,
+            date_to,
+            )
+      else
+        assessments =
+          @ni_gateway.assessments_for_open_data(
+            date_from,
+            %w[RdSAP SAP],
+            new_task_id,
+            date_to,
+            )
+      end
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
-        next if xml_data[:schema_type].include?("NI")
+        unless is_ni == true
+          next if xml_data[:schema_type].include?("NI")
+        end
 
         wrapper =
           ViewModel::Factory.new.create(

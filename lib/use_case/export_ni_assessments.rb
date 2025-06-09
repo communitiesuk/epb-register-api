@@ -8,6 +8,11 @@ module UseCase
     def execute(type_of_assessment:, date_from: "1990-01-01", date_to: Time.now)
       assessments_array = []
 
+      if type_of_assessment =="SAP-RDSAP-RR"
+        use_case = UseCase::ExportOpenDataDomesticrr.new
+        assessments_array = use_case.execute(date_from, task_id, date_to, true)
+      end
+
       assessments = @ni_export_gateway.fetch_assessments(type_of_assessment:, date_from:, date_to:)
 
       assessments.each do |assessment|
