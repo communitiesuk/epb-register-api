@@ -34,7 +34,7 @@ module Gateway
 
       # TOD0 extract this to helper method
       if type_of_assessment.is_a?(Array)
-        valid_type = %w[RdSAP SAP CEPC CEPC-RR DEC]
+        valid_type = %w[RdSAP SAP CEPC CEPC-RR DEC RdSAP-SAP-RR]
         invalid_types = type_of_assessment - valid_type
         raise StandardError, "Invalid types" unless invalid_types.empty?
       end
@@ -127,7 +127,7 @@ module Gateway
           AND type_of_assessment IN (#{list_of_types.join(',')})
         SQL_TYPE_OF_ASSESSMENT
       else
-        valid_types = %w[CEPC DEC]
+        valid_types = %w[CEPC DEC RdSAP-SAP-RR]
         unless valid_types.include? type_of_assessment
           raise StandardError, "Invalid types"
         end
