@@ -3371,6 +3371,10 @@ components:
           nullable: true
           description: Low and zero carbon energy sources for the property
           example: [ 11 ]
+        mainHeatingDescription:
+          type: string
+          example: 'Boiler and radiators, mains gas'
+          nullable: true
 
     MultipleBUSMatchesList:
       type: object
