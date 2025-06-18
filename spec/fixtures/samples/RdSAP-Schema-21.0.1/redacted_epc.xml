@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RdSAP-Report schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-21.0.0/RdSAP/Templates/RdSAP-Report.xsd">
+<RdSAP-Report schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-21.0.1/RdSAP/Templates/RdSAP-Report.xsd">
   <User-Interface-Name>SomeSoft RdSAP FormWiz</User-Interface-Name>
   <User-Interface-Version>UI-13.05r16</User-Interface-Version>
   <Schema-Version-Original>SAP-19.0</Schema-Version-Original>
