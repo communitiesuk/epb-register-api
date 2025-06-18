@@ -135,6 +135,10 @@
     "schema_path":
     "api/schemas/xml/SAP-Schema-S-19.0.0/SAP/Templates/SAP-Report.xsd"
   },
+  "RdSAP-Schema-21.0.1": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-21.0.1/RdSAP/Templates/RdSAP-Report.xsd"
+  },
   "RdSAP-Schema-21.0.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-21.0.0/RdSAP/Templates/RdSAP-Report.xsd"

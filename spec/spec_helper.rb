@@ -46,7 +46,7 @@ loader_enable_override "helper/toggles"
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["SILENT_EVENTS"] = "true"
-ENV["VALID_DOMESTIC_SCHEMAS"] = "SAP-Schema-19.1.0,SAP-Schema-19.0.0,SAP-Schema-18.0.0,SAP-Schema-NI-18.0.0,RdSAP-Schema-20.0.0,RdSAP-Schema-NI-20.0.0,SAP-Schema-S-19.0.0,RdSAP-Schema-S-19.0"
+ENV["VALID_DOMESTIC_SCHEMAS"] = "SAP-Schema-19.1.0,SAP-Schema-19.0.0,SAP-Schema-18.0.0,SAP-Schema-NI-18.0.0,RdSAP-Schema-20.0.0,RdSAP-Schema-21.0.0,RdSAP-Schema-21.0.1,RdSAP-Schema-NI-20.0.0,SAP-Schema-S-19.0.0,RdSAP-Schema-S-19.0"
 ENV["VALID_NON_DOMESTIC_SCHEMAS"] = "CEPC-8.0.0,CEPC-NI-8.0.0, CEPC-S-7.1"
 
 rake = Rake::Application.new

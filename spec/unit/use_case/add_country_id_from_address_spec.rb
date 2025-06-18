@@ -57,9 +57,19 @@ describe UseCase::AddCountryIdFromAddress do
       end
 
       context "when the schema is greater than 20" do
-        context "when it is in England and the XML country is England" do
+        context "when it 21.0.0 is in England and the XML country is England" do
           let(:xml) { Samples.xml "RdSAP-Schema-21.0.0" }
           let(:lodgement_domain) { Domain::Lodgement.new(xml, "RdSAP-Schema-21.0.0") }
+
+          it "uses the XML country code (ENG) as the country code" do
+            use_case.execute(country_domain: english_domain, lodgement_domain:)
+            expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
+          end
+        end
+
+        context "when it 21.0.1 is in England and the XML country is England" do
+          let(:xml) { Samples.xml "RdSAP-Schema-21.0.1" }
+          let(:lodgement_domain) { Domain::Lodgement.new(xml, "RdSAP-Schema-21.0.1") }
 
           it "uses the XML country code (ENG) as the country code" do
             use_case.execute(country_domain: english_domain, lodgement_domain:)

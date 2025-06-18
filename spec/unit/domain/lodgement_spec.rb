@@ -73,6 +73,12 @@ describe Domain::Lodgement do
       expect(domain.country_code).to eq("ENG")
     end
 
+    it "returns the country code from an RdSAP 21.0.1" do
+      xml = Samples.xml "RdSAP-Schema-21.0.1"
+      domain = described_class.new(xml, "RdSAP-Schema-21.0.1")
+      expect(domain.country_code).to eq("ENG")
+    end
+
     it "returns the country code from a SAP 19.1.0" do
       xml = Samples.xml "SAP-Schema-19.1.0"
       domain = described_class.new(xml, "SAP-Schema-19.1.0")
@@ -98,6 +104,12 @@ describe Domain::Lodgement do
     it "returns true for RdSAP-Schema-21.0.0" do
       xml = Samples.xml "RdSAP-Schema-21.0.0"
       domain = described_class.new(xml, "RdSAP-Schema-21.0.0")
+      expect(domain.is_new_rdsap?).to be true
+    end
+
+    it "returns true for RdSAP-Schema-21.0.1" do
+      xml = Samples.xml "RdSAP-Schema-21.0.1"
+      domain = described_class.new(xml, "RdSAP-Schema-21.0.1")
       expect(domain.is_new_rdsap?).to be true
     end
 

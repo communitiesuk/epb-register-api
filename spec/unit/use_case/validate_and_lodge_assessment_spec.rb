@@ -176,6 +176,20 @@ describe UseCase::ValidateAndLodgeAssessment do
                          overridden: false
       }.not_to raise_exception
     end
+
+    it "validates RdSAP Schema version 21.0.1" do
+      valid_xml = Samples.xml "RdSAP-Schema-21.0.1"
+      allow(ENV).to receive(:[])
+      allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("RdSAP-Schema-21.0.1")
+      Timecop.freeze(2025, 05, 2, 0, 0, 0)
+      expect {
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: "RdSAP-Schema-21.0.1",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overridden: false
+      }.not_to raise_exception
+    end
   end
 
   context "when validating that SAP-Version and SAP-Data-Version nodes are correct for version of SAP schema" do

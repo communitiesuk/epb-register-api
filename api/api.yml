@@ -748,6 +748,12 @@ paths:
           example: true
       requestBody:
         content:
+          application/xml+RdSAP-Schema-21.0.1:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+RdSAP-Schema-21.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
           application/xml+RdSAP-Schema-20.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
