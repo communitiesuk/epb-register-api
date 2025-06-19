@@ -119,6 +119,12 @@ describe Domain::Lodgement do
       expect(domain.is_new_rdsap?).to be true
     end
 
+    it "returns true for RdSAP-Schema-NI-21.0.1" do
+      xml = Samples.xml "RdSAP-Schema-NI-21.0.1"
+      domain = described_class.new(xml, "RdSAP-Schema-NI-21.0.1")
+      expect(domain.is_new_rdsap?).to be true
+    end
+
     it "returns false for RdSAP-Schema-20.0.0" do
       xml = Samples.xml "RdSAP-Schema-20.0.0"
       domain = described_class.new(xml, "RdSAP-Schema-20.0.0")

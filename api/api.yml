@@ -760,6 +760,12 @@ paths:
           application/xml+SAP-Schema-18.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
+          application/xml+RdSAP-Schema-NI-21.0.1:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+RdSAP-Schema-NI-21.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
           application/xml+RdSAP-Schema-NI-20.0.0:
             schema:
               $ref: '#/components/schemas/Empty'

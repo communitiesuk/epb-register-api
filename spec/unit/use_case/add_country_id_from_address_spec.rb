@@ -13,6 +13,10 @@ describe UseCase::AddCountryIdFromAddress do
     Domain::CountryLookup.new(country_codes: [:S])
   end
 
+  let(:northern_ireland_domain) do
+    Domain::CountryLookup.new(country_codes: [:N])
+  end
+
   let(:gateway) do
     instance_double Gateway::CountryGateway
   end
@@ -74,6 +78,16 @@ describe UseCase::AddCountryIdFromAddress do
           it "uses the XML country code (ENG) as the country code" do
             use_case.execute(country_domain: english_domain, lodgement_domain:)
             expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
+          end
+        end
+
+        context "when it NI 21.0.1 is in NI and the XML country is NI" do
+          let(:xml) { Samples.xml "RdSAP-Schema-NI-21.0.1" }
+          let(:lodgement_domain) { Domain::Lodgement.new(xml, "RdSAP-Schema-NI-21.0.1") }
+
+          it "uses the XML country code (NIR) as the country code" do
+            use_case.execute(country_domain: northern_ireland_domain, lodgement_domain:)
+            expect(lodgement_domain.fetch_data.first[:country_id]).to eq 3
           end
         end
 
