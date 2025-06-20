@@ -243,20 +243,20 @@
     <Recommendation>
       <Improvement-Number>72</Improvement-Number>
       <Improvement-Summary language="1">Add PV battery</Improvement-Summary>
-      <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
-      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
-      <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
-      <Improvement-Description language="1">Gas condensing boiler</Improvement-Description>
-      <Improvement-Description language="2">Bwyler cyddwyso nwy</Improvement-Description>
+      <Improvement-Summary language="2">Ychwanegu batris storio ynni</Improvement-Summary>
+      <Improvement-Heading language="1">PV Battery</Improvement-Heading>
+      <Improvement-Heading language="2">Batris storio ynni</Improvement-Heading>
+      <Improvement-Description language="1">PV Battery</Improvement-Description>
+      <Improvement-Description language="2">Batris storio ynni</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>73</Improvement-Number>
       <Improvement-Summary language="1">Add PV diverter</Improvement-Summary>
-      <Improvement-Summary language="2">Newid system wresogi i fwyler cyddwyso nwy</Improvement-Summary>
-      <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
-      <Improvement-Heading language="2">Bwyler cyddwyso nwy</Improvement-Heading>
-      <Improvement-Description language="1">Gas condensing boiler</Improvement-Description>
-      <Improvement-Description language="2">Bwyler cyddwyso nwy</Improvement-Description>
+      <Improvement-Summary language="2">Ychwanegu dargyfeiriwr ffotofoltäig</Improvement-Summary>
+      <Improvement-Heading language="1">PV Diverter</Improvement-Heading>
+      <Improvement-Heading language="2">Dargyfeiriwr ffotofoltäig</Improvement-Heading>
+      <Improvement-Description language="1">PV Diverter</Improvement-Description>
+      <Improvement-Description language="2">Dargyfeiriwr ffotofoltäig</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>34</Improvement-Number>
