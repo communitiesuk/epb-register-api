@@ -39,6 +39,8 @@ tags:
     description: Endpoints used by the Heat Pump Check service
   - name: Warm Home Discount
     description: Endpoints used by the Warm Home Discount service
+  - name: PRS Database
+    description: Endpoints used by the PRS landlord database services
   - name: Reports
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
@@ -465,7 +467,7 @@ paths:
       operationId: search-addresses
       security:
         - oauth:
-            - 'search:addresses'
+            - 'address:search'
       parameters:
         - in: query
           name: postcode
@@ -1807,7 +1809,7 @@ paths:
   /prsdatabase/assessments/search:
     get:
       tags:
-        - PRS database
+        - PRS Database
       summary: Search for assessments exposing details for the PRS database team
       description: |-
         Search for an assessment by  _either_:
@@ -2494,24 +2496,34 @@ components:
         clientCredentials:
           tokenUrl: /auth/oauth/token
           scopes:
+            'admin:opt_out': Opt out an EPC
+            'admin:update-address-id': Update linking of assessments by property identifier
+            'address:search': List addresses that match a given search criteria, along with existing assessments
             'scheme:create': Create a new scheme on the register
             'scheme:list': List schemes on the register
+            'scheme:assessor:fetch': Get full details of an individual assessor
             'scheme:assessor:list': List assessors
             'scheme:assessor:update': Add or Update assessors
-            'scheme:assessor:fetch': Get full details of an individual assessor
             'assessment:fetch': Get full details of an individual assessment
+            'dec_summary:fetch': Get partial XML details of a DEC (for previous years' ratings)
             'assessmentmetadata:fetch': Get the additional attributes we require for assessments
             'assessment:lodge': Lodge a new assessment with the register
+            'migrate:assessment': Migrate an assessment to the register
             'assessment:search': Search the register for an assessment
             'assessor:search': Search the register for an assessor
-            'address:search': List addresses that match a given search criteria, along with existing assessments
-            'migrate:assessment': Migrate an assessment to the register
             'report:assessor:status': Get a report of changes to assessors status for a given date
+            'reporting:assessment_by_scheme_and_type': Get counts of new assessments by scheme
+            'reporting:assessment_by_type_and_region': Get counts of new assessments by region
+            'statistics:fetch': Get monthly lodgement statistics
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
+            'assessment:domestic-epc:search': Domestic EPC search (used by several DESNZ services)
+            'ecoplus:assessment:fetch': Carry out ECO4 lookup for latest domestic EPC data
             'retrofit-advice:assessment:fetch': Carry out Find Ways to Save Energy lookup for latest domestic EPC data
+            'retrofit-funding:assessment:fetch': Carry out Retrofit Funding lookup for latest domestic EPC data
             'heat-pump-check:assessment:fetch': Carry out Heat Pump Check lookup for latest domestic EPC data
             'warm-home-discount:assessment:fetch': Carry out Warm Home Discount lookup for latest domestic EPC data
+            'prsdatabase:assessment:search': Carry out PRS Landlord database lookup for latest domestic EPC data
 
   schemas:
     # Addresses
@@ -3470,6 +3482,30 @@ components:
           nullable: true
           description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available) is semantically different to 'false' here."
 
+
+    # PRS landlord database
+    AssessmentPRSDatabaseDetails:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          example: 62
+          description: The current energy rating to be submitted to the Register
+        epcRrn:
+          $ref: '#/components/schemas/AssessmentId'
+        expiryDate:
+          type: string
+          format: date
+          example: '2030-02-28'
+        latestEpcRrnForAddress:
+          $ref: '#/components/schemas/AssessmentId'
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'c'
+          description: The band, from a to g, the current Energy Rating falls within
 
     # Find Ways to Save Energy previously known as Home Energy Retrofit Advice
     RetrofitAdviceAssessmentDetails:
