@@ -5,7 +5,7 @@
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="NI-21.0.1"
 >
   <xs:simpleType name="Percentage">
     <xs:restriction base="xs:integer">

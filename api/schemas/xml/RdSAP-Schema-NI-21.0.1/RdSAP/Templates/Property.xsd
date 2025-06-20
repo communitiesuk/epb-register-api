@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   elementFormDefault="qualified"
-	version="21.0.1"
+	version="NI-21.0.1"
 >
 	<xs:element name="Property" type="Property"/>
 	<xs:complexType name="Property">

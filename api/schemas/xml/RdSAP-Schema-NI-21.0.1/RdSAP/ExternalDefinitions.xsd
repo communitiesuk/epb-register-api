@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="EPC"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="NI-21.0.1"
 >
 	<xs:annotation>
 		<xs:documentation>
