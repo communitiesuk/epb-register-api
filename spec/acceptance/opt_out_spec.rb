@@ -205,7 +205,6 @@ describe "Acceptance::OptOut", :set_with_timecop do
     ) { put("/api/assessments/0000-0000-0000-0000-0000/opt-out", request_body) }
 
     error = JSON.parse(response.body, symbolize_names: true)[:errors].first
-    pp error[:title]
     expect(error[:code]).to eq("INVALID_REQUEST")
     expect(error[:title]).to include("unexpected character: 'something'")
   end
