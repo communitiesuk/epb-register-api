@@ -5,7 +5,7 @@ module Gateway
       WITH assessment_cte as(
         SELECT
                a.assessment_id AS epc_rrn,
-               a.date_of_expiry AS expiry_date,
+               TO_CHAR(a.date_of_expiry, 'yyyy-mm-dd') AS expiry_date,
                a.address_line1 AS address_line1,
                a.address_line2 AS address_line2,
                a.address_line3 AS address_line3,
@@ -44,7 +44,7 @@ module Gateway
                 a.cancelled_at,
                 a.not_for_issue_at,
                 a.assessment_id AS epc_rrn,
-                a.date_of_expiry AS expiry_date,
+                TO_CHAR(a.date_of_expiry, 'yyyy-mm-dd') AS expiry_date,
                 a.address_line1 AS address_line1,
                 a.address_line2 AS address_line2,
                 a.address_line3 AS address_line3,

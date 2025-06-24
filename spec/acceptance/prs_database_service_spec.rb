@@ -60,7 +60,7 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
                                          postcode: "SW1A 2AA" },
                               currentEnergyEfficiencyRating: 50,
                               epcRrn: "0000-0000-0000-0000-0002",
-                              expiryDate: "2034-05-03T00:00:00.000Z",
+                              expiryDate: "2034-05-03",
                               latestEpcRrnForAddress: "0000-0000-0000-0000-0002",
                               currentEnergyEfficiencyBand: "e" }
         response = JSON.parse(
@@ -155,7 +155,7 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
                                        postcode: "SW1A 2AA" },
                             currentEnergyEfficiencyRating: 50,
                             epcRrn: "0000-0000-0000-0000-0002",
-                            expiryDate: "2034-05-03T00:00:00.000Z",
+                            expiryDate: "2034-05-03",
                             latestEpcRrnForAddress: "0000-0000-0000-0000-0002",
                             currentEnergyEfficiencyBand: "e" }
       response = JSON.parse(
