@@ -11,11 +11,7 @@ describe UseCase::ExportOpenDataDomesticrr, :set_with_timecop do
           .execute("2019-07-01")
           .sort_by! { |item| item[:assessment_id] }
       end
-      let(:exported_data_ni) do
-        export_object
-          .execute("2019-07-01", 0, Time.now.utc, true)
-          .sort_by! { |item| item[:assessment_id] }
-      end
+
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
         gateway.fetch_log_statistics
@@ -193,12 +189,6 @@ describe UseCase::ExportOpenDataDomesticrr, :set_with_timecop do
         it "returns 0 rows when called with the existing task_id" do
           expect(export_object.execute("2019-07-01", 1).length).to eq(5)
           expect(export_object.execute("2019-07-01", 1).length).to eq(0)
-        end
-      end
-
-      context "when calling the rake for assessment from Northern Ireland" do
-        it "returns the correct number of assessments excluding the England and Wales lodgements" do
-          expect(exported_data_ni.length).to eq(2)
         end
       end
     end

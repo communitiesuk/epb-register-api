@@ -7,11 +7,6 @@ module UseCase
 
     def execute(type_of_assessment:, date_from: "1990-01-01", date_to: Time.now)
       assessments_array = []
-
-      if type_of_assessment == ["{RdSAP", "SAP", "RR}"]
-        use_case = UseCase::ExportOpenDataDomesticrr.new
-        assessments_array = use_case.execute(date_from, 0, date_to, true)
-      else
         assessments = @ni_export_gateway.fetch_assessments(type_of_assessment:, date_from:, date_to:)
 
         assessments.each do |assessment|
@@ -29,7 +24,6 @@ module UseCase
           combined_data[:assessment_id] = Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
           assessments_array << combined_data
         end
-      end
       assessments_array
     end
   end
