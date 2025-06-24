@@ -87,7 +87,7 @@ describe Domain::AssessmentBusDetails do
   end
 
   let(:domestic_digest) do
-    { "main_fuel_type": "Electricity: electricity, unspecified tariff", lzc_energy_sources: [1], main_heating_category: "Boiler and radiators, mains gas", }
+    { "main_fuel_type": "Electricity: electricity, unspecified tariff", lzc_energy_sources: [1], main_heating_category: "Boiler and radiators, mains gas" }
   end
 
   let(:expected_data) do

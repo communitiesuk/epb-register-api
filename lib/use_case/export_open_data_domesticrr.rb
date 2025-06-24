@@ -2,7 +2,6 @@ module UseCase
   class ExportOpenDataDomesticrr
     def initialize
       @gateway = Gateway::ReportingGateway.new
-      # @ni_gateway = Gateway::ExportNiGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
@@ -15,7 +14,7 @@ module UseCase
       improvement_code: "improvement_id",
     }.freeze
 
-    def execute(date_from, task_id = 0, date_to = Time.now.utc, is_ni = false)
+    def execute(date_from, task_id = 0, date_to = Time.now.utc)
       recommendations = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
@@ -25,7 +24,7 @@ module UseCase
           %w[RdSAP SAP],
           new_task_id,
           date_to,
-          )
+        )
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])

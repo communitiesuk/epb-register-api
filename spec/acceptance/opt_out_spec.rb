@@ -29,7 +29,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
       ).body.force_encoding("UTF-8")).to include "Your opt in request for RRN 0000-0000-0000-0000-0000 was successful"
     end
 
-    it "requests an opt in and gets the expected response" do
+    it "requests an opt out and gets the expected response" do
       expect(opt_out_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
         opt_out: true,

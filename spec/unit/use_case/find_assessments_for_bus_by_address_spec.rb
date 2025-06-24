@@ -78,7 +78,7 @@ describe UseCase::FindAssessmentsForBusByAddress do
     {
       "main_fuel_type": "mains gas (not community)",
       "lzc_energy_sources": [1],
-      "main_heating_category": "boiler with radiators or underfloor heating"
+      "main_heating_category": "boiler with radiators or underfloor heating",
     }
   end
 

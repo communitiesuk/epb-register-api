@@ -176,13 +176,13 @@ describe UseCase::ExportNiAssessments do
 
     it "returns a single hash in an array that include the nodes from both to_hash_ni and the database" do
       expect(use_case.execute(type_of_assessment: %w[DEC]).first).to match a_hash_including(
-                                                                              assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-                                                                              lodgement_date: "2020-05-04",
-                                                                              lodgement_datetime: "2021-02-22 00:00:00",
-                                                                              uprn: "UPRN-000000000001",
-                                                                              opt_out: false,
-                                                                              cancelled: false,
-                                                                              )
+        assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        lodgement_date: "2020-05-04",
+        lodgement_datetime: "2021-02-22 00:00:00",
+        uprn: "UPRN-000000000001",
+        opt_out: false,
+        cancelled: false,
+      )
     end
   end
 end

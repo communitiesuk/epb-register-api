@@ -244,12 +244,12 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       task.invoke("DEC")
 
       expect(WebMock).to have_requested(
-                           :put,
-                           "#{HttpStub::S3_BUCKET_URI}#{file_name}",
-                           ).with(body: "ASSESSMENT_ID,ADDRESS1,ADDRESS2\n9999-0000-0000-0000-0000,1 Some Street,\"\"\n",
-                                  headers: {
-                                    "Host" => "s3.eu-west-2.amazonaws.com",
-                                  })
+        :put,
+        "#{HttpStub::S3_BUCKET_URI}#{file_name}",
+      ).with(body: "ASSESSMENT_ID,ADDRESS1,ADDRESS2\n9999-0000-0000-0000-0000,1 Some Street,\"\"\n",
+             headers: {
+               "Host" => "s3.eu-west-2.amazonaws.com",
+             })
     end
   end
 

@@ -106,6 +106,7 @@ describe UseCase::ExportOpenDataDomesticrr, :set_with_timecop do
 
         # created_at is now being used instead of date_registered for the date boundaries
       end
+
       context "when calling the rake for assessment from England and Wales" do
         it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do
           expect(exported_data.length).to eq(5)
@@ -117,63 +118,63 @@ describe UseCase::ExportOpenDataDomesticrr, :set_with_timecop do
 
         it "returns recommendations in the following format" do
           expect(exported_data[0]).to eq(
-                                        {
-                                          assessment_id:
-                                            "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
-                                          improvement_descr_text: "Increase loft insulation to 270 mm",
-                                          improvement_summary_text: "Increase loft insulation to 270 mm",
-                                          indicative_cost: "£100 - £350",
-                                          improvement_id: "5",
-                                          improvement_item: 1,
-                                        },
-                                        )
+            {
+              assessment_id:
+                "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
+              improvement_descr_text: "Increase loft insulation to 270 mm",
+              improvement_summary_text: "Increase loft insulation to 270 mm",
+              indicative_cost: "£100 - £350",
+              improvement_id: "5",
+              improvement_item: 1,
+            },
+          )
           expect(exported_data[1]).to eq(
-                                        {
-                                          assessment_id:
-                                            "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
-                                          improvement_descr_text: "Improvement desc",
-                                          improvement_summary_text: nil,
-                                          indicative_cost: "2000",
-                                          improvement_id: nil,
-                                          improvement_item: 2,
-                                        },
-                                        )
+            {
+              assessment_id:
+                "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
+              improvement_descr_text: "Improvement desc",
+              improvement_summary_text: nil,
+              indicative_cost: "2000",
+              improvement_id: nil,
+              improvement_item: 2,
+            },
+          )
 
           expect(exported_data[2]).to eq(
-                                        {
-                                          assessment_id:
-                                            "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
-                                          improvement_descr_text: "Increase loft insulation to 270 mm",
-                                          improvement_summary_text: "Increase loft insulation to 270 mm",
-                                          indicative_cost: "£100 - £350",
-                                          improvement_id: "5",
-                                          improvement_item: 1,
-                                        },
-                                        )
+            {
+              assessment_id:
+                "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
+              improvement_descr_text: "Increase loft insulation to 270 mm",
+              improvement_summary_text: "Increase loft insulation to 270 mm",
+              indicative_cost: "£100 - £350",
+              improvement_id: "5",
+              improvement_item: 1,
+            },
+          )
 
           expect(exported_data[3]).to eq(
-                                        {
-                                          assessment_id:
-                                            "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
-                                          improvement_descr_text: "Insulate hot water cylinder with 80 mm jacket",
-                                          improvement_summary_text: "Insulate hot water cylinder with 80 mm jacket",
-                                          indicative_cost: "2000",
-                                          improvement_id: "1",
-                                          improvement_item: 2,
-                                        },
-                                        )
+            {
+              assessment_id:
+                "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
+              improvement_descr_text: "Insulate hot water cylinder with 80 mm jacket",
+              improvement_summary_text: "Insulate hot water cylinder with 80 mm jacket",
+              indicative_cost: "2000",
+              improvement_id: "1",
+              improvement_item: 2,
+            },
+          )
 
           expect(exported_data[4]).to eq(
-                                        {
-                                          assessment_id:
-                                            "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
-                                          improvement_descr_text: "Improvement desc",
-                                          improvement_summary_text: nil,
-                                          indicative_cost: "1000",
-                                          improvement_id: nil,
-                                          improvement_item: 3,
-                                        },
-                                        )
+            {
+              assessment_id:
+                "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
+              improvement_descr_text: "Improvement desc",
+              improvement_summary_text: nil,
+              indicative_cost: "1000",
+              improvement_id: nil,
+              improvement_item: 3,
+            },
+          )
         end
 
         it "returns 1 rows when called with a different task_id" do
