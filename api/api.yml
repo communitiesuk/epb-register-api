@@ -155,6 +155,7 @@ paths:
       tags:
         - Manage Schemes
       summary: Update a scheme
+      description: Update the details of an energy assessment scheme
       operationId: update-scheme
       responses:
         '204':
@@ -557,7 +558,7 @@ paths:
             items:
               $ref: '#/components/schemas/AssessmentType'
           explode: false
-          example: 'RdSAP,SAP'
+          example: ['RdSAP','SAP']
         - in: query
           name: street
           description: The street of the assessment being searched for
@@ -657,6 +658,8 @@ paths:
                         items:
                           $ref: '#/components/schemas/DomesticEPCsSearchResult'
                 example:
+                  type: object
+                  properties:
                   - epcRrn: "1111-1111-1111-1111-1111"
                     address:
                       addressLine1: "11 Acacia Avenue"
@@ -705,7 +708,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example: 503
 
   /assessments:
     post:

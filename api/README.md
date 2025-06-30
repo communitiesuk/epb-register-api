@@ -12,5 +12,5 @@ It's a config file for [Spectral](https://stoplight.io/open-source/spectral/), a
 From within the `api/` directory, run:
 
 ```sh
-npx spectral lint api.yml
+npx @stoplight/spectral-cli lint api.yml
 ```
