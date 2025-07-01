@@ -39,7 +39,7 @@ gem "rubocop", "~> 1.78.0"
 gem "rubocop-govuk", "~> 5.1"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.4.1"
-gem "sentry-ruby", "~> 5.22"
+gem "sentry-ruby", "~> 5.26"
 gem "sinatra", "~> 4.1"
 gem "sinatra-activerecord", "~> 2.0.27"
 gem "sinatra-cross_origin", "~> 0.4.0"
