@@ -2,6 +2,7 @@ namespace :data_export do
   desc "Exporting assessments data for Northern Ireland"
 
   task :ni_assessments, %i[type_of_assessments date_from date_to] do |_, args|
+    # use 'SAP-RdSAP' as the type_of_assessments for domestic assessments
     type_of_assessments = args.type_of_assessments || ENV["type_of_assessments"]
     date_from = args.date_from || ENV["date_from"]
     date_to =   args.date_to || ENV["date_to"]
