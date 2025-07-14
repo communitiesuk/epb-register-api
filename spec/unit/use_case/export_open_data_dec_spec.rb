@@ -28,7 +28,7 @@ describe UseCase::ExportOpenDataDec, :set_with_timecop do
         main_benchmark: "",
         main_heating_fuel: "Natural Gas",
         special_energy_uses: "special",
-        renewable_sources: "1",
+        renewable_sources: nil,
         total_floor_area: "99",
         occupancy_level: "level",
         typical_thermal_fuel_usage: "1",
