@@ -62,12 +62,21 @@
     </Recommendation>
     <Recommendation>
       <Improvement-Number>7</Improvement-Number>
-      <Improvement-Summary language="1">Internal or external wall insulation</Improvement-Summary>
-      <Improvement-Summary language="2">Inswleiddio waliau mewnol neu allanol</Improvement-Summary>
-      <Improvement-Heading language="1">Internal or external wall insulation</Improvement-Heading>
-      <Improvement-Heading language="2">Inswleiddio waliau mewnol neu allanol</Improvement-Heading>
-      <Improvement-Description language="1">Internal or external wall insulation</Improvement-Description>
-      <Improvement-Description language="2">Inswleiddio waliau mewnol neu allanol</Improvement-Description>
+      <Improvement-Summary language="1">Internal wall insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Inswleiddio waliau mewnol</Improvement-Summary>
+      <Improvement-Heading language="1">Internal wall insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddio waliau mewnol</Improvement-Heading>
+      <Improvement-Description language="1">Internal wall insulation</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau mewnol</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>65</Improvement-Number>
+      <Improvement-Summary language="1">External wall insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Inswleiddio waliau allanol</Improvement-Summary>
+      <Improvement-Heading language="1">External wall insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Inswleiddio waliau allanol</Improvement-Heading>
+      <Improvement-Description language="1">External wall insulation</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau allanol</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>8</Improvement-Number>
@@ -149,6 +158,15 @@
       <Improvement-Heading language="2">Uwchraddio rheolyddion gwres</Improvement-Heading>
       <Improvement-Description language="1">Heating controls (zone control)</Improvement-Description>
       <Improvement-Description language="2">Uwchraddio rheolyddion gwres</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>70</Improvement-Number>
+      <Improvement-Summary language="1">Water heating controls</Improvement-Summary>
+      <Improvement-Summary language="2">Rheolyddion gwresogi dŵr</Improvement-Summary>
+      <Improvement-Heading language="1">Water heating controls</Improvement-Heading>
+      <Improvement-Heading language="2">Uwchraddio rheolyddion gwres dŵr</Improvement-Heading>
+      <Improvement-Description language="1">Water heating controls</Improvement-Description>
+      <Improvement-Description language="2">Uwchraddio rheolyddion gwres dŵr</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>17</Improvement-Number>
@@ -394,7 +412,25 @@
       <Improvement-Description language="2">..</Improvement-Description>
     </Recommendation>
     <Recommendation>
+      <Improvement-Number>75</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump</Improvement-Summary>
+      <Improvement-Summary language="2">Pwmp gwres o’r aer neu’r ddaear</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump</Improvement-Heading>
+      <Improvement-Heading language="2">Pwmp gwres o’r aer neu’r ddaear</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
       <Improvement-Number>52</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
+      <Improvement-Summary language="2">Pwmp gwres o’r aer neu’r ddaear gyda gwresogi tanlawr</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
+      <Improvement-Heading language="2">Pwmp gwres o’r aer neu’r ddaear gyda gwresogi tanlawr</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>76</Improvement-Number>
       <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
       <Improvement-Summary language="2">Pwmp gwres o’r aer neu’r ddaear gyda gwresogi tanlawr</Improvement-Summary>
       <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
@@ -430,6 +466,15 @@
       <Improvement-Description language="2">..</Improvement-Description>
     </Recommendation>
     <Recommendation>
+      <Improvement-Number>66</Improvement-Number>
+      <Improvement-Summary language="1">Internal insulation with cavity wall insulation</Improvement-Summary>
+      <Improvement-Summary language="2">Insiwleiddio mewnol gydag insiwleiddio waliau ceudod</Improvement-Summary>
+      <Improvement-Heading language="1">Internal and cavity wall insulation</Improvement-Heading>
+      <Improvement-Heading language="2">Insiwleiddio waliau ceudod a mewnol</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+      <Improvement-Description language="2">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
       <Improvement-Number>56</Improvement-Number>
       <Improvement-Summary language="1">Replacement glazing units</Improvement-Summary>
       <Improvement-Summary language="2">Unedau gwydr newydd</Improvement-Summary>
@@ -458,7 +503,7 @@
     </Recommendation>
     <Recommendation>
       <Improvement-Number>59</Improvement-Number>
-      <Improvement-Summary language="1">High heat retention storage heaters and dual immersion cylinder and dual rate meter<</Improvement-Summary>
+      <Improvement-Summary language="1">High heat retention storage heaters and dual immersion cylinder and dual rate meter</Improvement-Summary>
       <Improvement-Summary language="2">Gwresogyddion storio sy’n cadw llawer o wres a silindr sydd â dau dwymwr tanddwr a mesurydd cyfradd ddeuol</Improvement-Summary>
       <Improvement-Heading language="1">High heat retention storage heaters</Improvement-Heading>
       <Improvement-Heading language="2">Gwresogyddion storio sy’n cadw llawer o wres</Improvement-Heading>
@@ -676,11 +721,18 @@
     </Recommendation>
     <Recommendation>
       <Improvement-Number>7</Improvement-Number>
-      <Improvement-Summary language="1">Internal or external wall insulation</Improvement-Summary>
-      <Improvement-Summary-2 language="1">Internal or external wall insulation</Improvement-Summary-2>
-      <Improvement-Heading language="1">Internal or external wall insulation</Improvement-Heading>
-      <Improvement-Description language="1">Internal or external wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that a building warrant is required for the installation of external wall insulation. Planning permission may also be required and that building regulations apply to external insulation so it is best to check with your local authority on both issues.
+      <Improvement-Summary language="1">Internal wall insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Internal wall insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Internal wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">Internal wall insulation involves adding a layer of insulation to the inside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).
       </Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>65</Improvement-Number>
+      <Improvement-Summary language="1">External wall insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">External wall insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">External wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">External wall insulation involves adding a layer of insulation to the inside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that a building warrant is required for the installation of external wall insulation. Planning permission may also be required and that building regulations apply to external insulation so it is best to check with your local authority on both issues.</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>8</Improvement-Number>
@@ -709,7 +761,7 @@
       <Improvement-Summary-2 language="1">Heating controls (programmer, thermostat, TRVs)</Improvement-Summary-2>
       <Improvement-Heading language="1">Heating controls (programmer, room thermostat and thermostatic radiator valves)</Improvement-Heading>
       <Improvement-Description language="1">The heating system would benefit from a programmer and room thermostat to allow you to set the temperature and programme when you want the heating and hot water to switch on and off; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Radiator valves should be fitted to every radiator except one – the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to check with your local authority building standards department and seek advice from a qualified heating engineer.
-</Improvement-Description>
+      </Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>12</Improvement-Number>
@@ -745,6 +797,13 @@
       <Improvement-Summary-2 language="1">Heating controls (zone control)</Improvement-Summary-2>
       <Improvement-Heading language="1">Heating controls (time and temperature zone control)</Improvement-Heading>
       <Improvement-Description language="1">The heating system controls should be improved so that both the temperature and time of heating can be set differently in separate areas of your house; this will reduce the amount of energy used and lower fuel bills. For example, it is possible to have cooler temperatures in the bedrooms than in the living room provided internal doors are kept closed, and to have a longer heating period for the living room. Building regulations generally apply to this work and a building warrant may be required, so it is best to check with your local authority building standards department and seek advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>70</Improvement-Number>
+      <Improvement-Summary language="1">Water heating controls</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Water heating controls</Improvement-Summary-2>
+      <Improvement-Heading language="1">Water heating controls</Improvement-Heading>
+      <Improvement-Description language="1">Water heating controls</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>17</Improvement-Number>
@@ -815,6 +874,18 @@
       <Improvement-Summary-2 language="1">Gas condensing boiler</Improvement-Summary-2>
       <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
       <Improvement-Description language="1">Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check with your local authority building standards department and seek advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>72</Improvement-Number>
+      <Improvement-Summary language="1">Add PV battery</Improvement-Summary>
+      <Improvement-Heading language="1">PV Battery</Improvement-Heading>
+      <Improvement-Description language="1">PV Battery</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>73</Improvement-Number>
+      <Improvement-Summary language="1">Add PV diverter</Improvement-Summary>
+      <Improvement-Heading language="1">PV diverter</Improvement-Heading>
+      <Improvement-Description language="1">PV diverter</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>34</Improvement-Number>
@@ -922,7 +993,21 @@
       <Improvement-Description language="1">..</Improvement-Description>
     </Recommendation>
     <Recommendation>
+      <Improvement-Number>75</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">Air or ground source heat pump</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
       <Improvement-Number>52</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
+      <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
+      <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>76</Improvement-Number>
       <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
       <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
       <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
@@ -947,6 +1032,13 @@
       <Improvement-Summary language="1">External insulation with cavity wall insulation</Improvement-Summary>
       <Improvement-Summary-2 language="1">..</Improvement-Summary-2>
       <Improvement-Heading language="1">External and cavity wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>66</Improvement-Number>
+      <Improvement-Summary language="1">Internal insulation with cavity wall insulation</Improvement-Summary>
+      <Improvement-Summary-2 language="1">Internal insulation with cavity wall insulation</Improvement-Summary-2>
+      <Improvement-Heading language="1">Internal and cavity wall insulation</Improvement-Heading>
       <Improvement-Description language="1">..</Improvement-Description>
     </Recommendation>
     <Recommendation>
@@ -1177,6 +1269,12 @@
       <Improvement-Description language="1">Solid wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating and can be installed by a competent DIY enthusiast. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
     </Recommendation>
     <Recommendation>
+      <Improvement-Number>65</Improvement-Number>
+      <Improvement-Summary language="1">External wall insulation</Improvement-Summary>
+      <Improvement-Heading language="1">External wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">External wall insulation</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
       <Improvement-Number>8</Improvement-Number>
       <Improvement-Summary language="1">Replace single glazed windows with low-E double glazed windows</Improvement-Summary>
       <Improvement-Heading language="1">Double glazed windows</Improvement-Heading>
@@ -1229,6 +1327,12 @@
       <Improvement-Summary language="1">Time and temperature zone control</Improvement-Summary>
       <Improvement-Heading language="1">Heating controls (time and temperature zone control)</Improvement-Heading>
       <Improvement-Description language="1">The heating system controls should be improved so that both the temperature and time of heating can be set differently in separate areas of your house; this will reduce the amount of energy used and lower fuel bills. For example, it is possible to have cooler temperatures in the bedrooms than in the living room provided internal doors are kept closed, and to have a longer heating period for the living room. It is best to obtain advice from a qualified heating engineer.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>70</Improvement-Number>
+      <Improvement-Summary language="1">Water heating controls</Improvement-Summary>
+      <Improvement-Heading language="1">Water heating controls</Improvement-Heading>
+      <Improvement-Description language="1">Water heating controls</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>17</Improvement-Number>
@@ -1289,6 +1393,18 @@
       <Improvement-Summary language="1">Change heating to gas condensing boiler</Improvement-Summary>
       <Improvement-Heading language="1">Gas condensing boiler</Improvement-Heading>
       <Improvement-Description language="1">Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. It is best to obtain advice from a qualified heating engineer. Ask the engineer to explain the options.</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>72</Improvement-Number>
+      <Improvement-Summary language="1">Add PV battery</Improvement-Summary>
+      <Improvement-Heading language="1">PV Battery</Improvement-Heading>
+      <Improvement-Description language="1">PV Battery</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>73</Improvement-Number>
+      <Improvement-Summary language="1">Add PV diverter</Improvement-Summary>
+      <Improvement-Heading language="1">PV diverter</Improvement-Heading>
+      <Improvement-Description language="1">PV diverter</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>34</Improvement-Number>
@@ -1381,7 +1497,19 @@
       <Improvement-Description language="1">..</Improvement-Description>
     </Recommendation>
     <Recommendation>
+      <Improvement-Number>75</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
       <Improvement-Number>52</Improvement-Number>
+      <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
+      <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>76</Improvement-Number>
       <Improvement-Summary language="1">Air or ground source heat pump with underfloor heating</Improvement-Summary>
       <Improvement-Heading language="1">Air or ground source heat pump with underfloor heating</Improvement-Heading>
       <Improvement-Description language="1">..</Improvement-Description>
@@ -1402,6 +1530,12 @@
       <Improvement-Number>55</Improvement-Number>
       <Improvement-Summary language="1">External insulation with cavity wall insulation</Improvement-Summary>
       <Improvement-Heading language="1">External and cavity wall insulation</Improvement-Heading>
+      <Improvement-Description language="1">..</Improvement-Description>
+    </Recommendation>
+    <Recommendation>
+      <Improvement-Number>66</Improvement-Number>
+      <Improvement-Summary language="1">Internal insulation with cavity wall insulation</Improvement-Summary>
+      <Improvement-Heading language="1">Internal and cavity wall insulation</Improvement-Heading>
       <Improvement-Description language="1">..</Improvement-Description>
     </Recommendation>
     <Recommendation>
@@ -1577,37 +1711,37 @@
     <Addendum-Number>13</Addendum-Number>
     <Circumstances>13. Dwelling has a special energy saving feature </Circumstances>
     <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="2">Mae gan yr anheddiad nodwedd arbed ynni arbennig. Mae hyn wedi'i gynnwys yn yr asesiad, ond dim yn y mesurau gwella arbed ynni.</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>14</Addendum-Number>
     <Circumstances>14. Conservation area </Circumstances>
-    <Addendum-Text language="1">Conservation area.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="1">Conservation area</Addendum-Text>
+    <Addendum-Text language="2">Ardal gadwraeth</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>15</Addendum-Number>
     <Circumstances>15. PV recommended </Circumstances>
-    <Addendum-Text language="1">When considering the PV installation consider installing PV battery and PV diverter for water heating.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="1">When considering the PV installation consider installing PV battery and a PV diverter for water heating</Addendum-Text>
+    <Addendum-Text language="2">Argymhellir ffotofoltäig. Ystyriwch hefyd storio batri a dargyfeiriwr ffotofoltäig.</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>16</Addendum-Number>
-    <Circumstances>16. PV-independent battery storage present </Circumstances>
-    <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Circumstances>16. PV-independent battery storage present</Circumstances>
+    <Addendum-Text language="1">The assessment does not include PV-independent battery storage</Addendum-Text>
+    <Addendum-Text language="2">Storio batri annibynnol o'r ffotofoltäig ar gael. Nid yw hyn wedi'i gynnwys yn yr asesiad.</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>17</Addendum-Number>
     <Circumstances>17. 'Phase changing' heat storage present </Circumstances>
-    <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="1">The assessment does not include “Phase-changing” heat storage</Addendum-Text>
+    <Addendum-Text language="2">Storfa gwres yn newid cyflwr ar gael. Nid yw hyn wedi'i gynnwys yn yr asesiad.</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>18</Addendum-Number>
     <Circumstances>18. Party wall insulation </Circumstances>
-    <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="1">Party wall is a property of two homes. If acoustic issues are important seek professional advice before insulating party wall. Insulating party wall on one side may cause condensation risk to adjoining property.</Addendum-Text>
+    <Addendum-Text language="2">Insiwleiddio muriau cyd</Addendum-Text>
   </Addendum>
   <Tenure>
     <Tenure-Code>1</Tenure-Code>
