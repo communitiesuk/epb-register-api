@@ -66,8 +66,8 @@
       <Improvement-Summary language="2">Inswleiddio waliau mewnol</Improvement-Summary>
       <Improvement-Heading language="1">Internal wall insulation</Improvement-Heading>
       <Improvement-Heading language="2">Inswleiddio waliau mewnol</Improvement-Heading>
-      <Improvement-Description language="1">External wall insulation</Improvement-Description>
-      <Improvement-Description language="2">Inswleiddio waliau allanol</Improvement-Description>
+      <Improvement-Description language="1">Internal wall insulation</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau mewnol</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>65</Improvement-Number>
@@ -76,7 +76,7 @@
       <Improvement-Heading language="1">External wall insulation</Improvement-Heading>
       <Improvement-Heading language="2">Inswleiddio waliau allanol</Improvement-Heading>
       <Improvement-Description language="1">External wall insulation</Improvement-Description>
-      <Improvement-Description language="2">Inswleiddio waliau mewnol</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau allanol</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>8</Improvement-Number>
