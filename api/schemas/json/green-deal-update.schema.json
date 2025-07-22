@@ -33,7 +33,7 @@
             "minimum": 0
           }
         },
-        "required": [ "sequence", "startDate", "endDate", "dailyCharge" ]
+        "required": [ "startDate", "endDate", "dailyCharge" ]
       }
     }
   },
