@@ -10,11 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_19_144800) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
+  create_schema "scotland"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
-  enable_extension "plpgsql"
 
   create_table "address_base", primary_key: "uprn", id: :string, force: :cascade do |t|
     t.string "postcode"
@@ -76,6 +78,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_19_144800) do
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.string "hashed_assessment_id"
+    t.string "test_column"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
@@ -138,6 +141,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_19_144800) do
     t.string "company_email"
     t.string "company_name"
     t.string "gda_qualification"
+    t.string "test_column"
     t.index ["registered_by"], name: "index_assessors_on_registered_by"
     t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
   end

@@ -64,7 +64,7 @@ GEM
     epb-auth-tools (1.1.0)
       jwt (~> 2.3)
       oauth2 (>= 1.4, < 3.0)
-    epb_view_models (2.1.6)
+    epb_view_models (2.1.7)
       nokogiri (~> 1.16)
       zeitwerk (~> 2.6)
     faraday (2.13.1)
@@ -281,7 +281,7 @@ DEPENDENCIES
   csv (~> 3.3)
   database_cleaner
   epb-auth-tools (~> 1.1.0)
-  epb_view_models (~> 2.1.6)
+  epb_view_models (~> 2.1.7)
   geocoder (~> 1.8.3)
   json-schema (~> 5.0)
   mock_redis (~> 0.49)
