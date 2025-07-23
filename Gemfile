@@ -20,7 +20,7 @@ end
 
 gem "activerecord", "~> 8.0.1"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.186"
+gem "aws-sdk-s3", "~> 1.194"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.1.7"
