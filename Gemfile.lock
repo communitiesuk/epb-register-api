@@ -67,16 +67,16 @@ GEM
     epb_view_models (2.1.7)
       nokogiri (~> 1.16)
       zeitwerk (~> 2.6)
-    faraday (2.13.1)
+    faraday (2.13.4)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
     faraday-mashify (1.0.0)
       faraday (~> 2.0)
       hashie
-    faraday-multipart (1.1.0)
+    faraday-multipart (1.1.1)
       multipart-post (~> 2.0)
-    faraday-net_http (3.4.0)
+    faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
     geocoder (1.8.5)
       base64 (>= 0.1.0)
@@ -128,7 +128,7 @@ GEM
     oj (3.16.11)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
-    ostruct (0.6.1)
+    ostruct (0.6.3)
     ougai (2.0.0)
       oj (~> 3.10)
     parallel (1.27.0)
@@ -241,8 +241,8 @@ GEM
       sinatra (= 4.1.1)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
-    slack-ruby-client (2.6.0)
-      faraday (>= 2.0)
+    slack-ruby-client (2.7.0)
+      faraday (>= 2.0.1)
       faraday-mashify
       faraday-multipart
       gli
