@@ -23,8 +23,6 @@ namespace :data_export do
   end
 end
 
-private
-
 def transmit_ni_file(data, type_of_assessments)
   assessment_types = type_of_assessments.is_a?(Array) ? type_of_assessments.join("_") : type_of_assessments
   filename = "ni_assessments_export_#{assessment_types.downcase}_#{Time.now.utc.strftime('%F')}.csv"
