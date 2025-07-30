@@ -68,6 +68,10 @@ module Gateway
       green_deal_plan
     end
 
+    def update_end_date_and_charges(green_deal_plan_id:, end_date:, charges:)
+      GreenDealPlan.update(green_deal_plan_id, { end_date: end_date, charges: charges })
+    end
+
     def fetch(assessment_id)
       sql = <<-SQL
         SELECT
