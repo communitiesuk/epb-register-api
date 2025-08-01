@@ -149,6 +149,77 @@ module Controller
       },
     }.freeze
 
+    PATCH_SCHEMA = {
+      type: "object",
+      required: %w[
+        greenDealPlanId
+        endDate
+        charges
+      ],
+      properties: {
+        greenDealPlanId: {
+          type: "string",
+          pattern: Helper::RegexHelper::GREEN_DEAL_PLAN_ID,
+        },
+        endDate: {
+          type: "string",
+          format: "iso-date",
+        },
+        charges: {
+          type: "array",
+          items: {
+            type: "object",
+            required: %w[startDate endDate dailyCharge],
+            properties: {
+              sequence: {
+                type: "integer",
+              },
+              startDate: {
+                type: "string",
+                format: "iso-date",
+              },
+              endDate: {
+                type: "string",
+                format: "iso-date",
+              },
+              dailyCharge: {
+                type: "number",
+              },
+            },
+          },
+        },
+      },
+    }.freeze
+
+    patch "/api/greendeal/disclosure/plans/:plan_id",
+          auth_token_has_all: %w[greendeal:charge-updates] do
+      updates = request_body(PATCH_SCHEMA)
+      plan_id = params[:plan_id]
+
+      if updates[:green_deal_plan_id] != plan_id
+        raise UseCase::UpdateGreenDealPlan::PlanIdMismatchException
+      end
+
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
+      ApiFactory.patch_green_deal_plan_use_case.execute(json: updates)
+
+      json_api_response code: 204
+    rescue StandardError => e
+      case e
+      when UseCase::PatchGreenDealPlan::NotFoundException
+        not_found_error "Green Deal Plan not found"
+      when Boundary::Json::ValidationError
+        error_response 400, "INVALID_REQUEST", e.message
+      when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
+        error_response 409,
+                       "INVALID_REQUEST",
+                       "Green Deal Plan ID does not match"
+      else
+        server_error e
+      end
+    end
+
     post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
          auth_token_has_all: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]

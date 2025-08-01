@@ -50,6 +50,23 @@ def assertive_put(
   ) { put(path, body.to_json) }
 end
 
+def assertive_patch(
+  path,
+  body:,
+  accepted_responses:,
+  auth_data: {},
+  scopes: [],
+  should_authenticate: true
+)
+  header "Content-type", "application/json"
+  assertive_request(
+    accepted_responses:,
+    should_authenticate:,
+    auth_data:,
+    scopes:,
+  ) { patch(path, body.to_json) }
+end
+
 def assertive_delete(path, accepted_responses:, should_authenticate:, auth_data:, scopes:)
   assertive_request(
     accepted_responses:,
@@ -284,6 +301,24 @@ def fetch_green_deal_assessment(
     should_authenticate: authenticate,
     auth_data:,
     scopes:,
+  )
+end
+
+def patch_green_deal_plan(
+  plan_id:,
+  body:,
+  accepted_responses: [204],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[greendeal:charge-updates]
+)
+  assertive_patch(
+    "/api/greendeal/disclosure/plans/#{plan_id}",
+    body: body,
+    accepted_responses: accepted_responses,
+    should_authenticate: authenticate,
+    auth_data: auth_data,
+    scopes: scopes,
   )
 end
 

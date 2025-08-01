@@ -305,6 +305,14 @@ class ApiFactory
       )
   end
 
+  def self.patch_green_deal_plan_use_case
+    @patch_green_deal_plan_use_case ||=
+      UseCase::PatchGreenDealPlan.new(
+        green_deal_plans_gateway:,
+        event_broadcaster:,
+      )
+  end
+
   def self.add_assessor_use_case
     @add_assessor_use_case ||=
       UseCase::AddAssessor.new(

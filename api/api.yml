@@ -2243,6 +2243,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+        - Green Deal
+      summary: Update the charges on a Green Deal plan
+      description: 'Update the charges on an existing Green Deal plan'
+      operationId: patch-green-deal-plan
+      security:
+        - oauth:
+            - 'greendeal:charge-updates'
+      parameters:
+        - in: path
+          name: planId
+          required: true
+          description: 'The ID of the plan being updated'
+          schema:
+            $ref: '#/components/schemas/GreenDealPlanId'
+      requestBody:
+        description: Green Deal charges data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GreenDealCharges'
+      responses:
+        '204':
+          description: Green Deal charges successfully updated
+        '400':
+          description: Problem with the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorised
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Green Deal plan with ID planId can not be found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Identifier in request body doesn't match the planId in the URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       tags:
         - Green Deal
@@ -3891,6 +3955,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GreenDealSaving'
+
+    GreenDealCharges:
+      type: object
+      properties:
+        greenDealPlanId:
+          $ref: '#/components/schemas/GreenDealPlanId'
+        endDate:
+          description: The date the plan is expected to end
+          type: string
+          format: date
+          example: '2030-02-28'
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/GreenDealCharge'
 
     GreenDealProvider:
       type: object

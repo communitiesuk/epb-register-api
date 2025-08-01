@@ -115,7 +115,7 @@ describe Gateway::GreenDealPlansGateway do
     end
 
     it "updates the specific green deal plan when there are multiple charges" do
-      charges = [{ "end_date" => "2025-12-03 00:00:00.000000", "start_date" => "2013-12-17 00:00:00.000000", "daily_charge" => 1.13 }, { "end_date" => "2025-12-04 00:00:00.000000", "start_date" => "2025-12-04 00:00:00.000000", "daily_charge" => 0.83 }]
+      charges = [{ "end_date" => "2033-03-29 00:00:00.000000", "start_date" => "2013-12-17 00:00:00.000000", "daily_charge" => 1.13 }, { "end_date" => "2025-12-04 00:00:00.000000", "start_date" => "2025-12-04 00:00:00.000000", "daily_charge" => 0.83 }]
       end_date = "2033-03-29"
       result = gateway.update_end_date_and_charges(green_deal_plan_id: "ABC654321DEF", end_date: end_date, charges: charges)
       expect(result[:green_deal_plan_id]).to eq("ABC654321DEF")
