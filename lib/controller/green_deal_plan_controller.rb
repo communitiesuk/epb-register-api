@@ -211,6 +211,8 @@ module Controller
         not_found_error "Green Deal Plan not found"
       when Boundary::Json::ValidationError
         error_response 400, "INVALID_REQUEST", e.message
+      when Boundary::Json::Error
+        error_response 400, "INVALID_REQUEST", e.message
       when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
         error_response 409,
                        "INVALID_REQUEST",
