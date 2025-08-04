@@ -4,7 +4,7 @@ describe "Acceptance::Assessment::GreenDealPlan::PatchGreenDealPlan", :set_with_
   let(:valid_request_body) do
     {
       greenDealPlanId: "ABC654321DEF",
-      endDate: "2035-02-28",
+      endDate: "2035-02-28 00:00:00 000000",
       charges: [
         {
           startDate: "2020-03-29",
@@ -157,6 +157,72 @@ describe "Acceptance::Assessment::GreenDealPlan::PatchGreenDealPlan", :set_with_
 
         it "returns a 400 status code" do
           expect(patch_green_deal_plan(plan_id: "ABC123456DEF",
+                                       body: invalid_request_body,
+                                       accepted_responses: [400]).status).to eq(400)
+        end
+      end
+
+      context "when the format of the plan id is incorrect" do
+        let(:invalid_request_body) do
+          {
+            greenDealPlanId: "AB4321DEF",
+            endDate: "2035-02-28",
+            charges: [
+              {
+                startDate: "2020-03-29",
+                endDate: "2025-03-29",
+                dailyCharge: 0.34,
+              },
+            ],
+          }
+        end
+
+        it "returns a 400 status code" do
+          expect(patch_green_deal_plan(plan_id: "AB4321DEF",
+                                       body: invalid_request_body,
+                                       accepted_responses: [400]).status).to eq(400)
+        end
+      end
+
+      context "when the format of end date is incorrect" do
+        let(:invalid_request_body) do
+          {
+            greenDealPlanId: "ABC654321DEF",
+            endDate: "202-02-20",
+            charges: [
+              {
+                startDate: "2032-02-20",
+                endDate: "2034-02-20",
+                dailyCharge: 0.34,
+              },
+            ],
+          }
+        end
+
+        it "returns a 400 status code" do
+          expect(patch_green_deal_plan(plan_id: "ABC654321DEF",
+                                       body: invalid_request_body,
+                                       accepted_responses: [400]).status).to eq(400)
+        end
+      end
+
+      context "when the format of one of the charges dates is incorrect" do
+        let(:invalid_request_body) do
+          {
+            greenDealPlanId: "ABC654321DEF",
+            endDate: "2022-02-20",
+            charges: [
+              {
+                startDate: "2032-02-20",
+                endDate: "20-02-2023",
+                dailyCharge: 0.34,
+              },
+            ],
+          }
+        end
+
+        it "returns a 400 status code" do
+          expect(patch_green_deal_plan(plan_id: "ABC654321DEF",
                                        body: invalid_request_body,
                                        accepted_responses: [400]).status).to eq(400)
         end

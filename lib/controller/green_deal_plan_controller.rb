@@ -213,6 +213,8 @@ module Controller
         error_response 400, "INVALID_REQUEST", e.message
       when Boundary::Json::Error
         error_response 400, "INVALID_REQUEST", e.message
+      when JSON::Schema::CustomFormatError
+        error_response 400, "INVALID_REQUEST", e.message
       when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
         error_response 409,
                        "INVALID_REQUEST",

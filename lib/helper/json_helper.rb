@@ -4,6 +4,11 @@ module Helper
   class JsonHelper
     DATE_FORMAT_PROC =
       lambda do |value|
+        if value.match(/\d{4}-\d{2}-\d{2}/).nil?
+          raise JSON::Schema::CustomFormatError,
+                "Must be date in format YYYY-MM-DD"
+        end
+
         Date.strptime(value, "%Y-%m-%d")
       rescue StandardError
         raise JSON::Schema::CustomFormatError,
