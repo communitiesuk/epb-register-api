@@ -379,7 +379,7 @@ paths:
 
         Clients with scope `assessor:search` can search by
           _either_:
-          - a postcode (with scope `assessor:search`) and optional qualification; _or_
+          - a postcode (with scope `assessor:search`) and comma-separated list of qualifications; _or_
           - full name (with scope `assessor:search`) and optional qualification type (domestic or non-domestic)
 
         Clients with scope `scheme:assessor:fetch` can search by
@@ -2900,7 +2900,7 @@ components:
 
     AssessorQualificationSearchOptions:
       type: string
-      example: domesticRdSap
+      example: domesticSap,domesticRdSap
       enum:
         - domesticRdSap
         - domesticSap
