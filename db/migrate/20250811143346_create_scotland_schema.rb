@@ -52,9 +52,9 @@ class CreateScotlandSchema < ActiveRecord::Migration[8.0]
                 SELECT tables.TABLE_NAME::text
                   FROM information_schema.tables as tables
                   join information_schema.columns as columns on tables.table_name = columns.table_name
-                 WHERE (tables.table_schema = 'public'
+                 WHERE ((tables.table_schema = 'public'
                    AND tables.table_type = 'BASE TABLE'
-                    AND columns.column_name = 'assessment_id') OR tables.TABLE_NAME = 'schema_migrations'
+                    AND columns.column_name = 'assessment_id') OR tables.TABLE_NAME = 'schema_migrations') AND tables.TABLE_NAME != 'open_data_logs'
 
               LOOP
                 buffer := '\"' || dest_schema || '\".' || quote_ident(object);
