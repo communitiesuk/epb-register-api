@@ -8,15 +8,16 @@ help:
 
 .PHONY: setup-db
 setup-db:
+	@echo "RACK_ENV is '$${RACK_ENV}'"
+	@echo ">>>>> Creating DB"
+	@bundle exec rake db:create
+	@echo ">>>>> Migrating DB"
+	@bundle exec rake db:migrate
 	@if [ "$${RACK_ENV}" != "production" ]; then \
 			echo ">>>>> Preparing DB for tests"; \
 			RACK_ENV=test bundle exec rake db:create; \
 			RACK_ENV=test bundle exec rake db:migrate; \
 	fi
-	@echo ">>>>> Creating DB"
-	@bundle exec rake db:create
-	@echo ">>>>> Migrating DB"
-	@bundle exec rake db:migrate
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
 	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake maintenance:green_deal_update_fuel_data'.\n"
