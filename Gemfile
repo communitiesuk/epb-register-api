@@ -9,7 +9,7 @@ end
 
 group :test do
   gem "database_cleaner"
-  gem "mock_redis", "~> 0.49"
+  gem "mock_redis", "~> 0.52"
   gem "pry", "~> 0.15.2"
   gem "rack-test", "~> 2.2.0"
   gem "rspec", "~>3.13"
