@@ -28,7 +28,7 @@ describe Gateway::SlackGateway, :set_with_timecop do
       end
 
       it "posts to the Slack files.getUploadURLExternal with correct file" do
-        expect(slack_web_client).to have_received(:files_getUploadURLExternal).with(filename: "postcodes_test.csv", length: 5470)
+        expect(slack_web_client).to have_received(:files_getUploadURLExternal).with(filename: "postcodes_test.csv", length: 4330)
       end
 
       it "posts to the Slack files_completeUploadExternal with the correct info" do

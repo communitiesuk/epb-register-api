@@ -27,11 +27,11 @@ module UseCase
 
       row_number = 1
       while (row = postcode_csv.shift)
-        postcode = row["pcd"]
+        postcode = row["pcd7"]
         lat = row["lat"]
         long = row["long"]
 
-        region = REGION_CODES[row["rgn"].to_sym]
+        region = REGION_CODES[row["rgn25cd"].to_sym]
 
         # Only considers England, NI and Wales
         next if region.nil?

@@ -21,33 +21,33 @@ describe UseCase::ProcessPostcodeCsv do
     end
 
     let(:expected_data) do
-      ["'BT1 1AA', 54.602444, -5.922291, 'Northern Ireland'",
-       "'BT1 1AE', 54.602557, -5.93151, 'Northern Ireland'",
-       "'BT1 1AF', 54.602557, -5.93151, 'Northern Ireland'",
-       "'AL1 1AA', 51.749084, -0.341337, 'East of England'",
-       "'CA6 7BB', 55.08748, -2.527787, 'North East'",
-       "'BB0 1GR', 53.753449, -2.464232, 'North West'",
+      ["'BT1 1AA', 54.602438, -5.922291, 'Northern Ireland'",
+       "'BT1 1AE', 54.602551, -5.93151, 'Northern Ireland'",
+       "'BT1 1AF', 54.602551, -5.93151, 'Northern Ireland'",
+       "'AL1 1AA', 51.74909, -0.341314, 'East of England'",
+       "'CA6 7BB', 55.087484, -2.527794, 'North East'",
+       "'BB0 1GR', 53.753464, -2.464231, 'North West'",
        "'BB18 6JR', 53.922805, -2.122499, 'Yorkshire and The Humber'",
-       "'B79 0PJ', 52.677817, -1.561515, 'East Midlands'",
-       "'B1  1AA', 52.47666, -1.903535, 'West Midlands'",
-       "'BR1 1AA', 51.401546, 0.015415, 'London'",
-       "'BH21 6AS', 50.867805, -1.847897, 'South East'",
+       "'B79 0PJ', 52.677817, -1.56153, 'East Midlands'",
+       "'B1  1AA', 52.476674, -1.90353, 'West Midlands'",
+       "'BR1 1AA', 51.401545, 0.01544, 'London'",
+       "'BH21 6AS', 50.867796, -1.84789, 'South East'",
        "'BA1 0AA', 51.378846, -2.35556, 'South West'",
-       "'CF1 1AA', 51.469744, -3.187692, 'Wales'"]
+       "'CF1 1AA', 51.469744, -3.187701, 'Wales'"]
     end
 
     let(:expected_outcodes)  do
-      { "BT1" => { latitude: [54.602444, 54.602557, 54.602557], longitude: [-5.922291, -5.93151, -5.93151], region: ["Northern Ireland", "Northern Ireland", "Northern Ireland"] },
-        "AL1" => { latitude: [51.749084], longitude: [-0.341337], region: ["East of England"] },
-        "CA6" => { latitude: [55.08748], longitude: [-2.527787], region: ["North East"] },
-        "BB0" => { latitude: [53.753449], longitude: [-2.464232], region: ["North West"] },
+      { "BT1" => { latitude: [54.602438, 54.602551, 54.602551], longitude: [-5.922291, -5.93151, -5.93151], region: ["Northern Ireland", "Northern Ireland", "Northern Ireland"] },
+        "AL1" => { latitude: [51.74909], longitude: [-0.341314], region: ["East of England"] },
+        "CA6" => { latitude: [55.087484], longitude: [-2.527794], region: ["North East"] },
+        "BB0" => { latitude: [53.753464], longitude: [-2.464231], region: ["North West"] },
         "BB18" => { latitude: [53.922805], longitude: [-2.122499], region: ["Yorkshire and The Humber"] },
-        "B79" => { latitude: [52.677817], longitude: [-1.561515], region: ["East Midlands"] },
-        "B1" => { latitude: [52.47666], longitude: [-1.903535], region: ["West Midlands"] },
-        "BR1" => { latitude: [51.401546], longitude: [0.015415], region: %w[London] },
-        "BH21" => { latitude: [50.867805], longitude: [-1.847897], region: ["South East"] },
+        "B79" => { latitude: [52.677817], longitude: [-1.56153], region: ["East Midlands"] },
+        "B1" => { latitude: [52.476674], longitude: [-1.90353], region: ["West Midlands"] },
+        "BR1" => { latitude: [51.401545], longitude: [0.01544], region: %w[London] },
+        "BH21" => { latitude: [50.867796], longitude: [-1.84789], region: ["South East"] },
         "BA1" => { latitude: [51.378846], longitude: [-2.35556], region: ["South West"] },
-        "CF1" => { latitude: [51.469744], longitude: [-3.187692], region: %w[Wales] } }
+        "CF1" => { latitude: [51.469744], longitude: [-3.187701], region: %w[Wales] } }
     end
 
     let(:file_io) do
