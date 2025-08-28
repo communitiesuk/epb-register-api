@@ -8,12 +8,12 @@ help:
 
 .PHONY: setup-db
 setup-db:
-	@echo "RACK_ENV is '$${RACK_ENV}'"
+	@echo "RACK_ENV is '${RACK_ENV}'"
 	@echo ">>>>> Creating DB"
 	@bundle exec rake db:create
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake db:migrate
-	@if [ "$${RACK_ENV}" != "production" ]; then \
+	@if [ "${RACK_ENV}" != "production" ]; then \
 			echo ">>>>> Preparing DB for tests"; \
 			RACK_ENV=test bundle exec rake db:create; \
 			RACK_ENV=test bundle exec rake db:migrate; \

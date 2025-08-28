@@ -1,5 +1,6 @@
 class CreateScotlandSchema < ActiveRecord::Migration[8.0]
   def up
+    pp "We have entered the migration function creator"
     sql = "CREATE OR REPLACE FUNCTION clone_schema(
                 source_schema text,
                 dest_schema text,
@@ -178,6 +179,7 @@ class CreateScotlandSchema < ActiveRecord::Migration[8.0]
               COST 100;"
 
     execute(sql)
+    pp "we will now execute the function"
     execute("SELECT clone_schema('public', 'scotland', false);")
   end
 
