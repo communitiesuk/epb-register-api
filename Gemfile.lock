@@ -158,7 +158,7 @@ GEM
       rack (>= 3)
     rainbow (3.1.1)
     rake (13.3.0)
-    redis (5.4.0)
+    redis (5.4.1)
       redis-client (>= 0.22.0)
     redis-client (0.25.2)
       connection_pool
@@ -295,7 +295,7 @@ DEPENDENCIES
   rack-test (~> 2.2.0)
   rackup (~> 2.1)
   rake (~> 13.2)
-  redis (~> 5.4.0)
+  redis (~> 5.4.1)
   rspec (~> 3.13)
   rubocop (~> 1.78.0)
   rubocop-govuk (~> 5.1)
