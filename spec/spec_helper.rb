@@ -114,7 +114,7 @@ def add_postcodes(
     }', #{latitude.to_f}, #{longitude.to_f}, #{
       region.nil? ? 'NULL' : (db.connection.quote region)
     })",
-  )
+    )
 end
 
 def add_outcodes(
@@ -132,18 +132,18 @@ def add_outcodes(
     "INSERT INTO postcode_outcode_geolocations (outcode, latitude, longitude, region) VALUES('#{
       db.sanitize_sql(outcode)
     }', #{latitude.to_f}, #{longitude.to_f}, '#{region}')",
-  )
+    )
 end
 
 def truncate(postcode)
   if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
     ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE postcode_geolocation",
-    )
+      )
   else
     ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE postcode_outcode_geolocations",
-    )
+      )
   end
 end
 
@@ -178,7 +178,7 @@ def add_address_base(uprn:, postcode: nil, country_code: nil)
       ActiveRecord::Relation::QueryAttribute.new("postcode", postcode, ActiveRecord::Type::String.new),
       ActiveRecord::Relation::QueryAttribute.new("country_code", country_code, ActiveRecord::Type::String.new),
     ],
-  )
+    )
 end
 
 def insert_into_address_base(rrn, post_code, address1, address2, town, country_code)
@@ -199,32 +199,32 @@ def insert_into_address_base(rrn, post_code, address1, address2, town, country_c
       "uprn",
       rrn.to_i.to_s,
       ActiveRecord::Type::String.new,
-    ),
+      ),
     ActiveRecord::Relation::QueryAttribute.new(
       "postcode",
       post_code,
       ActiveRecord::Type::String.new,
-    ),
+      ),
     ActiveRecord::Relation::QueryAttribute.new(
       "address1",
       address1,
       ActiveRecord::Type::String.new,
-    ),
+      ),
     ActiveRecord::Relation::QueryAttribute.new(
       "address2",
       address2,
       ActiveRecord::Type::String.new,
-    ),
+      ),
     ActiveRecord::Relation::QueryAttribute.new(
       "town",
       town,
       ActiveRecord::Type::String.new,
-    ),
+      ),
     ActiveRecord::Relation::QueryAttribute.new(
       "country_code",
       country_code,
       ActiveRecord::Type::String.new,
-    ),
+      ),
   ]
 
   ActiveRecord::Base.connection.exec_query sql, "SQL", binds
@@ -288,34 +288,47 @@ RSpec.configure do |config|
   end
 
   config.include Wisper::RSpec::BroadcastMatcher
-
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
+    truncate_all_tables(%w[public scotland])
+
     Rake::Task["db:seed"].invoke
 
     Events::Broadcaster.disable!
-
     Gateway::DataWarehouseRedisHelper.redis_client_class = MockRedis
   end
 
-  config.before(:all, :set_with_timecop) { Timecop.freeze(Time.utc(2021, 6, 21)) }
+  def truncate_all_tables(schemas)
+    schemas.each do |schema|
+      tables = ActiveRecord::Base.connection.execute(<<~SQL)
+        SELECT tablename FROM pg_tables WHERE schemaname = '#{schema}';
+      SQL
 
+      tables.each do |row|
+        table = row["tablename"]
+        next if table == "schema_migrations"
+
+        ActiveRecord::Base.connection.execute("TRUNCATE TABLE #{schema}.#{table} RESTART IDENTITY CASCADE;")
+      end
+    end
+  end
+
+  config.before(:all, :set_with_timecop) { Timecop.freeze(Time.utc(2021, 6, 21)) }
   config.after(:all, :set_with_timecop) { Timecop.return }
 
-  config.before { DatabaseCleaner.strategy = :transaction }
+  config.before do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+    ApiFactory.clear!
+  end
 
-  config.before { DatabaseCleaner.start }
-
-  config.before { ApiFactory.clear! }
-
-  config.after { ApiFactory.clear! }
-
-  config.after { DatabaseCleaner.clean }
+  config.after do
+    ApiFactory.clear!
+    DatabaseCleaner.clean
+  end
 
   config.before(:all) { DatabaseCleaner.start }
-
   config.after(:all) { DatabaseCleaner.clean }
 end
 
