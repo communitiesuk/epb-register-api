@@ -5,17 +5,21 @@
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+
 .PHONY: setup-db
 setup-db:
+	@echo "RACK_ENV is '${RACK_ENV}'"
 	@echo ">>>>> Creating DB"
 	@bundle exec rake db:create
 	@echo ">>>>> Migrating DB"
-	@bundle exec rake db:migrate
+	@bundle exec rake db:migrate VERSION=20250811143346
+	@if [ "${RACK_ENV}" != "production" ]; then \
+			echo ">>>>> Preparing DB for tests"; \
+			RACK_ENV=test bundle exec rake db:create; \
+			RACK_ENV=test bundle exec rake db:migrate VERSION=20250811143346; \
+	fi
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
-	@if [ "${RACK_ENV}" != "production" ]; then\
-            echo ">>>>>Preparing DB for tests" && bundle exec rake db:environment:set[development] && bundle exec rake db:test:prepare ;\
-  fi
 	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake maintenance:green_deal_update_fuel_data'.\n"
 
 
