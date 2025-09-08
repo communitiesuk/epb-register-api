@@ -12,11 +12,11 @@ setup-db:
 	@echo ">>>>> Creating DB"
 	@bundle exec rake db:create
 	@echo ">>>>> Migrating DB"
-	@bundle exec rake db:migrate VERSION=20250811143346
+	@bundle exec rake db:migrate
 	@if [ "${RACK_ENV}" != "production" ]; then \
 			echo ">>>>> Preparing DB for tests"; \
 			RACK_ENV=test bundle exec rake db:create; \
-			RACK_ENV=test bundle exec rake db:migrate VERSION=20250811143346; \
+			RACK_ENV=test bundle exec rake db:migrate; \
 	fi
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
