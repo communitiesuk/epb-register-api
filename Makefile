@@ -16,7 +16,7 @@ setup-db:
 	@if [ "${RACK_ENV}" != "production" ]; then \
 			echo ">>>>> Preparing DB for tests"; \
 			RACK_ENV=test bundle exec rake db:create; \
-			RACK_ENV=test bundle exec rake db:migrate;
+			RACK_ENV=test bundle exec rake db:migrate; \
 	fi
 	@echo ">>>>> Seeding DB with fuel code mapping data"
 	@bundle exec rake db:seed
