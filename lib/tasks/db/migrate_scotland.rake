@@ -1,6 +1,10 @@
 namespace :db do
 
-  # Rake::Task["db:migrate"].enhance(["db:migrate_scotland"])
+  desc "Run db migrations on both schema"
+  task :migrate do
+    Rake::Task["db:migrate"].invoke
+    Rake::Task["db:migrate_scotland"].invoke
+  end
 
   desc "Run db migrations on the scotland schema"
   task :migrate_scotland  do
