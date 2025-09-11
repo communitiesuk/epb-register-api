@@ -22,7 +22,8 @@ describe "create_function_for_new_schema and create_new_schema" do
                            assessments_xml
                            assessments_country_ids
                            assessments
-                           green_deal_assessments]
+                           green_deal_assessments
+                           scotland_test_table]
       table_results = ActiveRecord::Base.connection.exec_query <<~SQL
         SELECT table_name FROM information_schema.tables WHERE table_schema = 'scotland';
       SQL
