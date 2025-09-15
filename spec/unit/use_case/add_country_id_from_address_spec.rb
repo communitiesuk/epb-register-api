@@ -14,7 +14,7 @@ describe UseCase::AddCountryIdFromAddress do
   end
 
   let(:northern_ireland_domain) do
-    Domain::CountryLookup.new(country_codes: [:N])
+    Domain::CountrLookup.new(country_codes: [:N])
   end
 
   let(:gateway) do
