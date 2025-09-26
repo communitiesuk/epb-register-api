@@ -38,7 +38,7 @@ gem "redis", "~> 5.4.1"
 gem "rubocop", "~> 1.79.2"
 gem "rubocop-govuk", "~> 5.1"
 gem "rubocop-performance", require: false
-gem "rubyzip", "~> 2.4.1"
+gem "rubyzip", "~> 3.1.1"
 gem "sentry-ruby", "~> 5.26"
 gem "sinatra", "~> 4.1"
 gem "sinatra-activerecord", "~> 2.0.27"
