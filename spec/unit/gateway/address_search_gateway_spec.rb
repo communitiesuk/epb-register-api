@@ -1,5 +1,6 @@
 describe Gateway::AddressSearchGateway do
   subject(:gateway) { described_class.new }
+
   include RSpecRegisterApiServiceMixin
 
   context "when an address from address_base is returned in an address search response" do
@@ -11,7 +12,7 @@ describe Gateway::AddressSearchGateway do
         "SHELDSTOWN",
         "BOARDERS",
         "S",
-        )
+      )
 
       insert_into_address_base(
         "1234123412323232",
@@ -20,7 +21,7 @@ describe Gateway::AddressSearchGateway do
         "SHELDSTOWN",
         "LONDON",
         "E",
-        )
+      )
     end
 
     it "returns an English property when searched by postcode" do
