@@ -44,12 +44,12 @@ describe Gateway::AddressSearchGateway do
       expect(address).to eq []
     end
 
-    it "returns an English property when searched by streen name and town" do
+    it "returns an English property when searched by street name and town" do
       address = gateway.search_by_street_and_town("1 MCDONALD ROAD", "LONDON", nil).first.line1
       expect(address).to eq "1 McDonald Road"
     end
 
-    it "does not return the address for Scottish property when searched by streen name and town" do
+    it "does not return the address for Scottish property when searched by street name and town" do
       address = gateway.search_by_street_and_town("2 MCDONALD ROAD", "BOARDERS", nil)
       expect(address).to eq []
     end
