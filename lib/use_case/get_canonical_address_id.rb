@@ -12,7 +12,7 @@ module UseCase
       @assessments_search_gateway = assessments_search_gateway || Gateway::AssessmentsSearchGateway.new
     end
 
-    def execute(rrn:, address_id:, type_of_assessment: nil, related_rrn: nil)
+    def execute(rrn:, address_id:, type_of_assessment: nil, related_rrn: nil, is_scottish: false)
       if address_id.nil?
         return default_address_id(rrn:, related_rrn:, type_of_assessment:)
       elsif address_id.start_with?("UPRN-")
@@ -23,7 +23,7 @@ module UseCase
         related_assessment_id = address_id[4..]
         begin
           related_assessment =
-            @assessments_address_id_gateway.fetch(related_assessment_id)
+            @assessments_address_id_gateway.fetch(related_assessment_id, is_scottish)
         rescue ActiveRecord::RecordNotFound
           related_assessment = nil
         end
