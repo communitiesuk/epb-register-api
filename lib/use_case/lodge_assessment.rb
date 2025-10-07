@@ -39,8 +39,10 @@ module UseCase
     end
 
     def execute(data, migrated, schema_name)
-      assessment_id = data[:assessment_id]
+      is_scottish = schema_name.include?("-S-") || false
 
+      assessment_id = data[:assessment_id]
+      # TODO: UPDATE WHEN DOING LODGEMENT
       if !migrated && find_assessment_by_id(assessment_id)
         raise DuplicateAssessmentIdException
       end
@@ -83,32 +85,30 @@ module UseCase
         )
 
       if migrated
-        @assessments_gateway.insert_or_update assessment
-        insert_country_id(data[:assessment_id], data[:country_id], upsert: true)
+        @assessments_gateway.insert_or_update(assessment, is_scottish)
+        insert_country_id(data[:assessment_id], is_scottish, data[:country_id], upsert: true)
       else
         begin
+          # TODO: UPDATE WHEN DOING LODGEMENT
           @assessments_gateway.insert assessment
-          insert_country_id(data[:assessment_id], data[:country_id])
+          insert_country_id(data[:assessment_id], is_scottish, data[:country_id])
         rescue Gateway::AssessmentsGateway::AssessmentAlreadyExists
           raise DuplicateAssessmentIdException
         end
       end
-
-      insert_assessment_address_id assessment
-
-      associate_related_green_deals assessment if assessment.type_of_assessment == "RdSAP"
-
+      insert_assessment_address_id(assessment, is_scottish)
+      # TODO: UPDATE WHEN DOING LODGEMENT
+      associate_related_green_deals(assessment, is_scottish) if assessment.type_of_assessment == "RdSAP" && !migrated
       @assessments_xml_gateway.send_to_db(
         {
           assessment_id: data[:assessment_id],
           xml: data[:raw_data],
           schema_type: schema_name,
         },
+        is_scottish,
       )
-
       search_address = Domain::SearchAddress.new(data).to_hash
-      @search_address_gateway.insert search_address
-
+      @search_address_gateway.insert(search_address, is_scottish)
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id
 
       assessment
@@ -178,30 +178,32 @@ module UseCase
       related_rrn
     end
 
-    def insert_assessment_address_id(assessment)
+    def insert_assessment_address_id(assessment, is_scottish)
       canonical_address_id = get_canonical_address_id(assessment)
       source =
         get_assessments_address_id_source(
           lodged_address_id: assessment.address_id,
           canonical_address_id:,
         )
-
       @assessments_address_id_gateway.send_to_db(
         {
           assessment_id: assessment.assessment_id,
           address_id: canonical_address_id,
           source:,
         },
+        is_scottish,
       )
     end
 
-    def associate_related_green_deals(assessment)
-      canonical_address_id = @assessments_address_id_gateway.fetch(assessment.assessment_id)[:address_id]
+    def associate_related_green_deals(assessment, is_scottish)
+      canonical_address_id = @assessments_address_id_gateway.fetch(assessment.assessment_id, is_scottish)[:address_id]
       related_assessment_ids = @related_assessments_gateway.related_assessment_ids(canonical_address_id).reject { |id| id == assessment.assessment_id }
+      # Need to update the lodge_assessment method in assertive client
       green_deal_plan_sets = related_assessment_ids.map { |assessment_id| @green_deal_plans_gateway.fetch assessment_id }
       flat_mapped = green_deal_plan_sets.flat_map(&:itself)
       green_deal_plan_ids = flat_mapped.map(&:green_deal_plan_id).uniq
       green_deal_plan_ids.each do |green_deal_plan_id|
+        # Need to update the lodge_assessment method in assertive client
         @green_deal_plans_gateway.link_green_deal_to_assessment green_deal_plan_id, assessment.assessment_id
       end
     rescue StandardError => e
@@ -217,6 +219,7 @@ module UseCase
       )
     end
 
+    # TODO: UPDATE WHEN DOING LODGEMENT
     def find_assessment_by_id(assessment_id)
       @assessments_search_gateway.search_by_assessment_id(assessment_id, restrictive: false)
         .first
@@ -233,8 +236,8 @@ module UseCase
       end
     end
 
-    def insert_country_id(assessment_id, country_id = nil, upsert: false)
-      @assessments_country_id_gateway.insert(assessment_id:, country_id:, upsert:) unless country_id.nil?
+    def insert_country_id(assessment_id, is_scottish, country_id = nil, upsert: false)
+      @assessments_country_id_gateway.insert(assessment_id:, country_id:, upsert:, is_scottish:) unless country_id.nil?
     end
   end
 end

@@ -9,8 +9,12 @@ module Gateway
     class AssessmentsXml < ActiveRecord::Base
     end
 
-    def send_to_db(record)
-      AssessmentsXml.create(record)
+    class AssessmentsXmlScotland < ActiveRecord::Base
+      self.table_name = "scotland.assessments_xml"
+    end
+
+    def send_to_db(record, is_scottish)
+      is_scottish ? AssessmentsXmlScotland.create(record) : AssessmentsXml.create(record)
     end
 
     def fetch(assessment_id)

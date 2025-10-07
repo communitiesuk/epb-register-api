@@ -221,7 +221,7 @@ describe UseCase::LodgeAssessment do
         use_case.execute(data, true, "SAP-Schema-18.0.0")
 
         expect(assessments_gateway).to have_received(:insert_or_update)
-        expect(search_address_gateway).to have_received(:insert).with({ assessment_id: "2000-0000-0000-0000-0001", address: "1 some street some area some county" })
+        expect(search_address_gateway).to have_received(:insert).with({ assessment_id: "2000-0000-0000-0000-0001", address: "1 some street some area some county" }, false)
       end
 
       it "calls AssessmentsXMLGateway to save the XML data to the assessments_xml table" do
@@ -233,6 +233,7 @@ describe UseCase::LodgeAssessment do
             xml: "<SomeNode></SomeNode>",
             schema_type: "SAP-Schema-18.0.0",
           },
+          false,
         )
       end
     end
@@ -264,7 +265,7 @@ describe UseCase::LodgeAssessment do
         end
 
         it "sends the country to the assessments_country_id gateway" do
-          expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id: data[:assessment_id], country_id: 1, upsert: false)
+          expect(assessments_country_id_gateway).to have_received(:insert).with(assessment_id: data[:assessment_id], country_id: 1, upsert: false, is_scottish: false)
         end
       end
 

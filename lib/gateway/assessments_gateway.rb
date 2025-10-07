@@ -6,6 +6,10 @@ module Gateway
 
     class Assessment < ActiveRecord::Base; end
 
+    class AssessmentScotland < ActiveRecord::Base
+      self.table_name = "scotland.assessments"
+    end
+
     class InvalidAssessmentType < StandardError; end
 
     class AssessmentAlreadyExists < StandardError; end
@@ -21,9 +25,9 @@ module Gateway
       AC-REPORT
     ].freeze
 
-    def insert_or_update(assessment)
+    def insert_or_update(assessment, is_scottish)
       check_valid_energy_ratings assessment
-      send_update_to_db assessment
+      send_update_to_db(assessment, is_scottish)
     end
 
     def insert(assessment)
@@ -223,78 +227,92 @@ module Gateway
       end
     end
 
-    def send_update_to_db(assessment)
+    def send_update_to_db(assessment, is_scottish)
       ActiveRecord::Base.transaction do
-        existing_assessment =
-          Assessment.exists? assessment_id: assessment.get(:assessment_id)
+        existing_assessment = if is_scottish
+                                AssessmentScotland.exists?(assessment_id: assessment.get(:assessment_id))
+                              else
+                                Assessment.exists?(assessment_id: assessment.get(:assessment_id))
+                              end
 
         if existing_assessment
-          delete_xml = <<-SQL
-            DELETE FROM assessments_xml WHERE assessment_id = $1
-          SQL
-
-          delete_address_id = <<-SQL
-            DELETE FROM assessments_address_id WHERE assessment_id = $1
-          SQL
-
-          green_deal_plan_id = <<-SQL
-            SELECT green_deal_plan_id FROM green_deal_assessments WHERE assessment_id = $1
-          SQL
-
-          delete_green_deal_assessment = <<-SQL
-            DELETE FROM green_deal_assessments WHERE assessment_id = $1
-          SQL
-
-          delete_assessment = <<-SQL
-            DELETE FROM assessments WHERE assessment_id = $1
-          SQL
-
-          delete_linked_assessment = <<-SQL
-            DELETE FROM linked_assessments WHERE assessment_id = $1
-          SQL
-
-          binds = [
-            ActiveRecord::Relation::QueryAttribute.new(
-              "id",
-              assessment.get(:assessment_id),
-              ActiveRecord::Type::String.new,
-            ),
-          ]
-
-          ActiveRecord::Base.connection.exec_query delete_xml, "SQL", binds
-
-          green_deal_plan_ids =
-            ActiveRecord::Base.connection.exec_query green_deal_plan_id,
-                                                     "SQL",
-                                                     binds
-
-          ActiveRecord::Base.connection.exec_query delete_green_deal_assessment,
-                                                   "SQL",
-                                                   binds
-
-          ActiveRecord::Base.connection.exec_query delete_assessment,
-                                                   "SQL",
-                                                   binds
-
-          ActiveRecord::Base.connection.exec_query delete_address_id,
-                                                   "SQL",
-                                                   binds
-
-          ActiveRecord::Base.connection.exec_query delete_linked_assessment,
-                                                   "SQL",
-                                                   binds
-
-          Assessment.create assessment.to_record
-
-          reattach_green_deal_plans(green_deal_plan_ids, binds)
+          schema = is_scottish ? "scotland." : "public."
+          remove_and_relodge_assessment(assessment, schema)
         else
-          Assessment.create assessment.to_record
+          is_scottish ? AssessmentScotland.create(assessment.to_record) : Assessment.create(assessment.to_record)
         end
 
+        # We are going to have to re-think related assessments for Scotland non-dom
         unless assessment.get(:related_rrn).nil?
           add_linked_assessment assessment
         end
       end
+    end
+
+    def remove_and_relodge_assessment(assessment, schema)
+      delete_xml = <<-SQL
+            DELETE FROM #{schema}assessments_xml WHERE assessment_id = $1
+      SQL
+
+      delete_address_id = <<-SQL
+            DELETE FROM #{schema}assessments_address_id WHERE assessment_id = $1
+      SQL
+
+      green_deal_plan_id = <<-SQL
+            SELECT green_deal_plan_id FROM #{schema}green_deal_assessments WHERE assessment_id = $1
+      SQL
+
+      delete_green_deal_assessment = <<-SQL
+            DELETE FROM #{schema}green_deal_assessments WHERE assessment_id = $1
+      SQL
+
+      delete_assessment = <<-SQL
+            DELETE FROM #{schema}assessments WHERE assessment_id = $1
+      SQL
+
+      delete_linked_assessment = <<-SQL
+            DELETE FROM #{schema}linked_assessments WHERE assessment_id = $1
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "id",
+          assessment.get(:assessment_id),
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query delete_xml, "SQL", binds
+
+      green_deal_plan_ids =
+        ActiveRecord::Base.connection.exec_query green_deal_plan_id,
+                                                 "SQL",
+                                                 binds
+
+      ActiveRecord::Base.connection.exec_query delete_green_deal_assessment,
+                                               "SQL",
+                                               binds
+
+      ActiveRecord::Base.connection.exec_query delete_assessment,
+                                               "SQL",
+                                               binds
+
+      ActiveRecord::Base.connection.exec_query delete_address_id,
+                                               "SQL",
+                                               binds
+
+      ActiveRecord::Base.connection.exec_query delete_linked_assessment,
+                                               "SQL",
+                                               binds
+
+      if schema == "scotland."
+        AssessmentScotland.create assessment.to_record
+      else
+        Assessment.create assessment.to_record
+      end
+
+      # Need to test this
+      reattach_green_deal_plans(green_deal_plan_ids, binds, schema)
     end
 
     def check_valid_energy_ratings(assessment)
@@ -319,9 +337,9 @@ module Gateway
       end
     end
 
-    def reattach_green_deal_plans(green_deal_plan_ids, binds)
+    def reattach_green_deal_plans(green_deal_plan_ids, binds, schema)
       add_green_deal_plan = <<-SQL
-            INSERT INTO green_deal_assessments (assessment_id, green_deal_plan_id)
+            INSERT INTO #{schema}green_deal_assessments (assessment_id, green_deal_plan_id)
             VALUES ($1, $2)
       SQL
 
