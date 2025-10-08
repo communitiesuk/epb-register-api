@@ -2,11 +2,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   before do
+    Events::Broadcaster.enable!
     add_countries
   end
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-S-19.0" }
-  let(:scheme_id) { add_scheme_and_get_id }
+  let(:valid_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
       domestic_rd_sap: "ACTIVE",
@@ -17,17 +18,14 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       non_domestic_sp3: "ACTIVE",
     )
   end
-  let(:expected_lodgement) do
-    {}
-  end
 
   context "when migrating a Scottish assessment" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:migrated_column_scotland) do
+    let(:migrated_scotland_rdsap_data) do
       ActiveRecord::Base.connection.exec_query(
-        "SELECT migrated FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-      )
+        "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+        ).entries.first
     end
 
     before do
@@ -47,7 +45,32 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       ).status).to eq(403)
     end
 
-    it "is true in migrated column" do
+    it "has all expected data points present" do
+
+      expected_rdsap_data = {
+        "assessment_id"=>"0000-0000-0000-0000-0000",
+         "date_of_assessment"=>'2023-06-27',
+         "date_registered"=>'2023-06-27',
+         "type_of_assessment"=>"RdSAP",
+         "current_energy_efficiency_rating"=>79,
+         "postcode"=>"FK1 1XE",
+         "date_of_expiry"=>'2033-06-26',
+         "address_line1"=>"1 Some Street",
+         "address_line2"=>"",
+         "address_line3"=>"",
+         "address_line4"=>"",
+         "town"=>"Newkirk",
+         "scheme_assessor_id"=>"SPEC000000",
+         "opt_out"=>false,
+         "address_id"=>"LPRN-0000000000",
+         "migrated"=>true,
+         "cancelled_at"=>nil,
+         "not_for_issue_at"=>nil,
+         "created_at"=>'2021-06-21',
+         "hashed_assessment_id"=>"4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+         "test_column"=>nil
+      }
+
       response = lodge_assessment assessment_body: valid_rdsap_xml,
                                   accepted_responses: [201],
                                   scopes: %w[assessment:lodge migrate:assessment],
@@ -58,7 +81,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                   migrated: "true"
 
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
-      expect(migrated_column_scotland.entries.first["migrated"]).to be_truthy
+      expect(migrated_scotland_rdsap_data).to eq expected_rdsap_data
     end
 
     context "when migrating the same assessment ID" do
@@ -82,7 +105,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                          },
                          schema_name: "RdSAP-Schema-S-19.0",
                          migrated: "true"
-        expect(migrated_column_scotland.entries.first["migrated"]).to be_truthy
+        expect(migrated_scotland_rdsap_data["migrated"]).to be_truthy
       end
     end
 
@@ -112,7 +135,52 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                     migrated: true).status
 
         expect(response).to eq 201
-        expect(migrated_column_scotland.entries.first["migrated"]).to be_truthy
+        expect(migrated_scotland_rdsap_data["migrated"]).to be_truthy
+      end
+    end
+
+    context "when migrating a Scottish SAP assessment" do
+
+      expected_sap_assessment_data = {
+        "assessment_id"=>"0000-0000-0000-0000-0000",
+        "date_of_assessment"=>"2024-11-21",
+        "date_registered"=>"2024-11-21",
+        "type_of_assessment"=>"SAP",
+        "current_energy_efficiency_rating"=>91,
+        "postcode"=>"EH1 2NG",
+        "date_of_expiry"=>"2034-11-20",
+        "address_line1"=>"1 LOVELY ROAD",
+        "address_line2"=>"NICE ESTATE",
+        "address_line3"=>"",
+        "address_line4"=>nil,
+        "town"=>"TOWN",
+        "scheme_assessor_id"=>"SPEC000000",
+        "opt_out"=>false,
+        "address_id"=>"0000000001",
+        "migrated"=>true,
+        "cancelled_at"=>nil,
+        "not_for_issue_at"=>nil,
+        "created_at"=>"2021-06-21",
+        "hashed_assessment_id"=>"4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        "test_column"=>nil
+      }
+
+      it "is true in migrated column" do
+        response = lodge_assessment assessment_body: valid_sap_xml,
+                                    accepted_responses: [201],
+                                    scopes: %w[assessment:lodge migrate:assessment],
+                                    auth_data: {
+                                      scheme_ids: [scheme_id],
+                                    },
+                                    schema_name: "SAP-Schema-S-19.0.0",
+                                    migrated: "true"
+
+        sap_data =  ActiveRecord::Base.connection.exec_query(
+          "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          ).entries.first
+
+        expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+        expect(sap_data).to eq expected_sap_assessment_data
       end
     end
   end
