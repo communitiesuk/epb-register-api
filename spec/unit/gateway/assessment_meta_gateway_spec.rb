@@ -51,6 +51,7 @@ describe Gateway::AssessmentMetaGateway do
         created_at: Time.now.utc,
         hashed_assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         country_id: 1,
+        green_deal: false,
       }
     end
 
@@ -89,6 +90,17 @@ describe Gateway::AssessmentMetaGateway do
 
       it "returns the expected data set with the not for issue at datetime to be now" do
         expect(gateway.fetch("0000-0000-0000-0000-0000")["not_for_issue_at"]).to eq(Time.now)
+      end
+    end
+
+    context "when the certificate is attached to a green deal" do
+      before do
+        Gateway::GreenDealPlansGateway::GreenDealPlan.create(green_deal_plan_id: "ABC123456DEF")
+        Gateway::GreenDealPlansGateway.new.link_green_deal_to_assessment("ABC123456DEF", "0000-0000-0000-0000-0000")
+      end
+
+      it "returns the expected data with green_deal to be true" do
+        expect(gateway.fetch("0000-0000-0000-0000-0000")["green_deal"]).to eq true
       end
     end
   end
