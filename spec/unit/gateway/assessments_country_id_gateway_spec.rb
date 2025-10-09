@@ -25,6 +25,16 @@ describe Gateway::AssessmentsCountryIdGateway do
         expect { gateway.insert(assessment_id:, country_id: 1) }.to raise_error Gateway::AssessmentsGateway::AssessmentAlreadyExists
       end
     end
+
+    context "when inserting a scottish assessment_id" do
+      it "updates the row without error using upsert" do
+        gateway.insert(assessment_id:, country_id: 2, upsert: true, is_scottish: true)
+        row = ActiveRecord::Base.connection.exec_query(
+          "SELECT country_id FROM scotland.assessments_country_ids WHERE assessment_id = '0000-0000-0001-1234-0000'",
+        )
+        expect(row.entries.first["country_id"]).to eq 2
+      end
+    end
   end
 
   describe "fetch_country_name" do

@@ -3,6 +3,10 @@ module Gateway
     class GreenDealPlan < ActiveRecord::Base
     end
 
+    class GreenDealPlanScotland < ActiveRecord::Base
+      self.table_name = "scotland.green_deal_plan"
+    end
+
     def exists?(green_deal_plan_id)
       sql = <<-SQL
         SELECT EXISTS (
@@ -33,9 +37,10 @@ module Gateway
       link_green_deal_to_assessment green_deal_plan.green_deal_plan_id, assessment_id
     end
 
-    def link_green_deal_to_assessment(green_deal_plan_id, assessment_id)
+    def link_green_deal_to_assessment(green_deal_plan_id, assessment_id, is_scottish = false)
+      schema = is_scottish ? "scotland." : "public."
       sql = <<-SQL
-        INSERT INTO green_deal_assessments (green_deal_plan_id, assessment_id)
+        INSERT INTO #{schema}green_deal_assessments (green_deal_plan_id, assessment_id)
         VALUES ($1, $2)
       SQL
 
@@ -72,7 +77,8 @@ module Gateway
       GreenDealPlan.update(green_deal_plan_id, { end_date: end_date, charges: charges })
     end
 
-    def fetch(assessment_id)
+    def fetch(assessment_id, is_scottish = false)
+      schema = is_scottish ? "scotland." : "public."
       sql = <<-SQL
         SELECT
           b.green_deal_plan_id, b.start_date, b.end_date,
@@ -81,14 +87,17 @@ module Gateway
           b.charge_uplift_date, b.cca_regulated, b.structure_changed,
           b.measures_removed, b.charges, b.measures, b.savings
         FROM
-          green_deal_assessments a
+          #{schema}green_deal_assessments a
         INNER JOIN
-          green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
+          #{schema}green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
         WHERE
           assessment_id = $1
         ORDER BY b.green_deal_plan_id
       SQL
-      response = GreenDealPlan.connection.exec_query(
+
+      table = is_scottish ? GreenDealPlanScotland : GreenDealPlan
+
+      response = table.connection.exec_query(
         sql,
         "SQL",
         [

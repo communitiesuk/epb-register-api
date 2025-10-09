@@ -3,13 +3,15 @@ module Gateway
     class Assessment < ActiveRecord::Base
     end
 
-    def related_assessment_ids(address_id)
+    def related_assessment_ids(address_id, is_scottish = false)
       return [] if address_id.blank?
+
+      schema = is_scottish ? "scotland." : "public."
 
       ActiveRecord::Base
         .connection
         .exec_query(
-          "SELECT assessment_id FROM assessments_address_id WHERE address_id = $1",
+          "SELECT assessment_id FROM #{schema}assessments_address_id WHERE address_id = $1",
           "SQL",
           [
             ActiveRecord::Relation::QueryAttribute.new(
