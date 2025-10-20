@@ -3,9 +3,32 @@ require "rspec"
 describe "Address Matching Rake to process sample addresses from S3" do
   include RSpecRegisterApiServiceMixin
   let(:described_class) { get_task("dev_scripts:s3_sample_address_match") }
+  let(:address_without_match_args) do
+    {
+      postcode: "DE21 7FY",
+      address_line_1: "61 Kirkleys Avenue South",
+      address_line_2: "Spondon",
+      address_line_3: "",
+      address_line_4: "",
+      town: "DERBY",
+    }
+  end
+
+  let(:address_with_multiple_matches_args) do
+    {
+      postcode: "PL6 8LB",
+      address_line_1: "Vine Cottage",
+      address_line_2: "Marsh Close",
+      address_line_3: "",
+      address_line_4: "",
+      town: "PLYMOUTH",
+    }
+  end
+
   let(:address_sample_csv) do
     csv_data = <<~CSV
       postcode,address_line1,address_line2,address_line3,address_line4,town,address_id,source,type_of_assessment
+
       GL6 8DS,BUBBLEWELL HOUSE,HIGHT STREET,STROUD,,GLOUCESTERSHIRE,RRN-0000-0000-0000-0000-0000,epb_bulk_linking,RdSAP
       PE33 9DR,5 Hatherley Gardens,Barton Bendish,"","",KING'S LYNN,UPRN-100090976153,lodgement,RdSAP
       CW12 4DZ,30 West End Cottages,"","","",CONGLETON,UPRN-100010046240,lodgement,RdSAP
@@ -39,6 +62,7 @@ describe "Address Matching Rake to process sample addresses from S3" do
   end
 
   let(:file_name) { "addresses.csv" }
+  let(:results_file_name) { "addresses_matched.csv" }
 
   before(:all) { HttpStub.enable_webmock }
 
@@ -52,6 +76,7 @@ describe "Address Matching Rake to process sample addresses from S3" do
         .with("ONS_POSTCODE_BUCKET_NAME", "test-bucket")
         .with("FILE_NAME", file_name)
 
+      WebMock.stub_request(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/addresses_matched.csv").to_return(status: 200)
       HttpStub.s3_get_object(file_name, address_sample_csv)
 
       OauthStub.token
@@ -59,19 +84,48 @@ describe "Address Matching Rake to process sample addresses from S3" do
         .stub_request(
           :post,
           addressing_api_endpoint,
-          )
+        )
         .to_return(status: 200, body: "sample")
       allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
-      allow(addressing_gateway).to receive(:match_address)
+      allow(addressing_gateway).to receive(:match_address).and_return([{ "uprn" => "199990129", "address" => "Flat 1, New Bridge Lane, PC01 A11", "confidence" => "99.3" }])
+
+      allow(addressing_gateway).to receive(:match_address).with(address_without_match_args).and_return([])
+      allow(addressing_gateway).to receive(:match_address).with(address_with_multiple_matches_args).and_return(
+        [
+          {"uprn" => "100000001", "address" => "Vine Cottage, Marsh Close, PL6 8LB", "confidence" => "99.3" },
+          {"uprn" => "100000002", "address" => "Vine Kiosk, Marsh Close, PL6 8LB", "confidence" => "80.3" }
+        ]
+      )
+
+      described_class.invoke
     end
 
-    it "calls the task successfully" do
-      expect { described_class.invoke }.not_to raise_error
+    it "downloads the file from S3" do
+      expect(WebMock).to have_requested(:get, "https://test-bucket.s3.eu-west-2.amazonaws.com/#{file_name}")
     end
 
     it "calls the addressing_api_gateway" do
-      described_class.invoke
-      expect(addressing_gateway).to have_received(:match_address).exactly(20).times
+      expect(addressing_gateway).to have_received(:match_address).with(anything).exactly(20).times
+    end
+
+    it "calls the addressing_api_gateway with the right arguments" do
+      expect(addressing_gateway).to have_received(:match_address).with(**address_without_match_args).once
+    end
+
+    it "defaults to 'none' for addresses without a match" do
+      expect(a_request(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/#{results_file_name}").with do |req|
+        req.body.include? "DE21 7FY,61 Kirkleys Avenue South,Spondon,\"\",\"\",DERBY,UPRN-100030328722,lodgement,RdSAP,none,none,none\n"
+      end).to have_been_made
+    end
+
+    it "chooses the address match with most confidence" do
+      expect(a_request(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/#{results_file_name}").with do |req|
+        req.body.include? "PL6 8LB,Vine Cottage,Marsh Close,\"\",\"\",PLYMOUTH,UPRN-100040464000,lodgement,RdSAP,100000001,\"Vine Cottage, Marsh Close, PL6 8LB\",99.3\n"
+      end).to have_been_made
+    end
+
+    it "uploads the result file to S3" do
+      expect(WebMock).to have_requested(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/#{results_file_name}")
     end
   end
 end
