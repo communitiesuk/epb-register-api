@@ -3,9 +3,17 @@ require "csv"
 namespace :dev_scripts do
   desc "Clean up temporary tables following postcode data update"
   task :s3_sample_address_match do
-    bucket_name = ENV["ONS_POSTCODE_BUCKET_NAME"]
+    bucket_name = ENV["BUCKET_NAME"]
+    if bucket_name.nil?
+      raise Boundary::ArgumentMissing, "bucket_name"
+    end
+
     file_name = ENV["FILE_NAME"]
-    output_file_name = "#{File.basename(file_name, ".csv")}_matched.csv"
+    if file_name.nil?
+      raise Boundary::ArgumentMissing, "file_name"
+    end
+
+    output_file_name = "#{File.basename(file_name, '.csv')}_matched.csv"
 
     storage_gateway = ApiFactory.storage_gateway(bucket_name:)
     puts "[#{Time.now}] Retrieving from S3 file: #{file_name}"
@@ -26,10 +34,7 @@ namespace :dev_scripts do
           address_line_4: row["address_line4"],
           town: row["town"],
         )
-        pp "called gateway #{n} times"
-        pp row["address_line1"]
         n += 1
-
 
         best_match = matches.max_by { |m| m["confidence"].to_f }
         if best_match.nil?

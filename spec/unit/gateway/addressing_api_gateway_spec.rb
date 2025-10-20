@@ -35,7 +35,7 @@ describe Gateway::AddressingApiGateway do
           address_line_3: "",
           address_line_4: "",
           town: "Town",
-        }
+        },
       )
     end
   end

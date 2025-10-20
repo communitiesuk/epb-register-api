@@ -66,14 +66,17 @@ describe "Address Matching Rake to process sample addresses from S3" do
 
   before(:all) { HttpStub.enable_webmock }
 
-  after(:all) { HttpStub.off }
+  after(:all) do
+    HttpStub.off
+    EnvironmentStub.remove(%w[AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY BUCKET_NAME AWS_DEFAULT_REGION AWS_REGION FILE_NAME])
+  end
 
   context "when we call the import_address_matching task" do
     before do
       allow($stdout).to receive(:puts)
       EnvironmentStub
         .all
-        .with("ONS_POSTCODE_BUCKET_NAME", "test-bucket")
+        .with("BUCKET_NAME", "test-bucket")
         .with("FILE_NAME", file_name)
 
       WebMock.stub_request(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/addresses_matched.csv").to_return(status: 200)
@@ -92,9 +95,9 @@ describe "Address Matching Rake to process sample addresses from S3" do
       allow(addressing_gateway).to receive(:match_address).with(address_without_match_args).and_return([])
       allow(addressing_gateway).to receive(:match_address).with(address_with_multiple_matches_args).and_return(
         [
-          {"uprn" => "100000001", "address" => "Vine Cottage, Marsh Close, PL6 8LB", "confidence" => "99.3" },
-          {"uprn" => "100000002", "address" => "Vine Kiosk, Marsh Close, PL6 8LB", "confidence" => "80.3" }
-        ]
+          { "uprn" => "100000001", "address" => "Vine Cottage, Marsh Close, PL6 8LB", "confidence" => "99.3" },
+          { "uprn" => "100000002", "address" => "Vine Kiosk, Marsh Close, PL6 8LB", "confidence" => "80.3" },
+        ],
       )
 
       described_class.invoke
@@ -126,6 +129,34 @@ describe "Address Matching Rake to process sample addresses from S3" do
 
     it "uploads the result file to S3" do
       expect(WebMock).to have_requested(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/#{results_file_name}")
+    end
+  end
+
+  context "when the rake does not run" do
+    context "when the bucket name has not been passed" do
+      before do
+        EnvironmentStub.remove(%w[BUCKET_NAME])
+      end
+
+      after do
+        EnvironmentStub
+          .with("BUCKET_NAME", "test-bucket")
+      end
+
+      it "raises a Boundary::ArgumentMissing" do
+        expect { described_class.invoke }.to raise_error Boundary::ArgumentMissing, "A required argument is missing: bucket_name"
+      end
+    end
+
+    context "when the file name has not been passed" do
+      before do
+        EnvironmentStub
+          .with("BUCKET_NAME", "test-bucket")
+      end
+
+      it "raises a Boundary::ArgumentMissing" do
+        expect { described_class.invoke }.to raise_error Boundary::ArgumentMissing, "A required argument is missing: file_name"
+      end
     end
   end
 end
