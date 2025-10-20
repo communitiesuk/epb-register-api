@@ -11,10 +11,16 @@ namespace :dev_scripts do
     storage_gateway = ApiFactory.storage_gateway(bucket_name:)
     puts "[#{Time.now}] Retrieving from S3 file: #{file_name}"
     csv_io = storage_gateway.get_file_io(file_name)
-    pp csv_io
     csv = CSV.new(csv_io, headers: true)
+    addressing_gateway = Gateway::AddressingApiGateway.new
     csv.each do |row|
-      pp row
+      addressing_gateway.match_address(
+        postcode: row["postcode"],
+        address_line_1: row["address_line1"],
+        address_line_2: row["address_line2"],
+        address_line_3: row["address_line3"],
+        address_line_4: row["address_line4"],
+        town: row["town"])
     end
 
   end
