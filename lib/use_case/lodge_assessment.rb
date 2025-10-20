@@ -109,7 +109,7 @@ module UseCase
       )
       search_address = Domain::SearchAddress.new(data).to_hash
       @search_address_gateway.insert(search_address, is_scottish)
-      @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id
+      @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id, is_scottish: is_scottish
 
       assessment
     end
