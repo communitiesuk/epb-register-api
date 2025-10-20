@@ -292,6 +292,7 @@ describe UseCase::LodgeAssessment do
         expect { use_case.execute(data, true, "RdSAP-Schema-20.0.0") }.to broadcast(
           :assessment_lodged,
           assessment_id: data[:assessment_id],
+          is_scottish: false,
         )
       end
     end
