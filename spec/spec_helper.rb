@@ -43,6 +43,10 @@ end
 
 loader_enable_override "helper/toggles"
 
+ENV["EPB_AUTH_CLIENT_ID"] = "test.id"
+ENV["EPB_AUTH_CLIENT_SECRET"] = "test.client.secret"
+ENV["EPB_AUTH_SERVER"] = "http://test-auth-server.gov.uk"
+ENV["EPB_ADDRESSING_URL"] = "http://test-addressing.gov.uk"
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["SILENT_EVENTS"] = "true"

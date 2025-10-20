@@ -100,7 +100,7 @@ describe Gateway::AssessmentMetaGateway do
       end
 
       it "returns the expected data with green_deal to be true" do
-        expect(gateway.fetch("0000-0000-0000-0000-0000")["green_deal"]).to eq true
+        expect(gateway.fetch("0000-0000-0000-0000-0000")["green_deal"]).to be true
       end
     end
   end
