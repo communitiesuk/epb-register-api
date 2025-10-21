@@ -25,7 +25,7 @@ module Gateway
       AC-REPORT
     ].freeze
 
-    def insert_or_update(assessment, is_scottish)
+    def insert_or_update(assessment, is_scottish: false)
       check_valid_energy_ratings assessment
       send_update_to_db(assessment, is_scottish)
     end

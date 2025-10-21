@@ -41,7 +41,7 @@ describe Gateway::RelatedAssessmentsGateway do
 
       it "returns related assessment IDs when calling related_assessment_ids for a Sottish assessment" do
         ActiveRecord::Base.connection.exec_query("INSERT INTO scotland.assessments_address_id (assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0001','UPRN-000000000000', 'lodgement', '02/02/2023');")
-        expect(gateway.related_assessment_ids(address_id, true).sort).to eq %w[0000-0000-0000-0000-0001]
+        expect(gateway.related_assessment_ids(address_id, is_scottish: true).sort).to eq %w[0000-0000-0000-0000-0001]
       end
     end
   end

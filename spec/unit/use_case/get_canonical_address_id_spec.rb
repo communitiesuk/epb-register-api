@@ -9,6 +9,29 @@ describe UseCase::GetCanonicalAddressId do
   let(:address_base_search_gateway) { instance_double Gateway::AddressBaseSearchGateway }
   let(:assessments_address_id_gateway) { instance_double Gateway::AssessmentsAddressIdGateway }
 
+  context "when getting the canonical address ID for a Scottish lodgement when no UPRN is provided" do
+    before do
+      allow(address_base_search_gateway).to receive(:check_uprn_exists).and_return(false)
+      allow(assessments_address_id_gateway).to receive(:fetch).with("0000-0000-0000-0000-0001", is_scottish: true).and_return({ address_id: "RRN-0000-0000-0000-0000-0000" })
+    end
+
+    context "when determining the address ID for the scottish lodgement" do
+      let(:params) do
+        {
+          rrn: "0000-0000-0000-0000-0000",
+          related_rrn: "0000-0000-0000-0000-0001",
+          type_of_assessment: "SAP",
+          address_id: "RRN-0000-0000-0000-0000-0001",
+          is_scottish: true,
+        }
+      end
+
+      it "assigns the address ID based on the assessment id given" do
+        expect(use_case.execute(**params)).to eq "RRN-0000-0000-0000-0000-0000"
+      end
+    end
+  end
+
   context "when getting the canonical address ID for a CEPC dual lodgement when the UPRN provided does not exist" do
     before do
       allow(address_base_search_gateway).to receive(:check_uprn_exists).and_return(false)
