@@ -103,6 +103,10 @@ describe "Address Matching Rake to process sample addresses from S3" do
       described_class.invoke
     end
 
+    after do
+      WebMock.reset!
+    end
+
     it "downloads the file from S3" do
       expect(WebMock).to have_requested(:get, "https://test-bucket.s3.eu-west-2.amazonaws.com/#{file_name}")
     end
