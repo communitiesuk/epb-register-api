@@ -78,9 +78,9 @@ describe "Address Matching Rake to process sample addresses from S3" do
         .all
         .with("BUCKET_NAME", "test-bucket")
         .with("FILE_NAME", file_name)
-
-      WebMock.stub_request(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/addresses_matched.csv").to_return(status: 200)
+      WebMock.reset!
       HttpStub.s3_get_object(file_name, address_sample_csv)
+      WebMock.stub_request(:put, "https://test-bucket.s3.eu-west-2.amazonaws.com/addresses_matched.csv").to_return(status: 200)
 
       OauthStub.token
       WebMock
