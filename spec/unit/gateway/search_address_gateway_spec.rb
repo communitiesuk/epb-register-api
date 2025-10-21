@@ -44,7 +44,7 @@ describe Gateway::SearchAddressGateway, :set_with_timecop do
 
     context "when inserting Scotland row" do
       it "the saved data is correct" do
-        gateway.insert(search_address.to_hash, true)
+        gateway.insert(search_address.to_hash, is_scottish: true)
         saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM scotland.assessment_search_address")
         expect(saved_data.rows.length).to eq 1
         expect(saved_data[0]["assessment_id"]).to eq "0000-0000-0000-0000-0005"

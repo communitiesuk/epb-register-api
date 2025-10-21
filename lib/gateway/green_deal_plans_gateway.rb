@@ -37,7 +37,7 @@ module Gateway
       link_green_deal_to_assessment green_deal_plan.green_deal_plan_id, assessment_id
     end
 
-    def link_green_deal_to_assessment(green_deal_plan_id, assessment_id, is_scottish = false)
+    def link_green_deal_to_assessment(green_deal_plan_id, assessment_id, is_scottish: false)
       schema = is_scottish ? "scotland." : "public."
       sql = <<-SQL
         INSERT INTO #{schema}green_deal_assessments (green_deal_plan_id, assessment_id)
@@ -77,7 +77,7 @@ module Gateway
       GreenDealPlan.update(green_deal_plan_id, { end_date: end_date, charges: charges })
     end
 
-    def fetch(assessment_id, is_scottish = false)
+    def fetch(assessment_id, is_scottish: false)
       schema = is_scottish ? "scotland." : "public."
       sql = <<-SQL
         SELECT

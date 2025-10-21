@@ -15,11 +15,11 @@ module Gateway
       self.table_name = "scotland.assessments_address_id"
     end
 
-    def fetch(assessment_id, is_scottish = false)
+    def fetch(assessment_id, is_scottish: false)
       is_scottish ? AssessmentsAddressIdScotland.find(assessment_id).as_json.symbolize_keys : AssessmentsAddressId.find(assessment_id).as_json.symbolize_keys
     end
 
-    def send_to_db(record, is_scottish = false)
+    def send_to_db(record, is_scottish: false)
       if is_scottish
         existing_assessment_address_id =
           AssessmentsAddressIdScotland.find_by assessment_id: record[:assessment_id]

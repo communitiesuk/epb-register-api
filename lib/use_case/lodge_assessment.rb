@@ -85,7 +85,7 @@ module UseCase
         )
 
       if migrated
-        @assessments_gateway.insert_or_update(assessment, is_scottish)
+        @assessments_gateway.insert_or_update(assessment, is_scottish: is_scottish)
         insert_country_id(data[:assessment_id], is_scottish, data[:country_id], upsert: true)
       else
         begin
@@ -108,7 +108,7 @@ module UseCase
         is_scottish,
       )
       search_address = Domain::SearchAddress.new(data).to_hash
-      @search_address_gateway.insert(search_address, is_scottish)
+      @search_address_gateway.insert(search_address, is_scottish: is_scottish)
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id, is_scottish: is_scottish
 
       assessment
@@ -179,7 +179,7 @@ module UseCase
     end
 
     def insert_assessment_address_id(assessment, is_scottish)
-      canonical_address_id = get_canonical_address_id(assessment)
+      canonical_address_id = get_canonical_address_id(assessment, is_scottish)
       source =
         get_assessments_address_id_source(
           lodged_address_id: assessment.address_id,
@@ -191,12 +191,12 @@ module UseCase
           address_id: canonical_address_id,
           source:,
         },
-        is_scottish,
+        is_scottish: is_scottish,
       )
     end
 
     def associate_related_green_deals(assessment, is_scottish)
-      canonical_address_id = @assessments_address_id_gateway.fetch(assessment.assessment_id, is_scottish)[:address_id]
+      canonical_address_id = @assessments_address_id_gateway.fetch(assessment.assessment_id, is_scottish: is_scottish)[:address_id]
       related_assessment_ids = @related_assessments_gateway.related_assessment_ids(canonical_address_id).reject { |id| id == assessment.assessment_id }
       # Need to update the lodge_assessment method in assertive client
       green_deal_plan_sets = related_assessment_ids.map { |assessment_id| @green_deal_plans_gateway.fetch assessment_id }
@@ -210,12 +210,13 @@ module UseCase
       Logger.new($stdout).error "Associating related green deals for the assessment #{assessment.assessment_id} failed with error #{e.class}, message #{e.message}, backtrace #{e.backtrace.join('; ')}"
     end
 
-    def get_canonical_address_id(assessment)
+    def get_canonical_address_id(assessment, is_scottish)
       @get_canonical_address_id_use_case.execute(
         rrn: assessment.assessment_id,
         related_rrn: assessment.related_rrn,
         address_id: assessment.address_id,
         type_of_assessment: assessment.type_of_assessment,
+        is_scottish: is_scottish,
       )
     end
 

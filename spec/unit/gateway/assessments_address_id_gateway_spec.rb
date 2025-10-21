@@ -62,17 +62,17 @@ describe Gateway::AssessmentsAddressIdGateway do
 
       it "returns the expected response for a Scottish assessment" do
         ActiveRecord::Base.connection.exec_query(
-          "INSERT INTO scotland.assessments_address_id(assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0001', 'RRN-0000-0000-0000-0000-0001', 'lodgement', null)",
+          "INSERT INTO scotland.assessments_address_id(assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0002', 'RRN-0000-0000-0000-0000-0002', 'lodgement', null)",
         )
 
         expected_response = {
-          address_id: "RRN-0000-0000-0000-0000-0001",
+          address_id: "RRN-0000-0000-0000-0000-0002",
           address_updated_at: nil,
-          assessment_id: "0000-0000-0000-0000-0001",
+          assessment_id: "0000-0000-0000-0000-0002",
           source: "lodgement",
         }
-        assessment_id = "0000-0000-0000-0000-0001"
-        response = gateway.fetch(assessment_id, true)
+        assessment_id = "0000-0000-0000-0000-0002"
+        response = gateway.fetch(assessment_id, is_scottish: true)
 
         expect(response).to eq expected_response
       end
@@ -103,7 +103,7 @@ describe Gateway::AssessmentsAddressIdGateway do
           source: "lodgement",
 
         }
-        gateway.send_to_db(entry, true)
+        gateway.send_to_db(entry, is_scottish: true)
         row = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments_address_id WHERE assessment_id = '0000-0000-0000-0000-0001'",
         )

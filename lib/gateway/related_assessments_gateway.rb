@@ -3,7 +3,7 @@ module Gateway
     class Assessment < ActiveRecord::Base
     end
 
-    def related_assessment_ids(address_id, is_scottish = false)
+    def related_assessment_ids(address_id, is_scottish: false)
       return [] if address_id.blank?
 
       schema = is_scottish ? "scotland." : "public."
