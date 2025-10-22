@@ -67,7 +67,7 @@ GEM
     epb_view_models (2.1.7)
       nokogiri (~> 1.16)
       zeitwerk (~> 2.6)
-    faraday (2.13.4)
+    faraday (2.14.0)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -78,7 +78,7 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
-    geocoder (1.8.5)
+    geocoder (1.8.6)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
     gli (2.22.2)
@@ -89,7 +89,7 @@ GEM
       concurrent-ruby (~> 1.0)
     io-like (0.4.0)
     jmespath (1.6.2)
-    json (2.15.0)
+    json (2.15.1)
     json-schema (6.0.0)
       addressable (~> 2.8)
       bigdecimal (~> 3.1)
@@ -241,7 +241,7 @@ GEM
       sinatra (= 4.1.1)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
-    slack-ruby-client (2.7.0)
+    slack-ruby-client (3.0.0)
       faraday (>= 2.0.1)
       faraday-mashify
       faraday-multipart
@@ -261,7 +261,7 @@ GEM
     unicode-emoji (4.1.0)
     unleash (5.1.1)
       murmurhash3 (~> 0.1.7)
-    uri (1.0.3)
+    uri (1.0.4)
     version_gem (1.1.8)
     webmock (3.25.1)
       addressable (>= 2.8.0)
@@ -282,7 +282,7 @@ DEPENDENCIES
   database_cleaner
   epb-auth-tools (~> 1.1.0)
   epb_view_models (~> 2.1.7)
-  geocoder (~> 1.8.3)
+  geocoder (~> 1.8.6)
   json-schema (~> 6.0)
   mock_redis (~> 0.52)
   namecase (~> 2.0)
