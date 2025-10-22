@@ -28,9 +28,10 @@ describe Gateway::AssessmentsCountryIdGateway do
 
     context "when inserting a scottish assessment_id" do
       it "updates the row without error using upsert" do
+        assessment_id = "0000-0000-0001-1234-0022"
         gateway.insert(assessment_id:, country_id: 2, upsert: true, is_scottish: true)
         row = ActiveRecord::Base.connection.exec_query(
-          "SELECT country_id FROM scotland.assessments_country_ids WHERE assessment_id = '0000-0000-0001-1234-0000'",
+          "SELECT * FROM scotland.assessments_country_ids WHERE assessment_id = '0000-0000-0001-1234-0022'",
         )
         expect(row.entries.first["country_id"]).to eq 2
       end
