@@ -54,19 +54,51 @@ describe Gateway::AddressingApiGateway do
     end
   end
 
-  context "when the API call fails with an error" do
+  context "when the API call fails with a well formed error response" do
     before do
       OauthStub.token
       WebMock
-      .stub_request(
-        :post,
-        addressing_api_endpoint,
-      )
-      .to_return(status: 500, body: { error: "Invalid postcode" }.to_json)
+        .stub_request(
+          :post,
+          addressing_api_endpoint,
+        )
+        .to_return(status: 400, body: { error: "Invalid postcode" }.to_json)
     end
 
     it "raises an error" do
-      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Boundary::InternalServerError)
+      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Errors::ApiResponseError)
+    end
+  end
+
+  context "when the API call returns 200, but contains no 'data' key in the body" do
+    before do
+      OauthStub.token
+      WebMock
+        .stub_request(
+          :post,
+          addressing_api_endpoint,
+        )
+        .to_return(status: 200, body: { valid_json: "with no data key" }.to_json)
+    end
+
+    it "raises an error" do
+      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Errors::MalformedResponseError)
+    end
+  end
+
+  context "when the API call returns successfully but is not a 200 response" do
+    before do
+      OauthStub.token
+      WebMock
+        .stub_request(
+          :post,
+          addressing_api_endpoint,
+        )
+        .to_return(status: 206, body: { data: "valid body" }.to_json)
+    end
+
+    it "raises an error" do
+      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Errors::MalformedResponseError)
     end
   end
 
@@ -82,7 +114,23 @@ describe Gateway::AddressingApiGateway do
     end
 
     it "raises an error" do
-      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Boundary::InternalServerError)
+      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Errors::NonJsonResponseError)
+    end
+  end
+
+  context "when authentication fails" do
+    before do
+      OauthStub.token
+      WebMock
+        .stub_request(
+          :post,
+          addressing_api_endpoint,
+        )
+        .to_return(status: 401, body: { errors: ["Some auth issue."] }.to_json)
+    end
+
+    it "raises an error" do
+      expect { gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town") }.to raise_error(Errors::ApiAuthorizationError)
     end
   end
 end

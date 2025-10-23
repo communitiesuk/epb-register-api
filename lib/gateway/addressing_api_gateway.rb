@@ -18,18 +18,25 @@ module Gateway
         town: town,
       }.to_json
 
-      response = @addressing_client.post("/match-address") do |req|
-        req.headers["Content-Type"] = "application/json"
-        req.body = body
-      end
+      response =
+        Helper::Response.ensure_good do
+          @addressing_client.post("/match-address") do |req|
+            req.headers["Content-Type"] = "application/json"
+            req.body = body
+          end
+        end
+
       response_json = JSON.parse(response.body)
-      if response.status == 500
-        raise Boundary::InternalServerError
+
+      unless response.status < 400
+        raise Errors::ApiResponseError, response_json["error"]
+      end
+
+      unless response_json.key?("data") && response.status == 200
+        raise Errors::MalformedResponseError
       end
 
       response_json["data"]
-    rescue StandardError
-      raise Boundary::InternalServerError
     end
   end
 end
