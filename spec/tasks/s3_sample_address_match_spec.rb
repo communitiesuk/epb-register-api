@@ -64,14 +64,17 @@ describe "Address Matching Rake to process sample addresses from S3" do
   let(:file_name) { "addresses.csv" }
   let(:results_file_name) { "addresses_matched.csv" }
 
-  before(:all) { HttpStub.enable_webmock }
-
-  after(:all) do
-    HttpStub.off
+  after do
     EnvironmentStub.remove(%w[AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY BUCKET_NAME AWS_DEFAULT_REGION AWS_REGION FILE_NAME])
   end
 
   context "when we call the import_address_matching task" do
+    before(:all) { HttpStub.enable_webmock }
+
+    after(:all) do
+      HttpStub.off
+    end
+
     before do
       allow($stdout).to receive(:puts)
       EnvironmentStub
@@ -139,12 +142,8 @@ describe "Address Matching Rake to process sample addresses from S3" do
   context "when the rake does not run" do
     context "when the bucket name has not been passed" do
       before do
-        EnvironmentStub.remove(%w[BUCKET_NAME])
-      end
-
-      after do
         EnvironmentStub
-          .with("BUCKET_NAME", "test-bucket")
+          .with("FILE_NAME", file_name)
       end
 
       it "raises a Boundary::ArgumentMissing" do
