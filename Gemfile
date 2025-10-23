@@ -20,7 +20,7 @@ end
 
 gem "activerecord", "~> 8.0.3"
 gem "archive-zip"
-gem "aws-sdk-s3", "~> 1.194"
+gem "aws-sdk-s3", "~> 1.201"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.1.0"
 gem "epb_view_models", "~> 2.1.7"
@@ -38,7 +38,7 @@ gem "redis", "~> 5.4.1"
 gem "rubocop", "~> 1.79.2"
 gem "rubocop-govuk", "~> 5.1"
 gem "rubocop-performance", require: false
-gem "rubyzip", "~> 2.4.1"
+gem "rubyzip", "~> 3.2"
 gem "sentry-ruby", "~> 5.26"
 gem "sinatra", "~> 4.2"
 gem "sinatra-activerecord", "~> 2.0.27"
