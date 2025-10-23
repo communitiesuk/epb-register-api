@@ -54,6 +54,39 @@ describe Gateway::AddressingApiGateway do
     end
   end
 
+  context "when calling the /match-address API endpoint with optional data as nil" do
+    before do
+      response_body = { "data": response }
+      OauthStub.token
+      WebMock
+        .stub_request(
+          :post,
+          addressing_api_endpoint,
+        )
+        .to_return(status: 200, body: response_body.to_json)
+
+      gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", address_line_2: nil, address_line_3: nil, address_line_4: nil, town: "Town")
+    end
+
+    it "posts the addressing API with the right arguments" do
+      expect(WebMock).to have_requested(:post, addressing_api_endpoint).with(
+        body: {
+          postcode: "T4 8AA",
+          address_line_1: "4 Some Street",
+          address_line_2: "",
+          address_line_3: "",
+          address_line_4: "",
+          town: "Town",
+        },
+      )
+    end
+
+    it "returns the parsed response" do
+      result = gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", town: "Town")
+      expect(result).to eq response
+    end
+  end
+
   context "when the API call fails with a well formed error response" do
     before do
       OauthStub.token

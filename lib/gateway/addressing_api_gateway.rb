@@ -12,9 +12,9 @@ module Gateway
       body = {
         postcode: postcode,
         address_line_1: address_line_1,
-        address_line_2: address_line_2,
-        address_line_3: address_line_3,
-        address_line_4: address_line_4,
+        address_line_2: address_line_2 || "",
+        address_line_3: address_line_3 || "",
+        address_line_4: address_line_4 || "",
         town: town,
       }.to_json
 
