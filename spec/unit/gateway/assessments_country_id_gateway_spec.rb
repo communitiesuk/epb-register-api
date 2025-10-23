@@ -26,8 +26,8 @@ describe Gateway::AssessmentsCountryIdGateway do
       end
     end
 
-    context "when inserting a scottish assessment_id" do
-      it "updates the row without error using upsert" do
+    context "when inserting an assessment into the scotland equivalent of the assessments_country_ids table" do
+      it "it saves the row to the table" do
         assessment_id = "0000-0000-0001-1234-0022"
         gateway.insert(assessment_id:, country_id: 2, upsert: true, is_scottish: true)
         row = ActiveRecord::Base.connection.exec_query(
