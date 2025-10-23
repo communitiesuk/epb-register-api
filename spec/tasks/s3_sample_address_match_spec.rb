@@ -142,6 +142,7 @@ describe "Address Matching Rake to process sample addresses from S3" do
   context "when the rake does not run" do
     context "when the bucket name has not been passed" do
       before do
+        EnvironmentStub.remove(%w[BUCKET_NAME FILE_NAME])
         EnvironmentStub
           .with("FILE_NAME", file_name)
       end
@@ -153,6 +154,7 @@ describe "Address Matching Rake to process sample addresses from S3" do
 
     context "when the file name has not been passed" do
       before do
+        EnvironmentStub.remove(%w[BUCKET_NAME FILE_NAME])
         EnvironmentStub
           .with("BUCKET_NAME", "test-bucket")
       end
