@@ -65,14 +65,14 @@ describe Gateway::AddressingApiGateway do
         )
         .to_return(status: 200, body: response_body.to_json)
 
-      gateway.match_address(postcode: "T4 8AA", address_line_1: "4 Some Street", address_line_2: nil, address_line_3: nil, address_line_4: nil, town: "Town")
+      gateway.match_address(postcode: "T4 8AA", address_line_1: nil, address_line_2: nil, address_line_3: nil, address_line_4: nil, town: "Town")
     end
 
     it "posts the addressing API with the right arguments" do
       expect(WebMock).to have_requested(:post, addressing_api_endpoint).with(
         body: {
           postcode: "T4 8AA",
-          address_line_1: "4 Some Street",
+          address_line_1: "",
           address_line_2: "",
           address_line_3: "",
           address_line_4: "",

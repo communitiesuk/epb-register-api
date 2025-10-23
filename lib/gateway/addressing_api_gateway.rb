@@ -11,7 +11,7 @@ module Gateway
     def match_address(postcode:, address_line_1:, town:, address_line_2: "", address_line_3: "", address_line_4: "")
       body = {
         postcode: postcode,
-        address_line_1: address_line_1,
+        address_line_1: address_line_1 || "",
         address_line_2: address_line_2 || "",
         address_line_3: address_line_3 || "",
         address_line_4: address_line_4 || "",
