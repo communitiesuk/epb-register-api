@@ -11,14 +11,24 @@ module Gateway
     class AssessmentsAddressId < ActiveRecord::Base
     end
 
-    def fetch(assessment_id)
-      AssessmentsAddressId.find(assessment_id).as_json.symbolize_keys
+    class AssessmentsAddressIdScotland < ActiveRecord::Base
+      self.table_name = "scotland.assessments_address_id"
     end
 
-    def send_to_db(record)
-      existing_assessment_address_id =
-        AssessmentsAddressId.find_by assessment_id: record[:assessment_id]
-      AssessmentsAddressId.create(record) if existing_assessment_address_id.nil?
+    def fetch(assessment_id, is_scottish: false)
+      is_scottish ? AssessmentsAddressIdScotland.find(assessment_id).as_json.symbolize_keys : AssessmentsAddressId.find(assessment_id).as_json.symbolize_keys
+    end
+
+    def send_to_db(record, is_scottish: false)
+      if is_scottish
+        existing_assessment_address_id =
+          AssessmentsAddressIdScotland.find_by assessment_id: record[:assessment_id]
+        AssessmentsAddressIdScotland.create(record) if existing_assessment_address_id.nil?
+      else
+        existing_assessment_address_id =
+          AssessmentsAddressId.find_by assessment_id: record[:assessment_id]
+        AssessmentsAddressId.create(record) if existing_assessment_address_id.nil?
+      end
     end
 
     def update_assessments_address_id_mapping(

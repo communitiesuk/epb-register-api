@@ -20,7 +20,7 @@ module Events
     def attach_assessment_lodged
       @event_broadcaster.on :assessment_lodged do |**data|
         if notify_data_warehouse_enabled?
-          NotifyFactory.new_assessment_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id])
+          NotifyFactory.new_assessment_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], is_scottish: data[:is_scottish])
         end
         NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
       end

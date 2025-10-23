@@ -21,23 +21,31 @@ describe Gateway::SearchAddressGateway, :set_with_timecop do
   let(:search_address) { Domain::SearchAddress.new record }
 
   describe "#insert" do
-    it "saves data to the search address table without error" do
-      expect { gateway.insert search_address.to_hash }.not_to raise_error
+    context "when inserting row" do
+      it "the saved data is correct" do
+        gateway.insert search_address.to_hash
+        saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_search_address")
+        expect(saved_data.rows.length).to eq 1
+        expect(saved_data[0]["assessment_id"]).to eq "0000-0000-0000-0000-0005"
+        expect(saved_data[0]["address"]).to eq "22 acacia avenue some place"
+      end
+
+      it "does not duplicate rows" do
+        gateway.insert search_address.to_hash
+        gateway.insert search_address.to_hash
+        saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_search_address")
+        expect(saved_data.rows.length).to eq 1
+      end
     end
 
-    it "the saved data is correct" do
-      gateway.insert search_address.to_hash
-      saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_search_address")
-      expect(saved_data.rows.length).to eq 1
-      expect(saved_data[0]["assessment_id"]).to eq "0000-0000-0000-0000-0005"
-      expect(saved_data[0]["address"]).to eq "22 acacia avenue some place"
-    end
-
-    it "does not duplicate rows" do
-      gateway.insert search_address.to_hash
-      gateway.insert search_address.to_hash
-      saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_search_address")
-      expect(saved_data.rows.length).to eq 1
+    context "when inserting into the Scotland version of the table" do
+      it "the saved data is correct" do
+        gateway.insert(search_address.to_hash, is_scottish: true)
+        saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM scotland.assessment_search_address")
+        expect(saved_data.rows.length).to eq 1
+        expect(saved_data[0]["assessment_id"]).to eq "0000-0000-0000-0000-0005"
+        expect(saved_data[0]["address"]).to eq "22 acacia avenue some place"
+      end
     end
   end
 
