@@ -61,6 +61,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     diff-lcs (1.6.2)
+    domain_name (0.6.20240107)
     drb (2.2.3)
     epb-auth-tools (1.1.0)
       jwt (~> 2.3)
@@ -79,6 +80,10 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
+    ffi (1.16.3)
+    ffi-compiler (1.3.2)
+      ffi (>= 1.15.5)
+      rake
     geocoder (1.8.6)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
@@ -86,6 +91,14 @@ GEM
       ostruct
     hashdiff (1.2.0)
     hashie (5.0.0)
+    http (5.3.1)
+      addressable (~> 2.8)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.2)
+      llhttp-ffi (~> 0.5.0)
+    http-cookie (1.1.0)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-like (0.4.0)
@@ -97,7 +110,13 @@ GEM
     jwt (2.10.1)
       base64
     language_server-protocol (3.17.0.5)
+    ld-eventsource (2.2.4)
+      concurrent-ruby (~> 1.0)
+      http (>= 4.4.1, < 6.0.0)
     lint_roller (1.1.0)
+    llhttp-ffi (0.5.1)
+      ffi-compiler (~> 1.0)
+      rake (~> 13.0)
     logger (1.7.0)
     method_source (1.1.0)
     mini_portile2 (2.8.9)
@@ -108,7 +127,6 @@ GEM
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
-    murmurhash3 (0.1.7)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
     namecase (2.0.0)
@@ -260,8 +278,11 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    unleash (5.1.1)
-      murmurhash3 (~> 0.1.7)
+    unleash (6.4.0)
+      base64 (~> 0.3.0)
+      ld-eventsource (= 2.2.4)
+      logger (~> 1.6)
+      yggdrasil-engine (~> 1.0.4)
     uri (1.0.4)
     version_gem (1.1.8)
     webmock (3.25.1)
@@ -270,10 +291,12 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     wisper (3.0.0)
     wisper-rspec (1.1.0)
+    yggdrasil-engine (1.0.4-x86_64-linux)
+      ffi (~> 1.16.3)
     zeitwerk (2.7.3)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   activerecord (~> 8.0.3)
@@ -309,7 +332,7 @@ DEPENDENCIES
   sinatra-cross_origin (~> 0.4.0)
   slack-ruby-client
   timecop (~> 0.9.10)
-  unleash (~> 5.1.1)
+  unleash (~> 6.4.0)
   webmock (~> 3.23)
   wisper (~> 3.0.0)
   wisper-rspec (~> 1.0, >= 1.0.1)
