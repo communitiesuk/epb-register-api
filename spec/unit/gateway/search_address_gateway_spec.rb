@@ -22,10 +22,6 @@ describe Gateway::SearchAddressGateway, :set_with_timecop do
 
   describe "#insert" do
     context "when inserting row" do
-      it "saves data to the search address table without error" do
-        expect { gateway.insert search_address.to_hash }.not_to raise_error
-      end
-
       it "the saved data is correct" do
         gateway.insert search_address.to_hash
         saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM assessment_search_address")
@@ -42,7 +38,7 @@ describe Gateway::SearchAddressGateway, :set_with_timecop do
       end
     end
 
-    context "when inserting Scotland row" do
+    context "when inserting into the Scotland version of the table" do
       it "the saved data is correct" do
         gateway.insert(search_address.to_hash, is_scottish: true)
         saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM scotland.assessment_search_address")
