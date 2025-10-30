@@ -222,7 +222,7 @@ module Gateway
         end
 
         unless assessment.get(:related_rrn).nil?
-          add_linked_assessment assessment
+          add_linked_assessment(assessment, 'public.')
         end
       end
     end
@@ -242,9 +242,8 @@ module Gateway
           is_scottish ? AssessmentScotland.create(assessment.to_record) : Assessment.create(assessment.to_record)
         end
 
-        # We are going to have to re-think related assessments for Scotland non-dom
         unless assessment.get(:related_rrn).nil?
-          add_linked_assessment assessment
+          add_linked_assessment(assessment, schema)
         end
       end
     end
@@ -311,7 +310,7 @@ module Gateway
         Assessment.create assessment.to_record
       end
 
-      # Need to test this
+      #TODO Need to test this
       reattach_green_deal_plans(green_deal_plan_ids, binds, schema)
     end
 
@@ -358,9 +357,9 @@ module Gateway
       end
     end
 
-    def add_linked_assessment(assessment)
+    def add_linked_assessment(assessment, schema)
       add_linked_assessment = <<-SQL
-            INSERT INTO linked_assessments (assessment_id, linked_assessment_id)
+            INSERT INTO #{schema}linked_assessments (assessment_id, linked_assessment_id)
             VALUES ($1, $2)
       SQL
 

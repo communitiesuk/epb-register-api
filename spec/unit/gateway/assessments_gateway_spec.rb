@@ -14,6 +14,8 @@ describe Gateway::AssessmentsGateway do
     "9999"
   end
 
+  let(:fetch_assessor_stub) { AssessorStub.new }
+
   include RSpecRegisterApiServiceMixin
   include_context "when updating EPC dates"
 
@@ -243,6 +245,179 @@ describe Gateway::AssessmentsGateway do
     it "returns false when the assessment_id is for an EPC that has NOT been migrated" do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments SET migrated = false WHERE assessment_id = '0000-0000-0000-0000-0001'")
       expect(gateway.update_created_at_from_landmark?("0000-0000-0000-0000-0001", landmark_date)).to be false
+    end
+  end
+
+  describe "#insert_or_update" do
+
+    let(:scheme_id) { add_scheme_and_get_id }
+    let(:assessment) {
+      Domain::AssessmentIndexRecord.new(
+        assessment_id: '0000-0000-0000-0000-0000',
+        type_of_assessment: 'RdSAP',
+        date_of_assessment: '2024-01-16 17:52:43.00000',
+        date_registered: '2024-01-16 17:52:43.00000',
+        date_of_expiry: '2024-01-16 17:52:43.00000',
+        assessor: Domain::Assessor.new(
+          scheme_assessor_id: "SPEC000000" ,
+          first_name: 'Test',
+          last_name: 'Assessor',
+          middle_names: 'Brian',
+          date_of_birth: '2000-10-01',
+          email: 'test@example.com',
+          telephone_number: '07865672531',
+          registered_by_id: scheme_id,
+          registered_by_name: scheme_id,
+          search_results_comparison_postcode:
+            'SE32 5TR',
+          also_known_as: 'Bob',
+          address_line1: '6 Street place',
+          address_line2: 'Whimple area',
+          address_line3: 'Bloopshire',
+          town: 'London',
+          postcode: 'we 32 4ew',
+          company_reg_no: '23222',
+          company_address_line1: '3 Week street',
+          company_address_line2: 'Bloop place',
+          company_address_line3: 'London',
+          company_town: 'London',
+          company_postcode: 'AA1 2AA',
+          company_website: 'test.com',
+          company_telephone_number: '07865672531',
+          company_email: 'test@example.com',
+          company_name: 'Test',
+          domestic_sap_qualification: 'ACTIVE',
+          domestic_rd_sap_qualification: 'ACTIVE',
+          non_domestic_sp3_qualification: 'ACTIVE',
+          non_domestic_cc4_qualification: 'ACTIVE',
+          non_domestic_dec_qualification: 'ACTIVE',
+          non_domestic_nos3_qualification:'ACTIVE',
+          non_domestic_nos4_qualification: 'ACTIVE',
+          non_domestic_nos5_qualification: 'ACTIVE',
+          gda_qualification: 'ACTIVE',
+          ),
+        current_energy_efficiency_rating: 23,
+          potential_energy_efficiency_rating: 45,
+          address_id: 'RRN-0000-0000-0000-0000-0000',
+        address_line1: '4 Bloop lane',
+        address_line2: 'Gloop area',
+        address_line3: '',
+        address_line4: '',
+        town: 'London',
+        postcode: 'DW12 1WS',
+        xml: 'XML',
+        migrated: true,
+        related_rrn: '',
+        hashed_assessment_id: 'Hash23123213',
+        country_id: 1,
+      )
+    }
+
+    let(:updated_assessment) {
+      Domain::AssessmentIndexRecord.new(
+        assessment_id: '0000-0000-0000-0000-0000',
+        type_of_assessment: 'SAP',
+        date_of_assessment: '2024-01-16 17:52:43.00000',
+        date_registered: '2024-01-16 17:52:43.00000',
+        date_of_expiry: '2024-01-16 17:52:43.00000',
+        assessor: Domain::Assessor.new(
+          scheme_assessor_id: "SPEC000000" ,
+          first_name: 'Test',
+          last_name: 'Assessor',
+          middle_names: 'Brian',
+          date_of_birth: '2000-10-01',
+          email: 'test@example.com',
+          telephone_number: '07865672531',
+          registered_by_id: scheme_id,
+          registered_by_name: scheme_id,
+          search_results_comparison_postcode:
+            'SE32 5TR',
+          also_known_as: 'Bob',
+          address_line1: '6 Street place',
+          address_line2: 'Whimple area',
+          address_line3: 'Bloopshire',
+          town: 'London',
+          postcode: 'we 32 4ew',
+          company_reg_no: '23222',
+          company_address_line1: '3 Week street',
+          company_address_line2: 'Bloop place',
+          company_address_line3: 'London',
+          company_town: 'London',
+          company_postcode: 'AA1 2AA',
+          company_website: 'test.com',
+          company_telephone_number: '07865672531',
+          company_email: 'test@example.com',
+          company_name: 'Test',
+          domestic_sap_qualification: 'ACTIVE',
+          domestic_rd_sap_qualification: 'ACTIVE',
+          non_domestic_sp3_qualification: 'ACTIVE',
+          non_domestic_cc4_qualification: 'ACTIVE',
+          non_domestic_dec_qualification: 'ACTIVE',
+          non_domestic_nos3_qualification:'ACTIVE',
+          non_domestic_nos4_qualification: 'ACTIVE',
+          non_domestic_nos5_qualification: 'ACTIVE',
+          gda_qualification: 'ACTIVE',
+          ),
+        current_energy_efficiency_rating: 70,
+        potential_energy_efficiency_rating: 80,
+        address_id: 'RRN-0000-0000-0000-0000-0000',
+        address_line1: '4 Bloop lane',
+        address_line2: 'Gloop area',
+        address_line3: '',
+        address_line4: '',
+        town: 'London',
+        postcode: 'DW12 1WS',
+        xml: 'XML',
+        migrated: true,
+        related_rrn: '',
+        hashed_assessment_id: 'Hash23123213',
+        country_id: 1,
+        )
+    }
+
+    before do
+      add_assessor(
+        scheme_id:,
+        assessor_id: "SPEC000000",
+        body: fetch_assessor_stub.fetch_request_body(
+          non_domestic_nos3: "ACTIVE",
+          domestic_rd_sap: "ACTIVE",
+          ),
+        )
+    end
+
+    it "inserts the assessment" do
+      gateway.insert_or_update(assessment, is_scottish: false)
+      result = Gateway::AssessmentsGateway::Assessment.find_by(assessment_id: "0000-0000-0000-0000-0000")
+      expect(result.type_of_assessment).to eq("RdSAP")
+    end
+
+    it "updates the original assessment" do
+      gateway.insert_or_update(assessment, is_scottish: false)
+      gateway.insert_or_update(updated_assessment, is_scottish: false)
+      result = Gateway::AssessmentsGateway::Assessment.find_by(assessment_id: "0000-0000-0000-0000-0000")
+      expect(result.type_of_assessment).to eq("SAP")
+    end
+
+    it "does not raise an error when no ID is found" do
+      expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000") }.not_to raise_error
+    end
+
+    it "inserts the scottish assessment to the scottish schema" do
+      gateway.insert_or_update(assessment, is_scottish: true)
+      result = ActiveRecord::Base.connection.exec_query(
+        "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+        ).entries.first
+      expect(result['type_of_assessment']).to eq("RdSAP")
+    end
+
+    it "updates the original scottish assessment in the scottish schema" do
+      gateway.insert_or_update(assessment, is_scottish: true)
+      gateway.insert_or_update(updated_assessment, is_scottish: true)
+      result = ActiveRecord::Base.connection.exec_query(
+        "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+        ).entries.first
+      expect(result['type_of_assessment']).to eq("SAP")
     end
   end
 end
