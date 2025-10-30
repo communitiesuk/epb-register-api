@@ -17,6 +17,17 @@ describe UseCase::NotifyNewAssessmentToDataWarehouse do
       end
     end
 
+    describe "Scotland paths" do
+      before do
+        allow(data_warehouse_queues_gateway).to receive(:push_to_queue)
+        use_case.execute(assessment_id:, is_scottish: true)
+      end
+
+      it "calls down to the redis gateway to push to the queue" do
+        expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue)
+      end
+    end
+
     context "when the gateway is unable to push and raises an error" do
       before do
         allow(data_warehouse_queues_gateway).to receive(:push_to_queue).and_raise Gateway::DataWarehouseQueuesGateway::PushFailedError

@@ -45,6 +45,74 @@ describe Gateway::AssessmentsAddressIdGateway do
     end
   end
 
+  describe "#fetch" do
+    context "when fetching an assessment id" do
+      it "returns the expected response" do
+        expected_response = {
+          address_id: "RRN-0000-0000-0000-0000-0001",
+          address_updated_at: nil,
+          assessment_id: "0000-0000-0000-0000-0001",
+          source: "lodgement",
+        }
+        assessment_id = "0000-0000-0000-0000-0001"
+        response = gateway.fetch(assessment_id)
+
+        expect(response).to eq expected_response
+      end
+
+      it "returns the expected response for a Scottish assessment" do
+        ActiveRecord::Base.connection.exec_query(
+          "INSERT INTO scotland.assessments_address_id(assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0002', 'RRN-0000-0000-0000-0000-0002', 'lodgement', null)",
+        )
+
+        expected_response = {
+          address_id: "RRN-0000-0000-0000-0000-0002",
+          address_updated_at: nil,
+          assessment_id: "0000-0000-0000-0000-0002",
+          source: "lodgement",
+        }
+        assessment_id = "0000-0000-0000-0000-0002"
+        response = gateway.fetch(assessment_id, is_scottish: true)
+
+        expect(response).to eq expected_response
+      end
+    end
+  end
+
+  describe "#send_to_db" do
+    context "when creating an assessment" do
+      it "returns the expected response" do
+        entry = {
+          assessment_id: "0000-0000-0000-0000-0001",
+          address_id: "RRN-0000-0000-0000-0000-0001",
+          source: "lodgement",
+
+        }
+        gateway.send_to_db(entry)
+        row = ActiveRecord::Base.connection.exec_query(
+          "SELECT * FROM assessments_address_id WHERE assessment_id = '0000-0000-0000-0000-0001'",
+        )
+
+        expect(row.entries.first["assessment_id"]).to eq "0000-0000-0000-0000-0001"
+      end
+
+      it "returns the expected response for a Scottish entry" do
+        entry = {
+          assessment_id: "0000-0000-0000-0000-0001",
+          address_id: "RRN-0000-0000-0000-0000-0001",
+          source: "lodgement",
+
+        }
+        gateway.send_to_db(entry, is_scottish: true)
+        row = ActiveRecord::Base.connection.exec_query(
+          "SELECT * FROM scotland.assessments_address_id WHERE assessment_id = '0000-0000-0000-0000-0001'",
+        )
+
+        expect(row.entries.first["assessment_id"]).to eq "0000-0000-0000-0000-0001"
+      end
+    end
+  end
+
   describe "#fetch_updated_group_count" do
     context "when fetching updated group count" do
       it "returns the number of updated address groups" do

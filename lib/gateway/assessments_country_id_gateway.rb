@@ -3,16 +3,18 @@ module Gateway
     class AssessmentsCountryId < ActiveRecord::Base
     end
 
-    def insert(assessment_id:, country_id:, upsert: false)
+    def insert(assessment_id:, country_id:, upsert: false, is_scottish: false)
+      schema = is_scottish ? "scotland." : "public."
+
       sql = if upsert
               <<-SQL
-        INSERT INTO assessments_country_ids (assessment_id,country_id) VALUES ($1, $2)
+        INSERT INTO #{schema}assessments_country_ids (assessment_id,country_id) VALUES ($1, $2)
            ON CONFLICT(assessment_id)
         DO UPDATE SET country_id=$2
               SQL
             else
               <<-SQL
-        INSERT INTO assessments_country_ids (assessment_id,country_id) VALUES ($1, $2)
+        INSERT INTO #{schema}assessments_country_ids (assessment_id,country_id) VALUES ($1, $2)
               SQL
             end
 
