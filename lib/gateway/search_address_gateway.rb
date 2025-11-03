@@ -1,7 +1,7 @@
 module Gateway
   class SearchAddressGateway < StandardError
     def insert(object, is_scottish: false)
-      schema = is_scottish ? "scotland." : "public."
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       insert_sql = <<-SQL
             INSERT INTO #{schema}assessment_search_address(assessment_id, address)
             SELECT $1, $2

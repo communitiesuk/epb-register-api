@@ -38,7 +38,7 @@ module Gateway
     end
 
     def link_green_deal_to_assessment(green_deal_plan_id, assessment_id, is_scottish: false)
-      schema = is_scottish ? "scotland." : "public."
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       sql = <<-SQL
         INSERT INTO #{schema}green_deal_assessments (green_deal_plan_id, assessment_id)
         VALUES ($1, $2)
@@ -78,7 +78,7 @@ module Gateway
     end
 
     def fetch(assessment_id, is_scottish: false)
-      schema = is_scottish ? "scotland." : "public."
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       sql = <<-SQL
         SELECT
           b.green_deal_plan_id, b.start_date, b.end_date,

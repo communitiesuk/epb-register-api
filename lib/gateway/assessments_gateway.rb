@@ -236,7 +236,7 @@ module Gateway
                               end
 
         if existing_assessment
-          schema = is_scottish ? "scotland." : "public."
+          schema = Helper::ScotlandHelper.select_schema(is_scottish)
           remove_and_relodge_assessment(assessment, schema)
         else
           is_scottish ? AssessmentScotland.create(assessment.to_record) : Assessment.create(assessment.to_record)
