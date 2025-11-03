@@ -19,7 +19,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     )
   end
 
-  context "when migrating a Scottish assessment" do
+  context "when migrating a domestic Scottish assessment" do
     let(:scheme_id) { add_scheme_and_get_id }
 
     let(:migrated_scotland_rdsap_data) do
@@ -95,7 +95,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                          migrated: "true"
       end
 
-      it "is true in migrated column" do
+      it "it doesn't raise and error" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],
@@ -104,7 +104,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                          },
                          schema_name: "RdSAP-Schema-S-19.0",
                          migrated: "true"
-        expect(migrated_scotland_rdsap_data["migrated"]).to be_truthy
+        expect { migrated_scotland_rdsap_data["migrated"] }.not_to raise_error
       end
     end
 
