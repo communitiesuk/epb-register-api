@@ -238,6 +238,28 @@ describe UseCase::LodgeAssessment do
       end
     end
 
+    context "when the Scottish assessment is passed as being migrated" do
+      it "calls AssessmentsGateway to save the assessment data to the assessments table" do
+        use_case.execute(data, true, "SAP-Schema-S-19.0.0")
+
+        expect(assessments_gateway).to have_received(:insert_or_update)
+        expect(search_address_gateway).to have_received(:insert).with({ assessment_id: "2000-0000-0000-0000-0001", address: "1 some street some area some county" }, is_scottish: true)
+      end
+
+      it "calls AssessmentsXMLGateway to save the XML data to the assessments_xml table" do
+        use_case.execute(data, true, "SAP-Schema-S-19.0.0")
+
+        expect(assessments_xml_gateway).to have_received(:send_to_db).with(
+          {
+            assessment_id: "2000-0000-0000-0000-0001",
+            xml: "<SomeNode></SomeNode>",
+            schema_type: "SAP-Schema-S-19.0.0",
+          },
+          true,
+          )
+      end
+    end
+
     context "when the assessment is passed as being new and not migrated" do
       before do
         allow(assessments_search_gateway).to receive(:search_by_assessment_id).and_return([])
