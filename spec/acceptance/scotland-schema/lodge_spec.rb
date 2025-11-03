@@ -95,7 +95,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                          migrated: "true"
       end
 
-      it "it doesn't raise and error" do
+      it "doesn't raise and error" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],
