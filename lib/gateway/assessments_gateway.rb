@@ -222,7 +222,7 @@ module Gateway
         end
 
         unless assessment.get(:related_rrn).nil?
-          add_linked_assessment(assessment, 'public.')
+          add_linked_assessment(assessment, "public.")
         end
       end
     end
@@ -310,7 +310,7 @@ module Gateway
         Assessment.create assessment.to_record
       end
 
-      #TODO Need to test this
+      # TODO: Need to test this
       reattach_green_deal_plans(green_deal_plan_ids, binds, schema)
     end
 
