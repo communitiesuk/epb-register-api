@@ -4,7 +4,7 @@ module Gateway
     end
 
     def insert(assessment_id:, country_id:, upsert: false, is_scottish: false)
-      schema = is_scottish ? "scotland." : "public."
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
 
       sql = if upsert
               <<-SQL

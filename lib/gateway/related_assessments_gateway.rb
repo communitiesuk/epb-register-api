@@ -6,7 +6,7 @@ module Gateway
     def related_assessment_ids(address_id, is_scottish: false)
       return [] if address_id.blank?
 
-      schema = is_scottish ? "scotland." : "public."
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
 
       ActiveRecord::Base
         .connection
