@@ -86,12 +86,12 @@ module UseCase
 
       if migrated
         @assessments_gateway.insert_or_update(assessment, is_scottish: is_scottish)
-        insert_country_id(data[:assessment_id], is_scottish, data[:country_id], upsert: true)
+        insert_country_id(data[:assessment_id], is_scottish, country_id: data[:country_id], upsert: true)
       else
         begin
           # TODO: UPDATE WHEN DOING LODGEMENT
           @assessments_gateway.insert assessment
-          insert_country_id(data[:assessment_id], is_scottish, data[:country_id])
+          insert_country_id(data[:assessment_id], is_scottish, country_id: data[:country_id])
         rescue Gateway::AssessmentsGateway::AssessmentAlreadyExists
           raise DuplicateAssessmentIdException
         end
@@ -237,7 +237,7 @@ module UseCase
       end
     end
 
-    def insert_country_id(assessment_id, is_scottish, country_id = nil, upsert: false)
+    def insert_country_id(assessment_id, is_scottish, country_id: nil, upsert: false)
       @assessments_country_id_gateway.insert(assessment_id:, country_id:, upsert:, is_scottish:) unless country_id.nil?
     end
   end
