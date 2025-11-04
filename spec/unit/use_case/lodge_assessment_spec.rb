@@ -256,7 +256,7 @@ describe UseCase::LodgeAssessment do
             schema_type: "SAP-Schema-S-19.0.0",
           },
           true,
-          )
+        )
       end
     end
 
