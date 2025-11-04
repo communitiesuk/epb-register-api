@@ -17,6 +17,11 @@ class AddGreenDealPlansScotlandTable < ActiveRecord::Migration[8.0]
       t.jsonb :measures, null: false, default: "[]"
       t.jsonb :charges, null: false, default: "[]"
       t.jsonb :savings, null: false, default: "[]"
+      t.index "scotland.green_deal_plans", :green_deal_plan_id, unique: true
     end
+
+    add_foreign_key "scotland.green_deal_assessments",
+                    "scotland.green_deal_plans",
+                    column: :green_deal_plan_id, primary_key: :green_deal_plan_id
   end
 end
