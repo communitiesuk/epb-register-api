@@ -1,4 +1,4 @@
-class AddCorrectForgeinKeysToScotlandSchemaTables < ActiveRecord::Migration[8.0]
+class AddCorrectForeignKeysToScotlandSchemaTables < ActiveRecord::Migration[8.0]
   def change
     add_foreign_key "scotland.assessments_xml",
                     "scotland.assessments",
