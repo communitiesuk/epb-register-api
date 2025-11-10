@@ -14,11 +14,13 @@ module Gateway
       a.not_for_issue_at,
       x.schema_type,
       aai.address_id AS assessment_address_id,
-      ac.country_id
+      ac.country_id,
+      CASE WHEN EXISTS(SELECT * FROM green_deal_assessments g WHERE g.assessment_id = a.assessment_id) THEN true ELSE false END as green_deal
       FROM assessments a
       INNER JOIN assessments_xml x ON a.assessment_id = x.assessment_id
       INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
       LEFT JOIN assessments_country_ids ac ON a.assessment_id = ac.assessment_id
+
       WHERE a.assessment_id = $1
       SQL
 

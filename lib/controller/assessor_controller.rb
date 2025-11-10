@@ -243,7 +243,7 @@ module Controller
                 .map(&:last)
                 .map(&:to_i),
             )
-          return(
+          return (
             error_response(
               400,
               "INVALID_QUERY",
@@ -252,7 +252,7 @@ module Controller
           )
         end
 
-        return(
+        return (
           search_by_first_name_last_name_date_of_birth params[:firstName],
                                                        params[:lastName],
                                                        params[:dateOfBirth]

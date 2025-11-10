@@ -75,7 +75,7 @@ describe Helper::AddressBaseFilter do
   {
     E: true, # England
     W: true, # Wales
-    S: false, # Scotland
+    S: true, # Scotland
     N: true, # Northern Ireland
     L: false, # Channel Islands
     M: false, # Isle of Man

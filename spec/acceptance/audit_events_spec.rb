@@ -21,7 +21,7 @@ describe "Audit events", :set_with_timecop do
   end
 
   context "when adding a new assessor" do
-    it "saves addingthe assessor the event to the audit log" do
+    it "saves adding the assessor the event to the audit log" do
       expect(saved_data.first).to match a_hash_including(
         { "entity_type" => "assessor",
           "entity_id" => "SPEC000000",

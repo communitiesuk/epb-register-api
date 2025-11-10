@@ -81,7 +81,7 @@ module Gateway
     def insulation?(type, summary)
       unless summary[:type_of_assessment] != "RdSAP" ||
           summary[:type_of_assessment].nil?
-        return(
+        return (
           !summary[:recommended_improvements].select { |i|
             i[:improvement_type] == type
           }.empty?

@@ -72,6 +72,7 @@ module Gateway
                #{ranking_sql if building_name_number}
         FROM address_base
         WHERE postcode = $1
+        AND LOWER(country_code) IS DISTINCT FROM LOWER('S')
       SQL
 
       binds = [
@@ -167,6 +168,7 @@ module Gateway
                postcode
         FROM address_base
         WHERE uprn = $1
+        AND LOWER(country_code) IS DISTINCT FROM LOWER('S')
       SQL
 
       binds = [
@@ -282,6 +284,7 @@ module Gateway
               OR
               LOWER(address_line2) LIKE $1
         )
+        AND LOWER(country_code) IS DISTINCT FROM LOWER('S')
       SQL_ADDRESS_BASE
 
       sql_assessments << " ORDER BY assessment_id "

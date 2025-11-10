@@ -69,7 +69,7 @@ module Helper
     end
 
     def self.filter_by_country(address_base_entry)
-      !%w[S L M].include? address_base_entry[:COUNTRY] # filter out addresses from Scotland, Channel Islands and Isle of Man
+      !%w[L M].include? address_base_entry[:COUNTRY] # filter out addresses from Channel Islands and Isle of Man
     end
   end
 end
