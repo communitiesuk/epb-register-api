@@ -1,10 +1,11 @@
 module Gateway
   class SearchAddressGateway < StandardError
-    def insert(object)
+    def insert(object, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       insert_sql = <<-SQL
-            INSERT INTO assessment_search_address(assessment_id, address)
+            INSERT INTO #{schema}assessment_search_address(assessment_id, address)
             SELECT $1, $2
-            WHERE NOT EXISTS(SELECT * FROM assessment_search_address WHERE assessment_id = $3)
+            WHERE NOT EXISTS(SELECT * FROM #{schema}assessment_search_address WHERE assessment_id = $3)
       SQL
 
       bindings = [

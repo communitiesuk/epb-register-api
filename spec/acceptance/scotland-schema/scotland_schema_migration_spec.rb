@@ -16,6 +16,7 @@ describe "create_function_for_new_schema and create_new_schema" do
     it "creates the required new scotland tables" do
       expected_tables = %w[assessment_search_address
                            assessments_address_id
+                           green_deal_plans
                            linked_assessments
                            overridden_lodgement_events
                            schema_migrations
@@ -27,7 +28,9 @@ describe "create_function_for_new_schema and create_new_schema" do
         SELECT table_name FROM information_schema.tables WHERE table_schema = 'scotland';
       SQL
       tables = table_results.rows.flatten
-
+      if tables.include?("ar_internal_metadata")
+        tables.delete("ar_internal_metadata")
+      end
       expect(tables).to match_array(expected_tables)
     end
   end
