@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_07_120548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -31,18 +31,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
     t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
     t.index ["town"], name: "index_address_base_on_town"
-  end
-
-  create_table "address_base_tmp", primary_key: "uprn", id: :string, force: :cascade do |t|
-    t.string "postcode"
-    t.string "address_line1"
-    t.string "address_line2"
-    t.string "address_line3"
-    t.string "address_line4"
-    t.string "town"
-    t.string "classification_code", limit: 6
-    t.string "address_type", limit: 15
-    t.string "country_code", limit: 1
   end
 
   create_table "address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
@@ -89,7 +77,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
     t.datetime "not_for_issue_at", precision: nil
     t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.string "hashed_assessment_id"
-    t.string "test_column"
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
@@ -105,6 +92,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
     t.string "address_id"
     t.string "source"
     t.datetime "address_updated_at"
+    t.string "matched_address_id"
+    t.float "matched_confidence"
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
 
@@ -152,7 +141,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
     t.string "company_email"
     t.string "company_name"
     t.string "gda_qualification"
-    t.string "test_column"
     t.index ["registered_by"], name: "index_assessors_on_registered_by"
     t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
   end
