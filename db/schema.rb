@@ -94,8 +94,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
     t.string "address_id"
     t.string "source"
     t.datetime "address_updated_at"
-    t.string "matched_address_id"
-    t.float "matched_confidence"
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
 
