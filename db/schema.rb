@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_11_135429) do
+# Do not update until we work out why the introduction of the scotland
+# schema makes the tests fail in the pipeline
+ActiveRecord::Schema[8.0].define(version: 2025_05_19_124713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
