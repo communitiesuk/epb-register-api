@@ -72,6 +72,8 @@ describe Gateway::AssessmentsAddressIdGateway do
           address_updated_at: nil,
           assessment_id: "0000-0000-0000-0000-0002",
           source: "lodgement",
+          matched_address_id: nil,
+          matched_confidence: nil,
         }
         assessment_id = "0000-0000-0000-0000-0002"
         response = gateway.fetch(assessment_id, is_scottish: true)
