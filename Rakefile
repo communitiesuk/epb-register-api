@@ -5,6 +5,7 @@ require "active_support/core_ext"
 require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
 require "epb_view_models"
+require "epb-auth-tools"
 require "sentry-ruby"
 
 unless defined?(TestLoader)
