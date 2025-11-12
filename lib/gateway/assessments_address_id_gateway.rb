@@ -82,6 +82,18 @@ module Gateway
       result.map { |rows| rows["cnt"] }.first
     end
 
+    def update_matched_address_id(
+      assessment_id,
+      new_matched_address_id,
+      new_confidence
+    )
+      assessment_address_id_row =
+        AssessmentsAddressId.find_by(assessment_id:)
+      assessment_address_id_row.update(
+        { "matched_address_id" => new_matched_address_id, "matched_confidence" => new_confidence },
+      )
+    end
+
   private
 
     def update_address_id(

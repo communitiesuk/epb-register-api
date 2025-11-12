@@ -138,4 +138,15 @@ describe Gateway::AssessmentsAddressIdGateway do
       end
     end
   end
+
+  describe "#update_matched_address_id" do
+    context "when updating matched address ids" do
+      it "updates assessments with a new address_id source" do
+        assessment_id = "0000-0000-0000-0000-0002"
+        gateway.update_matched_address_id(assessment_id, "000000000031", 99.2)
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[000000000031]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [99.2]
+      end
+    end
+  end
 end
