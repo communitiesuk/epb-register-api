@@ -117,7 +117,6 @@ describe "BackfillMatchedAddress" do
         [
           { "uprn" => "199990129", "address" => "1A Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => "46.2" },
           { "uprn" => "199990144", "address" => "1B Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => "46.2" },
-
         ],
       )
       allow($stdout).to receive(:puts)
