@@ -88,5 +88,35 @@ describe UseCase::MatchAssessmentAddress do
         expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "unknown", "46.2")
       end
     end
+
+    context "when an API error is raised from the Addressing API gateway" do
+      before do
+        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_raise Errors::ApiResponseError
+      end
+
+      it "does not raise and error" do
+        expect { use_case.execute(assessment_id:, **args) }.not_to raise_error
+      end
+
+      it "does not call the assessments_address_id_gateway" do
+        use_case.execute(assessment_id:, **args)
+        expect(assessments_address_id_gateway).not_to have_received(:update_matched_address_id)
+      end
+    end
+
+    context "when any other standard error is raised from the Addressing API gateway" do
+      before do
+        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_raise StandardError
+      end
+
+      it "does not raise and error" do
+        expect { use_case.execute(assessment_id:, **args) }.not_to raise_error
+      end
+
+      it "does not call the assessments_address_id_gateway" do
+        use_case.execute(assessment_id:, **args)
+        expect(assessments_address_id_gateway).not_to have_received(:update_matched_address_id)
+      end
+    end
   end
 end
