@@ -12,6 +12,7 @@ describe UseCase::LodgeAssessment do
       event_broadcaster: Events::Broadcaster.new,
       search_address_gateway:,
       assessments_country_id_gateway:,
+      match_assessment_address_use_case:,
     )
   end
 
@@ -26,6 +27,7 @@ describe UseCase::LodgeAssessment do
     allow(use_case).to receive(:execute)
     use_case
   end
+  let(:match_assessment_address_use_case) { instance_double(UseCase::MatchAssessmentAddress) }
   let(:assessments_country_id_gateway) { instance_double(Gateway::AssessmentsCountryIdGateway) }
 
   let(:data) do
@@ -316,6 +318,41 @@ describe UseCase::LodgeAssessment do
           assessment_id: data[:assessment_id],
           is_scottish: false,
         )
+      end
+    end
+
+    context "when the address matching during lodgement toggle is on" do
+      before do
+        Helper::Toggles.set_feature("address-matching-during-lodgement", true)
+        allow(match_assessment_address_use_case).to receive(:execute)
+        use_case.execute(data, true, "SAP-Schema-20.0.0")
+      end
+
+      after do
+        Helper::Toggles.set_feature("address-matching-during-lodgement", false)
+      end
+
+      it "calls the match assessment address use case with the correct arguments" do
+        expect(match_assessment_address_use_case).to have_received(:execute).once.with(
+          assessment_id: data[:assessment_id],
+          address_line_1: data[:address_line1],
+          address_line_2: data[:address_line2],
+          address_line_3: data[:address_line3],
+          address_line_4: data[:address_line4],
+          town: data[:town],
+          postcode: data[:postcode],
+        )
+      end
+    end
+
+    context "when the address matching during lodgement toggle is off" do
+      before do
+        allow(match_assessment_address_use_case).to receive(:execute)
+        use_case.execute(data, true, "SAP-Schema-20.0.0")
+      end
+
+      it "calls the match assessment address use case with the correct arguments" do
+        expect(match_assessment_address_use_case).not_to have_received(:execute)
       end
     end
   end
