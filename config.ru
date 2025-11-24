@@ -36,4 +36,6 @@ end
 
 use Sentry::Rack::CaptureExceptions
 
+use Middleware::HeadersPolicy
+
 run RegisterApiService
