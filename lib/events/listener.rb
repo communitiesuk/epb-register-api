@@ -13,16 +13,43 @@ module Events
       attach_green_deal_plan_updated
       attach_green_deal_plan_deleted
       attach_assessor_added
+      attach_match_address_request
     end
 
   private
 
     def attach_assessment_lodged
       @event_broadcaster.on :assessment_lodged do |**data|
+        NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
         if notify_data_warehouse_enabled?
           NotifyFactory.new_assessment_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], is_scottish: data[:is_scottish])
         end
-        NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
+        # feature flag here with call to addressing app - send just the matched address id -
+        # when we have an address then send it to this will broadcast and will send a new queue  rrn:matched_address_id
+        # if there is a failure what to do that raise error ? alerted by error
+        # If issue - can run backfill (which will ideally use the use case) - this can then broadcast and send to queue - will this have access to listeners etc
+        # Notify warehouse from the match address use case - so backfilling will also fill - new queue - Warehouse can deal with retries.
+        # NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
+      end
+    end
+
+    def attach_match_address_request
+      @event_broadcaster.on :match_address_request do |**data|
+        # if Helper::Toggles.enabled?("address-matching-during-lodgement")
+        if address_matching_during_lodgement_enabled?
+          match_address_use_case = ApiFactory.match_assessment_address_use_case
+          match_address_use_case.execute(
+            assessment_id: data.fetch(:assessment_id),
+            address_line_1: data.fetch(:address_line1),
+            address_line_2: data.fetch(:address_line2),
+            address_line_3: data.fetch(:address_line3),
+            address_line_4: data.fetch(:address_line4),
+            town: data.fetch(:town),
+            postcode: data.fetch(:postcode),
+          )
+        end
+      rescue KeyError
+        raise Errors::MissingRequiredParameterError
       end
     end
 
@@ -79,6 +106,10 @@ module Events
 
     def notify_data_warehouse_enabled?
       ENV["STAGE"] != "test"
+    end
+
+    def address_matching_during_lodgement_enabled?
+      Helper::Toggles.enabled?("address-matching-during-lodgement")
     end
   end
 end

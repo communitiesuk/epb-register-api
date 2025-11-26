@@ -156,7 +156,6 @@ class ApiFactory
         event_broadcaster:,
         search_address_gateway:,
         assessments_country_id_gateway:,
-        match_assessment_address_use_case:,
       )
   end
 

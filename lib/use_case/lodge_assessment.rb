@@ -22,8 +22,8 @@ module UseCase
       get_canonical_address_id_use_case:,
       event_broadcaster:,
       search_address_gateway:,
-      assessments_country_id_gateway:,
-      match_assessment_address_use_case:
+      assessments_country_id_gateway:
+
     )
       @assessments_gateway = assessments_gateway
       @assessments_search_gateway = assessments_search_gateway
@@ -36,7 +36,6 @@ module UseCase
       @event_broadcaster = event_broadcaster
       @search_address_gateway = search_address_gateway
       @assessments_country_id_gateway = assessments_country_id_gateway
-      @match_assessment_address_use_case = match_assessment_address_use_case
     end
 
     def execute(data, migrated, schema_name)
@@ -98,19 +97,6 @@ module UseCase
         end
       end
       insert_assessment_address_id(assessment, is_scottish)
-
-      if Helper::Toggles.enabled?("address-matching-during-lodgement")
-        @match_assessment_address_use_case.execute(
-          assessment_id: data[:assessment_id],
-          address_line_1: data[:address][:address_line1],
-          address_line_2: data[:address][:address_line2],
-          address_line_3: data[:address][:address_line3],
-          address_line_4: data[:address][:address_line4],
-          town: data[:address][:town],
-          postcode: data[:address][:postcode],
-        )
-      end
-
       # TODO: UPDATE WHEN DOING LODGEMENT
       associate_related_green_deals(assessment, is_scottish) if assessment.type_of_assessment == "RdSAP" && !migrated
       @assessments_xml_gateway.send_to_db(
@@ -124,6 +110,18 @@ module UseCase
       search_address = Domain::SearchAddress.new(data).to_hash
       @search_address_gateway.insert(search_address, is_scottish: is_scottish)
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id, is_scottish: is_scottish
+      @event_broadcaster.broadcast(
+        :match_address_request,
+        assessment_id: data[:assessment_id],
+        address_line1: data[:address][:address_line1],
+        address_line2: data[:address][:address_line2],
+        address_line3: data[:address][:address_line3],
+        address_line4: data[:address][:address_line4],
+        town: data[:address][:town],
+        postcode: data[:address][:postcode],
+      )
+      # a new broadcast - takes what we need (already gone to warehouse queue - what do we do if it may be in the queue - what if it has not processed yet)
+      # how do we update the table in the DWH - update a new table? - or pause it until we are ready?
 
       assessment
     end

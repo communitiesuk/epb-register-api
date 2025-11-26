@@ -28,4 +28,7 @@ module Errors
 
   class InternalServerError < ApiError
   end
+
+  class MissingRequiredParameterError < StandardError
+  end
 end
