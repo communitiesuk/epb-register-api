@@ -49,7 +49,6 @@ describe Events::Listener do
     end
 
     context "when the address matching during lodgement toggle is on" do
-
       before do
         Helper::Toggles.set_feature("address-matching-during-lodgement", true)
       end
@@ -59,8 +58,6 @@ describe Events::Listener do
       end
 
       context "when the required arguments are passed" do
-
-
         before do
           allow(match_assessment_address_use_case).to receive(:execute)
           allow(ApiFactory).to receive(:match_assessment_address_use_case).and_return(match_assessment_address_use_case)
@@ -124,11 +121,10 @@ describe Events::Listener do
           listener.attach_listeners
         end
 
-        it "executes the match address use case with mapped arguments" do
+        it "does not execute the match address use case" do
           expect(match_assessment_address_use_case).not_to have_received(:execute)
         end
       end
     end
-
   end
 end

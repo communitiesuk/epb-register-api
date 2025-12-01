@@ -120,8 +120,6 @@ module UseCase
         town: data[:address][:town],
         postcode: data[:address][:postcode],
       )
-      # a new broadcast - takes what we need (already gone to warehouse queue - what do we do if it may be in the queue - what if it has not processed yet)
-      # how do we update the table in the DWH - update a new table? - or pause it until we are ready?
 
       assessment
     end

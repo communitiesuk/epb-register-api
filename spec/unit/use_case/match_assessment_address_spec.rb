@@ -94,13 +94,8 @@ describe UseCase::MatchAssessmentAddress do
         allow(addressing_api_gateway).to receive(:match_address).with(**args).and_raise Errors::ApiResponseError
       end
 
-      it "does not raise and error" do
-        expect { use_case.execute(assessment_id:, **args) }.not_to raise_error
-      end
-
-      it "does not call the assessments_address_id_gateway" do
-        use_case.execute(assessment_id:, **args)
-        expect(assessments_address_id_gateway).not_to have_received(:update_matched_address_id)
+      it "raises the error" do
+        expect { use_case.execute(assessment_id:, **args) }.to raise_error(Errors::ApiResponseError)
       end
     end
 
@@ -109,13 +104,8 @@ describe UseCase::MatchAssessmentAddress do
         allow(addressing_api_gateway).to receive(:match_address).with(**args).and_raise StandardError
       end
 
-      it "does not raise and error" do
-        expect { use_case.execute(assessment_id:, **args) }.not_to raise_error
-      end
-
-      it "does not call the assessments_address_id_gateway" do
-        use_case.execute(assessment_id:, **args)
-        expect(assessments_address_id_gateway).not_to have_received(:update_matched_address_id)
+      it "raises the error" do
+        expect { use_case.execute(assessment_id:, **args) }.to raise_error(StandardError)
       end
     end
   end

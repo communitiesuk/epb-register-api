@@ -30,9 +30,6 @@ module UseCase
           @assessments_address_id_gateway.update_matched_address_id(assessment_id, "unknown", best_confidence)
         end
       end
-    rescue Errors::ApiError, StandardError
-      # if unable to call addressing api we want to ignore the error so lodgement is not blocked
-      nil
     end
   end
 end
