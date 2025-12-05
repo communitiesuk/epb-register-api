@@ -3,7 +3,6 @@ require "nokogiri"
 namespace :oneoff do
   desc "Backfills matched_address_id"
   task :address_match_assessments do
-    Tasks::TaskHelpers.quit_if_production
     skip_existing = ENV["SKIP_EXISTING"]
     date_from = ENV["DATE_FROM"]
     date_to   = ENV["DATE_TO"]
