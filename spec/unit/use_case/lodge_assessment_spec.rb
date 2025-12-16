@@ -328,6 +328,21 @@ describe UseCase::LodgeAssessment do
           address_line4: data[:address_line4],
           town: data[:town],
           postcode: data[:postcode],
+          is_scottish: false,
+        )
+      end
+
+      it "broadcasts the match_address_request event for a scottish certificate" do
+        expect { use_case.execute(data, true, "SAP-Schema-S-19.0.0") }.to broadcast(
+          :match_address_request,
+          assessment_id: data[:assessment_id],
+          address_line1: data[:address_line1],
+          address_line2: data[:address_line2],
+          address_line3: data[:address_line3],
+          address_line4: data[:address_line4],
+          town: data[:town],
+          postcode: data[:postcode],
+          is_scottish: true,
         )
       end
     end

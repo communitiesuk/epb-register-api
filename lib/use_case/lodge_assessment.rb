@@ -119,6 +119,7 @@ module UseCase
         address_line4: data[:address][:address_line4],
         town: data[:address][:town],
         postcode: data[:address][:postcode],
+        is_scottish: is_scottish,
       )
 
       assessment

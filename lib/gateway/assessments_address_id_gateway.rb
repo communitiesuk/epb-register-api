@@ -85,10 +85,14 @@ module Gateway
     def update_matched_address_id(
       assessment_id,
       new_matched_address_id,
-      new_confidence
+      new_confidence,
+      is_scottish
     )
-      assessment_address_id_row =
-        AssessmentsAddressId.find_by(assessment_id:)
+      assessment_address_id_row = if is_scottish
+                                    AssessmentsAddressIdScotland.find_by(assessment_id:)
+                                  else
+                                    AssessmentsAddressId.find_by(assessment_id:)
+                                  end
       assessment_address_id_row.update(
         { "matched_address_id" => new_matched_address_id, "matched_confidence" => new_confidence },
       )

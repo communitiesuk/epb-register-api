@@ -44,7 +44,20 @@ describe Events::Listener do
         address_line4: "",
         town: "London",
         postcode: "SW1A 1AA",
+        is_scottish: false,
+      }
+    end
 
+    let(:valid_scottish_payload) do
+      {
+        assessment_id: "0000-0000-0000-0002",
+        address_line1: "1 Low St",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "Edinburgh",
+        postcode: "EH9 3HJ",
+        is_scottish: true,
       }
     end
 
@@ -81,6 +94,36 @@ describe Events::Listener do
             address_line_4: "",
             town: "London",
             postcode: "SW1A 1AA",
+            is_scottish: false,
+          )
+        end
+      end
+
+      context "when the required arguments are passed for an scottish address" do
+        before do
+          allow(match_assessment_address_use_case).to receive(:execute)
+          allow(ApiFactory).to receive(:match_assessment_address_use_case).and_return(match_assessment_address_use_case)
+
+          allow(event_broadcaster).to receive(:on)
+          # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+          allow(event_broadcaster).to receive(:on).with(:match_address_request) do |&block|
+            block.call(**valid_scottish_payload)
+          end
+          # rubocop:enable RSpec/Yield
+
+          listener.attach_listeners
+        end
+
+        it "executes the match address use case with mapped arguments" do
+          expect(match_assessment_address_use_case).to have_received(:execute).with(
+            assessment_id: "0000-0000-0000-0002",
+            address_line_1: "1 Low St",
+            address_line_2: "",
+            address_line_3: "",
+            address_line_4: "",
+            town: "Edinburgh",
+            postcode: "EH9 3HJ",
+            is_scottish: true,
           )
         end
       end

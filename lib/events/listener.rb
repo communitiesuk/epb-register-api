@@ -39,6 +39,7 @@ module Events
             address_line_4: data.fetch(:address_line4),
             town: data.fetch(:town),
             postcode: data.fetch(:postcode),
+            is_scottish: data.fetch(:is_scottish),
           )
         end
       rescue KeyError

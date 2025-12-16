@@ -143,9 +143,24 @@ describe Gateway::AssessmentsAddressIdGateway do
     context "when updating matched address ids" do
       it "updates assessments with a new address_id source" do
         assessment_id = "0000-0000-0000-0000-0002"
-        gateway.update_matched_address_id(assessment_id, "000000000031", 99.2)
+        gateway.update_matched_address_id(assessment_id, "000000000031", 99.2, false)
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[000000000031]
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [99.2]
+      end
+    end
+
+    context "when updating matched address ids for scottish addresses" do
+      before do
+        ActiveRecord::Base.connection.exec_query(
+          "INSERT INTO scotland.assessments_address_id(assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0002', 'RRN-0000-0000-0000-0000-0002', 'lodgement', null)",
+        )
+      end
+
+      it "updates assessments with a new address_id source" do
+        assessment_id = "0000-0000-0000-0000-0002"
+        gateway.update_matched_address_id(assessment_id, "000000000031", 99.2, true)
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[000000000031]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [99.2]
       end
     end
   end
