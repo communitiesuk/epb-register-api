@@ -7,6 +7,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   end
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-S-19.0" }
+  let(:valid_rdsap_not_scottish_xml) { Samples.xml "RdSAP-Schema-19.0" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
@@ -45,6 +46,45 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       ).status).to eq(403)
     end
 
+    it "rejects a migration from a client with a Scottish migration role but without a Scottish schema" do
+      expect(lodge_assessment(
+        assessment_body: valid_rdsap_not_scottish_xml,
+        accepted_responses: [403],
+        scopes: %w[migrate:scotland],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-19.0",
+        migrated: true,
+      ).status).to eq(403)
+    end
+
+    it "rejects a lodgement from a client with a Scottish migration role but without a Scottish schema" do
+      expect(lodge_assessment(
+        assessment_body: valid_rdsap_not_scottish_xml,
+        accepted_responses: [403],
+        scopes: %w[migrate:scotland],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-19.0",
+        migrated: false,
+      ).status).to eq(403)
+    end
+
+    it "rejects a lodgement from a client with a Scottish migration role" do
+      expect(lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [403],
+        scopes: %w[migrate:scotland],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-S-19.0",
+        migrated: false,
+      ).status).to eq(403)
+    end
+
     it "has all expected data points present" do
       expected_rdsap_data = {
         "assessment_id" => "0000-0000-0000-0000-0000",
@@ -67,11 +107,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         "not_for_issue_at" => nil,
         "created_at" => "2021-06-21",
         "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        "test_column" => nil,
       }
 
       response = lodge_assessment assessment_body: valid_rdsap_xml,
                                   accepted_responses: [201],
-                                  scopes: %w[assessment:lodge migrate:assessment],
+                                  scopes: %w[migrate:scotland],
                                   auth_data: {
                                     scheme_ids: [scheme_id],
                                   },
@@ -86,7 +127,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       before do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
-                         scopes: %w[assessment:lodge migrate:assessment],
+                         scopes: %w[migrate:scotland],
                          auth_data: {
                            scheme_ids: [scheme_id],
                          },
@@ -97,7 +138,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       it "doesn't raise and error" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
-                         scopes: %w[assessment:lodge migrate:assessment],
+                         scopes: %w[migrate:scotland],
                          auth_data: {
                            scheme_ids: [scheme_id],
                          },
@@ -125,7 +166,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       it "is true in migrated column" do
         response = lodge_assessment(assessment_body: rdsap_xml,
                                     accepted_responses: [201],
-                                    scopes: %w[assessment:lodge migrate:assessment],
+                                    scopes: %w[migrate:scotland],
                                     auth_data: {
                                       scheme_ids: [scheme_id],
                                     },
@@ -159,12 +200,13 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         "not_for_issue_at" => nil,
         "created_at" => "2021-06-21",
         "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        "test_column" => nil,
       }
 
       it "is true in migrated column" do
         response = lodge_assessment assessment_body: valid_sap_xml,
                                     accepted_responses: [201],
-                                    scopes: %w[assessment:lodge migrate:assessment],
+                                    scopes: %w[migrate:scotland],
                                     auth_data: {
                                       scheme_ids: [scheme_id],
                                     },

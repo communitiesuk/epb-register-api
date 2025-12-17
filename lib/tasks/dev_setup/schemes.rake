@@ -12,7 +12,12 @@ namespace :dev_data do
              "Sterling Accreditation Ltd",
              "Stroma Certification Ltd",
              "Quidos Limited",
-             "Kaizen Certification Ltd"]
+             "Kaizen Certification Ltd",
+             "Bacra EPC Scheme",
+             "ABE",
+             "CIH",
+             "RIAS",
+             "Unknown Assessors"]
 
     names.each do |name|
       query = "INSERT INTO schemes (name) VALUES('#{name}')"

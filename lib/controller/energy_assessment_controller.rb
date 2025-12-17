@@ -45,19 +45,34 @@ module Controller
       end
     end
 
-    post "/api/assessments", auth_token_has_all: %w[assessment:lodge] do
+    post "/api/assessments", auth_token_has_one_of: %w[assessment:lodge migrate:scotland] do
       correlation_id = rand
       migrated = boolean_parameter_true?("migrated")
       overridden = boolean_parameter_true?("override")
 
       RequestModule.relevant_request_headers = relevant_request_headers(request)
 
-      if migrated && !env[:auth_token].scopes?(%w[migrate:assessment])
+      xml_schema_type =
+        if request.env["CONTENT_TYPE"]
+          request.env["CONTENT_TYPE"].split("+")[1]
+        else
+          ""
+        end
+
+      if !migrated && env[:auth_token].scopes?(%w[migrate:scotland])
         forbidden(
           "UNAUTHORISED",
-          "You are not authorised to perform this request",
+          "You are not authorised to perform this lodgement request",
         )
       end
+
+      if migrated && !env[:auth_token].scopes?(%w[migrate:assessment]) && !(env[:auth_token].scopes?(%w[migrate:scotland]) && xml_schema_type.include?("-S-"))
+        forbidden(
+          "UNAUTHORISED",
+          "You are not authorised to perform this migration request",
+        )
+      end
+
       logit_char_limit = 500
 
       sanitised_xml =
@@ -79,12 +94,6 @@ module Controller
       sup = env[:auth_token].supplemental("scheme_ids")
       validate_and_lodge_assessment = ApiFactory.validate_and_lodge_assessment_use_case
 
-      xml_schema_type =
-        if request.env["CONTENT_TYPE"]
-          request.env["CONTENT_TYPE"].split("+")[1]
-        else
-          ""
-        end
       scheme_ids = sup
 
       results =
