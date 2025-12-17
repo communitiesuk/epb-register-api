@@ -110,6 +110,17 @@ module UseCase
       search_address = Domain::SearchAddress.new(data).to_hash
       @search_address_gateway.insert(search_address, is_scottish: is_scottish)
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id, is_scottish: is_scottish
+      @event_broadcaster.broadcast(
+        :match_address_request,
+        assessment_id: data[:assessment_id],
+        address_line1: data[:address][:address_line1],
+        address_line2: data[:address][:address_line2],
+        address_line3: data[:address][:address_line3],
+        address_line4: data[:address][:address_line4],
+        town: data[:address][:town],
+        postcode: data[:address][:postcode],
+        is_scottish: is_scottish,
+      )
 
       assessment
     end

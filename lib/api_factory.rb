@@ -1,6 +1,10 @@
 require_relative "./notify_factory"
 
 class ApiFactory
+  def self.addressing_api_gateway
+    @addressing_api_gateway ||= Gateway::AddressingApiGateway.new
+  end
+
   def self.assessments_gateway
     @assessments_gateway ||= Gateway::AssessmentsGateway.new
   end
@@ -153,6 +157,13 @@ class ApiFactory
         search_address_gateway:,
         assessments_country_id_gateway:,
       )
+  end
+
+  def self.match_assessment_address_use_case
+    @match_assessment_address_use_case ||= UseCase::MatchAssessmentAddress.new(
+      addressing_api_gateway:,
+      assessments_address_id_gateway:,
+    )
   end
 
   def self.validate_assessment_use_case

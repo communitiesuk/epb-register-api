@@ -33,7 +33,7 @@ describe UseCase::MatchAssessmentAddress do
         allow(addressing_api_gateway).to receive(:match_address).with(**args).and_return(
           [{ "uprn" => uprn, "address" => "1 Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => confidence }],
         )
-        use_case.execute(assessment_id:, **args)
+        use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
       it "calls the addressing api gateway with the correct arguments" do
@@ -41,18 +41,35 @@ describe UseCase::MatchAssessmentAddress do
       end
 
       it "calls the address id gateway with the correct arguments" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence)
+        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence, false)
       end
     end
 
-    context "when are no results returned" do
+    context "when there is only a single match for a scottish address" do
+      before do
+        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_return(
+          [{ "uprn" => uprn, "address" => "1 Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => confidence }],
+        )
+        use_case.execute(assessment_id:, is_scottish: true, **args)
+      end
+
+      it "calls the addressing api gateway with the correct arguments" do
+        expect(addressing_api_gateway).to have_received(:match_address).once.with(**args)
+      end
+
+      it "calls the address id gateway with the correct arguments" do
+        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence, true)
+      end
+    end
+
+    context "when there are no results returned" do
       before do
         allow(addressing_api_gateway).to receive(:match_address).with(**args).and_return([])
-        use_case.execute(assessment_id:, **args)
+        use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
       it "updates the matched_address_id as none" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "none", nil)
+        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "none", nil, false)
       end
     end
 
@@ -65,11 +82,11 @@ describe UseCase::MatchAssessmentAddress do
 
           ],
         )
-        use_case.execute(assessment_id:, **args)
+        use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
       it "updates the matched_address_id to the uprn with the most confidence" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "199990144", "90.9")
+        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "199990144", "90.9", false)
       end
     end
 
@@ -81,11 +98,31 @@ describe UseCase::MatchAssessmentAddress do
             { "uprn" => "199990144", "address" => "1B Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => "46.2" },
           ],
         )
-        use_case.execute(assessment_id:, **args)
+        use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
       it "updates the matched_address_id as unknown with the confidence value" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "unknown", "46.2")
+        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "unknown", "46.2", false)
+      end
+    end
+
+    context "when an API error is raised from the Addressing API gateway" do
+      before do
+        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_raise Errors::ApiResponseError
+      end
+
+      it "raises the error" do
+        expect { use_case.execute(assessment_id:, is_scottish: false, **args) }.to raise_error(Errors::ApiResponseError)
+      end
+    end
+
+    context "when any other standard error is raised from the Addressing API gateway" do
+      before do
+        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_raise StandardError
+      end
+
+      it "raises the error" do
+        expect { use_case.execute(assessment_id:, is_scottish: false, **args) }.to raise_error(StandardError)
       end
     end
   end

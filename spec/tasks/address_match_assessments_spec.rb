@@ -7,11 +7,18 @@ describe "BackfillMatchedAddress" do
     instance_double(Gateway::AddressingApiGateway)
   end
 
-  let(:assessment_address_ids) do
+  let(:scottish_assessment_address_ids) do
     ActiveRecord::Base.connection.exec_query(
-      "SELECT assessment_id, matched_address_id, matched_confidence FROM assessments_address_id",
+      "SELECT assessment_id, matched_address_id, matched_confidence FROM scotland.assessments_address_id",
     )
   end
+  let(:assessment_address_ids) do
+    ActiveRecord::Base.connection.exec_query(
+      "SELECT assessment_id, matched_address_id, matched_confidence FROM public.assessments_address_id",
+    )
+  end
+
+  let(:scottish_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
 
   before do
     scheme_id = add_scheme_and_get_id
@@ -21,14 +28,52 @@ describe "BackfillMatchedAddress" do
     sap_xml = Nokogiri.XML Samples.xml(sap_schema, "epc")
     call_lodge_assessment(scheme_id:, schema_name: sap_schema, xml_document: sap_xml, ensure_uprns: false)
 
+    scottish_sap_schema = "SAP-Schema-S-19.0.0".freeze
+    lodge_assessment assessment_body: scottish_sap_xml,
+                     accepted_responses: [201],
+                     scopes: %w[assessment:lodge migrate:assessment],
+                     auth_data: {
+                       scheme_ids: [scheme_id],
+                     },
+                     schema_name: scottish_sap_schema,
+                     migrated: "true"
+
     allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
   end
 
   after do
-    puts "Truncating tables"
     ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE assessments CASCADE",
     )
+  end
+
+  context "when the task runs with a single match for a scottish address" do
+    before do
+      allow($stdout).to receive(:puts)
+      allow(addressing_gateway).to receive(:match_address).and_return(
+        [
+          { "uprn" => "299990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, EDINBURGH, EH1 2BE", "confidence" => "98.3" },
+        ],
+      )
+      EnvironmentStub.with("IS_SCOTTISH", "true")
+    end
+
+    after(:all) do
+      EnvironmentStub.remove(%w[IS_SCOTTISH])
+    end
+
+    it "reports one address has been matched" do
+      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
+        /matched:1/,
+      ).to_stdout
+    end
+
+    it "updates the matched address_id in the right database schema" do
+      get_task("oneoff:address_match_assessments").invoke
+      row = scottish_assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
+      expect(row["matched_address_id"]).to eq("299990129")
+      expect(row["matched_confidence"]).to eq(98.3)
+    end
   end
 
   context "when the task run with a single match per address" do
