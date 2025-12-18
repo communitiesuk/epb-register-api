@@ -107,7 +107,6 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         "not_for_issue_at" => nil,
         "created_at" => "2021-06-21",
         "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-        "test_column" => nil,
       }
 
       response = lodge_assessment assessment_body: valid_rdsap_xml,
@@ -200,7 +199,6 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         "not_for_issue_at" => nil,
         "created_at" => "2021-06-21",
         "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-        "test_column" => nil,
       }
 
       it "is true in migrated column" do
