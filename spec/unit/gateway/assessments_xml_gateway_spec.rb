@@ -33,12 +33,12 @@ describe Gateway::AssessmentsXmlGateway do
     end
 
     describe "#sent_to_db" do
-      it "sends the xml record to the assessments xml table" do
+      it "sends the SAP xml record to the assessments xml table" do
         Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id: "12", type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-02", current_energy_efficiency_rating: 50)
         expect(gateway.send_to_db(record, false).assessment_id).to eq("0000-0000-0000-0000-0000")
       end
 
-      it "sends the xml record to the assessments xml table" do
+      it "sends the CEPC xml record to the assessments xml table" do
         Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id: "12", type_of_assessment: "CEPC", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-02", current_energy_efficiency_rating: 50)
         expect(gateway.send_to_db(ni_record, false).assessment_id).to eq("0000-0000-0000-0000-0002")
       end

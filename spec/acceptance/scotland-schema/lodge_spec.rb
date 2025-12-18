@@ -72,7 +72,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       ).status).to eq(403)
     end
 
-    it "rejects a lodgement from a client with a Scottish migration role" do
+    it "rejects a Scottish lodgement from a client with a Scottish migration role" do
       expect(lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
