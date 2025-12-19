@@ -46,7 +46,12 @@ namespace :dev_data do
         internal_company_telephone_number = "0#{rand(1_000_000..9_999_999)}"
         internal_company_email = company_email.sample
         internal_company_name = company_name.sample
-        scheme_assessor_id = (scheme["name"][0..3] + index.to_s.rjust(6, "0")).upcase
+        scheme_assessor_id =
+          if scheme["name"].length < 4
+            (scheme["name"].ljust(4, "/") + index.to_s.rjust(6, "0")).upcase
+          else
+            (scheme["name"][0..3] + index.to_s.rjust(6, "0")).upcase
+          end
         date_of_birth = "#{rand(1970..1999)}-01-01"
         telephone_number = "0#{rand(1_000_000..9_999_999)}"
         email = "#{"#{first_name.downcase}.#{last_name.downcase}"}@epb-assessors.com"
