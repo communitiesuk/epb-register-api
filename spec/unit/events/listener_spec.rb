@@ -17,6 +17,7 @@ describe Events::Listener do
       green_deal_plan_deleted
       assessor_added
       match_address_request
+      matched_address
     ]
 
     events.each do |event|
@@ -167,6 +168,46 @@ describe Events::Listener do
         it "does not execute the match address use case" do
           expect(match_assessment_address_use_case).not_to have_received(:execute)
         end
+      end
+    end
+  end
+
+  describe "executing logic for :matched_address" do
+    let(:matched_address_update_to_data_warehouse_use_case) do
+      instance_double(UseCase::NotifyMatchedAddressUpdateToDataWarehouse)
+    end
+
+    let(:valid_payload) do
+      {
+        assessment_id: "0000-0000-0000-0001",
+        matched_uprn: "30000000001",
+      }
+    end
+
+    context "when receiving the broadcast event" do
+      before do
+        allow(matched_address_update_to_data_warehouse_use_case).to receive(:execute)
+        allow(NotifyFactory).to receive(:matched_address_update_to_data_warehouse_use_case).and_return(matched_address_update_to_data_warehouse_use_case)
+
+        allow(event_broadcaster).to receive(:on)
+        # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+        allow(event_broadcaster).to receive(:on).with(:matched_address) do |&block|
+          block.call(**valid_payload)
+        end
+        # rubocop:enable RSpec/Yield
+
+        listener.attach_listeners
+      end
+
+      around do |test|
+        original_stage = ENV["STAGE"]
+        ENV["STAGE"] = "mock"
+        test.run
+        ENV["STAGE"] = original_stage
+      end
+
+      it "executes the use case" do
+        expect(matched_address_update_to_data_warehouse_use_case).to have_received(:execute).with(assessment_id: "0000-0000-0000-0001", matched_uprn: "30000000001").once
       end
     end
   end

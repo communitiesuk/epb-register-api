@@ -14,6 +14,7 @@ module Events
       attach_green_deal_plan_deleted
       attach_assessor_added
       attach_match_address_request
+      attach_matched_address
     end
 
   private
@@ -95,6 +96,14 @@ module Events
     def attach_assessor_added
       @event_broadcaster.on :assessor_added do |**data|
         NotifyFactory.assessor_added_to_audit_log(entity_id: data[:assessor_id])
+      end
+    end
+
+    def attach_matched_address
+      @event_broadcaster.on :matched_address do |**data|
+        if notify_data_warehouse_enabled?
+          NotifyFactory.matched_address_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], matched_uprn: data[:matched_uprn])
+        end
       end
     end
 

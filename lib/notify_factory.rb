@@ -91,6 +91,10 @@ class NotifyFactory
     @opt_out_status_update_to_data_warehouse_use_case ||= UseCase::NotifyOptOutStatusUpdateToDataWarehouse.new(redis_gateway: ApiFactory.data_warehouse_queues_gateway)
   end
 
+  def self.matched_address_update_to_data_warehouse_use_case
+    @matched_address_update_to_data_warehouse_use_case ||= UseCase::NotifyMatchedAddressUpdateToDataWarehouse.new(redis_gateway: ApiFactory.data_warehouse_queues_gateway)
+  end
+
   def self.save_audit_event_use_case
     @save_audit_event_use_case ||= UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
   end
