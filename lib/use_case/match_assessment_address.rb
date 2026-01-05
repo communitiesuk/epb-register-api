@@ -20,22 +20,24 @@ module UseCase
         postcode:,
       )
       if matches.empty?
-        @assessments_address_id_gateway.update_matched_address_id(assessment_id, "none", nil, is_scottish)
-        @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: "none")
+        matched_uprn = "none"
+        confidence = nil
       elsif matches.length == 1
-        @assessments_address_id_gateway.update_matched_address_id(assessment_id, matches.first["uprn"], matches.first["confidence"], is_scottish)
-        @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: matches.first["uprn"])
+        matched_uprn = matches.first["uprn"]
+        confidence = matches.first["confidence"]
       else
         best_confidence = matches.max_by { |m| m["confidence"].to_f }["confidence"]
         best_matches = matches.select { |m| m["confidence"] == best_confidence }
         if best_matches.length == 1
-          @assessments_address_id_gateway.update_matched_address_id(assessment_id, best_matches.first["uprn"], best_matches.first["confidence"], is_scottish)
-          @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: best_matches.first["uprn"])
+          matched_uprn = best_matches.first["uprn"]
+          confidence = best_matches.first["confidence"]
         else
-          @assessments_address_id_gateway.update_matched_address_id(assessment_id, "unknown", best_confidence, is_scottish)
-          @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: "unknown")
+          matched_uprn = "unknown"
+          confidence = best_confidence
         end
       end
+      @assessments_address_id_gateway.update_matched_address_id(assessment_id, matched_uprn, confidence, is_scottish)
+      @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: matched_uprn)
     end
   end
 end
