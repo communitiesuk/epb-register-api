@@ -163,6 +163,7 @@ class ApiFactory
     @match_assessment_address_use_case ||= UseCase::MatchAssessmentAddress.new(
       addressing_api_gateway:,
       assessments_address_id_gateway:,
+      event_broadcaster:,
     )
   end
 
