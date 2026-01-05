@@ -22,12 +22,12 @@ describe Gateway::DataWarehouseQueuesGateway do
     end
 
     it "raises an error for an invalid queue name" do
-      expect { gateway.push_to_queue(:none_exisitng_queue, ids) }.to raise_error(
+      expect { gateway.push_to_queue(:non_existing_queue, ids) }.to raise_error(
         Gateway::DataWarehouseQueuesGateway::InvalidRedisQueueNameError,
       )
     end
 
-    context "when there is an error is writing to Redis" do
+    context "when there is an error writing to Redis" do
       erroring_gateway = nil
 
       let(:exploding_redis) do
@@ -51,6 +51,14 @@ describe Gateway::DataWarehouseQueuesGateway do
         data = "9999-6666-7777-8888-9999:RRN-9999-6666-7777-8888-9999"
         gateway.push_to_queue :assessments_address_update, data
         expect(redis.lrange("assessments_address_update", 0, -1)).to eq [data]
+      end
+    end
+
+    context "when writing to the matched_address_update queue" do
+      it "can accept a colon delimited string" do
+        data = "9999-6666-7777-8888-9999:10000000001"
+        gateway.push_to_queue :matched_address_update, data
+        expect(redis.lrange("matched_address_update", 0, -1)).to eq [data]
       end
     end
   end

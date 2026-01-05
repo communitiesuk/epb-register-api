@@ -8,7 +8,7 @@ module Gateway
 
     class InvalidRedisQueueNameError < StandardError; end
 
-    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt_outs assessments_address_update].freeze
+    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt_outs assessments_address_update matched_address_update].freeze
 
     def initialize(redis_client: nil)
       @redis = redis_client
