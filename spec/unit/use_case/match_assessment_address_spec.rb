@@ -60,31 +60,6 @@ describe UseCase::MatchAssessmentAddress do
       end
     end
 
-    context "when there is only a single match for a scottish address" do
-      before do
-        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_return(
-          [{ "uprn" => uprn, "address" => "1 Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => confidence }],
-        )
-        use_case.execute(assessment_id:, is_scottish: true, **args)
-      end
-
-      it "calls the addressing api gateway with the correct arguments" do
-        expect(addressing_api_gateway).to have_received(:match_address).once.with(**args)
-      end
-
-      it "calls the address id gateway with the correct arguments" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence, true)
-      end
-
-      it "broadcast the assessment_id and matched uprn" do
-        expect { use_case.execute(assessment_id:, is_scottish: true, **args) }.to broadcast(
-          :matched_address,
-          assessment_id: assessment_id,
-          matched_uprn: uprn,
-        )
-      end
-    end
-
     context "when there are no results returned" do
       before do
         allow(addressing_api_gateway).to receive(:match_address).with(**args).and_return([])
@@ -149,6 +124,31 @@ describe UseCase::MatchAssessmentAddress do
           :matched_address,
           assessment_id: assessment_id,
           matched_uprn: "unknown",
+        )
+      end
+    end
+
+    context "when there is a scottish address" do
+      before do
+        allow(addressing_api_gateway).to receive(:match_address).with(**args).and_return(
+          [{ "uprn" => uprn, "address" => "1 Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => confidence }],
+        )
+        use_case.execute(assessment_id:, is_scottish: true, **args)
+      end
+
+      it "calls the addressing api gateway with the correct arguments" do
+        expect(addressing_api_gateway).to have_received(:match_address).once.with(**args)
+      end
+
+      it "calls the address id gateway with the correct arguments" do
+        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence, true)
+      end
+
+      it "does not broadcast the assessment_id and matched uprn" do
+        expect { use_case.execute(assessment_id:, is_scottish: true, **args) }.not_to broadcast(
+          :matched_address,
+          assessment_id: assessment_id,
+          matched_uprn: uprn,
         )
       end
     end
