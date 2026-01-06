@@ -255,9 +255,9 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                     schema_name: "CEPC-S-7.1",
                                     migrated: "true"
 
-        cepc_data =  ActiveRecord::Base.connection.exec_query(
+        cepc_data = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          ).entries.first
+        ).entries.first
 
         expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
         expect(cepc_data).to eq expected_cepc_assessment_data
