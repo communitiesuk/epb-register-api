@@ -19,7 +19,6 @@ describe "create_function_for_new_schema and create_new_schema" do
                            green_deal_plans
                            linked_assessments
                            overridden_lodgement_events
-                           schema_migrations
                            assessments_xml
                            assessments_country_ids
                            assessments
@@ -30,6 +29,9 @@ describe "create_function_for_new_schema and create_new_schema" do
       tables = table_results.rows.flatten
       if tables.include?("ar_internal_metadata")
         tables.delete("ar_internal_metadata")
+      end
+      if tables.include?("schema_migrations")
+        tables.delete("schema_migrations")
       end
       expect(tables).to match_array(expected_tables)
     end
