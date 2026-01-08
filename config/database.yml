@@ -6,6 +6,7 @@ development:
     username: postgres
     password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
     url: <%= ENV['DATABASE_URL'] %>
+    schema_search_path: "public,scotland"
   primary_replica:
     adapter: postgresql
     database: epb_development
@@ -15,6 +16,7 @@ development:
     url: <%= ENV['DATABASE_URL'] %>
     database_tasks: false
     replica: true
+    schema_search_path: "public,scotland"
 test:
   primary:
     adapter: postgresql
@@ -22,6 +24,7 @@ test:
     username: postgres
     password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
     host: 127.0.0.1
+    schema_search_path: "public,scotland"
   primary_replica:
     adapter: postgresql
     database: epb_test
@@ -30,12 +33,14 @@ test:
     host: 127.0.0.1
     database_tasks: false
     replica: true
+    schema_search_path: "public,scotland"
 default_env:
   primary:
     adapter: postgresql
     database: <%= ENV['DATABASE_URL'] ? ENV['DATABASE_URL'].split('/')[-1] : 'epb_development' %>
     pool: 62
     url: <%= ENV['DATABASE_URL'] %>
+    schema_search_path: "public,scotland"
   primary_replica:
     adapter: postgresql
     database: epb
@@ -43,12 +48,14 @@ default_env:
     url: <%= ENV['DATABASE_READER_URL'] %>
     database_tasks: false
     replica: true
+    schema_search_path: "public,scotland"
 production:
   primary:
     adapter: postgresql
     database: epb
     pool: 62
     url: <%= ENV['DATABASE_URL'] %>
+    schema_search_path: "public,scotland"
   primary_replica:
     adapter: postgresql
     database: epb
@@ -56,3 +63,4 @@ production:
     url: <%= ENV['DATABASE_READER_URL'] %>
     database_tasks: false
     replica: true
+    schema_search_path: "public,scotland"
