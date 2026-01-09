@@ -88,6 +88,7 @@ GEM
       logger
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
+    io-console (0.8.2)
     io-like (0.4.0)
     jmespath (1.6.2)
     json (2.18.0)
@@ -139,9 +140,10 @@ GEM
       racc
     pg (1.6.3)
     prism (1.7.0)
-    pry (0.15.2)
+    pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
+      reline (>= 0.6.0)
     public_suffix (7.0.2)
     puma (7.1.0)
       nio4r (~> 2.0)
@@ -165,6 +167,8 @@ GEM
     redis-client (0.26.3)
       connection_pool
     regexp_parser (2.11.3)
+    reline (0.6.3)
+      io-console (~> 0.5)
     rexml (3.4.4)
     rspec (3.13.2)
       rspec-core (~> 3.13.0)
@@ -292,7 +296,7 @@ DEPENDENCIES
   ougai (~> 2.0)
   parallel (~> 1.27)
   pg (~> 1.6)
-  pry (~> 0.15.2)
+  pry (~> 0.16.0)
   puma (~> 7.1)
   rack-test (~> 2.2.0)
   rackup (~> 2.1)
