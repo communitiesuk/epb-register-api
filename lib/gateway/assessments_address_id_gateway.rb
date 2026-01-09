@@ -88,14 +88,36 @@ module Gateway
       new_confidence,
       is_scottish
     )
-      assessment_address_id_row = if is_scottish
-                                    AssessmentsAddressIdScotland.find_by(assessment_id:)
-                                  else
-                                    AssessmentsAddressId.find_by(assessment_id:)
-                                  end
-      assessment_address_id_row.update(
-        { "matched_address_id" => new_matched_address_id, "matched_confidence" => new_confidence },
-      )
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "matched_address_id",
+          new_matched_address_id,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "matched_confidence",
+          new_confidence,
+          ActiveRecord::Type::Float.new,
+        ),
+      ]
+
+      sql = <<-SQL
+          UPDATE  #{schema}assessments_address_id
+          SET matched_address_id = $2,
+          matched_confidence = $3
+          WHERE assessment_id = $1
+      SQL
+
+      ActiveRecord::Base.transaction do
+        ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+      end
     end
 
   private
