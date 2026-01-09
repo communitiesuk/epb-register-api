@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (8.1.1)
-      activesupport (= 8.1.1)
-    activerecord (8.1.1)
-      activemodel (= 8.1.1)
-      activesupport (= 8.1.1)
+    activemodel (8.1.2)
+      activesupport (= 8.1.2)
+    activerecord (8.1.2)
+      activemodel (= 8.1.2)
+      activesupport (= 8.1.2)
       timeout (>= 0.4.0)
-    activesupport (8.1.1)
+    activesupport (8.1.2)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.3.1)
@@ -26,8 +26,8 @@ GEM
       io-like (~> 0.4.0)
     ast (2.4.3)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1175.0)
-    aws-sdk-core (3.234.0)
+    aws-partitions (1.1201.0)
+    aws-sdk-core (3.241.3)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -35,10 +35,10 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.115.0)
-      aws-sdk-core (~> 3, >= 3.234.0)
+    aws-sdk-kms (1.120.0)
+      aws-sdk-core (~> 3, >= 3.241.3)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.201.0)
+    aws-sdk-s3 (1.209.0)
       aws-sdk-core (~> 3, >= 3.234.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
@@ -113,7 +113,7 @@ GEM
     namecase (2.0.0)
     net-http (0.6.0)
       uri
-    nio4r (2.7.4)
+    nio4r (2.7.5)
     nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -141,7 +141,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (6.0.2)
-    puma (7.0.4)
+    puma (7.1.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.3)
@@ -221,7 +221,7 @@ GEM
     ruby2_keywords (0.0.5)
     rubyzip (3.2.0)
     securerandom (0.4.1)
-    sentry-ruby (5.26.0)
+    sentry-ruby (6.2.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     sinatra (4.2.1)
@@ -253,7 +253,7 @@ GEM
       version_gem (>= 1.1.8, < 3)
     tilt (2.6.0)
     timecop (0.9.10)
-    timeout (0.4.4)
+    timeout (0.6.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.2.0)
@@ -275,9 +275,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 8.1.1)
+  activerecord (~> 8.1.2)
   archive-zip
-  aws-sdk-s3 (~> 1.201)
+  aws-sdk-s3 (= 1.209)
   csv (~> 3.3)
   database_cleaner
   epb-auth-tools (~> 1.1.0)
@@ -291,7 +291,7 @@ DEPENDENCIES
   parallel (~> 1.27)
   pg (~> 1.6)
   pry (~> 0.15.2)
-  puma (~> 7.0)
+  puma (~> 7.1)
   rack-test (~> 2.2.0)
   rackup (~> 2.1)
   rake (~> 13.2)
@@ -301,7 +301,7 @@ DEPENDENCIES
   rubocop-govuk (~> 5.1)
   rubocop-performance
   rubyzip (~> 3.2)
-  sentry-ruby (~> 5.26)
+  sentry-ruby (~> 6.0)
   sinatra (~> 4.2)
   sinatra-activerecord (~> 2.0.27)
   sinatra-contrib
