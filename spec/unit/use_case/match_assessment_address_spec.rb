@@ -70,8 +70,8 @@ describe UseCase::MatchAssessmentAddress do
         expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "none", nil, false)
       end
 
-      it "broadcast the assessment_id and 'none'" do
-        expect { use_case.execute(assessment_id:, is_scottish: false, **args) }.to broadcast(
+      it "does not broadcast the assessment_id with 'none'" do
+        expect { use_case.execute(assessment_id:, is_scottish: false, **args) }.not_to broadcast(
           :matched_address,
           assessment_id: assessment_id,
           matched_uprn: "none",
@@ -119,8 +119,8 @@ describe UseCase::MatchAssessmentAddress do
         expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "unknown", "46.2", false)
       end
 
-      it "broadcast the assessment_id and 'unknown'" do
-        expect { use_case.execute(assessment_id:, is_scottish: false, **args) }.to broadcast(
+      it "does not broadcast the assessment_id and 'unknown'" do
+        expect { use_case.execute(assessment_id:, is_scottish: false, **args) }.not_to broadcast(
           :matched_address,
           assessment_id: assessment_id,
           matched_uprn: "unknown",

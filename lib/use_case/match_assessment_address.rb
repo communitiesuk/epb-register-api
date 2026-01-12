@@ -19,25 +19,28 @@ module UseCase
         town:,
         postcode:,
       )
+      match_found = false
       if matches.empty?
         matched_uprn = "none"
         confidence = nil
       elsif matches.length == 1
         matched_uprn = matches.first["uprn"]
         confidence = matches.first["confidence"]
+        match_found = true
       else
         best_confidence = matches.max_by { |m| m["confidence"].to_f }["confidence"]
         best_matches = matches.select { |m| m["confidence"] == best_confidence }
         if best_matches.length == 1
           matched_uprn = best_matches.first["uprn"]
           confidence = best_matches.first["confidence"]
+          match_found = true
         else
           matched_uprn = "unknown"
           confidence = best_confidence
         end
       end
       @assessments_address_id_gateway.update_matched_address_id(assessment_id, matched_uprn, confidence, is_scottish)
-      unless is_scottish
+      if match_found && !is_scottish
         @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: matched_uprn)
       end
     end
