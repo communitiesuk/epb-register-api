@@ -22,12 +22,16 @@ describe "BackfillMatchedAddress" do
 
   around do |test|
     original_stage = ENV["STAGE"]
+    Events::Broadcaster.enable!
     ENV["STAGE"] = "mock"
     test.run
+    Events::Broadcaster.disable!
     ENV["STAGE"] = original_stage
   end
 
   before do
+    Events::Broadcaster.accept_only! :matched_address
+
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
 
@@ -47,14 +51,13 @@ describe "BackfillMatchedAddress" do
 
     allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
     allow(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to receive(:execute)
-    Events::Broadcaster.enable!
   end
 
   after do
     ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE assessments CASCADE",
     )
-    Events::Broadcaster.disable!
+    Events::Broadcaster.accept_any!
   end
 
   context "when the task runs with a single match for a scottish address" do
