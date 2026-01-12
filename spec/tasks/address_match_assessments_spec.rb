@@ -20,6 +20,13 @@ describe "BackfillMatchedAddress" do
 
   let(:scottish_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
 
+  around do |test|
+    original_stage = ENV["STAGE"]
+    ENV["STAGE"] = "mock"
+    test.run
+    ENV["STAGE"] = original_stage
+  end
+
   before do
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
@@ -39,12 +46,15 @@ describe "BackfillMatchedAddress" do
                      migrated: "true"
 
     allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
+    allow(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to receive(:execute)
+    Events::Broadcaster.enable!
   end
 
   after do
     ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE assessments CASCADE",
     )
+    Events::Broadcaster.disable!
   end
 
   context "when the task runs with a single match for a scottish address" do
@@ -73,6 +83,17 @@ describe "BackfillMatchedAddress" do
       row = scottish_assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
       expect(row["matched_address_id"]).to eq("299990129")
       expect(row["matched_confidence"]).to eq(98.3)
+    end
+
+    it "does not broadcast matched_address" do
+      expect {
+        get_task("oneoff:address_match_assessments").invoke
+      }.not_to broadcast(:matched_address)
+    end
+
+    it "does not push a message to redis" do
+      get_task("oneoff:address_match_assessments").invoke
+      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).not_to have_received(:execute)
     end
   end
 
@@ -128,6 +149,17 @@ describe "BackfillMatchedAddress" do
       expect(row["matched_address_id"]).to eq("199990130")
       expect(row["matched_confidence"]).to eq(98.3)
     end
+
+    it "broadcasts matched_address" do
+      expect {
+        get_task("oneoff:address_match_assessments").invoke
+      }.to broadcast(:matched_address)
+    end
+
+    it "pushes message to redis" do
+      get_task("oneoff:address_match_assessments").invoke
+      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to have_received(:execute).with(assessment_id: "0000-0000-0000-0000-0000", matched_uprn: "199990129")
+    end
   end
 
   context "when there are multiple matches but one has more confidence" do
@@ -154,6 +186,17 @@ describe "BackfillMatchedAddress" do
       expect(row["matched_address_id"]).to eq("199990144")
       expect(row["matched_confidence"]).to eq(90.9)
     end
+
+    it "broadcasts matched_address" do
+      expect {
+        get_task("oneoff:address_match_assessments").invoke
+      }.to broadcast(:matched_address)
+    end
+
+    it "pushes message to redis" do
+      get_task("oneoff:address_match_assessments").invoke
+      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to have_received(:execute).with(assessment_id: "0000-0000-0000-0000-0000", matched_uprn: "199990144")
+    end
   end
 
   context "when the matches have multiple results with same confidence" do
@@ -179,6 +222,17 @@ describe "BackfillMatchedAddress" do
       expect(row["matched_address_id"]).to eq("unknown")
       expect(row["matched_confidence"]).to eq(46.2)
     end
+
+    it "does not broadcast matched_address" do
+      expect {
+        get_task("oneoff:address_match_assessments").invoke
+      }.not_to broadcast(:matched_address)
+    end
+
+    it "does not push message to redis" do
+      get_task("oneoff:address_match_assessments").invoke
+      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).not_to have_received(:execute)
+    end
   end
 
   context "when there are no matches for the address" do
@@ -198,6 +252,17 @@ describe "BackfillMatchedAddress" do
       row = assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
       expect(row["matched_address_id"]).to eq("none")
       expect(row["matched_confidence"]).to be_nil
+    end
+
+    it "does not broadcast matched_address" do
+      expect {
+        get_task("oneoff:address_match_assessments").invoke
+      }.not_to broadcast(:matched_address)
+    end
+
+    it "does not push message to redis" do
+      get_task("oneoff:address_match_assessments").invoke
+      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).not_to have_received(:execute)
     end
   end
 

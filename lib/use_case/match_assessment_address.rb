@@ -43,6 +43,7 @@ module UseCase
       if match_found && !is_scottish
         @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: matched_uprn)
       end
+      matched_uprn
     end
   end
 end

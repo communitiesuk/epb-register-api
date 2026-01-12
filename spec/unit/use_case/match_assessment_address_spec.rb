@@ -58,6 +58,10 @@ describe UseCase::MatchAssessmentAddress do
           matched_uprn: uprn,
         )
       end
+
+      it "returns the matched uprn" do
+        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq(uprn)
+      end
     end
 
     context "when there are no results returned" do
@@ -76,6 +80,10 @@ describe UseCase::MatchAssessmentAddress do
           assessment_id: assessment_id,
           matched_uprn: "none",
         )
+      end
+
+      it "returns none" do
+        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq("none")
       end
     end
 
@@ -102,6 +110,10 @@ describe UseCase::MatchAssessmentAddress do
           matched_uprn: "199990144",
         )
       end
+
+      it "returns the matched uprn" do
+        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq("199990144")
+      end
     end
 
     context "when multiple matches are returned with the same confidence" do
@@ -125,6 +137,10 @@ describe UseCase::MatchAssessmentAddress do
           assessment_id: assessment_id,
           matched_uprn: "unknown",
         )
+      end
+
+      it "returns unknown" do
+        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq("unknown")
       end
     end
 
@@ -150,6 +166,10 @@ describe UseCase::MatchAssessmentAddress do
           assessment_id: assessment_id,
           matched_uprn: uprn,
         )
+      end
+
+      it "returns the matched uprn" do
+        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq(uprn)
       end
     end
 

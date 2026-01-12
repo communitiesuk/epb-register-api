@@ -9,9 +9,11 @@ namespace :oneoff do
     is_scottish = ENV["IS_SCOTTISH"] || false
     puts "[#{Time.now}] Starting address matching backfill (#{skip_existing ? 'skipping assessments with an existing match' : 'processing all assessments'})"
 
-    addressing_gateway = Gateway::AddressingApiGateway.new
+    addressing_api_gateway = Gateway::AddressingApiGateway.new
     assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
-
+    event_broadcaster = Events::Broadcaster.new
+    Events::Listener.new(event_broadcaster).attach_listeners
+    match_assessment_address_use_case = UseCase::MatchAssessmentAddress.new(assessments_address_id_gateway:, event_broadcaster:, addressing_api_gateway:)
     ActiveRecord::Base.logger = nil
     db = ActiveRecord::Base.connection
     db_schema = is_scottish ? "scotland" : "public"
@@ -38,30 +40,20 @@ namespace :oneoff do
     unmatched_assessments.each do |unmatched_assessment|
       assessment_id = unmatched_assessment["assessment_id"]
 
-      matches = addressing_gateway.match_address(
+      match = match_assessment_address_use_case.execute(
+        assessment_id: assessment_id,
         postcode: unmatched_assessment["postcode"],
         address_line_1: unmatched_assessment["address_line1"],
         address_line_2: unmatched_assessment["address_line2"],
         address_line_3: unmatched_assessment["address_line3"],
         address_line_4: unmatched_assessment["address_line4"],
         town: unmatched_assessment["town"],
+        is_scottish: is_scottish,
       )
-      if matches.empty?
-        assessments_address_id_gateway.update_matched_address_id(assessment_id, "none", nil, is_scottish)
-        match_not_found += 1
-      elsif matches.length == 1
-        assessments_address_id_gateway.update_matched_address_id(assessment_id, matches.first["uprn"], matches.first["confidence"], is_scottish)
+      if !match.empty? && !%w[none unknown].include?(match)
         matched += 1
       else
-        best_confidence = matches.max_by { |m| m["confidence"].to_f }["confidence"]
-        best_matches = matches.select { |m| m["confidence"] == best_confidence }
-        if best_matches.length == 1
-          assessments_address_id_gateway.update_matched_address_id(assessment_id, best_matches.first["uprn"], best_matches.first["confidence"], is_scottish)
-          matched += 1
-        else
-          assessments_address_id_gateway.update_matched_address_id(assessment_id, "unknown", best_confidence, is_scottish)
-          match_not_found += 1
-        end
+        match_not_found += 1
       end
     end
 
