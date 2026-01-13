@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../../api/schemas/xml/SAP-Schema-19.1.0/SAP/Templates/SAP-Report.xsd">
-  <Schema-Version-Original>SAP-Schema-19.1.0</Schema-Version-Original>
-  <SAP-Version>10.2</SAP-Version>
-  <SAP-Data-Version>10.2</SAP-Data-Version>
+<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../../api/schemas/xml/SAP-Schema-19.2.0/SAP/Templates/SAP-Report.xsd">
+  <Schema-Version-Original>SAP-Schema-19.2.0</Schema-Version-Original>
+  <SAP-Version>10.3</SAP-Version>
+  <SAP-Data-Version>10.3</SAP-Data-Version>
   <PCDF-Revision-Number>345</PCDF-Revision-Number>
   <Calculation-Software-Name>SomeSoft SAP Calculator</Calculation-Software-Name>
   <Calculation-Software-Version>13.05r16</Calculation-Software-Version>
-  <User-Interface-Name>BRE SAP interface 10.2</User-Interface-Name>
+  <User-Interface-Name>BRE SAP interface 10.3</User-Interface-Name>
   <User-Interface-Version>1.0.1-alpha</User-Interface-Version>
   <Report-Header>
     <RRN>0000-0000-0000-0000-0000</RRN>
@@ -46,7 +46,7 @@
         <Address-Line-2>Some Area</Address-Line-2>
         <Address-Line-3>Some County</Address-Line-3>
         <Post-Town>Whitbury</Post-Town>
-        <Postcode>SW1A 2AA</Postcode>
+        <Postcode>A0 0AA</Postcode>
       </Address>
       <UPRN>UPRN-0000000001</UPRN>
     </Property>
@@ -193,7 +193,7 @@
             <Main-Heating-Fraction>1</Main-Heating-Fraction>
             <Main-Heating-Data-Source>3</Main-Heating-Data-Source>
             <Main-Heating-Code>192</Main-Heating-Code>
-            <Main-Fuel-Type>39</Main-Fuel-Type>
+            <Main-Fuel-Type>5</Main-Fuel-Type>
             <Main-Heating-Control>2106</Main-Heating-Control>
             <Is-Condensing-Boiler>false</Is-Condensing-Boiler>
             <Combi-Boiler-Type>4</Combi-Boiler-Type>
@@ -240,6 +240,8 @@
             <Community-Heating-Use>3</Community-Heating-Use>
             <Community-Heating-Distribution-Loss-Factor>1.26</Community-Heating-Distribution-Loss-Factor>
             <Community-Heating-Distribution-Type>5</Community-Heating-Distribution-Type>
+            <Heat-Network-Sleeved>1</Heat-Network-Sleeved>
+            <Heat-Network-Community-Heating>0</Heat-Network-Community-Heating>
             <Heat-Network-Index-Number>496402</Heat-Network-Index-Number>
             <Heat-Network-Existing>true</Heat-Network-Existing>
             <Heat-Network-Assessed-As-New>true</Heat-Network-Assessed-As-New>
@@ -586,6 +588,7 @@
       <Living-Area>41.35</Living-Area>
       <Lowest-Storey-Area>57.4</Lowest-Storey-Area>
       <Orientation>0</Orientation>
+      <Part-O-Cooling-Required>1</Part-O-Cooling-Required>
       <Cold-Water-Source>1</Cold-Water-Source>
       <Windows-Overshading>2</Windows-Overshading>
       <Is-In-Smoke-Control-Area>unknown</Is-In-Smoke-Control-Area>

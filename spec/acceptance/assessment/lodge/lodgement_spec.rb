@@ -56,12 +56,17 @@ shared_context "when lodging EPCS" do
   end
 end
 
-describe "Acceptance::Assessment::Lodge", :set_with_timecop do
+describe "Acceptance::Assessment::Lodge" do
   include RSpecRegisterApiServiceMixin
   include_context "when lodging EPCS"
 
   before do
     add_countries
+    Timecop.freeze(Time.utc(2021, 6, 21))
+  end
+
+  after do
+    Timecop.return
   end
 
   let(:valid_assessor_request_body) do
@@ -1001,53 +1006,88 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     end
   end
 
-  context "when lodging an assessment for SAP-Schema-19.0.0 which has an invalid SAP data version" do
-    let(:bad_sap_1900_data_version_xml) do
-      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
-      xml.at("SAP-Data-Version").content = "9.90"
-
-      xml.to_s
+  context "when lodging an assessment which has an invalid SAP data version" do
+    before do
+      Timecop.freeze(2022, 12, 22, 0, 0, 0)
     end
 
-    let(:register_assessor) do
-      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+    after do
+      Timecop.return
     end
 
-    it "rejects the assessment with a 400" do
-      register_assessor
-      expect(lodge_assessment(
-        assessment_body: bad_sap_1900_data_version_xml,
-        accepted_responses: [400],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "SAP-Schema-19.0.0",
-      ).status).to eq(400)
+    context "when the schema is SAP-Schema-19.0.0" do
+      let(:bad_sap_1900_data_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+        xml.at("SAP-Data-Version").content = "9.90"
+
+        xml.to_s
+      end
+
+      let(:register_assessor) do
+        add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      end
+
+      it "rejects the assessment with a 400" do
+        register_assessor
+        expect(lodge_assessment(
+          assessment_body: bad_sap_1900_data_version_xml,
+          accepted_responses: [400],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-19.0.0",
+        ).status).to eq(400)
+      end
     end
-  end
 
-  context "when lodging an assessment for SAP-Schema-19.1.0 which has an invalid SAP data version" do
-    let(:bad_sap_1910_data_version_xml) do
-      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.1.0")
-      xml.at("SAP-Data-Version").content = "9.90"
+    context "when the schema is SAP-Schema-19.1.0" do
+      let(:bad_sap_1910_data_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.1.0")
+        xml.at("SAP-Data-Version").content = "10.0"
 
-      xml.to_s
+        xml.to_s
+      end
+
+      let(:register_assessor) do
+        add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      end
+
+      it "rejects the assessment with a 400" do
+        register_assessor
+        expect(lodge_assessment(
+          assessment_body: bad_sap_1910_data_version_xml,
+          accepted_responses: [400],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-19.1.0",
+        ).status).to eq(400)
+      end
     end
 
-    let(:register_assessor) do
-      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-    end
+    context "when the schema is SAP-Schema-19.2.0" do
+      let(:bad_sap_1920_data_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")
+        xml.at("SAP-Data-Version").content = "10.2"
 
-    it "rejects the assessment with a 400" do
-      register_assessor
-      expect(lodge_assessment(
-        assessment_body: bad_sap_1910_data_version_xml,
-        accepted_responses: [400],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "SAP-Schema-19.1.0",
-      ).status).to eq 400
+        xml.to_s
+      end
+
+      let(:register_assessor) do
+        add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      end
+
+      it "rejects the assessment with a 400" do
+        register_assessor
+        expect(lodge_assessment(
+          assessment_body: bad_sap_1920_data_version_xml,
+          accepted_responses: [400],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-19.2.0",
+        ).status).to eq 400
+      end
     end
   end
 

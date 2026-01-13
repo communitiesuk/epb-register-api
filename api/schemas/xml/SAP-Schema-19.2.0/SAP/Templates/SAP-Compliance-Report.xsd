@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified" version="BRUKLD-10.3">
+  <xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+  <xs:include schemaLocation="SAP-Report.xsd"/>
+  <xs:element name="SAP-Compliance-Report" type="Compliance-Report"/>
+  <xs:complexType name="Compliance-Report">
+    <xs:sequence>
+      <xs:element name="SAP-Report" type="Energy-Performance-Certificate"
+                  minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>The SAP report corresponding to the compliance
+            report.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Client-Name" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Name of the client. External to the EPC schema for
+            GDPR purposes.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Client-Company" type="xs:string" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Company name of the client. External to the EPC
+            schema for GDPR purposes.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Client-Address" type="AddressType" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Address of the client. External to the EPC schema
+            for GDPR purposes.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Is-Multiple-Compliance" type="xs:boolean"
+                  default="false" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Is the compliance report part of a multiple
+            compliance calculation.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -127,6 +127,18 @@ describe UseCase::ValidateAndLodgeAssessment do
       allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
     end
 
+    it "validates SAP Schema version 19.2.0" do
+      valid_xml = Samples.xml "SAP-Schema-19.2.0"
+      Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
+      expect {
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: "SAP-Schema-19.2.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overridden: false
+      }.not_to raise_exception
+    end
+
     it "validates SAP Schema version 19.1.0" do
       valid_xml = Samples.xml "SAP-Schema-19.1.0"
       Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
