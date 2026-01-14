@@ -1,6 +1,8 @@
 module Gateway
   class CertificateSummaryGateway
-    def fetch(assessment_id)
+    def fetch(assessment_id, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
       sql = <<-SQL
       SELECT
       a.created_at,
@@ -20,16 +22,16 @@ module Gateway
       x.xml,
       gda.green_deal_plan_id,
       (SELECT count(*)
-       FROM assessments_address_id
+       FROM #{schema}assessments_address_id
        WHERE address_id =
-             (SELECT address_id from assessments_address_id where assessment_id = $1)) AS count_address_id_assessments
-      FROM assessments a
-      LEFT OUTER JOIN green_deal_assessments gda ON a.assessment_id = gda.assessment_id
+             (SELECT address_id from #{schema}assessments_address_id where assessment_id = $1)) AS count_address_id_assessments
+      FROM #{schema}assessments a
+      LEFT OUTER JOIN #{schema}green_deal_assessments gda ON a.assessment_id = gda.assessment_id
       INNER JOIN assessors ass ON a.scheme_assessor_id = ass.scheme_assessor_id
       INNER JOIN schemes s ON ass.registered_by = s.scheme_id
-      INNER JOIN assessments_xml x ON a.assessment_id = x.assessment_id
-      INNER JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
-      LEFT JOIN assessments_country_ids aci ON a.assessment_id = aci.assessment_id
+      INNER JOIN #{schema}assessments_xml x ON a.assessment_id = x.assessment_id
+      INNER JOIN #{schema}assessments_address_id aai ON a.assessment_id = aai.assessment_id
+      LEFT JOIN #{schema}assessments_country_ids aci ON a.assessment_id = aci.assessment_id
       LEFT JOIN countries c ON aci.country_id = c.country_id
       WHERE a.assessment_id = $1
       SQL

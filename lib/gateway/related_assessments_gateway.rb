@@ -25,8 +25,10 @@ module Gateway
         end
     end
 
-    def by_address_id(address_id)
-      assessment_ids = related_assessment_ids(address_id).map do |assessment_id|
+    def by_address_id(address_id, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
+      assessment_ids = related_assessment_ids(address_id, is_scottish: is_scottish).map do |assessment_id|
         ActiveRecord::Base.connection.quote(assessment_id)
       end
 
@@ -44,7 +46,7 @@ module Gateway
                date_registered,
                created_at,
                opt_out
-        FROM assessments
+        FROM #{schema}assessments
         WHERE assessment_id IN(#{assessment_ids.join(', ')}) AND
               not_for_issue_at IS NULL AND
               cancelled_at IS NULL

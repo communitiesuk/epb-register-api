@@ -11,11 +11,11 @@ module UseCase
         @related_assessments_gateway = related_assessments_gateway || Gateway::RelatedAssessmentsGateway.new
       end
 
-      def execute(assessment_id)
+      def execute(assessment_id, is_scottish: false)
         assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
           @certificate_summary_gateway
-            .fetch(assessment_id)
+            .fetch(assessment_id, is_scottish:)
 
         if assessment
           if !assessment["not_for_issue_at"].nil? || !assessment["cancelled_at"].nil?
@@ -33,7 +33,7 @@ module UseCase
         end
 
         related_assessments = if assessment["count_address_id_assessments"] > 1
-                                @related_assessments_gateway.by_address_id(assessment["assessment_address_id"])
+                                @related_assessments_gateway.by_address_id(assessment["assessment_address_id"], is_scottish: is_scottish)
                               else
                                 []
                               end
@@ -41,7 +41,7 @@ module UseCase
         green_deal_plan = if assessment["green_deal_plan_id"].nil?
                             nil
                           else
-                            @green_deal_plans_gateway.fetch(assessment_id)
+                            @green_deal_plans_gateway.fetch(assessment_id, is_scottish: is_scottish)
                           end
 
         Domain::CertificateSummary.new(assessment:,
