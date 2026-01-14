@@ -483,6 +483,18 @@ def fetch_assessment_summary(
   )
 end
 
+def fetch_scottish_certificate_summary(
+  id:,
+  scopes: %w[scotland_assessment:fetch],
+  **assertive_kwargs
+)
+  assertive_get(
+    "api/scotland/assessments/#{id}/certificate-summary",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def fetch_certificate_summary(
   id:,
   scopes: %w[assessment:fetch],
