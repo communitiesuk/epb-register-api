@@ -220,7 +220,7 @@ describe UseCase::LodgeAssessment do
       it "calls AssessmentsGateway to save the assessment data to the assessments table" do
         use_case.execute(data, true, "SAP-Schema-18.0.0")
 
-        expect(assessments_gateway).to have_received(:insert_or_update)
+        expect(assessments_gateway).to have_received(:insert_or_update).exactly(1).times
         expect(search_address_gateway).to have_received(:insert).with({ assessment_id: "2000-0000-0000-0000-0001", address: "1 some street some area some county" }, is_scottish: false)
       end
 

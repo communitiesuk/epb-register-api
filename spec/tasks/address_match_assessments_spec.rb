@@ -6,6 +6,12 @@ describe "BackfillMatchedAddress" do
   let(:addressing_gateway) do
     instance_double(Gateway::AddressingApiGateway)
   end
+  let(:assessments_address_id_gateway) do
+    instance_double(Gateway::AssessmentsAddressIdGateway)
+  end
+  let(:data_warehouse_queues_gateway) do
+    instance_double(Gateway::DataWarehouseQueuesGateway)
+  end
 
   let(:scottish_assessment_address_ids) do
     ActiveRecord::Base.connection.exec_query(
@@ -18,8 +24,6 @@ describe "BackfillMatchedAddress" do
     )
   end
 
-  let(:scottish_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
-
   around do |test|
     original_stage = ENV["STAGE"]
     Events::Broadcaster.enable!
@@ -29,12 +33,10 @@ describe "BackfillMatchedAddress" do
     ENV["STAGE"] = original_stage
   end
 
-  before do
-    Events::Broadcaster.accept_only! :matched_address
-
+  before(:all) do
+    scottish_sap_xml = Samples.xml "SAP-Schema-S-19.0.0"
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
-
     sap_schema = "SAP-Schema-19.1.0".freeze
     sap_xml = Nokogiri.XML Samples.xml(sap_schema, "epc")
     call_lodge_assessment(scheme_id:, schema_name: sap_schema, xml_document: sap_xml, ensure_uprns: false)
@@ -49,8 +51,23 @@ describe "BackfillMatchedAddress" do
                      schema_name: scottish_sap_schema,
                      migrated: "true"
 
+    schema = "RdSAP-Schema-20.0.0"
+    xml = Nokogiri.XML Samples.xml(schema)
+    xml.at("RRN").children = "0000-0000-0000-0000-0001"
+    call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
+    xml.at("RRN").children = "0000-0000-0000-0000-0002"
+    call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
+  end
+
+  before do
+    allow($stdout).to receive(:puts)
+    Events::Broadcaster.accept_only! :matched_address
     allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
     allow(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to receive(:execute)
+    allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(assessments_address_id_gateway)
+    allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
+    allow(assessments_address_id_gateway).to receive(:update_matched_batch)
+    allow(data_warehouse_queues_gateway).to receive(:push_to_queue)
   end
 
   after do
@@ -62,7 +79,6 @@ describe "BackfillMatchedAddress" do
 
   context "when the task runs with a single match for a scottish address" do
     before do
-      allow($stdout).to receive(:puts)
       allow(addressing_gateway).to receive(:match_address).and_return(
         [
           { "uprn" => "299990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, EDINBURGH, EH1 2BE", "confidence" => "98.3" },
@@ -75,34 +91,19 @@ describe "BackfillMatchedAddress" do
       EnvironmentStub.remove(%w[IS_SCOTTISH])
     end
 
-    it "reports one address has been matched" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /matched:1/,
-      ).to_stdout
-    end
-
     it "updates the matched address_id in the right database schema" do
       get_task("oneoff:address_match_assessments").invoke
-      row = scottish_assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
-      expect(row["matched_address_id"]).to eq("299990129")
-      expect(row["matched_confidence"]).to eq(98.3)
-    end
-
-    it "does not broadcast matched_address" do
-      expect {
-        get_task("oneoff:address_match_assessments").invoke
-      }.not_to broadcast(:matched_address)
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(["('0000-0000-0000-0000-0000', '299990129', 98.3)"], "true").exactly(1).times
     end
 
     it "does not push a message to redis" do
       get_task("oneoff:address_match_assessments").invoke
-      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).not_to have_received(:execute)
+      expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue)
     end
   end
 
   context "when the task run with a single match per address" do
     before do
-      allow($stdout).to receive(:puts)
       allow(addressing_gateway).to receive(:match_address).and_return(
         [
           { "uprn" => "199990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "99.3" },
@@ -111,12 +112,6 @@ describe "BackfillMatchedAddress" do
           { "uprn" => "199990130", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "98.3" },
         ],
       )
-    end
-
-    it "reports one address has been matched" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /matched:1/,
-      ).to_stdout
     end
 
     it "calls the AddressingAPIGateway service with the right arguments" do
@@ -131,37 +126,25 @@ describe "BackfillMatchedAddress" do
             postcode: "SW1A 2AA",
           )
     end
+  end
 
-    it "calls the AddressingAPIGateway multiple times if task called multiple times" do
+  context "when the task runs with a mixed matched results" do
+    before do
+      allow(addressing_gateway).to receive(:match_address).and_return(
+        [
+          { "uprn" => "199990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "99.3" },
+        ],
+        [
+          { "uprn" => "199990130", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "98.3" },
+        ],
+        [],
+      )
       get_task("oneoff:address_match_assessments").invoke
-      get_task("oneoff:address_match_assessments").invoke
-      expect(addressing_gateway).to have_received(:match_address).twice
     end
 
-    it "updates the assessment_address_id_row" do
-      get_task("oneoff:address_match_assessments").invoke
-      row = assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
-      expect(row["matched_address_id"]).to eq("199990129")
-      expect(row["matched_confidence"]).to eq(99.3)
-    end
-
-    it "updates the assessment_address_id row with the second run match" do
-      get_task("oneoff:address_match_assessments").invoke
-      get_task("oneoff:address_match_assessments").invoke
-      row = assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
-      expect(row["matched_address_id"]).to eq("199990130")
-      expect(row["matched_confidence"]).to eq(98.3)
-    end
-
-    it "broadcasts matched_address" do
-      expect {
-        get_task("oneoff:address_match_assessments").invoke
-      }.to broadcast(:matched_address)
-    end
-
-    it "pushes message to redis" do
-      get_task("oneoff:address_match_assessments").invoke
-      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to have_received(:execute).with(assessment_id: "0000-0000-0000-0000-0000", matched_uprn: "199990129")
+    it "only saves the 2 matched rows" do
+      expected_args = ["('0000-0000-0000-0000-0000', '199990129', 99.3)", "('0000-0000-0000-0000-0001', '199990130', 98.3)"], false
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(*expected_args).exactly(1).times
     end
   end
 
@@ -177,28 +160,10 @@ describe "BackfillMatchedAddress" do
       allow($stdout).to receive(:puts)
     end
 
-    it "reports one address has been matched" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:0 matched:1/,
-      ).to_stdout
-    end
-
     it "updates the assessment_address_id_row" do
+      expected_args = ["('0000-0000-0000-0000-0000', '199990144', 90.9)", "('0000-0000-0000-0000-0001', '199990144', 90.9)", "('0000-0000-0000-0000-0002', '199990144', 90.9)"], false
       get_task("oneoff:address_match_assessments").invoke
-      row = assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
-      expect(row["matched_address_id"]).to eq("199990144")
-      expect(row["matched_confidence"]).to eq(90.9)
-    end
-
-    it "broadcasts matched_address" do
-      expect {
-        get_task("oneoff:address_match_assessments").invoke
-      }.to broadcast(:matched_address)
-    end
-
-    it "pushes message to redis" do
-      get_task("oneoff:address_match_assessments").invoke
-      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to have_received(:execute).with(assessment_id: "0000-0000-0000-0000-0000", matched_uprn: "199990144")
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(*expected_args).exactly(1).times
     end
   end
 
@@ -213,23 +178,10 @@ describe "BackfillMatchedAddress" do
       allow($stdout).to receive(:puts)
     end
 
-    it "reports one address has not been matched" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:1 matched:0/,
-      ).to_stdout
-    end
-
     it "updates the assessment_address_id_row" do
+      expected_args = ["('0000-0000-0000-0000-0000', 'unknown', 46.2)", "('0000-0000-0000-0000-0001', 'unknown', 46.2)", "('0000-0000-0000-0000-0002', 'unknown', 46.2)"], false
       get_task("oneoff:address_match_assessments").invoke
-      row = assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
-      expect(row["matched_address_id"]).to eq("unknown")
-      expect(row["matched_confidence"]).to eq(46.2)
-    end
-
-    it "does not broadcast matched_address" do
-      expect {
-        get_task("oneoff:address_match_assessments").invoke
-      }.not_to broadcast(:matched_address)
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(*expected_args).exactly(1).times
     end
 
     it "does not push message to redis" do
@@ -244,28 +196,14 @@ describe "BackfillMatchedAddress" do
       allow($stdout).to receive(:puts)
     end
 
-    it "reports one address has not been matched" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:1 matched:0/,
-      ).to_stdout
-    end
-
     it "updates the assessment_address_id_row" do
       get_task("oneoff:address_match_assessments").invoke
-      row = assessment_address_ids.find { |r| r["assessment_id"] == "0000-0000-0000-0000-0000" }
-      expect(row["matched_address_id"]).to eq("none")
-      expect(row["matched_confidence"]).to be_nil
-    end
-
-    it "does not broadcast matched_address" do
-      expect {
-        get_task("oneoff:address_match_assessments").invoke
-      }.not_to broadcast(:matched_address)
+      expect(assessments_address_id_gateway).not_to have_received(:update_matched_batch)
     end
 
     it "does not push message to redis" do
       get_task("oneoff:address_match_assessments").invoke
-      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).not_to have_received(:execute)
+      expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue)
     end
   end
 
@@ -277,6 +215,10 @@ describe "BackfillMatchedAddress" do
           { "uprn" => "199990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "99.3" },
         ],
       )
+      row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0000")
+      row.update_columns(matched_address_id: "199990129")
+      row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0001")
+      row.update_columns(matched_address_id: "199990129")
       get_task("oneoff:address_match_assessments").invoke
     end
 
@@ -286,18 +228,6 @@ describe "BackfillMatchedAddress" do
 
     after(:all) do
       EnvironmentStub.remove(%w[SKIP_EXISTING])
-    end
-
-    it "reports no assessments have been processed" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:0 matched:0/,
-      ).to_stdout
-    end
-
-    it "reports it is skipping assessments with existing matches" do
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /skipping assessments with an existing match/,
-      ).to_stdout
     end
 
     it "called the addressing gateway once" do
@@ -322,30 +252,59 @@ describe "BackfillMatchedAddress" do
     it "does not process any assessments outside of the range" do
       EnvironmentStub.with("DATE_FROM", "2023-05-01")
       EnvironmentStub.with("DATE_TO", "2024-05-01")
-
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:0 matched:0/,
-      ).to_stdout
-    end
-
-    it "processes the assesment inside the range" do
-      EnvironmentStub.with("DATE_FROM", "2022-05-01")
-      EnvironmentStub.with("DATE_TO", "2023-05-01")
-
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:0 matched:1/,
-      ).to_stdout
-    end
-
-    it "does not process any in the range if skip_existing is true, on the second run" do
-      EnvironmentStub.with("DATE_FROM", "2022-05-01")
-      EnvironmentStub.with("DATE_TO", "2023-05-01")
-      EnvironmentStub.with("SKIP_EXISTING", "true")
       get_task("oneoff:address_match_assessments").invoke
+      expect(assessments_address_id_gateway).not_to have_received(:update_matched_batch)
+    end
 
-      expect { get_task("oneoff:address_match_assessments").invoke }.to output(
-        /unmatched:0 matched:0/,
-      ).to_stdout
+    it "processes the assessments inside the range" do
+      EnvironmentStub.with("DATE_FROM", "2022-05-01")
+      EnvironmentStub.with("DATE_TO", "2023-05-01")
+      get_task("oneoff:address_match_assessments").invoke
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).exactly(1).times
+    end
+  end
+
+  context "when the number of EPCs is greater than the batch size" do
+    let(:assessments_address_id_gateway) do
+      instance_double(Gateway::AssessmentsAddressIdGateway)
+    end
+
+    let(:data_warehouse_queues_gateway) do
+      instance_double(Gateway::DataWarehouseQueuesGateway)
+    end
+
+    before do
+      allow(addressing_gateway).to receive(:match_address).and_return(
+        [
+          { "uprn" => "199990128", "address" => "1A Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => "46.2" },
+        ],
+        [
+          { "uprn" => "199990179", "address" => "1A Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => "76.2" },
+        ],
+        [
+          { "uprn" => "199990126", "address" => "1A Some Street, Some Area, Some County, Whitbury, SW1A 2AA", "confidence" => "54.2" },
+        ],
+      )
+      EnvironmentStub.with("BATCH_SIZE", "2")
+      allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(assessments_address_id_gateway)
+      allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
+      allow(assessments_address_id_gateway).to receive(:update_matched_batch)
+      allow(data_warehouse_queues_gateway).to receive(:push_to_queue)
+      get_task("oneoff:address_match_assessments").invoke
+    end
+
+    after do
+      EnvironmentStub.remove(%w[BATCH_SIZE])
+    end
+
+    it "sends the sliced data to database" do
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(["('0000-0000-0000-0000-0000', '199990128', 46.2)", "('0000-0000-0000-0000-0001', '199990179', 76.2)"], false).exactly(1).times
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(["('0000-0000-0000-0000-0002', '199990126', 54.2)"], false).exactly(1).times
+    end
+
+    it "sends the sliced payload to Redis" do
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:matched_address_update, %w[0000-0000-0000-0000-0000:199990128 0000-0000-0000-0000-0001:199990179]).exactly(1).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:matched_address_update, ["0000-0000-0000-0000-0002:199990126"]).exactly(1).times
     end
   end
 end

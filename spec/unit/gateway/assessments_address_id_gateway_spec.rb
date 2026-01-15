@@ -164,4 +164,15 @@ describe Gateway::AssessmentsAddressIdGateway do
       end
     end
   end
+
+  describe "#update_matched_batch" do
+    it "saves multiple rows to the db" do
+      args = ["('0000-0000-0000-0000-0002', '199990128', 46.2)", "('0000-0000-0000-0000-0001', '199990179', 76.2)"]
+      gateway.update_matched_batch(args, false)
+      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:matched_address_id)).to eq %w[199990179]
+      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:matched_confidence)).to eq [76.2]
+      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[199990128]
+      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [46.2]
+    end
+  end
 end

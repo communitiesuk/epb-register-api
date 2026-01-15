@@ -120,6 +120,22 @@ module Gateway
       end
     end
 
+    def update_matched_batch(arr_matches, is_scottish)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
+      update_sql = <<-SQL
+       WITH updates (assessment_id, urpn, confidence) AS (
+        VALUES #{arr_matches.join(',')}
+    )
+        UPDATE #{schema}assessments_address_id u
+        SET matched_address_id = updates.urpn,
+        matched_confidence = updates.confidence
+        FROM updates
+        WHERE u.assessment_id = updates.assessment_id;
+      SQL
+      ActiveRecord::Base.connection.exec_query(update_sql, "SQL")
+    end
+
   private
 
     def update_address_id(
