@@ -63,7 +63,6 @@ describe "BackfillMatchedAddress" do
     allow($stdout).to receive(:puts)
     Events::Broadcaster.accept_only! :matched_address
     allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
-    allow(NotifyFactory.matched_address_update_to_data_warehouse_use_case).to receive(:execute)
     allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(assessments_address_id_gateway)
     allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
     allow(assessments_address_id_gateway).to receive(:update_matched_batch)
@@ -186,7 +185,7 @@ describe "BackfillMatchedAddress" do
 
     it "does not push message to redis" do
       get_task("oneoff:address_match_assessments").invoke
-      expect(NotifyFactory.matched_address_update_to_data_warehouse_use_case).not_to have_received(:execute)
+      expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue)
     end
   end
 

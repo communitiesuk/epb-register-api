@@ -69,11 +69,11 @@ namespace :oneoff do
           end
         end
         arr_matches << "('#{assessment_id}', '#{matched_uprn}', #{confidence})" if matched_uprn
-        payload << "#{assessment_id}:#{matched_uprn}" if matched_uprn
+        payload << "#{assessment_id}:#{matched_uprn}" if matched_uprn && matched_uprn != "unknown"
       end
 
       assessments_address_id_gateway.update_matched_batch(arr_matches, is_scottish) unless arr_matches.empty?
-      data_warehouse_queues_gateway.push_to_queue(:matched_address_update, payload) unless is_scottish || arr_matches.empty?
+      data_warehouse_queues_gateway.push_to_queue(:matched_address_update, payload) unless is_scottish || payload.empty?
     end
   end
 end
