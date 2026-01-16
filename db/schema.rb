@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_08_092829) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_15_152511) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -93,8 +93,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_092829) do
   create_table "public.assessments_address_id", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.string "address_id"
     t.datetime "address_updated_at"
-    t.string "matched_address_id"
     t.float "matched_confidence"
+    t.string "matched_uprn", limit: 20
     t.string "source"
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
@@ -296,8 +296,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_092829) do
   create_table "scotland.assessments_address_id", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.string "address_id"
     t.datetime "address_updated_at"
-    t.string "matched_address_id"
     t.float "matched_confidence"
+    t.string "matched_uprn", limit: 20
     t.string "source"
     t.index ["address_id"], name: "assessments_address_id_address_id_idx"
   end

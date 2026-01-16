@@ -76,7 +76,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
             "address_id" => "UPRN-000000000000",
             "address_updated_at" => nil,
             "assessment_id" => "0000-0000-0000-0000-0000",
-            "matched_address_id" => "123412341234",
+            "matched_uprn" => "123412341234",
             "matched_confidence" => 99.7,
             "source" => "lodgement",
           }
@@ -104,7 +104,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
             "address_id" => "RRN-0000-0000-0000-0000-0000",
             "address_updated_at" => nil,
             "assessment_id" => "0000-0000-0000-0000-0000",
-            "matched_address_id" => "123412341234",
+            "matched_uprn" => "123412341234",
             "matched_confidence" => 99.7,
             "source" => "adjusted_at_lodgement",
           }
@@ -133,7 +133,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
             "address_id" => "UPRN-000000000000",
             "address_updated_at" => nil,
             "assessment_id" => "0000-0000-0000-0000-0000",
-            "matched_address_id" => nil,
+            "matched_uprn" => nil,
             "matched_confidence" => nil,
             "source" => "lodgement",
           }
@@ -179,7 +179,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
           "address_id" => "UPRN-000000000000",
           "address_updated_at" => nil,
           "assessment_id" => "0000-0000-0000-0000-0000",
-          "matched_address_id" => nil,
+          "matched_uprn" => nil,
           "matched_confidence" => nil,
           "source" => "lodgement",
         }

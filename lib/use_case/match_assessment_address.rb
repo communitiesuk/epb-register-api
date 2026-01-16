@@ -39,7 +39,7 @@ module UseCase
           confidence = best_confidence
         end
       end
-      @assessments_address_id_gateway.update_matched_address_id(assessment_id, matched_uprn, confidence, is_scottish)
+      @assessments_address_id_gateway.update_matched_uprn(assessment_id, matched_uprn, confidence, is_scottish)
       if match_found && !is_scottish
         @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: matched_uprn)
       end

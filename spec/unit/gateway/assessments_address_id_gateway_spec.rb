@@ -53,7 +53,7 @@ describe Gateway::AssessmentsAddressIdGateway do
           address_updated_at: nil,
           assessment_id: "0000-0000-0000-0000-0001",
           source: "lodgement",
-          matched_address_id: nil,
+          matched_uprn: nil,
           matched_confidence: nil,
         }
         assessment_id = "0000-0000-0000-0000-0001"
@@ -72,7 +72,7 @@ describe Gateway::AssessmentsAddressIdGateway do
           address_updated_at: nil,
           assessment_id: "0000-0000-0000-0000-0002",
           source: "lodgement",
-          matched_address_id: nil,
+          matched_uprn: nil,
           matched_confidence: nil,
         }
         assessment_id = "0000-0000-0000-0000-0002"
@@ -139,12 +139,12 @@ describe Gateway::AssessmentsAddressIdGateway do
     end
   end
 
-  describe "#update_matched_address_id" do
+  describe "#update_matched_uprn" do
     context "when updating matched address ids" do
       it "updates assessments with a new address_id source" do
         assessment_id = "0000-0000-0000-0000-0002"
-        gateway.update_matched_address_id(assessment_id, "000000000031", 99.2, false)
-        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[000000000031]
+        gateway.update_matched_uprn(assessment_id, "000000000031", 99.2, false)
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_uprn)).to eq %w[000000000031]
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [99.2]
       end
     end
@@ -158,8 +158,8 @@ describe Gateway::AssessmentsAddressIdGateway do
 
       it "updates assessments with a new address_id source" do
         assessment_id = "0000-0000-0000-0000-0002"
-        gateway.update_matched_address_id(assessment_id, "000000000031", 99.2, true)
-        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[000000000031]
+        gateway.update_matched_uprn(assessment_id, "000000000031", 99.2, true)
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_uprn)).to eq %w[000000000031]
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [99.2]
       end
     end
@@ -169,9 +169,9 @@ describe Gateway::AssessmentsAddressIdGateway do
     it "saves multiple rows to the db" do
       args = ["('0000-0000-0000-0000-0002', '199990128', 46.2)", "('0000-0000-0000-0000-0001', '199990179', 76.2)"]
       gateway.update_matched_batch(args, false)
-      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:matched_address_id)).to eq %w[199990179]
+      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:matched_uprn)).to eq %w[199990179]
       expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:matched_confidence)).to eq [76.2]
-      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_address_id)).to eq %w[199990128]
+      expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_uprn)).to eq %w[199990128]
       expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:matched_confidence)).to eq [46.2]
     end
   end

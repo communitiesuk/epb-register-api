@@ -82,9 +82,9 @@ module Gateway
       result.map { |rows| rows["cnt"] }.first
     end
 
-    def update_matched_address_id(
+    def update_matched_uprn(
       assessment_id,
-      new_matched_address_id,
+      new_matched_uprn,
       new_confidence,
       is_scottish
     )
@@ -97,8 +97,8 @@ module Gateway
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
-          "matched_address_id",
-          new_matched_address_id,
+          "matched_uprn",
+          new_matched_uprn,
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
@@ -110,7 +110,7 @@ module Gateway
 
       sql = <<-SQL
           UPDATE  #{schema}assessments_address_id
-          SET matched_address_id = $2,
+          SET matched_uprn = $2,
           matched_confidence = $3
           WHERE assessment_id = $1
       SQL
@@ -128,7 +128,7 @@ module Gateway
         VALUES #{arr_matches.join(',')}
     )
         UPDATE #{schema}assessments_address_id u
-        SET matched_address_id = updates.urpn,
+        SET matched_uprn = updates.urpn,
         matched_confidence = updates.confidence
         FROM updates
         WHERE u.assessment_id = updates.assessment_id;

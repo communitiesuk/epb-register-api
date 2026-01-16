@@ -15,12 +15,12 @@ describe "BackfillMatchedAddress" do
 
   let(:scottish_assessment_address_ids) do
     ActiveRecord::Base.connection.exec_query(
-      "SELECT assessment_id, matched_address_id, matched_confidence FROM scotland.assessments_address_id",
+      "SELECT assessment_id, matched_uprn, matched_confidence FROM scotland.assessments_address_id",
     )
   end
   let(:assessment_address_ids) do
     ActiveRecord::Base.connection.exec_query(
-      "SELECT assessment_id, matched_address_id, matched_confidence FROM public.assessments_address_id",
+      "SELECT assessment_id, matched_uprn, matched_confidence FROM public.assessments_address_id",
     )
   end
 
@@ -216,9 +216,9 @@ describe "BackfillMatchedAddress" do
         ],
       )
       row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0000")
-      row.update_columns(matched_address_id: "199990129")
+      row.update_columns(matched_uprn: "199990129")
       row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0001")
-      row.update_columns(matched_address_id: "199990129")
+      row.update_columns(matched_uprn: "199990129")
       get_task("oneoff:address_match_assessments").invoke
     end
 

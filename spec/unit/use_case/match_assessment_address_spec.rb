@@ -26,7 +26,7 @@ describe UseCase::MatchAssessmentAddress do
 
   describe "#execute" do
     before do
-      allow(assessments_address_id_gateway).to receive(:update_matched_address_id)
+      allow(assessments_address_id_gateway).to receive(:update_matched_uprn)
     end
 
     around do |test|
@@ -48,7 +48,7 @@ describe UseCase::MatchAssessmentAddress do
       end
 
       it "calls the address id gateway with the correct arguments" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence, false)
+        expect(assessments_address_id_gateway).to have_received(:update_matched_uprn).once.with(assessment_id, uprn, confidence, false)
       end
 
       it "broadcast the assessment_id and matched uprn" do
@@ -70,8 +70,8 @@ describe UseCase::MatchAssessmentAddress do
         use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
-      it "updates the matched_address_id as none" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "none", nil, false)
+      it "updates the matched_uprn as none" do
+        expect(assessments_address_id_gateway).to have_received(:update_matched_uprn).once.with(assessment_id, "none", nil, false)
       end
 
       it "does not broadcast the assessment_id with 'none'" do
@@ -99,8 +99,8 @@ describe UseCase::MatchAssessmentAddress do
         use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
-      it "updates the matched_address_id to the uprn with the most confidence" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "199990144", "90.9", false)
+      it "updates the matched_uprn to the uprn with the most confidence" do
+        expect(assessments_address_id_gateway).to have_received(:update_matched_uprn).once.with(assessment_id, "199990144", "90.9", false)
       end
 
       it "broadcast the assessment_id and matched uprn" do
@@ -127,8 +127,8 @@ describe UseCase::MatchAssessmentAddress do
         use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
-      it "updates the matched_address_id as unknown with the confidence value" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, "unknown", "46.2", false)
+      it "updates the matched_uprn as unknown with the confidence value" do
+        expect(assessments_address_id_gateway).to have_received(:update_matched_uprn).once.with(assessment_id, "unknown", "46.2", false)
       end
 
       it "does not broadcast the assessment_id and 'unknown'" do
@@ -157,7 +157,7 @@ describe UseCase::MatchAssessmentAddress do
       end
 
       it "calls the address id gateway with the correct arguments" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_address_id).once.with(assessment_id, uprn, confidence, true)
+        expect(assessments_address_id_gateway).to have_received(:update_matched_uprn).once.with(assessment_id, uprn, confidence, true)
       end
 
       it "does not broadcast the assessment_id and matched uprn" do

@@ -1,7 +1,7 @@
 require "nokogiri"
 
 namespace :oneoff do
-  desc "Backfills matched_address_id"
+  desc "Backfills matched_uprn from assessment_address_id"
   task :address_match_assessments do
     skip_existing = ENV["SKIP_EXISTING"]
     batch_size = ENV["BATCH_SIZE"].nil? ? 1000 : ENV["BATCH_SIZE"].to_i
@@ -24,7 +24,7 @@ namespace :oneoff do
     SQL
 
     if skip_existing
-      find_unmatched_assessments_sql.concat("WHERE aai.matched_address_id IS NULL")
+      find_unmatched_assessments_sql.concat("WHERE aai.matched_uprn IS NULL")
     end
 
     if date_from && date_to
