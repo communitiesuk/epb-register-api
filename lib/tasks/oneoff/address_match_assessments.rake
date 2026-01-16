@@ -73,7 +73,10 @@ namespace :oneoff do
       end
 
       assessments_address_id_gateway.update_matched_batch(arr_matches, is_scottish) unless arr_matches.empty?
-      data_warehouse_queues_gateway.push_to_queue(:matched_address_update, payload) unless is_scottish || payload.empty?
+
+      if Helper::Toggles.enabled?("notify-data-warehouse-matched-uprn") && !(is_scottish || payload.empty?)
+        data_warehouse_queues_gateway.push_to_queue(:matched_address_update, payload)
+      end
     end
   end
 end
