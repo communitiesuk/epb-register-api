@@ -21,7 +21,7 @@ module UseCase
       )
       match_found = false
       if matches.empty?
-        matched_uprn = "none"
+        matched_uprn = nil
         confidence = nil
       elsif matches.length == 1
         matched_uprn = matches.first["uprn"]
@@ -39,11 +39,10 @@ module UseCase
           confidence = best_confidence
         end
       end
-      @assessments_address_id_gateway.update_matched_uprn(assessment_id, matched_uprn, confidence, is_scottish)
+      @assessments_address_id_gateway.update_matched_uprn(assessment_id, matched_uprn, confidence, is_scottish) if matched_uprn
       if match_found && !is_scottish
         @event_broadcaster.broadcast(:matched_address, assessment_id: assessment_id, matched_uprn: matched_uprn)
       end
-      matched_uprn
     end
   end
 end

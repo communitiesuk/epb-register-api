@@ -58,10 +58,6 @@ describe UseCase::MatchAssessmentAddress do
           matched_uprn: uprn,
         )
       end
-
-      it "returns the matched uprn" do
-        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq(uprn)
-      end
     end
 
     context "when there are no results returned" do
@@ -70,8 +66,8 @@ describe UseCase::MatchAssessmentAddress do
         use_case.execute(assessment_id:, is_scottish: false, **args)
       end
 
-      it "updates the matched_uprn as none" do
-        expect(assessments_address_id_gateway).to have_received(:update_matched_uprn).once.with(assessment_id, "none", nil, false)
+      it "does not update the database" do
+        expect(assessments_address_id_gateway).not_to have_received(:update_matched_uprn)
       end
 
       it "does not broadcast the assessment_id with 'none'" do
@@ -80,10 +76,6 @@ describe UseCase::MatchAssessmentAddress do
           assessment_id: assessment_id,
           matched_uprn: "none",
         )
-      end
-
-      it "returns none" do
-        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq("none")
       end
     end
 
@@ -110,10 +102,6 @@ describe UseCase::MatchAssessmentAddress do
           matched_uprn: "199990144",
         )
       end
-
-      it "returns the matched uprn" do
-        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq("199990144")
-      end
     end
 
     context "when multiple matches are returned with the same confidence" do
@@ -137,10 +125,6 @@ describe UseCase::MatchAssessmentAddress do
           assessment_id: assessment_id,
           matched_uprn: "unknown",
         )
-      end
-
-      it "returns unknown" do
-        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq("unknown")
       end
     end
 
@@ -166,10 +150,6 @@ describe UseCase::MatchAssessmentAddress do
           assessment_id: assessment_id,
           matched_uprn: uprn,
         )
-      end
-
-      it "returns the matched uprn" do
-        expect(use_case.execute(assessment_id:, is_scottish: false, **args)).to eq(uprn)
       end
     end
 
