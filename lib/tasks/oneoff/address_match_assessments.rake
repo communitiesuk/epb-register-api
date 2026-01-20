@@ -1,7 +1,7 @@
 require "nokogiri"
 
 namespace :oneoff do
-  desc "Backfills matched_uprn from assessment_address_id"
+  desc "Backfills matched_uprn from assessments_address_id"
   task :address_match_assessments do
     skip_existing = ENV["SKIP_EXISTING"]
     batch_size = ENV["BATCH_SIZE"].nil? ? 1000 : ENV["BATCH_SIZE"].to_i
@@ -75,7 +75,7 @@ namespace :oneoff do
       assessments_address_id_gateway.update_matched_batch(arr_matches, is_scottish) unless arr_matches.empty?
 
       if Helper::Toggles.enabled?("notify-data-warehouse-matched-uprn") && !(is_scottish || payload.empty?)
-        data_warehouse_queues_gateway.push_to_queue(:matched_address_update, payload)
+        data_warehouse_queues_gateway.push_to_queue(:backfill_matched_address_update, payload)
       end
     end
   end

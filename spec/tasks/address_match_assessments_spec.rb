@@ -303,8 +303,8 @@ describe "BackfillMatchedAddress" do
     end
 
     it "sends the sliced payload to Redis" do
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:matched_address_update, %w[0000-0000-0000-0000-0000:199990128 0000-0000-0000-0000-0001:199990179]).exactly(1).times
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:matched_address_update, ["0000-0000-0000-0000-0002:199990126"]).exactly(1).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, %w[0000-0000-0000-0000-0000:199990128 0000-0000-0000-0000-0001:199990179]).exactly(1).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, ["0000-0000-0000-0000-0002:199990126"]).exactly(1).times
     end
   end
 
