@@ -67,7 +67,6 @@ describe "BackfillMatchedAddress" do
     allow(Gateway::DataWarehouseQueuesGateway).to receive(:new).and_return(data_warehouse_queues_gateway)
     allow(assessments_address_id_gateway).to receive(:update_matched_batch)
     allow(data_warehouse_queues_gateway).to receive(:push_to_queue)
-    allow(Helper::Toggles).to receive(:enabled?).and_return(true)
   end
 
   after do
@@ -305,28 +304,6 @@ describe "BackfillMatchedAddress" do
     it "sends the sliced payload to Redis" do
       expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, %w[0000-0000-0000-0000-0000:199990128 0000-0000-0000-0000-0001:199990179]).exactly(1).times
       expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, ["0000-0000-0000-0000-0002:199990126"]).exactly(1).times
-    end
-  end
-
-  context "when notify-data-warehouse-matched-uprn feature toggle is off" do
-    before do
-      allow(Helper::Toggles).to receive(:enabled?).and_return(false)
-      allow(addressing_gateway).to receive(:match_address).and_return(
-        [
-          { "uprn" => "199990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "99.3" },
-        ],
-      )
-    end
-
-    it "updates the assessment_address_id_row" do
-      expected_args = ["('0000-0000-0000-0000-0000', '199990129', 99.3)", "('0000-0000-0000-0000-0001', '199990129', 99.3)", "('0000-0000-0000-0000-0002', '199990129', 99.3)"], false
-      get_task("oneoff:address_match_assessments").invoke
-      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(*expected_args).exactly(1).times
-    end
-
-    it "does not push message to redis" do
-      get_task("oneoff:address_match_assessments").invoke
-      expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue)
     end
   end
 end
