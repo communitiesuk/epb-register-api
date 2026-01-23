@@ -119,6 +119,14 @@ describe "BackfillMatchedAddress" do
       SQL
     end
 
+    after do
+      ActiveRecord::Base.connection.exec_query(<<~SQL)
+        UPDATE assessments
+        SET address_line1 = ''
+        WHERE assessment_id = '0000-0000-0000-0000-0003';
+      SQL
+    end
+
     it "calls the addressing api with all parmeters" do
       get_task("oneoff:address_match_assessments").invoke
       expect(addressing_gateway).to have_received(:match_address).once
@@ -152,7 +160,7 @@ describe "BackfillMatchedAddress" do
             address_line_1: "1 Some Street",
             address_line_2: "Some Area",
             address_line_3: "Some County",
-            address_line_4: nil,
+            address_line_4: "",
             town: "Whitbury",
             postcode: "SW1A 2AA",
           )
@@ -192,7 +200,7 @@ describe "BackfillMatchedAddress" do
     end
 
     it "updates the assessment_address_id_row" do
-      expected_args = ["('0000-0000-0000-0000-0000', '199990144', 90.9)", "('0000-0000-0000-0000-0001', '199990144', 90.9)", "('0000-0000-0000-0000-0002', '199990144', 90.9)"], false
+      expected_args = ["('0000-0000-0000-0000-0000', '199990144', 90.9)", "('0000-0000-0000-0000-0001', '199990144', 90.9)", "('0000-0000-0000-0000-0002', '199990144', 90.9)", "('0000-0000-0000-0000-0003', '199990144', 90.9)"], false
       get_task("oneoff:address_match_assessments").invoke
       expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(*expected_args).exactly(1).times
     end
@@ -210,7 +218,7 @@ describe "BackfillMatchedAddress" do
     end
 
     it "updates the assessment_address_id_row" do
-      expected_args = ["('0000-0000-0000-0000-0000', 'unknown', 46.2)", "('0000-0000-0000-0000-0001', 'unknown', 46.2)", "('0000-0000-0000-0000-0002', 'unknown', 46.2)"], false
+      expected_args = ["('0000-0000-0000-0000-0000', 'unknown', 46.2)", "('0000-0000-0000-0000-0001', 'unknown', 46.2)", "('0000-0000-0000-0000-0002', 'unknown', 46.2)", "('0000-0000-0000-0000-0003', 'unknown', 46.2)"], false
       get_task("oneoff:address_match_assessments").invoke
       expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(*expected_args).exactly(1).times
     end
@@ -249,6 +257,8 @@ describe "BackfillMatchedAddress" do
       row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0000")
       row.update_columns(matched_uprn: "199990129")
       row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0001")
+      row.update_columns(matched_uprn: "199990129")
+      row = Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.find("0000-0000-0000-0000-0003")
       row.update_columns(matched_uprn: "199990129")
       get_task("oneoff:address_match_assessments").invoke
     end
@@ -330,12 +340,12 @@ describe "BackfillMatchedAddress" do
 
     it "sends the sliced data to database" do
       expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(["('0000-0000-0000-0000-0000', '199990128', 46.2)", "('0000-0000-0000-0000-0001', '199990179', 76.2)"], false).exactly(1).times
-      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(["('0000-0000-0000-0000-0002', '199990126', 54.2)"], false).exactly(1).times
+      expect(assessments_address_id_gateway).to have_received(:update_matched_batch).with(["('0000-0000-0000-0000-0002', '199990126', 54.2)", "('0000-0000-0000-0000-0003', '199990126', 54.2)"], false).exactly(1).times
     end
 
     it "sends the sliced payload to Redis" do
       expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, %w[0000-0000-0000-0000-0000:199990128 0000-0000-0000-0000-0001:199990179]).exactly(1).times
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, ["0000-0000-0000-0000-0002:199990126"]).exactly(1).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(:backfill_matched_address_update, ["0000-0000-0000-0000-0002:199990126", "0000-0000-0000-0000-0003:199990126"]).exactly(1).times
     end
   end
 end
