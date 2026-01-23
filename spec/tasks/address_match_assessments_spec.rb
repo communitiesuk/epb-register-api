@@ -57,6 +57,10 @@ describe "BackfillMatchedAddress" do
     call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
     xml.at("RRN").children = "0000-0000-0000-0000-0002"
     call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
+    xml.at("RRN").children = "0000-0000-0000-0000-0003"
+    xml.at("Property").at("Address-Line-1").children = ""
+
+    call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
   end
 
   before do
@@ -98,6 +102,34 @@ describe "BackfillMatchedAddress" do
     it "does not push a message to redis" do
       get_task("oneoff:address_match_assessments").invoke
       expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue)
+    end
+  end
+
+  context "when the task runs with missing mandatory addressing api parameters" do
+    before do
+      allow(addressing_gateway).to receive(:match_address).and_return(
+        [
+          { "uprn" => "199990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "99.3" },
+        ],
+      )
+      ActiveRecord::Base.connection.exec_query(<<~SQL)
+        UPDATE assessments
+        SET address_line1 = NULL
+        WHERE assessment_id = '0000-0000-0000-0000-0003';
+      SQL
+    end
+
+    it "calls the addressing api with all parmeters" do
+      get_task("oneoff:address_match_assessments").invoke
+      expect(addressing_gateway).to have_received(:match_address).once
+                                                                 .with(
+                                                                   address_line_1: "",
+                                                                   address_line_2: "",
+                                                                   address_line_3: "",
+                                                                   address_line_4: "",
+                                                                   town: "Whitbury",
+                                                                   postcode: "SW1A 2AA",
+                                                                 )
     end
   end
 

@@ -44,11 +44,11 @@ namespace :oneoff do
 
         matches = addressing_gateway.match_address(
           postcode: unmatched_assessment["postcode"],
-          address_line_1: unmatched_assessment["address_line1"],
-          address_line_2: unmatched_assessment["address_line2"],
-          address_line_3: unmatched_assessment["address_line3"],
-          address_line_4: unmatched_assessment["address_line4"],
-          town: unmatched_assessment["town"],
+          address_line_1: unmatched_assessment["address_line1"] || "",
+          address_line_2: unmatched_assessment["address_line2"] || "",
+          address_line_3: unmatched_assessment["address_line3"] || "",
+          address_line_4: unmatched_assessment["address_line4"] || "",
+          town: unmatched_assessment["town"] || "",
         )
 
         if matches.empty?
