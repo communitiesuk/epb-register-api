@@ -27,8 +27,8 @@ module UseCase
 
         schema_type = assessment["schema_type"]
 
-        # placeholder logic until non-dom to_certificate_summary_created
-        unless schema_type.start_with?("RdSAP", "SAP")
+        # placeholder logic until other to_certificate_summary_created
+        unless schema_type.start_with?("RdSAP", "SAP", "CEPC")
           raise Boundary::InvalidAssessment, schema_type
         end
 

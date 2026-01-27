@@ -379,8 +379,85 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         )
       end
 
-      it "raises a 400 error" do
-        expect(fetch_scottish_certificate_summary(id: "0000-0000-0000-0002-0000", accepted_responses: [400]).status).to eq(400)
+      it "returns the expected CEPC" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0002-0000").body,
+            symbolize_names: true,
+          )
+
+        expected_response = { typeOfAssessment: "CEPC",
+                              assessmentId: "0000-0000-0000-0002-0000",
+                              dateOfExpiry: "2033-08-03",
+                              reportType: "3",
+                              dateOfAssessment: "2023-07-11",
+                              dateOfRegistration: "2023-08-04",
+                              address:
+                               { addressLine1: "Non-dom Property", addressLine2: "Some Street", addressLine3: "Bigger Line", addressLine4: nil, town: "Town", postcode: "FK1 1XE" },
+                              assessor:
+                               { schemeAssessorId: "SPEC000000",
+                                 contactDetails: { email: "sessor@email.co.uk", tradingAddress: "6 Unit Business Park Town", telephoneNumber: "00000000073" },
+                                 companyName: "EPC R Us Ltd",
+                                 insurer: "Insurance Company",
+                                 policyNo: "POL000000",
+                                 insurerEffectiveDate: "2022-10-22",
+                                 insurerExpiryDate: "2023-10-21",
+                                 insurerPiLimit: "5000000",
+                                 firstName: "Someone",
+                                 lastName: "Person",
+                                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                              technicalInformation: { mainHeatingFuel: "LPG", buildingEnvironment: "Heating and Natural Ventilation", floorArea: "109" },
+                              currentEnergyEfficiencyRating: 120,
+                              potentialEnergyRating: "17",
+                              currentEnergyEfficiencyBand: "G",
+                              potentialEnergyBand: "B+",
+                              newBuildBenchmarkRating: "56",
+                              newBuildBenchmarkBand: "D",
+                              comparativeAssetRating: "65",
+                              epcRatingBer: "120.47",
+                              approximateEnergyUse: "523",
+                              propertyType: "\n" + "        Hotel\n" + "        Hotels\n" + "      ",
+                              propertyShortDescription: "Hotel",
+                              compliant2002: "N",
+                              renewableEnergySources: ["\n" + "        None\n" + "      "],
+                              electricitySources: ["\n" + "        Grid supplied\n" + "      "],
+                              primaryEnergyIndicator: "616",
+                              calculationTool: "DesignBuilder Software Ltd, DesignBuilder SBEM, v7.2.0, SBEM, v6.1.e.0",
+                              ter2002: "118.01",
+                              ter: "55.93",
+                              recommendations:
+                               [{ paybackType: "short", recommendationCode: "EPC-H7", recommendation: "Add optimum start/stop to the heating system.", cO2Impact: "MEDIUM" },
+                                { paybackType: "short", recommendationCode: "EPC-H8", recommendation: "Add weather compensation controls to heating system.", cO2Impact: "MEDIUM" },
+                                { paybackType: "short", recommendationCode: "EPC-H5", recommendation: "Add local time control to heating system.", cO2Impact: "MEDIUM" },
+                                { paybackType: "short",
+                                  recommendationCode: "EPC-V1",
+                                  recommendation:
+                                   "In some spaces, the solar gain limit defined in the NCM is exceeded, which might cause overheating. Consider solar control measures such as the application of reflective coating or shading devices to windows.",
+                                  cO2Impact: "MEDIUM" },
+                                { paybackType: "short",
+                                  recommendationCode: "EPC-E3",
+                                  recommendation: "Some solid walls are poorly insulated - introduce or improve internal wall insulation.",
+                                  cO2Impact: "MEDIUM" },
+                                { paybackType: "short", recommendationCode: "EPC-F4", recommendation: "Consider switching from oil or LPG to biomass.", cO2Impact: "HIGH" },
+                                { paybackType: "short",
+                                  recommendationCode: "EPC-E7",
+                                  recommendation: "Carry out a pressure test, identify and treat identified air leakage. Enter result in EPC calculation.",
+                                  cO2Impact: "MEDIUM" },
+                                { paybackType: "short",
+                                  recommendationCode: "EPC-E8",
+                                  recommendation: "Some glazing is poorly insulated. Replace/improve glazing and/or frames. ",
+                                  cO2Impact: "MEDIUM" },
+                                { paybackType: "medium",
+                                  recommendationCode: "EPC-E2",
+                                  recommendation: "Roof is poorly insulated. Install or improve insulation of roof.",
+                                  cO2Impact: "MEDIUM" }],
+                              addressId: "RRN-0000-0000-0000-0002-0000",
+                              optOut: false,
+                              relatedAssessments: [],
+                              supersededBy: nil,
+                              countryName: "Unknown" }
+
+        expect(response[:data]).to eq(expected_response)
       end
     end
   end

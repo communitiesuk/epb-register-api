@@ -546,8 +546,73 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
         )
       end
 
-      it "raises a 400 error" do
-        expect(fetch_certificate_summary(id: "0000-0000-0000-0000-0000", accepted_responses: [400]).status).to eq(400)
+      it "returns the expected certificate summary" do
+        response =
+          JSON.parse(
+            fetch_certificate_summary(id: "0000-0000-0000-0000-0000").body,
+            symbolize_names: true,
+          )
+
+        expected_response = {
+          address:
+            {
+              addressLine1: "Some Unit",
+              addressLine2: "2 Lonely Street",
+              addressLine3: "Some Area",
+              addressLine4: "Some County",
+              postcode: "SW1A 2AA",
+              town: "Whitbury",
+            },
+          addressId: "UPRN-000000000001",
+          assessmentId: "0000-0000-0000-0000-0000",
+          assessor:
+            {
+              contactDetails:
+                {
+                  email: "a@b.c",
+                  telephoneNumber: "012345",
+                },
+              firstName: "Someone",
+              lastName: "Person",
+              registeredBy:
+                {
+                  name: "test scheme",
+                  schemeId: scheme_id,
+                },
+              schemeAssessorId: "SPEC000000",
+            },
+          buildingComplexity: 3,
+          buildingEmissionRate: "67.09",
+          countryName: "Unknown",
+          currentEnergyEfficiencyBand: "d",
+          currentEnergyEfficiencyRating: 80,
+          dateOfAssessment: "2020-05-04",
+          dateOfExpiry: "2026-05-04",
+          dateOfRegistration: "2020-05-04",
+          energyEfficiencyRating: 80,
+          existingBuildBand: "d",
+          existingBuildRating: 81,
+          newBuildBand: "b",
+          newBuildRating: 28,
+          optOut: false,
+          primaryEnergyUse: "413.22",
+          propertyType: "B1 Offices and Workshop businesses",
+          relatedAssessments: [],
+          relatedPartyDisclosure: "1",
+          relatedRrn: nil,
+          reportType: "3",
+          supersededBy: nil,
+          technicalInformation:
+            {
+              buildingEnvironment: "Air Conditioning",
+              buildingLevel: 3,
+              floorArea: "403",
+              mainHeatingFuel: "Natural Gas",
+            },
+          typeOfAssessment: "CEPC",
+        }
+
+        expect(response[:data]).to eq(expected_response)
       end
     end
   end

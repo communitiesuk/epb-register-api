@@ -418,11 +418,11 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
 
     context "when an non-dom certificate is passed to the use_case" do
       before do
-        allow(certificate_summary_gateway).to receive(:fetch).with("0000-0000-0000-0000-0001", is_scottish: false).and_return(cepc_data)
+        allow(certificate_summary_gateway).to receive(:fetch).with("0000-0000-0000-0000-0000", is_scottish: false).and_return(cepc_data)
       end
 
       it "raises an error for a non-dom certificate" do
-        expect { use_case.execute("0000-0000-0000-0000-0001") }.to raise_error Boundary::InvalidAssessment
+        expect { use_case.execute("0000-0000-0000-0000-0000") }.not_to raise_error
       end
     end
 

@@ -37,7 +37,12 @@ module Domain
           @assessment["schema_type"],
           @assessment_id,
         )
-      @certificate_summary_data = lodged_values.to_certificate_summary
+
+      @certificate_summary_data = if @assessment["schema_type"].include?("CEPC-S-7.1")
+                                    lodged_values.to_certificate_summary_scotland
+                                  else
+                                    lodged_values.to_certificate_summary
+                                  end
     end
 
     def update_address_id
