@@ -53,7 +53,7 @@ namespace :oneoff do
 
         if matches.empty?
           matched_uprn = nil
-          confidence = nil?
+          confidence = nil
         elsif matches.length == 1
           matched_uprn = matches.first["uprn"]
           confidence = matches.first["confidence"]

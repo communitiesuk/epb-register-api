@@ -34,13 +34,14 @@ describe "BackfillMatchedAddress" do
   end
 
   before(:all) do
-    scottish_sap_xml = Samples.xml "SAP-Schema-S-19.0.0"
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
+
     sap_schema = "SAP-Schema-19.1.0".freeze
     sap_xml = Nokogiri.XML Samples.xml(sap_schema, "epc")
     call_lodge_assessment(scheme_id:, schema_name: sap_schema, xml_document: sap_xml, ensure_uprns: false)
 
+    scottish_sap_xml = Samples.xml "SAP-Schema-S-19.0.0"
     scottish_sap_schema = "SAP-Schema-S-19.0.0".freeze
     lodge_assessment assessment_body: scottish_sap_xml,
                      accepted_responses: [201],
@@ -53,13 +54,15 @@ describe "BackfillMatchedAddress" do
 
     schema = "RdSAP-Schema-20.0.0"
     xml = Nokogiri.XML Samples.xml(schema)
+
     xml.at("RRN").children = "0000-0000-0000-0000-0001"
     call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
+
     xml.at("RRN").children = "0000-0000-0000-0000-0002"
     call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
+
     xml.at("RRN").children = "0000-0000-0000-0000-0003"
     xml.at("Property").at("Address-Line-1").children = ""
-
     call_lodge_assessment(scheme_id:, schema_name: schema, xml_document: xml, migrated: true)
   end
 
