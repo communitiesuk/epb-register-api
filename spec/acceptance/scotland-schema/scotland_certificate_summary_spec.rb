@@ -460,5 +460,78 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         expect(response[:data]).to eq(expected_response)
       end
     end
+
+    context "when requesting an Action Plan assessment" do
+      before do
+        action_plan_xml = Nokogiri.XML Samples.xml("CS63-S-7.0", "cs63")
+        action_plan_xml
+          .xpath("//*[local-name() = 'RRN']")
+          .each do |node|
+          node.content = "0000-0000-0000-0003-0000"
+        end
+        lodge_assessment(
+          assessment_body: action_plan_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CS63-S-7.0",
+          migrated: true,
+        )
+      end
+
+      it "returns the expected Action Plan" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0003-0000").body,
+            symbolize_names: true,
+          )
+
+        expected_response = { typeOfAssessment: "CS63",
+                              assessmentId: "0000-0000-0000-0003-0000",
+                              epcAssessmentId: "0000-0000-0000-0000-0001",
+                              saleLeaseDate: "2025-06-13",
+                              reportType: "9",
+                              dateOfAssessment: "2025-06-04",
+                              planReportDate: "2025-06-11",
+                              address: { addressLine1: "Non-dom Property", addressLine2: "", addressLine3: "", addressLine4: "", town: "Town", postcode: "FK1 1XE" },
+                              assessor:
+                               { schemeAssessorId: "SPEC000000",
+                                 contactDetails: { email: "sessor@email.co.uk", tradingAddress: "6 Unit Business Park Town", telephoneNumber: "00000000073" },
+                                 companyName: "EPC R Us Ltd",
+                                 status: "Registered",
+                                 firstName: "Someone",
+                                 lastName: "Person",
+                                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                              ownerCommissionReport: "Y",
+                              delegatedPersonCommissionReport: "N",
+                              propertyTypeShortDescription: "General Industrial",
+                              propertyTypeLongDescription: "B2 to B7 General Industrial and Special Industrial Groups",
+                              buildingImprovements: "N",
+                              operationalRatings: "Y",
+                              dec: "N",
+                              plannedCompletionDate: "2028-12-12",
+                              actualCompletionDate: nil,
+                              targetEmissionSavings: "1.61",
+                              targetEnergySavings: "10.11",
+                              acceptPrescriptiveImprovements: "Y",
+                              prescriptiveImprovements:
+                               [{ measureDescriptionShort: "Central time heating control", measureDescriptionLong: nil, measureValid: "N", measureType: nil },
+                                { measureDescriptionShort: "Lighting controls", measureDescriptionLong: nil, measureValid: "Y", measureType: nil },
+                                { measureDescriptionShort: "Draught-stripping windows and doors", measureDescriptionLong: nil, measureValid: "Y", measureType: nil },
+                                { measureDescriptionShort: "Hot water storage insulation", measureDescriptionLong: nil, measureValid: "N", measureType: nil },
+                                { measureDescriptionShort: "Lamp replacement", measureDescriptionLong: nil, measureValid: "N", measureType: nil },
+                                { measureDescriptionShort: "Boiler replacement", measureDescriptionLong: nil, measureValid: "N", measureType: nil },
+                                { measureDescriptionShort: "Roof insulation", measureDescriptionLong: nil, measureValid: "N", measureType: nil }],
+                              alternativeImprovements: [],
+                              addressId: "RRN-0000-0000-0000-0003-0000",
+                              optOut: false,
+                              relatedAssessments: [],
+                              supersededBy: nil,
+                              countryName: "Unknown" }
+
+        expect(response[:data]).to eq(expected_response)
+      end
+    end
   end
 end

@@ -12,6 +12,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   let(:valid_rdsap_not_scottish_xml) { Samples.xml "RdSAP-Schema-19.0" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-S-7.1", "cepc" }
+  let(:valid_action_plan_xml) { Samples.xml "CS63-S-7.0", "cs63" }
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
       domestic_rd_sap: "ACTIVE",
@@ -236,6 +237,49 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
         expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
         expect(cepc_data).to eq expected_cepc_assessment_data
+      end
+    end
+
+    context "when migrating a valid Scottish Action Plan assessment" do
+      expected_action_plan_assessment_data = {
+        "assessment_id" => "0000-0000-0000-0000-0000",
+        "date_of_assessment" => "2025-06-04",
+        "date_registered" => "2025-06-11",
+        "type_of_assessment" => "CS63",
+        "current_energy_efficiency_rating" => 0,
+        "postcode" => "FK1 1XE",
+        "date_of_expiry" => "2028-12-11",
+        "address_line1" => "Non-dom Property",
+        "address_line2" => "",
+        "address_line3" => "",
+        "address_line4" => "",
+        "town" => "Town",
+        "scheme_assessor_id" => "SPEC000000",
+        "opt_out" => false,
+        "address_id" => "0000000001",
+        "migrated" => true,
+        "cancelled_at" => nil,
+        "not_for_issue_at" => nil,
+        "created_at" => "2021-06-21",
+        "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+      }
+
+      it "successfully migrates the assessment" do
+        response = lodge_assessment assessment_body: valid_action_plan_xml,
+                                    accepted_responses: [201],
+                                    scopes: %w[migrate:scotland],
+                                    auth_data: {
+                                      scheme_ids: [scheme_id],
+                                    },
+                                    schema_name: "CS63-S-7.0",
+                                    migrated: "true"
+
+        action_plan_data = ActiveRecord::Base.connection.exec_query(
+          "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+        ).entries.first
+
+        expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+        expect(action_plan_data).to eq expected_action_plan_assessment_data
       end
     end
 
