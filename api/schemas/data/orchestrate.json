@@ -234,5 +234,8 @@
   },
   "CS63-S-7.0": {
     "schema_path": "api/schemas/xml/CS63-S-7.0/ActionPlan.xsd"
+  },
+  "DECAR-S-7.0": {
+    "schema_path": "api/schemas/xml/DECAR-S-7.0/Messages/LodgeReportRequest.xsd"
   }
 }

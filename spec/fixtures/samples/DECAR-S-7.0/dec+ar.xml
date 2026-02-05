@@ -1,0 +1,515 @@
+<ns1:LodgeReportRequest xmlns:CEPC="DCLG-CEPC" xmlns:CS="DCLG-CEPC/CommonStructures" xmlns:ns1="http://www.est.org.uk/DECAR/lodgement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\CP\ORCalc\OR Scotland\Schemas\DEC AR\Messages\LodgeReportRequest.xsd">
+  <ns1:MessageIdentifier>
+    <CS:Timestamp>2025-06-18T11:21:20.9003955+01:00</CS:Timestamp>
+  </ns1:MessageIdentifier>
+  <ns1:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
+      <CEPC:Issue-Date>2025-06-18</CEPC:Issue-Date>
+      <CEPC:Valid-Until>2026-03-31</CEPC:Valid-Until>
+      <CEPC:Report-Type>1</CEPC:Report-Type>
+      <CEPC:Inspection-Date>2025-04-02</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2025-06-18</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
+        <CEPC:Name>Test Assessor</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Test Scheme</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Trading-Address>6 Unit Business Park Town</CEPC:Trading-Address>
+        <CEPC:Company-Name>EPC R Us Ltd</CEPC:Company-Name>
+        <CEPC:Status>Registered</CEPC:Status>
+        <CEPC:E-Mail>assessor@co.uk</CEPC:E-Mail>
+        <CEPC:Telephone-Number>000002828282</CEPC:Telephone-Number>
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:Location-Description>Landlord owned building built 1980. central landlord heating with mmixture of lighting, electric pou and a single split AC unit in the comms room. </CEPC:Location-Description>
+        <CEPC:UPRN>0000000001</CEPC:UPRN>
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>Non-dom Property</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2>Buisness Park</CEPC:Address-Line-2>
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>EH14 2SP</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Property-Type>General office</CEPC:Property-Type>
+        <CEPC:Occupier>Business name</CEPC:Occupier>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Methodology>ORCalc</CEPC:Methodology>
+        <CEPC:Calculation-Tool>BSD, OR Scotland, v1.0.0</CEPC:Calculation-Tool>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Formatted-Report>
+      <!--The DEC is inserted into the XML Document as a CDATA section encoded in MIME's base64.-->
+    </CEPC:Formatted-Report>
+    <!--This is the variable part of the report XML message-->
+    <CEPC:OR-Operational-Rating>
+      <CEPC:OR-Assessment-Start-Date>2024-01-02</CEPC:OR-Assessment-Start-Date>
+      <CEPC:OR-Assessment-End-Date>2025-01-01</CEPC:OR-Assessment-End-Date>
+      <CEPC:Building-Category>C1; </CEPC:Building-Category>
+      <CEPC:OR-Building-Data>
+        <CEPC:Internal-Environment>Heating and Natural Ventilation</CEPC:Internal-Environment>
+        <CEPC:Assessment-Period-Alignment>End Of Main Heating Fuel Period</CEPC:Assessment-Period-Alignment>
+        <CEPC:HVAC-System>Other</CEPC:HVAC-System>
+        <CEPC:Other-HVAC-System>Landlords perimeter radiator heating</CEPC:Other-HVAC-System>
+      </CEPC:OR-Building-Data>
+      <CEPC:OR-Benchmark-Data>
+        <CEPC:Main-Benchmark>General office</CEPC:Main-Benchmark>
+        <CEPC:Benchmarks>
+          <CEPC:Benchmark>
+            <CEPC:Name>Public sector offices</CEPC:Name>
+            <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
+            <CEPC:Area-Metric>Gross floor area measured as RICS Gross Internal Area (GIA)</CEPC:Area-Metric>
+            <CEPC:Floor-Area>973.6</CEPC:Floor-Area>
+            <CEPC:Special-Uses-Area />
+            <CEPC:TUFA>973.6</CEPC:TUFA>
+            <CEPC:Benchmark>General office</CEPC:Benchmark>
+            <CEPC:Occupancy-Level>Standard Occupancy</CEPC:Occupancy-Level>
+          </CEPC:Benchmark>
+        </CEPC:Benchmarks>
+      </CEPC:OR-Benchmark-Data>
+      <CEPC:OR-Energy-Consumption>
+        <CEPC:Electricity>
+          <CEPC:Consumption>36519</CEPC:Consumption>
+          <CEPC:Start-Date>2024-01-01</CEPC:Start-Date>
+          <CEPC:End-Date>2025-01-01</CEPC:End-Date>
+          <CEPC:Estimate>0</CEPC:Estimate>
+        </CEPC:Electricity>
+        <CEPC:Gas>
+          <CEPC:Consumption>76956</CEPC:Consumption>
+          <CEPC:Start-Date>2024-01-01</CEPC:Start-Date>
+          <CEPC:End-Date>2025-01-01</CEPC:End-Date>
+          <CEPC:Estimate>1</CEPC:Estimate>
+        </CEPC:Gas>
+      </CEPC:OR-Energy-Consumption>
+      <CEPC:OR-Usable-Floor-Area />
+      <CEPC:OR-Previous-Data>
+        <CEPC:Asset-Rating>21</CEPC:Asset-Rating>
+      </CEPC:OR-Previous-Data>
+    </CEPC:OR-Operational-Rating>
+    <CEPC:Display-Certificate>
+      <CEPC:DEC-Annual-Energy-Summary>
+        <CEPC:Annual-Energy-Use-Electrical>37</CEPC:Annual-Energy-Use-Electrical>
+        <CEPC:Annual-Energy-Use-Fuel-Thermal>79</CEPC:Annual-Energy-Use-Fuel-Thermal>
+        <CEPC:Renewables-Fuel-Thermal>0</CEPC:Renewables-Fuel-Thermal>
+        <CEPC:Renewables-Electrical>0</CEPC:Renewables-Electrical>
+        <CEPC:Typical-Thermal-Use>127</CEPC:Typical-Thermal-Use>
+        <CEPC:Typical-Electrical-Use>95</CEPC:Typical-Electrical-Use>
+      </CEPC:DEC-Annual-Energy-Summary>
+      <CEPC:DEC-Status>0</CEPC:DEC-Status>
+      <CEPC:Reason-Type>1</CEPC:Reason-Type>
+      <CEPC:DEC-Related-Party-Disclosure>4</CEPC:DEC-Related-Party-Disclosure>
+      <CEPC:This-Assessment>
+        <CEPC:Nominated-Date>2025-04-01</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>47</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>19</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>17</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:This-Assessment>
+      <CEPC:Technical-Information>
+        <CEPC:Main-Heating-Fuel>Natural Gas</CEPC:Main-Heating-Fuel>
+        <CEPC:Building-Environment>Heating and Natural Ventilation</CEPC:Building-Environment>
+        <CEPC:Floor-Area>973.6</CEPC:Floor-Area>
+        <CEPC:Separately-Metered-Electric-Heating>0</CEPC:Separately-Metered-Electric-Heating>
+      </CEPC:Technical-Information>
+    </CEPC:Display-Certificate>
+  </ns1:Report>
+  <ns1:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0001</CEPC:RRN>
+      <CEPC:Issue-Date>2025-06-18</CEPC:Issue-Date>
+      <CEPC:Valid-Until>2032-06-18</CEPC:Valid-Until>
+      <CEPC:Report-Type>2</CEPC:Report-Type>
+      <CEPC:Inspection-Date>2025-04-02</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2025-06-18</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0000</CEPC:Related-RRN>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
+        <CEPC:Name>Test Assessor</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Test Scheme</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Trading-Address>6 Unit Business Park Town</CEPC:Trading-Address>
+        <CEPC:Company-Name>EPC R Us Ltd</CEPC:Company-Name>
+        <CEPC:Status>Registered</CEPC:Status>
+        <CEPC:E-Mail>assessor@co.uk</CEPC:E-Mail>
+        <CEPC:Telephone-Number>000002828282</CEPC:Telephone-Number>
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:Location-Description>Landlord owned building built 1980. central landlord heating with mmixture of lighting, electric pou and a single split AC unit in the comms room. </CEPC:Location-Description>
+        <CEPC:UPRN>0000000001</CEPC:UPRN>
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>Non-dom Property</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2>Buisness Park</CEPC:Address-Line-2>
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>EH14 2SP</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
+        <CEPC:Property-Type>General office</CEPC:Property-Type>
+        <CEPC:Occupier>Business Name</CEPC:Occupier>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Methodology>ORCalc</CEPC:Methodology>
+        <CEPC:Calculation-Tool>BSD, OR Scotland, v1.0.0</CEPC:Calculation-Tool>
+        <CEPC:Inspection-Type>Physical</CEPC:Inspection-Type>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Formatted-Report>
+      <!--The DEC is inserted into the XML Document as a CDATA section encoded in MIME's base64.-->
+    </CEPC:Formatted-Report>
+    <!--This is the variable part of the report XML message-->
+    <CEPC:AR-Questions>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0001-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0001-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0002-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0002-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0003-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0003-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0004-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0004-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0006-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0006-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0007-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0007-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0008-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0008-003</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0009-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0009-017</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0009-018</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0009-008</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0009-013</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0032-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0032-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0033-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0033-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0034-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0034-003</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0035-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0035-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0036-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0036-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0037-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0037-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0038-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0038-003</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0039-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0039-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0040-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0040-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0041-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0041-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0042-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0042-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0043-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0043-001</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+      <CEPC:AR-Question-Answer>
+        <CEPC:Question-Code>
+          <CEPC:Question-Code-Number>0052-000</CEPC:Question-Code-Number>
+        </CEPC:Question-Code>
+        <CEPC:Answer>
+          <CEPC:Answer>None</CEPC:Answer>
+          <CEPC:Answer-Code>
+            <CEPC:Answer-Code-Number>0052-002</CEPC:Answer-Code-Number>
+          </CEPC:Answer-Code>
+        </CEPC:Answer>
+      </CEPC:AR-Question-Answer>
+    </CEPC:AR-Questions>
+    <CEPC:Advisory-Report>
+      <CEPC:AR-Recommendations>
+        <!--CEPC:Short Paybacks-->
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>X12</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Clean windows and roof lights to maximise daylight entering building and reduce the need for artificial lighting.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>X11</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider implementing a programme of planned lighting systems maintenance to maintain effectiveness and energy efficiency.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>X9</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>X10</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>OM15</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>BF6</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider how building fabric air tightness could be improved, for example sealing, draught stripping and closing off unused ventilation openings, chimneys.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>AC12</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <!--CEPC:Medium Paybacks-->
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>X3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>BF9</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider introducing or improving cavity wall insulation.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>AC9</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>BF22</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <!--CEPC:Long Paybacks-->
+        <CEPC:Long-Payback>
+          <CEPC:Recommendation-Code>X13</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Engage experts to review the building lighting strategies and propose alterations and/or upgrades to daylighting provisions, luminaires and their control systems and an implementation plan.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Long-Payback>
+        <CEPC:Long-Payback>
+          <CEPC:Recommendation-Code>X1</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Long-Payback>
+        <CEPC:Long-Payback>
+          <CEPC:Recommendation-Code>BF3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider replacing or improving glazing.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Long-Payback>
+      </CEPC:AR-Recommendations>
+      <CEPC:Technical-Information>
+        <CEPC:Main-Heating-Fuel>Natural Gas</CEPC:Main-Heating-Fuel>
+        <CEPC:Building-Environment>Heating and Natural Ventilation</CEPC:Building-Environment>
+        <CEPC:Floor-Area>973.6</CEPC:Floor-Area>
+      </CEPC:Technical-Information>
+      <CEPC:Site-Services>
+        <CEPC:Service-1>
+          <CEPC:Description>Natural Gas</CEPC:Description>
+          <CEPC:Quantity>76639</CEPC:Quantity>
+        </CEPC:Service-1>
+        <CEPC:Service-2>
+          <CEPC:Description>Electricity</CEPC:Description>
+          <CEPC:Quantity>36419</CEPC:Quantity>
+        </CEPC:Service-2>
+        <CEPC:Service-3>
+          <CEPC:Description>Not used</CEPC:Description>
+          <CEPC:Quantity>0</CEPC:Quantity>
+        </CEPC:Service-3>
+      </CEPC:Site-Services>
+    </CEPC:Advisory-Report>
+  </ns1:Report>
+</ns1:LodgeReportRequest>
+<!--HASH:84C91B9A6961C630319337CBBB53A2D7-->

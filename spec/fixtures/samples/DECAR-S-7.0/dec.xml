@@ -1,0 +1,139 @@
+<ns1:LodgeReportRequest xmlns:CEPC="DCLG-CEPC" xmlns:CS="DCLG-CEPC/CommonStructures" xmlns:ns1="http://www.est.org.uk/DECAR/lodgement" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="LodgeReportRequest.xsd">
+  <ns1:MessageIdentifier>
+    <CS:Timestamp>2025-04-10T20:12:17.2997868+01:00</CS:Timestamp>
+  </ns1:MessageIdentifier>
+  <ns1:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
+      <CEPC:Issue-Date>2025-04-10</CEPC:Issue-Date>
+      <CEPC:Valid-Until>2026-03-18</CEPC:Valid-Until>
+      <CEPC:Report-Type>1</CEPC:Report-Type>
+      <CEPC:Inspection-Date>2025-04-10</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2025-04-10</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
+        <CEPC:Name>Test Assessor</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Test Scheme</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Trading-Address>6 Unit Business Park Town</CEPC:Trading-Address>
+        <CEPC:Company-Name>EPC R Us Ltd</CEPC:Company-Name>
+        <CEPC:Status>Registered</CEPC:Status>
+        <CEPC:E-Mail>assessor@co.uk</CEPC:E-Mail>
+        <CEPC:Telephone-Number>000002828282</CEPC:Telephone-Number>
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:Location-Description />
+        <CEPC:UPRN>0000000001</CEPC:UPRN>
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>Non-dom Property</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2>Buisness Park</CEPC:Address-Line-2>
+          <CEPC:Address-Line-3 />
+          <CEPC:Address-Line-4 />
+          <CEPC:Post-Town>Town</CEPC:Post-Town>
+          <CEPC:Postcode>EH14 2SP</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Property-Type>Storage facility</CEPC:Property-Type>
+        <CEPC:Occupier>Industrial Estate</CEPC:Occupier>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Methodology>ORCalc</CEPC:Methodology>
+        <CEPC:Calculation-Tool>BSD, OR Scotland, v1.0.3</CEPC:Calculation-Tool>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Formatted-Report>
+      <!--The DEC is inserted into the XML Document as a CDATA section encoded in MIME's base64.-->
+    </CEPC:Formatted-Report>
+    <!--This is the variable part of the report XML message-->
+    <CEPC:OR-Operational-Rating>
+      <CEPC:OR-Assessment-Start-Date>2024-01-01</CEPC:OR-Assessment-Start-Date>
+      <CEPC:OR-Assessment-End-Date>2024-12-31</CEPC:OR-Assessment-End-Date>
+      <CEPC:Building-Category>C28; </CEPC:Building-Category>
+      <CEPC:OR-Building-Data>
+        <CEPC:Internal-Environment>Heating and Natural Ventilation</CEPC:Internal-Environment>
+        <CEPC:Assessment-Period-Alignment>Start Of Main Heating Fuel Period</CEPC:Assessment-Period-Alignment>
+        <CEPC:HVAC-System>Radiators</CEPC:HVAC-System>
+        <CEPC:Other-HVAC-System>Enter details of 'Other' here.</CEPC:Other-HVAC-System>
+      </CEPC:OR-Building-Data>
+      <CEPC:OR-Benchmark-Data>
+        <CEPC:Main-Benchmark>Storage facility</CEPC:Main-Benchmark>
+        <CEPC:Benchmarks>
+          <CEPC:Benchmark>
+            <CEPC:Name>Storage depot</CEPC:Name>
+            <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
+            <CEPC:Area-Metric>Gross floor area measured as RICS Gross Internal Area (GIA)</CEPC:Area-Metric>
+            <CEPC:Floor-Area>1194.47</CEPC:Floor-Area>
+            <CEPC:Special-Uses-Area />
+            <CEPC:TUFA>1194.47</CEPC:TUFA>
+            <CEPC:Benchmark>Storage facility</CEPC:Benchmark>
+            <CEPC:Occupancy-Level>Standard Occupancy</CEPC:Occupancy-Level>
+          </CEPC:Benchmark>
+        </CEPC:Benchmarks>
+      </CEPC:OR-Benchmark-Data>
+      <CEPC:OR-Energy-Consumption>
+        <CEPC:Electricity>
+          <CEPC:Consumption>26384</CEPC:Consumption>
+          <CEPC:Start-Date>2024-01-01</CEPC:Start-Date>
+          <CEPC:End-Date>2024-12-31</CEPC:End-Date>
+          <CEPC:Estimate>0</CEPC:Estimate>
+        </CEPC:Electricity>
+        <CEPC:Gas>
+          <CEPC:Consumption>2262</CEPC:Consumption>
+          <CEPC:Start-Date>2024-01-01</CEPC:Start-Date>
+          <CEPC:End-Date>2024-12-31</CEPC:End-Date>
+          <CEPC:Estimate>0</CEPC:Estimate>
+        </CEPC:Gas>
+      </CEPC:OR-Energy-Consumption>
+      <CEPC:OR-Usable-Floor-Area />
+      <CEPC:OR-Previous-Data>
+        <CEPC:Previous-Rating-1>
+          <CEPC:OR>33</CEPC:OR>
+          <CEPC:ORMM>3</CEPC:ORMM>
+          <CEPC:ORYYYY>2024</CEPC:ORYYYY>
+        </CEPC:Previous-Rating-1>
+        <CEPC:Asset-Rating>46</CEPC:Asset-Rating>
+      </CEPC:OR-Previous-Data>
+    </CEPC:OR-Operational-Rating>
+    <CEPC:Display-Certificate>
+      <CEPC:DEC-Annual-Energy-Summary>
+        <CEPC:Annual-Energy-Use-Electrical>22</CEPC:Annual-Energy-Use-Electrical>
+        <CEPC:Annual-Energy-Use-Fuel-Thermal>2</CEPC:Annual-Energy-Use-Fuel-Thermal>
+        <CEPC:Renewables-Fuel-Thermal>0</CEPC:Renewables-Fuel-Thermal>
+        <CEPC:Renewables-Electrical>0</CEPC:Renewables-Electrical>
+        <CEPC:Typical-Thermal-Use>68</CEPC:Typical-Thermal-Use>
+        <CEPC:Typical-Electrical-Use>35</CEPC:Typical-Electrical-Use>
+      </CEPC:DEC-Annual-Energy-Summary>
+      <CEPC:DEC-Status>0</CEPC:DEC-Status>
+      <CEPC:Reason-Type>3</CEPC:Reason-Type>
+      <CEPC:DEC-Related-Party-Disclosure>1</CEPC:DEC-Related-Party-Disclosure>
+      <CEPC:This-Assessment>
+        <CEPC:Nominated-Date>2025-03-19</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>36</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>14</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>0</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:This-Assessment>
+      <CEPC:Year1-Assessment>
+        <CEPC:Nominated-Date>2024-03-01</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>33</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>17</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>5</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:Year1-Assessment>
+      <CEPC:Year2-Assessment>
+        <CEPC:Nominated-Date>2023-03-01</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>33</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>17</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>5</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:Year2-Assessment>
+      <CEPC:Technical-Information>
+        <CEPC:Main-Heating-Fuel>Natural Gas</CEPC:Main-Heating-Fuel>
+        <CEPC:Building-Environment>Heating and Natural Ventilation</CEPC:Building-Environment>
+        <CEPC:Floor-Area>1194.47</CEPC:Floor-Area>
+        <CEPC:Separately-Metered-Electric-Heating>0</CEPC:Separately-Metered-Electric-Heating>
+      </CEPC:Technical-Information>
+    </CEPC:Display-Certificate>
+  </ns1:Report>
+</ns1:LodgeReportRequest>
+<!--HASH:19744181F7775830DCFE8367D1B288D5-->

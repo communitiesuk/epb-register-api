@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by Niall Horgan (Bridgeall Technology) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="DCLG-CEPC/CommonStructures" xmlns:ERR="DCLG-CEPC/Exceptions" xmlns:UDT="DCLG-CEPC/BaseDataTypes" xmlns:CEPC="DCLG-CEPC" xmlns:ns1="http://www.est.org.uk/DECAR/lodgement" targetNamespace="http://www.est.org.uk/DECAR/lodgement" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-7.0">
+	<xs:import namespace="DCLG-CEPC" schemaLocation="../Reports/CEPC-Reports.xsd"/>
+	<xs:import namespace="DCLG-CEPC/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
+	<xs:element name="LodgeReportRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MessageIdentifier" type="CS:MessageIdentifier"/>
+				<xs:element name="Report" type="CEPC:Report" maxOccurs="2"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

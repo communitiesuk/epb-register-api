@@ -228,6 +228,7 @@ module Gateway
     end
 
     def send_update_to_db(assessment, is_scottish)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       ActiveRecord::Base.transaction do
         existing_assessment = if is_scottish
                                 AssessmentScotland.exists?(assessment_id: assessment.get(:assessment_id))
@@ -236,7 +237,6 @@ module Gateway
                               end
 
         if existing_assessment
-          schema = Helper::ScotlandHelper.select_schema(is_scottish)
           remove_and_relodge_assessment(assessment, schema)
         else
           is_scottish ? AssessmentScotland.create(assessment.to_record) : Assessment.create(assessment.to_record)
