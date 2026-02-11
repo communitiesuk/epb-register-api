@@ -108,6 +108,74 @@ describe "BackfillMatchedAddress" do
     end
   end
 
+  context "when the addressing api endpoint returns errors for a single assessment (scottish epc)" do
+    before(:all) do
+      EnvironmentStub.with("IS_SCOTTISH", "true")
+    end
+
+    after(:all) do
+      EnvironmentStub.remove(%w[IS_SCOTTISH])
+    end
+
+    context "when the error occurs only once" do
+      before do
+        call_count = 0
+
+        allow(addressing_gateway).to receive(:match_address) do
+          call_count += 1
+          raise Errors::ApiResponseError if call_count == 1
+
+          [
+            { "uprn" => "299990129", "address" => "1 LOVELY ROAD, NICE ESTATE, TOWN, EH1 2NG", "confidence" => "98.3" },
+          ]
+        end
+      end
+
+      it "calls the addressing api with expected parameters twice" do
+        get_task("oneoff:address_match_assessments").invoke
+        expect(addressing_gateway).to have_received(:match_address).twice
+                                                                   .with(
+                                                                     address_line_1: "1 LOVELY ROAD",
+                                                                     address_line_2: "NICE ESTATE",
+                                                                     address_line_3: "",
+                                                                     address_line_4: "",
+                                                                     postcode: "EH1 2NG",
+                                                                     town: "TOWN",
+                                                                   )
+      end
+    end
+
+    context "when the error persists for the same assessment" do
+      before do
+        allow(Sentry).to receive(:capture_exception)
+        allow(addressing_gateway).to receive(:match_address).and_raise(Errors::ApiResponseError, "Connection refused")
+      end
+
+      it "calls the addressing api with the expected parameters three times" do
+        get_task("oneoff:address_match_assessments").invoke
+        expect(addressing_gateway).to have_received(:match_address).exactly(3).times
+                                                                   .with(
+                                                                     address_line_1: "1 LOVELY ROAD",
+                                                                     address_line_2: "NICE ESTATE",
+                                                                     address_line_3: "",
+                                                                     address_line_4: "",
+                                                                     postcode: "EH1 2NG",
+                                                                     town: "TOWN",
+                                                                   )
+      end
+
+      it "sends the error to sentry" do
+        get_task("oneoff:address_match_assessments").invoke
+        expect(Sentry).to have_received(:capture_exception).with(
+          have_attributes(
+            class: Errors::BackfillAddressMatchError,
+            message: "Address matching backfill failed for assessment 0000-0000-0000-0000-0000: Errors::ApiResponseError - Connection refused",
+          ),
+        ).exactly(1).times
+      end
+    end
+  end
+
   context "when the task runs with missing mandatory addressing api parameters" do
     before do
       allow(addressing_gateway).to receive(:match_address).and_return(
@@ -149,9 +217,6 @@ describe "BackfillMatchedAddress" do
       allow(addressing_gateway).to receive(:match_address).and_return(
         [
           { "uprn" => "199990129", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "99.3" },
-        ],
-        [
-          { "uprn" => "199990130", "address" => "1 SOME STREET, SOME AREA, SOME COUNTY, WHITBURY, SW1A 2AA", "confidence" => "98.3" },
         ],
       )
     end

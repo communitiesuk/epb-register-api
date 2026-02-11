@@ -42,14 +42,30 @@ namespace :oneoff do
       batch.each do |unmatched_assessment|
         assessment_id = unmatched_assessment["assessment_id"]
 
-        matches = addressing_gateway.match_address(
-          postcode: unmatched_assessment["postcode"],
-          address_line_1: unmatched_assessment["address_line1"] || "",
-          address_line_2: unmatched_assessment["address_line2"] || "",
-          address_line_3: unmatched_assessment["address_line3"] || "",
-          address_line_4: unmatched_assessment["address_line4"] || "",
-          town: unmatched_assessment["town"] || "",
-        )
+        attempts = 0
+
+        begin
+          matches = addressing_gateway.match_address(
+            postcode: unmatched_assessment["postcode"],
+            address_line_1: unmatched_assessment["address_line1"] || "",
+            address_line_2: unmatched_assessment["address_line2"] || "",
+            address_line_3: unmatched_assessment["address_line3"] || "",
+            address_line_4: unmatched_assessment["address_line4"] || "",
+            town: unmatched_assessment["town"] || "",
+          )
+        rescue StandardError => e
+          attempts += 1
+
+          if attempts < 3
+            sleep(0.05 * attempts)
+            retry
+          else
+            sentry_error = Errors::BackfillAddressMatchError.new("Address matching backfill failed for assessment #{assessment_id}: #{e.class} - #{e.message}")
+            sentry_error.set_backtrace(e.backtrace)
+            report_to_sentry(sentry_error)
+            matches = []
+          end
+        end
 
         if matches.empty?
           matched_uprn = nil

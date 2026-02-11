@@ -1,4 +1,7 @@
 module Errors
+  class BackfillAddressMatchError < StandardError
+  end
+
   class ApiError < StandardError
   end
 
