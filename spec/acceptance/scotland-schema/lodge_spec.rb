@@ -287,26 +287,26 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     end
 
     context "when migrating a valid Scottish DEC assessment" do
-      expected_dec_assessment_data = {"assessment_id" => "0000-0000-0000-0000-0000",
-                                      "date_of_assessment" => "2025-04-10",
-                                      "date_registered" => "2025-04-10",
-                                      "type_of_assessment" => "DEC",
-                                      "current_energy_efficiency_rating" => 0,
-                                      "postcode" => "EH14 2SP",
-                                      "date_of_expiry" => "2026-03-18",
-                                      "address_line1" => "Non-dom Property",
-                                      "address_line2" => "Buisness Park",
-                                      "address_line3" => "",
-                                      "address_line4" => "",
-                                      "town" => "Town",
-                                      "scheme_assessor_id" => "SPEC000000",
-                                      "opt_out" => false,
-                                      "address_id" => "0000000001",
-                                      "migrated" => true,
-                                      "cancelled_at" => nil,
-                                      "not_for_issue_at" => nil,
-                                      "created_at" => "2021-06-21",
-                                      "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"}
+      expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
+                                       "date_of_assessment" => "2025-04-10",
+                                       "date_registered" => "2025-04-10",
+                                       "type_of_assessment" => "DEC",
+                                       "current_energy_efficiency_rating" => 0,
+                                       "postcode" => "EH14 2SP",
+                                       "date_of_expiry" => "2026-03-18",
+                                       "address_line1" => "Non-dom Property",
+                                       "address_line2" => "Buisness Park",
+                                       "address_line3" => "",
+                                       "address_line4" => "",
+                                       "town" => "Town",
+                                       "scheme_assessor_id" => "SPEC000000",
+                                       "opt_out" => false,
+                                       "address_id" => "0000000001",
+                                       "migrated" => true,
+                                       "cancelled_at" => nil,
+                                       "not_for_issue_at" => nil,
+                                       "created_at" => "2021-06-21",
+                                       "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
 
       it "successfully migrates the assessment" do
         response = lodge_assessment assessment_body: valid_dec_xml,
@@ -320,7 +320,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
         dec_data = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          ).entries.first
+        ).entries.first
 
         expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
         expect(dec_data).to eq expected_dec_assessment_data
@@ -328,26 +328,26 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     end
 
     context "when migrating a valid Scottish DEC-AR assessment" do
-      expected_dec_ar_assessment_data = {"assessment_id" => "0000-0000-0000-0000-0000",
-                                      "date_of_assessment" => "2019-10-21",
-                                      "date_registered" => "2019-11-22",
-                                      "type_of_assessment" => "DEC-AR",
-                                      "current_energy_efficiency_rating" => 0,
-                                      "postcode" => "EH14 2SP",
-                                      "date_of_expiry" => "2029-11-21",
-                                      "address_line1" => "Non-dom Property",
-                                      "address_line2" => "Buisness Park",
-                                      "address_line3" => "",
-                                      "address_line4" => "",
-                                      "town" => "Town",
-                                      "scheme_assessor_id" => "SPEC000000",
-                                      "opt_out" => false,
-                                      "address_id" => "0000000001",
-                                      "migrated" => true,
-                                      "cancelled_at" => nil,
-                                      "not_for_issue_at" => nil,
-                                      "created_at" => "2021-06-21",
-                                      "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"}
+      expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
+                                          "date_of_assessment" => "2019-10-21",
+                                          "date_registered" => "2019-11-22",
+                                          "type_of_assessment" => "DEC-AR",
+                                          "current_energy_efficiency_rating" => 0,
+                                          "postcode" => "EH14 2SP",
+                                          "date_of_expiry" => "2029-11-21",
+                                          "address_line1" => "Non-dom Property",
+                                          "address_line2" => "Buisness Park",
+                                          "address_line3" => "",
+                                          "address_line4" => "",
+                                          "town" => "Town",
+                                          "scheme_assessor_id" => "SPEC000000",
+                                          "opt_out" => false,
+                                          "address_id" => "0000000001",
+                                          "migrated" => true,
+                                          "cancelled_at" => nil,
+                                          "not_for_issue_at" => nil,
+                                          "created_at" => "2021-06-21",
+                                          "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
 
       it "successfully migrates the assessment" do
         response = lodge_assessment assessment_body: valid_dec_ar_xml,
@@ -361,7 +361,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
         dec_ar_data = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          ).entries.first
+        ).entries.first
 
         expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
         expect(dec_ar_data).to eq expected_dec_ar_assessment_data
@@ -369,47 +369,47 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     end
 
     context "when migrating a valid Scottish DEC+AR assessment" do
-      expected_dec_assessment_data = {"assessment_id" => "0000-0000-0000-0000-0000",
-                                      "date_of_assessment" => "2025-04-02",
-                                      "date_registered" => "2025-06-18",
-                                      "type_of_assessment" => "DEC",
-                                      "current_energy_efficiency_rating" => 0,
-                                      "postcode" => "EH14 2SP",
-                                      "date_of_expiry" => "2035-03-31",
-                                      "address_line1" => "Non-dom Property",
-                                      "address_line2" => "Buisness Park",
-                                      "address_line3" => "",
-                                      "address_line4" => "",
-                                      "town" => "Town",
-                                      "scheme_assessor_id" => "SPEC000000",
-                                      "opt_out" => false,
-                                      "address_id" => "0000000001",
-                                      "migrated" => true,
-                                      "cancelled_at" => nil,
-                                      "not_for_issue_at" => nil,
-                                      "created_at" => "2021-06-21",
-                                      "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"}
-      expected_dec_ar_assessment_data = {"assessment_id" => "0000-0000-0000-0000-0001",
-                                         "date_of_assessment" => "2025-04-02",
-                                         "date_registered" => "2025-06-18",
-                                         "type_of_assessment" => "DEC-AR",
-                                         "current_energy_efficiency_rating" => 0,
-                                         "postcode" => "EH14 2SP",
-                                         "date_of_expiry" => "2035-06-17",
-                                         "address_line1" => "Non-dom Property",
-                                         "address_line2" => "Buisness Park",
-                                         "address_line3" => "",
-                                         "address_line4" => "",
-                                         "town" => "Town",
-                                         "scheme_assessor_id" => "SPEC000000",
-                                         "opt_out" => false,
-                                         "address_id" => "0000000001",
-                                         "migrated" => true,
-                                         "cancelled_at" => nil,
-                                         "not_for_issue_at" => nil,
-                                         "created_at" => "2021-06-21",
-                                         "hashed_assessment_id" => "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"}
-      expected_linked_assessment_data = [{"assessment_id" => "0000-0000-0000-0000-0000", "linked_assessment_id" => "0000-0000-0000-0000-0001"}]
+      expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
+                                       "date_of_assessment" => "2025-04-02",
+                                       "date_registered" => "2025-06-18",
+                                       "type_of_assessment" => "DEC",
+                                       "current_energy_efficiency_rating" => 0,
+                                       "postcode" => "EH14 2SP",
+                                       "date_of_expiry" => "2035-03-31",
+                                       "address_line1" => "Non-dom Property",
+                                       "address_line2" => "Buisness Park",
+                                       "address_line3" => "",
+                                       "address_line4" => "",
+                                       "town" => "Town",
+                                       "scheme_assessor_id" => "SPEC000000",
+                                       "opt_out" => false,
+                                       "address_id" => "0000000001",
+                                       "migrated" => true,
+                                       "cancelled_at" => nil,
+                                       "not_for_issue_at" => nil,
+                                       "created_at" => "2021-06-21",
+                                       "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
+      expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0001",
+                                          "date_of_assessment" => "2025-04-02",
+                                          "date_registered" => "2025-06-18",
+                                          "type_of_assessment" => "DEC-AR",
+                                          "current_energy_efficiency_rating" => 0,
+                                          "postcode" => "EH14 2SP",
+                                          "date_of_expiry" => "2035-06-17",
+                                          "address_line1" => "Non-dom Property",
+                                          "address_line2" => "Buisness Park",
+                                          "address_line3" => "",
+                                          "address_line4" => "",
+                                          "town" => "Town",
+                                          "scheme_assessor_id" => "SPEC000000",
+                                          "opt_out" => false,
+                                          "address_id" => "0000000001",
+                                          "migrated" => true,
+                                          "cancelled_at" => nil,
+                                          "not_for_issue_at" => nil,
+                                          "created_at" => "2021-06-21",
+                                          "hashed_assessment_id" => "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4" }
+      expected_linked_assessment_data = [{ "assessment_id" => "0000-0000-0000-0000-0000", "linked_assessment_id" => "0000-0000-0000-0000-0001" }]
 
       it "successfully migrates the assessment" do
         response = lodge_assessment assessment_body: valid_dec_and_ar_xml,
@@ -423,15 +423,15 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
         dec_data = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          ).entries.first
+        ).entries.first
 
         dec_ar_data = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0001'",
-          ).entries.first
+        ).entries.first
 
         linked_assessments = ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.linked_assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          ).entries
+        ).entries
 
         expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
         expect(dec_ar_data).to eq expected_dec_ar_assessment_data
