@@ -409,6 +409,8 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
           "registered_by": { "name": "test scheme", "scheme_id": 1 },
           "first_name": "Someone",
           "last_name": "Person",
+          "assessor_contact_address": "12 Epc Street, AL1C 2DE",
+          "company_name": "Test EPCs 4U",
           "scheme_assessor_id": "SPEC000000",
           "contact_details":
             { "email": "a@b.c", "telephone_number": "0555 497 2848" },
