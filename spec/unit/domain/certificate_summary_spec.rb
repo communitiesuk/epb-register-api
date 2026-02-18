@@ -296,11 +296,10 @@ describe Domain::CertificateSummary do
         "registered_by": { "name": "test scheme", "scheme_id": 1 },
         "first_name": "Someone",
         "last_name": "Person",
-        "assessor_contact_address": "12 Epc Street, AL1C 2DE",
         "company_name": "Test EPCs 4U",
         "scheme_assessor_id": "SPEC000000",
         "contact_details":
-          { "email": "a@b.c", "telephone_number": "0555 497 2848" },
+          { "email": "a@b.c", "telephone_number": "0555 497 2848", "address": "12 Epc Street, AL1C 2DE" },
       },
       "current_carbon_emission": 2.4,
       carbon_emissions_current_per_floor_area: "20",
@@ -595,11 +594,10 @@ describe Domain::CertificateSummary do
             "registered_by": { "name": "test scheme", "scheme_id": 1 },
             "first_name": "Someone",
             "last_name": "Person",
-            "assessor_contact_address": "12 Epc Street, AL1C 2DE",
             "company_name": "Test EPCs 4U",
             "scheme_assessor_id": "SPEC000000",
             "contact_details":
-              { "email": "a@b.c", "telephone_number": "0555 497 2848" },
+              { "email": "a@b.c", "telephone_number": "0555 497 2848", "address": "12 Epc Street, AL1C 2DE" },
           },
         )
       end
@@ -642,11 +640,10 @@ describe Domain::CertificateSummary do
             "registered_by": { "name": "test scheme", "scheme_id": 1 },
             "first_name": "Someone",
             "last_name": "Person",
-            "assessor_contact_address": "12 Epc Street, AL1C 2DE",
             "company_name": "Test EPCs 4U",
             "scheme_assessor_id": "SPEC000000",
             "contact_details":
-              { "email": "person@person.com", "telephone_number": "010199991010101" },
+              { "email": "person@person.com", "telephone_number": "010199991010101", "address": "12 Epc Street, AL1C 2DE" },
           },
         )
       end

@@ -70,8 +70,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           assessmentId: "0000-0000-0000-0000-0000",
           assessor:
               {
-                contactDetails: { email: "a@b.c", telephoneNumber: "0555 497 2848" },
-                assessorContactAddress: "12 Epc Street, Newkirk, FK1 1XE",
+                contactDetails: { email: "a@b.c", telephoneNumber: "0555 497 2848", address: "12 Epc Street, Newkirk, FK1 1XE" },
                 companyName: "Test EPCs 4U",
                 firstName: "Someone",
                 lastName: "Person",
@@ -284,9 +283,8 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
              address: { addressLine1: "1 LOVELY ROAD", addressLine2: "NICE ESTATE", addressLine3: "", addressLine4: nil, town: "TOWN", postcode: "EH1 2NG" },
              assessor:
               { schemeAssessorId: "SPEC000000",
-                assessorContactAddress: "Assessor House Energy Business Park, Town Road, Scotlandshire, Newkirk, FK1 1XE",
                 companyName: "Test Homes Limited",
-                contactDetails: { email: "a@b.c", telephoneNumber: "111222333" },
+                contactDetails: { email: "a@b.c", telephoneNumber: "111222333", address: "Assessor House Energy Business Park, Town Road, Scotlandshire, Newkirk, FK1 1XE" },
                 firstName: "Someone",
                 lastName: "Person",
                 registeredBy: { name: "test scheme", schemeId: scheme_id } },

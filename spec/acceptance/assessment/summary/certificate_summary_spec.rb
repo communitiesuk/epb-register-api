@@ -80,7 +80,6 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             "assessor": {
               "firstName": "Someone",
               "lastName": "Person",
-              assessorContactAddress: "12 Epc Street, AL1C 2DE",
               companyName: "Test EPCs 4U",
               "registeredBy": {
                 "name": "test scheme",
@@ -90,6 +89,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
               "contactDetails": {
                 "email": "a@b.c",
                 "telephoneNumber": "0555 497 2848",
+                "address": "12 Epc Street, AL1C 2DE",
               },
             },
             "currentCarbonEmission": "2.4",
@@ -435,9 +435,8 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
               { addressLine1: "1 Some Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: nil, town: "Whitbury", postcode: "SW1A 2AA" },
              assessor:
               { schemeAssessorId: "SPEC000000",
-                assessorContactAddress: "1 Some Assessor's Street, Fulchester, SW1A 2AA",
                 companyName: "Test EPCs 4U",
-                contactDetails: { email: "a@b.c", telephoneNumber: "111222333" },
+                contactDetails: { email: "a@b.c", telephoneNumber: "111222333", address: "1 Some Assessor's Street, Fulchester, SW1A 2AA" },
                 firstName: "Someone",
                 lastName: "Person",
                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
