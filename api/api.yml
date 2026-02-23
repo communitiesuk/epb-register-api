@@ -45,6 +45,8 @@ tags:
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
     description: Endpoints used in providing the Service Performance page
+  - name: Scotland
+    description: Endpoints used by the Scotland frontend services
 
 paths:
   /schemes:
@@ -1510,7 +1512,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-
   /ecoplus/assessments/{assessmentId}:
     get:
       tags:
@@ -1567,8 +1568,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
-
 
   /retrofit-advice/assessments/{assessmentId}:
     get:
@@ -2553,6 +2552,63 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /scotland/assessments/{assessmentId}/certificate-summary:
+    get:
+      tags:
+        - Scotland
+      summary: Get summary of assessment for use by Scottish frontend
+      description: Get assessment details in use by Scottish frontend in JSON format
+      operationId: get-certificate-summary
+      security:
+        - oauth:
+            - 'scotland_assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/ScottishDomesticEnergyAssessmentSummary'
+        '404':
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Bad request - The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: >-
+            Assessment no long accessible
+            (could have been cancelled or marked not for issue)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   securitySchemes:
     oauth:
@@ -3262,6 +3318,177 @@ components:
           type: string
           nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
+
+    ScottishDomesticEnergyAssessmentSummary:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        address:
+          type: object
+          properties:
+            addressLine1:
+              $ref: '#/components/schemas/AddressLine1'
+            addressLine2:
+              type: string
+              example: ''
+            addressLine3:
+              type: string
+              example: ''
+            addressLine4:
+              type: string
+              example: ''
+            town:
+              $ref: '#/components/schemas/AddressTown'
+            postcode:
+              $ref: '#/components/schemas/AddressPostcode'
+        assessor:
+          type: object
+          properties:
+            firstName:
+              type: string
+              example: 'Joe'
+            lastName:
+              type: string
+              example: 'Bloggs'
+            registeredBy:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Stroma Certification Ltd'
+                schemeId:
+                  type: integer
+                  example: 5
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            companyName:
+              type: string
+              example: 'EPCs R Us'
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
+                address:
+                  type: string
+                  example: '123, EPC street'
+        currentCarbonEmission:
+          type: number
+          description: The current carbon emission of the property
+          example: 4.736
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'c'
+          description: The band, from a to g, the current Energy Rating falls within
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          example: 62
+          description: The current energy rating to be submitted to the Register
+        dwellingType:
+          type: string
+        estimatedEnergyCost:
+          type: string
+          example: '1307.00'
+        mainFuelType:
+          type: string
+          example: '28'
+        heatDemand:
+          type: object
+          properties:
+            currentSpaceHeatingDemand:
+              type: number
+              example: 456.45
+            currentWaterHeatingDemand:
+              type: number
+              example: 325.33
+            impactOfLoftInsulation:
+              type: integer
+              example: -453
+            impactOfCavityInsulation:
+              type: integer
+              example: -84
+            impactOfSolidWallInsulation:
+              type: integer
+              example: -21
+        totalFloorArea:
+          type: number
+          example: 120.55
+        potentialCarbonEmission:
+          type: number
+          description: The potential carbon emission of the propety
+          example: 2.839
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
+        potentialEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+        primaryEnergyUse:
+          type: number
+          example: 598
+        propertySummary:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/PropertySummary'
+        recommendedImprovements:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/DomesticRecommendationWithoutCode'
+              - $ref: '#/components/schemas/DomesticRecommendationWithCode'
+        lzcEnergySources:
+          type: array
+          items:
+            type: integer
+            example: 11
+          nullable: true
+          description: Low and zero carbon energy sources for the property
+          example: [ 11 ]
+        addendum:
+          anyOf:
+            - $ref: '#/components/schemas/Addendum'
+          nullable: true
+          description: Additional information about the property
+        relatedAssessments:
+          type: array
+          items:
+            type: string
+            example: 0004-0005-0006-0007-0008
+          nullable: false
+          description: Other certificates or reports related to this property
+          example: [ 0004-0005-0006-0007-0008 ]
+        supersededBy:
+          type: string
+          nullable: true
+          description: The RRN of the assessment that has superseded this one, if one exists
+        countryName:
+          type: string
+          example: 'Scotland'
 
     EnergyAssessmentMetadata:
       type: object
