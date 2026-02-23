@@ -176,6 +176,8 @@ module Controller
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::SupersededSchemaException
         error_response(400, "INVALID_REQUEST", "This schema version has been superseded.")
+      when UseCase::ValidateAndLodgeAssessment::SAPComplianceReportException
+        error_response(400, "INVALID_REQUEST", "SAP Compliance Reports are not supported.")
       when UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
         error_response(400, "INVALID_REQUEST", "Schema is not supported.")
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException

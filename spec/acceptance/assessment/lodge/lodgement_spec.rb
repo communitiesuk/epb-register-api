@@ -88,6 +88,7 @@ describe "Acceptance::Assessment::Lodge" do
   let(:valid_ac_cert_report_xml) do
     Samples.xml "CEPC-8.0.0", "ac-cert+ac-report"
   end
+  let(:sap_compliance_report_xml) { Samples.xml "SAP-Schema-19.0.0", "compliance-report" }
   let(:scheme_id) { add_scheme_and_get_id }
 
   context "when rejecting lodgements" do
@@ -136,6 +137,22 @@ describe "Acceptance::Assessment::Lodge" do
         )
 
       expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
+    end
+
+    it "rejects SAP Compliance reports" do
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: sap_compliance_report_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "SAP-Schema-19.0.0",
+          ).body,
+        )
+
+      expect(response["errors"][0]["title"]).to eq("SAP Compliance Reports are not supported.")
     end
 
     it "rejects an assessment with a missing content-type" do

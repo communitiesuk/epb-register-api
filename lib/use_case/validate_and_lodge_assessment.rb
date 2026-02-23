@@ -12,6 +12,8 @@ module UseCase
 
     class SupersededSchemaException < SchemaNotSupportedException; end
 
+    class SAPComplianceReportException < SchemaNotSupportedException; end
+
     class RelatedReportError < StandardError; end
 
     class AddressIdsDoNotMatch < StandardError; end
@@ -107,6 +109,7 @@ module UseCase
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
       ensure_sap_data_version_valid(assessment_xml_doc: xml_doc, schema_name:)
+      raise SAPComplianceReportException if sap_compliance_report?(xml_doc)
 
       begin
         LodgementRules::NiCommon.new.validate(schema_name:, address: lodgement_data[0][:address], migrated:)
@@ -221,6 +224,10 @@ module UseCase
       else
         true
       end
+    end
+
+    def sap_compliance_report?(xml)
+      true if xml.root.name == "SAP-Compliance-Report"
     end
 
     def software_is_approved?(assessment_xml_doc:, schema_name:)
