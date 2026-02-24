@@ -508,6 +508,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                  registeredBy: { name: "test scheme", schemeId: scheme_id } },
                               ownerCommissionReport: "Y",
                               delegatedPersonCommissionReport: "N",
+                              delegatedProtocolDate: nil,
                               propertyType: {
                                 propertyTypeShortDescription: "General Industrial",
                                 propertyTypeLongDescription: "B2 to B7 General Industrial and Special Industrial Groups",
