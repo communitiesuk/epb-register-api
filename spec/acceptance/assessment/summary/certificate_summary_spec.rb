@@ -73,7 +73,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
               "addressLine1": "1 Some Street",
               "addressLine2": "",
               "addressLine3": "",
-              "addressLine4": nil,
+              "addressLine4": "",
               "town": "Whitbury",
               "postcode": "SW1A 2AA",
             },
@@ -432,7 +432,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
              dateOfAssessment: "2020-05-04",
              dateOfRegistration: "2020-05-04",
              address:
-              { addressLine1: "1 Some Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: nil, town: "Whitbury", postcode: "SW1A 2AA" },
+              { addressLine1: "1 Some Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: "", town: "Whitbury", postcode: "SW1A 2AA" },
              assessor:
               { schemeAssessorId: "SPEC000000",
                 companyName: "Test EPCs 4U",

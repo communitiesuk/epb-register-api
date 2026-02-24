@@ -190,7 +190,7 @@ describe "UseCase::CertificateSummary", :set_with_timecop do
           "address_line1": "1 Some Street",
           "address_line2": "",
           "address_line3": "",
-          "address_line4": nil,
+          "address_line4": "",
           "town": "Whitbury",
           "postcode": "SW1A 2AA",
         },
