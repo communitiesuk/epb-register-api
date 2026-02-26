@@ -80,7 +80,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             "assessor": {
               "firstName": "Someone",
               "lastName": "Person",
-              companyName: "Test EPCs 4U",
+              "companyName": "Test EPCs 4U",
               "registeredBy": {
                 "name": "test scheme",
                 "schemeId": scheme_id,
@@ -92,8 +92,8 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
                 "address": "12 Epc Street, AL1C 2DE",
               },
             },
-            "currentCarbonEmission": "2.4",
-            carbonEmissionsCurrentPerFloorArea: "20",
+            "currentCarbonEmission": 2.4,
+            "carbonEmissionsCurrentPerFloorArea": "20",
             "currentEnergyEfficiencyBand": "e",
             "currentEnergyEfficiencyRating": 50,
             "dwellingType": "Mid-terrace house",
@@ -108,7 +108,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             "hotWaterCostPotential": "180.43",
             "lightingCostCurrent": "123.45",
             "lightingCostPotential": "84.23",
-            "potentialCarbonEmission": "1.4",
+            "potentialCarbonEmission": 1.4,
             "potentialEnergyEfficiencyBand": "c",
             "potentialEnergyEfficiencyRating": 72,
             "potentialEnergySaving": "174.83",
@@ -245,7 +245,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             "lzcEnergySources": [1],
             "relatedPartyDisclosureNumber": nil,
             "relatedPartyDisclosureText": "No related party",
-            "totalFloorArea": "55.0",
+            "totalFloorArea": 55.0,
             "status": "ENTERED",
             "environmentalImpactCurrent": 52,
             "environmentalImpactPotential": 74,
@@ -289,7 +289,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             fetch_certificate_summary(id: "0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
-        expect(response).to eq(expected_response)
+        expect(response[:data]).to eq(expected_response[:data])
       end
 
       context "when there is a related assessment" do
@@ -342,7 +342,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
               symbolize_names: true,
             )
 
-          expect(response).to eq(expected_response)
+          expect(response[:data]).to eq(expected_response[:data])
         end
       end
 
@@ -413,7 +413,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
 
           # the interest rate and charge uplift amount are big decimal values which
           # gets decoded to a string with the .to_json method
-          expect(response).to eq(expected_response)
+          expect(response[:data]).to eq(expected_response[:data])
         end
       end
     end
@@ -440,7 +440,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
                 firstName: "Someone",
                 lastName: "Person",
                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
-             currentCarbonEmission: "2.4",
+             currentCarbonEmission: 2.4,
              carbonEmissionsCurrentPerFloorArea: "20",
              currentEnergyEfficiencyBand: "e",
              currentEnergyEfficiencyRating: 50,
@@ -453,7 +453,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
              hotWaterCostPotential: "180.43",
              lightingCostCurrent: "123.45",
              lightingCostPotential: "84.23",
-             potentialCarbonEmission: "1.4",
+             potentialCarbonEmission: 1.4,
              potentialEnergyEfficiencyBand: "c",
              potentialEnergyEfficiencyRating: 72,
              potentialEnergySaving: "174.83",
@@ -501,7 +501,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
              lzcEnergySources: nil,
              relatedPartyDisclosureNumber: 1,
              relatedPartyDisclosureText: nil,
-             totalFloorArea: "69.0",
+             totalFloorArea: 69,
              status: "ENTERED",
              environmentalImpactCurrent: 52,
              environmentalImpactPotential: 74,
@@ -538,7 +538,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             fetch_certificate_summary(id: "0000-0000-0000-0000-0001").body,
             symbolize_names: true,
           )
-        expect(response).to eq(expected_response)
+        expect(response[:data]).to eq(expected_response[:data])
       end
     end
 

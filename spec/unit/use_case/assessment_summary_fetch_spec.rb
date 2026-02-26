@@ -484,4 +484,48 @@ describe "UseCase::AssessmentSummary::Fetch", :set_with_timecop do
       expect(results).to eq(SummaryStub.fetch_certificate_summary_sap_19(scheme_id))
     end
   end
+
+  context "when extracting certificate summary data for a Scottish SAP 19" do
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway:, xml_gateway:) }
+
+    let(:search_gateway) do
+      instance_double(Gateway::AssessmentsSearchGateway)
+    end
+
+    let(:xml_gateway) do
+      instance_double(Gateway::AssessmentsXmlGateway)
+    end
+
+    let(:xml_data) do
+      {
+        xml: xml_fixture,
+        schema_type: "SAP-Schema-S-19.0.0",
+        assessment_id: "0000-0000-0000-0000-0000",
+        scheme_assessor_id: "SPEC000000",
+      }
+    end
+
+    let(:xml_fixture) do
+      Samples.xml "SAP-Schema-S-19.0.0"
+    end
+
+    let(:search_results) do
+      [{
+        "assessment_id" => "0000-0000-0000-0000-0000",
+        "date_of_assessment" => "01-01-2021",
+        "type_of_assessment" => "SAP",
+      }]
+    end
+
+    before do
+      add_super_assessor(scheme_id:)
+      allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
+      allow(xml_gateway).to receive(:fetch).and_return(xml_data)
+    end
+
+    it "can execute and return the expected hash" do
+      results = use_case.execute("0000-0000-0000-0000-0001", "to_certificate_summary")
+      expect(results).to eq(SummaryStub.fetch_certificate_summary_scottish_sap_19(scheme_id))
+    end
+  end
 end
