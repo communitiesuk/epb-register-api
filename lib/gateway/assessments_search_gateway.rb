@@ -10,16 +10,18 @@ module Gateway
     class InvalidAssessmentType < StandardError
     end
 
-    ASSESSMENT_SEARCH_INDEX_SELECT = <<-SQL
+    def assessment_search_index_select(schema)
+      <<-SQL
         SELECT
             a.assessment_id, a.date_of_assessment, a.type_of_assessment,
             a.current_energy_efficiency_rating, a.opt_out, a.postcode, a.date_of_expiry, a.date_registered,
             a.address_line1, a.address_line2, a.address_line3, a.address_line4, a.town, a.created_at,
             a.cancelled_at, a.not_for_issue_at, b.address_id, a.scheme_assessor_id, la.linked_assessment_id
-        FROM assessments a
-        INNER JOIN assessments_address_id b USING(assessment_id)
-        LEFT JOIN linked_assessments la USING(assessment_id)
-    SQL
+        FROM #{schema}assessments a
+        INNER JOIN #{schema}assessments_address_id b USING(assessment_id)
+        LEFT JOIN #{schema}linked_assessments la USING(assessment_id)
+      SQL
+    end
 
     VALID_ASSESSMENT_TYPES = %w[
       RdSAP
@@ -28,12 +30,16 @@ module Gateway
       CEPC-RR
       DEC
       DEC-RR
+      DEC-AR
       AC-CERT
       AC-REPORT
+      CS63
     ].freeze
 
-    def search_by_postcode(postcode, assessment_types = [])
-      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
+    def search_by_postcode(postcode, assessment_types = [], is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
+      sql = assessment_search_index_select(schema) + <<-SQL
         WHERE a.postcode = $1
         AND a.cancelled_at IS NULL
         AND a.not_for_issue_at IS NULL
@@ -74,8 +80,11 @@ module Gateway
       town,
       assessment_type,
       restrictive: true,
-      limit: nil
+      limit: nil,
+      is_scottish: false
     )
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
       sql_cte = <<-SQL
         WITH cte AS (
           SELECT a.assessment_id,
@@ -95,8 +104,8 @@ module Gateway
           a.cancelled_at,
           a.not_for_issue_at,
           a.scheme_assessor_id
-        FROM assessments a
-        JOIN assessment_search_address sa ON a.assessment_id = sa.assessment_id
+        FROM #{schema}assessments a
+        JOIN #{schema}assessment_search_address sa ON a.assessment_id = sa.assessment_id
         WHERE sa.address LIKE $1
       SQL
 
@@ -119,8 +128,8 @@ module Gateway
           )
            SELECT cte.*, b.address_id, la.linked_assessment_id
            FROM cte
-           INNER JOIN assessments_address_id b USING (assessment_id)
-           LEFT JOIN linked_assessments la USING (assessment_id)
+           INNER JOIN #{schema}assessments_address_id b USING (assessment_id)
+           LEFT JOIN #{schema}linked_assessments la USING (assessment_id)
            WHERE ( LOWER(cte.town) = $2  OR  LOWER(cte.address_line2) = $2
            OR  LOWER(cte.address_line3) = $2
            OR  LOWER(cte.address_line4) = $2)
@@ -154,9 +163,12 @@ module Gateway
 
     def search_by_assessment_id(
       assessment_id,
-      restrictive: true
+      restrictive: true,
+      is_scottish: false
     )
-      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
+
+      sql = assessment_search_index_select(schema) + <<-SQL
         WHERE a.assessment_id = #{
         ActiveRecord::Base.connection.quote(assessment_id)
       }
