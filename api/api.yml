@@ -3322,7 +3322,7 @@ components:
 
     ScottishDomesticEnergyAssessmentSummary:
       type: object
-      description: Scottish Domestic Energy Assessment Summary
+      title: Scottish Domestic Energy Assessment Summary
       properties:
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
@@ -3423,22 +3423,22 @@ components:
 #              type: integer
 #              example: -21
         heatingCostCurrent:
-          tyoe: string
+          type: string
           example: '123'
         heatingCostPotential:
-          tyoe: string
+          type: string
           example: '123'
         hotWaterCostCurrent:
-          tyoe: string
+          type: string
           example: '123'
         hotWaterCostPotential:
-          tyoe: string
+          type: string
           example: '123'
         lightingCostCurrent:
-          tyoe: string
+          type: string
           example: '123'
         lightingCostPotential:
-          tyoe: string
+          type: string
           example: '123'
         potentialCarbonEmission:
           type: number
@@ -3532,6 +3532,7 @@ components:
 
     ScottishCEPCEnergyAssessmentSummary:
       type: object
+      title: Scottish CEPC Energy Assessment Summary
       properties:
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
@@ -3729,6 +3730,7 @@ components:
 
     ScottishCS63EnergyAssessmentSummary:
       type: object
+      title: Scottish CS63 Energy Assessment Summary
       properties:
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
@@ -3901,6 +3903,7 @@ components:
 
     ScottishDECEnergyAssessmentSummary:
       type: object
+      title: Scottish DEC Assessment Summary
       properties:
         assessmentId:
           $ref: '#/components/schemas/AssessmentId'
@@ -4039,6 +4042,7 @@ components:
 
     ScottishDECAREnergyAssessmentSummary:
       type: object
+      title: Scottish DEC-AR Assessment Summary
       properties:
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
