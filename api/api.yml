@@ -2575,15 +2575,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    oneOf:
-                      - $ref: '#/components/schemas/ScottishDomesticEnergyAssessmentSummary'
-                      - $ref: '#/components/schemas/ScottishCEPCEnergyAssessmentSummary'
-                      - $ref: '#/components/schemas/ScottishCS63EnergyAssessmentSummary'
-                      - $ref: '#/components/schemas/ScottishDECEnergyAssessmentSummary'
-                      - $ref: '#/components/schemas/ScottishDDECAREnergyAssessmentSummary'
+                oneOf:
+                  - $ref: '#/components/schemas/ScottishDomesticEnergyAssessmentSummary'
+                  - $ref: '#/components/schemas/ScottishCEPCEnergyAssessmentSummary'
+                  - $ref: '#/components/schemas/ScottishCS63EnergyAssessmentSummary'
+                  - $ref: '#/components/schemas/ScottishDECEnergyAssessmentSummary'
+                  - $ref: '#/components/schemas/ScottishDDECAREnergyAssessmentSummary'
         '404':
           description: Assessment not found
           content:
