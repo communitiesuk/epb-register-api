@@ -2580,6 +2580,10 @@ paths:
                   data:
                     oneOf:
                       - $ref: '#/components/schemas/ScottishDomesticEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishCEPCEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishCS63EnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishDECEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishDDECAREnergyAssessmentSummary'
         '404':
           description: Assessment not found
           content:
@@ -3339,32 +3343,15 @@ components:
           format: date
           description: The date that the assessment was submitted to the Register
         address:
-          type: object
-          properties:
-            addressLine1:
-              $ref: '#/components/schemas/AddressLine1'
-            addressLine2:
-              type: string
-              example: ''
-            addressLine3:
-              type: string
-              example: ''
-            addressLine4:
-              type: string
-              example: ''
-            town:
-              $ref: '#/components/schemas/AddressTown'
-            postcode:
-              $ref: '#/components/schemas/AddressPostcode'
+          $ref: '#/components/schemas/AddressStyle2'
         assessor:
           type: object
           properties:
             firstName:
-              type: string
-              example: 'Joe'
+              $ref: '#/components/schemas/FirstName'
             lastName:
               type: string
-              example: 'Bloggs'
+              $ref: '#/components/schemas/LastName'
             registeredBy:
               type: object
               properties:
@@ -3397,6 +3384,10 @@ components:
           type: number
           description: The current carbon emission of the property
           example: 4.736
+        carbonEmissionsCurrentPerFloorArea:
+          type: number
+          description: CO2 emissions per square metre floor area per year in kg/m².
+          example: 52.0
         currentEnergyEfficiencyBand:
           type: string
           example: 'c'
@@ -3408,12 +3399,13 @@ components:
           description: The current energy rating to be submitted to the Register
         dwellingType:
           type: string
+          example: 'End-terrace house'
         estimatedEnergyCost:
           type: string
           example: '1307.00'
-        mainFuelType:
-          type: string
-          example: '28'
+#        mainFuelType:
+#          type: string
+#          example: '28'
         heatDemand:
           type: object
           properties:
@@ -3423,22 +3415,37 @@ components:
             currentWaterHeatingDemand:
               type: number
               example: 325.33
-            impactOfLoftInsulation:
-              type: integer
-              example: -453
-            impactOfCavityInsulation:
-              type: integer
-              example: -84
-            impactOfSolidWallInsulation:
-              type: integer
-              example: -21
-        totalFloorArea:
-          type: number
-          example: 120.55
+#            impactOfLoftInsulation:
+#              type: integer
+#              example: -453
+#            impactOfCavityInsulation:
+#              type: integer
+#              example: -84
+#            impactOfSolidWallInsulation:
+#              type: integer
+#              example: -21
+        heatingCostCurrent:
+          tyoe: string
+          example: '123'
+        heatingCostPotential:
+          tyoe: string
+          example: '123'
+        hotWaterCostCurrent:
+          tyoe: string
+          example: '123'
+        hotWaterCostPotential:
+          tyoe: string
+          example: '123'
+        lightingCostCurrent:
+          tyoe: string
+          example: '123'
+        lightingCostPotential:
+          tyoe: string
+          example: '123'
         potentialCarbonEmission:
           type: number
           description: The potential carbon emission of the propety
-          example: 2.839
+          example: 2.83
         potentialEnergyEfficiencyBand:
           type: string
           example: 'a'
@@ -3447,9 +3454,9 @@ components:
           type: integer
           minimum: 1
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
-        primaryEnergyUse:
-          type: number
-          example: 598
+        potentialEnergySaving:
+          type: string
+          example: '123'
         propertySummary:
           type: array
           items:
@@ -3469,19 +3476,51 @@ components:
           nullable: true
           description: Low and zero carbon energy sources for the property
           example: [ 11 ]
+        relatedPartyDisclosureNumber:
+          type: integer
+          example: 1
+          description: Code indicating any potential conflicts of interest or commercial relationships with other parties.
+        relatedPartyDisclosureText:
+          type: string
+          description: FOR BACKWARDS COMPATABILITY ONLY?
+        totalFloorArea:
+          type: integer
+          example: 120
+        status:
+          $ref: '#/components/schemas/AssessmentStatus'
+        environmentalImpactCurrent:
+          type: integer
+          description: The estimated current Environmental Impact Rating of the property
+        environmentalImpactPotential:
+          type: integer
+          description: The estimated potential Environmental Impact Rating of the property
+        primaryEnergyUse:
+          type: number
+          example: 598
+          description: Estimated total energy consumption for the Property in a 12 month period. Value is Kilowatt Hours per Square Metre (kWh/m2)
         addendum:
           anyOf:
             - $ref: '#/components/schemas/Addendum'
           nullable: true
           description: Additional information about the property
+        gasSmartMeterPresent:
+          type: boolean
+          nullable: true
+        electricitySmartMeterPresent:
+          type: boolean
+          nullable: true
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        optOut:
+          type: boolean
+          example: false
         relatedAssessments:
           type: array
           items:
-            type: string
-            example: 0004-0005-0006-0007-0008
+            $ref: '#/components/schemas/AddressId'
           nullable: false
           description: Other certificates or reports related to this property
-          example: [ 0004-0005-0006-0007-0008 ]
+          example: [ '0004-0005-0006-0007-0008' ]
         supersededBy:
           type: string
           nullable: true
@@ -3489,6 +3528,737 @@ components:
         countryName:
           type: string
           example: 'Scotland'
+        greenDealPlan:
+          $ref: '#/components/schemas/GreenDealPlan'
+          description: Only present for RdSAP assessments
+
+    ScottishCEPCEnergyAssessmentSummary:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        reportType:
+          type: string
+          enum:
+            - '3'
+            - '4'
+          description: >
+            The report type generated:
+             * '3' - Energy Performance Certificate (Non Domestic)
+             * '4' - Recommendation Report (Non Domestic)
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        assessor:
+          type: object
+          properties:
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                tradingAddress:
+                  type: string
+                  example: '123, EPC street'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
+            companyName:
+              type: string
+              example: 'EPCs R Us'
+            insurer:
+              type: string
+            policyNo:
+              type: string
+            insurerEffectiveDate:
+              type: string
+              format: date
+            insurerExpiryDate:
+              type: string
+              format: date
+            insurerPiLimit:
+              type: string
+              description: The upper limit of the Professional Indemnity cover provided by the insurance policy.
+            firstName:
+              $ref: '#/components/schemas/FirstName'
+            lastName:
+              type: string
+              $ref: '#/components/schemas/LastName'
+            registeredBy:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Stroma Certification Ltd'
+                schemeId:
+                  type: integer
+                  example: 5
+        technicalInformation:
+          type: object
+          properties:
+            mainHeatingFuel:
+              type: string
+            buildingEnvironment:
+              type: string
+            floorArea:
+              type: string
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          example: 62
+          description: The current energy rating to be submitted to the Register
+        potentialEnergyRating:
+          type: integer
+          minimum: 1
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'C'
+          description: The band, from A to G, the current Energy Rating falls within
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'B'
+          description: The band, from A to G, the potential Energy Rating falls within
+        newBuildBenchmarkRating:
+          type: integer
+          minimum: 1
+          description: The Asset Rating if the Building was newly built.
+        newBuildBenchmarkBand:
+          type: string
+          example: 'C'
+          description: The band, from A to G, the current Asset Rating falls within
+        comparativeAssetRating:
+          type: integer
+          example: 51
+          description: Comparative Asset Rating if the building were assessed in England using Scottish weather data
+        epcRatingBER:
+          type: float
+          description: Building emissions
+        approximateEnergyUse:
+          type: integer
+          example: 488
+          description: Total annual delivered energy consumption, in kWh/m2, including any energy consumed by a CHP, if applicable, and net of any energy displaced by it.
+        propertyType:
+          type: object
+          properties:
+            propertyTypeLongDescription:
+              type: string
+            propertyTypeShortDescription:
+              type: string
+        compliant2002:
+          type: string
+          example: 'N'
+          description: Indicates whether the actual building complies with the Target Emission Rate defined by Section 6 of the 2002 building regulations.
+        renewableEnergySources:
+          type: array
+          items:
+            type: string
+        electricitySources:
+          type: array
+          items:
+            type: string
+        primaryEnergyIndicator:
+          type: integer
+          description:
+        calculationTool:
+          type: string
+          example: "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.a.1"
+        ter2002:
+          type: integer
+          description: Target Emission Rate defined by Section 6 of the 2002 building regulations, in kg of CO2 per m2 per year.
+        ter:
+          type: integer
+          description: Target Emission Rate
+        recommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              paybackType:
+                type: string
+                enum:
+                  - 'short'
+                  - 'medium'
+                  - 'long'
+                  - 'other'
+              recommendationCode:
+                type: string
+              recommendation:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        optOut:
+          type: boolean
+          example: false
+        relatedAssessments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentId'
+          nullable: false
+          description: Other certificates or reports related to this property
+          example: [ '0004-0005-0006-0007-0008' ]
+        supersededBy:
+          type: string
+          nullable: true
+          description: The RRN of the assessment that has superseded this one, if one exists
+        countryName:
+          type: string
+          example: 'Scotland'
+
+    ScottishCS63EnergyAssessmentSummary:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        epcAssessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+          description: assessmentId of EPC generated for the building for which the Section 63 Action Plan has been created.
+        saleLeaseDate:
+          type: string
+          format: date
+        reportType:
+          type: string
+          example: '9'
+          description: The report type generated. '9' is a Section 63 Action Plan
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        planReportDate:
+          type: string
+          format: date
+        delegatedProtocolDate:
+          type: string
+          format: date
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        assessor:
+          type: object
+          properties:
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                tradingAddress:
+                  type: string
+                  example: '123, EPC street'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
+            companyName:
+              type: string
+              example: 'EPCs R Us'
+            status:
+              type: string
+              example: 'Registered'
+            firstName:
+              $ref: '#/components/schemas/FirstName'
+            lastName:
+              type: string
+              $ref: '#/components/schemas/LastName'
+            registeredBy:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Stroma Certification Ltd'
+                schemeId:
+                  type: integer
+                  example: 5
+        ownerCommissionReport:
+          type: string
+          example: 'Y'
+        delegatedPersonCommissionReport:
+          type: string
+          example: 'N'
+        propertyType:
+          type: object
+          properties:
+            propertyTypeLongDescription:
+              type: string
+            propertyTypeShortDescription:
+              type: string
+        buildingImprovements:
+          type: string
+          example: 'Y'
+        operationalRatings:
+          type: string
+          example: 'Y'
+        dec:
+          type: string
+          example: 'Y'
+        plannedCompletionDate:
+          type: string
+          format: date
+        actualCompletionDate:
+          type: string
+          format: date
+          nullable: true
+        targetEmissionSavings:
+          type: float
+          example: 1.23
+          description: Target savings of emissions in kg of CO2 per m2 per year.
+        targetEnergySavings:
+          type: float
+          example: 2.34
+          description: Target savings of energy consumption in kWh per m2 per year.
+        acceptPrescriptiveImprovements:
+          type: string
+          example: 'Y'
+          description: Whether the prescriptive measures have been accepted for implementation as a single package.
+        prescriptiveImprovements:
+          type: array
+          items:
+            type: object
+            properties:
+              measureDescriptionShort:
+                type: string
+              measureDescriptionLong:
+                type: string
+                nullable: true
+              measureValid:
+                type: string
+                example: 'Y'
+                description: Whether the measure is valid for this building
+              measureType:
+                type: string
+                description: Always null for prescriptiveImprovements
+                nullable: true
+                oneOf:
+                  - Prescriptive
+                  - Alternative
+        alternativeImprovements:
+          type: array
+          items:
+            type: object
+            properties:
+              measureDescriptionShort:
+                type: string
+              measureDescriptionLong:
+                type: string
+                nullable: true
+              measureValid:
+                type: string
+                nullable: true
+                example: 'Y'
+                description: Always null for alternativeImprovements
+              measureType:
+                type: string
+                description: type of measure for the alternative scenario
+                nullable: true
+                oneOf:
+                  - Prescriptive
+                  - Alternative
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        optOut:
+          type: boolean
+          example: false
+        relatedAssessments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentId'
+          nullable: false
+          description: Other certificates or reports related to this property
+          example: [ '0004-0005-0006-0007-0008' ]
+        supersededBy:
+          $ref: '#/components/schemas/AssessmentId'
+          nullable: true
+          description: The RRN of the assessment that has superseded this one, if one exists
+        countryName:
+          type: string
+          example: 'Scotland'
+
+    ScottishDECEnergyAssessmentSummary:
+      type: object
+      properties:
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        schemaVersion:
+          type: string
+          example: '7.0'
+        reportType:
+          type: string
+          enum:
+            - '1'
+            - '2'
+            - '3'
+            - '4'
+            - '5'
+            - '6'
+          description: >
+            The report type generated:
+             * '1' - Display Energy Certificate
+             * '2' - Advisory Report
+             * '3' - Energy Performance Certificate (Non Domestic)
+             * '4' - Recommendation Report (Non Domestic)
+             * '5' - Air Conditioning Inspection Report
+             * '6' - Air Conditioning Inspection Certificate
+        currentAssessment:
+          $ref: '#/components/schemas/DECAssessmentObject'
+        year1Assessment:
+          $ref: '#/components/schemas/DECAssessmentObject'
+        year2Assessment:
+          $ref: '#/components/schemas/DECAssessmentObject'
+        technicalInformation:
+          type: object
+          properties:
+            mainHeatingFuel:
+              type: string
+            buildingEnvironment:
+              type: string
+            floorArea:
+              type: integer
+            occupier:
+              type: string
+            assetRating:
+              type: integer
+            annualEnergyUseFuelThermal:
+              type: integer
+            annualEnergyUseFuelElectrical:
+              type: integer
+            typicalThermalUse:
+              type: integer
+            typicalElectricalUse:
+              type: integer
+            renewablesFuelThermal:
+              type: integer
+            renewablesElectrical:
+              type: integer
+        assessor:
+          type: object
+          properties:
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                tradingAddress:
+                  type: string
+                  example: '123, EPC street'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
+            firstName:
+              $ref: '#/components/schemas/FirstName'
+            lastName:
+              type: string
+              $ref: '#/components/schemas/LastName'
+            registeredBy:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Stroma Certification Ltd'
+                schemeId:
+                  type: integer
+                  example: 5
+        administrativeInformation:
+          type: object
+          properties:
+            issueDate:
+              type: string
+              format: date
+            calculationTool:
+              type: string
+              example: "BSD, OR Scotland, v1.0.2"
+            relatedPartyDisclosure:
+              type: string
+              example: '1'
+              description: Code indicating any potential conflicts of interest or commercial relationships with other parties.
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        optOut:
+          type: boolean
+          example: false
+        relatedAssessments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentId'
+          nullable: false
+          description: Other certificates or reports related to this property
+          example: [ '0004-0005-0006-0007-0008' ]
+        supersededBy:
+          type: string
+          nullable: true
+          description: The RRN of the assessment that has superseded this one, if one exists
+        countryName:
+          type: string
+          example: 'Scotland'
+
+    ScottishDECAREnergyAssessmentSummary:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        reportType:
+          type: string
+          enum:
+            - '1'
+            - '2'
+            - '3'
+            - '4'
+            - '5'
+            - '6'
+          description: >
+            The report type generated:
+             * '1' - Display Energy Certificate
+             * '2' - Advisory Report
+             * '3' - Energy Performance Certificate (Non Domestic)
+             * '4' - Recommendation Report (Non Domestic)
+             * '5' - Air Conditioning Inspection Report
+             * '6' - Air Conditioning Inspection Certificate
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        assessor:
+          type: object
+          properties:
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            companyDetails:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
+            firstName:
+              $ref: '#/components/schemas/FirstName'
+            lastName:
+              type: string
+              $ref: '#/components/schemas/LastName'
+            registeredBy:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Stroma Certification Ltd'
+                schemeId:
+                  type: integer
+                  example: 5
+        shortPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              text:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        mediumPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              text:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        longPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              text:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        otherPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              text:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        technicalInformation:
+          type: object
+          properties:
+            buildingEnvironment:
+              type: string
+            floorArea:
+              type: string
+            occupier:
+              type: string
+            propertyType:
+              type: string
+            renewablesSources:
+              type: string
+            discountedEnergy:
+              type: string
+            dateOfIssue:
+              type: string
+              format: date
+            calculationTool:
+              type: string
+              example: "BSD, OR Scotland, v1.0.2"
+            inspectionType:
+              type: string
+        siteServiceOne:
+          $ref: '#/components/schemas/SiteService'
+        siteServiceTwo:
+          $ref: '#/components/schemas/SiteService'
+        siteServiceThree:
+          $ref: '#/components/schemas/SiteService'
+        relatedRrn:
+          $ref: '#/components/schemas/AssessmentId'
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        optOut:
+          type: boolean
+          example: false
+        relatedAssessments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentId'
+          nullable: false
+          description: Other certificates or reports related to this property
+          example: [ '0004-0005-0006-0007-0008' ]
+        supersededBy:
+          type: string
+          nullable: true
+          description: The RRN of the assessment that has superseded this one, if one exists
+        countryName:
+          type: string
+          example: 'Scotland'
+
+
+      DECAssessmentObject:
+        type: object
+        properties:
+          date:
+            type: string
+            nullable: true
+            format: date
+          energyEfficiencyRating:
+            type: integer
+            nullable: true
+          energyEfficiencyBand:
+            type: string
+            nullable: true
+          heatingCo2:
+            type: integer
+            nullable: true
+            description: Total CO2 emissions from heating sources
+          electricityCo2:
+            type: integer
+            nullable: true
+            description: Total CO2 emissions from electricity
+          renewablesCo2:
+            type: integer
+            nullable: true
+            description: Total CO2 emissions from Renewable sources
+
+      SiteService:
+        type: object
+        properties:
+          description:
+            type: string
+          quantity:
+            type: integer
 
     EnergyAssessmentMetadata:
       type: object
