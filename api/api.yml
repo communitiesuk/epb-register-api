@@ -4226,39 +4226,39 @@ components:
           example: 'Scotland'
 
 
-      DECAssessmentObject:
-        type: object
-        properties:
-          date:
-            type: string
-            nullable: true
-            format: date
-          energyEfficiencyRating:
-            type: integer
-            nullable: true
-          energyEfficiencyBand:
-            type: string
-            nullable: true
-          heatingCo2:
-            type: integer
-            nullable: true
-            description: Total CO2 emissions from heating sources
-          electricityCo2:
-            type: integer
-            nullable: true
-            description: Total CO2 emissions from electricity
-          renewablesCo2:
-            type: integer
-            nullable: true
-            description: Total CO2 emissions from Renewable sources
+    DECAssessmentObject:
+      type: object
+      properties:
+        date:
+          type: string
+          nullable: true
+          format: date
+        energyEfficiencyRating:
+          type: integer
+          nullable: true
+        energyEfficiencyBand:
+          type: string
+          nullable: true
+        heatingCo2:
+          type: integer
+          nullable: true
+          description: Total CO2 emissions from heating sources
+        electricityCo2:
+          type: integer
+          nullable: true
+          description: Total CO2 emissions from electricity
+        renewablesCo2:
+          type: integer
+          nullable: true
+          description: Total CO2 emissions from Renewable sources
 
-      SiteService:
-        type: object
-        properties:
-          description:
-            type: string
-          quantity:
-            type: integer
+    SiteService:
+      type: object
+      properties:
+        description:
+          type: string
+        quantity:
+          type: integer
 
     EnergyAssessmentMetadata:
       type: object
