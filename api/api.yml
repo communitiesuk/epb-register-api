@@ -2580,7 +2580,7 @@ paths:
                   - $ref: '#/components/schemas/ScottishCEPCEnergyAssessmentSummary'
                   - $ref: '#/components/schemas/ScottishCS63EnergyAssessmentSummary'
                   - $ref: '#/components/schemas/ScottishDECEnergyAssessmentSummary'
-                  - $ref: '#/components/schemas/ScottishDDECAREnergyAssessmentSummary'
+                  - $ref: '#/components/schemas/ScottishDECAREnergyAssessmentSummary'
         '404':
           description: Assessment not found
           content:
@@ -3322,6 +3322,7 @@ components:
 
     ScottishDomesticEnergyAssessmentSummary:
       type: object
+      description: Scottish Domestic Energy Assessment Summary
       properties:
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
