@@ -3538,10 +3538,6 @@ components:
           $ref: '#/components/schemas/AssessmentType'
         assessmentId:
           $ref: '#/components/schemas/AssessmentId'
-        dateOfExpiry:
-          type: string
-          format: date
-          description: The date that the certificate expires
         reportType:
           type: string
           enum:
@@ -3555,6 +3551,10 @@ components:
           type: string
           format: date
           description: The date that the assessor carried out the assessment of the property
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
         dateOfRegistration:
           type: string
           format: date
@@ -3618,20 +3618,20 @@ components:
             buildingEnvironment:
               type: string
             floorArea:
-              type: string
+              type: integer
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
           example: 62
           description: The current energy rating to be submitted to the Register
-        potentialEnergyRating:
-          type: integer
-          minimum: 1
-          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         currentEnergyEfficiencyBand:
           type: string
           example: 'C'
           description: The band, from A to G, the current Energy Rating falls within
+        potentialEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         potentialEnergyEfficiencyBand:
           type: string
           example: 'B'
@@ -3686,21 +3686,59 @@ components:
         ter:
           type: integer
           description: Target Emission Rate
-        recommendations:
+        shortPaybackRecommendations:
           type: array
           items:
             type: object
             properties:
-              paybackType:
+              code:
+                type: string
+              text:
+                type: string
+              co2Impact:
                 type: string
                 enum:
-                  - 'short'
-                  - 'medium'
-                  - 'long'
-                  - 'other'
-              recommendationCode:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        mediumPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
                 type: string
-              recommendation:
+              text:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        longPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              text:
+                type: string
+              co2Impact:
+                type: string
+                enum:
+                  - "LOW"
+                  - "MEDIUM"
+                  - "HIGH"
+        otherPaybackRecommendations:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              text:
                 type: string
               co2Impact:
                 type: string
@@ -3739,13 +3777,13 @@ components:
         epcAssessmentId:
           $ref: '#/components/schemas/AssessmentId'
           description: assessmentId of EPC generated for the building for which the Section 63 Action Plan has been created.
-        saleLeaseDate:
-          type: string
-          format: date
         reportType:
           type: string
           example: '9'
           description: The report type generated. '9' is a Section 63 Action Plan
+        saleLeaseDate:
+          type: string
+          format: date
         dateOfAssessment:
           type: string
           format: date
@@ -3905,22 +3943,6 @@ components:
       type: object
       title: Scottish DEC Assessment Summary
       properties:
-        assessmentId:
-          $ref: '#/components/schemas/AssessmentId'
-        dateOfAssessment:
-          type: string
-          format: date
-          description: The date that the assessor carried out the assessment of the property
-        dateOfExpiry:
-          type: string
-          format: date
-          description: The date that the certificate expires
-        dateOfRegistration:
-          type: string
-          format: date
-          description: The date that the assessment was submitted to the Register
-        address:
-          $ref: '#/components/schemas/AddressStyle2'
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
         schemaVersion:
@@ -3943,6 +3965,47 @@ components:
              * '4' - Recommendation Report (Non Domestic)
              * '5' - Air Conditioning Inspection Report
              * '6' - Air Conditioning Inspection Certificate
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        assessor:
+          type: object
+          properties:
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            name:
+                '#/components/schemas/AssessorFullName'
+            companyDetails:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
         currentAssessment:
           $ref: '#/components/schemas/DECAssessmentObject'
         year1Assessment:
@@ -3974,39 +4037,6 @@ components:
               type: integer
             renewablesElectrical:
               type: integer
-        assessor:
-          type: object
-          properties:
-            schemeAssessorId:
-              $ref: '#/components/schemas/AssessorSchemeId'
-            contactDetails:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                  example: 'j.t.bloggs@example.com'
-                tradingAddress:
-                  type: string
-                  example: '123, EPC street'
-                telephoneNumber:
-                  type: string
-                  maxLength: 256
-                  example: '01632 960375'
-            firstName:
-              $ref: '#/components/schemas/FirstName'
-            lastName:
-              type: string
-              $ref: '#/components/schemas/LastName'
-            registeredBy:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: 'Stroma Certification Ltd'
-                schemeId:
-                  type: integer
-                  example: 5
         administrativeInformation:
           type: object
           properties:
@@ -4069,14 +4099,14 @@ components:
           type: string
           format: date
           description: The date that the assessor carried out the assessment of the property
-        dateOfRegistration:
-          type: string
-          format: date
-          description: The date that the assessment was submitted to the Register
         dateOfExpiry:
           type: string
           format: date
           description: The date that the certificate expires
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
         address:
           $ref: '#/components/schemas/AddressStyle2'
         assessor:
@@ -4084,6 +4114,8 @@ components:
           properties:
             schemeAssessorId:
               $ref: '#/components/schemas/AssessorSchemeId'
+            name:
+              '#/components/schemas/AssessorFullName'
             companyDetails:
               type: object
               properties:
@@ -4102,20 +4134,6 @@ components:
                   type: string
                   maxLength: 256
                   example: '01632 960375'
-            firstName:
-              $ref: '#/components/schemas/FirstName'
-            lastName:
-              type: string
-              $ref: '#/components/schemas/LastName'
-            registeredBy:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: 'Stroma Certification Ltd'
-                schemeId:
-                  type: integer
-                  example: 5
         shortPaybackRecommendations:
           type: array
           items:
@@ -4191,22 +4209,25 @@ components:
               type: string
             discountedEnergy:
               type: string
-            dateOfIssue:
+            inspectionType:
+              type: string
+        administrativeInformation:
+          type: object
+          properties:
+            issueDate:
               type: string
               format: date
             calculationTool:
               type: string
               example: "BSD, OR Scotland, v1.0.2"
-            inspectionType:
-              type: string
+            relatedRrn:
+              $ref: '#/components/schemas/AssessmentId'
         siteServiceOne:
           $ref: '#/components/schemas/SiteService'
         siteServiceTwo:
           $ref: '#/components/schemas/SiteService'
         siteServiceThree:
           $ref: '#/components/schemas/SiteService'
-        relatedRrn:
-          $ref: '#/components/schemas/AssessmentId'
         addressId:
           $ref: '#/components/schemas/AddressId'
         optOut:
