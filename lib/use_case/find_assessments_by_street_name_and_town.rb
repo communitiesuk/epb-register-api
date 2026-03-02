@@ -9,7 +9,7 @@ module UseCase
       @assessment_gateway = gateway || Gateway::AssessmentsSearchGateway.new
     end
 
-    def execute(street_name, town, assessment_type)
+    def execute(street_name, town, assessment_type, is_scottish: false)
       raise ParameterMissing if street_name.blank? || town.blank?
 
       result =
@@ -18,6 +18,7 @@ module UseCase
           town,
           assessment_type,
           limit: MAX_RESULTS_THRESHOLD + 1,
+          is_scottish: is_scottish,
         )
       raise Boundary::TooManyResults if result.length > MAX_RESULTS_THRESHOLD
 

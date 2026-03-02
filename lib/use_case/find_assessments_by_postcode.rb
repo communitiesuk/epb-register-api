@@ -10,7 +10,7 @@ module UseCase
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
     end
 
-    def execute(postcode, assessment_types = [])
+    def execute(postcode, assessment_types = [], is_scottish: false)
       postcode&.strip!
       postcode&.upcase!
 
@@ -21,7 +21,7 @@ module UseCase
       postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
       result =
-        @assessments_gateway.search_by_postcode(postcode, assessment_types)
+        @assessments_gateway.search_by_postcode(postcode, assessment_types, is_scottish: is_scottish)
 
       Helper::NaturalSort.sort!(result)
 

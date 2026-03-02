@@ -4,25 +4,52 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
   let(:gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
 
   describe "#execute" do
-    let(:results) do
-      [Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0001", address_line1: "1 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76),
-       Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0002", address_line1: "2 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76)]
+    context "when an English address is given" do
+      let(:results) do
+        [Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0001", address_line1: "1 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76),
+         Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0002", address_line1: "2 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76)]
+      end
+
+      before do
+        allow(gateway).to receive(:search_by_street_name_and_town).with("Some Street",
+                                                                        "Town",
+                                                                        %w[RdSAP],
+                                                                        limit: 201,
+                                                                        is_scottish: false).and_return(results)
+      end
+
+      it "executes the method" do
+        use_case.execute("Some Street", "Town", %w[RdSAP])
+        expect(gateway).to have_received(:search_by_street_name_and_town)
+      end
+
+      it "gets the results" do
+        expect(use_case.execute("Some Street", "Town", %w[RdSAP])[:data].length).to eq(2)
+      end
     end
 
-    before do
-      allow(gateway).to receive(:search_by_street_name_and_town).with("Some Street",
-                                                                      "Town",
-                                                                      %w[RdSAP],
-                                                                      limit: 201).and_return(results)
-    end
+    context "when a Scottish address is given" do
+      let(:results) do
+        [Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0001", address_line1: "1 Some Street", town: "Falkurk", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76),
+         Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0002", address_line1: "2 Some Street", town: "Falkurk", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76)]
+      end
 
-    it "executes the method" do
-      use_case.execute("Some Street", "Town", %w[RdSAP])
-      expect(gateway).to have_received(:search_by_street_name_and_town)
-    end
+      before do
+        allow(gateway).to receive(:search_by_street_name_and_town).with("Some Street",
+                                                                        "Town",
+                                                                        %w[RdSAP],
+                                                                        limit: 201,
+                                                                        is_scottish: true).and_return(results)
+      end
 
-    it "gets the results" do
-      expect(use_case.execute("Some Street", "Town", %w[RdSAP])[:data].length).to eq(2)
+      it "executes the method" do
+        use_case.execute("Some Street", "Town", %w[RdSAP], is_scottish: true)
+        expect(gateway).to have_received(:search_by_street_name_and_town)
+      end
+
+      it "gets the results" do
+        expect(use_case.execute("Some Street", "Town", %w[RdSAP], is_scottish: true)[:data].length).to eq(2)
+      end
     end
 
     context "when the search has more than 200 results" do
@@ -36,7 +63,8 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
         allow(gateway).to receive(:search_by_street_name_and_town).with("1",
                                                                         "Town",
                                                                         %w[RdSAP],
-                                                                        limit: 201).and_return(too_many_results)
+                                                                        limit: 201,
+                                                                        is_scottish: false).and_return(too_many_results)
       end
 
       it "raises an error" do
@@ -60,7 +88,8 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
         allow(gateway).to receive(:search_by_street_name_and_town).with("1",
                                                                         "Town",
                                                                         %w[RdSAP],
-                                                                        limit: 201).and_return(two_hundred_results)
+                                                                        limit: 201,
+                                                                        is_scottish: false).and_return(two_hundred_results)
       end
 
       it "does not raise an error" do

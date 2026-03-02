@@ -40,6 +40,44 @@ describe UseCase::FindAssessmentsByPostcode do
       created_at: Time.utc(2030, 5, 4, 10, 0, 0),
     )
   end
+  let(:first_scottish_assessment) do
+    Domain::AssessmentSearchResult.new(
+      type_of_assessment: "RdSAP",
+      assessment_id: "0000-0000-0000-0000-0000",
+      current_energy_efficiency_rating: 50,
+      opt_out: false,
+      postcode: "FK1 1XE",
+      date_of_expiry: Time.new(2030, 5, 3).to_date,
+      date_registered: Time.new(2020, 5, 4).to_date,
+      address_id: "UPRN-000000000123",
+      address_line1: "1 Some Street",
+      address_line2: "",
+      address_line3: "",
+      address_line4: "",
+      town: "Newkirk",
+      date_of_assessment: Time.new(2020, 5, 4).to_date,
+      created_at: Time.utc(2030, 5, 4, 9, 0, 0),
+    )
+  end
+  let(:second_scottish_assessment) do
+    Domain::AssessmentSearchResult.new(
+      type_of_assessment: "RdSAP",
+      assessment_id: "0000-0000-0000-0000-0001",
+      current_energy_efficiency_rating: 50,
+      opt_out: false,
+      postcode: "FK1 1XE",
+      date_of_expiry: Time.new(2030, 5, 3).to_date,
+      date_registered: Time.new(2020, 5, 4).to_date,
+      address_id: "UPRN-000000000123",
+      address_line1: "1 Some Street",
+      address_line2: "",
+      address_line3: "",
+      address_line4: "",
+      town: "Newkirk",
+      date_of_assessment: Time.new(2020, 5, 4).to_date,
+      created_at: Time.utc(2030, 5, 4, 10, 0, 0),
+    )
+  end
 
   let(:expected_data) do
     { data: [
@@ -81,22 +119,84 @@ describe UseCase::FindAssessmentsByPostcode do
       searchQuery: "SW1A 2AA" }
   end
 
+  let(:expected_scottish_data) do
+    { data:
+       [{ date_of_assessment: "2020-05-04",
+          date_of_expiry: "2030-05-03",
+          date_of_registration: "2020-05-04",
+          type_of_assessment: "RdSAP",
+          assessment_id: "0000-0000-0000-0000-0000",
+          current_energy_efficiency_rating: 50,
+          current_energy_efficiency_band: "e",
+          opt_out: false,
+          address_id: "UPRN-000000000123",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          town: "Newkirk",
+          postcode: "FK1 1XE",
+          status: "ENTERED",
+          created_at: "2030-05-04T09:00:00Z" },
+        { date_of_assessment: "2020-05-04",
+          date_of_expiry: "2030-05-03",
+          date_of_registration: "2020-05-04",
+          type_of_assessment: "RdSAP",
+          assessment_id: "0000-0000-0000-0000-0001",
+          current_energy_efficiency_rating: 50,
+          current_energy_efficiency_band: "e",
+          opt_out: false,
+          address_id: "UPRN-000000000123",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          town: "Newkirk",
+          postcode: "FK1 1XE",
+          status: "ENTERED",
+          created_at: "2030-05-04T10:00:00Z" }],
+      searchQuery: "FK1 1XE" }
+  end
+
   before do
     allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_search_gateway)
-    allow(assessments_search_gateway).to receive(:search_by_postcode).with("SW1A 2AA", []).and_return([first_assessment, second_assessment])
   end
 
   describe ".execute" do
-    it "returns the expected data" do
-      expect(use_case.execute("SW1A 2AA")).to eq(expected_data)
+    context "when a English postcode is entered" do
+      before do
+        allow(assessments_search_gateway).to receive(:search_by_postcode).with("SW1A 2AA", [], is_scottish: false).and_return([first_assessment, second_assessment])
+      end
+
+      it "returns the expected data" do
+        expect(use_case.execute("SW1A 2AA")).to eq(expected_data)
+      end
+
+      it "raises an error when postcode is not provided" do
+        expect { use_case.execute("") }.to raise_error(described_class::ParameterMissing)
+      end
+
+      it "raises an error for an invalid postcode" do
+        expect { use_case.execute("A0") }.to raise_error(described_class::PostcodeNotValid)
+      end
     end
 
-    it "raises an error when postcode is not provided" do
-      expect { use_case.execute("") }.to raise_error(described_class::ParameterMissing)
-    end
+    context "when a Scottish postcode is entered" do
+      before do
+        allow(assessments_search_gateway).to receive(:search_by_postcode).with("FK1 1XE", [], is_scottish: true).and_return([first_scottish_assessment, second_scottish_assessment])
+      end
 
-    it "raises an error for an invalid postcode" do
-      expect { use_case.execute("A0") }.to raise_error(described_class::PostcodeNotValid)
+      it "returns the expected data" do
+        expect(use_case.execute("FK1 1XE", is_scottish: true)).to eq(expected_scottish_data)
+      end
+
+      it "raises an error when postcode is not provided" do
+        expect { use_case.execute("") }.to raise_error(described_class::ParameterMissing)
+      end
+
+      it "raises an error for an invalid postcode" do
+        expect { use_case.execute("FK") }.to raise_error(described_class::PostcodeNotValid)
+      end
     end
   end
 end

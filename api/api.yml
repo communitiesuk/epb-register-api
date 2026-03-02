@@ -2610,6 +2610,90 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /scotland/assessments/search:
+    get:
+      tags:
+        - Search
+        - Manage Assessments
+      summary: Search for Scottish assessments
+      description: |-
+        Search for an Scottish assessment by
+          _either_:
+           - a postcode AND assessment type; _or_
+           - a street AND town AND assessment type; _or_
+           - an assessment reference number (RRN)
+      operationId: scotland-search-assessments
+      security:
+        - oauth:
+            - 'scotland_assessment:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+          example: 'FL23 4JA'
+        - in: query
+          name: assessmentTypes
+          description: The types of assessment being searched for, separated by commas
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AssessmentType'
+          explode: false
+          example: [ 'RdSAP','SAP' ]
+        - in: query
+          name: street
+          description: The street of the assessment being searched for
+          schema:
+            type: string
+          example: 'High Road'
+        - in: query
+          name: town
+          description: The city or town of the assessment being searched for
+          schema:
+            $ref: '#/components/schemas/AddressTown'
+          example: 'Woking'
+        - in: query
+          name: assessmentId
+          description: The RRN of the assessment being searched for
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+          example: '1234-2345-3456-4567-6789'
+      responses:
+        '200':
+          description: Assessment search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessments:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EnergyAssessmentSearchResult'
+        '400':
+          description: Bad request - missing or malformed parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   securitySchemes:
     oauth:
@@ -3126,6 +3210,49 @@ components:
           $ref: '#/components/schemas/AssessmentId'
         address:
           $ref: '#/components/schemas/AddressStyle2'
+
+    ScottishDomesticEPCsSearchResult:
+      type: object
+      description: 'A reference to the most recent domestic EPC for the address also referenced in the result'
+      properties:
+        epcRrn:
+          $ref: '#/components/schemas/AssessmentId'
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          example: 62
+          description: The current energy rating to be submitted to the Register
+        optOut:
+          type: boolean
+          example: false
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'c'
+          description: The band, from a to g, the current Energy Rating falls within
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
+        status:
+          $ref: '#/components/schemas/AssessmentStatus'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2020-08-09T12:34:56.789Z'
 
     CommercialEnergyAssessmentSummary:
       $ref: '#/components/schemas/Empty'

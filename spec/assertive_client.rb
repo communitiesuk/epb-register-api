@@ -538,6 +538,25 @@ def assessments_search_by_postcode(
   )
 end
 
+def scottish_assessments_search_by_postcode(
+  postcode,
+  scopes: %w[scotland_assessment:search],
+  assessment_types: %w[RdSAP SAP],
+  **assertive_kwargs
+)
+  path = "/api/scotland/assessments/search?postcode=#{postcode}"
+
+  unless assessment_types.empty?
+    path << "&assessmentTypes=#{assessment_types.sort.join(',')}"
+  end
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def domestic_assessments_search_by_assessment_id(
   assessment_id,
   scopes: %w[assessment:search],
@@ -545,6 +564,18 @@ def domestic_assessments_search_by_assessment_id(
 )
   assertive_get(
     "/api/assessments/search?assessmentId=#{assessment_id}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
+def scottish_domestic_assessments_search_by_assessment_id(
+  assessment_id,
+  scopes: %w[scotland_assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/scotland/assessments/search?assessmentId=#{assessment_id}",
     scopes:,
     **assertive_kwargs,
   )
@@ -558,6 +589,26 @@ def assessments_search_by_street_and_town(
   **assertive_kwargs
 )
   path = "/api/assessments/search?street=#{street}&town=#{town}"
+
+  unless assessment_types.empty?
+    path += "&assessmentTypes=#{assessment_types.sort.join(',')}"
+  end
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
+def scottish_assessments_search_by_street_and_town(
+  street:,
+  town:,
+  assessment_types: %w[RdSAP SAP],
+  scopes: %w[scotland_assessment:search],
+  **assertive_kwargs
+)
+  path = "/api/scotland/assessments/search?street=#{street}&town=#{town}"
 
   unless assessment_types.empty?
     path += "&assessmentTypes=#{assessment_types.sort.join(',')}"

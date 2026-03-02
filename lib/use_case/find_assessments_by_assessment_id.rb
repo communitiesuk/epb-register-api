@@ -4,10 +4,10 @@ module UseCase
       @assessment_gateway = Gateway::AssessmentsSearchGateway.new
     end
 
-    def execute(assessment_id)
+    def execute(assessment_id, is_scottish: false)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
-      result = @assessment_gateway.search_by_assessment_id(assessment_id, restrictive: false)
+      result = @assessment_gateway.search_by_assessment_id(assessment_id, restrictive: false, is_scottish: is_scottish)
 
       new = []
 
