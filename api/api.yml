@@ -2613,8 +2613,7 @@ paths:
   /scotland/assessments/search:
     get:
       tags:
-        - Search
-        - Manage Assessments
+        - Scotland
       summary: Search for Scottish assessments
       description: |-
         Search for an Scottish assessment by
