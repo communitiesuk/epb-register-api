@@ -45,8 +45,10 @@ tags:
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
     description: Endpoints used in providing the Service Performance page
-  - name: Scotland
+  - name: Scotland Frontend
     description: Endpoints used by the Scotland frontend services
+  - name: Scotland Data
+    description: Endpoints used by the Scotland data services
 
 paths:
   /schemes:
@@ -662,22 +664,22 @@ paths:
                 example:
                   type: object
                   properties:
-                  - epcRrn: "1111-1111-1111-1111-1111"
-                    address:
-                      addressLine1: "11 Acacia Avenue"
-                      addressLine2: "Upper Wellgood"
-                      addressLine3: ""
-                      addressLine4: ""
-                      town: "Fulchester"
-                      postcode: "FL23 4JA"
-                  - epcRrn: "2222-2222-2222-2222-2222"
-                    address:
-                      addressLine1: "22 Acacia Avenue"
-                      addressLine2: "Upper Wellgood"
-                      addressLine3: ""
-                      addressLine4: ""
-                      town: "Fulchester"
-                      postcode: "FL23 4JA"
+                    - epcRrn: "1111-1111-1111-1111-1111"
+                      address:
+                        addressLine1: "11 Acacia Avenue"
+                        addressLine2: "Upper Wellgood"
+                        addressLine3: ""
+                        addressLine4: ""
+                        town: "Fulchester"
+                        postcode: "FL23 4JA"
+                    - epcRrn: "2222-2222-2222-2222-2222"
+                      address:
+                        addressLine1: "22 Acacia Avenue"
+                        addressLine2: "Upper Wellgood"
+                        addressLine3: ""
+                        addressLine4: ""
+                        town: "Fulchester"
+                        postcode: "FL23 4JA"
         '400':
           description: 'Bad request - most likely an invalid postcode'
           content:
@@ -2555,10 +2557,10 @@ paths:
   /scotland/assessments/{assessmentId}/certificate-summary:
     get:
       tags:
-        - Scotland
+        - Scotland Frontend
       summary: Get summary of assessment for use by Scottish frontend
       description: Get assessment details in use by Scottish frontend in JSON format
-      operationId: get-certificate-summary
+      operationId: get-scottish-certificate-summary
       security:
         - oauth:
             - 'scotland_assessment:fetch'
@@ -2575,12 +2577,15 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/ScottishDomesticEnergyAssessmentSummary'
-                  - $ref: '#/components/schemas/ScottishCEPCEnergyAssessmentSummary'
-                  - $ref: '#/components/schemas/ScottishCS63EnergyAssessmentSummary'
-                  - $ref: '#/components/schemas/ScottishDECEnergyAssessmentSummary'
-                  - $ref: '#/components/schemas/ScottishDECAREnergyAssessmentSummary'
+                type: object
+                properties:
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/ScottishDomesticEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishCEPCEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishCS63EnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishDECEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/ScottishDECAREnergyAssessmentSummary'
         '404':
           description: Assessment not found
           content:
@@ -2613,7 +2618,7 @@ paths:
   /scotland/assessments/search:
     get:
       tags:
-        - Scotland
+        - Scotland Frontend
       summary: Search for Scottish assessments
       description: |-
         Search for an Scottish assessment by
@@ -2673,7 +2678,7 @@ paths:
                       assessments:
                         type: array
                         items:
-                          $ref: '#/components/schemas/EnergyAssessmentSearchResult'
+                          $ref: '#/components/schemas/ScottishDomesticEPCsSearchResult'
         '400':
           description: Bad request - missing or malformed parameters
           content:
@@ -2682,6 +2687,286 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/assessments/{assessmentId}/xml-data:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get a Scottish assessment's XML
+      description: Get an Energy Performance Assessment (XML document)
+      operationId: get-scottish-assessment-xml
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Energy Performance Assessment
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Empty'
+        '404':
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Bad request - The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: >-
+            Assessment no long accessible
+            (could have been cancelled or marked not for issue)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/assessments/{assessmentId}/meta-data:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get Scottish assessment metadata
+      description: Get assessment metadata attributes in JSON format
+      operationId: get-scottish-assessment-metadata
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ScotlandEnergyAssessmentMetadata'
+
+        '404':
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Bad request - The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/updates/assessment/status:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get status changes to Scottish assessments
+      description: Provides a paginated list of all the RRNs of the reports that changed status between the start and end dates provided.
+      operationId: get-scottish-assessment-status-changes
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: query
+          name: startDate
+          required: true
+          description: 'The start date of the range (inclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: query
+          name: endDate
+          required: true
+          description: 'The end date of the range (exclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
+      responses:
+        '200':
+          description: Scottish assessment status changes
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ScottishAssessmentsStatusChanges'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/updates/new-reports:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get a list of RRNs for new Scottish assessments
+      description: Provides a paginated list of all the new reports that were submitted between the start and end dates provided.
+      operationId: get-new-scottish-assessments
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: query
+          name: startDate
+          required: true
+          description: 'The start date of the range (inclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: query
+          name: endDate
+          required: true
+          description: 'The end date of the range (exclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
+      responses:
+        '200':
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Pagination'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ScottishNewAssessments'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/updates/assessor/status:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get report of assessors who have been struck off or suspended
+      description: Report of assessors who were suspended and struck off between two dates
+      operationId: get-scottish-assessor-status-report
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: query
+          name: startDate
+          required: false
+          description: 'The start date of the range (inclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: query
+          name: endDate
+          required: false
+          description: 'The end date of the range (exclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
+      responses:
+        '200':
+          description: Report returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessorStatusEvents:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AssessorQualificationChangeEvent'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Report not found
           content:
             application/json:
               schema:
@@ -3132,6 +3417,14 @@ components:
         - CANCELLED
         - NOT_FOR_ISSUE
 
+    ScotlandAssessmentStatus:
+      type: string
+      example:
+      enum:
+        - ENTERED
+        - EXPIRED
+        - CANCELLED
+
     AssessmentType:
       type: string
       example: 'RdSAP'
@@ -3527,9 +3820,6 @@ components:
         estimatedEnergyCost:
           type: string
           example: '1307.00'
-#        mainFuelType:
-#          type: string
-#          example: '28'
         heatDemand:
           type: object
           properties:
@@ -3539,15 +3829,6 @@ components:
             currentWaterHeatingDemand:
               type: number
               example: 325.33
-#            impactOfLoftInsulation:
-#              type: integer
-#              example: -453
-#            impactOfCavityInsulation:
-#              type: integer
-#              example: -84
-#            impactOfSolidWallInsulation:
-#              type: integer
-#              example: -21
         heatingCostCurrent:
           type: string
           example: '123'
@@ -3775,7 +4056,7 @@ components:
           example: 51
           description: Comparative Asset Rating if the building were assessed in England using Scottish weather data
         epcRatingBER:
-          type: float
+          type: number
           description: Building emissions
         approximateEnergyUse:
           type: integer
@@ -3991,11 +4272,11 @@ components:
           format: date
           nullable: true
         targetEmissionSavings:
-          type: float
+          type: number
           example: 1.23
           description: Target savings of emissions in kg of CO2 per m2 per year.
         targetEnergySavings:
-          type: float
+          type: number
           example: 2.34
           description: Target savings of energy consumption in kWh per m2 per year.
         acceptPrescriptiveImprovements:
@@ -4020,7 +4301,7 @@ components:
                 type: string
                 description: Always null for prescriptiveImprovements
                 nullable: true
-                oneOf:
+                enum:
                   - Prescriptive
                   - Alternative
         alternativeImprovements:
@@ -4042,7 +4323,7 @@ components:
                 type: string
                 description: type of measure for the alternative scenario
                 nullable: true
-                oneOf:
+                enum:
                   - Prescriptive
                   - Alternative
         addressId:
@@ -4113,7 +4394,7 @@ components:
             schemeAssessorId:
               $ref: '#/components/schemas/AssessorSchemeId'
             name:
-                '#/components/schemas/AssessorFullName'
+              $ref: '#/components/schemas/AssessorFullName'
             companyDetails:
               type: object
               properties:
@@ -4241,7 +4522,7 @@ components:
             schemeAssessorId:
               $ref: '#/components/schemas/AssessorSchemeId'
             name:
-              '#/components/schemas/AssessorFullName'
+              $ref: '#/components/schemas/AssessorFullName'
             companyDetails:
               type: object
               properties:
@@ -4374,6 +4655,33 @@ components:
           type: string
           example: 'Scotland'
 
+    ScottishAssessmentsStatusChanges:
+      type: object
+      properties:
+        statusUpdates:
+          type: array
+          items:
+            type: object
+            properties:
+              reportRRN:
+                $ref: '#/components/schemas/AssessmentId'
+              previousStatus:
+                $ref: '#/components/schemas/ScotlandAssessmentStatus'
+              newStatus:
+                $ref: '#/components/schemas/ScotlandAssessmentStatus'
+              timeOfChange:
+                type: string
+                format: date-time
+
+    ScottishNewAssessments:
+      type: object
+      properties:
+        rrns:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssessmentId'
+          example:
+            ['0000-0000-0000-0000-0000', '0000-0000-0000-0000-0001']
 
     DECAssessmentObject:
       type: object
@@ -4440,6 +4748,35 @@ components:
           $ref: '#/components/schemas/SchemaName'
         assessmentAddressId:
           $ref: '#/components/schemas/AddressId'
+
+    ScotlandEnergyAssessmentMetadata:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        optOut:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+          example: '2020-08-09T12:34:56.789Z'
+          nullable: true
+        cancelledAt:
+          type: string
+          format: date-time
+          example: '2021-04-26T16:32:01.703Z'
+          nullable: true
+        schemaType:
+          $ref: '#/components/schemas/SchemaName'
+        assessmentAddressId:
+          $ref: '#/components/schemas/AddressId'
+        dataSentAt:
+          type: string
+          format: date-time
+          example: '2026-02-26T16:32:01.703Z'
+        status:
+          $ref: '#/components/schemas/ScotlandAssessmentStatus'
 
     PropertySummary:
       type: object
@@ -5334,6 +5671,23 @@ components:
               title:
                 type: string
                 example: "The thing you are looking for is not here"
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+        nextPage:
+          type: string
+          format: uri
+          nullable: true
+          example: null
+        previousPage:
+          type: string
+          format: uri
+          nullable: true
+          example: null
 
   links: {}
   callbacks: {}
