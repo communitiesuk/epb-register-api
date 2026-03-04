@@ -734,5 +734,113 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         expect(response[:data]).to eq(expected_response)
       end
     end
+
+    context "when requesting a DEC or DEC-AR assessment from a dual lodgement" do
+      before do
+        dual_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec+ar")
+
+        lodge_assessment(
+          assessment_body: dual_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "DECAR-S-7.0",
+          migrated: true,
+          )
+      end
+
+      it "returns the expected DEC-AR" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0050").body,
+            symbolize_names: true,
+            )
+
+        expected_response = {typeOfAssessment: "DEC-AR",
+                             assessmentId: "0000-0000-0000-0000-0050",
+                             reportType: "2",
+                             dateOfAssessment: "2025-04-02",
+                             dateOfExpiry: "2035-06-17",
+                             dateOfRegistration: "2025-06-18",
+                             address: {addressLine1: "Non-dom Property", addressLine2: "Buisness Park", addressLine3: "", addressLine4: "", town: "Town", postcode: "EH14 2SP"},
+                             assessor:
+                               {schemeAssessorId: "SPEC000000",
+                                contactDetails: {email: "assessor@co.uk", telephoneNumber: "000002828282"},
+                                companyDetails: {name: "EPC R Us Ltd", address: "6 Unit Business Park Town"},
+                                firstName: "Someone",
+                                lastName: "Person",
+                                registeredBy: {name: "test scheme", schemeId: scheme_id}},
+                             shortPaybackRecommendations:
+                               [{code: "X12",
+                                 text: "Clean windows and roof lights to maximise daylight entering building and reduce the need for artificial lighting.",
+                                 cO2Impact: "MEDIUM"},
+                                {code: "X11",
+                                 text: "Consider implementing a programme of planned lighting systems maintenance to maintain effectiveness and energy efficiency.",
+                                 cO2Impact: "MEDIUM"},
+                                {code: "X9",
+                                 text:
+                                   "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
+                                 cO2Impact: "HIGH"},
+                                {code: "X10",
+                                 text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
+                                 cO2Impact: "HIGH"},
+                                {code: "OM15",
+                                 text:
+                                   "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
+                                 cO2Impact: "MEDIUM"},
+                                {code: "BF6",
+                                 text:
+                                   "Consider how building fabric air tightness could be improved, for example sealing, draught stripping and closing off unused ventilation openings, chimneys.",
+                                 cO2Impact: "MEDIUM"},
+                                {code: "AC12",
+                                 text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
+                                 cO2Impact: "HIGH"}],
+                             mediumPaybackRecommendations:
+                               [{code: "X3",
+                                 text:
+                                   "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
+                                 cO2Impact: "MEDIUM"},
+                                {code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM"},
+                                {code: "AC9",
+                                 text:
+                                   "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
+                                 cO2Impact: "HIGH"},
+                                {code: "BF22",
+                                 text:
+                                   "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
+                                 cO2Impact: "MEDIUM"}],
+                             longPaybackRecommendations:
+                               [{code: "X13",
+                                 text:
+                                   "Engage experts to review the building lighting strategies and propose alterations and/or upgrades to daylighting provisions, luminaires and their control systems and an implementation plan.",
+                                 cO2Impact: "MEDIUM"},
+                                {code: "X1",
+                                 text:
+                                   "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
+                                 cO2Impact: "HIGH"},
+                                {code: "BF3", text: "Consider replacing or improving glazing.", cO2Impact: "MEDIUM"}],
+                             otherPaybackRecommendations: [],
+                             technicalInformation:
+                               {buildingEnvironment: "Heating and Natural Ventilation",
+                                floorArea: 973.6,
+                                occupier: "Business Name",
+                                propertyType: "General office",
+                                renewableSources: nil,
+                                discountedEnergy: nil,
+                                inspectionType: "Physical"},
+                             administrativeInformation: {issueDate: "2025-06-18", calculationTool: "BSD, OR Scotland, v1.0.0", relatedRrn: "0000-0000-0000-0000-0040"},
+                             siteServiceOne: {description: "Natural Gas", quantity: 76639},
+                             siteServiceTwo: {description: "Electricity", quantity: 36419},
+                             siteServiceThree: {description: "Not used", quantity: 0},
+                             addressId: "RRN-0000-0000-0000-0000-0050",
+                             optOut: false,
+                             relatedAssessments: [],
+                             supersededBy: nil,
+                             countryName: "Unknown"}
+
+        expect(response[:data]).to eq(expected_response)
+      end
+    end
   end
 end

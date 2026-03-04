@@ -4,14 +4,14 @@
   </ns1:MessageIdentifier>
   <ns1:Report>
     <CEPC:Report-Header>
-      <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
+      <CEPC:RRN>0000-0000-0000-0000-0040</CEPC:RRN>
       <CEPC:Issue-Date>2025-06-18</CEPC:Issue-Date>
       <CEPC:Valid-Until>2026-03-31</CEPC:Valid-Until>
       <CEPC:Report-Type>1</CEPC:Report-Type>
       <CEPC:Inspection-Date>2025-04-02</CEPC:Inspection-Date>
       <CEPC:Registration-Date>2025-06-18</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
-      <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0050</CEPC:Related-RRN>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
@@ -119,14 +119,14 @@
   </ns1:Report>
   <ns1:Report>
     <CEPC:Report-Header>
-      <CEPC:RRN>0000-0000-0000-0000-0001</CEPC:RRN>
+      <CEPC:RRN>0000-0000-0000-0000-0050</CEPC:RRN>
       <CEPC:Issue-Date>2025-06-18</CEPC:Issue-Date>
       <CEPC:Valid-Until>2032-06-18</CEPC:Valid-Until>
       <CEPC:Report-Type>2</CEPC:Report-Type>
       <CEPC:Inspection-Date>2025-04-02</CEPC:Inspection-Date>
       <CEPC:Registration-Date>2025-06-18</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
-      <CEPC:Related-RRN>0000-0000-0000-0000-0000</CEPC:Related-RRN>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0040</CEPC:Related-RRN>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>

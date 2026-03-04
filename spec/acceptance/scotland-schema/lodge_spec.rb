@@ -369,7 +369,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     end
 
     context "when migrating a valid Scottish DEC+AR assessment" do
-      expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
+      expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0040",
                                        "date_of_assessment" => "2025-04-02",
                                        "date_registered" => "2025-06-18",
                                        "type_of_assessment" => "DEC",
@@ -388,8 +388,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                        "cancelled_at" => nil,
                                        "not_for_issue_at" => nil,
                                        "created_at" => "2021-06-21",
-                                       "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
-      expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0001",
+                                       "hashed_assessment_id" => "e2a73bb7e6874fb5f0b4541326bbbc8cca6d375012da903b2a9712e2edaa12ee" }
+      expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0050",
                                           "date_of_assessment" => "2025-04-02",
                                           "date_registered" => "2025-06-18",
                                           "type_of_assessment" => "DEC-AR",
@@ -408,8 +408,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                           "cancelled_at" => nil,
                                           "not_for_issue_at" => nil,
                                           "created_at" => "2021-06-21",
-                                          "hashed_assessment_id" => "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4" }
-      expected_linked_assessment_data = [{ "assessment_id" => "0000-0000-0000-0000-0000", "linked_assessment_id" => "0000-0000-0000-0000-0001" }]
+                                          "hashed_assessment_id" => "e81c2c444c8afe8cf6554bd26ece29405a43ea5ac7d1b02e1737bba5a5bd14c0" }
+      expected_linked_assessment_data = [{ "assessment_id" => "0000-0000-0000-0000-0040", "linked_assessment_id" => "0000-0000-0000-0000-0050" }]
 
       it "successfully migrates the assessment" do
         response = lodge_assessment assessment_body: valid_dec_and_ar_xml,
@@ -422,18 +422,18 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                     migrated: "true"
 
         dec_data = ActiveRecord::Base.connection.exec_query(
-          "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0040'",
         ).entries.first
 
         dec_ar_data = ActiveRecord::Base.connection.exec_query(
-          "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0001'",
+          "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0050'",
         ).entries.first
 
         linked_assessments = ActiveRecord::Base.connection.exec_query(
-          "SELECT * FROM scotland.linked_assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          "SELECT * FROM scotland.linked_assessments WHERE assessment_id = '0000-0000-0000-0000-0040'",
         ).entries
 
-        expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+        expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0040"
         expect(dec_ar_data).to eq expected_dec_ar_assessment_data
         expect(dec_data).to eq expected_dec_assessment_data
         expect(linked_assessments).to eq expected_linked_assessment_data
