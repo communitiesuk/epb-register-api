@@ -505,6 +505,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               ownerCommissionReport: "Y",
                               delegatedPersonCommissionReport: "N",
                               delegatedProtocolDate: nil,
+                              delegatedProtocolSetUp: nil,
                               propertyType: {
                                 propertyTypeShortDescription: "General Industrial",
                                 propertyTypeLongDescription: "B2 to B7 General Industrial and Special Industrial Groups",
