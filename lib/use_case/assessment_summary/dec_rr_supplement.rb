@@ -1,9 +1,9 @@
 module UseCase
   module AssessmentSummary
     class DecRrSupplement < UseCase::AssessmentSummary::Supplement
-      def related_cert_energy_band!(hash)
+      def related_cert_energy_band!(hash, method = "to_hash", is_scottish: false)
         related_cert =
-          UseCase::AssessmentSummary::Fetch.new.execute(hash[:related_rrn])
+          UseCase::AssessmentSummary::Fetch.new.execute(hash[:related_rrn], method, is_scottish: is_scottish)
 
         hash[:energy_band_from_related_certificate] =
           (
@@ -11,6 +11,7 @@ module UseCase
               related_cert[:current_assessment][:energy_efficiency_band]
             end
           )
+        hash
       rescue StandardError
         hash[:energy_band_from_related_certificate] = nil
       end

@@ -43,10 +43,16 @@ module UseCase
                             @green_deal_plans_gateway.fetch(assessment_id, is_scottish: is_scottish)
                           end
 
-        Domain::CertificateSummary.new(assessment:,
-                                       assessment_id:,
-                                       related_assessments:,
-                                       green_deal_plan:).certificate_summary_data
+        certificate_summary = Domain::CertificateSummary.new(assessment:,
+                                                             assessment_id:,
+                                                             related_assessments:,
+                                                             green_deal_plan:).certificate_summary_data
+
+        if certificate_summary[:type_of_assessment] == "DEC-AR" && !certificate_summary[:related_rrn].nil?
+          UseCase::AssessmentSummary::DecRrSupplement.new.related_cert_energy_band!(certificate_summary, "to_certificate_summary", is_scottish: true)
+        else
+          certificate_summary
+        end
       end
     end
   end

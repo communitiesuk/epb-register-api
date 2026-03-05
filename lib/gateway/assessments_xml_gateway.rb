@@ -17,8 +17,8 @@ module Gateway
       is_scottish ? AssessmentsXmlScotland.create(record) : AssessmentsXml.create(record)
     end
 
-    def fetch(assessment_id)
-      result = AssessmentsXml.find_by(assessment_id:)
+    def fetch(assessment_id, is_scottish: false)
+      result = is_scottish ? AssessmentsXmlScotland.find_by(assessment_id:) : AssessmentsXml.find_by(assessment_id:)
       result ? { xml: result["xml"], schema_type: result["schema_type"] } : nil
     end
   end

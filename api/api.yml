@@ -4457,6 +4457,8 @@ components:
               type: string
               example: '1'
               description: Code indicating any potential conflicts of interest or commercial relationships with other parties.
+        relatedRrn:
+          $ref: '#/components/schemas/AssessmentId'
         addressId:
           $ref: '#/components/schemas/AddressId'
         optOut:
@@ -4627,8 +4629,8 @@ components:
             calculationTool:
               type: string
               example: "BSD, OR Scotland, v1.0.2"
-            relatedRrn:
-              $ref: '#/components/schemas/AssessmentId'
+        relatedRrn:
+          $ref: '#/components/schemas/AssessmentId'
         siteServiceOne:
           $ref: '#/components/schemas/SiteService'
         siteServiceTwo:
@@ -4654,6 +4656,9 @@ components:
         countryName:
           type: string
           example: 'Scotland'
+        energyBandFromRelatedCertificate:
+          type: string
+          example: "b"
 
     ScottishAssessmentsStatusChanges:
       type: object

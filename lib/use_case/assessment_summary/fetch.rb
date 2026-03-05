@@ -10,11 +10,11 @@ module UseCase
         @xml_gateway = xml_gateway || Gateway::AssessmentsXmlGateway.new
       end
 
-      def execute(assessment_id, method = "to_hash")
+      def execute(assessment_id, method = "to_hash", is_scottish: false)
         assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
           @search_gateway
-            .search_by_assessment_id(assessment_id, restrictive: false)
+            .search_by_assessment_id(assessment_id, restrictive: false, is_scottish: is_scottish)
             .first
 
         if assessment
@@ -26,7 +26,7 @@ module UseCase
         end
 
         lodged_xml_document =
-          @xml_gateway.fetch assessment_id
+          @xml_gateway.fetch assessment_id, is_scottish: is_scottish
         raise NotFoundException unless lodged_xml_document
 
         lodged_values =
