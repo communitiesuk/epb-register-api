@@ -24,6 +24,7 @@ describe UseCase::ProcessPostcodeCsv do
       ["'BT1 1AA', 54.602438, -5.922291, 'Northern Ireland'",
        "'BT1 1AE', 54.602551, -5.93151, 'Northern Ireland'",
        "'BT1 1AF', 54.602551, -5.93151, 'Northern Ireland'",
+       "'AB1 0AA', 57.101459, -2.242858, 'Scotland'",
        "'AL1 1AA', 51.74909, -0.341314, 'East of England'",
        "'CA6 7BB', 55.087484, -2.527794, 'North East'",
        "'BB0 1GR', 53.753464, -2.464231, 'North West'",
@@ -38,6 +39,7 @@ describe UseCase::ProcessPostcodeCsv do
 
     let(:expected_outcodes)  do
       { "BT1" => { latitude: [54.602438, 54.602551, 54.602551], longitude: [-5.922291, -5.93151, -5.93151], region: ["Northern Ireland", "Northern Ireland", "Northern Ireland"] },
+        "AB1" => { latitude: [57.101459], longitude: [-2.242858], region: %w[Scotland] },
         "AL1" => { latitude: [51.74909], longitude: [-0.341314], region: ["East of England"] },
         "CA6" => { latitude: [55.087484], longitude: [-2.527794], region: ["North East"] },
         "BB0" => { latitude: [53.753464], longitude: [-2.464231], region: ["North West"] },
@@ -63,12 +65,12 @@ describe UseCase::ProcessPostcodeCsv do
       expect { use_case.execute(postcode_csv) }.not_to raise_error
     end
 
-    it "sends expected args, excluding Scottish postcodes, to insert_postcode_batch" do
+    it "sends expected args, including Scottish postcodes, to insert_postcode_batch" do
       use_case.execute(postcode_csv)
       expect(gateway).to have_received(:insert_postcode_batch).exactly(1).with(expected_data).times
     end
 
-    it "sends expected args, excluding Scottish outcodes, to insert_outcodes" do
+    it "sends expected args, including Scottish outcodes, to insert_outcodes" do
       use_case.execute(postcode_csv)
       expect(gateway).to have_received(:insert_outcodes).exactly(1).with(expected_outcodes).times
     end
