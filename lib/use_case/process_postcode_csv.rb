@@ -12,6 +12,7 @@ module UseCase
       E12000009: "South West",
       N99999999: "Northern Ireland",
       W99999999: "Wales",
+      S99999999: "Scotland",
     }.freeze
 
     def initialize(geolocation_gateway)
