@@ -165,6 +165,7 @@ module PostcodeHelper
       E15000009: "South West",
       N07000001: "Northern Ireland",
       W08000001: "Wales",
+      S15000001: "Scotland",
     }
   end
 end
