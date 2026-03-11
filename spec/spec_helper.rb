@@ -332,7 +332,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.before(:all) { DatabaseCleaner.start }
+  config.before(:all) do
+    DatabaseCleaner.start
+    # most tests don't need to call the address-matching api so this is set to true
+    # to avoid mocking the match address api for test that are unrelated to address matching
+    Helper::Toggles.set_feature("block-address-matching-during-lodgement", true)
+  end
   config.after(:all) { DatabaseCleaner.clean }
 end
 

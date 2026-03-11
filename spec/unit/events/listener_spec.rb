@@ -62,13 +62,13 @@ describe Events::Listener do
       }
     end
 
-    context "when the address matching during lodgement toggle is on" do
+    context "when the block-address-matching-during-lodgement toggle is off" do
       before do
-        Helper::Toggles.set_feature("address-matching-during-lodgement", true)
+        Helper::Toggles.set_feature("block-address-matching-during-lodgement", false)
       end
 
       after do
-        Helper::Toggles.set_feature("address-matching-during-lodgement", false)
+        Helper::Toggles.set_feature("block-address-matching-during-lodgement", true)
       end
 
       context "when the required arguments are passed" do
@@ -149,7 +149,11 @@ describe Events::Listener do
       end
     end
 
-    context "when the address matching during lodgement toggle is off" do
+    context "when the block-address-matching-during-lodgement toggle is on" do
+      before do
+        Helper::Toggles.set_feature("block-address-matching-during-lodgement", true)
+      end
+
       context "when the required arguments are passed" do
         before do
           allow(match_assessment_address_use_case).to receive(:execute)
