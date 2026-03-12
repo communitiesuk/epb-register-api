@@ -126,6 +126,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           status: "ENTERED",
           supersededBy: nil,
           totalFloorArea: 66.0,
+          schemaType: "RdSAP-Schema-S-19.0",
           typeOfAssessment: "RdSAP",
         }
       end
@@ -335,6 +336,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
              optOut: false,
              relatedAssessments: [],
              supersededBy: nil,
+             schemaType: "SAP-Schema-S-19.0.0",
              countryName: "Unknown" },
           meta: {} }
       end
@@ -454,6 +456,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               optOut: false,
                               relatedAssessments: [],
                               supersededBy: nil,
+                              schemaType: "CEPC-S-7.1",
                               countryName: "Unknown" }
 
         expect(response[:data]).to eq(expected_response)
@@ -531,6 +534,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               optOut: false,
                               relatedAssessments: [],
                               supersededBy: nil,
+                              schemaType: "CS63-S-7.0",
                               countryName: "Unknown" }
 
         expect(response[:data]).to eq(expected_response)
@@ -605,6 +609,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               optOut: false,
                               relatedAssessments: [],
                               supersededBy: nil,
+                              schemaType: "DECAR-S-7.0",
                               countryName: "Unknown" }
 
         expect(response[:data]).to eq(expected_response)
@@ -731,6 +736,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               optOut: false,
                               relatedAssessments: [],
                               supersededBy: nil,
+                              schemaType: "DECAR-S-7.0",
                               countryName: "Unknown" }
 
         expect(response[:data]).to eq(expected_response)
@@ -840,6 +846,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               optOut: false,
                               relatedAssessments: [],
                               supersededBy: nil,
+                              schemaType: "DECAR-S-7.0",
                               countryName: "Unknown",
                               energyBandFromRelatedCertificate: "b" }
 

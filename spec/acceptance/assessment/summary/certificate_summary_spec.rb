@@ -265,6 +265,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             "supersededBy": superseded_by,
             "countryName": "Unknown",
             "relatedAssessments": related_assessment,
+            "schemaType": "RdSAP-Schema-20.0.0",
             "greenDealPlan": green_deal_plan,
           },
           "meta": {},
@@ -513,7 +514,8 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
              optOut: false,
              relatedAssessments: [],
              supersededBy: nil,
-             countryName: "Unknown" },
+             countryName: "Unknown",
+             schemaType: "SAP-Schema-18.0.0" },
           meta: {} }
       end
 
@@ -620,6 +622,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
               mainHeatingFuel: "Natural Gas",
             },
           typeOfAssessment: "CEPC",
+          schemaType: "CEPC-8.0.0",
         }
 
         expect(response[:data]).to eq(expected_response)

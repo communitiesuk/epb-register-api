@@ -20,6 +20,7 @@ module Domain
       update_related_assessments
       update_country_name
       update_assessor
+      update_schema_type
 
       if @type_of_assessment == "RdSAP"
         update_green_deal
@@ -103,6 +104,10 @@ module Domain
                                                     else
                                                       @green_deal_plan
                                                     end
+    end
+
+    def update_schema_type
+      @certificate_summary_data[:schema_type] = @assessment["schema_type"]
     end
 
     def lodged_values_from_xml(xml, schema_type, assessment_id)

@@ -3930,6 +3930,9 @@ components:
           type: string
           nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
+        schemaType:
+          type: string
+          example: "RdSAP-Schema-S-19.0"
         countryName:
           type: string
           example: 'Scotland'
@@ -4169,6 +4172,9 @@ components:
           type: string
           nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
+        schemaType:
+          type: string
+          example: "CEPC-S-7.1"
         countryName:
           type: string
           example: 'Scotland'
@@ -4345,6 +4351,9 @@ components:
           $ref: '#/components/schemas/AssessmentId'
           nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
+        schemaType:
+          type: string
+          example: "CS63-S-7.0"
         countryName:
           type: string
           example: 'Scotland'
@@ -4478,6 +4487,9 @@ components:
           type: string
           nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
+        schemaType:
+          type: string
+          example: "DECAR-S-7.0"
         countryName:
           type: string
           example: 'Scotland'
@@ -4659,6 +4671,9 @@ components:
         countryName:
           type: string
           example: 'Scotland'
+        schemaType:
+          type: string
+          example: "DECAR-S-7.0"
         energyBandFromRelatedCertificate:
           type: string
           example: "b"
