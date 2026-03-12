@@ -29,7 +29,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
   context "when the client has a migrate Scotland role" do
     context "when migrating a Scottish domestic assessment" do
-      let(:migrated_scotland_rdsap_data) do
+      let(:migrated_scotland_rdsap_qualification_data) do
         ActiveRecord::Base.connection.exec_query(
           "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
         ).entries.first
@@ -83,7 +83,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                       migrated: "true"
 
           expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
-          expect(migrated_scotland_rdsap_data).to eq expected_rdsap_data
+          expect(migrated_scotland_rdsap_qualification_data).to eq expected_rdsap_data
         end
 
         context "when migrating the same assessment ID" do
@@ -107,7 +107,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                              },
                              schema_name: "RdSAP-Schema-S-19.0",
                              migrated: "true"
-            expect { migrated_scotland_rdsap_data["migrated"] }.not_to raise_error
+            expect { migrated_scotland_rdsap_qualification_data["migrated"] }.not_to raise_error
           end
         end
 
@@ -137,8 +137,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                         migrated: true).status
 
             expect(response).to eq 201
-            expect(migrated_scotland_rdsap_data["migrated"]).to be_truthy
-            expect(migrated_scotland_rdsap_data["scheme_assessor_id"]).to eq "UNQU000000"
+            expect(migrated_scotland_rdsap_qualification_data["migrated"]).to be_truthy
+            expect(migrated_scotland_rdsap_qualification_data["scheme_assessor_id"]).to eq "UNQU000000"
           end
         end
       end

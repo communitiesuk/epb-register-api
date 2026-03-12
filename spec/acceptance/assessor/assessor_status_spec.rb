@@ -229,5 +229,40 @@ describe "Acceptance::AssessorStatus" do
 
       expect(response[:data]).to eq(assessorStatusEvents: [])
     end
+
+    # it "returns assessors when a Scottish qualification is changed" do
+    #   create_assessor(
+    #     scheme_id: test_scheme_id,
+    #     assessor_id: "SPEC000008",
+    #     first_name: "Ash",
+    #     last_name: "Doe",
+    #     scotland_rdsap: "ACTIVE",
+    #     )
+    #   create_assessor(
+    #     scheme_id: test_scheme_id,
+    #     assessor_id: "SPEC000008",
+    #     first_name: "Ash",
+    #     last_name: "Doe",
+    #     scotland_rdsap: "INACTIVE",
+    #     )
+    #
+    #
+    #   expect(response[:data]).to eq(
+    #                                assessorStatusEvents: [
+    #                                  {
+    #                                    firstName: "Ash",
+    #                                    lastName: "Doe",
+    #                                    middleNames: nil,
+    #                                    schemeAssessorId: "SPEC000008",
+    #                                    dateOfBirth: "1991-02-25",
+    #                                    qualificationChange: {
+    #                                      qualificationType: "domestic_rd_sap",
+    #                                      previousStatus: "ACTIVE",
+    #                                      newStatus: "INACTIVE",
+    #                                    },
+    #                                  },
+    #                                ],
+    #                                )
+    # end
   end
 end

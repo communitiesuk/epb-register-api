@@ -54,6 +54,13 @@ describe "Acceptance::Assessor" do
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "ACTIVE",
         gda: "ACTIVE",
+        scotlandRdsap: "ACTIVE",
+        scotlandSapExistingBuilding: "ACTIVE",
+        scotlandSapNewBuilding: "ACTIVE",
+        scotlandDecAndAr: "ACTIVE",
+        scotlandNondomesticExistingBuilding: "ACTIVE",
+        scotlandNondomesticNewBuilding: "ACTIVE",
+        scotlandSection63: "ACTIVE"
       },
     }
   end
@@ -130,6 +137,13 @@ describe "Acceptance::Assessor" do
                   nonDomesticNos4: "ACTIVE",
                   nonDomesticNos5: "ACTIVE",
                   gda: "ACTIVE",
+                  scotlandRdsap: "ACTIVE",
+                  scotlandSapExistingBuilding: "ACTIVE",
+                  scotlandSapNewBuilding: "ACTIVE",
+                  scotlandDecAndAr: "ACTIVE",
+                  scotlandNondomesticExistingBuilding: "ACTIVE",
+                  scotlandNondomesticNewBuilding: "ACTIVE",
+                  scotlandSection63: "ACTIVE"
                 },
               },
               meta: {},
@@ -202,6 +216,13 @@ describe "Acceptance::Assessor" do
           nonDomesticNos4: "ACTIVE",
           nonDomesticNos5: "ACTIVE",
           gda: "ACTIVE",
+          scotlandRdsap: "ACTIVE",
+          scotlandSapExistingBuilding: "ACTIVE",
+          scotlandSapNewBuilding: "ACTIVE",
+          scotlandDecAndAr: "ACTIVE",
+          scotlandNondomesticExistingBuilding: "ACTIVE",
+          scotlandNondomesticNewBuilding: "ACTIVE",
+          scotlandSection63: "ACTIVE"
         },
       }
     end
@@ -402,6 +423,13 @@ describe "Acceptance::Assessor" do
                 nonDomesticNos4: "ACTIVE",
                 nonDomesticNos5: "ACTIVE",
                 gda: "ACTIVE",
+                scotlandRdsap: "ACTIVE",
+                scotlandSapExistingBuilding: "ACTIVE",
+                scotlandSapNewBuilding: "ACTIVE",
+                scotlandDecAndAr: "ACTIVE",
+                scotlandNondomesticExistingBuilding: "ACTIVE",
+                scotlandNondomesticNewBuilding: "ACTIVE",
+                scotlandSection63: "ACTIVE"
               },
               contactDetails: {
                 email: "person@person.com",
@@ -448,6 +476,13 @@ describe "Acceptance::Assessor" do
                 nonDomesticNos4: "ACTIVE",
                 nonDomesticNos5: "ACTIVE",
                 gda: "ACTIVE",
+                scotlandRdsap: "ACTIVE",
+                scotlandSapExistingBuilding: "ACTIVE",
+                scotlandSapNewBuilding: "ACTIVE",
+                scotlandDecAndAr: "ACTIVE",
+                scotlandNondomesticExistingBuilding: "ACTIVE",
+                scotlandNondomesticNewBuilding: "ACTIVE",
+                scotlandSection63: "ACTIVE"
               },
               contactDetails: {
                 email: "person@person.com",
@@ -494,6 +529,13 @@ describe "Acceptance::Assessor" do
                 nonDomesticNos4: "ACTIVE",
                 nonDomesticNos5: "ACTIVE",
                 gda: "ACTIVE",
+                scotlandRdsap: "ACTIVE",
+                scotlandSapExistingBuilding: "ACTIVE",
+                scotlandSapNewBuilding: "ACTIVE",
+                scotlandDecAndAr: "ACTIVE",
+                scotlandNondomesticExistingBuilding: "ACTIVE",
+                scotlandNondomesticNewBuilding: "ACTIVE",
+                scotlandSection63: "ACTIVE"
               },
               contactDetails: {
                 email: "person@person.com",
@@ -540,6 +582,13 @@ describe "Acceptance::Assessor" do
                 nonDomesticNos4: "ACTIVE",
                 nonDomesticNos5: "ACTIVE",
                 gda: "ACTIVE",
+                scotlandRdsap: "ACTIVE",
+                scotlandSapExistingBuilding: "ACTIVE",
+                scotlandSapNewBuilding: "ACTIVE",
+                scotlandDecAndAr: "ACTIVE",
+                scotlandNondomesticExistingBuilding: "ACTIVE",
+                scotlandNondomesticNewBuilding: "ACTIVE",
+                scotlandSection63: "ACTIVE"
               },
               contactDetails: {
                 email: "person@person.com",
@@ -761,6 +810,27 @@ describe "Acceptance::Assessor" do
         expect(JSON.parse(response.body)["data"]).to eq(
           JSON.parse(expected_response.to_json),
         )
+      end
+
+      it "updated a Scottish qualification successfully" do
+        assessor = valid_assessor_request
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
+
+        assessor[:qualifications][:scotlandRdsap] = "INACTIVE"
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
+
+        response = fetch_assessor(scheme_id:, assessor_id: "ASSR000999")
+
+        expected_response = valid_assessor_request
+        expected_response[:registeredBy] = {
+          schemeId: scheme_id,
+          name: "test scheme",
+        }
+        expected_response[:schemeAssessorId] = "ASSR000999"
+        expected_response[:qualifications][:scotlandRdsap] = "INACTIVE"
+        expect(JSON.parse(response.body)["data"]).to eq(
+                                                       JSON.parse(expected_response.to_json),
+                                                       )
       end
 
       it "replaces search_results_comparison_postcode in upcase" do

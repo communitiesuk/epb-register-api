@@ -56,6 +56,7 @@ module Gateway
     end
 
     def add(assessor_status_event_domain)
+      pp AssessorsStatusEvents.create(assessor_status_event_domain.to_record)
       AssessorsStatusEvents.create(assessor_status_event_domain.to_record)
     end
   end

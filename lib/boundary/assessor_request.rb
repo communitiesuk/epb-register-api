@@ -33,7 +33,14 @@ module Boundary
                 :non_domestic_nos3_qualification,
                 :non_domestic_nos4_qualification,
                 :non_domestic_nos5_qualification,
-                :gda_qualification
+                :gda_qualification,
+                :scotland_rdsap_qualification,
+                :scotland_sap_existing_building_qualification,
+                :scotland_sap_new_building_qualification,
+                :scotland_dec_and_ar_qualification,
+                :scotland_nondomestic_existing_building_qualification,
+                :scotland_nondomestic_new_building_qualification,
+                :scotland_section63_qualification
 
     def initialize(body: nil, scheme_assessor_id: nil, registered_by_id: nil)
       @scheme_assessor_id = scheme_assessor_id
@@ -82,6 +89,13 @@ module Boundary
       @non_domestic_nos5_qualification =
         body.dig(:qualifications, :non_domestic_nos5)
       @gda_qualification = body.dig(:qualifications, :gda)
+      @scotland_rdsap_qualification = body.dig(:qualifications, :scotland_rdsap)
+      @scotland_sap_existing_building_qualification = body.dig(:qualifications, :scotland_sap_existing_building)
+      @scotland_sap_new_building_qualification = body.dig(:qualifications, :scotland_sap_new_building)
+      @scotland_dec_and_ar_qualification = body.dig(:qualifications, :scotland_dec_and_ar)
+      @scotland_nondomestic_existing_building_qualification = body.dig(:qualifications, :scotland_nondomestic_existing_building)
+      @scotland_nondomestic_new_building_qualification = body.dig(:qualifications, :scotland_nondomestic_new_building)
+      @scotland_section63_qualification = body.dig(:qualifications, :scotland_section63)
     end
   end
 end

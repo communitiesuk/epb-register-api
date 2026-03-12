@@ -52,6 +52,13 @@ def lodge_assessor
       non_domestic_sp3: "ACTIVE",
       non_domestic_cc4: "ACTIVE",
       gda: "ACTIVE",
+      scotland_dec_and_ar: "INACTIVE",
+      scotland_nondomestic_existing_building: "INACTIVE",
+      scotland_nondomestic_new_building: "INACTIVE",
+      scotland_rdsap: "INACTIVE",
+      scotland_sap_existing_building:"INACTIVE",
+      scotland_sap_new_building: "INACTIVE",
+      scotland_section63: "INACTIVE",
     ),
   )
   scheme_id
