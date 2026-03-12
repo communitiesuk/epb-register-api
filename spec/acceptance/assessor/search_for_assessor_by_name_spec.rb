@@ -21,6 +21,13 @@ describe "Searching for an assessor by name" do
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "ACTIVE",
         gda: "ACTIVE",
+        scotlandRdsap: "INACTIVE",
+        scotlandSapExistingBuilding: "INACTIVE",
+        scotlandSapNewBuilding: "INACTIVE",
+        scotlandDecAndAr: "INACTIVE",
+        scotlandNondomesticExistingBuilding: "INACTIVE",
+        scotlandNondomesticNewBuilding: "INACTIVE",
+        scotlandSection63: "INACTIVE"
       },
     }
   end
@@ -46,6 +53,13 @@ describe "Searching for an assessor by name" do
         non_domestic_nos4: "INACTIVE",
         non_domestic_nos5: "INACTIVE",
         gda: "INACTIVE",
+        scotlandRdsap: "INACTIVE",
+        scotlandSapExistingBuilding: "INACTIVE",
+        scotlandSapNewBuilding: "INACTIVE",
+        scotlandDecAndAr: "INACTIVE",
+        scotlandNondomesticExistingBuilding: "INACTIVE",
+        scotlandNondomesticNewBuilding: "INACTIVE",
+        scotlandSection63: "INACTIVE"
       },
     }
   end
@@ -71,6 +85,13 @@ describe "Searching for an assessor by name" do
         non_domestic_nos4: "ACTIVE",
         non_domestic_nos5: "ACTIVE",
         gda: "INACTIVE",
+        scotlandRdsap: "INACTIVE",
+        scotlandSapExistingBuilding: "INACTIVE",
+        scotlandSapNewBuilding: "INACTIVE",
+        scotlandDecAndAr: "INACTIVE",
+        scotlandNondomesticExistingBuilding: "INACTIVE",
+        scotlandNondomesticNewBuilding: "INACTIVE",
+        scotlandSection63: "INACTIVE"
       },
     }
   end
@@ -149,7 +170,25 @@ describe "Searching for an assessor by name" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_domestic_assessor_request)
       add_assessor(scheme_id:, assessor_id: "SCHE665544", body: valid_non_domestic_assessor_request)
-      domestic_qualifications = { "domesticRdSap" => "ACTIVE", "domesticSap" => "ACTIVE", "gda" => "INACTIVE", "nonDomesticCc4" => "INACTIVE", "nonDomesticDec" => "INACTIVE", "nonDomesticNos3" => "INACTIVE", "nonDomesticNos4" => "INACTIVE", "nonDomesticNos5" => "INACTIVE", "nonDomesticSp3" => "INACTIVE" }
+      domestic_qualifications =
+        {
+          "domesticRdSap" => "ACTIVE",
+          "domesticSap" => "ACTIVE",
+          "gda" => "INACTIVE",
+          "nonDomesticCc4" => "INACTIVE",
+          "nonDomesticDec" => "INACTIVE",
+          "nonDomesticNos3" => "INACTIVE",
+          "nonDomesticNos4" => "INACTIVE",
+          "nonDomesticNos5" => "INACTIVE",
+          "nonDomesticSp3" => "INACTIVE",
+          "scotlandRdsap" => "INACTIVE",
+          "scotlandSapExistingBuilding" => "INACTIVE",
+          "scotlandSapNewBuilding" => "INACTIVE",
+          "scotlandDecAndAr" => "INACTIVE",
+          "scotlandNondomesticExistingBuilding" => "INACTIVE",
+          "scotlandNondomesticNewBuilding" => "INACTIVE",
+          "scotlandSection63" => "INACTIVE"
+        }
       search_response = assessors_search_by_name("Per%20Some", qualification_type: "domestic")
       response = JSON.parse(search_response.body)
       expect(response["data"]["assessors"].size).to eq(1)
@@ -160,7 +199,25 @@ describe "Searching for an assessor by name" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_domestic_assessor_request)
       add_assessor(scheme_id:, assessor_id: "SCHE665544", body: valid_non_domestic_assessor_request)
-      non_domestic_qualifications = { "domesticRdSap" => "INACTIVE", "domesticSap" => "INACTIVE", "gda" => "INACTIVE", "nonDomesticCc4" => "ACTIVE", "nonDomesticDec" => "ACTIVE", "nonDomesticNos3" => "ACTIVE", "nonDomesticNos4" => "ACTIVE", "nonDomesticNos5" => "ACTIVE", "nonDomesticSp3" => "ACTIVE" }
+      non_domestic_qualifications =
+        {
+          "domesticRdSap" => "INACTIVE",
+          "domesticSap" => "INACTIVE",
+          "gda" => "INACTIVE",
+          "nonDomesticCc4" => "ACTIVE",
+          "nonDomesticDec" => "ACTIVE",
+          "nonDomesticNos3" => "ACTIVE",
+          "nonDomesticNos4" => "ACTIVE",
+          "nonDomesticNos5" => "ACTIVE",
+          "nonDomesticSp3" => "ACTIVE",
+          "scotlandRdsap" => "INACTIVE",
+          "scotlandSapExistingBuilding" => "INACTIVE",
+          "scotlandSapNewBuilding" => "INACTIVE",
+          "scotlandDecAndAr" => "INACTIVE",
+          "scotlandNondomesticExistingBuilding" => "INACTIVE",
+          "scotlandNondomesticNewBuilding" => "INACTIVE",
+          "scotlandSection63" => "INACTIVE"
+        }
       search_response = assessors_search_by_name("Per%20Some", qualification_type: "nonDomestic")
       response = JSON.parse(search_response.body)
 

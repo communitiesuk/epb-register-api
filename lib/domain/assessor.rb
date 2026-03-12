@@ -12,7 +12,14 @@ module Domain
                 :non_domestic_nos5_qualification,
                 :non_domestic_dec_qualification,
                 :non_domestic_sp3_qualification,
-                :non_domestic_cc4_qualification
+                :non_domestic_cc4_qualification,
+                :scotland_rdsap_qualification,
+                :scotland_sap_existing_building_qualification,
+                :scotland_sap_new_building_qualification,
+                :scotland_dec_and_ar_qualification,
+                :scotland_nondomestic_existing_building_qualification,
+                :scotland_nondomestic_new_building_qualification,
+                :scotland_section63_qualification
 
     def initialize(
       scheme_assessor_id: nil,
@@ -49,7 +56,14 @@ module Domain
       non_domestic_nos3_qualification: nil,
       non_domestic_nos4_qualification: nil,
       non_domestic_nos5_qualification: nil,
-      gda_qualification: nil
+      gda_qualification: nil,
+      scotland_rdsap_qualification: nil,
+      scotland_sap_existing_building_qualification: nil,
+      scotland_sap_new_building_qualification: nil,
+      scotland_dec_and_ar_qualification: nil,
+      scotland_nondomestic_existing_building_qualification: nil,
+      scotland_nondomestic_new_building_qualification: nil,
+      scotland_section63_qualification: nil
     )
       @scheme_assessor_id = scheme_assessor_id
       @first_name = first_name
@@ -86,6 +100,13 @@ module Domain
       @non_domestic_nos4_qualification = non_domestic_nos4_qualification
       @non_domestic_nos5_qualification = non_domestic_nos5_qualification
       @gda_qualification = gda_qualification
+      @scotland_rdsap_qualification = scotland_rdsap_qualification
+      @scotland_sap_existing_building_qualification = scotland_sap_existing_building_qualification
+      @scotland_sap_new_building_qualification = scotland_sap_new_building_qualification
+      @scotland_dec_and_ar_qualification = scotland_dec_and_ar_qualification
+      @scotland_nondomestic_existing_building_qualification = scotland_nondomestic_existing_building_qualification
+      @scotland_nondomestic_new_building_qualification = scotland_nondomestic_new_building_qualification
+      @scotland_section63_qualification = scotland_section63_qualification
     end
 
     def to_hash
@@ -140,6 +161,13 @@ module Domain
           non_domestic_nos5:
             filter_qualification(@non_domestic_nos5_qualification),
           gda: filter_qualification(@gda_qualification),
+          scotland_rdsap: filter_qualification(@scotland_rdsap_qualification),
+          scotland_sap_existing_building: filter_qualification(@scotland_sap_existing_building_qualification),
+          scotland_sap_new_building: filter_qualification(@scotland_sap_new_building_qualification),
+          scotland_dec_and_ar: filter_qualification(@scotland_dec_and_ar_qualification),
+          scotland_nondomestic_existing_building: filter_qualification(@scotland_nondomestic_existing_building_qualification),
+          scotland_nondomestic_new_building: filter_qualification(@scotland_nondomestic_new_building_qualification),
+          scotland_section63: filter_qualification(@scotland_section63_qualification)
         },
       }
 
@@ -186,6 +214,13 @@ module Domain
         non_domestic_nos4_qualification: @non_domestic_nos4_qualification,
         non_domestic_nos5_qualification: @non_domestic_nos5_qualification,
         gda_qualification: @gda_qualification,
+        scotland_rdsap_qualification: @scotland_rdsap_qualification,
+        scotland_sap_existing_building_qualification: @scotland_sap_existing_building_qualification,
+        scotland_sap_new_building_qualification: @scotland_sap_new_building_qualification,
+        scotland_dec_and_ar_qualification: @scotland_dec_and_ar_qualification,
+        scotland_nondomestic_existing_building_qualification: @scotland_nondomestic_existing_building_qualification,
+        scotland_nondomestic_new_building_qualification: @scotland_nondomestic_new_building_qualification,
+        scotland_section63_qualification: @scotland_section63_qualification
       }
     end
 

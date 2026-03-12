@@ -22,6 +22,13 @@ describe "Acceptance::SearchForAssessor" do
         non_domestic_nos4: "INACTIVE",
         non_domestic_nos5: "INACTIVE",
         gda: "INACTIVE",
+        scotland_dec_and_ar: "INACTIVE",
+        scotland_nondomestic_existing_building: "INACTIVE",
+        scotland_nondomestic_new_building: "INACTIVE",
+        scotland_rdsap: "INACTIVE",
+        scotland_sap_existing:"INACTIVE",
+        scotland_sap_new_building: "INACTIVE",
+        scotland_section63: "INACTIVE",
       },
     }
   end
@@ -190,13 +197,19 @@ describe "Acceptance::SearchForAssessor" do
               nonDomesticNos4: "INACTIVE",
               nonDomesticNos5: "INACTIVE",
               gda: "INACTIVE",
+              scotlandDecAndAr: "INACTIVE",
+              scotlandNondomesticExistingBuilding: "INACTIVE",
+              scotlandNondomesticNewBuilding: "INACTIVE",
+              scotlandRdsap: "INACTIVE",
+              scotlandSapExistingBuilding:"INACTIVE",
+              scotlandSapNewBuilding: "INACTIVE",
+              scotlandSection63: "INACTIVE",
             },
             distanceFromPostcodeInMiles: 0.0,
           }.to_json,
         )
 
       response_json["data"]["assessors"][0]["registeredBy"]["schemeId"] = 25
-
       expect(response_json["data"]["assessors"][0]).to eq(expected_response)
     end
 

@@ -130,6 +130,34 @@ module Controller
               type: "string",
               enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
+            scotlandDecAndAr: {
+              type: "string",
+            enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
+            scotlandNondomesticExistingBuilding: {
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
+            scotlandNondomesticNewBuilding: {
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
+            scotlandRdsap: {
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
+            scotlandSapExistingBuilding: {
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
+            scotlandSapNewBuilding: {
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
+            scotlandSection63: {
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+            },
           },
         },
       },
@@ -344,7 +372,7 @@ module Controller
           env[:auth_token].sub,
         )
       assessor_record = create_assessor_response[:assessor]
-
+      # pp assessor_record
       if create_assessor_response[:assessor_was_newly_created]
         @events.event(:new_assessor_registered, scheme_assessor_id)
         json_api_response(code: 201, data: create_assessor_response[:assessor])

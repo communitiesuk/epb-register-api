@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_05_113834) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_11_120732) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -140,13 +140,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_113834) do
     t.string "non_domestic_sp3_qualification"
     t.string "postcode"
     t.integer "registered_by", limit: 2, null: false
-    t.string "scotland_dec_and_ar"
-    t.string "scotland_nondomestic_existing_building"
-    t.string "scotland_nondomestic_new_building"
-    t.string "scotland_rdsap"
-    t.string "scotland_sap_existing_building"
-    t.string "scotland_sap_new_building"
-    t.string "scotland_section_63"
+    t.string "scotland_dec_and_ar_qualification"
+    t.string "scotland_nondomestic_existing_building_qualification"
+    t.string "scotland_nondomestic_new_building_qualification"
+    t.string "scotland_rdsap_qualification"
+    t.string "scotland_sap_existing_building_qualification"
+    t.string "scotland_sap_new_building_qualification"
+    t.string "scotland_section63_qualification"
     t.string "search_results_comparison_postcode"
     t.string "telephone_number"
     t.string "town"

@@ -33,12 +33,22 @@ module Gateway
     NON_DOMESTIC_NOS3_COLUMN = :non_domestic_nos3_qualification
     NON_DOMESTIC_NOS4_COLUMN = :non_domestic_nos4_qualification
     NON_DOMESTIC_NOS5_COLUMN = :non_domestic_nos5_qualification
+    SCOTLAND_RDSAP_COLUMN = :scotland_rdsap_qualification
+    SCOTLAND_SAP_EXISTING_BUILDING_COLUMN = :scotland_sap_existing_building_qualification
+    SCOTLAND_SAP_NEW_BUILDING_COLUMN = :scotland_sap_new_building_qualification
+    SCOTLAND_DEC_AND_AR_COLUMN = :scotland_dec_and_ar_qualification
+    SCOTLAND_NONDOMESTIC_EXISTING_BUILDING_COLUMN = :scotland_nondomestic_existing_building_qualification
+    SCOTLAND_NONDOMESTIC_NEW_BUILDING_COLUMN = :scotland_nondomestic_new_building_qualification
+    SCOTLAND_SECTION63_COLUMN = :scotland_section63_qualification
     GDA_COLUMN = :gda_qualification
     REGISTERED_BY_COLUMN = :registered_by
     QUALIFICATION_TYPES = {
       domestic: %w[
         domestic_sap_qualification
         domestic_rd_sap_qualification
+        scotland_rdsap_qualification
+        scotland_sap_existing_building_qualification
+        scotland_sap_new_building_qualification
       ],
       non_domestic: %w[
         non_domestic_sp3_qualification
@@ -47,6 +57,10 @@ module Gateway
         non_domestic_nos3_qualification
         non_domestic_nos4_qualification
         non_domestic_nos5_qualification
+        scotland_dec_and_ar_qualification
+        scotland_nondomestic_existing_building_qualification
+        scotland_nondomestic_new_building_qualification
+        scotland_section63_qualification
       ],
     }.freeze
 
@@ -93,6 +107,13 @@ module Gateway
         non_domestic_nos4_qualification: row[NON_DOMESTIC_NOS4_COLUMN.to_s],
         non_domestic_nos5_qualification: row[NON_DOMESTIC_NOS5_COLUMN.to_s],
         gda_qualification: row[GDA_COLUMN.to_s],
+        scotland_rdsap_qualification: row[SCOTLAND_RDSAP_COLUMN.to_s],
+        scotland_sap_existing_building_qualification: row[SCOTLAND_SAP_EXISTING_BUILDING_COLUMN.to_s],
+        scotland_sap_new_building_qualification: row[SCOTLAND_SAP_NEW_BUILDING_COLUMN.to_s],
+        scotland_dec_and_ar_qualification: row[SCOTLAND_DEC_AND_AR_COLUMN.to_s],
+        scotland_nondomestic_existing_building_qualification: row[SCOTLAND_NONDOMESTIC_EXISTING_BUILDING_COLUMN.to_s],
+        scotland_nondomestic_new_building_qualification: row[SCOTLAND_NONDOMESTIC_NEW_BUILDING_COLUMN.to_s],
+        scotland_section63_qualification: row[SCOTLAND_SECTION63_COLUMN.to_s],
       )
     end
 
@@ -122,6 +143,20 @@ module Gateway
         NON_DOMESTIC_NOS5_COLUMN
       when "gda"
         GDA_COLUMN
+      when "scotlandRdsap"
+        SCOTLAND_RDSAP_COLUMN
+      when "scotlandSapExistingBuilding"
+        SCOTLAND_SAP_EXISTING_BUILDING_COLUMN
+      when "scotlandSapNewBuilding"
+        SCOTLAND_SAP_NEW_BUILDING_COLUMN
+      when "scotlandDecAndAr"
+        SCOTLAND_DEC_AND_AR_COLUMN
+      when "scotlandNondomesticExistingBuilding"
+        SCOTLAND_NONDOMESTIC_EXISTING_BUILDING_COLUMN
+      when "scotlandNondomesticNewBuilding"
+        SCOTLAND_NONDOMESTIC_NEW_BUILDING_COLUMN
+      when "scotlandSection63"
+        SCOTLAND_SECTION63_COLUMN
       else
         raise ArgumentError, "Unrecognised qualification type"
       end
@@ -189,7 +224,10 @@ module Gateway
            domestic_rd_sap_qualification, non_domestic_sp3_qualification,
            non_domestic_cc4_qualification, non_domestic_dec_qualification,
            non_domestic_nos3_qualification, non_domestic_nos4_qualification,
-           non_domestic_nos5_qualification, gda_qualification,
+           non_domestic_nos5_qualification, gda_qualification, scotland_dec_and_ar_qualification,
+           scotland_nondomestic_existing_building_qualification, scotland_nondomestic_new_building_qualification,
+           scotland_section63_qualification, scotland_rdsap_qualification, scotland_sap_existing_building_qualification,
+           scotland_sap_new_building_qualification,
             (
               sqrt(abs(POWER(69.1 * (coalesce(a.latitude, d.latitude) - $1), 2) +
                        POWER(69.1 * (coalesce(a.longitude, d.longitude) - $2) *
@@ -208,7 +246,6 @@ module Gateway
           "SQL",
           binds,
         )
-
       result = []
       response.each do |row|
         assessor_hash = row_to_assessor_domain(row).to_hash
@@ -237,7 +274,10 @@ module Gateway
           domestic_rd_sap_qualification, non_domestic_sp3_qualification,
           non_domestic_cc4_qualification, non_domestic_dec_qualification,
           non_domestic_nos3_qualification, non_domestic_nos4_qualification,
-          non_domestic_nos5_qualification, gda_qualification
+          non_domestic_nos5_qualification, gda_qualification, scotland_dec_and_ar_qualification,
+          scotland_nondomestic_existing_building_qualification, scotland_nondomestic_new_building_qualification,
+          scotland_rdsap_qualification, scotland_sap_existing_building_qualification, scotland_sap_new_building_qualification,
+          scotland_section63_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
@@ -340,7 +380,10 @@ module Gateway
           domestic_rd_sap_qualification, non_domestic_sp3_qualification,
           non_domestic_cc4_qualification, non_domestic_dec_qualification,
           non_domestic_nos3_qualification, non_domestic_nos4_qualification,
-          non_domestic_nos5_qualification, gda_qualification
+          non_domestic_nos5_qualification, gda_qualification,scotland_dec_and_ar_qualification,
+          scotland_nondomestic_existing_building_qualification, scotland_nondomestic_new_building_qualification,
+          scotland_rdsap_qualification, scotland_sap_existing_building_qualification, scotland_sap_new_building_qualification,
+          scotland_section63_qualification
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE

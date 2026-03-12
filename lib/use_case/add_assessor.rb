@@ -90,13 +90,22 @@ module UseCase
           non_domestic_nos5_qualification:
             add_assessor_request.non_domestic_nos5_qualification,
           gda_qualification: add_assessor_request.gda_qualification,
+          scotland_rdsap_qualification: add_assessor_request.scotland_rdsap_qualification,
+          scotland_sap_existing_building_qualification: add_assessor_request.scotland_sap_existing_building_qualification,
+          scotland_sap_new_building_qualification: add_assessor_request.scotland_sap_new_building_qualification,
+          scotland_dec_and_ar_qualification: add_assessor_request.scotland_dec_and_ar_qualification,
+          scotland_nondomestic_existing_building_qualification: add_assessor_request.scotland_nondomestic_existing_building_qualification,
+          scotland_nondomestic_new_building_qualification: add_assessor_request.scotland_nondomestic_new_building_qualification,
+          scotland_section63_qualification: add_assessor_request.scotland_section63_qualification
         )
 
       @assessors_gateway.update(assessor)
 
       if existing_assessor
         previous_qualifications = existing_assessor.to_hash[:qualifications]
+        # pp previous_qualifications
         new_qualifications = assessor.to_hash[:qualifications]
+        # pp new_qualifications
 
         previous_qualifications.each do |qualification, status|
           next unless status != new_qualifications[qualification]
