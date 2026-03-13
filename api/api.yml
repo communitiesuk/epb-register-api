@@ -3738,6 +3738,9 @@ components:
           type: string
           nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
+        schemaType:
+          type: string
+          example: "RdSAP-Schema-19.0"
 
     ScottishDomesticEnergyAssessmentSummary:
       type: object
