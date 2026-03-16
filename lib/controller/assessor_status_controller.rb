@@ -16,7 +16,7 @@ module Controller
           Date.parse(params["date"].nil? ? "" : params["date"]),
           scheme_id,
         )
-      # pp events
+
       json_api_response(code: 200, data: { assessorStatusEvents: events })
     rescue StandardError => e
       case e

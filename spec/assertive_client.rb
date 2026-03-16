@@ -634,6 +634,19 @@ def assessors_search(
   )
 end
 
+def scotland_assessors_search(
+  postcode:,
+  qualification:,
+  scopes: %w[scotland_assessor:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/scotland/assessors?postcode=#{postcode}&qualification=#{qualification}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def assessors_search_by_name(
   name,
   qualification_type: nil,

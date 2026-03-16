@@ -27,7 +27,7 @@ describe "Searching for an assessor by name" do
         scotlandDecAndAr: "INACTIVE",
         scotlandNondomesticExistingBuilding: "INACTIVE",
         scotlandNondomesticNewBuilding: "INACTIVE",
-        scotlandSection63: "INACTIVE"
+        scotlandSection63: "INACTIVE",
       },
     }
   end
@@ -59,7 +59,7 @@ describe "Searching for an assessor by name" do
         scotlandDecAndAr: "INACTIVE",
         scotlandNondomesticExistingBuilding: "INACTIVE",
         scotlandNondomesticNewBuilding: "INACTIVE",
-        scotlandSection63: "INACTIVE"
+        scotlandSection63: "INACTIVE",
       },
     }
   end
@@ -91,7 +91,7 @@ describe "Searching for an assessor by name" do
         scotlandDecAndAr: "INACTIVE",
         scotlandNondomesticExistingBuilding: "INACTIVE",
         scotlandNondomesticNewBuilding: "INACTIVE",
-        scotlandSection63: "INACTIVE"
+        scotlandSection63: "INACTIVE",
       },
     }
   end
@@ -187,7 +187,7 @@ describe "Searching for an assessor by name" do
           "scotlandDecAndAr" => "INACTIVE",
           "scotlandNondomesticExistingBuilding" => "INACTIVE",
           "scotlandNondomesticNewBuilding" => "INACTIVE",
-          "scotlandSection63" => "INACTIVE"
+          "scotlandSection63" => "INACTIVE",
         }
       search_response = assessors_search_by_name("Per%20Some", qualification_type: "domestic")
       response = JSON.parse(search_response.body)
@@ -216,7 +216,7 @@ describe "Searching for an assessor by name" do
           "scotlandDecAndAr" => "INACTIVE",
           "scotlandNondomesticExistingBuilding" => "INACTIVE",
           "scotlandNondomesticNewBuilding" => "INACTIVE",
-          "scotlandSection63" => "INACTIVE"
+          "scotlandSection63" => "INACTIVE",
         }
       search_response = assessors_search_by_name("Per%20Some", qualification_type: "nonDomestic")
       response = JSON.parse(search_response.body)

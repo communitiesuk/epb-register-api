@@ -132,7 +132,7 @@ module Controller
             },
             scotlandDecAndAr: {
               type: "string",
-            enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             scotlandNondomesticExistingBuilding: {
               type: "string",

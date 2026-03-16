@@ -11,7 +11,7 @@ module UseCase
       @assessor_gateway = Gateway::AssessorsGateway.new
     end
 
-    def execute(postcode, qualifications)
+    def execute(postcode, qualifications, is_scottish: false)
       postcode&.strip!
       postcode&.upcase!
 
@@ -28,7 +28,7 @@ module UseCase
       latitude = postcodes_geolocation.first[:latitude]
       longitude = postcodes_geolocation.first[:longitude]
 
-      result = @assessor_gateway.search(latitude, longitude, qualifications)
+      result = @assessor_gateway.search(latitude, longitude, qualifications, is_scottish: is_scottish)
 
       { data: result, search_postcode: postcode }
     end

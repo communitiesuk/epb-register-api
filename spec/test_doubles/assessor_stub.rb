@@ -13,7 +13,7 @@ class AssessorStub
     scotland_nondomestic_existing_building: "INACTIVE",
     scotland_nondomestic_new_building: "INACTIVE",
     scotland_rdsap: "INACTIVE",
-    scotland_sap_existing_building:"INACTIVE",
+    scotland_sap_existing_building: "INACTIVE",
     scotland_sap_new_building: "INACTIVE",
     scotland_section63: "INACTIVE",
     first_name: "Someone",
@@ -51,6 +51,5 @@ class AssessorStub
         email: "person@person.com",
       },
     }
-
   end
 end
