@@ -30,7 +30,7 @@ module Events
 
     def attach_match_address_request
       @event_broadcaster.on :match_address_request do |**data|
-        if address_matching_during_lodgement_enabled?
+        unless address_matching_during_lodgement_disabled?
           match_address_use_case = ApiFactory.match_assessment_address_use_case
           match_address_use_case.execute(
             assessment_id: data.fetch(:assessment_id),
@@ -111,8 +111,8 @@ module Events
       ENV["STAGE"] != "test"
     end
 
-    def address_matching_during_lodgement_enabled?
-      Helper::Toggles.enabled?("address-matching-during-lodgement")
+    def address_matching_during_lodgement_disabled?
+      Helper::Toggles.enabled?("block-address-matching-during-lodgement")
     end
   end
 end

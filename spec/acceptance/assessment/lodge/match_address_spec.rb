@@ -65,9 +65,9 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
       Events::Broadcaster.disable!
     end
 
-    context "when the address-matching-during-lodgement flag is enabled" do
+    context "when the block-address-matching-during-lodgement flag is off" do
       before do
-        allow_any_instance_of(Events::Listener).to receive(:address_matching_during_lodgement_enabled?).and_return(true)
+        allow_any_instance_of(Events::Listener).to receive(:address_matching_during_lodgement_disabled?).and_return(false)
       end
 
       context "when lodging an assessment" do
@@ -173,7 +173,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
       end
     end
 
-    context "when the address-matching-during-lodgement flag is disabled" do
+    context "when the block-address-matching-during-lodgement flag is enabled" do
       let(:unmatched_result) do
         {
           "address_id" => "UPRN-000000000000",
@@ -186,7 +186,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
       end
 
       before do
-        allow_any_instance_of(Events::Listener).to receive(:address_matching_during_lodgement_enabled?).and_return(false)
+        allow_any_instance_of(Events::Listener).to receive(:address_matching_during_lodgement_disabled?).and_return(true)
 
         lodge_assessment(
           assessment_body: rdsap_xml,
@@ -196,6 +196,10 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
           },
           schema_name: "RdSAP-Schema-20.0.0",
         )
+      end
+
+      after do
+        allow_any_instance_of(Events::Listener).to receive(:address_matching_during_lodgement_disabled?).and_return(false)
       end
 
       it "does not update matched address_id or confidence" do

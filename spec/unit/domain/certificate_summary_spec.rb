@@ -302,7 +302,7 @@ describe Domain::CertificateSummary do
           { "email": "a@b.c", "telephone_number": "0555 497 2848", "address": "12 Epc Street, AL1C 2DE" },
       },
       "current_carbon_emission": 2.4,
-      carbon_emissions_current_per_floor_area: "20",
+      "carbon_emissions_current_per_floor_area": "20",
       "current_energy_efficiency_band": "e",
       "current_energy_efficiency_rating": 50,
       "dwelling_type": "Mid-terrace house",
@@ -474,6 +474,7 @@ describe Domain::CertificateSummary do
       "superseded_by": nil,
       "related_assessments": expected_assessments,
       "country_name": "England",
+      "schema_type": "RdSAP-Schema-20.0.0",
       "green_deal_plan": green_deal_plan,
     }
   end
