@@ -1,4 +1,4 @@
-describe "Acceptance::SearchForAssessor" do
+describe "Acceptance::ScottishSearchForAssessor" do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_with_contact_request_body) do
@@ -11,9 +11,9 @@ describe "Acceptance::SearchForAssessor" do
         telephoneNumber: "010199991010101",
         email: "person@person.com",
       },
-      searchResultsComparisonPostcode: "SE1 7EZ",
+      searchResultsComparisonPostcode: "EH8 8FT",
       qualifications: {
-        domestic_rd_sap: "ACTIVE",
+        domestic_rd_sap: "INACTIVE",
         domestic_sap: "INACTIVE",
         non_domestic_sp3: "INACTIVE",
         non_domestic_cc4: "INACTIVE",
@@ -25,7 +25,7 @@ describe "Acceptance::SearchForAssessor" do
         scotland_dec_and_ar: "INACTIVE",
         scotland_nondomestic_existing_building: "INACTIVE",
         scotland_nondomestic_new_building: "INACTIVE",
-        scotland_rdsap: "INACTIVE",
+        scotland_rdsap: "ACTIVE",
         scotland_sap_existing: "INACTIVE",
         scotland_sap_new_building: "INACTIVE",
         scotland_section63: "INACTIVE",
@@ -35,114 +35,114 @@ describe "Acceptance::SearchForAssessor" do
 
   context "when a search postcode is not found" do
     it "returns status 404 for a get" do
-      expect(assessors_search(postcode: "73334", qualification: "domesticRdSap", accepted_responses: [404]).status).to eq(404)
+      expect(scotland_assessors_search(postcode: "73334", qualification: "scotlandRdsap", accepted_responses: [404]).status).to eq(404)
     end
   end
 
   context "when searching without the right params" do
     before do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
     end
 
     it "returns a 400 for postcode search without qualification" do
       expect(assertive_get(
-        "api/assessors?postcode=SE17EZ",
+        "api/scotland/assessors?postcode=EH88FT",
         accepted_responses: [400],
-        scopes: %w[assessor:search],
+        scopes: %w[scotland_assessor:search],
       ).status).to eq 400
     end
 
-    it "returns a 400 or no parameters" do
+    it "returns a 400 for no postcode" do
       expect(assertive_get(
-        "/api/assessors",
+        "api/scotland/assessors?qualification=scotlandRdsap",
         accepted_responses: [400],
-        scopes: %w[assessor:search],
+        scopes: %w[scotland_assessor:search],
       ).status).to eq 400
     end
 
     it "rejects a request which searches for a bad qualification" do
-      add_postcodes("SA70 7BD")
-      expect(assessors_search(postcode: "SA707BD", qualification: "doubleGlazingFitter", accepted_responses: [400]).status).to eq 400
+      add_postcodes("EH8 8FT")
+      expect(scotland_assessors_search(postcode: "EH8 8FT", qualification: "doubleGlazingFitter", accepted_responses: [400]).status).to eq 400
     end
   end
 
   context "when a search postcode is valid" do
     it "allows searching using a normal looking postcode" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
       scheme_id = add_scheme_and_get_id
       add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
-      response = assessors_search(postcode: "SE1 7EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
     it "searches using an outcode if we dont know the postcode" do
-      add_outcodes("SE1")
+      add_outcodes("EH8")
       scheme_id = add_scheme_and_get_id
       add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
-      response = assessors_search(postcode: "SE1 7EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
     it "allows searching using a postcode with excessive spaces" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
       scheme_id = add_scheme_and_get_id
       add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
-      response = assessors_search(postcode: "  SE1 7EZ   ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "  EH8 8FT   ", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
     it "allows searching using a postcode with no spaces" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
       scheme_id = add_scheme_and_get_id
       add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
-      response = assessors_search(postcode: "SE17EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH88FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
     it "allows searching using a lowercase postcode" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
       scheme_id = add_scheme_and_get_id
       add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
                    body: valid_assessor_with_contact_request_body
 
-      response = assessors_search(postcode: "se1 7ez", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "eh8 8ft", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
     it "has the properties we expect" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
 
-      response = assessors_search(postcode: "SE17EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json).to include("data", "meta")
     end
 
     it "has the assessors of the shape we expect" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id:,
@@ -150,14 +150,14 @@ describe "Acceptance::SearchForAssessor" do
         body: valid_assessor_with_contact_request_body,
       )
 
-      response = assessors_search(postcode: "SE17EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]).to include("assessors")
     end
 
     it "has the over all hash of the shape we expect" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT")
 
       scheme_id = add_scheme_and_get_id
 
@@ -167,7 +167,7 @@ describe "Acceptance::SearchForAssessor" do
         body: valid_assessor_with_contact_request_body,
       )
 
-      response = assessors_search(postcode: "SE17EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
 
       response_json = JSON.parse(response.body)
 
@@ -182,14 +182,14 @@ describe "Acceptance::SearchForAssessor" do
               schemeId: 25,
             },
             schemeAssessorId: "ASSR999999",
-            searchResultsComparisonPostcode: "SE1 7EZ",
+            searchResultsComparisonPostcode: "EH8 8FT",
             contactDetails: {
               telephoneNumber: "010199991010101",
               email: "person@person.com",
             },
             qualifications: {
               domesticSap: "INACTIVE",
-              domesticRdSap: "ACTIVE",
+              domesticRdSap: "INACTIVE",
               nonDomesticSp3: "INACTIVE",
               nonDomesticCc4: "INACTIVE",
               nonDomesticDec: "INACTIVE",
@@ -200,7 +200,7 @@ describe "Acceptance::SearchForAssessor" do
               scotlandDecAndAr: "INACTIVE",
               scotlandNondomesticExistingBuilding: "INACTIVE",
               scotlandNondomesticNewBuilding: "INACTIVE",
-              scotlandRdsap: "INACTIVE",
+              scotlandRdsap: "ACTIVE",
               scotlandSapExistingBuilding: "INACTIVE",
               scotlandSapNewBuilding: "INACTIVE",
               scotlandSection63: "INACTIVE",
@@ -214,75 +214,74 @@ describe "Acceptance::SearchForAssessor" do
     end
 
     it "does not show assessors outside of 1 degree latitude/longitude" do
-      add_postcodes("SE1 9SG", 51.5045, 0.0865)
-      add_postcodes("NE8 2BH", 54.9680, 1.6062, false)
+      add_postcodes("EH8 8FT", 55.9519, 3.1823)
+      add_postcodes("G2 8LU", 55.8571, 4.2645, false)
       scheme_id = add_scheme_and_get_id
       assessor = valid_assessor_with_contact_request_body
-      assessor[:searchResultsComparisonPostcode] = "NE8 2BH"
+      assessor[:searchResultsComparisonPostcode] = "G2 8LU"
       add_assessor(
         scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
 
-      response = assessors_search(postcode: "SE19SG", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].size).to eq(0)
     end
 
     it "shows distance of assessors inside of 1 degree latitude/longitude" do
-      add_postcodes("SE1 9SG", 51.5045, 0.0865)
-
-      add_postcodes("SW8 5BN", 51.4818, 0.1444, false)
+      add_postcodes("EH8 8FT", 55.9519, 3.1823)
+      add_postcodes("EH1 3DG", 55.9537, 3.1839, false)
 
       scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:searchResultsComparisonPostcode] = "SW8 5BN"
+      assessor[:searchResultsComparisonPostcode] = "EH1 3DG"
       add_assessor(
         scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
 
-      response = assessors_search(postcode: "SE19SG", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
 
       response_json = JSON.parse(response.body)
       expect(
         response_json["data"]["assessors"][0]["distanceFromPostcodeInMiles"],
-      ).to be_between(2, 4)
+      ).to be_between(0, 1)
     end
 
-    it "doesn't return assessors within the search area with only scottish qualifications" do
-      add_postcodes("SE1 7EZ")
+    it "doesn't return assessors within the search area with only non-scottish qualifications" do
+      add_postcodes("EH8 8FT")
       scheme_id = add_scheme_and_get_id
-      scottish_assessor = valid_assessor_with_contact_request_body
-      scottish_assessor[:searchResultsComparisonPostcode] = "SE1 7EZ"
-      scottish_assessor[:qualifications][:scotland_rdsap] = "ACTIVE"
+      english_qualification_assessor = valid_assessor_with_contact_request_body
+      english_qualification_assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
+      english_qualification_assessor[:qualifications][:domestic_rd_sap] = "ACTIVE"
       add_assessor scheme_id:,
                    assessor_id: "ASSR999999",
-                   body: scottish_assessor
+                   body: english_qualification_assessor
 
-      response = assessors_search(postcode: "SE1 7EZ", qualification: "scotlandRdsap", accepted_responses: [400])
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "domesticRdSap", accepted_responses: [400])
       response_json = JSON.parse(response.body)
 
       expect(response_json["errors"][0]["title"]).to eq "Unrecognised qualification type"
     end
 
     it "does not return inactive assessors" do
-      add_postcodes("SE1 5BN", 51.5045, 0.0865)
+      add_postcodes("EH8 8FT", 55.9519, 3.1823)
 
       scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticRdSap] = "INACTIVE"
+      assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
       add_assessor(
         scheme_id:,
         assessor_id: "ASSR999999",
-        body: valid_assessor_with_contact_request_body,
+        body: assessor,
       )
-      response = assessors_search(postcode: "SE15BN", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
 
       response_json = JSON.parse(response.body)
 
@@ -290,54 +289,52 @@ describe "Acceptance::SearchForAssessor" do
     end
 
     it "does return reactivated assessors" do
-      add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+      add_postcodes("EH8 8FT", 55.9519, 3.1823)
 
       scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticRdSap] = "INACTIVE"
+      assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
+      add_assessor(
+        scheme_id:,
+        assessor_id: "ASSR999999",
+        body: assessor,
+      )
+      assessor[:qualifications][:scotland_rdsap] = "ACTIVE"
 
       add_assessor(
         scheme_id:,
         assessor_id: "ASSR999999",
-        body: valid_assessor_with_contact_request_body,
-      )
-      assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-
-      add_assessor(
-        scheme_id:,
-        assessor_id: "ASSR999999",
-        body: valid_assessor_with_contact_request_body,
+        body: assessor,
       )
 
-      response = assessors_search(postcode: "SE17EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
 
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].size).to eq(1)
     end
 
-    it "does not return unactivated assessors" do
-      add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+    it "does not return inactivated assessors" do
+      add_postcodes("EH8 8FT", 55.9519, 3.1823)
       scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticRdSap] = "ACTIVE"
 
       add_assessor(
         scheme_id:,
         assessor_id: "ASSR999999",
-        body: valid_assessor_with_contact_request_body,
+        body: assessor,
       )
 
-      assessor[:qualifications][:domesticRdSap] = "INACTIVE"
+      assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
       add_assessor(
         scheme_id:,
         assessor_id: "ASSR999999",
-        body: valid_assessor_with_contact_request_body,
+        body: assessor,
       )
 
-      response = assessors_search(postcode: "SE17EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
 
       response_json = JSON.parse(response.body)
 
@@ -346,18 +343,18 @@ describe "Acceptance::SearchForAssessor" do
 
     context "when the postcode is not found" do
       it "returns results based on the outcode of the postcode" do
-        add_postcodes("SE1 5BN", 51.5045, 0.0865)
-        add_outcodes("SE1", 51.5045, 0.4865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
+        add_outcodes("EH8", 55.9484, 3.1589)
         scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
-        assessor[:searchResultsComparisonPostcode] = "SE1 5BN"
+        assessor[:searchResultsComparisonPostcode] = "EH8 8FT"
         add_assessor(
           scheme_id:,
           assessor_id: "ASSR999999",
-          body: valid_assessor_with_contact_request_body,
+          body: assessor,
         )
-        response = assessors_search(postcode: "SE19SY", qualification: "domesticRdSap")
+        response = scotland_assessors_search(postcode: "EH8 8DX", qualification: "scotlandRdsap")
 
         response_json = JSON.parse(response.body)
         expect(response_json["data"]["assessors"][0]).to include(
@@ -366,18 +363,18 @@ describe "Acceptance::SearchForAssessor" do
       end
 
       it "returns error when neither postcode or outcode are found" do
-        add_postcodes("SE1 5BN", 51.5045, 0.0865)
-        add_outcodes("SE1", 51.5045, 0.4865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
+        add_outcodes("EH8", 55.9484, 3.1589)
         scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
-        assessor[:searchResultsComparisonPostcode] = "SE1 5BN"
+        assessor[:searchResultsComparisonPostcode] = "EH8 8FT"
         add_assessor(
           scheme_id:,
           assessor_id: "ASSR999999",
           body: valid_assessor_with_contact_request_body,
         )
-        response = assessors_search(postcode: "NE19SY", qualification: "domesticRdSap", accepted_responses: [404])
+        response = scotland_assessors_search(postcode: "EH99 1SP", qualification: "scotlandRdsap", accepted_responses: [404])
         response_json = JSON.parse(response.body)
         expect(response_json.key?("errors")).to be(true)
       end
@@ -385,22 +382,22 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   context "when searching by qualification" do
-    context "when searching domestic sap assessors" do
+    context "when searching domestic sap new building assessors" do
       it "returns only the assessors qualified" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
         scheme_id = add_scheme_and_get_id
 
         sap_assessor = valid_assessor_with_contact_request_body.dup
-        sap_assessor[:qualifications][:domesticSap] = "ACTIVE"
-        sap_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
+        sap_assessor[:qualifications][:scotland_sap_new_building] = "ACTIVE"
+        sap_assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
         add_assessor(scheme_id:, assessor_id: "SAP_123456", body: sap_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
-        rdsap_assessor[:qualifications][:domesticSap] = "INACTIVE"
-        rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
+        rdsap_assessor[:qualifications][:scotland_sap_new_building] = "INACTIVE"
+        rdsap_assessor[:qualifications][:scotland_rdsap] = "ACTIVE"
         add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
-        response = assessors_search(postcode: "SE17EZ", qualification: "domesticSap")
+        response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandSapNewBuilding")
         response_json = JSON.parse(response.body)
         expect(response_json["data"]["assessors"].length).to eq(1)
         expect(
@@ -408,35 +405,36 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("SAP_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "domesticSap",
+            "scotlandSapNewBuilding",
           ],
         ).to eq("ACTIVE")
       end
     end
 
-    context "when searching air conditioning level 3 assessors" do
+    context "when searching domestic sap existing building assessors" do
       it "returns only the assessors qualified" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
         scheme_id = add_scheme_and_get_id
 
-        assessor = valid_assessor_with_contact_request_body
-        assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        assessor[:qualifications][:nonDomesticSp3] = "ACTIVE"
-        add_assessor(scheme_id:, assessor_id: "AC__123456", body: assessor)
+        sap_assessor = valid_assessor_with_contact_request_body.dup
+        sap_assessor[:qualifications][:scotland_sap_existing_building] = "ACTIVE"
+        sap_assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
+        add_assessor(scheme_id:, assessor_id: "SAP_123456", body: sap_assessor)
 
-        assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        assessor[:qualifications][:nonDomesticSp3] = "INACTIVE"
-        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: assessor)
+        rdsap_assessor = valid_assessor_with_contact_request_body.dup
+        rdsap_assessor[:qualifications][:scotland_sap_existing_building] = "INACTIVE"
+        rdsap_assessor[:qualifications][:scotland_rdsap] = "ACTIVE"
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
-        response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticSp3")
+        response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandSapExistingBuilding")
         response_json = JSON.parse(response.body)
         expect(response_json["data"]["assessors"].length).to eq(1)
         expect(
           response_json["data"]["assessors"].first["schemeAssessorId"],
-        ).to eq("AC__123456")
+        ).to eq("SAP_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticSp3",
+            "scotlandSapExistingBuilding",
           ],
         ).to eq("ACTIVE")
       end
@@ -444,20 +442,20 @@ describe "Acceptance::SearchForAssessor" do
 
     context "when searching non domestic dec assessors" do
       it "returns only the assessors qualified" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
         scheme_id = add_scheme_and_get_id
 
         dec_assessor = valid_assessor_with_contact_request_body.dup
-        dec_assessor[:qualifications][:nonDomesticDec] = "ACTIVE"
-        dec_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
+        dec_assessor[:qualifications][:scotland_dec_and_ar] = "ACTIVE"
+        dec_assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
         add_assessor(scheme_id:, assessor_id: "DEC_123456", body: dec_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
-        rdsap_assessor[:qualifications][:nonDomesticDec] = "INACTIVE"
-        rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
+        rdsap_assessor[:qualifications][:scotland_dec_and_ar] = "INACTIVE"
+        rdsap_assessor[:qualifications][:scotland_rdsap] = "ACTIVE"
         add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
-        response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticDec")
+        response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandDecAndAr")
         response_json = JSON.parse(response.body)
         expect(response_json["data"]["assessors"].length).to eq(1)
         expect(
@@ -465,28 +463,28 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("DEC_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticDec",
+            "scotlandDecAndAr",
           ],
         ).to eq("ACTIVE")
       end
     end
 
-    context "when searching non domestic level 3 assessors" do
+    context "when searching Section 63 assessors" do
       it "returns only the assessors qualified" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
         scheme_id = add_scheme_and_get_id
 
         nos3_assessor = valid_assessor_with_contact_request_body.dup
-        nos3_assessor[:qualifications][:nonDomesticNos3] = "ACTIVE"
-        nos3_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
+        nos3_assessor[:qualifications][:scotland_section63] = "ACTIVE"
+        nos3_assessor[:qualifications][:scotland_rdsap] = "INACTIVE"
         add_assessor(scheme_id:, assessor_id: "NOS_123456", body: nos3_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
-        rdsap_assessor[:qualifications][:nonDomesticNos3] = "INACTIVE"
-        rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
+        rdsap_assessor[:qualifications][:scotland_section63] = "INACTIVE"
+        rdsap_assessor[:qualifications][:scotland_rdsap] = "ACTIVE"
         add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
-        response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticNos3")
+        response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandSection63")
         response_json = JSON.parse(response.body)
         expect(response_json["data"]["assessors"].length).to eq(1)
         expect(
@@ -494,65 +492,7 @@ describe "Acceptance::SearchForAssessor" do
         ).to eq("NOS_123456")
         expect(
           response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticNos3",
-          ],
-        ).to eq("ACTIVE")
-      end
-    end
-
-    context "when searching non domestic level 4 assessors" do
-      it "returns only the assessors qualified" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
-        scheme_id = add_scheme_and_get_id
-
-        nos4_assessor = valid_assessor_with_contact_request_body.dup
-        nos4_assessor[:qualifications][:nonDomesticNos4] = "ACTIVE"
-        nos4_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id:, assessor_id: "NOS_123456", body: nos4_assessor)
-
-        rdsap_assessor = valid_assessor_with_contact_request_body.dup
-        rdsap_assessor[:qualifications][:nonDomesticNos4] = "INACTIVE"
-        rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
-
-        response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticNos4")
-        response_json = JSON.parse(response.body)
-        expect(response_json["data"]["assessors"].length).to eq(1)
-        expect(
-          response_json["data"]["assessors"].first["schemeAssessorId"],
-        ).to eq("NOS_123456")
-        expect(
-          response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticNos4",
-          ],
-        ).to eq("ACTIVE")
-      end
-    end
-
-    context "when searching non domestic level 5 assessors" do
-      it "returns only the assessors qualified" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
-        scheme_id = add_scheme_and_get_id
-
-        nos5_assessor = valid_assessor_with_contact_request_body.dup
-        nos5_assessor[:qualifications][:nonDomesticNos5] = "ACTIVE"
-        nos5_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id:, assessor_id: "NOS_123456", body: nos5_assessor)
-
-        rdsap_assessor = valid_assessor_with_contact_request_body.dup
-        rdsap_assessor[:qualifications][:nonDomesticNos5] = "INACTIVE"
-        rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
-
-        response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticNos5")
-        response_json = JSON.parse(response.body)
-        expect(response_json["data"]["assessors"].length).to eq(1)
-        expect(
-          response_json["data"]["assessors"].first["schemeAssessorId"],
-        ).to eq("NOS_123456")
-        expect(
-          response_json["data"]["assessors"].first["qualifications"][
-            "nonDomesticNos5",
+            "scotlandSection63",
           ],
         ).to eq("ACTIVE")
       end
@@ -560,19 +500,19 @@ describe "Acceptance::SearchForAssessor" do
 
     context "when searching multiple types of qualification" do
       it "returns each of the assessors with matching qualifications" do
-        add_postcodes("SE1 7EZ", 51.5045, 0.0865)
+        add_postcodes("EH8 8FT", 55.9519, 3.1823)
         scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
-        assessor[:qualifications][:nonDomesticSp3] = "ACTIVE"
-        assessor[:qualifications][:nonDomesticCc4] = "INACTIVE"
+        assessor[:qualifications][:scotland_section63] = "ACTIVE"
+        assessor[:qualifications][:scotland_dec_and_ar] = "INACTIVE"
         add_assessor(scheme_id:, assessor_id: "AIR_123456", body: assessor)
 
-        assessor[:qualifications][:nonDomesticSp3] = "INACTIVE"
-        assessor[:qualifications][:nonDomesticCc4] = "ACTIVE"
+        assessor[:qualifications][:scotland_section63] = "INACTIVE"
+        assessor[:qualifications][:scotland_dec_and_ar] = "ACTIVE"
         add_assessor(scheme_id:, assessor_id: "COMP654321", body: assessor)
 
-        response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticSp3,nonDomesticCc4")
+        response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandSection63,scotlandDecAndAr")
         response_json = JSON.parse(response.body)
         returned_assessor_ids =
           response_json["data"]["assessors"].map { |a| a["schemeAssessorId"] }
@@ -586,7 +526,7 @@ describe "Acceptance::SearchForAssessor" do
 
   context "when assessors are on an inactive scheme" do
     it "does not return them" do
-      add_postcodes("SE1 7EZ")
+      add_postcodes("EH8 8FT", 55.9519, 3.1823)
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id:,
@@ -594,7 +534,7 @@ describe "Acceptance::SearchForAssessor" do
         body: valid_assessor_with_contact_request_body,
       )
       update_scheme(scheme_id:, body: { name: "Old scheme", active: false })
-      response = assessors_search(postcode: "SE1 7EZ", qualification: "domesticRdSap")
+      response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
       expect(response_json["data"]["assessors"].size).to eq(0)
     end
@@ -602,18 +542,18 @@ describe "Acceptance::SearchForAssessor" do
 
   describe "security scenarios" do
     it "returns a 401 when not authenticated" do
-      expect(assessors_search(
-        postcode: "SE1 7EZ",
-        qualification: "domesticRdSap",
+      expect(scotland_assessors_search(
+        postcode: "EH8 8FT",
+        qualification: "scotlandRdsap",
         accepted_responses: [401],
         should_authenticate: false,
       ).status).to eq 401
     end
 
     it "returns a 403 when the right scopes are not present" do
-      expect(assessors_search(
-        postcode: "SE1 7EZ",
-        qualification: "domesticRdSap",
+      expect(scotland_assessors_search(
+        postcode: "EH8 8FT",
+        qualification: "scotlandRdsap",
         accepted_responses: [403],
         scopes: %w[wrong:scope],
       ).status).to eq 403

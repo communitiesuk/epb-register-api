@@ -60,7 +60,7 @@ describe "Acceptance::Assessor" do
         scotlandDecAndAr: "ACTIVE",
         scotlandNondomesticExistingBuilding: "ACTIVE",
         scotlandNondomesticNewBuilding: "ACTIVE",
-        scotlandSection63: "ACTIVE"
+        scotlandSection63: "ACTIVE",
       },
     }
   end
@@ -143,7 +143,7 @@ describe "Acceptance::Assessor" do
                   scotlandDecAndAr: "ACTIVE",
                   scotlandNondomesticExistingBuilding: "ACTIVE",
                   scotlandNondomesticNewBuilding: "ACTIVE",
-                  scotlandSection63: "ACTIVE"
+                  scotlandSection63: "ACTIVE",
                 },
               },
               meta: {},
@@ -222,7 +222,7 @@ describe "Acceptance::Assessor" do
           scotlandDecAndAr: "ACTIVE",
           scotlandNondomesticExistingBuilding: "ACTIVE",
           scotlandNondomesticNewBuilding: "ACTIVE",
-          scotlandSection63: "ACTIVE"
+          scotlandSection63: "ACTIVE",
         },
       }
     end
@@ -429,7 +429,7 @@ describe "Acceptance::Assessor" do
                 scotlandDecAndAr: "ACTIVE",
                 scotlandNondomesticExistingBuilding: "ACTIVE",
                 scotlandNondomesticNewBuilding: "ACTIVE",
-                scotlandSection63: "ACTIVE"
+                scotlandSection63: "ACTIVE",
               },
               contactDetails: {
                 email: "person@person.com",
@@ -482,7 +482,7 @@ describe "Acceptance::Assessor" do
                 scotlandDecAndAr: "ACTIVE",
                 scotlandNondomesticExistingBuilding: "ACTIVE",
                 scotlandNondomesticNewBuilding: "ACTIVE",
-                scotlandSection63: "ACTIVE"
+                scotlandSection63: "ACTIVE",
               },
               contactDetails: {
                 email: "person@person.com",
@@ -535,7 +535,7 @@ describe "Acceptance::Assessor" do
                 scotlandDecAndAr: "ACTIVE",
                 scotlandNondomesticExistingBuilding: "ACTIVE",
                 scotlandNondomesticNewBuilding: "ACTIVE",
-                scotlandSection63: "ACTIVE"
+                scotlandSection63: "ACTIVE",
               },
               contactDetails: {
                 email: "person@person.com",
@@ -588,7 +588,7 @@ describe "Acceptance::Assessor" do
                 scotlandDecAndAr: "ACTIVE",
                 scotlandNondomesticExistingBuilding: "ACTIVE",
                 scotlandNondomesticNewBuilding: "ACTIVE",
-                scotlandSection63: "ACTIVE"
+                scotlandSection63: "ACTIVE",
               },
               contactDetails: {
                 email: "person@person.com",
@@ -829,8 +829,8 @@ describe "Acceptance::Assessor" do
         expected_response[:schemeAssessorId] = "ASSR000999"
         expected_response[:qualifications][:scotlandRdsap] = "INACTIVE"
         expect(JSON.parse(response.body)["data"]).to eq(
-                                                       JSON.parse(expected_response.to_json),
-                                                       )
+          JSON.parse(expected_response.to_json),
+        )
       end
 
       it "replaces search_results_comparison_postcode in upcase" do

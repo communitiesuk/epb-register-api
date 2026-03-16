@@ -26,7 +26,7 @@ describe "Acceptance::AssessorList" do
         scotlandDecAndAr: "INACTIVE",
         scotlandNondomesticExistingBuilding: "INACTIVE",
         scotlandNondomesticNewBuilding: "INACTIVE",
-        scotlandSection63: "INACTIVE"
+        scotlandSection63: "INACTIVE",
       },
       contact_details: {
         email: "someone@energy.gov",
@@ -146,7 +146,7 @@ describe "Acceptance::AssessorList" do
               "scotlandDecAndAr" => "INACTIVE",
               "scotlandNondomesticExistingBuilding" => "INACTIVE",
               "scotlandNondomesticNewBuilding" => "INACTIVE",
-              "scotlandSection63" => "INACTIVE"
+              "scotlandSection63" => "INACTIVE",
             },
           },
         ],
@@ -156,11 +156,14 @@ describe "Acceptance::AssessorList" do
     end
   end
 
-  context "when a scheme has multiple assessors" do
+  context "when a scheme has multiple assessors including ones with scottish qualifications" do
     it "returns an array of assessors" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id:, assessor_id: "SCHE123456", body: valid_assessor_request_body)
       add_assessor(scheme_id:, assessor_id: "SCHE567890", body: valid_assessor_request_body)
+      valid_scottish_assessor_request_body = valid_assessor_request_body
+      valid_scottish_assessor_request_body[:qualifications][:scotlandRdsap] = "ACTIVE"
+      add_assessor(scheme_id:, assessor_id: "SCHE024680", body: valid_scottish_assessor_request_body)
 
       response =
         fetch_assessors(scheme_id:, auth_data: { 'scheme_ids': [scheme_id] })
@@ -200,7 +203,7 @@ describe "Acceptance::AssessorList" do
               "scotlandDecAndAr" => "INACTIVE",
               "scotlandNondomesticExistingBuilding" => "INACTIVE",
               "scotlandNondomesticNewBuilding" => "INACTIVE",
-              "scotlandSection63" => "INACTIVE"
+              "scotlandSection63" => "INACTIVE",
             },
           },
           {
@@ -236,7 +239,43 @@ describe "Acceptance::AssessorList" do
               "scotlandDecAndAr" => "INACTIVE",
               "scotlandNondomesticExistingBuilding" => "INACTIVE",
               "scotlandNondomesticNewBuilding" => "INACTIVE",
-              "scotlandSection63" => "INACTIVE"
+              "scotlandSection63" => "INACTIVE",
+            },
+          },
+          {
+            "registeredBy" => {
+              "schemeId" => scheme_id,
+              "name" => "test scheme",
+            },
+            "schemeAssessorId" => "SCHE024680",
+            "firstName" => valid_assessor_request_body[:firstName],
+            "middleNames" => valid_assessor_request_body[:middleNames],
+            "lastName" => valid_assessor_request_body[:lastName],
+            "dateOfBirth" => valid_assessor_request_body[:dateOfBirth],
+            "contactDetails" => {
+              "telephoneNumber" => "01234 567",
+              "email" => "someone@energy.gov",
+            },
+            "searchResultsComparisonPostcode" => "",
+            "address" => {},
+            "companyDetails" => {},
+            "qualifications" => {
+              "domesticSap" => "INACTIVE",
+              "domesticRdSap" => "ACTIVE",
+              "nonDomesticSp3" => "INACTIVE",
+              "nonDomesticCc4" => "INACTIVE",
+              "nonDomesticDec" => "INACTIVE",
+              "nonDomesticNos3" => "INACTIVE",
+              "nonDomesticNos4" => "INACTIVE",
+              "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
+              "scotlandRdsap" => "ACTIVE",
+              "scotlandSapExistingBuilding" => "INACTIVE",
+              "scotlandSapNewBuilding" => "INACTIVE",
+              "scotlandDecAndAr" => "INACTIVE",
+              "scotlandNondomesticExistingBuilding" => "INACTIVE",
+              "scotlandNondomesticNewBuilding" => "INACTIVE",
+              "scotlandSection63" => "INACTIVE",
             },
           },
         ],

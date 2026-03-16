@@ -143,6 +143,13 @@ module Gateway
         NON_DOMESTIC_NOS5_COLUMN
       when "gda"
         GDA_COLUMN
+      else
+        raise ArgumentError, "Unrecognised qualification type"
+      end
+    end
+
+    def scottish_qualification_to_column(qualification)
+      case qualification
       when "scotlandRdsap"
         SCOTLAND_RDSAP_COLUMN
       when "scotlandSapExistingBuilding"
@@ -190,11 +197,16 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude, qualifications, entries = 40)
-      qualification_selector =
-        qualification_columns_to_sql(
-          qualifications.map { |q| qualification_to_column(q) },
-        )
+    def search(latitude, longitude, qualifications, entries = 40, is_scottish: false)
+      qualification_selector = if is_scottish
+                                 qualification_columns_to_sql(
+                                   qualifications.map { |q| scottish_qualification_to_column(q) },
+                                 )
+                               else
+                                 qualification_columns_to_sql(
+                                   qualifications.map { |q| qualification_to_column(q) },
+                                 )
+                               end
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(

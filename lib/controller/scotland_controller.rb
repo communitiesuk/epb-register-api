@@ -70,5 +70,68 @@ module Controller
         server_error(e)
       end
     end
+
+    get "/api/scotland/assessors", auth_token_has_all: %w[scotland_assessor:search] do
+      postcode = params[:postcode]
+      qualifications = params[:qualification]
+
+      if postcode.nil? || qualifications.nil?
+        error_response(
+          400,
+          "INVALID_QUERY",
+          "Must specify postcode & qualification when searching",
+        )
+      else
+        postcode.upcase
+        postcode.insert(-4, " ") if postcode[-4] != " "
+
+        result =
+          UseCase::FindAssessorsByPostcode.new.execute(
+            postcode,
+            qualifications.split(","),
+            is_scottish: true,
+          )
+
+        result[:data] = assessor_list_results_filter(result)
+
+        json_api_response(code: 200, data: result, burrow_key: :assessors)
+      end
+    rescue StandardError => e
+      case e
+      when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
+        not_found_error("The requested postcode is not registered")
+      when UseCase::FindAssessorsByPostcode::PostcodeNotValid
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The requested postcode is not valid",
+        )
+      when ArgumentError
+        error_response(400, "INVALID_QUERY", e.message)
+      else
+        server_error(e)
+      end
+    end
+
+    def assessor_list_results_filter(unfiltered_results)
+      if unfiltered_results[:data]
+        unfiltered_results[:data].map do |r|
+          r.slice(
+            :registered_by,
+            :scheme_assessor_id,
+            :first_name,
+            :last_name,
+            :middle_names,
+            :date_of_birth,
+            :email,
+            :telephone_number,
+            :search_results_comparison_postcode,
+            :contact_details,
+            :qualifications,
+            :distance_from_postcode_in_miles,
+          )
+        end
+      end
+    end
   end
 end
