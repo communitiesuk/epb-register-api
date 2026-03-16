@@ -103,9 +103,8 @@ module UseCase
 
       if existing_assessor
         previous_qualifications = existing_assessor.to_hash[:qualifications]
-        # pp previous_qualifications
+
         new_qualifications = assessor.to_hash[:qualifications]
-        # pp new_qualifications
 
         previous_qualifications.each do |qualification, status|
           next unless status != new_qualifications[qualification]

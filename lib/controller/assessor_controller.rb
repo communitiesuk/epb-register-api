@@ -372,7 +372,7 @@ module Controller
           env[:auth_token].sub,
         )
       assessor_record = create_assessor_response[:assessor]
-      # pp assessor_record
+
       if create_assessor_response[:assessor_was_newly_created]
         @events.event(:new_assessor_registered, scheme_assessor_id)
         json_api_response(code: 201, data: create_assessor_response[:assessor])
