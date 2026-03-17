@@ -2704,7 +2704,7 @@ paths:
         - Scotland Frontend
       summary: Search for a Scottish assessor
       description: |-
-        Search for a Scottish assessor by postcode or full name/number.
+        Search for a Scottish assessor by postcode.
 
         Clients with scope `scotland_assessor:search` can search by
           _either_:
@@ -3319,10 +3319,6 @@ components:
     ScottishAssessorDetail:
       allOf:
         - $ref: '#/components/schemas/ScottishAssessor'
-        - type: object
-          properties:
-            assessorSchemeId:
-              $ref: '#/components/schemas/AssessorSchemeId'
 
     AssessorSearchResults:
       type: object
@@ -3445,7 +3441,7 @@ components:
 
     AssessorQualificationSearchOptions:
       type: string
-      example: domesticSap,domesticRdSap
+      example: domesticSap,scotlandSapExistingBuilding
       enum:
         - domesticRdSap
         - domesticSap
@@ -3456,6 +3452,13 @@ components:
         - nonDomesticSp3
         - nonDomesticCc4
         - gda
+        - scotlandRdsap
+        - scotlandSapExistingBuilding
+        - scotlandSapNewBuilding
+        - scotlandDecAndAr
+        - scotlandNondomesticExistingBuilding
+        - scotlandNondomesticNewBuilding
+        - scotlandSection63
 
     AssessorQualificationTypeSearchOptions:
       type: string
@@ -4832,15 +4835,20 @@ components:
     ScottishAssessorSearchByPostcodeResults:
       type: object
       properties:
-        assessors:
-          type: array
-          items:
-            allOf:
-              - $ref: '#/components/schemas/ScottishAssessorDetail'
-              - type: object
-                properties:
-                  assessorSchemeId:
-                    $ref: '#/components/schemas/AssessorSchemeId'
+        data:
+          type: objects
+          properties:
+            assessors:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/ScottishAssessorDetail'
+        meta:
+          type: objects
+          properties:
+            searchPostcode:
+              type: string
+              example: "EH12 6TS"
 
     DECAssessmentObject:
       type: object
