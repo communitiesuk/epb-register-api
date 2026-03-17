@@ -2698,6 +2698,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /scotland/assessors:
+    get:
+      tags:
+        - Scotland Frontend
+      summary: Search for a Scottish assessor
+      description: |-
+        Search for a Scottish assessor by postcode or full name/number.
+
+        Clients with scope `scotland_assessor:search` can search by
+          _either_:
+          - a postcode (with scope `assessor:search`) and comma-separated list of qualifications;
+
+      operationId: scotland-search-assessors
+      security:
+        - oauth:
+            - 'scotland_assessor:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: A postcode to search from for an assessor
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+        - in: query
+          name: qualification
+          description: Only show assessors who have this specific qualification
+          schema:
+            $ref: '#/components/schemas/AssessorQualificationSearchOptions'
+      responses:
+        '200':
+          description: List of Scottish assessors matching the search criteria
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ScottishAssessorSearchByPostcodeResults'
+        '400':
+          description: Invalid query - probably a missing parameter or disallowed combination of parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /scotland/v1/assessments/{assessmentId}/xml-data:
     get:
       tags:
@@ -3192,6 +3246,50 @@ components:
           type: string
           example: 'Joey'
 
+    ScottishAssessor:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: 'Joe'
+        lastName:
+          type: string
+          example: 'Bloggs'
+        middleNames:
+          type: string
+          example: 'T'
+        searchResultsComparisonPostcode:
+          type: string
+          example: 'EH1 2NG'
+        distanceFromPostcodeInMiles:
+          type: number
+          example: 0.0
+        schemeAssessorId:
+          type: string
+          example: 'TEST301553'
+        contactDetails:
+          type: object
+          properties:
+            telephoneNumber:
+              type: string
+              maxLength: 256
+              example: '01632 960375'
+            email:
+              type: string
+              format: email
+              example: 'j.t.bloggs@example.com'
+        qualifications:
+          $ref: '#/components/schemas/AssessorQualifications'
+        registeredBy:
+          type: object
+          properties:
+            name:
+              type: string
+              example: 'Stroma Certification Ltd'
+            schemeId:
+              type: integer
+              example: 5
+
     AssessorBody:
       allOf:
         - $ref: '#/components/schemas/Assessor'
@@ -3217,6 +3315,14 @@ components:
               $ref: '#/components/schemas/AssessorSchemeId'
             registeredBy:
               $ref: '#/components/schemas/Scheme'
+
+    ScottishAssessorDetail:
+      allOf:
+        - $ref: '#/components/schemas/ScottishAssessor'
+        - type: object
+          properties:
+            assessorSchemeId:
+              $ref: '#/components/schemas/AssessorSchemeId'
 
     AssessorSearchResults:
       type: object
@@ -3321,6 +3427,20 @@ components:
         nonDomesticCc4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         gda:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandRdsap:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandSapExistingBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandSapNewBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandDecAndAr:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandNondomesticExistingBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandNondomesticNewBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandSection63:
           $ref: '#/components/schemas/AssessorQualificationStatus'
 
     AssessorQualificationSearchOptions:
@@ -4708,6 +4828,19 @@ components:
             $ref: '#/components/schemas/AssessmentId'
           example:
             ['0000-0000-0000-0000-0000', '0000-0000-0000-0000-0001']
+
+    ScottishAssessorSearchByPostcodeResults:
+      type: object
+      properties:
+        assessors:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/ScottishAssessorDetail'
+              - type: object
+                properties:
+                  assessorSchemeId:
+                    $ref: '#/components/schemas/AssessorSchemeId'
 
     DECAssessmentObject:
       type: object
