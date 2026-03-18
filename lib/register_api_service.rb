@@ -50,4 +50,5 @@ class RegisterApiService < Controller::BaseController
   use Controller::CertificateSummaryController
   use Controller::PrsDatabaseController
   use Controller::ScotlandController
+  use Controller::ScotlandDataController
 end

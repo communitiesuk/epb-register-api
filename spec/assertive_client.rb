@@ -581,6 +581,26 @@ def scottish_domestic_assessments_search_by_assessment_id(
   )
 end
 
+def scottish_get_new_reports(
+  start_date:,
+  end_date:,
+  current_page: nil,
+  scopes: %w[scotland_data:search],
+  **assertive_kwargs
+)
+  path = "/api/scotland/v1/updates/new-reports?startDate=#{start_date}&endDate=#{end_date}"
+
+  unless current_page.nil?
+    path += "&currentPage=#{current_page}"
+  end
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def assessments_search_by_street_and_town(
   street:,
   town:,

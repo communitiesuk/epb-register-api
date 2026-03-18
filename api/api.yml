@@ -5842,9 +5842,10 @@ components:
     Pagination:
       type: object
       properties:
-        page:
-          type: integer
-          example: 0
+        currentPage:
+          type: string
+          format: uri
+          example: "example.com/a_param=1&currentPage=2&another_param=2"
         nextPage:
           type: string
           format: uri

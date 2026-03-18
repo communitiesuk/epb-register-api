@@ -86,6 +86,14 @@ class ApiFactory
     @prs_database_gateway ||= Gateway::PrsDatabaseGateway.new
   end
 
+  def self.new_reports_gateway
+    @new_reports_gateway ||= Gateway::NewReportsGateway.new
+  end
+
+  def self.fetch_new_reports_use_case
+    @fetch_new_reports_use_case ||= UseCase::FetchNewReports.new(new_reports_gateway)
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -482,6 +490,10 @@ class ApiFactory
 
   def self.add_country_id_from_address
     @add_country_id_from_address ||= UseCase::AddCountryIdFromAddress.new(country_gateway)
+  end
+
+  def self.get_pagination_for_new_reports
+    @get_pagination_for_new_reports ||= UseCase::GetPagination.new(gateway: new_reports_gateway)
   end
 
   def self.geolocation_gateway

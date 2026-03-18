@@ -111,14 +111,17 @@ module Controller
       data: {},
       meta: {},
       burrow_key: false,
-      data_key: :data
+      data_key: :data,
+      pagination: {}
     )
       if burrow_key
         data, meta = meta, data
         data[burrow_key] = meta.delete(data_key)
       end
 
-      json_response({ data:, meta: }, code)
+      response_data = { data:, meta: }
+      response_data[:pagination] = pagination unless pagination.empty?
+      json_response(response_data, code)
     end
 
     def xml_response(xml, code = 200)
