@@ -34,4 +34,7 @@ module Errors
 
   class MissingRequiredParameterError < StandardError
   end
+
+  class OutOfPaginationRangeError < RuntimeError
+  end
 end
