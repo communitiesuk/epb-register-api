@@ -125,6 +125,10 @@ describe UseCase::GetPagination do
           expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&another_param=2"
         end
 
+        it "returns nil for the previous page of results" do
+          expect(use_case.execute(**search_arguments_with_url)[:previous_page]).to be_nil
+        end
+
         it "returns the url for the next page of results with the page appended" do
           expect(use_case.execute(**search_arguments_with_url)[:next_page]).to eq "example.com/a_param=1&another_param=2&page=2"
         end

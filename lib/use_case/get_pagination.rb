@@ -39,7 +39,7 @@ module UseCase
       {
         current_page: url,
         next_page: next_page,
-        previous_page: next_page.nil? ? nil : url.gsub(/page=(\d*)/, "page=#{prev_page}"),
+        previous_page: prev_page.nil? ? nil : url.gsub(/page=(\d*)/, "page=#{prev_page}"),
       }
     end
   end
