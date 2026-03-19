@@ -20,7 +20,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/scotland/v1/updates/new-reports", auth_token_has_all: %w[scotland_data:search] do
+    get "/api/scotland/v1/updates/new-reports", auth_token_has_all: %w[scotland_data:rrn:list] do
       params = params_body PARAMS_SCHEMA
 
       start_date = Date.parse(params[:start_date])

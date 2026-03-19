@@ -585,7 +585,7 @@ def scottish_get_new_reports(
   start_date:,
   end_date:,
   current_page: nil,
-  scopes: %w[scotland_data:search],
+  scopes: %w[scotland_data:rrn:list],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/updates/new-reports?startDate=#{start_date}&endDate=#{end_date}"
