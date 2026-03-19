@@ -584,14 +584,14 @@ end
 def scottish_get_new_reports(
   start_date:,
   end_date:,
-  current_page: nil,
+  page: nil,
   scopes: %w[scotland_data:rrn:list],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/updates/new-reports?startDate=#{start_date}&endDate=#{end_date}"
 
-  unless current_page.nil?
-    path += "&currentPage=#{current_page}"
+  unless page.nil?
+    path += "&page=#{page}"
   end
 
   assertive_get(

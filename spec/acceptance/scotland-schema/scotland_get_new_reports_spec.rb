@@ -26,13 +26,13 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
   end
 
   def expected_response
-    JSON.parse({data: {
-                  rrns: %w[0000-0000-0000-0000-0000],
-                },
-                pagination: { nextPage: nil,
-                              currentPage: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03&currentPage=1",
-                              previousPage: nil },
-                meta: {} }.to_json)
+    JSON.parse({ data: {
+                   rrns: %w[0000-0000-0000-0000-0000],
+                 },
+                 pagination: { nextPage: nil,
+                               currentPage: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03&page=1",
+                               previousPage: nil },
+                 meta: {} }.to_json)
   end
 
   describe "security scenarios" do
@@ -67,7 +67,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response = scottish_get_new_reports(
         start_date: "2021-06-01",
         end_date: "2021-06-03",
-        current_page: 1,
+        page: 1,
       )
 
       response_json = JSON.parse(response.body)
@@ -103,7 +103,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response = scottish_get_new_reports(
         start_date: "2021-06-01",
         end_date: "not a date",
-        current_page: 1,
+        page: 1,
         accepted_responses: [400],
       )
 
@@ -116,7 +116,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response = scottish_get_new_reports(
         start_date: "2021-06-01",
         end_date: "2021-06-03",
-        current_page: 2,
+        page: 2,
         accepted_responses: [400],
       )
 
@@ -130,7 +130,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response = scottish_get_new_reports(
         start_date: "2010-06-20",
         end_date: "2010-06-22",
-        current_page: 2,
+        page: 2,
         accepted_responses: [404],
       )
 
@@ -144,7 +144,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response = scottish_get_new_reports(
         start_date: "2010-06-20",
         end_date: Date.today.to_s,
-        current_page: 2,
+        page: 2,
         accepted_responses: [400],
       )
 
@@ -158,7 +158,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response = scottish_get_new_reports(
         start_date: "2021-06-03",
         end_date: "2021-06-01",
-        current_page: 2,
+        page: 2,
         accepted_responses: [400],
       )
 

@@ -14,7 +14,7 @@ module Controller
           type: "string",
           format: "iso-date",
         },
-        currentPage: {
+        page: {
           type: "string",
         },
       },
@@ -29,7 +29,7 @@ module Controller
       raise Boundary::InvalidDates if start_date > end_date
       raise Boundary::InvalidArgument, "date range includes today" if end_date >= Date.today
 
-      current_page = params[:current_page] ? params[:current_page].to_i : 1
+      current_page = params[:page] ? params[:page].to_i : 1
 
       data = ApiFactory.fetch_new_reports_use_case.execute(start_date: start_date, end_date: end_date, current_page: current_page)
       pagination = ApiFactory.get_pagination_for_new_reports.execute(start_date: start_date, end_date: end_date, current_page: current_page, url: request.url)
