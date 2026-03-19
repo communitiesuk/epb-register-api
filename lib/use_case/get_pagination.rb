@@ -28,10 +28,18 @@ module UseCase
     end
 
     def replace_page_numbers_with_urls(url, next_page, prev_page)
+      next_page = if next_page.nil?
+                    nil
+                  elsif url.match?(/page=(\d*)/)
+                    url.gsub(/page=(\d*)/, "page=#{next_page}")
+                  else
+                    url + "&page=#{next_page}"
+                  end
+
       {
         current_page: url,
-        next_page: next_page.nil? ? nil : url.gsub(/page=(\d*)/, "page=#{next_page}"),
-        previous_page: prev_page.nil? ? nil : url.gsub(/page=(\d*)/, "page=#{prev_page}"),
+        next_page: next_page,
+        previous_page: next_page.nil? ? nil : url.gsub(/page=(\d*)/, "page=#{prev_page}"),
       }
     end
   end

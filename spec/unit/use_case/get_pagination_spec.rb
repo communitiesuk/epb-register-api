@@ -103,16 +103,31 @@ describe UseCase::GetPagination do
         { start_date: "2023-12-01", end_date: "2023-12-23", current_page: 2, records_per_page: 100, url: "example.com/a_param=1&page=2&another_param=2" }
       end
 
-      it "the url for the previous page of results" do
+      it "returns the url for the previous page of results" do
         expect(use_case.execute(**search_arguments_with_url)[:previous_page]).to eq "example.com/a_param=1&page=1&another_param=2"
       end
 
-      it "the url for the current page of results" do
+      it "returns the url for the current page of results" do
         expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&page=2&another_param=2"
       end
 
-      it "the url for the next page of results" do
+      it "returns the url for the next page of results" do
         expect(use_case.execute(**search_arguments_with_url)[:next_page]).to eq "example.com/a_param=1&page=3&another_param=2"
+      end
+
+      context "when the url doesn't contain the current page" do
+        # this can happen when requesting the page parameter isn't used so we default to the first page
+        let(:search_arguments_with_url) do
+          { start_date: "2023-12-01", end_date: "2023-12-23", current_page: 1, records_per_page: 100, url: "example.com/a_param=1&another_param=2" }
+        end
+
+        it "returns the url for the current page of results" do
+          expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&another_param=2"
+        end
+
+        it "returns the url for the next page of results with the page appended" do
+          expect(use_case.execute(**search_arguments_with_url)[:next_page]).to eq "example.com/a_param=1&another_param=2&page=2"
+        end
       end
     end
   end
