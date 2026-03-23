@@ -23,10 +23,26 @@ describe UseCase::UpdateAssessmentStatus do
     ).first
   end
 
+  let(:scottish_assessment) do
+    assessments_search_gateway.search_by_assessment_id(
+      "0000-0000-0000-0000-0040",
+      restrictive: false,
+      is_scottish: true,
+    ).first
+  end
+
   let(:linked_assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0001",
       restrictive: false,
+    ).first
+  end
+
+  let(:scottish_linked_assessment) do
+    assessments_search_gateway.search_by_assessment_id(
+      "0000-0000-0000-0000-0050",
+      restrictive: false,
+      is_scottish: true,
     ).first
   end
 
@@ -36,6 +52,16 @@ describe UseCase::UpdateAssessmentStatus do
     cepc_schema = "CEPC-8.0.0".freeze
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
     call_lodge_assessment(scheme_id:, schema_name: cepc_schema, xml_document: cepc_xml)
+
+    lodge_assessment(
+      assessment_body: Samples.xml("DECAR-S-7.0", "dec+ar"),
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: "DECAR-S-7.0",
+      migrated: true,
+    )
   end
 
   context "when calling update_statuses" do
@@ -49,6 +75,20 @@ describe UseCase::UpdateAssessmentStatus do
 
     it "cancels the linked assessment" do
       expect(linked_assessment.get("cancelled_at")).not_to be_nil
+    end
+  end
+
+  context "when calling update_statuses for Scottish assessments" do
+    before do
+      use_case.execute("0000-0000-0000-0000-0040", "CANCELLED", [scheme_id], is_scottish: true)
+    end
+
+    it "cancels the first scottish assessment" do
+      expect(scottish_assessment.get("cancelled_at")).not_to be_nil
+    end
+
+    it "cancels the linked scottish assessment" do
+      expect(scottish_linked_assessment.get("cancelled_at")).not_to be_nil
     end
   end
 
@@ -76,13 +116,21 @@ describe UseCase::UpdateAssessmentStatus do
 
     context "when an assessment is cancelled" do
       it "broadcasts an assessment_cancelled event" do
-        expect { use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [scheme_id]) }.to broadcast(:assessment_cancelled, assessment_id: "0000-0000-0000-0000-0000")
+        expect { use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [scheme_id]) }.to broadcast(:assessment_cancelled, assessment_id: "0000-0000-0000-0000-0000", is_scottish: false)
+      end
+
+      it "broadcasts an assessment_cancelled event for a Scottish assessment" do
+        expect { use_case.execute("0000-0000-0000-0000-0040", "CANCELLED", [scheme_id], is_scottish: true) }.to broadcast(:assessment_cancelled, assessment_id: "0000-0000-0000-0000-0040", is_scottish: true)
       end
     end
 
     context "when an assessment is marked not for issue" do
       it "broadcasts an assessment_marked_not_for_issue event" do
-        expect { use_case.execute("0000-0000-0000-0000-0000", "NOT_FOR_ISSUE", [scheme_id]) }.to broadcast(:assessment_marked_not_for_issue, assessment_id: "0000-0000-0000-0000-0000")
+        expect { use_case.execute("0000-0000-0000-0000-0000", "NOT_FOR_ISSUE", [scheme_id]) }.to broadcast(:assessment_marked_not_for_issue, assessment_id: "0000-0000-0000-0000-0000", is_scottish: false)
+      end
+
+      it "broadcasts an assessment_marked_not_for_issue event for a Scottish assessment" do
+        expect { use_case.execute("0000-0000-0000-0000-0040", "NOT_FOR_ISSUE", [scheme_id], is_scottish: true) }.to broadcast(:assessment_marked_not_for_issue, assessment_id: "0000-0000-0000-0000-0040", is_scottish: true)
       end
     end
   end

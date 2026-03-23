@@ -387,6 +387,27 @@ def update_assessment_status(
   )
 end
 
+def update_scottish_assessment_status(
+  assessment_id: "",
+  assessment_status_body: "",
+  accepted_responses: [201],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[scotland_assessment:lodge]
+)
+  path = "api/scotland/assessments/#{assessment_id}/status"
+
+  assertive_post(
+    path,
+    body: assessment_status_body,
+    accepted_responses:,
+    should_authenticate: authenticate,
+    auth_data:,
+    scopes:,
+    json: true,
+  )
+end
+
 def add_scheme_and_get_id(
   name: "test scheme",
   accepted_responses: [201],
@@ -911,6 +932,21 @@ def opt_out_assessment(
 )
   assertive_put(
     "/api/assessments/#{assessment_id}/opt-out",
+    body: { "optOut": opt_out },
+    scopes:,
+    accepted_responses: [200],
+    **assertive_kwargs,
+  )
+end
+
+def opt_out_scottish_assessment(
+  assessment_id:,
+  opt_out: true,
+  scopes: %w[scotland_admin:opt_out],
+  **assertive_kwargs
+)
+  assertive_put(
+    "/api/scotland/assessments/#{assessment_id}/opt-out",
     body: { "optOut": opt_out },
     scopes:,
     accepted_responses: [200],

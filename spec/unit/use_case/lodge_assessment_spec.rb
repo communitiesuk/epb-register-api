@@ -318,6 +318,14 @@ describe UseCase::LodgeAssessment do
         )
       end
 
+      it "broadcasts the Scottish assessment lodged event" do
+        expect { use_case.execute(data, true, "SAP-Schema-S-19.0.0") }.to broadcast(
+          :assessment_lodged,
+          assessment_id: data[:assessment_id],
+          is_scottish: true,
+        )
+      end
+
       it "broadcasts the match_address_request event" do
         expect { use_case.execute(data, true, "RdSAP-Schema-20.0.0") }.to broadcast(
           :match_address_request,

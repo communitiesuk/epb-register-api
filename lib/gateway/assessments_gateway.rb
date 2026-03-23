@@ -35,24 +35,26 @@ module Gateway
       send_insert_to_db assessment
     end
 
-    def update_statuses(assessments_ids, status, value)
+    def update_statuses(assessments_ids, status, value, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       ActiveRecord::Base.transaction do
         assessments_ids.each do |assessment_id|
-          update_field(assessment_id, status, value)
+          update_field(assessment_id, status, value, schema)
         end
       end
     end
 
-    def update_field(assessment_id, field, value)
+    def update_field(assessment_id, field, value, schema)
       sql =
-        "UPDATE assessments SET #{ActiveRecord::Base.connection.quote_column_name(field)} = #{ActiveRecord::Base.connection.quote(value)} WHERE assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}"
+        "UPDATE #{schema}assessments SET #{ActiveRecord::Base.connection.quote_column_name(field)} = #{ActiveRecord::Base.connection.quote(value)} WHERE assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}"
 
       Assessment.connection.exec_query(sql)
     end
 
-    def get_linked_assessment_id(assessment_id)
+    def get_linked_assessment_id(assessment_id, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       select_linked_assessment = <<-SQL
-            SELECT linked_assessment_id FROM linked_assessments
+            SELECT linked_assessment_id FROM #{schema}linked_assessments
             WHERE assessment_id = $1
       SQL
       binds = [

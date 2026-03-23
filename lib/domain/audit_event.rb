@@ -3,6 +3,13 @@ module Domain
     attr_reader :event_type, :entity_type, :data, :entity_id
 
     VALID_TYPES = {
+      scottish_assessment: %i[
+        scottish_lodgement
+        scottish_opt_out
+        scottish_opt_in
+        scottish_cancelled
+        scottish_address_id_updated
+      ],
       assessment: %i[
         lodgement
         opt_out

@@ -71,6 +71,86 @@ module Controller
       end
     end
 
+    POST_ASSESSMENT_UPDATE_SCHEMA = {
+      type: "object",
+      required: %w[status],
+      properties: {
+        status: {
+          type: "string",
+          enum: %w[CANCELLED NOT_FOR_ISSUE],
+        },
+      },
+    }.freeze
+
+    post "/api/scotland/assessments/:assessment_id/status",
+         auth_token_has_all: %w[scotland_assessment:lodge] do
+      assessment_id = params[:assessment_id]
+      assessment_body = request_body(POST_ASSESSMENT_UPDATE_SCHEMA)
+
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
+      ApiFactory.update_assessment_status_use_case.execute(
+        assessment_id,
+        assessment_body[:status],
+        env[:auth_token].supplemental("scheme_ids"),
+        is_scottish: true,
+      )
+
+      json_api_response(code: 200, data: { "status": assessment_body[:status] })
+    rescue StandardError => e
+      case e
+      when UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme
+        error_response(403, "NOT_ALLOWED", e.message)
+      when UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled
+        gone_error(e.message)
+      when UseCase::UpdateAssessmentStatus::AssessmentNotFound
+        not_found_error("Assessment not found")
+      when Boundary::Json::Error
+        error_response(422, "INVALID_REQUEST", e.message)
+      else
+        server_error(e)
+      end
+    end
+
+    UPDATE_OPT_OUT_PUT_SCHEMA = {
+      type: "object",
+      required: %w[optOut],
+      properties: {
+        optOut: {
+          type: "boolean",
+        },
+      },
+    }.freeze
+
+    put "/api/scotland/assessments/:assessment_id/opt-out",
+        auth_token_has_all: %w[scotland_admin:opt_out] do
+      assessment_id = params[:assessment_id]
+      new_opt_out_status = request_body(UPDATE_OPT_OUT_PUT_SCHEMA)[:opt_out]
+
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
+      ApiFactory.opt_out_assessment_use_case.execute(assessment_id, new_opt_out_status, is_scottish: true)
+
+      response_text = if new_opt_out_status == true
+                        "Your opt out request for RRN #{params[:assessment_id]} was successful"
+                      else
+                        "Your opt in request for RRN #{params[:assessment_id]} was successful"
+                      end
+
+      json_api_response(code: 200, data: response_text)
+    rescue StandardError => e
+      case e
+      when UseCase::OptOutAssessment::AssessmentNotFound
+        not_found_error("Assessment not found")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+      when Boundary::Json::Error
+        error_response(400, "INVALID_REQUEST", e.message)
+      else
+        server_error(e)
+      end
+    end
+
     get "/api/scotland/assessors", auth_token_has_all: %w[scotland_assessor:search] do
       postcode = params[:postcode]
       qualifications = params[:qualification]

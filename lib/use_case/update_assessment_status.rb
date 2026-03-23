@@ -22,11 +22,12 @@ module UseCase
       @event_broadcaster = event_broadcaster
     end
 
-    def execute(assessment_id, status, scheme_ids)
+    def execute(assessment_id, status, scheme_ids, is_scottish: false)
       main_assessment =
         @assessments_search_gateway.search_by_assessment_id(
           assessment_id,
           restrictive: false,
+          is_scottish: is_scottish,
         ).first
 
       raise AssessmentNotFound unless main_assessment
@@ -34,13 +35,14 @@ module UseCase
       assessments = [main_assessment]
 
       linked_assessment_id =
-        @assessments_gateway.get_linked_assessment_id(assessment_id)
+        @assessments_gateway.get_linked_assessment_id(assessment_id, is_scottish: is_scottish)
 
       unless linked_assessment_id.nil?
         linked_assessment =
           @assessments_search_gateway.search_by_assessment_id(
             linked_assessment_id,
             restrictive: false,
+            is_scottish: is_scottish,
           ).first
 
         unless linked_assessment.get(:cancelled_at) ||
@@ -50,7 +52,7 @@ module UseCase
       end
 
       validate_status_updates(assessments, scheme_ids)
-      update_statuses(assessments, status)
+      update_statuses(assessments, status, is_scottish)
     end
 
   private
@@ -71,7 +73,7 @@ module UseCase
       end
     end
 
-    def update_statuses(assessments, status)
+    def update_statuses(assessments, status, is_scottish)
       assessment_ids =
         assessments.map { |assessment| assessment.get("assessment_id") }
 
@@ -81,20 +83,22 @@ module UseCase
           assessment_ids,
           "cancelled_at",
           Time.now.to_s,
+          is_scottish: is_scottish,
         )
-        broadcast :assessment_cancelled, assessment_ids
+        broadcast :assessment_cancelled, assessment_ids, is_scottish
       when "NOT_FOR_ISSUE"
         @assessments_gateway.update_statuses(
           assessment_ids,
           "not_for_issue_at",
           Time.now.to_s,
+          is_scottish: is_scottish,
         )
-        broadcast :assessment_marked_not_for_issue, assessment_ids
+        broadcast :assessment_marked_not_for_issue, assessment_ids, is_scottish
       end
     end
 
-    def broadcast(event_name, assessment_ids)
-      assessment_ids.each { |id| @event_broadcaster.broadcast(event_name, assessment_id: id) }
+    def broadcast(event_name, assessment_ids, is_scottish)
+      assessment_ids.each { |id| @event_broadcaster.broadcast(event_name, assessment_id: id, is_scottish: is_scottish) }
     end
   end
 end

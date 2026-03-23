@@ -24,7 +24,7 @@ module Events
         if notify_data_warehouse_enabled?
           NotifyFactory.new_assessment_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], is_scottish: data[:is_scottish])
         end
-        NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
+        NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id], is_scottish: data[:is_scottish])
       end
     end
 
@@ -51,9 +51,9 @@ module Events
     def attach_assessment_cancellation
       @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |**data|
         if notify_data_warehouse_enabled?
-          NotifyFactory.assessment_status_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id])
+          NotifyFactory.assessment_status_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], is_scottish: data[:is_scottish])
         end
-        NotifyFactory.cancelled_to_audit_log(entity_id: data[:assessment_id])
+        NotifyFactory.cancelled_to_audit_log(entity_id: data[:assessment_id], is_scottish: data[:is_scottish])
       end
     end
 
@@ -69,9 +69,9 @@ module Events
     def attach_assessment_status
       @event_broadcaster.on :assessment_opt_out_status_changed do |**data|
         if notify_data_warehouse_enabled?
-          NotifyFactory.opt_out_status_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id])
+          NotifyFactory.opt_out_status_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], is_scottish: data[:is_scottish])
         end
-        NotifyFactory.opt_out_to_audit_log(entity_id: data[:assessment_id], is_opt_out: data[:new_status])
+        NotifyFactory.opt_out_to_audit_log(entity_id: data[:assessment_id], is_opt_out: data[:new_status], is_scottish: data[:is_scottish])
       end
     end
 

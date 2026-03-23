@@ -3,28 +3,35 @@ require_relative "./controller/base_controller"
 class NotifyFactory
   include RequestModule
 
-  def self.lodgement_to_audit_log(entity_id:)
+  def self.lodgement_to_audit_log(entity_id:, is_scottish:)
+    entity_type = is_scottish ? :scottish_assessment : :assessment
+    event_type = is_scottish ? :scottish_lodgement : :lodgement
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: :assessment,
-                                        event_type: :lodgement,
+                                        entity_type: entity_type,
+                                        event_type: event_type,
                                         entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end
 
-  def self.opt_out_to_audit_log(entity_id:, is_opt_out:)
+  def self.opt_out_to_audit_log(entity_id:, is_opt_out:, is_scottish:)
+    entity_type = is_scottish ? :scottish_assessment : :assessment
+    opt_in_or_out = is_opt_out ? "opt_out" : "opt_in"
+    event_type = is_scottish ? "scottish_#{opt_in_or_out}" : opt_in_or_out
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: :assessment,
-                                        event_type: is_opt_out ? :opt_out : :opt_in,
+                                        entity_type: entity_type,
+                                        event_type: event_type.to_sym,
                                         entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end
 
-  def self.cancelled_to_audit_log(entity_id:)
+  def self.cancelled_to_audit_log(entity_id:, is_scottish:)
+    entity_type = is_scottish ? :scottish_assessment : :assessment
+    event_type = is_scottish ? :scottish_cancelled : :cancelled
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: :assessment,
-                                        event_type: :cancelled,
+                                        entity_type: entity_type,
+                                        event_type: event_type,
                                         entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))

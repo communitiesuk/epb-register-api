@@ -171,19 +171,19 @@ describe Gateway::AssessmentsGateway do
     end
 
     it "updates the fields with the expected value" do
-      gateway.update_field("0000-0000-0000-0000-0000", "type_of_assessment", "SAP")
+      gateway.update_field("0000-0000-0000-0000-0000", "type_of_assessment", "SAP", "public.")
       result = Gateway::AssessmentsGateway::Assessment.find_by(assessment_id: "0000-0000-0000-0000-0000")
       expect(result.type_of_assessment).to eq("SAP")
     end
 
     it "updates the created_at with a correct date" do
-      gateway.update_field("0000-0000-0000-0000-0000", "created_at", "2024-01-16 17:52:43.00000")
+      gateway.update_field("0000-0000-0000-0000-0000", "created_at", "2024-01-16 17:52:43.00000", "public.")
       result = Gateway::AssessmentsGateway::Assessment.find_by(assessment_id: "0000-0000-0000-0000-0000")
       expect(result.created_at).to eq("2024-01-16 17:52:43.00000")
     end
 
     it "does not raise an error when no ID is found" do
-      expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000") }.not_to raise_error
+      expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000", "public.") }.not_to raise_error
     end
   end
 
@@ -413,7 +413,7 @@ describe Gateway::AssessmentsGateway do
     end
 
     it "does not raise an error when no ID is found" do
-      expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000") }.not_to raise_error
+      expect { gateway.update_field("0000-0000-0000-0000-0004", "created_at", "2024-01-16 17:52:43.00000", "public.") }.not_to raise_error
     end
 
     it "inserts the scottish assessment to the scottish schema" do
