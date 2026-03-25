@@ -2707,7 +2707,6 @@ paths:
         Search for a Scottish assessor by postcode.
 
         Clients with scope `scotland_assessor:search` can search by
-          _either_:
           - a postcode (with scope `assessor:search`) and comma-separated list of qualifications;
 
       operationId: scotland-search-assessors
