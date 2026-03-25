@@ -1,7 +1,19 @@
 module Gateway
   class PostcodesGateway
-    def fetch(postcode)
-      response = db_response(postcode:)
+    # postcodes base
+    SCOTTISH_BORDER_OUTCODES = %w[
+      CA6
+      DG14
+      DG16
+      TD5
+      TD8
+      TD9
+      TD12
+      TD15
+    ].freeze
+
+    def fetch(postcode, is_scottish: false)
+      response = db_response(postcode:, is_scottish: is_scottish)
       result = []
 
       output(response, result)
@@ -11,6 +23,7 @@ module Gateway
         response =
           db_response(
             code: "outcode",
+            is_scottish: is_scottish,
             table: "postcode_outcode_geolocations",
             postcode: outcode,
           )
@@ -23,9 +36,21 @@ module Gateway
 
   private
 
-    def db_response(postcode:, code: "postcode", table: "postcode_geolocation")
+    def db_response(postcode:, is_scottish: false, code: "postcode", table: "postcode_geolocation")
+      sql = <<-SQL
+        SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = $1
+      SQL
+
+      unless SCOTTISH_BORDER_OUTCODES.include?(postcode.split(" ")[0])
+        sql += if is_scottish
+                 " AND region = 'Scotland'"
+               else
+                 " AND region != 'Scotland'"
+               end
+      end
+
       ActiveRecord::Base.connection.exec_query(
-        "SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = $1",
+        sql,
         "SQL",
         [
           ActiveRecord::Relation::QueryAttribute.new(

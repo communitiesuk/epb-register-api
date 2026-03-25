@@ -1,37 +1,13 @@
 describe "Integration::FilterAndOrderAssessorsByPostcode" do
   include RSpecRegisterApiServiceMixin
 
-  def truncate(postcode = nil)
-    if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-      ActiveRecord::Base.connection.exec_query(
-        "TRUNCATE TABLE postcode_geolocation",
-      )
-    else
-      ActiveRecord::Base.connection.exec_query(
-        "TRUNCATE TABLE postcode_outcode_geolocations",
-      )
-    end
-  end
-
-  def add_postcodes(postcode, latitude = 0, longitude = 0, clean: true)
-    db = ActiveRecord::Base
-
-    truncate(postcode) if clean
-
-    db.connection.execute(
-      "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
-        db.sanitize_sql(postcode)
-      }', #{latitude.to_f}, #{longitude.to_f})",
-    )
-  end
-
   let(:valid_assessor_request_body) do
     {
       firstName: "Someone",
       middleNames: "muddle",
       lastName: "Person",
       dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "BF1 3AD",
+      searchResultsComparisonPostcode: "SW1A 2AA",
       qualifications: {
         domestic_rd_sap: "ACTIVE",
       },
@@ -39,8 +15,7 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
   end
 
   def populate_postcode_geolocation
-    truncate
-    add_postcodes("BF1 3AD", 27.7172, -85.3240)
+    add_postcodes("SW1A 2AA", 51.503541, -0.12767, "London")
   end
 
   context "when searching for a postcode" do
@@ -55,14 +30,14 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
       it "returns a single record" do
         populate_postcode_geolocation
 
-        response = Gateway::PostcodesGateway.new.fetch("BF1 3AD")
+        response = Gateway::PostcodesGateway.new.fetch("SW1A 2AA")
 
         expect(response).to eq(
           [
             {
-              'postcode': "BF1 3AD",
-              'latitude': 27.7172,
-              'longitude': -85.3240,
+              'postcode': "SW1A 2AA",
+              'latitude': 51.503541,
+              'longitude': -0.12767,
             },
           ],
         )
@@ -80,7 +55,7 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
 
       populate_postcode_geolocation
 
-      postcode = Gateway::PostcodesGateway.new.fetch("BF1 3AD").first
+      postcode = Gateway::PostcodesGateway.new.fetch("SW1A 2AA").first
 
       assessors =
         Gateway::AssessorsGateway.new.search(

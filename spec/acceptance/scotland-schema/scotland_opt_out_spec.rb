@@ -81,7 +81,7 @@ describe "Acceptance::OptOut", :set_with_timecop do
         )
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
 
-      lodge_assessment(assessment_body:  xml_file,
+      lodge_assessment(assessment_body: xml_file,
                        accepted_responses: [201],
                        scopes: %w[migrate:scotland],
                        auth_data: {

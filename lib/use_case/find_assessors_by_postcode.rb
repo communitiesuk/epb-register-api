@@ -21,7 +21,7 @@ module UseCase
         raise PostcodeNotValid
       end
 
-      postcodes_geolocation = @postcodes_gateway.fetch(postcode)
+      postcodes_geolocation = @postcodes_gateway.fetch(postcode, is_scottish: is_scottish)
 
       raise PostcodeNotRegistered if postcodes_geolocation.empty?
 
