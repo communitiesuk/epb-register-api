@@ -12,7 +12,7 @@ module Domain
       {
         reportRrn: @entity_id,
         newStatus: get_new_status(@event_type),
-        timestamp: @timestamp,
+        timeOfChange: @timestamp,
       }
     end
 

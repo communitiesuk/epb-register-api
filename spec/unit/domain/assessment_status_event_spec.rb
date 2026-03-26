@@ -5,9 +5,17 @@ describe Domain::AssessmentStatusEvent do
 
   let(:assessment_event) do
     {
-      entity_id: "0000-0000-0000-0000-00001",
+      entity_id: "0000-0000-0000-0000-0001",
       event_type: "scottish_opt_out",
       timestamp: Time.new(2013, 1, 1),
+    }
+  end
+
+  let(:expected_result) do
+    {
+      reportRrn: "0000-0000-0000-0000-0001",
+      newStatus: "OPTED OUT",
+      timeOfChange: Time.new(2013, 1, 1),
     }
   end
 
@@ -18,9 +26,8 @@ describe Domain::AssessmentStatusEvent do
 
     describe "#to_hash" do
       it "returns a hash with the expected keys and values" do
-        search_address = described_class.new(assessment_event: assessment_event).to_hash
-        expect(search_address[:reportRrn]).to eq "0000-0000-0000-0000-00001"
-        expect(search_address[:newStatus]).to eq "OPTED OUT"
+        assessment_status_event = described_class.new(assessment_event: assessment_event).to_hash
+        expect(assessment_status_event).to eq expected_result
       end
     end
   end
