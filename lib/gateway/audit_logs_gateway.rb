@@ -64,5 +64,82 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).map { |result| result["entity_id"] }
     end
+
+    def fetch_scottish_events(event_types:, start_date:, end_date:, current_page:, limit: 5000)
+      sql = <<-SQL
+            SELECT entity_id, event_type, timestamp
+            FROM audit_logs
+            WHERE timestamp BETWEEN $1 AND $2
+            AND entity_type = 'scottish_assessment'
+      SQL
+
+      valid_scottish_events = %w[
+        scottish_lodgement
+        scottish_opt_out
+        scottish_opt_in
+        scottish_cancelled
+        scottish_address_id_updated
+      ]
+
+      if event_types.is_a?(Array)
+        invalid_types = event_types - valid_scottish_events
+        raise StandardError, "Invalid types" unless invalid_types.empty?
+
+        events = "(#{event_types.map { |n| "'#{n}'" }.join(',')})"
+        sql << <<~SQL
+          AND event_type IN #{events}
+        SQL
+      else
+        unless valid_scottish_events.include? event_type
+          raise StandardError, "Invalid types"
+        end
+
+        sql << <<~SQL
+          AND event_type = '#{event_type}'
+        SQL
+      end
+
+      sql << <<~SQL
+        ORDER BY timestamp ASC
+        LIMIT $3
+        OFFSET $4;
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          start_date,
+          ActiveRecord::Type::Date.new,
+        ),
+
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          end_date,
+          ActiveRecord::Type::Date.new,
+        ),
+
+        ActiveRecord::Relation::QueryAttribute.new(
+          "limit",
+          limit,
+          ActiveRecord::Type::Integer.new,
+        ),
+
+        ActiveRecord::Relation::QueryAttribute.new(
+          "offset",
+          calculate_offset(current_page, limit),
+          ActiveRecord::Type::String.new,
+        ),
+
+      ]
+
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+
+      results.map { |result| Domain::AssessmentStatusEvent.new(assessment_event: result.symbolize_keys).to_hash }
+    end
+
+    def calculate_offset(current_page, limit)
+      current_page = 1 if current_page <= 0
+      (current_page - 1) * limit
+    end
   end
 end
