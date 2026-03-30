@@ -4,8 +4,14 @@ module UseCase
       @gateway = gateway
     end
 
-    def execute(start_date:, end_date:, current_page:, records_per_page: 5000, url: nil)
-      total_records = @gateway.count(start_date: start_date, end_date: end_date)
+    def execute(start_date:, end_date:, current_page:, records_per_page: 5000, url: nil, count_method: :count, event_types: [])
+      total_records = if count_method == :count_scottish_events
+                        @gateway.method(count_method).call(event_types:, start_date:, end_date:)
+                      elsif count_method == :count
+                        @gateway.method(count_method).call(start_date:, end_date:)
+                      else
+                        raise NoMethodError
+                      end
 
       raise Boundary::NoData, "#{start_date} to #{end_date}" if total_records.zero?
 

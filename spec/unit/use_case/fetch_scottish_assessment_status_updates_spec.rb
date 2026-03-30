@@ -25,7 +25,7 @@ describe UseCase::FetchScottishAssessmentStatusUpdates do
 
     describe "#execute" do
       it "fetches an rrn object containing an array of rrns" do
-        expect(use_case.execute(start_date: "2013-01-01", end_date: "2013-01-05", current_page: 1)).to eq({ statusUpdates: data })
+        expect(use_case.execute(event_types: %w[scottish_opt_out scottish_opt_in scottish_cancelled], start_date: "2013-01-01", end_date: "2013-01-05", current_page: 1)).to eq({ statusUpdates: data })
       end
     end
   end

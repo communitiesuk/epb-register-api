@@ -622,6 +622,26 @@ def scottish_get_new_reports(
   )
 end
 
+def scottish_get_assessment_status_updates(
+  start_date:,
+  end_date:,
+  page: nil,
+  scopes: %w[scotland_data:assessment_status:list],
+  **assertive_kwargs
+)
+  path = "/api/scotland/v1/updates/assessments/status?startDate=#{start_date}&endDate=#{end_date}"
+
+  unless page.nil?
+    path += "&page=#{page}"
+  end
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def assessments_search_by_street_and_town(
   street:,
   town:,

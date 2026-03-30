@@ -118,4 +118,22 @@ describe Gateway::AuditLogsGateway do
       end
     end
   end
+
+  describe "#count_scottish_events" do
+    before do
+      gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :scottish_assessment, entity_id: "0000-0000-0000-0000-0001", event_type: :scottish_opt_out))
+      gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :scottish_assessment, entity_id: "0000-0000-0000-0000-0002", event_type: :scottish_opt_in))
+      gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :scottish_assessment, entity_id: "0000-0000-0000-0000-0003", event_type: :scottish_lodgement))
+      gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :scottish_assessment, entity_id: "0000-0000-0000-0000-0004", event_type: :scottish_cancelled))
+      gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :scottish_assessment, entity_id: "0000-0000-0000-0000-0005", event_type: :scottish_address_id_updated))
+    end
+
+    start_date = Time.now - 1.day
+    end_date = Time.now + 1.day
+
+    it "returns a count of the number of results between two dates" do
+      result = gateway.count_scottish_events(event_types: %w[scottish_opt_in scottish_opt_out scottish_cancelled], start_date:, end_date:)
+      expect(result).to eq(3)
+    end
+  end
 end

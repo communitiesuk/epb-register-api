@@ -94,6 +94,10 @@ class ApiFactory
     @fetch_new_reports_use_case ||= UseCase::FetchNewReports.new(new_reports_gateway)
   end
 
+  def self.fetch_scottish_assessment_status_updates
+    @fetch_scottish_assessment_status_updates ||= UseCase::FetchScottishAssessmentStatusUpdates.new(audit_logs_gateway)
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -494,6 +498,10 @@ class ApiFactory
 
   def self.get_pagination_for_new_reports
     @get_pagination_for_new_reports ||= UseCase::GetPagination.new(gateway: new_reports_gateway)
+  end
+
+  def self.get_pagination_for_scottish_assessment_status_updates
+    @get_pagination_for_scottish_assessment_status_updates ||= UseCase::GetPagination.new(gateway: audit_logs_gateway)
   end
 
   def self.geolocation_gateway
