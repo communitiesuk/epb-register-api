@@ -3028,6 +3028,14 @@ paths:
             type: string
             format: date
             example: '2020-12-01'
+        - in: query
+          name: page
+          required: false
+          description: 'The page of data requested'
+          schema:
+            type: string
+            format: number
+            example: '1'
       responses:
         '200':
           description: Scottish assessment status changes
@@ -3082,6 +3090,14 @@ paths:
             type: string
             format: date
             example: '2020-12-01'
+        - in: query
+          name: page
+          required: false
+          description: 'The page of data requested'
+          schema:
+            type: string
+            format: number
+            example: '1'
       responses:
         '200':
           description: Energy Performance Assessment
@@ -3685,6 +3701,8 @@ components:
         - ENTERED
         - EXPIRED
         - CANCELLED
+        - OPTED IN
+        - OPTED OUT
 
     AssessmentType:
       type: string
@@ -4952,8 +4970,6 @@ components:
             properties:
               reportRRN:
                 $ref: '#/components/schemas/AssessmentId'
-              previousStatus:
-                $ref: '#/components/schemas/ScotlandAssessmentStatus'
               newStatus:
                 $ref: '#/components/schemas/ScotlandAssessmentStatus'
               timeOfChange:
