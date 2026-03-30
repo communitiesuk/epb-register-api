@@ -22,7 +22,6 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       schema_name: "RdSAP-Schema-S-19.0",
       migrated: true,
     )
-    scheme_id
   end
 
   def expected_response
@@ -47,8 +46,8 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
 
     it "rejects a request without the right scope" do
       expect(scottish_get_new_reports(
-        start_date: "",
-        end_date: "",
+        start_date: "2021-01-01",
+        end_date: "2021-01-02",
         accepted_responses: [403],
         scopes: %w[wrong:scope],
       ).status).to eq(403)
@@ -126,7 +125,6 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
     end
 
     it "raises an error if you make a request with a date range that returns no data" do
-      setup_scheme_and_lodge
       response = scottish_get_new_reports(
         start_date: "2010-06-20",
         end_date: "2010-06-22",
@@ -140,7 +138,6 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
     end
 
     it "raises an error if you make a request a date range including today" do
-      setup_scheme_and_lodge
       response = scottish_get_new_reports(
         start_date: "2010-06-20",
         end_date: Date.today.to_s,
@@ -154,7 +151,6 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
     end
 
     it "raises an error if you make a request with the date range reversed" do
-      setup_scheme_and_lodge
       response = scottish_get_new_reports(
         start_date: "2021-06-03",
         end_date: "2021-06-01",

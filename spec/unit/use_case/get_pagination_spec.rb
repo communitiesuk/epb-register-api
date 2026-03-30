@@ -60,7 +60,7 @@ describe UseCase::GetPagination do
 
       context "when a url is passed in" do
         let(:search_arguments_with_url) do
-          { start_date: "2023-12-01", end_date: "2023-12-23", current_page: 1, url: "example.com/a_param=1&page=2&another_param=2" }
+          { start_date: "2023-12-01", end_date: "2023-12-23", current_page: 1, url: "example.com/a_param=1&page=1&another_param=2" }
         end
 
         it "nil for the previous page of results" do
@@ -68,7 +68,7 @@ describe UseCase::GetPagination do
         end
 
         it "the url for the current page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&page=2&another_param=2"
+          expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&page=1&another_param=2"
         end
 
         it "nil for the next page of results" do
