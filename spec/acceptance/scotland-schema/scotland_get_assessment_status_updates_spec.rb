@@ -36,6 +36,10 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
     ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = '#{events_date}' WHERE entity_id = '0000-0000-0000-0000-0000' ")
   end
 
+  after do
+    Events::Broadcaster.disable!
+  end
+
   def expected_response
     JSON.parse({ data: {
                    statusUpdates: [
@@ -75,8 +79,8 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
 
     it "rejects a request without the right scope" do
       expect(scottish_get_assessment_status_updates(
-        start_date: "",
-        end_date: "",
+        start_date: "2020-01-01",
+        end_date: "2020-01-02",
         accepted_responses: [403],
         scopes: %w[wrong:scope],
       ).status).to eq(403)
@@ -160,7 +164,7 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
       response = scottish_get_assessment_status_updates(
         start_date: "2010-06-20",
         end_date: Date.today.to_s,
-        page: 2,
+        page: 1,
         accepted_responses: [400],
       )
 

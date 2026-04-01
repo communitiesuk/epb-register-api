@@ -107,7 +107,7 @@ describe Gateway::AuditLogsGateway do
       context "when there is an additional older entry in the audit logs" do
         before do
           two_days_ago = Time.now - 2.day
-          gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :assessment, entity_id: "0000-0000-0000-0000-0006", event_type: :opt_in))
+          gateway.add_audit_event(Domain::AuditEvent.new(entity_type: :scottish_assessment, entity_id: "0000-0000-0000-0000-0006", event_type: :scottish_opt_in))
           ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = '#{two_days_ago}' WHERE entity_id = '0000-0000-0000-0000-0006' ")
         end
 

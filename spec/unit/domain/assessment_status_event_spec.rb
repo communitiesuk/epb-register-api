@@ -29,6 +29,21 @@ describe Domain::AssessmentStatusEvent do
         assessment_status_event = described_class.new(assessment_event: assessment_event).to_hash
         expect(assessment_status_event).to eq expected_result
       end
+
+      it "return an unknown event type" do
+        unknown_event = {
+          entity_id: "0000-0000-0000-0000-0001",
+          event_type: "undefined_event",
+          timestamp: Time.new(2013, 1, 1),
+        }
+        expected_result = {
+          reportRrn: "0000-0000-0000-0000-0001",
+          newStatus: "unknown event",
+          timeOfChange: Time.new(2013, 1, 1),
+        }
+        assessment_status_event = described_class.new(assessment_event: unknown_event).to_hash
+        expect(assessment_status_event).to eq expected_result
+      end
     end
   end
 end
