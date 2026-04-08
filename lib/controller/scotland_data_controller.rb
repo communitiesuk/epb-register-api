@@ -2,7 +2,7 @@
 
 module Controller
   class ScotlandDataController < Controller::BaseController
-    PARAMS_SCHEMA = {
+    DATE_RANGE_SCHEMA = {
       type: "object",
       required: %w[startDate endDate],
       properties: {
@@ -20,8 +20,19 @@ module Controller
       },
     }.freeze
 
+    ASSESSMENT_ID_SCHEMA = {
+      type: "object",
+      required: %w[assessmentId],
+      properties: {
+        assessmentId: {
+          type: "string",
+          pattern: Helper::RegexHelper::RRN,
+        },
+      },
+    }.freeze
+
     get "/api/scotland/v1/updates/new-reports", auth_token_has_all: %w[scotland_data:rrn:list] do
-      params = params_body PARAMS_SCHEMA
+      params = params_body DATE_RANGE_SCHEMA
 
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -53,7 +64,7 @@ module Controller
     end
 
     get "/api/scotland/v1/updates/assessments/status", auth_token_has_all: %w[scotland_data:assessment_status:list] do
-      params = params_body PARAMS_SCHEMA
+      params = params_body DATE_RANGE_SCHEMA
 
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -81,6 +92,24 @@ module Controller
         error_response 400, "INVALID_REQUEST", e.message
       when Errors::OutOfPaginationRangeError
         error_response 400, "PAGINATION_ERROR", e.message
+      else
+        server_error(e)
+      end
+    end
+
+    get "/api/scotland/v1/assessments/:assessmentId/meta-data",
+        auth_token_has_all: %w[scotland_data:assessment_meta:fetch] do
+      params_body ASSESSMENT_ID_SCHEMA
+      assessment_id = params[:assessmentId]
+      summary = UseCase::AssessmentMeta.new(Gateway::AssessmentMetaGateway.new).execute(assessment_id, is_scottish: true)
+
+      json_api_response(data: summary, meta: { data_sent_at: Time.now.utc })
+    rescue StandardError => e
+      case e
+      when UseCase::AssessmentMeta::NoDataException
+        error_response(404, "NOT_FOUND", "Assessment ID did not return any data")
+      when Boundary::Json::ValidationError
+        error_response 400, "BAD_REQUEST", "The value provided for the assessment ID in the endpoint URL was not valid"
       else
         server_error(e)
       end

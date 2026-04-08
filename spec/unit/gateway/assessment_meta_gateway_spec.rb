@@ -9,6 +9,8 @@ describe Gateway::AssessmentMetaGateway do
       scheme_id = add_scheme_and_get_id
       domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       domestic_rdsap_xml.at("UPRN").children = "RRN-0000-0000-0000-0000-0000"
+      domestic_scottish_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
+      domestic_scottish_rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0001"
 
       add_assessor(
         scheme_id:,
@@ -33,6 +35,15 @@ describe Gateway::AssessmentMetaGateway do
         },
         override: true,
       )
+      lodge_assessment(
+        assessment_body: domestic_scottish_rdsap_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-S-19.0",
+        migrated: true,
+      )
       Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.update_all(address_id: "UPRN-000000000123")
     end
 
@@ -49,9 +60,22 @@ describe Gateway::AssessmentMetaGateway do
         type_of_assessment: "RdSAP",
         schema_type: "RdSAP-Schema-20.0.0",
         created_at: Time.now.utc,
+        date_of_expiry: Date.new(2030, 0o5, 0o3),
         hashed_assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         country_id: 1,
         green_deal: false,
+      }
+    end
+
+    let(:expected_scottish_data) do
+      {
+        status: "ENTERED",
+        optOut: false,
+        createdAt: Time.now.utc,
+        cancelledAt: nil,
+        typeOfAssessment: "RdSAP",
+        schemaType: "RdSAP-Schema-S-19.0",
+        assessmentAddressId: "RRN-0000-0000-0000-0000-0001",
       }
     end
 
@@ -101,6 +125,13 @@ describe Gateway::AssessmentMetaGateway do
 
       it "returns the expected data with green_deal to be true" do
         expect(gateway.fetch("0000-0000-0000-0000-0000")["green_deal"]).to be true
+      end
+    end
+
+    context "when requesting meta data for a scottish certificate" do
+      it "returns the expected data set" do
+        result = gateway.fetch("0000-0000-0000-0000-0001", is_scottish: true).symbolize_keys
+        expect(result).to eq(expected_scottish_data)
       end
     end
   end

@@ -2975,11 +2975,18 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/ScotlandEnergyAssessmentMetadata'
-
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ScotlandEnergyAssessmentMetadata'
+                  - type: object
+                    properties:
+                      meta:
+                        dataSentAt:
+                          type: string
+                          format: date-time
+                          example: '2026-02-26T16:32:01.703Z'
         '404':
           description: Assessment not found
           content:
@@ -3699,6 +3706,13 @@ components:
       example:
       enum:
         - ENTERED
+        - EXPIRED
+        - CANCELLED
+
+    ScotlandAssessmentStatusChange:
+      type: string
+      example:
+      enum:
         - EXPIRED
         - CANCELLED
         - OPTED IN
@@ -4971,7 +4985,7 @@ components:
               reportRRN:
                 $ref: '#/components/schemas/AssessmentId'
               newStatus:
-                $ref: '#/components/schemas/ScotlandAssessmentStatus'
+                $ref: '#/components/schemas/ScotlandAssessmentStatusChange'
               timeOfChange:
                 type: string
                 format: date-time
@@ -5073,8 +5087,8 @@ components:
     ScotlandEnergyAssessmentMetadata:
       type: object
       properties:
-        typeOfAssessment:
-          $ref: '#/components/schemas/AssessmentType'
+        status:
+          $ref: '#/components/schemas/ScotlandAssessmentStatus'
         optOut:
           type: boolean
           example: false
@@ -5088,16 +5102,12 @@ components:
           format: date-time
           example: '2021-04-26T16:32:01.703Z'
           nullable: true
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
         schemaType:
           $ref: '#/components/schemas/SchemaName'
         assessmentAddressId:
           $ref: '#/components/schemas/AddressId'
-        dataSentAt:
-          type: string
-          format: date-time
-          example: '2026-02-26T16:32:01.703Z'
-        status:
-          $ref: '#/components/schemas/ScotlandAssessmentStatus'
 
     PropertySummary:
       type: object
