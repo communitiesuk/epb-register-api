@@ -2983,10 +2983,12 @@ paths:
                   - type: object
                     properties:
                       meta:
-                        dataSentAt:
-                          type: string
-                          format: date-time
-                          example: '2026-02-26T16:32:01.703Z'
+                        type: object
+                        properties:
+                          dataSentAt:
+                            type: string
+                            format: date-time
+                            example: '2026-02-26T16:32:01.703Z'
         '404':
           description: Assessment not found
           content:
