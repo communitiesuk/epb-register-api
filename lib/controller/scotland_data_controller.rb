@@ -103,7 +103,7 @@ module Controller
       assessment_id = params[:assessmentId]
       summary = UseCase::AssessmentMeta.new(Gateway::AssessmentMetaGateway.new).execute(assessment_id, is_scottish: true)
 
-      json_api_response(data: summary, meta: { data_sent_at: Time.now.utc })
+      json_api_response(data: summary, meta: { data_sent_at: Time.now })
     rescue StandardError => e
       case e
       when UseCase::AssessmentMeta::NoDataException

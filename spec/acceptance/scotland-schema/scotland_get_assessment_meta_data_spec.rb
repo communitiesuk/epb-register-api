@@ -28,7 +28,7 @@ describe "Acceptance::ScotlandGetAssessmentMetaData", :set_with_timecop do
                    assessmentAddressId: "RRN-0000-0000-0000-0000-0000",
                  },
                  meta: {
-                   dataSentAt: Time.now.utc,
+                   dataSentAt: Time.now,
                  } }.to_json)
   end
 
