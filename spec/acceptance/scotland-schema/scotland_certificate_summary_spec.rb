@@ -77,7 +77,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                 registeredBy: { name: "test scheme", schemeId: scheme_id },
                 schemeAssessorId: "SPEC000000",
               },
-          countryName: "Unknown",
+          countryName: "Scotland",
           currentCarbonEmission: 1.7,
           carbonEmissionsCurrentPerFloorArea: 25,
           currentEnergyEfficiencyBand: "c",
@@ -337,7 +337,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
              relatedAssessments: [],
              supersededBy: nil,
              schemaType: "SAP-Schema-S-19.0.0",
-             countryName: "Unknown" },
+             countryName: "Scotland" },
           meta: {} }
       end
 
@@ -457,7 +457,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               relatedAssessments: [],
                               supersededBy: nil,
                               schemaType: "CEPC-S-7.1",
-                              countryName: "Unknown" }
+                              countryName: "Scotland" }
 
         expect(response[:data]).to eq(expected_response)
       end
@@ -535,7 +535,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               relatedAssessments: [],
                               supersededBy: nil,
                               schemaType: "CS63-S-7.0",
-                              countryName: "Unknown" }
+                              countryName: "Scotland" }
 
         expect(response[:data]).to eq(expected_response)
       end
@@ -610,7 +610,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               relatedAssessments: [],
                               supersededBy: nil,
                               schemaType: "DECAR-S-7.0",
-                              countryName: "Unknown" }
+                              countryName: "Scotland" }
 
         expect(response[:data]).to eq(expected_response)
       end
@@ -737,7 +737,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               relatedAssessments: [],
                               supersededBy: nil,
                               schemaType: "DECAR-S-7.0",
-                              countryName: "Unknown" }
+                              countryName: "Scotland" }
 
         expect(response[:data]).to eq(expected_response)
       end
@@ -847,7 +847,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               relatedAssessments: [],
                               supersededBy: nil,
                               schemaType: "DECAR-S-7.0",
-                              countryName: "Unknown",
+                              countryName: "Scotland",
                               energyBandFromRelatedCertificate: "b" }
 
         expect(response[:data]).to eq(expected_response)

@@ -263,7 +263,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
             "addressId": "UPRN-000000000000",
             "optOut": false,
             "supersededBy": superseded_by,
-            "countryName": "Unknown",
+            "countryName": "England and Wales",
             "relatedAssessments": related_assessment,
             "schemaType": "RdSAP-Schema-20.0.0",
             "greenDealPlan": green_deal_plan,
@@ -514,7 +514,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
              optOut: false,
              relatedAssessments: [],
              supersededBy: nil,
-             countryName: "Unknown",
+             countryName: "England and Wales",
              schemaType: "SAP-Schema-18.0.0" },
           meta: {} }
       end

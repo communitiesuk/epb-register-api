@@ -366,6 +366,50 @@ def lodge_assessment(
   )
 end
 
+def lodge_scottish_assessment(
+  assessment_body: "",
+  accepted_responses: [201],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[scotland_assessment:lodge migrate:scotland],
+  json: false,
+  schema_name: "RdSAP-Schema-S-19.0",
+  headers: {},
+  migrated: nil,
+  override: nil,
+  ensure_uprns: true
+)
+  # ensure "good" range of UPRNs added to address_base table
+  add_uprns_to_address_base("0", "1") if ensure_uprns
+
+  path =
+    if !migrated.nil?
+      "api/scotland/assessments?migrated#{migrated == true ? '' : "=#{migrated}"}"
+    elsif !override.nil?
+      "api/scotland/assessments?override#{override == true ? '' : "=#{override}"}"
+    else
+      "api/scotland/assessments"
+    end
+
+  unless schema_name.nil?
+    header "Content-type", "application/xml+#{schema_name}"
+    content_type_set = true
+  end
+
+  headers.each { |key, value| header key.to_s, value.to_s }
+
+  assertive_post(
+    path,
+    body: assessment_body,
+    accepted_responses:,
+    should_authenticate: authenticate,
+    auth_data:,
+    scopes:,
+    json:,
+    content_type_set:,
+  )
+end
+
 def update_assessment_status(
   assessment_id: "",
   assessment_status_body: "",
