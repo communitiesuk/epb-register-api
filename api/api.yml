@@ -3010,7 +3010,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /scotland/v1/updates/assessment/status:
+  /scotland/v1/updates/assessments/status:
     get:
       tags:
         - Scotland Data
