@@ -3052,11 +3052,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Pagination'
                   - type: object
                     properties:
                       data:
                         $ref: '#/components/schemas/ScottishAssessmentsStatusChanges'
+                  - type: object
+                    properties:
+                      meta:
+                        $ref: '#/components/schemas/Pagination'
         '403':
           description: Forbidden
           content:
@@ -3114,11 +3117,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/Pagination'
                   - type: object
                     properties:
                       data:
                         $ref: '#/components/schemas/ScottishNewAssessments'
+                  - type: object
+                    properties:
+                      meta:
+                        $ref: '#/components/schemas/Pagination'
         '403':
           description: Forbidden
           content:

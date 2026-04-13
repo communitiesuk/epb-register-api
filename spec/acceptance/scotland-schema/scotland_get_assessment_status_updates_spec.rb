@@ -60,11 +60,9 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
                      },
                    ],
                  },
-                 pagination:
-                   { nextPage: nil,
-                     currentPage: "http://example.org/api/scotland/v1/updates/assessments/status?startDate=2021-05-31&endDate=2021-06-15&page=1",
-                     previousPage: nil },
-                 meta: {} }.to_json)
+                 meta: { nextPage: nil,
+                         currentPage: "http://example.org/api/scotland/v1/updates/assessments/status?startDate=2021-05-31&endDate=2021-06-15&page=1",
+                         previousPage: nil } }.to_json)
   end
 
   describe "security scenarios" do
@@ -97,11 +95,11 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json.keys).to contain_exactly("data", "pagination", "meta")
+      expect(response_json.keys).to contain_exactly("data", "meta")
       expect(response_json["data"]["statusUpdates"].first.keys).to contain_exactly("newStatus", "reportRrn", "timeOfChange")
       expect(response_json["data"]["statusUpdates"].map { |update| update["newStatus"] }).to contain_exactly("CANCELLED", "OPTED OUT", "OPTED IN")
 
-      expect(response_json["pagination"]).to eq(expected_response["pagination"])
+      expect(response_json["meta"]).to eq(expected_response["meta"])
     end
 
     it "defaults to page 1 if you don't specify a page" do
@@ -112,7 +110,7 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json["pagination"]).to eq(JSON.parse(
+      expect(response_json["meta"]).to eq(JSON.parse(
                                                   { nextPage: nil,
                                                     currentPage: "http://example.org/api/scotland/v1/updates/assessments/status?startDate=2021-05-31&endDate=2021-06-15",
                                                     previousPage: nil }.to_json,

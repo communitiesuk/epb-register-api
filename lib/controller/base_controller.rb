@@ -111,8 +111,7 @@ module Controller
       data: {},
       meta: {},
       burrow_key: false,
-      data_key: :data,
-      pagination: {}
+      data_key: :data
     )
       if burrow_key
         data, meta = meta, data
@@ -120,7 +119,6 @@ module Controller
       end
 
       response_data = { data:, meta: }
-      response_data[:pagination] = pagination unless pagination.empty?
       json_response(response_data, code)
     end
 
