@@ -28,9 +28,10 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
     JSON.parse({ data: {
                    rrns: %w[0000-0000-0000-0000-0000],
                  },
-                 meta: { nextPage: nil,
-                         currentPage: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03&page=1",
-                         previousPage: nil } }.to_json)
+                 links: { next: nil,
+                          self: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03&page=1",
+                          prev: nil },
+                 meta: {} }.to_json)
   end
 
   describe "security scenarios" do
@@ -81,11 +82,11 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json["meta"]).to eq(JSON.parse(
-                                            { nextPage: nil,
-                                              currentPage: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03",
-                                              previousPage: nil }.to_json,
-                                          ))
+      expect(response_json["links"]).to eq(JSON.parse(
+                                             { next: nil,
+                                               self: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03",
+                                               prev: nil }.to_json,
+                                           ))
     end
   end
 

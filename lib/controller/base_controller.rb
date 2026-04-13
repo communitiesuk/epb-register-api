@@ -111,7 +111,8 @@ module Controller
       data: {},
       meta: {},
       burrow_key: false,
-      data_key: :data
+      data_key: :data,
+      links: {}
     )
       if burrow_key
         data, meta = meta, data
@@ -119,6 +120,7 @@ module Controller
       end
 
       response_data = { data:, meta: }
+      response_data[:links] = links unless links.empty?
       json_response(response_data, code)
     end
 

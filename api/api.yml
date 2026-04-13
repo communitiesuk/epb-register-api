@@ -3058,7 +3058,7 @@ paths:
                         $ref: '#/components/schemas/ScottishAssessmentsStatusChanges'
                   - type: object
                     properties:
-                      meta:
+                      links:
                         $ref: '#/components/schemas/Pagination'
         '403':
           description: Forbidden
@@ -3123,7 +3123,7 @@ paths:
                         $ref: '#/components/schemas/ScottishNewAssessments'
                   - type: object
                     properties:
-                      meta:
+                      links:
                         $ref: '#/components/schemas/Pagination'
         '403':
           description: Forbidden
@@ -6014,16 +6014,16 @@ components:
     Pagination:
       type: object
       properties:
-        currentPage:
+        self:
           type: string
           format: uri
-          example: "example.com/a_param=1&currentPage=2&another_param=2"
-        nextPage:
+          example: "example.com/a_param=1&page=2&another_param=2"
+        next:
           type: string
           format: uri
           nullable: true
           example: null
-        previousPage:
+        prev:
           type: string
           format: uri
           nullable: true

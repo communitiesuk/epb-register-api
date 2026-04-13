@@ -64,15 +64,15 @@ describe UseCase::GetPagination do
         end
 
         it "nil for the previous page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:previous_page]).to be_nil
+          expect(use_case.execute(**search_arguments_with_url)[:prev]).to be_nil
         end
 
         it "the url for the current page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&page=1&another_param=2"
+          expect(use_case.execute(**search_arguments_with_url)[:self]).to eq "example.com/a_param=1&page=1&another_param=2"
         end
 
         it "nil for the next page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:next_page]).to be_nil
+          expect(use_case.execute(**search_arguments_with_url)[:next]).to be_nil
         end
       end
     end
@@ -105,15 +105,15 @@ describe UseCase::GetPagination do
         end
 
         it "returns the url for the previous page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:previous_page]).to eq "example.com/a_param=1&page=1&another_param=2"
+          expect(use_case.execute(**search_arguments_with_url)[:prev]).to eq "example.com/a_param=1&page=1&another_param=2"
         end
 
         it "returns the url for the current page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&page=2&another_param=2"
+          expect(use_case.execute(**search_arguments_with_url)[:self]).to eq "example.com/a_param=1&page=2&another_param=2"
         end
 
         it "returns the url for the next page of results" do
-          expect(use_case.execute(**search_arguments_with_url)[:next_page]).to eq "example.com/a_param=1&page=3&another_param=2"
+          expect(use_case.execute(**search_arguments_with_url)[:next]).to eq "example.com/a_param=1&page=3&another_param=2"
         end
 
         context "when the url doesn't contain the current page" do
@@ -123,15 +123,15 @@ describe UseCase::GetPagination do
           end
 
           it "returns the url for the current page of results" do
-            expect(use_case.execute(**search_arguments_with_url)[:current_page]).to eq "example.com/a_param=1&another_param=2"
+            expect(use_case.execute(**search_arguments_with_url)[:self]).to eq "example.com/a_param=1&another_param=2"
           end
 
           it "returns nil for the previous page of results" do
-            expect(use_case.execute(**search_arguments_with_url)[:previous_page]).to be_nil
+            expect(use_case.execute(**search_arguments_with_url)[:prev]).to be_nil
           end
 
           it "returns the url for the next page of results with the page appended" do
-            expect(use_case.execute(**search_arguments_with_url)[:next_page]).to eq "example.com/a_param=1&another_param=2&page=2"
+            expect(use_case.execute(**search_arguments_with_url)[:next]).to eq "example.com/a_param=1&another_param=2&page=2"
           end
         end
       end
