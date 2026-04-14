@@ -115,7 +115,7 @@ module Controller
       end
     end
 
-    get "/api/scotland/v1/assessments/:assessment_id",
+    get "/api/scotland/v1/assessments/:assessment_id/xml-data",
         auth_token_has_all: %w[scotland_data:assessment:fetch] do
       assessment_id = params[:assessment_id]
 

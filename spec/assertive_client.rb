@@ -661,7 +661,7 @@ def scottish_get_assessment_xml(
   scopes: %w[scotland_data:assessment:fetch],
   **assertive_kwargs
 )
-  path = "/api/scotland/v1/assessments/#{assessment_id}"
+  path = "/api/scotland/v1/assessments/#{assessment_id}/xml-data"
 
   assertive_get(
     path,
