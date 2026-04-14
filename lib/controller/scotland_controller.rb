@@ -23,7 +23,7 @@ module Controller
         )
       end
 
-      if !migrated && env[:auth_token].scopes?(%w[migrate:scotland])
+      if !migrated && !env[:auth_token].scopes?(%w[scotland_assessment:lodge])
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this lodgement request",
