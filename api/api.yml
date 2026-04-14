@@ -2924,21 +2924,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '400':
-          description: Bad request - The assessmentId parameter is badly formatted
+          description: The requested assessment id is not valid
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '410':
-          description: >-
-            Assessment no long accessible
-            (could have been cancelled or marked not for issue)
           content:
             application/json:
               schema:
@@ -2996,7 +2988,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '400':
-          description: Bad request - The assessmentId parameter is badly formatted
+          description: The requested assessment id is not valid
           content:
             application/json:
               schema:

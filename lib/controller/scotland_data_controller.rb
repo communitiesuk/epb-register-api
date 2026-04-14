@@ -107,9 +107,39 @@ module Controller
     rescue StandardError => e
       case e
       when UseCase::AssessmentMeta::NoDataException
-        error_response(404, "NOT_FOUND", "Assessment ID did not return any data")
+        not_found_error("Assessment ID did not return any data")
       when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST", "The value provided for the assessment ID in the endpoint URL was not valid"
+        error_response 400, "BAD_REQUEST", "The requested assessment id is not valid"
+      else
+        server_error(e)
+      end
+    end
+
+    get "/api/scotland/v1/assessments/:assessment_id",
+        auth_token_has_all: %w[scotland_data:assessment:fetch] do
+      assessment_id = params[:assessment_id]
+
+      auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")
+
+      result =
+        UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids, is_scottish: true)
+
+      xml_response result, 200
+    rescue StandardError => e
+      case e
+      when UseCase::FetchAssessment::NotFoundException
+        not_found_error("Assessment ID did not return any data")
+      when UseCase::FetchAssessment::SchemeIdsDoNotMatch
+        forbidden(
+          "UNAUTHORISED",
+          "You are not authorised to view this scheme's lodged data",
+        )
+      when Helper::RrnHelper::RrnNotValid
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The requested assessment id is not valid",
+        )
       else
         server_error(e)
       end

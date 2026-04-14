@@ -1,4 +1,4 @@
-describe "Acceptance::ScotlandGetAssessmentMetaData", :set_with_timecop do
+describe "Acceptance::ScotlandGetAssessmentXml", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }
@@ -18,54 +18,63 @@ describe "Acceptance::ScotlandGetAssessmentMetaData", :set_with_timecop do
   end
 
   def expected_response
-    JSON.parse({ data: {
-                   status: "ENTERED",
-                   optOut: false,
-                   createdAt: Time.now.utc,
-                   cancelledAt: nil,
-                   typeOfAssessment: "RdSAP",
-                   schemaType: "RdSAP-Schema-S-19.0",
-                   assessmentAddressId: "RRN-0000-0000-0000-0000-0000",
-                 },
-                 meta: {
-                   dataSentAt: Time.now,
-                 } }.to_json)
+    valid_scottish_rdsap_xml
+  end
+
+  context "when requesting xml for an assessment" do
+    it "returns the xml" do
+      response = scottish_get_assessment_xml(
+        assessment_id: "0000-0000-0000-0000-0000",
+        auth_data: { 'scheme_ids': [scheme_id] },
+      )
+
+      expect(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{response.body}",
+      ).to eq(expected_response)
+    end
   end
 
   describe "security scenarios" do
     it "rejects a request without authentication" do
-      expect(scottish_get_assessment_meta_data(
+      expect(scottish_get_assessment_xml(
         assessment_id: "0000-0000-0000-0000-0000",
+        auth_data: { 'scheme_ids': [scheme_id] },
         accepted_responses: [401],
         should_authenticate: false,
       ).status).to eq(401)
     end
 
     it "rejects a request without the right scope" do
-      expect(scottish_get_assessment_meta_data(
+      response = scottish_get_assessment_xml(
         assessment_id: "0000-0000-0000-0000-0000",
+        auth_data: { 'scheme_ids': [scheme_id] },
         accepted_responses: [403],
         scopes: %w[wrong:scope],
-      ).status).to eq(403)
-    end
-  end
-
-  context "when requesting meta data for an assessment" do
-    it "returns the data and timestamp" do
-      response = scottish_get_assessment_meta_data(
-        assessment_id: "0000-0000-0000-0000-0000",
       )
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json).to eq(expected_response)
+      expect(response_json["errors"][0]["title"]).to eq "You are not authorised to perform this request"
+    end
+
+    it "rejects a request when the provided auth schemes do not match the scheme id from the assessment" do
+      response = scottish_get_assessment_xml(
+        assessment_id: "0000-0000-0000-0000-0000",
+        auth_data: { 'scheme_ids': %w[1] },
+        accepted_responses: [403],
+      )
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["errors"][0]["title"]).to eq "You are not authorised to view this scheme's lodged data"
     end
   end
 
   describe "error scenarios" do
     it "raises an error if the assessment you have requested doesn't exist" do
-      response = scottish_get_assessment_meta_data(
+      response = scottish_get_assessment_xml(
         assessment_id: "0000-0000-0000-0000-0009",
+        auth_data: { 'scheme_ids': [scheme_id] },
         accepted_responses: [404],
       )
 
@@ -75,8 +84,9 @@ describe "Acceptance::ScotlandGetAssessmentMetaData", :set_with_timecop do
     end
 
     it "raises an error if you provide it with something other than an assessment id" do
-      response = scottish_get_assessment_meta_data(
+      response = scottish_get_assessment_xml(
         assessment_id: "bad-example",
+        auth_data: { 'scheme_ids': [scheme_id] },
         accepted_responses: [400],
       )
 

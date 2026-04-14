@@ -656,6 +656,20 @@ def scottish_get_assessment_meta_data(
   )
 end
 
+def scottish_get_assessment_xml(
+  assessment_id:,
+  scopes: %w[scotland_data:assessment:fetch],
+  **assertive_kwargs
+)
+  path = "/api/scotland/v1/assessments/#{assessment_id}"
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def assessments_search_by_street_and_town(
   street:,
   town:,
