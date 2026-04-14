@@ -10,7 +10,7 @@ describe Domain::ScottishAssessmentMetaData do
       opt_out: false,
       not_for_issue_at: nil,
       type_of_assessment: "RdSAP",
-      schema_type: "RdSAP-Schema-20.0.0",
+      schema_type: "RdSAP-Schema-S-19.0",
       created_at: Date.new(2020, 0o5, 0o4),
       date_of_expiry: Date.new(2030, 0o5, 0o3),
       hashed_assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
@@ -26,19 +26,19 @@ describe Domain::ScottishAssessmentMetaData do
       createdAt: Date.new(2020, 0o5, 0o4),
       cancelledAt: nil,
       typeOfAssessment: "RdSAP",
-      schemaType: "RdSAP-Schema-20.0.0",
+      schemaType: "RdSAP-Schema-S-19.0",
       assessmentAddressId: "UPRN-000000000123",
     }
   end
 
   context "when initializing the object" do
     it "does not raise an error" do
-      expect { described_class.new(meta_data: meta_data) }.not_to raise_error
+      expect { described_class.new(meta_data:) }.not_to raise_error
     end
 
     describe "#to_hash" do
       it "returns a hash with the expected keys and values" do
-        assessment_status_event = described_class.new(meta_data: meta_data).to_hash
+        assessment_status_event = described_class.new(meta_data:).to_hash
         expect(assessment_status_event).to eq expected_result
       end
 
@@ -49,7 +49,7 @@ describe Domain::ScottishAssessmentMetaData do
         end
 
         it "returns the hash with an expired status" do
-          assessment_status_event = described_class.new(meta_data: meta_data).to_hash
+          assessment_status_event = described_class.new(meta_data:).to_hash
           expect(assessment_status_event).to eq expected_result
         end
       end
@@ -62,7 +62,7 @@ describe Domain::ScottishAssessmentMetaData do
         end
 
         it "returns the hash with an cancelled status and date" do
-          assessment_status_event = described_class.new(meta_data: meta_data).to_hash
+          assessment_status_event = described_class.new(meta_data:).to_hash
           expect(assessment_status_event).to eq expected_result
         end
       end
@@ -75,7 +75,7 @@ describe Domain::ScottishAssessmentMetaData do
         end
 
         it "returns the hash with an cancelled status and date" do
-          assessment_status_event = described_class.new(meta_data: meta_data).to_hash
+          assessment_status_event = described_class.new(meta_data:).to_hash
           expect(assessment_status_event).to eq expected_result
         end
       end
