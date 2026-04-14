@@ -27,12 +27,12 @@ module Gateway
 
     def insert_or_update(assessment, is_scottish: false)
       check_valid_energy_ratings assessment
-      send_update_to_db(assessment, is_scottish)
+      send_update_to_db(assessment, is_scottish: is_scottish)
     end
 
-    def insert(assessment)
+    def insert(assessment, is_scottish: false)
       check_valid_energy_ratings assessment
-      send_insert_to_db assessment
+      send_insert_to_db(assessment, is_scottish: is_scottish)
     end
 
     def update_statuses(assessments_ids, status, value, is_scottish: false)
@@ -215,21 +215,23 @@ module Gateway
 
   private
 
-    def send_insert_to_db(assessment)
+    def send_insert_to_db(assessment, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       ActiveRecord::Base.transaction do
         begin
-          Assessment.create assessment.to_record
+          # Assessment.create assessment.to_record
+          is_scottish ? AssessmentScotland.create(assessment.to_record) : Assessment.create(assessment.to_record)
         rescue ActiveRecord::RecordNotUnique
           raise AssessmentAlreadyExists
         end
 
         unless assessment.get(:related_rrn).nil?
-          add_linked_assessment(assessment, "public.")
+          add_linked_assessment(assessment, schema)
         end
       end
     end
 
-    def send_update_to_db(assessment, is_scottish)
+    def send_update_to_db(assessment, is_scottish: false)
       schema = Helper::ScotlandHelper.select_schema(is_scottish)
       ActiveRecord::Base.transaction do
         existing_assessment = if is_scottish

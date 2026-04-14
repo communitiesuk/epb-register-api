@@ -120,13 +120,12 @@ module UseCase
       wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
       schema_valid = UseCase::CheckSchemaVersion.new.execute(schema_name)
 
-
       country_lookup = @country_use_case.execute rrn: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :assessment_id),
                                                  postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
                                                  address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
 
-      unless migrated  || schema_name.include?("-S-")
-        # We need the Scottish lodgement rules!
+      unless migrated || schema_name.include?("-S-")
+        # TODO: We need Scottish lodgement rules
         if schema_valid && !wrapper.nil?
 
           rules =
@@ -135,10 +134,6 @@ module UseCase
             else
               LodgementRules::DomesticCommon.new
             end
-          #
-          # country_lookup = @country_use_case.execute rrn: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :assessment_id),
-          #                                            postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
-          #                                            address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
 
           validation_result = rules.validate(wrapper.get_view_model, country_lookup)
 

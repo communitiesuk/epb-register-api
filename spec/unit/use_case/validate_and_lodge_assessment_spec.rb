@@ -40,6 +40,10 @@ describe UseCase::ValidateAndLodgeAssessment do
     instance_double(UseCase::GetCountryForCandidateLodgement)
   end
 
+  before do
+    allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:E])
+  end
+
   context "when validating an invalid schema name" do
     it "raises the error SchemaNotSupportedException" do
       expect {
@@ -121,10 +125,6 @@ describe UseCase::ValidateAndLodgeAssessment do
   context "when validating assessment XML that is from the current version of a schema" do
     after do
       Timecop.return
-    end
-
-    before do
-      allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
     end
 
     it "validates SAP Schema version 19.2.0" do
@@ -352,7 +352,6 @@ describe UseCase::ValidateAndLodgeAssessment do
     let(:rdsap) { Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")) }
 
     before do
-      allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
     end
 
@@ -418,7 +417,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       let(:cepc) { Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc")) }
 
       before do
-        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:E])
         Timecop.freeze(2019, 2, 22, 0, 0, 0)
       end
 
@@ -445,7 +443,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
-        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
         Timecop.freeze(2021, 2, 22, 0, 0, 0)
       end
 
@@ -470,7 +467,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
-        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
         Timecop.freeze(2020, 5, 3, 0, 0, 0) # Fixture has dates of 2020-05-04; this is the day before.
       end
 
@@ -497,7 +493,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
-        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
         Timecop.freeze(2021, 2, 22, 0, 0, 0)
       end
 
@@ -524,7 +519,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       end
 
       before do
-        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:E])
         Timecop.freeze(2022, 12, 22, 0, 0, 0)
         allow(Helper::Toggles).to receive(:enabled?)
       end
@@ -551,7 +545,6 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
 
     before do
-      allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
       allow(lodge_assessment_use_case).to receive(:execute).and_raise(ActiveRecord::StatementInvalid)
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
     end

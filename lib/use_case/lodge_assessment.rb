@@ -42,8 +42,7 @@ module UseCase
       is_scottish = schema_name.include?("-S-") || false
 
       assessment_id = data[:assessment_id]
-      # TODO: UPDATE WHEN DOING LODGEMENT
-      if !migrated && find_assessment_by_id(assessment_id)
+      if !migrated && find_assessment_by_id(assessment_id, is_scottish: is_scottish)
         raise DuplicateAssessmentIdException
       end
 
@@ -56,7 +55,7 @@ module UseCase
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
-      check_assessor_qualification data, assessor unless migrated
+      check_assessor_qualification(data, assessor, is_scottish: is_scottish) unless migrated
 
       assessment =
         Domain::AssessmentIndexRecord.new(
@@ -89,15 +88,13 @@ module UseCase
         insert_country_id(data[:assessment_id], is_scottish, country_id: data[:country_id], upsert: true)
       else
         begin
-          # TODO: UPDATE WHEN DOING LODGEMENT
-          @assessments_gateway.insert assessment
+          @assessments_gateway.insert(assessment, is_scottish: is_scottish)
           insert_country_id(data[:assessment_id], is_scottish, country_id: data[:country_id])
         rescue Gateway::AssessmentsGateway::AssessmentAlreadyExists
           raise DuplicateAssessmentIdException
         end
       end
       insert_assessment_address_id(assessment, is_scottish)
-      # TODO: UPDATE WHEN DOING LODGEMENT
       associate_related_green_deals(assessment, is_scottish) if assessment.type_of_assessment == "RdSAP" && !migrated
       @assessments_xml_gateway.send_to_db(
         {
@@ -107,6 +104,7 @@ module UseCase
         },
         is_scottish,
       )
+
       search_address = Domain::SearchAddress.new(data).to_hash
       @search_address_gateway.insert(search_address, is_scottish: is_scottish)
       @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id, is_scottish: is_scottish
@@ -127,45 +125,72 @@ module UseCase
 
   private
 
-    def check_assessor_qualification(data, assessor)
+    def check_assessor_qualification(data, assessor, is_scottish: false)
       active_status = "ACTIVE"
 
-      if data[:type_of_assessment] == "RdSAP" &&
-          assessor.domestic_rd_sap_qualification != active_status
-        raise InactiveAssessorException
-      end
+      if is_scottish
+        if data[:type_of_assessment] == "RdSAP" &&
+            assessor.scotland_rdsap_qualification != active_status
+          raise InactiveAssessorException
+        end
 
-      if data[:type_of_assessment] == "SAP" &&
-          assessor.domestic_sap_qualification != active_status
-        raise InactiveAssessorException
-      end
+        if data[:type_of_assessment] == "SAP" &&
+            assessor.scotland_sap_existing_building_qualification != active_status && assessor.scotland_sap_new_building_qualification != active_status
+          raise InactiveAssessorException
+        end
 
-      if %w[CEPC CEPC-RR].include?(data[:type_of_assessment])
-        if data[:building_complexity]
-          level = data[:building_complexity]
+        if data[:type_of_assessment] == "CEPC" &&
+            assessor.scotland_nondomestic_existing_building_qualification != active_status && assessor.scotland_nondomestic_new_building_qualification != active_status
+          raise InactiveAssessorException
+        end
 
-          if assessor.send(:"non_domestic_nos#{level}_qualification") !=
-              active_status
+        if %w[DEC DEC-RR].include?(data[:type_of_assessment]) &&
+            assessor.scotland_dec_and_ar_qualification != active_status
+          raise InactiveAssessorException
+        end
+
+        if data[:type_of_assessment] == "CS63" &&
+            assessor.scotland_section63_qualification != active_status
+          raise InactiveAssessorException
+        end
+      else
+        if data[:type_of_assessment] == "RdSAP" &&
+            assessor.domestic_rd_sap_qualification != active_status
+          raise InactiveAssessorException
+        end
+
+        if data[:type_of_assessment] == "SAP" &&
+            assessor.domestic_sap_qualification != active_status
+          raise InactiveAssessorException
+        end
+
+        if %w[CEPC CEPC-RR].include?(data[:type_of_assessment])
+          if data[:building_complexity]
+            level = data[:building_complexity]
+
+            if assessor.send(:"non_domestic_nos#{level}_qualification") !=
+                active_status
+              raise InactiveAssessorException
+            end
+          end
+
+          if assessor.non_domestic_nos3_qualification != active_status &&
+              assessor.non_domestic_nos4_qualification != active_status &&
+              assessor.non_domestic_nos5_qualification != active_status
             raise InactiveAssessorException
           end
         end
 
-        if assessor.non_domestic_nos3_qualification != active_status &&
-            assessor.non_domestic_nos4_qualification != active_status &&
-            assessor.non_domestic_nos5_qualification != active_status
+        if %w[DEC DEC-RR].include?(data[:type_of_assessment]) &&
+            assessor.non_domestic_dec_qualification != active_status
           raise InactiveAssessorException
         end
-      end
 
-      if %w[DEC DEC-RR].include?(data[:type_of_assessment]) &&
-          assessor.non_domestic_dec_qualification != active_status
-        raise InactiveAssessorException
-      end
-
-      if %w[AC-CERT AC-REPORT].include?(data[:type_of_assessment]) &&
-          assessor.non_domestic_sp3_qualification != active_status &&
-          assessor.non_domestic_cc4_qualification != active_status
-        raise InactiveAssessorException
+        if %w[AC-CERT AC-REPORT].include?(data[:type_of_assessment]) &&
+            assessor.non_domestic_sp3_qualification != active_status &&
+            assessor.non_domestic_cc4_qualification != active_status
+          raise InactiveAssessorException
+        end
       end
     end
 
@@ -208,14 +233,14 @@ module UseCase
 
     def associate_related_green_deals(assessment, is_scottish)
       canonical_address_id = @assessments_address_id_gateway.fetch(assessment.assessment_id, is_scottish: is_scottish)[:address_id]
-      related_assessment_ids = @related_assessments_gateway.related_assessment_ids(canonical_address_id).reject { |id| id == assessment.assessment_id }
+      related_assessment_ids = @related_assessments_gateway.related_assessment_ids(canonical_address_id, is_scottish: is_scottish).reject { |id| id == assessment.assessment_id }
       # Need to update the lodge_assessment method in assertive client
       green_deal_plan_sets = related_assessment_ids.map { |assessment_id| @green_deal_plans_gateway.fetch assessment_id }
       flat_mapped = green_deal_plan_sets.flat_map(&:itself)
       green_deal_plan_ids = flat_mapped.map(&:green_deal_plan_id).uniq
       green_deal_plan_ids.each do |green_deal_plan_id|
         # Need to update the lodge_assessment method in assertive client
-        @green_deal_plans_gateway.link_green_deal_to_assessment green_deal_plan_id, assessment.assessment_id
+        @green_deal_plans_gateway.link_green_deal_to_assessment green_deal_plan_id, assessment.assessment_id, is_scottish: is_scottish
       end
     rescue StandardError => e
       Logger.new($stdout).error "Associating related green deals for the assessment #{assessment.assessment_id} failed with error #{e.class}, message #{e.message}, backtrace #{e.backtrace.join('; ')}"
@@ -231,9 +256,8 @@ module UseCase
       )
     end
 
-    # TODO: UPDATE WHEN DOING LODGEMENT
-    def find_assessment_by_id(assessment_id)
-      @assessments_search_gateway.search_by_assessment_id(assessment_id, restrictive: false)
+    def find_assessment_by_id(assessment_id, is_scottish: false)
+      @assessments_search_gateway.search_by_assessment_id(assessment_id, restrictive: false, is_scottish: is_scottish)
         .first
     end
 

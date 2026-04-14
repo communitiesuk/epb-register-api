@@ -180,36 +180,36 @@ module Controller
           "INVALID_REQUEST",
           "Both parts of a dual lodgement must share the same address id.",
         )
-      # when UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
-      #   error_response(
-      #     400,
-      #     "INVALID_REQUEST",
-      #     "Lodgement rule cannot be overridden: #{e.message}",
-      #     )
+      when UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Lodgement rule cannot be overridden: #{e.message}",
+        )
       when UseCase::ValidateAndLodgeAssessment::InvalidSapDataVersionError
         error_response(
           400,
           "INVALID_REQUEST",
           "The version number #{e.invalid_version_value} for the node #{e.failed_node} is invalid for the #{e.schema_name} schema",
         )
-      # when UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
-      #   error_response(
-      #     400,
-      #     "INVALID_REQUEST",
-      #     e.message,
-      #     )
-      # when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
-      #   json_response(
-      #     {
-      #       errors: e.errors,
-      #       meta: {
-      #         links: {
-      #           override: "/api/scotland/assessments?override=true",
-      #         },
-      #       },
-      #     },
-      #     400,
-      #     )
+      when UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          e.message,
+        )
+      when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
+        json_response(
+          {
+            errors: e.errors,
+            meta: {
+              links: {
+                override: "/api/scotland/assessments?override=true",
+              },
+            },
+          },
+          400,
+        )
       else
         server_error(e)
       end
