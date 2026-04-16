@@ -55,6 +55,101 @@ module Gateway
       result
     end
 
+    def get_scottish_assessor_events(start_date:, end_date:, current_page:, limit: 5000)
+      sql = <<~SQL
+        SELECT
+          ase.assessor, ase.scheme_assessor_id, ase.qualification_type, ase.previous_status, ase.new_status
+        FROM
+          assessors_status_events ase
+        WHERE
+          recorded_at BETWEEN $1 AND $2
+        AND
+          ase.qualification_type IN ('scotland_dec_and_ar',
+                                       'scotland_nondomestic_existing_building',
+                                       'scotland_nondomestic_new_building',
+                                       'scotland_rdsap',
+                                       'scotland_sap_existing_building',
+                                       'scotland_sap_new_building',
+                                       'scotland_section63')
+        ORDER BY recorded_at
+        LIMIT $3
+        OFFSET $4;
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "start_date",
+          start_date.to_s,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "end_date",
+          end_date.to_s,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "limit",
+          limit,
+          ActiveRecord::Type::Integer.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "offset",
+          Helper::PaginationHelper.calculate_offset(current_page, limit),
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      response = AssessorsStatusEvents.connection.exec_query(sql, "SQL", binds)
+
+      result = []
+      response.each do |row|
+        result <<
+          Domain::AssessorsStatusEvent.new(
+            assessor: JSON.parse(row["assessor"]),
+            scheme_assessor_id: row["scheme_assessor_id"],
+            qualification_type: row["qualification_type"],
+            previous_status: row["previous_status"],
+            new_status: row["new_status"],
+          ).to_hash
+      end
+
+      result
+    end
+
+    def count_scottish_assessor_events(start_date:, end_date:)
+      sql = <<~SQL
+        SELECT
+          COUNT(*)
+        FROM
+          assessors_status_events ase
+        WHERE
+          recorded_at BETWEEN $1 AND $2
+        AND
+          ase.qualification_type IN ('scotland_dec_and_ar',
+                                       'scotland_nondomestic_existing_building',
+                                       'scotland_nondomestic_new_building',
+                                       'scotland_rdsap',
+                                       'scotland_sap_existing_building',
+                                       'scotland_sap_new_building',
+                                       'scotland_section63');
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "start_date",
+          start_date.to_s,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "end_date",
+          end_date.to_s,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      AssessorsStatusEvents.connection.exec_query(sql, "SQL", binds).first["count"]
+    end
+
     def add(assessor_status_event_domain)
       AssessorsStatusEvents.create(assessor_status_event_domain.to_record)
     end

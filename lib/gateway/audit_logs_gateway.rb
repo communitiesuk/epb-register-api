@@ -99,7 +99,7 @@ module Gateway
 
         ActiveRecord::Relation::QueryAttribute.new(
           "offset",
-          calculate_offset(current_page, limit),
+          Helper::PaginationHelper.calculate_offset(current_page, limit),
           ActiveRecord::Type::String.new,
         ),
 
@@ -136,11 +136,6 @@ module Gateway
     end
 
   private
-
-    def calculate_offset(current_page, limit)
-      current_page = 1 if current_page <= 0
-      (current_page - 1) * limit
-    end
 
     def shared_scottish_event_sql(event_types:)
       sql = <<-SQL
