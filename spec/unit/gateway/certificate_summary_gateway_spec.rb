@@ -36,7 +36,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
       schema_name: "SAP-Schema-19.0.0",
       migrated: true,
     )
-    lodge_assessment(
+    lodge_scottish_assessment(
       assessment_body: domestic_rdsap_s_xml.to_xml,
       accepted_responses: [201],
       auth_data: {
@@ -45,7 +45,7 @@ describe Gateway::CertificateSummaryGateway, :set_with_timecop do
       schema_name: "RdSAP-Schema-S-19.0",
       migrated: true,
     )
-    lodge_assessment(
+    lodge_scottish_assessment(
       assessment_body: domestic_sap_s_xml.to_xml,
       accepted_responses: [201],
       auth_data: {

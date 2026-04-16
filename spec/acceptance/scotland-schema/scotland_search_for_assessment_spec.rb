@@ -14,7 +14,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
     )
 
     if non_domestic
-      lodge_assessment(
+      lodge_scottish_assessment(
         assessment_body: Samples.xml("CEPC-S-7.1", "cepc"),
         accepted_responses: [201],
         auth_data: {
@@ -24,7 +24,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
         migrated: true,
       )
     else
-      lodge_assessment(
+      lodge_scottish_assessment(
         assessment_body: Samples.xml("RdSAP-Schema-S-19.0"),
         accepted_responses: [201],
         auth_data: {
@@ -100,87 +100,86 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    # TODO: Update when assessment opt-out done for Scotland
-    # it "does not return opted out addresses" do
-    #   setup_scheme_and_lodge
-    #   before_assessments =
-    #     JSON.parse(
-    #       scottish_assessments_search_by_postcode("FK1 1XE").body,
-    #       symbolize_names: true,
-    #     )
-    #
-    #   expect(before_assessments[:data][:assessments][0]).not_to be_nil
-    #
-    #   opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
-    #
-    #   after_assessments =
-    #     JSON.parse(
-    #       assessments_search_by_postcode("FK1 1XE").body,
-    #       symbolize_names: true,
-    #     )
-    #
-    #   expect(after_assessments[:data][:assessments][0]).to be_nil
-    # end
-    # TODO Update when assessment status update has been done for Scotland
-    # it "doesn't show cancelled assessments" do
-    #   scheme_id = setup_scheme_and_lodge
-    #   before_assessments =
-    #     JSON.parse(
-    #       scottish_assessments_search_by_postcode("FK1 1XE").body,
-    #       symbolize_names: true,
-    #     )
-    #
-    #   expect(before_assessments[:data][:assessments][0]).not_to be_nil
-    #
-    #   update_assessment_status(
-    #     assessment_id: "0000-0000-0000-0000-0000",
-    #     assessment_status_body: {
-    #       "status": "CANCELLED",
-    #     },
-    #     accepted_responses: [200],
-    #     auth_data: {
-    #       scheme_ids: [scheme_id],
-    #     },
-    #   )
-    #
-    #   after_assessments =
-    #     JSON.parse(
-    #       scottish_assessments_search_by_postcode("FK1 1XE").body,
-    #       symbolize_names: true,
-    #     )
-    #
-    #   expect(after_assessments[:data][:assessments][0]).to be_nil
-    # end
-    # TODO Update when assessment status update has been done for Scotland
-    # it "doesn't show not for issue assessments" do
-    #   scheme_id = setup_scheme_and_lodge
-    #   before_assessments =
-    #     JSON.parse(
-    #       assessments_search_by_postcode("SW1A 2AA").body,
-    #       symbolize_names: true,
-    #     )
-    #
-    #   expect(before_assessments[:data][:assessments][0]).not_to be_nil
-    #
-    #   update_assessment_status(
-    #     assessment_id: "0000-0000-0000-0000-0000",
-    #     assessment_status_body: {
-    #       "status": "NOT_FOR_ISSUE",
-    #     },
-    #     accepted_responses: [200],
-    #     auth_data: {
-    #       scheme_ids: [scheme_id],
-    #     },
-    #   )
-    #
-    #   after_assessments =
-    #     JSON.parse(
-    #       assessments_search_by_postcode("SW1A 2AA").body,
-    #       symbolize_names: true,
-    #     )
-    #
-    #   expect(after_assessments[:data][:assessments][0]).to be_nil
-    # end
+    it "does not return opted out addresses" do
+      setup_scheme_and_lodge
+      before_assessments =
+        JSON.parse(
+          scottish_assessments_search_by_postcode("FK1 1XE").body,
+          symbolize_names: true,
+        )
+
+      expect(before_assessments[:data][:assessments][0]).not_to be_nil
+
+      opt_out_scottish_assessment(assessment_id: "0000-0000-0000-0000-0000")
+
+      after_assessments =
+        JSON.parse(
+          scottish_assessments_search_by_postcode("FK1 1XE").body,
+          symbolize_names: true,
+        )
+
+      expect(after_assessments[:data][:assessments][0]).to be_nil
+    end
+
+    it "doesn't show cancelled assessments" do
+      scheme_id = setup_scheme_and_lodge
+      before_assessments =
+        JSON.parse(
+          scottish_assessments_search_by_postcode("FK1 1XE").body,
+          symbolize_names: true,
+        )
+
+      expect(before_assessments[:data][:assessments][0]).not_to be_nil
+
+      update_scottish_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: {
+          "status": "CANCELLED",
+        },
+        accepted_responses: [200],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
+
+      after_assessments =
+        JSON.parse(
+          scottish_assessments_search_by_postcode("FK1 1XE").body,
+          symbolize_names: true,
+        )
+
+      expect(after_assessments[:data][:assessments][0]).to be_nil
+    end
+
+    it "doesn't show not for issue assessments" do
+      scheme_id = setup_scheme_and_lodge
+      before_assessments =
+        JSON.parse(
+          scottish_assessments_search_by_postcode("FK1 1XE").body,
+          symbolize_names: true,
+        )
+
+      expect(before_assessments[:data][:assessments][0]).not_to be_nil
+
+      update_scottish_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: {
+          "status": "NOT_FOR_ISSUE",
+        },
+        accepted_responses: [200],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
+
+      after_assessments =
+        JSON.parse(
+          scottish_assessments_search_by_postcode("FK1 1XE").body,
+          symbolize_names: true,
+        )
+
+      expect(after_assessments[:data][:assessments][0]).to be_nil
+    end
 
     it "can filter for non-domestic results" do
       setup_scheme_and_lodge(non_domestic: true)
@@ -263,7 +262,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
       second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
       second_xml.at("Property Address Address-Line-1").content = "9 Some Street"
 
-      lodge_assessment(
+      lodge_scottish_assessment(
         assessment_body: second_xml.to_xml,
         accepted_responses: [201],
         auth_data: {
@@ -426,17 +425,16 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    # TODO: Update when assessment opt-out done for Scotland
-    # it "does not return opted out assessments" do
-    #   setup_scheme_and_lodge
-    #   opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
-    #
-    #   response =
-    #     assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury")
-    #   response_json = JSON.parse(response.body)
-    #
-    #   expect(response_json["data"]["assessments"].length).to eq(0)
-    # end
+    it "does not return opted out assessments" do
+      setup_scheme_and_lodge
+      opt_out_scottish_assessment(assessment_id: "0000-0000-0000-0000-0000")
+
+      response =
+        scottish_assessments_search_by_street_and_town(street: "1 Some Street", town: "Whitbury")
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"].length).to eq(0)
+    end
 
     it "can filter for non-domestic assessments" do
       setup_scheme_and_lodge(non_domestic: true)
@@ -465,7 +463,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
       third_xml.at("RRN").content = "0000-0000-0000-0000-0002"
       third_xml.at("Property Address Address-Line-1").content = "3, Some Street"
 
-      lodge_assessment(
+      lodge_scottish_assessment(
         assessment_body: second_xml.to_xml,
         accepted_responses: [201],
         auth_data: {
@@ -475,7 +473,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
         migrated: true,
       )
 
-      lodge_assessment(
+      lodge_scottish_assessment(
         assessment_body: third_xml.to_xml,
         accepted_responses: [201],
         auth_data: {

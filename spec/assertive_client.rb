@@ -506,6 +506,21 @@ def call_lodge_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil
   )
 end
 
+def call_lodge_scottish_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil, ensure_uprns: true)
+  lodge_scottish_assessment(
+    assessment_body: xml_document.to_xml,
+    accepted_responses: [201],
+    auth_data: {
+      scheme_ids: [scheme_id],
+    },
+    scopes: %w[scotland_assessment:lodge migrate:scotland],
+    override: true,
+    schema_name:,
+    migrated:,
+    ensure_uprns:,
+    )
+end
+
 def fetch_renewable_heat_incentive(
   assessment_id:,
   scopes: %w[greendeal:plans],

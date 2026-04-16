@@ -45,7 +45,7 @@ module Controller
       end
     end
 
-    post "/api/assessments", auth_token_has_one_of: %w[assessment:lodge migrate:scotland] do
+    post "/api/assessments", auth_token_has_one_of: %w[assessment:lodge migrate:assessment] do
       correlation_id = rand
       migrated = boolean_parameter_true?("migrated")
       overridden = boolean_parameter_true?("override")
@@ -59,14 +59,14 @@ module Controller
           ""
         end
 
-      if !migrated && env[:auth_token].scopes?(%w[migrate:scotland])
+      if xml_schema_type&.include?("-S-")
         forbidden(
-          "UNAUTHORISED",
-          "You are not authorised to perform this lodgement request",
+          "INVALID_REQUEST",
+          "Scottish schemas cannot be lodged to this endpoint",
         )
       end
 
-      if migrated && !env[:auth_token].scopes?(%w[migrate:assessment]) && !(env[:auth_token].scopes?(%w[migrate:scotland]) && xml_schema_type.include?("-S-"))
+      if migrated && !env[:auth_token].scopes?(%w[migrate:assessment])
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this migration request",

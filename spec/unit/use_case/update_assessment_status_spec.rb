@@ -53,7 +53,7 @@ describe UseCase::UpdateAssessmentStatus do
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
     call_lodge_assessment(scheme_id:, schema_name: cepc_schema, xml_document: cepc_xml)
 
-    lodge_assessment(
+    lodge_scottish_assessment(
       assessment_body: Samples.xml("DECAR-S-7.0", "dec+ar"),
       accepted_responses: [201],
       auth_data: {

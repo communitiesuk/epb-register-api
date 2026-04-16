@@ -18,7 +18,7 @@ describe Gateway::AssessmentsSearchGateway do
     )
 
     scottish_domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
-    lodge_assessment(
+    lodge_scottish_assessment(
       assessment_body: scottish_domestic_rdsap_xml.to_xml,
       accepted_responses: [201],
       auth_data: {

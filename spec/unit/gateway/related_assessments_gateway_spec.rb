@@ -33,7 +33,7 @@ describe Gateway::RelatedAssessmentsGateway do
       xml_s = Nokogiri.XML Samples.xml(schema_s)
       related_assessment_s_ids.each do |assessment_s_id|
         xml_s.at("RRN").children = assessment_s_id
-        call_lodge_assessment scheme_id:, schema_name: schema_s, xml_document: xml_s, migrated: true
+        call_lodge_scottish_assessment scheme_id:, schema_name: schema_s, xml_document: xml_s, migrated: true
       end
     end
 

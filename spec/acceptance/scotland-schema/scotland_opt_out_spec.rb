@@ -13,14 +13,14 @@ describe "Acceptance::OptOut", :set_with_timecop do
     before do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
-      lodge_assessment(assessment_body: valid_scottish_rdsap_xml,
-                       accepted_responses: [201],
-                       scopes: %w[migrate:scotland],
-                       auth_data: {
-                         scheme_ids: [scheme_id],
-                       },
-                       schema_name: "RdSAP-Schema-S-19.0",
-                       migrated: true)
+      lodge_scottish_assessment(assessment_body: valid_scottish_rdsap_xml,
+                                accepted_responses: [201],
+                                scopes: %w[migrate:scotland],
+                                auth_data: {
+                                  scheme_ids: [scheme_id],
+                                },
+                                schema_name: "RdSAP-Schema-S-19.0",
+                                migrated: true)
     end
 
     it "requests an opt in and gets the expected response" do
@@ -81,14 +81,14 @@ describe "Acceptance::OptOut", :set_with_timecop do
         )
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
 
-      lodge_assessment(assessment_body: xml_file,
-                       accepted_responses: [201],
-                       scopes: %w[migrate:scotland],
-                       auth_data: {
-                         scheme_ids: [scheme_id],
-                       },
-                       schema_name: "CEPC-S-7.1",
-                       migrated: true)
+      lodge_scottish_assessment(assessment_body: xml_file,
+                                accepted_responses: [201],
+                                scopes: %w[migrate:scotland],
+                                auth_data: {
+                                  scheme_ids: [scheme_id],
+                                },
+                                schema_name: "CEPC-S-7.1",
+                                migrated: true)
 
       opt_out_scottish_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
@@ -107,14 +107,14 @@ describe "Acceptance::OptOut", :set_with_timecop do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
-      lodge_assessment(assessment_body: valid_scottish_rdsap_xml,
-                       accepted_responses: [201],
-                       scopes: %w[migrate:scotland],
-                       auth_data: {
-                         scheme_ids: [scheme_id],
-                       },
-                       schema_name: "RdSAP-Schema-S-19.0",
-                       migrated: true)
+      lodge_scottish_assessment(assessment_body: valid_scottish_rdsap_xml,
+                                accepted_responses: [201],
+                                scopes: %w[migrate:scotland],
+                                auth_data: {
+                                  scheme_ids: [scheme_id],
+                                },
+                                schema_name: "RdSAP-Schema-S-19.0",
+                                migrated: true)
 
       response =
         JSON.parse(
@@ -148,14 +148,14 @@ describe "Acceptance::OptOut", :set_with_timecop do
     it "shows as opted in the Scottish assessment summary JSON" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-      lodge_assessment(assessment_body: valid_scottish_rdsap_xml,
-                       accepted_responses: [201],
-                       scopes: %w[migrate:scotland],
-                       auth_data: {
-                         scheme_ids: [scheme_id],
-                       },
-                       schema_name: "RdSAP-Schema-S-19.0",
-                       migrated: true)
+      lodge_scottish_assessment(assessment_body: valid_scottish_rdsap_xml,
+                                accepted_responses: [201],
+                                scopes: %w[migrate:scotland],
+                                auth_data: {
+                                  scheme_ids: [scheme_id],
+                                },
+                                schema_name: "RdSAP-Schema-S-19.0",
+                                migrated: true)
       opt_out_scottish_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
       summary =

@@ -35,7 +35,7 @@ describe Gateway::AssessmentMetaGateway do
         },
         override: true,
       )
-      lodge_assessment(
+      lodge_scottish_assessment(
         assessment_body: domestic_scottish_rdsap_xml.to_xml,
         accepted_responses: [201],
         auth_data: {

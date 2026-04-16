@@ -13,7 +13,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
         non_domestic_nos3: "ACTIVE",
       ),
     )
-    lodge_assessment(
+    lodge_scottish_assessment(
       assessment_body: Samples.xml("RdSAP-Schema-S-19.0"),
       accepted_responses: [201],
       auth_data: {

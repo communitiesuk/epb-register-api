@@ -111,7 +111,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
         end
 
         before do
-          lodge_assessment(
+          lodge_scottish_assessment(
             assessment_body: scottish_sap_xml,
             accepted_responses: [201],
             auth_data: {

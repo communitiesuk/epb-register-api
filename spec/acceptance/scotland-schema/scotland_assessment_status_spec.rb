@@ -45,14 +45,14 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
 
   context "when assessment exists" do
     before do
-      lodge_assessment(assessment_body: valid_scottish_rdsap_xml,
-                       accepted_responses: [201],
-                       scopes: %w[migrate:scotland],
-                       auth_data: {
-                         scheme_ids: [scheme_id],
-                       },
-                       schema_name: "RdSAP-Schema-S-19.0",
-                       migrated: true)
+      lodge_scottish_assessment(assessment_body: valid_scottish_rdsap_xml,
+                                accepted_responses: [201],
+                                scopes: %w[migrate:scotland],
+                                auth_data: {
+                                  scheme_ids: [scheme_id],
+                                },
+                                schema_name: "RdSAP-Schema-S-19.0",
+                                migrated: true)
     end
 
     it "responds that the assessment has been cancelled" do

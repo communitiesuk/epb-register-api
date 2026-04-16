@@ -40,7 +40,7 @@ describe UseCase::OptOutAssessment do
     call_lodge_assessment(scheme_id:, schema_name: cepc_schema, xml_document: cepc_xml)
 
     scottish_xml = Samples.xml "RdSAP-Schema-S-19.0"
-    lodge_assessment(assessment_body: scottish_xml,
+    lodge_scottish_assessment(assessment_body: scottish_xml,
                      accepted_responses: [201],
                      scopes: %w[migrate:scotland],
                      auth_data: {

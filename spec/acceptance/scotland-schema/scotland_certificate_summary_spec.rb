@@ -40,7 +40,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
     context "when a certificate has been cancelled" do
       it "raises the AssessmentGone Error" do
         domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -133,7 +133,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
 
       before do
         domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -185,7 +185,15 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           xml.at("UPRN").children.to_s
           related_assessment_ids.each do |assessment_id|
             xml.at("RRN").children = assessment_id
-            call_lodge_assessment scheme_id:, schema_name: schema, xml_document: xml, migrated: true
+            lodge_scottish_assessment(
+              assessment_body: xml.to_xml,
+              accepted_responses: [201],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: schema,
+              migrated: true,
+            )
           end
         end
 
@@ -345,7 +353,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         sap_schema = "SAP-Schema-S-19.0.0"
         sap_xml = Nokogiri.XML(Samples.xml(sap_schema))
         sap_xml.at("RRN").content = "0000-0000-0000-0000-0067"
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: sap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -374,7 +382,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           .each do |node|
           node.content = "0000-0000-0000-0002-0000"
         end
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: cepc_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -471,7 +479,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           .each do |node|
           node.content = "0000-0000-0000-0003-0000"
         end
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: action_plan_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -549,7 +557,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           .each do |node|
           node.content = "0000-0000-0000-0004-0000"
         end
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -624,7 +632,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           .each do |node|
           node.content = "0000-0000-0000-0005-0000"
         end
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: dec_ar_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
@@ -747,7 +755,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       before do
         dual_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec+ar")
 
-        lodge_assessment(
+        lodge_scottish_assessment(
           assessment_body: dual_xml.to_xml,
           accepted_responses: [201],
           auth_data: {

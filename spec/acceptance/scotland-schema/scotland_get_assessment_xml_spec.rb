@@ -7,14 +7,14 @@ describe "Acceptance::ScotlandGetAssessmentXml", :set_with_timecop do
 
   before do
     add_super_assessor(scheme_id:)
-    lodge_assessment(assessment_body: valid_scottish_rdsap_xml,
-                     accepted_responses: [201],
-                     scopes: %w[migrate:scotland],
-                     auth_data: {
-                       scheme_ids: [scheme_id],
-                     },
-                     schema_name: "RdSAP-Schema-S-19.0",
-                     migrated: true)
+    lodge_scottish_assessment(assessment_body: valid_scottish_rdsap_xml,
+                              accepted_responses: [201],
+                              scopes: %w[migrate:scotland],
+                              auth_data: {
+                                scheme_ids: [scheme_id],
+                              },
+                              schema_name: "RdSAP-Schema-S-19.0",
+                              migrated: true)
   end
 
   def expected_response

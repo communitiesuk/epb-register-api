@@ -11,14 +11,14 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
     Events::Broadcaster.enable!
 
     add_super_assessor(scheme_id:)
-    lodge_assessment(assessment_body: valid_scottish_rdsap_xml,
-                     accepted_responses: [201],
-                     scopes: %w[migrate:scotland],
-                     auth_data: {
-                       scheme_ids: [scheme_id],
-                     },
-                     schema_name: "RdSAP-Schema-S-19.0",
-                     migrated: true)
+    lodge_scottish_assessment(assessment_body: valid_scottish_rdsap_xml,
+                              accepted_responses: [201],
+                              scopes: %w[migrate:scotland],
+                              auth_data: {
+                                scheme_ids: [scheme_id],
+                              },
+                              schema_name: "RdSAP-Schema-S-19.0",
+                              migrated: true)
     opt_out_scottish_assessment(
       assessment_id: "0000-0000-0000-0000-0000",
       opt_out: true,

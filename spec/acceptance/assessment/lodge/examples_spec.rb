@@ -235,7 +235,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
 
     context "with an Scotland XML" do
       it "can lodge the example SAP" do
-        expect(lodge_assessment(
+        expect(lodge_scottish_assessment(
           assessment_body: sap_s_xml,
           accepted_responses: [201],
           auth_data: {
@@ -247,7 +247,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
       end
 
       it "can lodge the example RdSAP" do
-        expect(lodge_assessment(
+        expect(lodge_scottish_assessment(
           assessment_body: rdsap_s_xml,
           accepted_responses: [201],
           auth_data: {
@@ -259,7 +259,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
       end
 
       it "can lodge the example CEPC" do
-        expect(lodge_assessment(
+        expect(lodge_scottish_assessment(
           assessment_body: cepc_s_xml,
           accepted_responses: [201],
           auth_data: {
