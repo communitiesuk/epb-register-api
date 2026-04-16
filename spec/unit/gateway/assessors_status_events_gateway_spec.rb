@@ -1,4 +1,4 @@
-describe Gateway::AssessorsStatusEventsGateway do
+describe Gateway::AssessorsStatusEventsGateway, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   subject(:gateway) { described_class.new }
 
