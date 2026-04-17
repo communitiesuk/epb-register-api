@@ -518,7 +518,7 @@ def call_lodge_scottish_assessment(scheme_id:, schema_name:, xml_document:, migr
     schema_name:,
     migrated:,
     ensure_uprns:,
-    )
+  )
 end
 
 def fetch_renewable_heat_incentive(
@@ -689,6 +689,26 @@ def scottish_get_assessment_status_updates(
   **assertive_kwargs
 )
   path = "/api/scotland/v1/updates/assessments/status?startDate=#{start_date}&endDate=#{end_date}"
+
+  unless page.nil?
+    path += "&page=#{page}"
+  end
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
+def scottish_get_assessors_status_updates(
+  start_date:,
+  end_date:,
+  page: nil,
+  scopes: %w[scotland_data:assessor_status:fetch],
+  **assertive_kwargs
+)
+  path = "/api/scotland/v1/updates/assessors/status?startDate=#{start_date}&endDate=#{end_date}"
 
   unless page.nil?
     path += "&page=#{page}"

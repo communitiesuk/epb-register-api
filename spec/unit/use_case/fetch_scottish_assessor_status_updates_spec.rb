@@ -35,7 +35,7 @@ describe UseCase::FetchScottishAssessorStatusUpdates do
 
     describe "#execute" do
       it "fetches an array of assessor status events" do
-        expect(use_case.execute(start_date: "2013-01-01", end_date: "2013-01-05", current_page: 1)).to eq({ statusUpdates: data })
+        expect(use_case.execute(start_date: "2013-01-01", end_date: "2013-01-05", current_page: 1)).to eq({ assessorStatusUpdates: data })
       end
     end
   end

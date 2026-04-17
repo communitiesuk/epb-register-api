@@ -44,13 +44,13 @@ describe "BackfillMatchedAddress" do
     scottish_sap_xml = Samples.xml "SAP-Schema-S-19.0.0"
     scottish_sap_schema = "SAP-Schema-S-19.0.0".freeze
     lodge_scottish_assessment assessment_body: scottish_sap_xml,
-                     accepted_responses: [201],
-                     scopes: %w[scotland_assessment:lodge migrate:scotland],
-                     auth_data: {
-                       scheme_ids: [scheme_id],
-                     },
-                     schema_name: scottish_sap_schema,
-                     migrated: true
+                              accepted_responses: [201],
+                              scopes: %w[scotland_assessment:lodge migrate:scotland],
+                              auth_data: {
+                                scheme_ids: [scheme_id],
+                              },
+                              schema_name: scottish_sap_schema,
+                              migrated: true
 
     schema = "RdSAP-Schema-20.0.0"
     xml = Nokogiri.XML Samples.xml(schema)

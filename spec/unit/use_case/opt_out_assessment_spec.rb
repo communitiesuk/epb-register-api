@@ -41,13 +41,13 @@ describe UseCase::OptOutAssessment do
 
     scottish_xml = Samples.xml "RdSAP-Schema-S-19.0"
     lodge_scottish_assessment(assessment_body: scottish_xml,
-                     accepted_responses: [201],
-                     scopes: %w[migrate:scotland],
-                     auth_data: {
-                       scheme_ids: [scheme_id],
-                     },
-                     schema_name: "RdSAP-Schema-S-19.0",
-                     migrated: true)
+                              accepted_responses: [201],
+                              scopes: %w[migrate:scotland],
+                              auth_data: {
+                                scheme_ids: [scheme_id],
+                              },
+                              schema_name: "RdSAP-Schema-S-19.0",
+                              migrated: true)
   end
 
   context "when not having performed an update" do

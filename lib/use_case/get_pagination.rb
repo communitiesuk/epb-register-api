@@ -7,7 +7,7 @@ module UseCase
     def execute(start_date:, end_date:, current_page:, records_per_page: 5000, url: nil, count_method: :count, event_types: [])
       total_records = if count_method == :count_scottish_events
                         @gateway.method(count_method).call(event_types:, start_date:, end_date:)
-                      elsif count_method == :count
+                      elsif %i[count count_scottish_assessor_events].include?(count_method)
                         @gateway.method(count_method).call(start_date:, end_date:)
                       else
                         raise NoMethodError

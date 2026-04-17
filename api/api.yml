@@ -3052,8 +3052,20 @@ paths:
                     properties:
                       links:
                         $ref: '#/components/schemas/Pagination'
+        '400':
+          description: A required argument is is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Date range did not return any data
           content:
             application/json:
               schema:
@@ -3132,12 +3144,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /scotland/v1/updates/assessor/status:
+  /scotland/v1/updates/assessors/status:
     get:
       tags:
         - Scotland Data
-      summary: Get report of assessors who have been struck off or suspended
-      description: Report of assessors who were suspended and struck off between two dates
+      summary: Get report of assessors who have had changes to their scottish qualifications between two dates
+      description: Report of assessors who have had changes to their scottish qualifications between two dates
       operationId: get-scottish-assessor-status-report
       security:
         - oauth:
@@ -3174,6 +3186,12 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorQualificationChangeEvent'
+        '400':
+          description: A required argument is is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
           content:
@@ -3181,7 +3199,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Report not found
+          description: Date range did not return any data
           content:
             application/json:
               schema:
