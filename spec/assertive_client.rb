@@ -665,7 +665,7 @@ def scottish_get_new_reports(
   start_date:,
   end_date:,
   page: nil,
-  scopes: %w[scotland_data:rrn:list],
+  scopes: %w[scotland_data:fetch],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/updates/new-reports?startDate=#{start_date}&endDate=#{end_date}"
@@ -685,7 +685,7 @@ def scottish_get_assessment_status_updates(
   start_date:,
   end_date:,
   page: nil,
-  scopes: %w[scotland_data:assessment_status:list],
+  scopes: %w[scotland_data:fetch],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/updates/assessments/status?startDate=#{start_date}&endDate=#{end_date}"
@@ -705,7 +705,7 @@ def scottish_get_assessors_status_updates(
   start_date:,
   end_date:,
   page: nil,
-  scopes: %w[scotland_data:assessor_status:fetch],
+  scopes: %w[scotland_data:fetch],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/updates/assessors/status?startDate=#{start_date}&endDate=#{end_date}"
@@ -723,7 +723,7 @@ end
 
 def scottish_get_assessment_meta_data(
   assessment_id:,
-  scopes: %w[scotland_data:assessment_meta:fetch],
+  scopes: %w[scotland_data:fetch],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/assessments/#{assessment_id}/meta-data"
@@ -737,7 +737,7 @@ end
 
 def scottish_get_assessment_xml(
   assessment_id:,
-  scopes: %w[scotland_data:assessment:fetch],
+  scopes: %w[scotland_data:fetch],
   **assertive_kwargs
 )
   path = "/api/scotland/v1/assessments/#{assessment_id}/xml-data"

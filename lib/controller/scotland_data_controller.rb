@@ -31,7 +31,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/scotland/v1/updates/new-reports", auth_token_has_all: %w[scotland_data:rrn:list] do
+    get "/api/scotland/v1/updates/new-reports", auth_token_has_all: %w[scotland_data:fetch] do
       params = params_body DATE_RANGE_SCHEMA
 
       start_date = Date.parse(params[:start_date])
@@ -63,7 +63,7 @@ module Controller
       end
     end
 
-    get "/api/scotland/v1/updates/assessments/status", auth_token_has_all: %w[scotland_data:assessment_status:list] do
+    get "/api/scotland/v1/updates/assessments/status", auth_token_has_all: %w[scotland_data:fetch] do
       params = params_body DATE_RANGE_SCHEMA
 
       start_date = Date.parse(params[:start_date])
@@ -98,7 +98,7 @@ module Controller
     end
 
     get "/api/scotland/v1/assessments/:assessmentId/meta-data",
-        auth_token_has_all: %w[scotland_data:assessment_meta:fetch] do
+        auth_token_has_all: %w[scotland_data:fetch] do
       params_body ASSESSMENT_ID_SCHEMA
       assessment_id = params[:assessmentId]
       summary = UseCase::AssessmentMeta.new(Gateway::AssessmentMetaGateway.new).execute(assessment_id, is_scottish: true)
@@ -116,7 +116,7 @@ module Controller
     end
 
     get "/api/scotland/v1/assessments/:assessment_id/xml-data",
-        auth_token_has_all: %w[scotland_data:assessment:fetch] do
+        auth_token_has_all: %w[scotland_data:fetch] do
       assessment_id = params[:assessment_id]
 
       auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")
@@ -145,7 +145,7 @@ module Controller
       end
     end
 
-    get "/api/scotland/v1/updates/assessors/status", auth_token_has_all: %w[scotland_data:assessor_status:fetch] do
+    get "/api/scotland/v1/updates/assessors/status", auth_token_has_all: %w[scotland_data:fetch] do
       params = params_body DATE_RANGE_SCHEMA
 
       start_date = Date.parse(params[:start_date])
