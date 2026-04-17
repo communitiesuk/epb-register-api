@@ -28,9 +28,9 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
     JSON.parse({ data: {
                    rrns: %w[0000-0000-0000-0000-0000],
                  },
-                 links: { next: nil,
+                 links: { prev: nil,
                           self: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03&page=1",
-                          prev: nil },
+                          next: nil },
                  meta: {} }.to_json)
   end
 
@@ -83,9 +83,9 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
       response_json = JSON.parse(response.body)
 
       expect(response_json["links"]).to eq(JSON.parse(
-                                             { next: nil,
+                                             { prev: nil,
                                                self: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03",
-                                               prev: nil }.to_json,
+                                               next: nil }.to_json,
                                            ))
     end
   end

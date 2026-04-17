@@ -6024,20 +6024,20 @@ components:
     Pagination:
       type: object
       properties:
-        self:
-          type: string
-          format: uri
-          example: "example.com/a_param=1&page=2&another_param=2"
-        next:
-          type: string
-          format: uri
-          nullable: true
-          example: null
         prev:
           type: string
           format: uri
           nullable: true
           example: null
+        self:
+          type: string
+          format: uri
+          example: "https://api.example.com/param1=foo&param2=bar&page=1"
+        next:
+          type: string
+          format: uri
+          nullable: true
+          example: "https://api.example.com/param1=foo&param2=bar&page=2"
 
   links: {}
   callbacks: {}

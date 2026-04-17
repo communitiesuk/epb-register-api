@@ -60,9 +60,9 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
                      },
                    ],
                  },
-                 links: { next: nil,
+                 links: { prev: nil,
                           self: "http://example.org/api/scotland/v1/updates/assessments/status?startDate=2021-05-31&endDate=2021-06-15&page=1",
-                          prev: nil } }.to_json)
+                          next: nil } }.to_json)
   end
 
   describe "security scenarios" do
@@ -111,9 +111,9 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
       response_json = JSON.parse(response.body)
 
       expect(response_json["links"]).to eq(JSON.parse(
-                                             { next: nil,
+                                             { prev: nil,
                                                self: "http://example.org/api/scotland/v1/updates/assessments/status?startDate=2021-05-31&endDate=2021-06-15",
-                                               prev: nil }.to_json,
+                                               next: nil }.to_json,
                                            ))
     end
   end
