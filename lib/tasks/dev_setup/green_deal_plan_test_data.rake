@@ -103,9 +103,10 @@ namespace :dev_data do
       interest_rates = [14.61, 12.21, 26.30, 10.10, 15.70]
       yes_or_no = %w[Y N]
       uplift_amounts = [0, 1.24, 1.50, 0.90, 1]
+      green_deal_plan_id = "ABC123456788"
 
       assessments.each do |row|
-        green_deal_plan_id = "A#{('A'..'Z').to_a.sample}#{rand(100...2000).to_s.rjust(10, '0')}"
+        green_deal_plan_id = green_deal_plan_id.succ
         start_date = "20#{rand(14..21).to_s.rjust(2, '0')}#{rand(1..12).to_s.rjust(2, '0')}#{rand(1..28).to_s.rjust(2, '0')}"
         end_date = (Date.parse(start_date) + rand(5..20).year).strftime("%Y-%m-%d")
         provider_name = provider_names.sample

@@ -3708,7 +3708,7 @@ components:
     AssessmentId:
       type: string
       pattern: '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
-      example: '0000-0000-0000-0000-0000'
+      example: '0000-0000-0000-0000-0001'
 
     AssessmentStatus:
       type: string
@@ -5016,7 +5016,7 @@ components:
           items:
             $ref: '#/components/schemas/AssessmentId'
           example:
-            ['0000-0000-0000-0000-0000', '0000-0000-0000-0000-0001']
+            ['0000-0000-0000-0000-0001', '0000-0000-0000-0000-0002']
 
     ScottishAssessorSearchByPostcodeResults:
       type: object
@@ -5731,7 +5731,7 @@ components:
                     (GDCC) when the plan is set up'
       type: string
       maxLength: 12
-      example: 'ABC123456DEF'
+      example: 'ABC123456789'
 
     GreenDealPlan:
       type: object
