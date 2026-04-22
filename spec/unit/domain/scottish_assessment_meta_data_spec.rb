@@ -27,7 +27,7 @@ describe Domain::ScottishAssessmentMetaData do
       cancelledAt: nil,
       typeOfAssessment: "RdSAP",
       schemaType: "RdSAP-Schema-S-19.0",
-      assessmentAddressId: "UPRN-000000000123",
+      propertyId: "UPRN-000000000123",
     }
   end
 

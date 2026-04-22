@@ -25,7 +25,7 @@ describe "Acceptance::ScotlandGetAssessmentMetaData", :set_with_timecop do
                    cancelledAt: nil,
                    typeOfAssessment: "RdSAP",
                    schemaType: "RdSAP-Schema-S-19.0",
-                   assessmentAddressId: "RRN-0000-0000-0000-0000-0000",
+                   propertyId: "RRN-0000-0000-0000-0000-0000",
                  },
                  meta: {
                    dataSentAt: Time.now,

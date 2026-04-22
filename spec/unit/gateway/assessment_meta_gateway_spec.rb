@@ -75,7 +75,7 @@ describe Gateway::AssessmentMetaGateway do
         cancelledAt: nil,
         typeOfAssessment: "RdSAP",
         schemaType: "RdSAP-Schema-S-19.0",
-        assessmentAddressId: "RRN-0000-0000-0000-0000-0001",
+        propertyId: "RRN-0000-0000-0000-0000-0001",
       }
     end
 

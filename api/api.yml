@@ -5118,7 +5118,7 @@ components:
           $ref: '#/components/schemas/AssessmentType'
         schemaType:
           $ref: '#/components/schemas/SchemaName'
-        assessmentAddressId:
+        propertyId:
           $ref: '#/components/schemas/AddressId'
 
     PropertySummary:

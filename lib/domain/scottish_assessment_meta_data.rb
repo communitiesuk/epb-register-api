@@ -9,7 +9,7 @@ module Domain
       @cancelled_at = meta_data[:cancelled_at]
       @not_for_issue_at = meta_data[:not_for_issue_at]
       @schema_type = meta_data[:schema_type]
-      @assessment_address_id = meta_data[:assessment_address_id]
+      @property_id = meta_data[:assessment_address_id]
       @date_of_expiry = meta_data[:date_of_expiry]
     end
 
@@ -21,7 +21,7 @@ module Domain
         cancelledAt: get_cancelled_at,
         typeOfAssessment: @type_of_assessment,
         schemaType: @schema_type,
-        assessmentAddressId: @assessment_address_id,
+        propertyId: @property_id,
       }
     end
 
