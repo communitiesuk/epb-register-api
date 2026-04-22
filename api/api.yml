@@ -3064,12 +3064,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Date range did not return any data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
         '503':
@@ -3129,6 +3123,12 @@ paths:
                     properties:
                       links:
                         $ref: '#/components/schemas/Pagination'
+        '400':
+          description: A required argument is is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
           content:
@@ -3194,12 +3194,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Date range did not return any data
           content:
             application/json:
               schema:
