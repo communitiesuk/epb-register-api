@@ -13,11 +13,11 @@ module UseCase
                         raise NoMethodError
                       end
 
-      raise Boundary::NoData, "#{start_date} to #{end_date}" if total_records.zero?
-
       total_pages = (total_records / records_per_page.to_f).ceil
 
-      raise Errors::OutOfPaginationRangeError, "The requested page number #{current_page} is out of range. There are #{total_pages} pages." if current_page > total_pages || current_page < 1
+      if !total_records.zero? && (current_page > total_pages || current_page < 1)
+        raise Errors::OutOfPaginationRangeError, "The requested page number #{current_page} is out of range. There are #{total_pages} pages."
+      end
 
       next_page = current_page + 1 unless current_page >= total_pages
       prev_page = current_page > 1 ? current_page - 1 : nil

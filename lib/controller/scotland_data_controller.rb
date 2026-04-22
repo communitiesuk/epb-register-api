@@ -48,8 +48,6 @@ module Controller
       json_api_response(code: 200, links: pagination, data: data)
     rescue StandardError => e
       case e
-      when Boundary::NoData
-        error_response 404, "NOT_FOUND", "Date range did not return any data"
       when Boundary::InvalidDates
         error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
       when Boundary::InvalidArgument
@@ -82,8 +80,6 @@ module Controller
       json_api_response(code: 200, links: pagination, data: data)
     rescue StandardError => e
       case e
-      when Boundary::NoData
-        error_response 404, "NOT_FOUND", "Date range did not return any data"
       when Boundary::InvalidDates
         error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
       when Boundary::InvalidArgument
@@ -162,8 +158,6 @@ module Controller
       json_api_response(code: 200, links: pagination, data: data)
     rescue StandardError => e
       case e
-      when Boundary::NoData
-        error_response 404, "NOT_FOUND", "Date range did not return any data"
       when Boundary::InvalidDates
         error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
       when Boundary::InvalidArgument

@@ -116,6 +116,19 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
                                                next: nil }.to_json,
                                            ))
     end
+
+    it "returns an empty list if there is no data" do
+      response = scottish_get_assessment_status_updates(
+        start_date: "2010-06-20",
+        end_date: "2010-06-22",
+      )
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]).to eq(JSON.parse(
+                                            { statusUpdates: [] }.to_json,
+                                          ))
+    end
   end
 
   describe "error scenarios" do
@@ -143,19 +156,6 @@ describe "Acceptance::ScotlandGetAssessmentStatusUpdates", :set_with_timecop do
       response_json = JSON.parse(response.body)
 
       expect(response_json["errors"][0]["title"]).to eq "The requested page number 2 is out of range. There are 1 pages."
-    end
-
-    it "raises an error if you make a request with a date range that returns no data" do
-      response = scottish_get_assessment_status_updates(
-        start_date: "2010-06-20",
-        end_date: "2010-06-22",
-        page: 2,
-        accepted_responses: [404],
-      )
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json["errors"][0]["title"]).to eq "Date range did not return any data"
     end
 
     it "raises an error if you make a request a date range including today" do

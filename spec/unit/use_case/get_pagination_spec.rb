@@ -58,6 +58,20 @@ describe UseCase::GetPagination do
         expect(use_case.execute(**current_page_1_args)[:next_page]).to be_nil
       end
 
+      context "when total records is 0" do
+        before do
+          allow(gateway).to receive_messages(count: 0)
+        end
+
+        it "returns nil for previous page" do
+          expect(use_case.execute(**current_page_1_args)[:previous_page]).to be_nil
+        end
+
+        it "returns nil for next page when total records is below threshold" do
+          expect(use_case.execute(**current_page_1_args)[:next_page]).to be_nil
+        end
+      end
+
       context "when a url is passed in" do
         let(:search_arguments_with_url) do
           { start_date: "2023-12-01", end_date: "2023-12-23", current_page: 1, url: "example.com/a_param=1&page=1&another_param=2" }
@@ -150,16 +164,6 @@ describe UseCase::GetPagination do
       it "raises an OutOfPaginationRangeError when current page is greater than 1 and there is only one page of results" do
         search_args_page_2 = { start_date: "2023-12-01", end_date: "2023-12-23", current_page: 2 }
         expect { use_case.execute(**search_args_page_2) }.to raise_error(Errors::OutOfPaginationRangeError)
-      end
-    end
-
-    context "when total records is 0" do
-      before do
-        allow(gateway).to receive_messages(count: 0)
-      end
-
-      it "raises an NoData error" do
-        expect { use_case.execute(**search_arguments) }.to raise_error(Boundary::NoData)
       end
     end
   end
