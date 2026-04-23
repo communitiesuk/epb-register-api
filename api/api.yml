@@ -3370,6 +3370,28 @@ components:
       description: 'An identifier for the versioned XML schema used for the lodged assessment XML'
       example: 'RdSAP-Schema-20.0.0'
 
+    ScottishSchemaType:
+      type: string
+      description: 'An identifier for the versioned XML schema used for the lodged assessment XML'
+      example: 'RdSAP-Schema-S-19.0'
+      enum:
+        - DECAR-S-7.0
+        - CEPC-S-7.1
+        - CEPC-S-7.0
+        - SAP-Schema-S-19.0.0
+        - SAP-Schema-S-17.0
+        - SAP-Schema-S-16.1
+        - RdSAP-Schema-S-21.0
+        - RdSAP-Schema-S-19.0
+        - RdSAP-Schema-S-18.0
+        - RdSAP-Schema-S-17.0
+        - RdSAP-Schema-S-16.1
+        - RdSAP-Schema-S-15.0
+        - RdSAP-Schema-S-14.0
+        - RdSAP-Schema-S-13.0
+        - RdSAP-Schema-S-12.0
+        - CS63-S-7.0
+
     AddressSearchResults:
       type: object
       properties:
@@ -3742,6 +3764,17 @@ components:
         - DEC-RR
         - AC-CERT
         - AC-REPORT
+
+    ScottishAssessmentType:
+      type: string
+      example: 'RdSAP'
+      enum:
+        - RdSAP
+        - SAP
+        - CEPC
+        - CS63
+        - DEC
+        - DEC-AR
 
     EnergyAssessmentSearchResult:
       type: object
@@ -5115,9 +5148,9 @@ components:
           example: '2021-04-26T16:32:01.703Z'
           nullable: true
         typeOfAssessment:
-          $ref: '#/components/schemas/AssessmentType'
+          $ref: '#/components/schemas/ScottishAssessmentType'
         schemaType:
-          $ref: '#/components/schemas/SchemaName'
+          $ref: '#/components/schemas/ScottishSchemaType'
         propertyId:
           $ref: '#/components/schemas/AddressId'
 
