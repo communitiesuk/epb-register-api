@@ -5,9 +5,9 @@ describe UseCase::FetchAssessmentForScotlandPortal do
 
   let(:assessments_xml_gateway) { instance_double Gateway::AssessmentsXmlGateway }
 
-  context "when an assessment id matches an RdSAP assessment" do
+  context "when an assessment id matches an assessment" do
     assessment_id = "0000-1111-2222-3333-4444"
-    xml = Samples.xml "RdSAP-Schema-20.0.0"
+    xml = Samples.xml "RdSAP-Schema-S-19.0"
 
     before do
       allow(assessments_xml_gateway).to receive(:fetch).with(assessment_id, is_scottish: true).and_return({ xml: xml })
