@@ -10,7 +10,7 @@ describe UseCase::FetchAssessmentForScotlandPortal do
     xml = Samples.xml "RdSAP-Schema-20.0.0"
 
     before do
-      allow(assessments_xml_gateway).to receive(:fetch).with(assessment_id, is_scottish: false).and_return({ xml: xml })
+      allow(assessments_xml_gateway).to receive(:fetch).with(assessment_id, is_scottish: true).and_return({ xml: xml })
     end
 
     it "returns an assessments xml", :aggregate_failures do
@@ -23,7 +23,7 @@ describe UseCase::FetchAssessmentForScotlandPortal do
     assessment_id = "5555-5555-5555-5555-5555"
 
     before do
-      allow(assessments_xml_gateway).to receive(:fetch).with(assessment_id, is_scottish: false).and_return(nil)
+      allow(assessments_xml_gateway).to receive(:fetch).with(assessment_id, is_scottish: true).and_return(nil)
     end
 
     it "raises a not found exception" do

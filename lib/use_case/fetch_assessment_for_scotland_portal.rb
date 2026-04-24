@@ -7,10 +7,10 @@ module UseCase
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
-    def execute(assessment_id, is_scottish: false)
+    def execute(assessment_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
-      data = @assessments_xml_gateway.fetch(assessment_id, is_scottish: is_scottish)
+      data = @assessments_xml_gateway.fetch(assessment_id, is_scottish: true)
 
       if data.nil?
         raise NotFoundException

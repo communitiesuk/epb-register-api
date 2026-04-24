@@ -117,7 +117,7 @@ module Controller
 
       result =
         UseCase::FetchAssessmentForScotlandPortal.new(assessments_xml_gateway: Gateway::AssessmentsXmlGateway.new)
-                                                 .execute(assessment_id, is_scottish: true)
+                                                 .execute(assessment_id)
 
       xml_response result, 200
     rescue StandardError => e
