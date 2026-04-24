@@ -1,5 +1,12 @@
 module Gateway
   class AssessorsStatusEventsGateway
+    SCOTTISH_QUALIFICATIONS = %w[scotland_dec_and_ar
+                                 scotland_nondomestic_existing_building
+                                 scotland_nondomestic_new_building
+                                 scotland_rdsap
+                                 scotland_sap_existing_building
+                                 scotland_sap_new_building
+                                 scotland_section63].freeze
     class AssessorsStatusEvents < ActiveRecord::Base
     end
 
@@ -64,13 +71,7 @@ module Gateway
         WHERE
           recorded_at BETWEEN $1 AND $2
         AND
-          ase.qualification_type IN ('scotland_dec_and_ar',
-                                       'scotland_nondomestic_existing_building',
-                                       'scotland_nondomestic_new_building',
-                                       'scotland_rdsap',
-                                       'scotland_sap_existing_building',
-                                       'scotland_sap_new_building',
-                                       'scotland_section63')
+          ase.qualification_type IN (#{scottish_qualifications})
         ORDER BY recorded_at
         LIMIT $3
         OFFSET $4;
@@ -125,13 +126,7 @@ module Gateway
         WHERE
           recorded_at BETWEEN $1 AND $2
         AND
-          ase.qualification_type IN ('scotland_dec_and_ar',
-                                       'scotland_nondomestic_existing_building',
-                                       'scotland_nondomestic_new_building',
-                                       'scotland_rdsap',
-                                       'scotland_sap_existing_building',
-                                       'scotland_sap_new_building',
-                                       'scotland_section63');
+          ase.qualification_type IN (#{scottish_qualifications});
       SQL
 
       binds = [
@@ -152,6 +147,12 @@ module Gateway
 
     def add(assessor_status_event_domain)
       AssessorsStatusEvents.create(assessor_status_event_domain.to_record)
+    end
+
+  private
+
+    def scottish_qualifications
+      SCOTTISH_QUALIFICATIONS.map { |n| "'#{n}'" }.join(",")
     end
   end
 end
