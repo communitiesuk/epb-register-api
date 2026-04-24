@@ -70,34 +70,6 @@ describe UseCase::FetchAssessment do
     end
   end
 
-  context "when a cancelled scottish assessment is requested" do
-    assessment_id = "0000-1111-2222-3333-4444"
-    xml = Samples.xml "RdSAP-Schema-S-19.0"
-    assessment_scheme_assessor_id = "SPEC000000"
-
-    before do
-      allow(assessments_gateway).to receive(:search_by_assessment_id)
-                                      .with(assessment_id, restrictive: false, is_scottish: true)
-                                      .and_return([Domain::AssessmentSearchResult.new(assessment_id: assessment_id,
-                                                                                      scheme_assessor_id: assessment_scheme_assessor_id,
-                                                                                      date_of_assessment: Time.now,
-                                                                                      date_of_expiry: Time.now + 10.years,
-                                                                                      date_registered: Time.now,
-                                                                                      cancelled_at: Time.now)])
-
-      allow(assessors_gateway).to receive(:fetch)
-                                    .with(assessment_scheme_assessor_id)
-                                    .and_return(Domain::Assessor.new(registered_by_id: "9"))
-
-      allow(assessments_xml_gateway).to receive(:fetch).with(assessment_id, is_scottish: true).and_return({ xml: xml })
-    end
-
-    it "returns an assessments xml", :aggregate_failures do
-      details = use_case.execute(assessment_id, "9", is_scottish: true)
-      expect(details).to eq xml
-    end
-  end
-
   context "when the provided auth schemes do not match the scheme id from the assessment" do
     assessment_id = "0000-1111-2222-3333-4444"
     assessment_scheme_assessor_id = "SPEC000000"

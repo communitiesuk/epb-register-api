@@ -115,21 +115,15 @@ module Controller
         auth_token_has_all: %w[scotland_data:fetch] do
       assessment_id = params[:assessment_id]
 
-      auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")
-
       result =
-        UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids, is_scottish: true)
+        UseCase::FetchAssessmentForScotlandPortal.new(assessments_xml_gateway: Gateway::AssessmentsXmlGateway.new)
+                                                 .execute(assessment_id, is_scottish: true)
 
       xml_response result, 200
     rescue StandardError => e
       case e
-      when UseCase::FetchAssessment::NotFoundException
+      when UseCase::FetchAssessmentForScotlandPortal::NotFoundException
         not_found_error("Assessment ID did not return any data")
-      when UseCase::FetchAssessment::SchemeIdsDoNotMatch
-        forbidden(
-          "UNAUTHORISED",
-          "You are not authorised to view this scheme's lodged data",
-        )
       when Helper::RrnHelper::RrnNotValid
         error_response(
           400,
