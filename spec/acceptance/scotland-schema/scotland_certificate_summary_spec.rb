@@ -286,9 +286,9 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         { data:
            { typeOfAssessment: "SAP",
              assessmentId: "0000-0000-0000-0000-0067",
-             dateOfExpiry: "2034-11-20",
-             dateOfAssessment: "2024-11-21",
-             dateOfRegistration: "2024-11-21",
+             dateOfExpiry: "2033-06-26",
+             dateOfAssessment: "2023-06-27",
+             dateOfRegistration: "2023-06-27",
              address: { addressLine1: "1 LOVELY ROAD", addressLine2: "NICE ESTATE", addressLine3: "", addressLine4: "", town: "TOWN", postcode: "EH1 2NG" },
              assessor:
               { schemeAssessorId: "SPEC000000",
@@ -402,10 +402,10 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
 
         expected_response = { typeOfAssessment: "CEPC",
                               assessmentId: "0000-0000-0000-0002-0000",
-                              dateOfExpiry: "2033-08-03",
+                              dateOfExpiry: "2033-06-26",
                               reportType: "3",
-                              dateOfAssessment: "2023-07-11",
-                              dateOfRegistration: "2023-08-04",
+                              dateOfAssessment: "2023-06-27",
+                              dateOfRegistration: "2023-06-27",
                               address:
                                { addressLine1: "Non-dom Property", addressLine2: "Some Street", addressLine3: "Bigger Line", addressLine4: "", town: "Town", postcode: "FK1 1XE" },
                               assessor:
@@ -500,10 +500,10 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         expected_response = { typeOfAssessment: "CS63",
                               assessmentId: "0000-0000-0000-0003-0000",
                               epcAssessmentId: "0000-0000-0000-0000-0001",
-                              saleLeaseDate: "2025-06-13",
+                              saleLeaseDate: "2023-06-27",
                               reportType: "9",
-                              dateOfAssessment: "2025-06-04",
-                              planReportDate: "2025-06-11",
+                              dateOfAssessment: "2023-06-27",
+                              planReportDate: "2023-06-27",
                               address: { addressLine1: "Non-dom Property", addressLine2: "", addressLine3: "", addressLine4: "", town: "Town", postcode: "FK1 1XE" },
                               assessor:
                                { schemeAssessorId: "SPEC000000",
@@ -576,9 +576,9 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
           )
 
         expected_response = { assessmentId: "0000-0000-0000-0004-0000",
-                              dateOfAssessment: "2025-04-10",
+                              dateOfAssessment: "2023-06-27",
                               dateOfExpiry: "2026-03-18",
-                              dateOfRegistration: "2025-04-10",
+                              dateOfRegistration: "2023-06-27",
                               address:
                                { addressLine1: "Non-dom Property",
                                  addressLine2: "Buisness Park",
@@ -611,7 +611,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                  firstName: "Someone",
                                  lastName: "Person",
                                  registeredBy: { name: "test scheme", schemeId: scheme_id } },
-                              administrativeInformation: { issueDate: "2025-04-10", calculationTool: "BSD, OR Scotland, v1.0.3", relatedPartyDisclosure: "1" },
+                              administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.3", relatedPartyDisclosure: "1" },
                               relatedRrn: nil,
                               addressId: "RRN-0000-0000-0000-0004-0000",
                               optOut: false,
@@ -653,9 +653,9 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         expected_response = { typeOfAssessment: "DEC-AR",
                               assessmentId: "0000-0000-0000-0005-0000",
                               reportType: "2",
-                              dateOfAssessment: "2019-10-21",
-                              dateOfRegistration: "2019-11-22",
-                              dateOfExpiry: "2029-11-21",
+                              dateOfAssessment: "2023-06-27",
+                              dateOfRegistration: "2023-06-27",
+                              dateOfExpiry: "2033-06-26",
                               address:
                                { addressLine1: "Non-dom Property",
                                  addressLine2: "Buisness Park",
@@ -733,7 +733,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                  discountedEnergy: nil,
                                  inspectionType: "Physical" },
                               administrativeInformation: {
-                                issueDate: "2019-11-22",
+                                issueDate: "2023-06-27",
                                 calculationTool: "BSD, OR Scotland, v1.0.1",
                               },
                               siteServiceOne: { description: "Electricity", quantity: 26_914 },
@@ -776,9 +776,9 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         expected_response = { typeOfAssessment: "DEC-AR",
                               assessmentId: "0000-0000-0000-0000-0050",
                               reportType: "2",
-                              dateOfAssessment: "2025-04-02",
-                              dateOfExpiry: "2035-06-17",
-                              dateOfRegistration: "2025-06-18",
+                              dateOfAssessment: "2023-06-27",
+                              dateOfExpiry: "2033-06-26",
+                              dateOfRegistration: "2023-06-27",
                               address: { addressLine1: "Non-dom Property", addressLine2: "Buisness Park", addressLine3: "", addressLine4: "", town: "Town", postcode: "EH14 2SP" },
                               assessor:
                                { schemeAssessorId: "SPEC000000",
@@ -845,7 +845,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                  renewableSources: nil,
                                  discountedEnergy: nil,
                                  inspectionType: "Physical" },
-                              administrativeInformation: { issueDate: "2025-06-18", calculationTool: "BSD, OR Scotland, v1.0.0" },
+                              administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.0" },
                               siteServiceOne: { description: "Natural Gas", quantity: 76_639 },
                               siteServiceTwo: { description: "Electricity", quantity: 36_419 },
                               siteServiceThree: { description: "Not used", quantity: 0 },

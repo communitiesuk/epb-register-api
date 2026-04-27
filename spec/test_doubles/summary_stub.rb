@@ -643,9 +643,9 @@ class SummaryStub
   def self.fetch_certificate_summary_scottish_sap_19(scheme_id)
     { type_of_assessment: "SAP",
       assessment_id: "0000-0000-0000-0000-0000",
-      date_of_expiry: "2034-11-20",
-      date_of_assessment: "2024-11-21",
-      date_of_registration: "2024-11-21",
+      date_of_expiry: "2033-06-26",
+      date_of_assessment: "2023-06-27",
+      date_of_registration: "2023-06-27",
       address: { address_line1: "1 LOVELY ROAD", address_line2: "NICE ESTATE", address_line3: "", address_line4: "", town: "TOWN", postcode: "EH1 2NG" },
       assessor: { first_name: "Someone", last_name: "Person", registered_by: { name: "test scheme", scheme_id: scheme_id }, scheme_assessor_id: "SPEC000000", contact_details: { email: "a@b.c", telephone_number: "111222333" } },
       current_carbon_emission: 2.2,

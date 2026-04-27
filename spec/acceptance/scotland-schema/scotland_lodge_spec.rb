@@ -5,6 +5,11 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
     Events::Broadcaster.enable!
     add_countries
     add_assessor scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body
+    Timecop.freeze(Time.utc(2023, 6, 27))
+  end
+
+  after do
+    Timecop.return
   end
 
   let(:scheme_id) { add_scheme_and_get_id }
@@ -80,7 +85,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           end
 
           it "has all expected data points present" do
-            expected_rdsap_data = {
+            migrated_expected_rdsap_data = {
               "assessment_id" => "0000-0000-0000-0000-0000",
               "date_of_assessment" => "2023-06-27",
               "date_registered" => "2023-06-27",
@@ -99,7 +104,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
               "migrated" => true,
               "cancelled_at" => nil,
               "not_for_issue_at" => nil,
-              "created_at" => "2021-06-21",
+              "created_at" => "2023-06-27",
               "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
             }
 
@@ -113,7 +118,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                                  migrated: "true"
 
             expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
-            expect(migrated_scotland_rdsap_qualification_data).to eq expected_rdsap_data
+            expect(migrated_scotland_rdsap_qualification_data).to eq migrated_expected_rdsap_data
           end
 
           context "when migrating the same assessment ID" do
@@ -176,12 +181,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         context "when migrating a valid Scottish SAP assessment" do
           expected_sap_assessment_data = {
             "assessment_id" => "0000-0000-0000-0000-0000",
-            "date_of_assessment" => "2024-11-21",
-            "date_registered" => "2024-11-21",
+            "date_of_assessment" => "2023-06-27",
+            "date_registered" => "2023-06-27",
             "type_of_assessment" => "SAP",
             "current_energy_efficiency_rating" => 91,
             "postcode" => "EH1 2NG",
-            "date_of_expiry" => "2034-11-20",
+            "date_of_expiry" => "2033-06-26",
             "address_line1" => "1 LOVELY ROAD",
             "address_line2" => "NICE ESTATE",
             "address_line3" => "",
@@ -193,7 +198,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
             "migrated" => true,
             "cancelled_at" => nil,
             "not_for_issue_at" => nil,
-            "created_at" => "2021-06-21",
+            "created_at" => "2023-06-27",
             "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
           }
 
@@ -233,12 +238,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       context "when migrating a valid Scottish CEPC assessment" do
         expected_cepc_assessment_data = {
           "assessment_id" => "0000-0000-0000-0000-0000",
-          "date_of_assessment" => "2023-07-11",
-          "date_registered" => "2023-08-04",
+          "date_of_assessment" => "2023-06-27",
+          "date_registered" => "2023-06-27",
           "type_of_assessment" => "CEPC",
           "current_energy_efficiency_rating" => 120,
           "postcode" => "FK1 1XE",
-          "date_of_expiry" => "2033-08-03",
+          "date_of_expiry" => "2033-06-26",
           "address_line1" => "Non-dom Property",
           "address_line2" => "Some Street",
           "address_line3" => "Bigger Line",
@@ -250,7 +255,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "migrated" => true,
           "cancelled_at" => nil,
           "not_for_issue_at" => nil,
-          "created_at" => "2021-06-21",
+          "created_at" => "2023-06-27",
           "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         }
 
@@ -276,12 +281,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       context "when migrating a valid Scottish Action Plan assessment" do
         expected_action_plan_assessment_data = {
           "assessment_id" => "0000-0000-0000-0000-0000",
-          "date_of_assessment" => "2025-06-04",
-          "date_registered" => "2025-06-11",
+          "date_of_assessment" => "2023-06-27",
+          "date_registered" => "2023-06-27",
           "type_of_assessment" => "CS63",
           "current_energy_efficiency_rating" => 0,
           "postcode" => "FK1 1XE",
-          "date_of_expiry" => "2028-12-11",
+          "date_of_expiry" => "2026-12-27",
           "address_line1" => "Non-dom Property",
           "address_line2" => "",
           "address_line3" => "",
@@ -293,7 +298,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "migrated" => true,
           "cancelled_at" => nil,
           "not_for_issue_at" => nil,
-          "created_at" => "2021-06-21",
+          "created_at" => "2023-06-27",
           "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         }
 
@@ -318,8 +323,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when migrating a valid Scottish DEC assessment" do
         expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
-                                         "date_of_assessment" => "2025-04-10",
-                                         "date_registered" => "2025-04-10",
+                                         "date_of_assessment" => "2023-06-27",
+                                         "date_registered" => "2023-06-27",
                                          "type_of_assessment" => "DEC",
                                          "current_energy_efficiency_rating" => 0,
                                          "postcode" => "EH14 2SP",
@@ -335,7 +340,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                          "migrated" => true,
                                          "cancelled_at" => nil,
                                          "not_for_issue_at" => nil,
-                                         "created_at" => "2021-06-21",
+                                         "created_at" => "2023-06-27",
                                          "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
 
         it "successfully migrates the assessment" do
@@ -359,12 +364,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when migrating a valid Scottish DEC-AR assessment" do
         expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
-                                            "date_of_assessment" => "2019-10-21",
-                                            "date_registered" => "2019-11-22",
+                                            "date_of_assessment" => "2023-06-27",
+                                            "date_registered" => "2023-06-27",
                                             "type_of_assessment" => "DEC-AR",
                                             "current_energy_efficiency_rating" => 0,
                                             "postcode" => "EH14 2SP",
-                                            "date_of_expiry" => "2029-11-21",
+                                            "date_of_expiry" => "2033-06-26",
                                             "address_line1" => "Non-dom Property",
                                             "address_line2" => "Buisness Park",
                                             "address_line3" => "",
@@ -376,7 +381,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                             "migrated" => true,
                                             "cancelled_at" => nil,
                                             "not_for_issue_at" => nil,
-                                            "created_at" => "2021-06-21",
+                                            "created_at" => "2023-06-27",
                                             "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
 
         it "successfully migrates the assessment" do
@@ -400,8 +405,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when migrating a valid Scottish DEC+AR assessment" do
         expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0040",
-                                         "date_of_assessment" => "2025-04-02",
-                                         "date_registered" => "2025-06-18",
+                                         "date_of_assessment" => "2023-06-27",
+                                         "date_registered" => "2023-06-27",
                                          "type_of_assessment" => "DEC",
                                          "current_energy_efficiency_rating" => 0,
                                          "postcode" => "EH14 2SP",
@@ -417,15 +422,15 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                          "migrated" => true,
                                          "cancelled_at" => nil,
                                          "not_for_issue_at" => nil,
-                                         "created_at" => "2021-06-21",
+                                         "created_at" => "2023-06-27",
                                          "hashed_assessment_id" => "e2a73bb7e6874fb5f0b4541326bbbc8cca6d375012da903b2a9712e2edaa12ee" }
         expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0050",
-                                            "date_of_assessment" => "2025-04-02",
-                                            "date_registered" => "2025-06-18",
+                                            "date_of_assessment" => "2023-06-27",
+                                            "date_registered" => "2023-06-27",
                                             "type_of_assessment" => "DEC-AR",
                                             "current_energy_efficiency_rating" => 0,
                                             "postcode" => "EH14 2SP",
-                                            "date_of_expiry" => "2035-06-17",
+                                            "date_of_expiry" => "2033-06-26",
                                             "address_line1" => "Non-dom Property",
                                             "address_line2" => "Buisness Park",
                                             "address_line3" => "",
@@ -437,7 +442,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                             "migrated" => true,
                                             "cancelled_at" => nil,
                                             "not_for_issue_at" => nil,
-                                            "created_at" => "2021-06-21",
+                                            "created_at" => "2023-06-27",
                                             "hashed_assessment_id" => "e81c2c444c8afe8cf6554bd26ece29405a43ea5ac7d1b02e1737bba5a5bd14c0" }
         expected_linked_assessment_data = [{ "assessment_id" => "0000-0000-0000-0000-0040", "linked_assessment_id" => "0000-0000-0000-0000-0050" }]
 
@@ -635,7 +640,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
               "migrated" => false,
               "cancelled_at" => nil,
               "not_for_issue_at" => nil,
-              "created_at" => "2021-06-21",
+              "created_at" => "2023-06-27",
               "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
             }
 
@@ -718,12 +723,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           it "has all expected data points present" do
             expected_sap_data = {
               "assessment_id" => "0000-0000-0000-0000-0000",
-              "date_of_assessment" => "2024-11-21",
-              "date_registered" => "2024-11-21",
+              "date_of_assessment" => "2023-06-27",
+              "date_registered" => "2023-06-27",
               "type_of_assessment" => "SAP",
               "current_energy_efficiency_rating" => 91,
               "postcode" => "EH1 2NG",
-              "date_of_expiry" => "2034-11-20",
+              "date_of_expiry" => "2033-06-26",
               "address_line1" => "1 LOVELY ROAD",
               "address_line2" => "NICE ESTATE",
               "address_line3" => "",
@@ -735,7 +740,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
               "migrated" => false,
               "cancelled_at" => nil,
               "not_for_issue_at" => nil,
-              "created_at" => "2021-06-21",
+              "created_at" => "2023-06-27",
               "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
             }
 
@@ -757,12 +762,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       context "when lodging a valid Scottish CEPC assessment" do
         expected_cepc_assessment_data = {
           "assessment_id" => "0000-0000-0000-0000-0000",
-          "date_of_assessment" => "2023-07-11",
-          "date_registered" => "2023-08-04",
+          "date_of_assessment" => "2023-06-27",
+          "date_registered" => "2023-06-27",
           "type_of_assessment" => "CEPC",
           "current_energy_efficiency_rating" => 120,
           "postcode" => "FK1 1XE",
-          "date_of_expiry" => "2033-08-03",
+          "date_of_expiry" => "2033-06-26",
           "address_line1" => "Non-dom Property",
           "address_line2" => "Some Street",
           "address_line3" => "Bigger Line",
@@ -774,7 +779,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "migrated" => false,
           "cancelled_at" => nil,
           "not_for_issue_at" => nil,
-          "created_at" => "2021-06-21",
+          "created_at" => "2023-06-27",
           "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         }
 
@@ -800,12 +805,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       context "when lodging a valid Scottish Action Plan assessment" do
         expected_action_plan_assessment_data = {
           "assessment_id" => "0000-0000-0000-0000-0000",
-          "date_of_assessment" => "2025-06-04",
-          "date_registered" => "2025-06-11",
+          "date_of_assessment" => "2023-06-27",
+          "date_registered" => "2023-06-27",
           "type_of_assessment" => "CS63",
           "current_energy_efficiency_rating" => 0,
           "postcode" => "FK1 1XE",
-          "date_of_expiry" => "2028-12-11",
+          "date_of_expiry" => "2026-12-27",
           "address_line1" => "Non-dom Property",
           "address_line2" => "",
           "address_line3" => "",
@@ -817,7 +822,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "migrated" => false,
           "cancelled_at" => nil,
           "not_for_issue_at" => nil,
-          "created_at" => "2021-06-21",
+          "created_at" => "2023-06-27",
           "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         }
 
@@ -842,8 +847,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when lodging a valid Scottish DEC assessment" do
         expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
-                                         "date_of_assessment" => "2025-04-10",
-                                         "date_registered" => "2025-04-10",
+                                         "date_of_assessment" => "2023-06-27",
+                                         "date_registered" => "2023-06-27",
                                          "type_of_assessment" => "DEC",
                                          "current_energy_efficiency_rating" => 0,
                                          "postcode" => "EH14 2SP",
@@ -859,7 +864,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                          "migrated" => false,
                                          "cancelled_at" => nil,
                                          "not_for_issue_at" => nil,
-                                         "created_at" => "2021-06-21",
+                                         "created_at" => "2023-06-27",
                                          "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
 
         it "successfully migrates the assessment" do
@@ -883,12 +888,12 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when lodging a valid Scottish DEC-AR assessment" do
         expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0000",
-                                            "date_of_assessment" => "2019-10-21",
-                                            "date_registered" => "2019-11-22",
+                                            "date_of_assessment" => "2023-06-27",
+                                            "date_registered" => "2023-06-27",
                                             "type_of_assessment" => "DEC-AR",
                                             "current_energy_efficiency_rating" => 0,
                                             "postcode" => "EH14 2SP",
-                                            "date_of_expiry" => "2029-11-21",
+                                            "date_of_expiry" => "2033-06-26",
                                             "address_line1" => "Non-dom Property",
                                             "address_line2" => "Buisness Park",
                                             "address_line3" => "",
@@ -900,7 +905,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                             "migrated" => false,
                                             "cancelled_at" => nil,
                                             "not_for_issue_at" => nil,
-                                            "created_at" => "2021-06-21",
+                                            "created_at" => "2023-06-27",
                                             "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a" }
 
         it "successfully migrates the assessment" do
@@ -924,8 +929,8 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when lodging a valid Scottish DEC+AR assessment" do
         expected_dec_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0040",
-                                         "date_of_assessment" => "2025-04-02",
-                                         "date_registered" => "2025-06-18",
+                                         "date_of_assessment" => "2023-06-27",
+                                         "date_registered" => "2023-06-27",
                                          "type_of_assessment" => "DEC",
                                          "current_energy_efficiency_rating" => 0,
                                          "postcode" => "EH14 2SP",
@@ -941,15 +946,15 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                          "migrated" => false,
                                          "cancelled_at" => nil,
                                          "not_for_issue_at" => nil,
-                                         "created_at" => "2021-06-21",
+                                         "created_at" => "2023-06-27",
                                          "hashed_assessment_id" => "e2a73bb7e6874fb5f0b4541326bbbc8cca6d375012da903b2a9712e2edaa12ee" }
         expected_dec_ar_assessment_data = { "assessment_id" => "0000-0000-0000-0000-0050",
-                                            "date_of_assessment" => "2025-04-02",
-                                            "date_registered" => "2025-06-18",
+                                            "date_of_assessment" => "2023-06-27",
+                                            "date_registered" => "2023-06-27",
                                             "type_of_assessment" => "DEC-AR",
                                             "current_energy_efficiency_rating" => 0,
                                             "postcode" => "EH14 2SP",
-                                            "date_of_expiry" => "2035-06-17",
+                                            "date_of_expiry" => "2033-06-26",
                                             "address_line1" => "Non-dom Property",
                                             "address_line2" => "Buisness Park",
                                             "address_line3" => "",
@@ -961,7 +966,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                             "migrated" => false,
                                             "cancelled_at" => nil,
                                             "not_for_issue_at" => nil,
-                                            "created_at" => "2021-06-21",
+                                            "created_at" => "2023-06-27",
                                             "hashed_assessment_id" => "e81c2c444c8afe8cf6554bd26ece29405a43ea5ac7d1b02e1737bba5a5bd14c0" }
         expected_linked_assessment_data = [{ "assessment_id" => "0000-0000-0000-0000-0040", "linked_assessment_id" => "0000-0000-0000-0000-0050" }]
 

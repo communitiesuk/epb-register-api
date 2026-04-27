@@ -50,7 +50,8 @@ module UseCase
 
     class DatabaseWriteError < StandardError; end
 
-    LATEST_COMMERCIAL = %w[CEPC-8.0.0 CEPC-NI-8.0.0].freeze
+    LATEST_COMMERCIAL = %w[CEPC-8.0.0 CEPC-NI-8.0.0 CEPC-S-7.1].freeze
+    SCOTTISH_DEC_DECAR_CS63 = %w[CS63-S-7.0 DECAR-S-7.0].freeze
     NOT_OVERRIDABLE_LODGEMENT_RULES = %w[
       FLOOR_AREA_CANT_BE_LESS_THAN_ZERO
       DATES_CANT_BE_IN_FUTURE
@@ -128,12 +129,20 @@ module UseCase
                                                  postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
                                                  address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
 
-      unless migrated || schema_name.include?("-S-")
-        # TODO: We need Scottish lodgement rules
+      unless migrated || SCOTTISH_DEC_DECAR_CS63.include?(schema_name)
+
         if schema_valid && !wrapper.nil?
 
           rules =
-            if LATEST_COMMERCIAL.include? schema_name
+            if schema_name.include?("-S-")
+              if LATEST_COMMERCIAL.include? schema_name
+                LodgementRules::ScottishNonDomestic.new
+              elsif schema_name.include?("RdSAP")
+                LodgementRules::ScottishRdsap.new
+              else
+                LodgementRules::ScottishSap.new
+              end
+            elsif LATEST_COMMERCIAL.include? schema_name
               LodgementRules::NonDomestic.new
             else
               LodgementRules::DomesticCommon.new

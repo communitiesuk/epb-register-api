@@ -5,11 +5,11 @@
   <ns1:Report>
     <CEPC:Report-Header>
       <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
-      <CEPC:Issue-Date>2025-04-10</CEPC:Issue-Date>
-      <CEPC:Valid-Until>2026-03-18</CEPC:Valid-Until>
+      <CEPC:Issue-Date>2023-06-27</CEPC:Issue-Date>
+      <CEPC:Valid-Until>2023-06-27</CEPC:Valid-Until>
       <CEPC:Report-Type>1</CEPC:Report-Type>
-      <CEPC:Inspection-Date>2025-04-10</CEPC:Inspection-Date>
-      <CEPC:Registration-Date>2025-04-10</CEPC:Registration-Date>
+      <CEPC:Inspection-Date>2023-06-27</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2023-06-27</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
