@@ -90,8 +90,8 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
   describe "security scenarios" do
     it "rejects a request without authentication" do
       expect(scottish_get_assessors_status_updates(
-        start_date: "2020-01-01",
-        end_date: "2020-01-02",
+        start_date: events_date - 1.day,
+        end_date: events_date + 1.day,
         accepted_responses: [401],
         should_authenticate: false,
       ).status).to eq(401)
@@ -99,8 +99,8 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
 
     it "rejects a request without the right scope" do
       expect(scottish_get_assessors_status_updates(
-        start_date: "2020-01-01",
-        end_date: "2020-01-02",
+        start_date: events_date - 1.day,
+        end_date: events_date + 1.day,
         accepted_responses: [403],
         scopes: %w[wrong:scope],
       ).status).to eq(403)

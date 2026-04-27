@@ -3683,7 +3683,7 @@ components:
         lastName:
           type: string
           example: "Bloggs"
-        assessorSchemeId:
+        schemeAssessorId:
           type: string
           example: "TEST00001"
         dateOfBirth:
