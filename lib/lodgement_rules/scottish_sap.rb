@@ -6,7 +6,7 @@ module LodgementRules
 
     RULES = [
       {
-        name: "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE VAL100",
+        name: "SCOTLAND_INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL100",
         title:
           "Date of dwelling survey (inspection date) cannot be any later than date of lodgement of data to the register",
         test:
@@ -21,7 +21,7 @@ module LodgementRules
           end,
       },
       {
-        name: "INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE VAL101",
+        name: "SCOTLAND_INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL101",
         title:
           "Date of dwelling survey (inspection date) should not be more than three months earlier than the completion date",
         test:
@@ -36,7 +36,7 @@ module LodgementRules
           end,
       },
       {
-        name: "COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT VAL102",
+        name: "SCOTLAND_COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT_VAL102",
         title:
           "Date of certificate declared is not the same as date of lodgement to the register",
         test:
@@ -47,7 +47,7 @@ module LodgementRules
           end,
       },
       {
-        name: "TOTAL_FLOOR_AREA_GREATER_THAN_450_VAL103",
+        name: "SCOTLAND_TOTAL_FLOOR_AREA_GREATER_THAN_450_VAL103",
         title:
           "Very large total floor area (>450) reported",
         test:
@@ -58,7 +58,7 @@ module LodgementRules
           end,
       },
       {
-        name: "BOTH_MAIN_HEATING_INDEX_NUMBER_AND_MAIN_HEATING_CODE_MISSING_VAL104",
+        name: "SCOTLAND_BOTH_MAIN_HEATING_INDEX_NUMBER_AND_MAIN_HEATING_CODE_MISSING_VAL104",
         title:
           "Neither Main-Heating-Index-Number nor Main-Heating-Code recorded for this dwelling",
         test:
@@ -73,7 +73,7 @@ module LodgementRules
           end,
       },
       {
-        name: "CONSTRUCTION_YEAR_MISSING_FROM_BUILDING_PART_VAL106",
+        name: "SCOTLAND_CONSTRUCTION_YEAR_MISSING_FROM_BUILDING_PART_VAL106",
         title:
           "No construction year defined for dwelling part",
         test:

@@ -6,7 +6,7 @@ module LodgementRules
 
     RULES = [
       {
-        name: "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL200",
+        name: "SCOTLAND_INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL200",
         title:
           "Date of building assessment (inspection date) cannot be any later than date of lodgement of data to the register",
         test:
@@ -22,7 +22,7 @@ module LodgementRules
           end,
       },
       {
-        name: "INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL201",
+        name: "SCOTLAND_INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL201",
         title:
           "Building assessment not completed recently; data used for lodgement is more than three months old",
         test:

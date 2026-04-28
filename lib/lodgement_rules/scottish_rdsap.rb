@@ -6,7 +6,7 @@ module LodgementRules
 
     RULES = [
       {
-        name: "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE VAL009",
+        name: "SCOTLAND_INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL009",
         title:
           "Date of dwelling survey (inspection date) cannot be any later than date of lodgement of data to the register",
         test:
@@ -21,7 +21,7 @@ module LodgementRules
           end,
       },
       {
-        name: "INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE VAL010",
+        name: "SCOTLAND_INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL010",
         title:
           "Date of dwelling survey (inspection date) should not be more than three months earlier than the completion date",
         test:
@@ -36,7 +36,7 @@ module LodgementRules
           end,
       },
       {
-        name: "COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT VAL011",
+        name: "SCOTLAND_COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT_VAL011",
         title:
           "Date of certificate declared is not the same as date of lodgement to the register",
         test:
@@ -47,7 +47,7 @@ module LodgementRules
           end,
       },
       {
-        name: "PARTY_WALLS_ARE_NOT_APPLICABLE_FOR_DETACHED_PROPERTIES VAL001",
+        name: "SCOTLAND_PARTY_WALLS_ARE_NOT_APPLICABLE_FOR_DETACHED_PROPERTIES_VAL001",
         title:
           "When the build form for a property is detached, party walls must be recorded as not applicable",
         test:
@@ -66,7 +66,7 @@ module LodgementRules
           end,
       },
       {
-        name: "PARTY_WALLS_ARE_NOT_DEFINED_USING_CURRENT_SURVEY_INFORMATION_VAL003",
+        name: "SCOTLAND_PARTY_WALLS_ARE_NOT_DEFINED_USING_CURRENT_SURVEY_INFORMATION_VAL003",
         title:
           "Party walls must be defined using current survey information",
         test:
@@ -83,7 +83,7 @@ module LodgementRules
           end,
       },
       {
-        name: "TOTAL_FLOOR_AREA_LESS_THAN_30_VAL012",
+        name: "SCOTLAND_TOTAL_FLOOR_AREA_LESS_THAN_30_VAL012",
         title:
           "Very small total floor area (<30) reported",
         test:
@@ -94,7 +94,7 @@ module LodgementRules
           end,
       },
       {
-        name: "TOTAL_FLOOR_AREA_GREATER_THAN_299_VAL013",
+        name: "SCOTLAND_TOTAL_FLOOR_AREA_GREATER_THAN_299_VAL013",
         title:
           "Very large total floor area (>299) reported",
         test:
@@ -105,7 +105,7 @@ module LodgementRules
           end,
       },
       {
-        name: "PRIMARY_ENERGY_VALUE_LESS_THAN_50_VAL015",
+        name: "SCOTLAND_PRIMARY_ENERGY_VALUE_LESS_THAN_50_VAL015",
         title:
           "Very low primary energy value (<50) reported",
         test:
@@ -116,7 +116,7 @@ module LodgementRules
           end,
       },
       {
-        name: "PRIMARY_ENERGY_VALUE_GREATER_THAN_849_VAL016",
+        name: "SCOTLAND_PRIMARY_ENERGY_VALUE_GREATER_THAN_849_VAL016",
         title:
           "Very high primary energy value (>849) reported",
         test:
@@ -127,7 +127,7 @@ module LodgementRules
           end,
       },
       {
-        name: "WALL_THICKNESS_GREATER_THAN_801_VAL004",
+        name: "SCOTLAND_WALL_THICKNESS_GREATER_THAN_801_VAL004",
         title:
           "Unusually think walls (>801) reported for dwelling part",
         test:
@@ -145,7 +145,7 @@ module LodgementRules
           end,
       },
       {
-        name: "WALL_THICKNESS_LESS_THAN_140_NOT_PARK_HOME_OR_SYSTEM_BUILT_VAL006",
+        name: "SCOTLAND_WALL_THICKNESS_LESS_THAN_140_NOT_PARK_HOME_OR_SYSTEM_BUILT_VAL006",
         title:
           "Very low wall thickness (<140) reported and construction not park home or system built",
         test:
@@ -172,7 +172,7 @@ module LodgementRules
           end,
       },
       {
-        name: "WALL_THICKNESS_LESS_THAN_230_WITH_CAVITY_VAL007",
+        name: "SCOTLAND_WALL_THICKNESS_LESS_THAN_230_WITH_CAVITY_VAL007",
         title:
           "Wall thickness of less than 230mm reported for cavity wall construction",
         test:
@@ -199,7 +199,7 @@ module LodgementRules
           end,
       },
       {
-        name: "WALL_THICKNESS_MEASURED_IS_N_BUT_WALL_THICKNESS_PRESENT_VAL008",
+        name: "SCOTLAND_WALL_THICKNESS_MEASURED_IS_N_BUT_WALL_THICKNESS_PRESENT_VAL008",
         title:
           "Wall thickness recorded as not measured but wall thickness value provided by assessor",
         test:
@@ -226,7 +226,7 @@ module LodgementRules
           end,
       },
       {
-        name: "10_OR_MORE_HABITABLE_ROOMS_VAL002",
+        name: "SCOTLAND_10_OR_MORE_HABITABLE_ROOMS_VAL002",
         title:
           "High number of habitable rooms - 10 or more",
         test:

@@ -26,7 +26,7 @@ describe LodgementRules::ScottishSap do
   context "when the inspection date is later than the completion date VAL100" do
     let(:error) do
       {
-        "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE VAL100",
+        "code": "SCOTLAND_INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL100",
         "title":
           "Date of dwelling survey (inspection date) cannot be any later than date of lodgement of data to the register",
       }.freeze
@@ -50,7 +50,7 @@ describe LodgementRules::ScottishSap do
     it "throws an error when the Inspection-Date is later than the Completion-Date (This will trigger a concurrent error VAL102)" do
       assert_errors(expected_errors: [error,
                                       {
-                                        "code": "COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT VAL102",
+                                        "code": "SCOTLAND_COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT_VAL102",
                                         "title":
                                                 "Date of certificate declared is not the same as date of lodgement to the register",
                                       }], values: { "Inspection-Date": Date.today.to_s,
@@ -63,7 +63,7 @@ describe LodgementRules::ScottishSap do
   context "when the inspection date is more than three months earlier than completion date VAL101" do
     let(:error) do
       {
-        "code": "INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE VAL101",
+        "code": "SCOTLAND_INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL101",
         "title":
           "Date of dwelling survey (inspection date) should not be more than three months earlier than the completion date",
       }.freeze
@@ -92,7 +92,7 @@ describe LodgementRules::ScottishSap do
   context "when the completion date is not the same as the date of lodgement VAL102" do
     let(:error) do
       {
-        "code": "COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT VAL102",
+        "code": "SCOTLAND_COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT_VAL102",
         "title":
           "Date of certificate declared is not the same as date of lodgement to the register",
       }.freeze
@@ -114,7 +114,7 @@ describe LodgementRules::ScottishSap do
   context "when the floor area is greater than 450 VAL103" do
     let(:error) do
       {
-        "code": "TOTAL_FLOOR_AREA_GREATER_THAN_450_VAL103",
+        "code": "SCOTLAND_TOTAL_FLOOR_AREA_GREATER_THAN_450_VAL103",
         "title":
           "Very large total floor area (>450) reported",
       }.freeze
@@ -140,7 +140,7 @@ describe LodgementRules::ScottishSap do
   context "when both main heating index number and main heating code are missing VAL104" do
     let(:error) do
       {
-        "code": "BOTH_MAIN_HEATING_INDEX_NUMBER_AND_MAIN_HEATING_CODE_MISSING_VAL104",
+        "code": "SCOTLAND_BOTH_MAIN_HEATING_INDEX_NUMBER_AND_MAIN_HEATING_CODE_MISSING_VAL104",
         "title":
           "Neither Main-Heating-Index-Number nor Main-Heating-Code recorded for this dwelling",
       }.freeze
@@ -194,7 +194,7 @@ describe LodgementRules::ScottishSap do
   context "when the construction year is missing from a building part VAL106" do
     let(:error) do
       {
-        "code": "CONSTRUCTION_YEAR_MISSING_FROM_BUILDING_PART_VAL106",
+        "code": "SCOTLAND_CONSTRUCTION_YEAR_MISSING_FROM_BUILDING_PART_VAL106",
         "title":
           "No construction year defined for dwelling part",
       }.freeze

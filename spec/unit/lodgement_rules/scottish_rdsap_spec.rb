@@ -26,7 +26,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the inspection date is later than the completion date VAL009" do
     let(:error) do
       {
-        "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE VAL009",
+        "code": "SCOTLAND_INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL009",
         "title":
           "Date of dwelling survey (inspection date) cannot be any later than date of lodgement of data to the register",
       }.freeze
@@ -50,7 +50,7 @@ describe LodgementRules::ScottishRdsap do
     it "throws an error when the Inspection-Date is later than the Completion-Date (This will trigger a concurrent error VAL011)" do
       assert_errors(expected_errors: [error,
                                       {
-                                        "code": "COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT VAL011",
+                                        "code": "SCOTLAND_COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT_VAL011",
                                         "title":
                                                 "Date of certificate declared is not the same as date of lodgement to the register",
                                       }], values: { "Inspection-Date": Date.today.to_s,
@@ -63,7 +63,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the inspection date is more than three months earlier than completion date VAL010" do
     let(:error) do
       {
-        "code": "INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE VAL010",
+        "code": "SCOTLAND_INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL010",
         "title":
           "Date of dwelling survey (inspection date) should not be more than three months earlier than the completion date",
       }.freeze
@@ -92,7 +92,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the completion date is not the same as the date of lodgement VAL011" do
     let(:error) do
       {
-        "code": "COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT VAL011",
+        "code": "SCOTLAND_COMPLETION_DATE_IS_NOT_THE_SAME_AS_DATE_OF_LODGEMENT_VAL011",
         "title":
           "Date of certificate declared is not the same as date of lodgement to the register",
       }.freeze
@@ -114,7 +114,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the built form is detached party walls are not applicable VAL001" do
     let(:error) do
       {
-        "code": "PARTY_WALLS_ARE_NOT_APPLICABLE_FOR_DETACHED_PROPERTIES VAL001",
+        "code": "SCOTLAND_PARTY_WALLS_ARE_NOT_APPLICABLE_FOR_DETACHED_PROPERTIES_VAL001",
         "title":
           "When the build form for a property is detached, party walls must be recorded as not applicable",
       }.freeze
@@ -142,7 +142,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the built form is detached party walls are not applicable VAL003" do
     let(:error) do
       {
-        "code": "PARTY_WALLS_ARE_NOT_DEFINED_USING_CURRENT_SURVEY_INFORMATION_VAL003",
+        "code": "SCOTLAND_PARTY_WALLS_ARE_NOT_DEFINED_USING_CURRENT_SURVEY_INFORMATION_VAL003",
         "title":
           "Party walls must be defined using current survey information",
       }.freeze
@@ -168,7 +168,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the floor area is less than 30 VAL012" do
     let(:error) do
       {
-        "code": "TOTAL_FLOOR_AREA_LESS_THAN_30_VAL012",
+        "code": "SCOTLAND_TOTAL_FLOOR_AREA_LESS_THAN_30_VAL012",
         "title":
           "Very small total floor area (<30) reported",
       }.freeze
@@ -194,7 +194,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the floor area is greater than 299 VAL013" do
     let(:error) do
       {
-        "code": "TOTAL_FLOOR_AREA_GREATER_THAN_299_VAL013",
+        "code": "SCOTLAND_TOTAL_FLOOR_AREA_GREATER_THAN_299_VAL013",
         "title":
           "Very large total floor area (>299) reported",
       }.freeze
@@ -220,7 +220,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the energy consumption current is less than 50 VAL015" do
     let(:error) do
       {
-        "code": "PRIMARY_ENERGY_VALUE_LESS_THAN_50_VAL015",
+        "code": "SCOTLAND_PRIMARY_ENERGY_VALUE_LESS_THAN_50_VAL015",
         "title":
           "Very low primary energy value (<50) reported",
       }.freeze
@@ -246,7 +246,7 @@ describe LodgementRules::ScottishRdsap do
   context "when the energy consumption current is greater than 849 VAL016" do
     let(:error) do
       {
-        "code": "PRIMARY_ENERGY_VALUE_GREATER_THAN_849_VAL016",
+        "code": "SCOTLAND_PRIMARY_ENERGY_VALUE_GREATER_THAN_849_VAL016",
         "title":
           "Very high primary energy value (>849) reported",
       }.freeze
@@ -272,7 +272,7 @@ describe LodgementRules::ScottishRdsap do
   context "when any wall thickness is greater than 801 VAL004" do
     let(:error) do
       {
-        "code": "WALL_THICKNESS_GREATER_THAN_801_VAL004",
+        "code": "SCOTLAND_WALL_THICKNESS_GREATER_THAN_801_VAL004",
         "title":
           "Unusually think walls (>801) reported for dwelling part",
       }.freeze
@@ -327,7 +327,7 @@ describe LodgementRules::ScottishRdsap do
   context "when any wall thickness less than 140 and wall construction is park home or system built VAL006" do
     let(:error) do
       {
-        "code": "WALL_THICKNESS_LESS_THAN_140_NOT_PARK_HOME_OR_SYSTEM_BUILT_VAL006",
+        "code": "SCOTLAND_WALL_THICKNESS_LESS_THAN_140_NOT_PARK_HOME_OR_SYSTEM_BUILT_VAL006",
         "title":
           "Very low wall thickness (<140) reported and construction not park home or system built",
       }.freeze
@@ -449,7 +449,7 @@ describe LodgementRules::ScottishRdsap do
   context "when any wall thickness less than 230 and wall construction is cavity VAL007" do
     let(:error) do
       {
-        "code": "WALL_THICKNESS_LESS_THAN_230_WITH_CAVITY_VAL007",
+        "code": "SCOTLAND_WALL_THICKNESS_LESS_THAN_230_WITH_CAVITY_VAL007",
         "title":
           "Wall thickness of less than 230mm reported for cavity wall construction",
       }.freeze
@@ -560,7 +560,7 @@ describe LodgementRules::ScottishRdsap do
   context "when any wall thickness measured is no then a wall thickness cannot be given VAL008" do
     let(:error) do
       {
-        "code": "WALL_THICKNESS_MEASURED_IS_N_BUT_WALL_THICKNESS_PRESENT_VAL008",
+        "code": "SCOTLAND_WALL_THICKNESS_MEASURED_IS_N_BUT_WALL_THICKNESS_PRESENT_VAL008",
         "title":
           "Wall thickness recorded as not measured but wall thickness value provided by assessor",
       }.freeze
@@ -646,7 +646,7 @@ describe LodgementRules::ScottishRdsap do
   context "when there are 10 or more habitable rooms VAL002" do
     let(:error) do
       {
-        "code": "10_OR_MORE_HABITABLE_ROOMS_VAL002",
+        "code": "SCOTLAND_10_OR_MORE_HABITABLE_ROOMS_VAL002",
         "title":
           "High number of habitable rooms - 10 or more",
       }.freeze

@@ -51,7 +51,7 @@ describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
     context "when the inspection date is later than the completion date VAL200" do
       let(:error) do
         {
-          "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL200",
+          "code": "SCOTLAND_INSPECTION_DATE_LATER_THAN_COMPLETION_DATE_VAL200",
           "title":
             "Date of building assessment (inspection date) cannot be any later than date of lodgement of data to the register",
         }.freeze
@@ -65,7 +65,7 @@ describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
     context "when the inspection date is more than three months earlier than completion date VAL201" do
       let(:error) do
         {
-          "code": "INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL201",
+          "code": "SCOTLAND_INSPECTION_DATE_THREE_MONTHS_EARLIER_THAN_COMPLETION_DATE_VAL201",
           "title":
             "Building assessment not completed recently; data used for lodgement is more than three months old",
         }.freeze
