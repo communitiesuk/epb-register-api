@@ -3186,6 +3186,8 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorQualificationChangeEvent'
+                  links:
+                    $ref: '#/components/schemas/Pagination'
         '400':
           description: A required argument is is invalid
           content:
@@ -3198,6 +3200,128 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/updates/new-assessors:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get a list of new assessors
+      description: Provides a paginated list of all the new assessors that were registered between the start and end dates provided.
+      operationId: get-new-scottish-assessors
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: query
+          name: startDate
+          required: true
+          description: 'The start date of the range (inclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: query
+          name: endDate
+          required: true
+          description: 'The end date of the range (exclusive)'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
+        - in: query
+          name: page
+          required: false
+          description: 'The page of data requested'
+          schema:
+            type: string
+            format: number
+            example: '1'
+      responses:
+        '200':
+          description: New assessors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      newAssessors:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ScottishNewAssessor'
+                  links:
+                    $ref: '#/components/schemas/Pagination'
+        '400':
+          description: A required argument is is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /scotland/v1/assessors/{schemeAssessorId}:
+    get:
+      tags:
+        - Scotland Data
+      summary: Get Scottish assessor
+      description: Get assessor attributes in JSON format
+      operationId: get-scottish-assessor
+      security:
+        - oauth:
+            - 'scotland_data:fetch'
+      parameters:
+        - in: path
+          name: schemeAssessorId
+          required: true
+          description: The Assessor ID assigned by the registering scheme
+          schema:
+            $ref: '#/components/schemas/AssessorSchemeId'
+      responses:
+        '200':
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ScottishNewAssessor'
+                  meta:
+                    type: object
+                    properties:
+                      dataSentAt:
+                        type: string
+                        format: date-time
+                        example: '2026-02-26T16:32:01.703Z'
+        '404':
+          description: Assessor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -3460,8 +3584,7 @@ components:
           type: number
           example: 0.0
         schemeAssessorId:
-          type: string
-          example: 'TEST301553'
+          $ref: '#/components/schemas/AssessorSchemeId'
         contactDetails:
           type: object
           properties:
@@ -3484,6 +3607,30 @@ components:
             schemeId:
               type: integer
               example: 5
+
+    ScottishNewAssessor:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: 'Joe'
+        middleNames:
+          type: string
+          example: 'T'
+        lastName:
+          type: string
+          example: 'Bloggs'
+        email:
+          type: string
+          format: email
+          example: 'j.t.bloggs@example.com'
+        schemeAssessorId:
+          $ref: '#/components/schemas/AssessorSchemeId'
+        registeredBy:
+          type: string
+          example: 'Stroma Certification Ltd'
+        qualifications:
+          $ref: '#/components/schemas/AssessorQualifications'
 
     AssessorBody:
       allOf:
@@ -3702,6 +3849,9 @@ components:
               allOf:
                 - $ref: '#/components/schemas/AssessorQualificationStatus'
                 - example: 'STRUCKOFF'
+            timeOfChange:
+              type: string
+              format: date-time
 
     AssessorFullName:
       type: string
