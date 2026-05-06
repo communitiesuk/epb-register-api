@@ -14,6 +14,10 @@ describe "Audit events", :set_with_timecop do
     )
   end
 
+  after do
+    Events::Broadcaster.disable!
+  end
+
   let(:scheme_id) { add_scheme_and_get_id }
 
   let(:saved_data) do

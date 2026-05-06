@@ -9,6 +9,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   end
 
   after do
+    Events::Broadcaster.disable!
     Timecop.return
   end
 
