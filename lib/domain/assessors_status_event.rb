@@ -6,7 +6,8 @@ module Domain
       qualification_type:,
       previous_status:,
       new_status:,
-      auth_client_id: nil
+      auth_client_id: nil,
+      recorded_at: nil
     )
       @assessor = assessor
       @scheme_assessor_id = scheme_assessor_id
@@ -14,6 +15,7 @@ module Domain
       @previous_status = previous_status
       @new_status = new_status
       @auth_client_id = auth_client_id
+      @recorded_at = recorded_at
     end
 
     def to_record
@@ -44,6 +46,22 @@ module Domain
           qualification_type: @qualification_type,
           previous_status: @previous_status,
           new_status: @new_status,
+        },
+      }
+    end
+
+    def to_hash_scotland
+      {
+        first_name: @assessor["first_name"],
+        last_name: @assessor["last_name"],
+        middle_names: @assessor["middle_name"],
+        scheme_assessor_id: @scheme_assessor_id,
+        date_of_birth: @assessor["date_of_birth"],
+        qualification_change: {
+          qualification_type: @qualification_type,
+          previous_status: @previous_status,
+          new_status: @new_status,
+          time_of_change: @recorded_at,
         },
       }
     end

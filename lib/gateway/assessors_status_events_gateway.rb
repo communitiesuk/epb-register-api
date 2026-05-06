@@ -65,7 +65,7 @@ module Gateway
     def get_scottish_assessor_events(start_date:, end_date:, current_page:, limit: 5000)
       sql = <<~SQL
         SELECT
-          ase.assessor, ase.scheme_assessor_id, ase.qualification_type, ase.previous_status, ase.new_status
+          ase.assessor, ase.scheme_assessor_id, ase.qualification_type, ase.previous_status, ase.new_status, ase.recorded_at
         FROM
           assessors_status_events ase
         WHERE
@@ -111,7 +111,8 @@ module Gateway
             qualification_type: row["qualification_type"],
             previous_status: row["previous_status"],
             new_status: row["new_status"],
-          ).to_hash
+            recorded_at: row["recorded_at"],
+          ).to_hash_scotland
       end
 
       result

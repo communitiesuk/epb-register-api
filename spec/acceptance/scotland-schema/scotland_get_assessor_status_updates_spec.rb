@@ -1,7 +1,8 @@
 describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
-  let(:events_date) { Date.today - 1.week }
+  let(:events_time) { Time.now.utc - 1.week }
+  let(:events_date) { Date.parse(events_time.to_s) }
 
   before do
     scheme_id = add_scheme_and_get_id
@@ -56,6 +57,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
                          newStatus: "ACTIVE",
                          previousStatus: "INACTIVE",
                          qualificationType: "scotland_rdsap",
+                         timeOfChange: events_time,
                        },
                        schemeAssessorId: "ACME123456",
                      },
@@ -67,7 +69,8 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
                        qualificationChange:
                          { newStatus: "STRUCKOFF",
                            previousStatus: "ACTIVE",
-                           qualificationType: "scotland_rdsap" },
+                           qualificationType: "scotland_rdsap",
+                           timeOfChange: events_time },
                        schemeAssessorId: "ACME123456",
                      },
                      { dateOfBirth: "1991-02-25",
@@ -77,7 +80,8 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
                        qualificationChange:
                         { newStatus: "SUSPENDED",
                           previousStatus: "STRUCKOFF",
-                          qualificationType: "scotland_rdsap" },
+                          qualificationType: "scotland_rdsap",
+                          timeOfChange: events_time },
                        schemeAssessorId: "ACME123456" },
                    ],
                  },

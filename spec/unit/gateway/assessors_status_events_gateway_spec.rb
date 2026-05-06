@@ -48,7 +48,8 @@ describe Gateway::AssessorsStatusEventsGateway, :set_with_timecop do
         expect(result.length).to eq(3)
         expect(result.first[:qualification_change]).to eq({ new_status: "ACTIVE",
                                                             previous_status: "INACTIVE",
-                                                            qualification_type: "scotland_rdsap" })
+                                                            qualification_type: "scotland_rdsap",
+                                                            time_of_change: Time.now.utc })
       end
 
       it "only returns events between the two dates" do
