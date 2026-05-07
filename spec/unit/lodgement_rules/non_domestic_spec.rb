@@ -1,4 +1,4 @@
-shared_context "when testing non-domestic lodgements" do
+shared_context "when testing non-domestic Scottish lodgements" do
   def assert_errors(xml_updates, expected_errors, include_errors: false, country_code: nil)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
@@ -35,7 +35,7 @@ shared_context "when testing non-domestic lodgements" do
 end
 
 describe LodgementRules::NonDomestic, :set_with_timecop do
-  include_context "when testing non-domestic lodgements"
+  include_context "when testing non-domestic Scottish lodgements"
 
   before do
     map_lookups_to_country_codes do |postcode:|

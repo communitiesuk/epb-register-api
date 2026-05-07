@@ -58,11 +58,7 @@ module LodgementRules
 
             party_walls_exist = party_walls_construction.any? { |v| v != "NA" }
 
-            if built_form == "1" && party_walls_exist
-              false
-            else
-              true
-            end
+            !(built_form == "1" && party_walls_exist)
           end,
       },
       {
@@ -75,11 +71,7 @@ module LodgementRules
 
             party_walls_no_information = party_walls_construction.any? { |v| v != "NI" }
 
-            if party_walls_no_information
-              true
-            else
-              false
-            end
+            party_walls_no_information
           end,
       },
       {
@@ -164,11 +156,7 @@ module LodgementRules
               end
             end
 
-            if thin_walls
-              false
-            else
-              true
-            end
+            !thin_walls
           end,
       },
       {
@@ -191,11 +179,7 @@ module LodgementRules
               end
             end
 
-            if thin_walls
-              false
-            else
-              true
-            end
+            !thin_walls
           end,
       },
       {
@@ -218,11 +202,7 @@ module LodgementRules
               end
             end
 
-            if thin_walls
-              false
-            else
-              true
-            end
+            !thin_walls
           end,
       },
       {
@@ -234,6 +214,185 @@ module LodgementRules
             habitable_room_count = method_or_nil(adapter, :habitable_room_count)
 
             (habitable_room_count.to_i < 9)
+          end,
+      },
+      {
+        name: "SCOTLAND_ROOF_INSULATION_LOCATION_CANNOT_BE_5_VAL050",
+        title:
+          "Roof insulation location can only be 5 when roof construction is 4, 5 or 6",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            rooves_construction_and_insulation = method_or_nil(adapter, :rooves_construction_and_insulation)
+
+            incorrect_roof_insulation = rooves_construction_and_insulation&.any? do |hash|
+              if hash[:roof_insulation_location].to_i != 5
+                false
+              elsif (hash[:roof_insulation_location].to_i == 5) && [4, 5, 6].include?(hash[:roof_construction].to_i)
+                false
+              else
+                true
+              end
+            end
+
+            !incorrect_roof_insulation
+          end,
+      },
+      {
+        name: "SCOTLAND_INSULATION_IN_ROOM_IN_ROOF_IS_1_VAL051",
+        title:
+          "The insulation for room in roof cannot be 1",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            rooms_in_roof_insulation = method_or_nil(adapter, :rooms_in_roof_insulation)
+
+            room_insulation_1 = rooms_in_roof_insulation&.any? do |room_in_roof_insulation|
+              %w[1].include?(room_in_roof_insulation)
+            end
+
+            !room_insulation_1
+          end,
+      },
+      {
+        name: "SCOTLAND_FLOOR_INSULATION_THICKNESS_AND_FLOOR_U_VALUE_CANNOT_BOTH_BE_PRESENT_VAL052",
+        title:
+          "Either floor insulation thickness or floor u value can be present but not both. It is possible for neither to be present",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            floors_insulation = method_or_nil(adapter, :floors_insulation)
+
+            both_floor_measurements_present = floors_insulation&.any? do |floor_insulation|
+              if floor_insulation[:floor_u_value].present? && floor_insulation[:floor_insulation_thickness].present?
+                true
+              else
+                false
+              end
+            end
+
+            !both_floor_measurements_present
+          end,
+      },
+      {
+        name: "SCOTLAND_ONLY_ONE_ROOF_INSULATION_VALUE_PERMITTED_VAL053",
+        title:
+          "One one of the following should be present: Roof-Insulation-Thickness, Roof-U-Value, Rafter-Insulation-Thickness, Flat-Roof-Insulation-Thickness, Sloping-Ceiling-Insulation-Thickness",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            rooves_insulation = method_or_nil(adapter, :rooves_insulation)
+
+            multiple_insulation_types_present = rooves_insulation&.any? do |roof_insulation|
+              data_array = roof_insulation.values.reject { |element| element.nil? || element.empty? }
+
+              data_array&.count != 1
+            end
+
+            !multiple_insulation_types_present
+          end,
+      },
+      {
+        name: "SCOTLAND_ONLY_ONE_WALL_INSULATION_VALUE_PERMITTED_VAL054",
+        title:
+          "One one of the following should be present: Wall-Insulation-Thickness, Wall-U-Value",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            walls_insulation = method_or_nil(adapter, :walls_insulation)
+
+            both_wall_measurements_present = walls_insulation&.any? do |wall_insulation|
+              if (wall_insulation[:wall_u_value].present? && wall_insulation[:wall_insulation_thickness].present?) || (wall_insulation[:wall_u_value].nil? && wall_insulation[:wall_insulation_thickness].nil?)
+                true
+              else
+                false
+              end
+            end
+
+            !both_wall_measurements_present
+          end,
+      },
+      {
+        name: "SCOTLAND_ONLY_ONE_ROOM_IN_ROOF_INSULATION_VALUE_PERMITTED_VAL055",
+        title:
+          "One one of the following should be present: Roof-Insulation-Thickness, Room-In-Roof-Details",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            rooms_in_roof = method_or_nil(adapter, :rooms_in_roof).reject { |element| element.nil? || element.empty? }
+
+            rooms_in_roof_roof_insulation = method_or_nil(adapter, :rooms_in_roof_roof_insulation)
+
+            both_roof_measurements_present = false
+
+            unless rooms_in_roof.empty?
+              both_roof_measurements_present = rooms_in_roof_roof_insulation&.any? do |roof_insulation|
+                roof_insulation[:room_in_roof_details].present? ==
+                  roof_insulation[:roof_insulation_thickness].present?
+              end
+            end
+
+            !both_roof_measurements_present
+          end,
+      },
+      {
+        name: "SCOTLAND_ONLY_ONE_ALTERNATIVE_WALL_INSULATION_VALUE_PERMITTED_VAL056",
+        title:
+          "One one of the following should be present for an alternative wall: Wall-Insulation-Thickness, Wall-U-Value",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            walls_thickness = method_or_nil(adapter, :walls_thickness)
+
+            both_wall_insulations_present = walls_thickness&.any? do |wall_insulation|
+              wall_insulation[:alternative_wall_construction].present? &&
+                (
+                  wall_insulation[:alternative_wall_u_value].present? ==
+                    wall_insulation[:alternative_wall_insulation_thickness].present?
+                )
+            end
+
+            !both_wall_insulations_present
+          end,
+      },
+      {
+        name: "SCOTLAND_ONLY_ONE_MAIN_HEATING_VALUE_PERMITTED_VAL057",
+        title:
+          "One one of the following should be present for main heating: Main-Heating-Index-Number, SAP-Main-Heating-Code",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            main_heating_details = method_or_nil(adapter, :main_heating_details)
+
+            both_main_heating_present = main_heating_details&.any? do |main_heating|
+              main_heating[:main_heating_index_number].present? ==
+                main_heating[:sap_main_heating_code].present?
+            end
+
+            !both_main_heating_present
+          end,
+      },
+      {
+        name: "SCOTLAND_MAIN_HEATING_CODE_MUST_BE_699_OR_310_VAL059",
+        title:
+          "Main-Fuel-Type may only be 0 when Main-Heating-Code is either 699 and 310",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            main_heating_details = method_or_nil(adapter, :main_heating_details)
+
+            wrong_heating_code = main_heating_details&.any? do |main_heating|
+              main_heating[:main_fuel_type] == "0" &&
+                !%w[699 310].include?(main_heating[:sap_main_heating_code])
+            end
+
+            !wrong_heating_code
+          end,
+      },
+      {
+        name: "SCOTLAND_WATER_HEATING_CODE_MUST_BE_999_OR_953_VAL060",
+        title:
+          "Water-Heating-Fuel may only be 0 when Water-Heating-Code is either 999 and 953",
+        test:
+          lambda do |adapter, _country_lookup = nil|
+            water_heating = method_or_nil(adapter, :water_heating)
+
+            if (water_heating[:water_heating_fuel] == "0") && !%w[999 953].include?(water_heating[:water_heating_code])
+              false
+            else
+              true
+            end
           end,
       },
       {

@@ -51,7 +51,7 @@ ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["SILENT_EVENTS"] = "true"
 ENV["VALID_DOMESTIC_SCHEMAS"] = "SAP-Schema-19.2.0, SAP-Schema-19.1.0,SAP-Schema-19.0.0,SAP-Schema-18.0.0,SAP-Schema-NI-18.0.0,RdSAP-Schema-20.0.0,RdSAP-Schema-21.0.0,RdSAP-Schema-21.0.1,RdSAP-Schema-NI-20.0.0,RdSAP-Schema-NI-21.0.0,RdSAP-Schema-NI-21.0.1,SAP-Schema-S-19.0.0,RdSAP-Schema-S-19.0"
-ENV["VALID_NON_DOMESTIC_SCHEMAS"] = "CEPC-8.0.0,CEPC-NI-8.0.0, CEPC-S-7.1, CS63-S-7.0, DECAR-S-7.0"
+ENV["VALID_NON_DOMESTIC_SCHEMAS"] = "CEPC-8.0.0,CEPC-NI-8.0.0,CEPC-S-7.1,CS63-S-7.0,DECAR-S-7.0"
 
 rake = Rake::Application.new
 Rake.application = rake
@@ -304,7 +304,7 @@ RSpec.configure do |config|
   end
 
   # Uncomment this out if you want to see the full error message for an rspec test
-  # RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = 10000
+  RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = 10000
 
   def truncate_all_tables(schemas)
     schemas.each do |schema|
