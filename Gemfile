@@ -35,7 +35,7 @@ gem "puma", "~> 7.2"
 gem "rackup", "~> 2.1"
 gem "rake", "~> 13.2"
 gem "redis", "~> 5.4.1"
-gem "rubocop", "~> 1.79.2"
+gem "rubocop", "~> 1.82.1"
 gem "rubocop-govuk", "~> 5.1"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 3.2"
