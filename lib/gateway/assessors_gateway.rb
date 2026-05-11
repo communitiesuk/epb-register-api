@@ -419,9 +419,6 @@ module Gateway
     end
 
     def search_by_date(start_date:, end_date:, limit:, offset:)
-      qualifications = SCOTTISH_QUALIFICATIONS
-      qualification_selector = qualification_columns_to_sql(qualifications.map { |q| scottish_qualification_to_column(q) })
-
       sql = <<-SQL
         SELECT
           first_name, last_name, middle_names, registered_by AS registered_by_id,
@@ -436,10 +433,7 @@ module Gateway
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         JOIN audit_logs al ON a.scheme_assessor_id = al.entity_id
-        WHERE
-                      (#{qualification_selector})
-        AND
-          (timestamp >= $1 AND timestamp <= $2)
+       #{scottish_assessor_predicates}
         ORDER BY timestamp
         LIMIT $3
         OFFSET $4
@@ -470,6 +464,45 @@ module Gateway
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
       results.map { |row| Domain::Assessor.new(**row.symbolize_keys).scottish_assessor }
+    end
+
+    def count_search_by_date(start_date:, end_date:)
+      sql = <<-SQL
+        SELECT COUNT(*) as cnt
+        FROM assessors a
+        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
+        JOIN audit_logs al ON a.scheme_assessor_id = al.entity_id
+        #{scottish_assessor_predicates}
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "start_date",
+          start_date,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "end_date",
+          end_date,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).first["cnt"]
+    end
+
+  private
+
+    def scottish_assessor_predicates
+      qualifications = SCOTTISH_QUALIFICATIONS
+      qualification_selector = qualification_columns_to_sql(qualifications.map { |q| scottish_qualification_to_column(q) })
+
+      <<-SQL
+      WHERE
+            (#{qualification_selector})
+        AND
+          (timestamp >= $1 AND timestamp <= $2)
+      SQL
     end
   end
 end

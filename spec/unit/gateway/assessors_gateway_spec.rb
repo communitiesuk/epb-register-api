@@ -233,4 +233,43 @@ describe Gateway::AssessorsGateway do
       expect(result.length).to eq(2)
     end
   end
+
+  describe "#count_search_by_date" do
+    before do
+      audit_log = Gateway::AuditLogsGateway.new
+      arr = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id FROM assessors").map { |row| row }
+
+      arr.each do |i|
+        audit_log.add_audit_event(Domain::AuditEvent.new(entity_type: :assessor, entity_id: i["scheme_assessor_id"], event_type: :added))
+      end
+
+      scheme_id = 999
+      Gateway::SchemesGateway::Scheme.create(scheme_id:)
+      ActiveRecord::Base.connection.exec_query("UPDATE assessors SET registered_by = 999 WHERE scheme_assessor_id = 'ACME123423'")
+    end
+
+    let(:start_date) do
+      Time.now.strftime("%Y-%m-%d")
+    end
+
+    let(:end_date) do
+      (Time.now + 1.day).strftime("%Y-%m-%d")
+    end
+
+    let(:args) do
+      { start_date:, end_date: }
+    end
+
+    it "returns the count of assessors by date" do
+      expect(gateway.count_search_by_date(**args)).to eq(10)
+    end
+
+    context "when no assessors are found in the date range" do
+      args = { start_date: "2014-12-25", end_date: "2014-12-27" }
+
+      it "returns a zero" do
+        expect(gateway.count_search_by_date(**args)).to eq(0)
+      end
+    end
+  end
 end
