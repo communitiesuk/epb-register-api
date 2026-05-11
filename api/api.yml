@@ -2751,6 +2751,140 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /scotland/assessments:
+    post:
+      tags:
+        - Scotland Assessment Management
+      summary: Lodge a new Scottish assessment or migrate an existing Scottish assessment
+      description: |-
+        Single endpoint for POSTing all new Scottish lodgements.
+
+        It will accept as an XML payload one of the following:
+        * A single <Report> for a domestic RdSAP assessment
+        * A single <Report> for a domestic SAP assessment
+        * A single <Report> for a Non-domestic EPC
+        * A single <Report> for DEC
+        * A single <Report> for DEC recommendation report
+        * DEC and DEC-RR in a single XML payload with two <Report>
+          elements
+        * A single <Report> for Action Plan
+      operationId: lodge-assessment
+      security:
+        - oauth:
+            - 'scotland_assessment:lodge'
+            - 'migrate:scotland'
+      parameters:
+        - in: query
+          name: override
+          description: 'Only set to true after assessor has manually confirmed
+                        desire to override lodgement rules. This action will be
+                        logged.'
+          schema:
+            type: boolean
+          example: true
+        - in: query
+          name: migrated
+          description: 'For use by EPB register only. Set to true if migrating a
+                        previous lodgement.
+                        Requires migrate:assessment scope in client credentials.'
+          schema:
+            type: boolean
+          example: true
+      requestBody:
+        content:
+          application/xml+RdSAP-Schema-S-19.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+SAP-Schema-S-19.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+CEPC-S-7.1:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+DECAR-S-7.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+CS6-S-7.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+      responses:
+        '201':
+          description: New Scottish assessment(s) successfully lodged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessments:
+                        type: array
+                        items:
+                          type: string
+                          properties:
+                            assessmentId:
+                              $ref: '#/components/schemas/AssessmentId'
+                        example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          assessments:
+                            type: array
+                            items:
+                              type: string
+                            example: [ "/api/scotland/assessments/9876-9876-9876-9876-9876", "/api/scotland/assessments/8765-8765-8765-8765-8765" ]
+        '400':
+          description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          example: "FLOOR_AREA_LESS_THAN_ZERO"
+                        title:
+                          type: string
+                          example: "Floor-Area must be greater than zero"
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          override:
+                            type: string
+                            example: "/scotland/assessments?override=true"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Assessment with that assessmentId already exists - retry with different RRN
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /scotland/assessments/{assessmentId}/status:
     post:
       tags:
