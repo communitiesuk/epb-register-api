@@ -304,7 +304,7 @@ RSpec.configure do |config|
   end
 
   # Uncomment this out if you want to see the full error message for an rspec test
-  RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = 10000
+  # RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = 10_000
 
   def truncate_all_tables(schemas)
     schemas.each do |schema|

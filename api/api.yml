@@ -3162,7 +3162,7 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            example: '2025-11-01'
         - in: query
           name: endDate
           required: false
@@ -3170,7 +3170,15 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            example: '2026-05-01'
+        - in: query
+          name: page
+          required: false
+          description: 'The page of data requested'
+          schema:
+            type: string
+            format: number
+            example: '1'
       responses:
         '200':
           description: Report returned successfully
