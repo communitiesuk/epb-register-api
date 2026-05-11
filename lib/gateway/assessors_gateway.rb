@@ -418,7 +418,7 @@ module Gateway
       result
     end
 
-    def search_by_date(start_date:, end_date:)
+    def search_by_date(start_date:, end_date:, limit:, offset:)
       qualifications = SCOTTISH_QUALIFICATIONS
       qualification_selector = qualification_columns_to_sql(qualifications.map { |q| scottish_qualification_to_column(q) })
 
@@ -440,6 +440,9 @@ module Gateway
                       (#{qualification_selector})
         AND
           (timestamp >= $1 AND timestamp <= $2)
+        ORDER BY timestamp
+        LIMIT $3
+        OFFSET $4
       SQL
 
       binds = [
@@ -452,6 +455,16 @@ module Gateway
           "end_date",
           end_date,
           ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "limit",
+          limit,
+          ActiveRecord::Type::Integer.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "offset",
+          offset,
+          ActiveRecord::Type::Integer.new,
         ),
       ]
 

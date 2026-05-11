@@ -144,8 +144,15 @@ describe Gateway::AssessorsGateway do
       Time.now.strftime("%Y-%m-%d")
     end
 
+    let(:limit) { 50 }
+    let(:offset) { 1 }
+
     let(:end_date) do
       (Time.now + 1.day).strftime("%Y-%m-%d")
+    end
+
+    let(:args) do
+      { start_date:, end_date:, limit:, offset: }
     end
 
     let(:expected_result) do
@@ -192,12 +199,12 @@ describe Gateway::AssessorsGateway do
     end
 
     it "returns assessors within an exclusive date range" do
-      expect(gateway.search_by_date(start_date:, end_date:).length).to eq(10)
+      expect(gateway.search_by_date(**args).length).to eq(9)
     end
 
     it "returns assessors within a set date range" do
       ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = (now()::date - 7) WHERE entity_id IN ('0000-0000-0000-0000-0001', '0000-0000-0000-0000-0002')")
-      expect(gateway.search_by_date(start_date:, end_date:).length).to eq(10)
+      expect(gateway.search_by_date(**args).length).to eq(9)
     end
 
     it "returns assessors with inactive scotland qualification" do
@@ -212,12 +219,18 @@ describe Gateway::AssessorsGateway do
         WHERE scheme_assessor_id IN ('ACME123422', 'ACME123426', 'ACME123428')",
       )
 
-      expect(gateway.search_by_date(start_date:, end_date:).length).to eq(7)
+      expect(gateway.search_by_date(**args).length).to eq(6)
     end
 
     it "returns filtered data matches correct keys" do
-      result = gateway.search_by_date(start_date:, end_date:).find { |i| i[:scheme_assessor_id] == "ACME123423" }
+      result = gateway.search_by_date(**args).find { |i| i[:scheme_assessor_id] == "ACME123423" }
       expect(result).to eq(expected_result)
+    end
+
+    it "limits the results" do
+      args[:limit] = 2
+      result = gateway.search_by_date(**args)
+      expect(result.length).to eq(2)
     end
   end
 end
