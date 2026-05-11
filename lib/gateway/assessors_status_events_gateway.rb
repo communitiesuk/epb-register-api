@@ -96,7 +96,7 @@ module Gateway
         ActiveRecord::Relation::QueryAttribute.new(
           "offset",
           Helper::PaginationHelper.calculate_offset(current_page, limit),
-          ActiveRecord::Type::String.new,
+          ActiveRecord::Type::Integer.new,
         ),
       ]
 

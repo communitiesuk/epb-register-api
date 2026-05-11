@@ -145,14 +145,14 @@ describe Gateway::AssessorsGateway do
     end
 
     let(:limit) { 50 }
-    let(:offset) { 1 }
+    let(:current_page) { 1 }
 
     let(:end_date) do
       (Time.now + 1.day).strftime("%Y-%m-%d")
     end
 
     let(:args) do
-      { start_date:, end_date:, limit:, offset: }
+      { start_date:, end_date:, limit:, current_page: }
     end
 
     let(:expected_result) do
@@ -196,15 +196,21 @@ describe Gateway::AssessorsGateway do
       scheme_id = 999
       Gateway::SchemesGateway::Scheme.create(scheme_id:)
       ActiveRecord::Base.connection.exec_query("UPDATE assessors SET registered_by = 999 WHERE scheme_assessor_id = 'ACME123423'")
+      allow(Helper::PaginationHelper).to receive(:calculate_offset)
     end
 
     it "returns assessors within an exclusive date range" do
-      expect(gateway.search_by_date(**args).length).to eq(9)
+      expect(gateway.search_by_date(**args).length).to eq(10)
+    end
+
+    it "calculates the offset by calling the Helper class method" do
+      gateway.search_by_date(**args)
+      expect(Helper::PaginationHelper).to have_received(:calculate_offset).with(1, 50)
     end
 
     it "returns assessors within a set date range" do
       ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = (now()::date - 7) WHERE entity_id IN ('0000-0000-0000-0000-0001', '0000-0000-0000-0000-0002')")
-      expect(gateway.search_by_date(**args).length).to eq(9)
+      expect(gateway.search_by_date(**args).length).to eq(10)
     end
 
     it "returns assessors with inactive scotland qualification" do
@@ -219,7 +225,7 @@ describe Gateway::AssessorsGateway do
         WHERE scheme_assessor_id IN ('ACME123422', 'ACME123426', 'ACME123428')",
       )
 
-      expect(gateway.search_by_date(**args).length).to eq(6)
+      expect(gateway.search_by_date(**args).length).to eq(7)
     end
 
     it "returns filtered data matches correct keys" do

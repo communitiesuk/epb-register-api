@@ -418,7 +418,7 @@ module Gateway
       result
     end
 
-    def search_by_date(start_date:, end_date:, limit:, offset:)
+    def search_by_date(start_date:, end_date:, current_page:, limit:)
       sql = <<-SQL
         SELECT
           first_name, last_name, middle_names, registered_by AS registered_by_id,
@@ -457,7 +457,7 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "offset",
-          offset,
+          Helper::PaginationHelper.calculate_offset(current_page, limit),
           ActiveRecord::Type::Integer.new,
         ),
       ]
