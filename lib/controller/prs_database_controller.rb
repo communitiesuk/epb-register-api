@@ -59,7 +59,7 @@ module Controller
                          "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
                        end
       when UseCase::FetchAssessmentForPrsDatabase::InvalidAssessmentTypeException
-        error_response 400, "INVALID_REQUEST", "The requested assessment type is not SAP or RdSAP"
+        error_response 404, "INVALID_REQUEST", "The requested assessment type is not SAP or RdSAP"
       else
         server_error e
       end

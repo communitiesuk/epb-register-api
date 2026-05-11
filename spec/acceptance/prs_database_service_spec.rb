@@ -96,7 +96,7 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
         response = JSON.parse(
           prs_database_details_by_rrn(
             "0000-0000-0000-0000-0000",
-            accepted_responses: [400],
+            accepted_responses: [404],
           ).body,
           symbolize_names: true,
         )
