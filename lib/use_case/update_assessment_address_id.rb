@@ -80,7 +80,7 @@ module UseCase
         end
       elsif new_address_id.start_with? "RRN-"
         linking_to_rrn = new_address_id[4..]
-        if @assessments_search_gateway.search_by_assessment_id(linking_to_rrn)
+        if @assessments_search_gateway.search_by_assessment_id(linking_to_rrn, restrictive: false)
                                       .empty?
           raise AddressIdNotFound
         end

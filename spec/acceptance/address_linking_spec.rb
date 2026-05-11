@@ -322,6 +322,55 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
     end
   end
 
+  context "when two assessments exist but one is cancelled" do
+    before do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE"))
+
+      lodge_assessment(
+        assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+
+      second_assessment = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
+      lodge_assessment(
+        assessment_body: second_assessment.to_s,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: {
+          status: "CANCELLED",
+        },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        accepted_responses: [200],
+      )
+    end
+
+    it "allows linking to the address ID of the cancelled certificate" do
+      response = update_assessment_address_id(
+        assessment_id: "0000-0000-0000-0000-0001",
+        new_address_id: "RRN-0000-0000-0000-0000-0000",
+        accepted_responses: [200],
+      )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
+        "Address ID has been updated",
+      )
+    end
+  end
+
   context "when updating the address ID linked to an assessment with a related report" do
     before do
       scheme_id = add_scheme_and_get_id
