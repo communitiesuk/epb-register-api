@@ -2,7 +2,7 @@ describe Gateway::AssessorsGateway do
   include RSpecRegisterApiServiceMixin
   subject(:gateway) { described_class.new }
 
-  before do
+  before(:all) do
     scheme_id = add_scheme_and_get_id
     11.upto(16) do |n|
       add_assessor(
@@ -136,6 +136,88 @@ describe Gateway::AssessorsGateway do
         expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications][:domestic_rd_sap]).to eq("INACTIVE")
         expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications][:scotland_rdsap]).to eq("ACTIVE")
       end
+    end
+  end
+
+  describe "#search_by_date" do
+    let(:start_date) do
+      Time.now.strftime("%Y-%m-%d")
+    end
+
+    let(:end_date) do
+      (Time.now + 1.day).strftime("%Y-%m-%d")
+    end
+
+    let(:expected_result) do
+      {
+        first_name: "Someone",
+        middle_names: "Muddle",
+        last_name: "Person",
+        email: "person@person.com",
+        scheme_assessor_id: "ACME123423",
+        registered_by: 999,
+        qualifications: {
+          domestic_rd_sap: "INACTIVE",
+          domestic_sap: "INACTIVE",
+          non_domestic_dec: "INACTIVE",
+          non_domestic_nos3: "INACTIVE",
+          non_domestic_nos4: "INACTIVE",
+          non_domestic_nos5: "INACTIVE",
+          non_domestic_sp3: "INACTIVE",
+          non_domestic_cc4: "INACTIVE",
+          gda: "INACTIVE",
+          scotland_rdsap: "ACTIVE",
+          scotland_sap_existing_building: "ACTIVE",
+          scotland_sap_new_building: "ACTIVE",
+          scotland_dec_and_ar: "ACTIVE",
+          scotland_nondomestic_existing_building: "ACTIVE",
+          scotland_nondomestic_new_building: "ACTIVE",
+          scotland_section63: "ACTIVE",
+        },
+
+      }
+    end
+
+    before do
+      audit_log = Gateway::AuditLogsGateway.new
+      arr = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id FROM assessors").map { |row| row }
+
+      arr.each do |i|
+        audit_log.add_audit_event(Domain::AuditEvent.new(entity_type: :assessor, entity_id: i["scheme_assessor_id"], event_type: :added))
+      end
+
+      scheme_id = 999
+      Gateway::SchemesGateway::Scheme.create(scheme_id:)
+      ActiveRecord::Base.connection.exec_query("UPDATE assessors SET registered_by = 999 WHERE scheme_assessor_id = 'ACME123423'")
+    end
+
+    it "returns assessors within an exclusive date range" do
+      expect(gateway.search_by_date(start_date:, end_date:).length).to eq(10)
+    end
+
+    it "returns assessors within a set date range" do
+      ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = (now()::date - 7) WHERE entity_id IN ('0000-0000-0000-0000-0001', '0000-0000-0000-0000-0002')")
+      expect(gateway.search_by_date(start_date:, end_date:).length).to eq(10)
+    end
+
+    it "returns assessors with inactive scotland qualification" do
+      ActiveRecord::Base.connection.exec_query(
+        "UPDATE assessors SET scotland_dec_and_ar_qualification = 'INACTIVE',
+              scotland_nondomestic_existing_building_qualification = 'INACTIVE',
+              scotland_nondomestic_new_building_qualification = 'INACTIVE',
+              scotland_rdsap_qualification = 'INACTIVE',
+              scotland_sap_existing_building_qualification = 'INACTIVE',
+              scotland_sap_new_building_qualification = 'INACTIVE',
+              scotland_section63_qualification = 'INACTIVE'
+        WHERE scheme_assessor_id IN ('ACME123422', 'ACME123426', 'ACME123428')",
+      )
+
+      expect(gateway.search_by_date(start_date:, end_date:).length).to eq(7)
+    end
+
+    it "returns filtered data matches correct keys" do
+      result = gateway.search_by_date(start_date:, end_date:).find { |i| i[:scheme_assessor_id] == "ACME123423" }
+      expect(result).to eq(expected_result)
     end
   end
 end

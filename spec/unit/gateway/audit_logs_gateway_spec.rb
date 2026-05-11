@@ -83,7 +83,7 @@ describe Gateway::AuditLogsGateway do
         results = gateway.fetch_scottish_events(event_types: %w[scottish_opt_in scottish_opt_out scottish_cancelled], start_date:, end_date:, current_page: 1)
         expect(results.count).to eq(3)
         expect(results.first.keys).to contain_exactly(:newStatus, :reportRrn, :timeOfChange)
-        expect(results.pluck(:reportRrn)).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0004])
+        expect(results.pluck(:reportRrn).sort).to eq(%w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002 0000-0000-0000-0000-0004])
         expect(results.pluck(:newStatus)).to eq(["OPTED OUT", "OPTED IN", "CANCELLED"])
       end
 

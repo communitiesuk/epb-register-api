@@ -63,6 +63,15 @@ module Gateway
         scotland_section63_qualification
       ],
     }.freeze
+    SCOTTISH_QUALIFICATIONS = %w[
+      scotlandRdsap
+      scotlandSapExistingBuilding
+      scotlandSapNewBuilding
+      scotlandDecAndAr
+      scotlandNondomesticExistingBuilding
+      scotlandNondomesticNewBuilding
+      scotlandSection63
+    ].freeze
 
     def row_to_assessor_domain(row)
       scheme_name = row["scheme_name"]
@@ -407,6 +416,47 @@ module Gateway
       result = []
       response.each { |row| result.push(row_to_assessor_domain(row).to_hash) }
       result
+    end
+
+    def search_by_date(start_date:, end_date:)
+      qualifications = SCOTTISH_QUALIFICATIONS
+      qualification_selector = qualification_columns_to_sql(qualifications.map { |q| scottish_qualification_to_column(q) })
+
+      sql = <<-SQL
+        SELECT
+          first_name, last_name, middle_names, registered_by AS registered_by_id,
+          scheme_assessor_id, email, domestic_sap_qualification,
+          domestic_rd_sap_qualification, non_domestic_sp3_qualification,
+          non_domestic_cc4_qualification, non_domestic_dec_qualification,
+          non_domestic_nos3_qualification, non_domestic_nos4_qualification,
+          non_domestic_nos5_qualification, gda_qualification, scotland_dec_and_ar_qualification,
+          scotland_nondomestic_existing_building_qualification, scotland_nondomestic_new_building_qualification,
+          scotland_rdsap_qualification, scotland_sap_existing_building_qualification, scotland_sap_new_building_qualification,
+          scotland_section63_qualification
+        FROM assessors a
+        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
+        JOIN audit_logs al ON a.scheme_assessor_id = al.entity_id
+        WHERE
+                      (#{qualification_selector})
+        AND
+          (timestamp >= $1 AND timestamp <= $2)
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "start_date",
+          start_date,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "end_date",
+          end_date,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+      results.map { |row| Domain::Assessor.new(**row.symbolize_keys).scottish_assessor }
     end
   end
 end
