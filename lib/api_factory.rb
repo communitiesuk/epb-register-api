@@ -421,6 +421,12 @@ class ApiFactory
       )
   end
 
+  def self.fetch_scottish_assessor_by_date
+    @fetch_scottish_assessor_by_date ||= UseCase::FetchScottishAssessors.new(
+      assessors_gateway,
+    )
+  end
+
   def self.assessment_summary_fetch_use_case
     @assessment_summary_fetch_use_case ||=
       UseCase::AssessmentSummary::Fetch.new(
@@ -510,6 +516,10 @@ class ApiFactory
 
   def self.get_pagination_for_scottish_assessor_status_updates
     @get_pagination_for_scottish_assessor_status_updates ||= UseCase::GetPagination.new(gateway: assessors_status_events_gateway)
+  end
+
+  def self.get_pagination_for_scottish_assessors_by_date
+    @get_pagination_for_scottish_assessors_by_date ||= UseCase::GetPagination.new(gateway: assessors_gateway)
   end
 
   def self.geolocation_gateway

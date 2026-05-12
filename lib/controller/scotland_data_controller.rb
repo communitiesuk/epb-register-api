@@ -164,5 +164,35 @@ module Controller
         server_error(e)
       end
     end
+
+    get "/api/scotland/v1/updates/new-assessors", auth_token_has_all: %w[scotland_data:fetch] do
+      params = params_body DATE_RANGE_SCHEMA
+
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+
+      raise Boundary::InvalidDates if start_date > end_date
+      raise Boundary::InvalidArgument, "date range includes today" if end_date >= Date.today
+
+      current_page = params[:page] ? params[:page].to_i : 1
+
+      data = ApiFactory.fetch_scottish_assessor_by_date.execute(start_date:, end_date:, current_page:)
+      pagination = ApiFactory.get_pagination_for_scottish_assessors_by_date.execute(start_date: start_date, end_date: end_date, current_page: current_page, url: request.url, count_method: :count_search_by_date)
+
+      json_api_response(code: 200, links: pagination, data: data)
+    rescue StandardError => e
+      case e
+      when Boundary::InvalidDates
+        error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
+      when Boundary::InvalidArgument
+        error_response 400, "INVALID_REQUEST", e.message
+      when Boundary::Json::ValidationError
+        error_response 400, "INVALID_REQUEST", e.message
+      when Errors::OutOfPaginationRangeError
+        error_response 400, "PAGINATION_ERROR", e.message
+      else
+        server_error(e)
+      end
+    end
   end
 end

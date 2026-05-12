@@ -162,7 +162,7 @@ describe Gateway::AssessorsGateway do
         last_name: "Person",
         email: "person@person.com",
         scheme_assessor_id: "ACME123423",
-        registered_by: 999,
+        registered_by: "Scottish Scheme",
         qualifications: {
           domestic_rd_sap: "INACTIVE",
           domestic_sap: "INACTIVE",
@@ -194,7 +194,7 @@ describe Gateway::AssessorsGateway do
       end
 
       scheme_id = 999
-      Gateway::SchemesGateway::Scheme.create(scheme_id:)
+      Gateway::SchemesGateway::Scheme.create(scheme_id:, name: "Scottish Scheme")
       ActiveRecord::Base.connection.exec_query("UPDATE assessors SET registered_by = 999 WHERE scheme_assessor_id = 'ACME123423'")
       allow(Helper::PaginationHelper).to receive(:calculate_offset)
     end

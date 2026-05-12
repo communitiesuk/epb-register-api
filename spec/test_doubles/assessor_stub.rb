@@ -20,7 +20,8 @@ class AssessorStub
     middle_names: "Muddle",
     last_name: "Person",
     date_of_birth: "1991-02-25",
-    search_results_comparison_postcode: "AB1 0AA"
+    search_results_comparison_postcode: "AB1 0AA",
+    email: "person@person.com"
   )
     {
       firstName: first_name,
@@ -48,7 +49,7 @@ class AssessorStub
       },
       contactDetails: {
         telephoneNumber: "010199991010101",
-        email: "person@person.com",
+        email:,
       },
     }
   end

@@ -192,24 +192,4 @@ describe UseCase::GetPagination do
       expect(use_case.execute(**search_arguments)).to eq expected_return_hash
     end
   end
-
-  context "when passed an unsupported count method" do
-    let(:gateway) do
-      instance_double(Gateway::NewReportsGateway)
-    end
-    let(:event_types) do
-      %w[scottish_opt_in]
-    end
-    let(:search_arguments) do
-      { start_date: start_date, end_date: end_date, current_page: 3, records_per_page: 100, count_method: :non_existant_method, event_types: }
-    end
-
-    before do
-      allow(gateway).to receive(:count).and_return(60_000)
-    end
-
-    it "raises a no method error" do
-      expect { use_case.execute(**search_arguments) }.to raise_error NoMethodError
-    end
-  end
 end

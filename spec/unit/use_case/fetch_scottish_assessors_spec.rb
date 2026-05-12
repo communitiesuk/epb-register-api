@@ -21,7 +21,7 @@ describe UseCase::FetchScottishAssessors do
         last_name: "Person",
         email: "person@person.com",
         scheme_assessor_id: "ACME123423",
-        registered_by: 999,
+        registered_by: "test scheme",
         qualifications: {
           domestic_rd_sap: "INACTIVE",
           domestic_sap: "INACTIVE",

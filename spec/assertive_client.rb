@@ -721,6 +721,26 @@ def scottish_get_assessors_status_updates(
   )
 end
 
+def scottish_get_assessors_by_date(
+  start_date:,
+  end_date:,
+  page: nil,
+  scopes: %w[scotland_data:fetch],
+  **assertive_kwargs
+)
+  path = "/api/scotland/v1/updates/new-assessors?startDate=#{start_date}&endDate=#{end_date}"
+
+  unless page.nil?
+    path += "&page=#{page}"
+  end
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def scottish_get_assessment_meta_data(
   assessment_id:,
   scopes: %w[scotland_data:fetch],
