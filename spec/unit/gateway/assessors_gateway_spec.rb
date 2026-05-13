@@ -1,3 +1,5 @@
+require_relative "../../shared_context/shared_scottish_assesors"
+
 describe Gateway::AssessorsGateway do
   include RSpecRegisterApiServiceMixin
   subject(:gateway) { described_class.new }
@@ -140,6 +142,8 @@ describe Gateway::AssessorsGateway do
   end
 
   describe "#search_by_date" do
+    include_context "when testing Scottish assessors"
+
     let(:start_date) do
       Time.now.strftime("%Y-%m-%d")
     end
@@ -158,11 +162,8 @@ describe Gateway::AssessorsGateway do
     let(:expected_result) do
       {
         first_name: "Someone",
-        middle_names: "Muddle",
         last_name: "Person",
-        email: "person@person.com",
         scheme_assessor_id: "ACME123423",
-        registered_by: "Scottish Scheme",
         qualifications: {
           domestic_rd_sap: "INACTIVE",
           domestic_sap: "INACTIVE",
@@ -186,16 +187,9 @@ describe Gateway::AssessorsGateway do
     end
 
     before do
-      audit_log = Gateway::AuditLogsGateway.new
-      arr = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id FROM assessors").map { |row| row }
+      # include_context "when testing Scottish assessors"
+      add_assessors_to_logs
 
-      arr.each do |i|
-        audit_log.add_audit_event(Domain::AuditEvent.new(entity_type: :assessor, entity_id: i["scheme_assessor_id"], event_type: :added))
-      end
-
-      scheme_id = 999
-      Gateway::SchemesGateway::Scheme.create(scheme_id:, name: "Scottish Scheme")
-      ActiveRecord::Base.connection.exec_query("UPDATE assessors SET registered_by = 999 WHERE scheme_assessor_id = 'ACME123423'")
       allow(Helper::PaginationHelper).to receive(:calculate_offset)
     end
 
@@ -241,17 +235,9 @@ describe Gateway::AssessorsGateway do
   end
 
   describe "#count_search_by_date" do
+    include_context "when testing Scottish assessors"
     before do
-      audit_log = Gateway::AuditLogsGateway.new
-      arr = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id FROM assessors").map { |row| row }
-
-      arr.each do |i|
-        audit_log.add_audit_event(Domain::AuditEvent.new(entity_type: :assessor, entity_id: i["scheme_assessor_id"], event_type: :added))
-      end
-
-      scheme_id = 999
-      Gateway::SchemesGateway::Scheme.create(scheme_id:)
-      ActiveRecord::Base.connection.exec_query("UPDATE assessors SET registered_by = 999 WHERE scheme_assessor_id = 'ACME123423'")
+      add_assessors_to_logs
     end
 
     let(:start_date) do

@@ -228,10 +228,7 @@ module Domain
       {
         first_name: @first_name,
         last_name: @last_name,
-        middle_names: @middle_names,
-        email: @email,
         scheme_assessor_id: @scheme_assessor_id,
-        registered_by: @registered_by_id,
         qualifications: {
           domestic_rd_sap: @domestic_rd_sap_qualification,
           domestic_sap: @domestic_sap_qualification,

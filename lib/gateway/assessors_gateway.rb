@@ -421,8 +421,8 @@ module Gateway
     def search_by_date(start_date:, end_date:, current_page:, limit:)
       sql = <<-SQL
         SELECT
-          first_name, last_name, middle_names, s.name AS registered_by_id,
-          scheme_assessor_id, email, domestic_sap_qualification,
+          first_name, last_name,
+          scheme_assessor_id, domestic_sap_qualification,
           domestic_rd_sap_qualification, non_domestic_sp3_qualification,
           non_domestic_cc4_qualification, non_domestic_dec_qualification,
           non_domestic_nos3_qualification, non_domestic_nos4_qualification,
@@ -431,7 +431,6 @@ module Gateway
           scotland_rdsap_qualification, scotland_sap_existing_building_qualification, scotland_sap_new_building_qualification,
           scotland_section63_qualification
         FROM assessors a
-        JOIN schemes s ON(a.registered_by = s.scheme_id)
         JOIN audit_logs al ON a.scheme_assessor_id = al.entity_id
        #{scottish_assessor_predicates}
         ORDER BY timestamp

@@ -1,5 +1,9 @@
+require_relative "../../shared_context/shared_scottish_assesors"
+
 describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
+  include_context "when testing Scottish assessors"
+
 
   let(:events_time) { Time.now.utc }
   let(:expected_response) do
@@ -7,11 +11,8 @@ describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
                    newAssessors: [
                      {
                        firstName: "Someone",
-                       middleNames: "Muddle",
                        lastName: "Person",
-                       email: "person@person.com",
                        schemeAssessorId: "ACME123456",
-                       registeredBy: "Scottish Scheme",
                        qualifications: {
                          domesticRdSap: "INACTIVE",
                          domesticSap: "INACTIVE",
@@ -34,11 +35,8 @@ describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
                      },
                      {
                        firstName: "John",
-                       middleNames: "Muddle",
                        lastName: "Smith",
-                       email: "J@person.com",
                        schemeAssessorId: "ACME123457",
-                       registeredBy: "Scottish Scheme",
                        qualifications: {
                          domesticRdSap: "INACTIVE",
                          domesticSap: "INACTIVE",
@@ -93,12 +91,7 @@ describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
       body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE"),
     )
 
-    audit_log = Gateway::AuditLogsGateway.new
-    arr = ActiveRecord::Base.connection.exec_query("SELECT scheme_assessor_id FROM assessors").map { |row| row }
-
-    arr.each do |i|
-      audit_log.add_audit_event(Domain::AuditEvent.new(entity_type: :assessor, entity_id: i["scheme_assessor_id"], event_type: :added))
-    end
+    add_assessors_to_logs
 
     ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = '#{start_date}'")
   end

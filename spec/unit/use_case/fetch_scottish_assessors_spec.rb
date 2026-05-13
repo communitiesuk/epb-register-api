@@ -17,11 +17,8 @@ describe UseCase::FetchScottishAssessors do
     let(:expected_result) do
       {
         first_name: "Someone",
-        middle_names: "Muddle",
         last_name: "Person",
-        email: "person@person.com",
         scheme_assessor_id: "ACME123423",
-        registered_by: "test scheme",
         qualifications: {
           domestic_rd_sap: "INACTIVE",
           domestic_sap: "INACTIVE",
