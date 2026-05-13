@@ -3327,7 +3327,7 @@ paths:
                       assessorStatusEvents:
                         type: array
                         items:
-                          $ref: '#/components/schemas/AssessorQualificationChangeEvent'
+                          $ref: '#/components/schemas/ScottishAssessorQualificationChangeEvent'
                   links:
                     $ref: '#/components/schemas/Pagination'
         '400':
@@ -3448,7 +3448,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/ScottishNewAssessor'
+                    $ref: '#/components/schemas/ScottishAssessorFull'
                   meta:
                     type: object
                     properties:
@@ -3756,6 +3756,20 @@ components:
         firstName:
           type: string
           example: 'Joe'
+        lastName:
+          type: string
+          example: 'Bloggs'
+        schemeAssessorId:
+          $ref: '#/components/schemas/AssessorSchemeId'
+        qualifications:
+          $ref: '#/components/schemas/AssessorQualifications'
+
+    ScottishAssessorFull:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: 'Joe'
         middleNames:
           type: string
           example: 'T'
@@ -3766,6 +3780,8 @@ components:
           type: string
           format: email
           example: 'j.t.bloggs@example.com'
+        address:
+          $ref: '#/components/schemas/AssessorAddress'
         schemeAssessorId:
           $ref: '#/components/schemas/AssessorSchemeId'
         registeredBy:
@@ -3979,6 +3995,34 @@ components:
           type: string
           format: date
           example: "1974-12-28"
+        qualificationChange:
+          type: object
+          properties:
+            qualificationType:
+              type: string
+              example: domesticEnergyPerformanceCertificates
+            previousStatus:
+              $ref: '#/components/schemas/AssessorQualificationStatus'
+            newStatus:
+              allOf:
+                - $ref: '#/components/schemas/AssessorQualificationStatus'
+                - example: 'STRUCKOFF'
+            timeOfChange:
+              type: string
+              format: date-time
+
+    ScottishAssessorQualificationChangeEvent:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: "Joe"
+        lastName:
+          type: string
+          example: "Bloggs"
+        schemeAssessorId:
+          type: string
+          example: "TEST00001"
         qualificationChange:
           type: object
           properties:
