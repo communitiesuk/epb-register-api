@@ -257,7 +257,7 @@ module Gateway
           FROM assessors b
           LEFT JOIN postcode_geolocation a ON (b.search_results_comparison_postcode = a.postcode)
           LEFT JOIN postcode_outcode_geolocations d ON (substring(b.search_results_comparison_postcode from '[^ ]+'::text) = d.outcode)
-          LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
+          JOIN schemes c ON(b.registered_by = c.scheme_id)
           WHERE
             (#{qualification_selector})
             AND coalesce(a.latitude, d.latitude) BETWEEN ($1 - 1) AND ($1 + 1)
@@ -301,7 +301,7 @@ module Gateway
           scotland_section63_qualification
 
         FROM assessors a
-        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
+        JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
           b.active = TRUE
       SQL
@@ -406,7 +406,7 @@ module Gateway
           scotland_rdsap_qualification, scotland_sap_existing_building_qualification, scotland_sap_new_building_qualification,
           scotland_section63_qualification
         FROM assessors a
-        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
+        JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
           first_name ILIKE $1 AND last_name ILIKE $2 AND date_of_birth = $3
       SQL
@@ -470,7 +470,7 @@ module Gateway
       sql = <<-SQL
         SELECT COUNT(*) as cnt
         FROM assessors a
-        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
+        JOIN schemes b ON(a.registered_by = b.scheme_id)
         JOIN audit_logs al ON a.scheme_assessor_id = al.entity_id
         #{scottish_assessor_predicates}
       SQL
