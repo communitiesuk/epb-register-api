@@ -1,4 +1,4 @@
-require_relative "../../shared_context/shared_scottish_assesors"
+require_relative "../../shared_context/shared_scottish_assessors"
 
 describe Gateway::AssessorsGateway do
   include RSpecRegisterApiServiceMixin

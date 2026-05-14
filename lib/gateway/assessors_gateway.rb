@@ -462,7 +462,7 @@ module Gateway
       ]
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
-      results.map { |row| Domain::Assessor.new(**row.symbolize_keys).scottish_assessor }
+      results.map { |row| Domain::Assessor.new(**row.symbolize_keys).scottish_new_assessor }
     end
 
     def count_search_by_date(start_date:, end_date:)

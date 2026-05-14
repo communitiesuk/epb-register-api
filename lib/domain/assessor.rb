@@ -124,14 +124,7 @@ module Domain
             telephone_number: @telephone_number,
           }.reject { |_k, v| v.nil? },
         search_results_comparison_postcode: @search_results_comparison_postcode,
-        address:
-          {
-            address_line1: @address_line1,
-            address_line2: @address_line2,
-            address_line3: @address_line3,
-            town: @town,
-            postcode: @postcode,
-          }.reject { |_k, v| v.nil? },
+        address: address.reject { |_k, v| v.nil? },
         company_details:
           {
             company_reg_no: @company_reg_no,
@@ -145,30 +138,7 @@ module Domain
             company_email: @company_email,
             company_name: @company_name,
           }.reject { |_k, v| v.nil? },
-        qualifications: {
-          domestic_sap: filter_qualification(@domestic_sap_qualification),
-          domestic_rd_sap: filter_qualification(@domestic_rd_sap_qualification),
-          non_domestic_sp3:
-            filter_qualification(@non_domestic_sp3_qualification),
-          non_domestic_cc4:
-            filter_qualification(@non_domestic_cc4_qualification),
-          non_domestic_dec:
-            filter_qualification(@non_domestic_dec_qualification),
-          non_domestic_nos3:
-            filter_qualification(@non_domestic_nos3_qualification),
-          non_domestic_nos4:
-            filter_qualification(@non_domestic_nos4_qualification),
-          non_domestic_nos5:
-            filter_qualification(@non_domestic_nos5_qualification),
-          gda: filter_qualification(@gda_qualification),
-          scotland_rdsap: filter_qualification(@scotland_rdsap_qualification),
-          scotland_sap_existing_building: filter_qualification(@scotland_sap_existing_building_qualification),
-          scotland_sap_new_building: filter_qualification(@scotland_sap_new_building_qualification),
-          scotland_dec_and_ar: filter_qualification(@scotland_dec_and_ar_qualification),
-          scotland_nondomestic_existing_building: filter_qualification(@scotland_nondomestic_existing_building_qualification),
-          scotland_nondomestic_new_building: filter_qualification(@scotland_nondomestic_new_building_qualification),
-          scotland_section63: filter_qualification(@scotland_section63_qualification),
-        },
+        qualifications: qualifications,
       }
 
       hash[:middle_names] = @middle_names if @middle_names
@@ -224,30 +194,25 @@ module Domain
       }
     end
 
-    def scottish_assessor
+    def scottish_new_assessor
       {
         first_name: @first_name,
         last_name: @last_name,
         scheme_assessor_id: @scheme_assessor_id,
-        qualifications: {
-          domestic_rd_sap: @domestic_rd_sap_qualification,
-          domestic_sap: @domestic_sap_qualification,
-          non_domestic_dec: @non_domestic_dec_qualification,
-          non_domestic_nos3: @non_domestic_nos3_qualification,
-          non_domestic_nos4: @non_domestic_nos4_qualification,
-          non_domestic_nos5: @non_domestic_nos5_qualification,
-          non_domestic_sp3: @non_domestic_sp3_qualification,
-          non_domestic_cc4: @non_domestic_cc4_qualification,
-          gda: @gda_qualification,
-          scotland_rdsap: @scotland_rdsap_qualification,
-          scotland_sap_existing_building: @scotland_sap_existing_building_qualification,
-          scotland_sap_new_building: @scotland_sap_new_building_qualification,
-          scotland_dec_and_ar: @scotland_dec_and_ar_qualification,
-          scotland_nondomestic_existing_building: @scotland_nondomestic_existing_building_qualification,
-          scotland_nondomestic_new_building: @scotland_nondomestic_new_building_qualification,
-          scotland_section63: @scotland_section63_qualification,
+        qualifications: qualifications,
+      }
+    end
 
-        },
+    def scottish_assessor
+      {
+        first_name: @first_name,
+        middle_names: @middle_names,
+        last_name: @last_name,
+        email: @email,
+        address: address,
+        scheme_assessor_id: @scheme_assessor_id,
+        registered_by: @registered_by_name,
+        qualifications: qualifications,
       }
     end
 
@@ -259,6 +224,43 @@ module Domain
       return "INACTIVE" unless valid_qualifications.include? qualification
 
       qualification
+    end
+
+    def qualifications
+      {
+        domestic_sap: filter_qualification(@domestic_sap_qualification),
+        domestic_rd_sap: filter_qualification(@domestic_rd_sap_qualification),
+        non_domestic_sp3:
+          filter_qualification(@non_domestic_sp3_qualification),
+        non_domestic_cc4:
+          filter_qualification(@non_domestic_cc4_qualification),
+        non_domestic_dec:
+          filter_qualification(@non_domestic_dec_qualification),
+        non_domestic_nos3:
+          filter_qualification(@non_domestic_nos3_qualification),
+        non_domestic_nos4:
+          filter_qualification(@non_domestic_nos4_qualification),
+        non_domestic_nos5:
+          filter_qualification(@non_domestic_nos5_qualification),
+        gda: filter_qualification(@gda_qualification),
+        scotland_rdsap: filter_qualification(@scotland_rdsap_qualification),
+        scotland_sap_existing_building: filter_qualification(@scotland_sap_existing_building_qualification),
+        scotland_sap_new_building: filter_qualification(@scotland_sap_new_building_qualification),
+        scotland_dec_and_ar: filter_qualification(@scotland_dec_and_ar_qualification),
+        scotland_nondomestic_existing_building: filter_qualification(@scotland_nondomestic_existing_building_qualification),
+        scotland_nondomestic_new_building: filter_qualification(@scotland_nondomestic_new_building_qualification),
+        scotland_section63: filter_qualification(@scotland_section63_qualification),
+      }
+    end
+
+    def address
+      {
+        address_line1: @address_line1,
+        address_line2: @address_line2,
+        address_line3: @address_line3,
+        town: @town,
+        postcode: @postcode,
+      }
     end
 
     def date_of_birth
