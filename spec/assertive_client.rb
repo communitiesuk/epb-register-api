@@ -741,6 +741,20 @@ def scottish_get_assessors_by_date(
   )
 end
 
+def scottish_get_assessor_by_id(
+  scheme_assessor_id:,
+  scopes: %w[scotland_data:fetch],
+  **assertive_kwargs
+)
+  path = "/api/scotland/v1/assessors/#{scheme_assessor_id}"
+
+  assertive_get(
+    path,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def scottish_get_assessment_meta_data(
   assessment_id:,
   scopes: %w[scotland_data:fetch],

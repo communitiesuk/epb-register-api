@@ -102,6 +102,10 @@ class ApiFactory
     @fetch_scottish_assessor_status_updates ||= UseCase::FetchScottishAssessorStatusUpdates.new(assessors_status_events_gateway)
   end
 
+  def self.fetch_scottish_assessor_by_id
+    @fetch_scottish_assessor_by_id ||= UseCase::FetchScottishAssessorById.new(assessors_gateway)
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(

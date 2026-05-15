@@ -341,6 +341,9 @@ RSpec.configure do |config|
     # to avoid mocking the match address api for test that are unrelated to address matching
     Helper::Toggles.set_feature("block-address-matching-during-lodgement", true)
   end
+
+  Dir[File.join(__dir__, "shared_examples/**/*.rb")].sort.each { |f| require f }
+
   config.after(:all) { DatabaseCleaner.clean }
 end
 

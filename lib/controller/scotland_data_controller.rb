@@ -119,6 +119,19 @@ module Controller
       rescue_errors(e)
     end
 
+    get "/api/scotland/v1/assessors/:scheme_assessor_id", auth_token_has_all: %w[scotland_data:fetch] do
+      scheme_assessor_id = params[:scheme_assessor_id]
+      data = ApiFactory.fetch_scottish_assessor_by_id.execute(scheme_assessor_id:)
+      json_api_response(code: 200, data:, meta: { data_sent_at: Time.now })
+    rescue StandardError => e
+      case e
+      when Boundary::AssessorNotFoundException
+        error_response 400, "NOT_FOUND", "The thing you are looking for is not here"
+      else
+        server_error(e)
+      end
+    end
+
   private
 
     def rescue_errors(error)
