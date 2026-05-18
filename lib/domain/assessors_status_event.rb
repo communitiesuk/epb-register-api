@@ -54,9 +54,7 @@ module Domain
       {
         first_name: @assessor["first_name"],
         last_name: @assessor["last_name"],
-        middle_names: @assessor["middle_name"],
         scheme_assessor_id: @scheme_assessor_id,
-        date_of_birth: @assessor["date_of_birth"],
         qualification_change: {
           qualification_type: @qualification_type,
           previous_status: @previous_status,

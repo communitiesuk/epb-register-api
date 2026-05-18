@@ -47,12 +47,10 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
 
   def expected_response
     JSON.parse({ data: {
-                   assessorStatusUpdates: [
+                   assessorStatusEvents: [
                      {
-                       dateOfBirth: "1991-02-25",
                        firstName: "Someone",
                        lastName: "Person",
-                       middleNames: nil,
                        qualificationChange: {
                          newStatus: "ACTIVE",
                          previousStatus: "INACTIVE",
@@ -62,10 +60,8 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
                        schemeAssessorId: "ACME123456",
                      },
                      {
-                       dateOfBirth: "1991-02-25",
                        firstName: "Someone",
                        lastName: "Person",
-                       middleNames: nil,
                        qualificationChange:
                          { newStatus: "STRUCKOFF",
                            previousStatus: "ACTIVE",
@@ -73,22 +69,21 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
                            timeOfChange: events_time },
                        schemeAssessorId: "ACME123456",
                      },
-                     { dateOfBirth: "1991-02-25",
+                     {
                        firstName: "Someone",
                        lastName: "Person",
-                       middleNames: nil,
                        qualificationChange:
                         { newStatus: "SUSPENDED",
                           previousStatus: "STRUCKOFF",
                           qualificationType: "scotland_rdsap",
                           timeOfChange: events_time },
-                       schemeAssessorId: "ACME123456" },
+                       schemeAssessorId: "ACME123456",
+                     },
                    ],
                  },
                  links: { next: nil,
                           self: "http://example.org/api/scotland/v1/updates/assessors/status?startDate=2021-06-13&endDate=2021-06-15&page=1",
-                          prev: nil },
-                 meta: {} }.to_json)
+                          prev: nil } }.to_json)
   end
 
   describe "security scenarios" do
@@ -148,7 +143,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]).to eq(JSON.parse(
-                                            { assessorStatusUpdates: [] }.to_json,
+                                            { assessorStatusEvents: [] }.to_json,
                                           ))
     end
   end

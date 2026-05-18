@@ -10,9 +10,7 @@ describe UseCase::FetchScottishAssessorStatusUpdates do
       [{
         first_name: "April",
         last_name: "Mason",
-        middle_names: "",
         scheme_assessor_id: "ABC123",
-        date_of_birth: "1970-01-01",
         qualification_change: { new_status: "ACTIVE",
                                 previous_status: "INACTIVE",
                                 qualification_type: "scotland_rdsap" },
@@ -20,9 +18,7 @@ describe UseCase::FetchScottishAssessorStatusUpdates do
        {
          first_name: "June",
          last_name: "Julian",
-         middle_names: "",
          scheme_assessor_id: "ABC456",
-         date_of_birth: "1970-01-01",
          qualification_change: { new_status: "ACTIVE",
                                  previous_status: "STRUCKOFF",
                                  qualification_type: "scotland_section63" },
@@ -35,7 +31,7 @@ describe UseCase::FetchScottishAssessorStatusUpdates do
 
     describe "#execute" do
       it "fetches an array of assessor status events" do
-        expect(use_case.execute(start_date: "2013-01-01", end_date: "2013-01-05", current_page: 1)).to eq({ assessorStatusUpdates: data })
+        expect(use_case.execute(start_date: "2013-01-01", end_date: "2013-01-05", current_page: 1)).to eq({ assessorStatusEvents: data })
       end
     end
   end

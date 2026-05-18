@@ -103,7 +103,7 @@ module Controller
       data = ApiFactory.fetch_scottish_assessor_status_updates.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page)
       pagination = ApiFactory.get_pagination_for_scottish_assessor_status_updates.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url, count_method: :count_scottish_assessor_events)
 
-      json_api_response(code: 200, links: pagination, data: data)
+      json_api_response(code: 200, links: pagination, data: data, meta: false)
     rescue StandardError => e
       rescue_errors(e)
     end

@@ -119,7 +119,12 @@ module Controller
         data[burrow_key] = meta.delete(data_key)
       end
 
-      response_data = { data:, meta: }
+      response_data = if meta == false
+                        { data: }
+                      else
+                        { data:, meta: }
+                      end
+
       response_data[:links] = links unless links.empty?
       json_response(response_data, code)
     end

@@ -43,13 +43,18 @@ describe Gateway::AssessorsStatusEventsGateway, :set_with_timecop do
 
   describe "#get_scottish_assessor_events" do
     context "when there are five events in the audit log between two dates" do
-      it "returns only the changes to a scottish qualification" do
+      it "returns only the changes to a scottish qualification in the expected format" do
         result = gateway.get_scottish_assessor_events(start_date: Time.now - 10.days, end_date: Time.now, current_page: 1)
         expect(result.length).to eq(3)
-        expect(result.first[:qualification_change]).to eq({ new_status: "ACTIVE",
-                                                            previous_status: "INACTIVE",
-                                                            qualification_type: "scotland_rdsap",
-                                                            time_of_change: Time.now.utc })
+        expect(result.first).to eq({
+          "first_name": "Someone",
+          "last_name": "Person",
+          "scheme_assessor_id": "ACME123456",
+          "qualification_change": { new_status: "ACTIVE",
+                                    previous_status: "INACTIVE",
+                                    qualification_type: "scotland_rdsap",
+                                    time_of_change: Time.now.utc },
+        })
       end
 
       it "only returns events between the two dates" do
