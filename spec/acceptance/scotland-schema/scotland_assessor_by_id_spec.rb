@@ -3,7 +3,6 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
 
   context "when fetching an assessor" do
     let(:use_case) { instance_double(UseCase::FetchScottishAssessorById) }
-
     let(:data) do
       {
         first_name: "Joe",
@@ -39,9 +38,8 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
         },
       }
     end
-
     let(:expected_response) do
-      { "data" =>
+      JSON.parse({ "data" =>
          { "firstName" => "Joe",
            "middleNames" => "T",
            "lastName" => "Bloggs",
@@ -66,15 +64,20 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
               "scotlandNondomesticExistingBuilding" => "ACTIVE",
               "scotlandNondomesticNewBuilding" => "ACTIVE",
               "scotlandSection63" => "ACTIVE" } },
-        "meta" => {
-          "dataSentAt" => "2021-06-21T01:00:00.000+01:00",
-        } }
+                   "meta" => {
+                     "dataSentAt" => Time.now,
+                   } }.to_json)
     end
 
     before do
+      Timecop.freeze(2026, 2, 22, 14, 32, 0)
       allow(ApiFactory).to receive(:fetch_scottish_assessor_by_id).and_return(use_case)
       allow(use_case).to receive(:execute).with(scheme_assessor_id: "TEST000001").and_return(data)
       allow(use_case).to receive(:execute).with(scheme_assessor_id: "invalid-id").and_raise(Boundary::AssessorNotFoundException)
+    end
+
+    after(:all) do
+      Timecop.return
     end
 
     it "returns an assessor" do
