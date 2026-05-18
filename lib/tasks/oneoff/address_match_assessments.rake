@@ -11,29 +11,10 @@ namespace :oneoff do
     puts "[#{Time.now}] Starting address matching backfill (#{skip_existing ? 'skipping assessments with an existing match' : 'processing all assessments'})"
 
     addressing_gateway = Gateway::AddressingApiGateway.new
-    Gateway::AssessmentsAddressIdGateway.new
+    assessments_address_id_gateway  = Gateway::AssessmentsAddressIdGateway.new
 
-    ActiveRecord::Base.logger = nil
-    db = ActiveRecord::Base.connection
-    db_schema = is_scottish ? "scotland" : "public"
-
-    find_unmatched_assessments_sql = <<-SQL
-      SELECT a.assessment_id, a.address_line1, a.address_line2, a.address_line3, a.address_line4, a.postcode, a.town
-      FROM #{db_schema}.assessments a
-      JOIN #{db_schema}.assessments_address_id aai ON a.assessment_id = aai.assessment_id
-    SQL
-
-    if skip_existing
-      find_unmatched_assessments_sql.concat("WHERE aai.matched_uprn IS NULL")
-    end
-
-    if date_from && date_to
-      find_unmatched_assessments_sql.concat(" #{skip_existing ? 'AND' : 'WHERE'} date_registered BETWEEN '#{date_from}' AND '#{date_to}'")
-    end
-
-    unmatched_assessments = db.exec_query find_unmatched_assessments_sql
+    unmatched_assessments = Helper::AddressMatchAssessment.find_unmatched_assessments(is_scottish:, date_to:, date_from:,skip_existing: )
     puts "[#{Time.now}] Found #{unmatched_assessments.length} assessments to process"
-    assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     data_warehouse_queues_gateway = Gateway::DataWarehouseQueuesGateway.new
     unmatched_assessments.each_slice(batch_size) do |batch|
       arr_matches = []
