@@ -4,6 +4,14 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
   let(:events_time) { Time.now.utc - 1.week }
   let(:events_date) { Date.parse(events_time.to_s) }
 
+  before(:all) do
+    Timecop.freeze(2021, 6, 21, 15, 33, 25)
+  end
+
+  after(:all) do
+    Timecop.return
+  end
+
   before do
     scheme_id = add_scheme_and_get_id
 
@@ -42,7 +50,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
       body: AssessorStub.new.fetch_request_body(scotland_rdsap: "SUSPENDED", domestic_rd_sap: "ACTIVE"),
     )
 
-    ActiveRecord::Base.connection.exec_query("UPDATE assessors_status_events SET recorded_at = '#{events_date}' ")
+    ActiveRecord::Base.connection.exec_query("UPDATE assessors_status_events SET recorded_at = '#{events_time}' ")
   end
 
   def expected_response
@@ -145,6 +153,19 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
       expect(response_json["data"]).to eq(JSON.parse(
                                             { assessorStatusEvents: [] }.to_json,
                                           ))
+    end
+  end
+
+  context "when requesting a list of assessor status updates for one day" do
+    it "returns the data for events the day" do
+      response = scottish_get_assessors_status_updates(
+        start_date: events_date,
+        end_date: events_date,
+        page: 1,
+        )
+
+      response_json = JSON.parse(response.body)
+      expect(response_json["data"]).to eq(expected_response["data"])
     end
   end
 

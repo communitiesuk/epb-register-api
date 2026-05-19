@@ -153,10 +153,14 @@ module Controller
       @params = params_body DATE_RANGE_SCHEMA
 
       @start_date = Date.parse(@params[:start_date])
-      @end_date = Date.parse(@params[:end_date])
+      # When the Date object here is evaluated in a query against a timestamp
+      # (as happens in all the gateways here) then it is at the time 00:00:00
+      # on the date specified, so we need to add a day to the end_date parameter
+      # to include events from during the day of the end_date specified
+      @end_date = Date.parse(@params[:end_date]) + 1.day
 
       raise Boundary::InvalidDates if @start_date > @end_date
-      raise Boundary::InvalidArgument, "date range includes today" if @end_date >= Date.today
+      raise Boundary::InvalidArgument, "date range includes today" if @end_date >= Date.today + 1.day
 
       @current_page = @params[:page] ? @params[:page].to_i : 1
     end
