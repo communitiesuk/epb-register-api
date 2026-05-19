@@ -3864,9 +3864,6 @@ components:
         addressLine3:
           type: string
           example: ''
-        addressLine4:
-          type: string
-          example: ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
