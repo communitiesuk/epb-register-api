@@ -75,7 +75,7 @@ describe "reload queues rake" do
   context "when no RRNs are found for an event type" do
     before do
       allow(audit_logs_gateway).to receive(:fetch_assessment_ids).and_return(assessment_ids)
-      allow(audit_logs_gateway).to receive(:fetch_assessment_ids).with(event_type: "opt_out", start_date: start_date).and_return(nil)
+      allow(audit_logs_gateway).to receive(:fetch_assessment_ids).with(event_type: "opt_out", start_date: start_date).and_return([])
       rake.invoke
     end
 
