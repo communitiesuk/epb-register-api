@@ -1,5 +1,9 @@
 module Controller
   class AssessorController < Controller::BaseController
+
+    NULLABLE_STRING = %w[string null].freeze
+    ASSESSOR_STATUSES = %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED].freeze
+
     PUT_SCHEMA = {
       type: "object",
       required: %w[firstName lastName dateOfBirth],
@@ -18,28 +22,28 @@ module Controller
           format: "iso-date",
         },
         searchResultsComparisonPostcode: {
-          type: %w[string null],
+          type: NULLABLE_STRING,
         },
         alsoKnownAs: {
-          type: %w[string null],
+          type: NULLABLE_STRING,
         },
         address: {
           type: "object",
           properties: {
             addressLine1: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             addressLine2: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             addressLine3: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             town: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             postcode: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
           },
         },
@@ -47,34 +51,34 @@ module Controller
           type: "object",
           properties: {
             companyRegNo: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyAddressLine1: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyAddressLine2: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyAddressLine3: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyTown: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyPostcode: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyWebsite: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyTelephoneNumber: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyEmail: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
             companyName: {
-              type: %w[string null],
+              type: NULLABLE_STRING,
             },
           },
         },
@@ -96,67 +100,67 @@ module Controller
           properties: {
             domesticSap: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             domesticRdSap: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             nonDomesticSp3: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             nonDomesticCc4: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             nonDomesticDec: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             nonDomesticNos3: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             nonDomesticNos4: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             nonDomesticNos5: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             gda: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandDecAndAr: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandNondomesticExistingBuilding: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandNondomesticNewBuilding: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandRdsap: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandSapExistingBuilding: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandSapNewBuilding: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
             scotlandSection63: {
               type: "string",
-              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
+              enum: ASSESSOR_STATUSES,
             },
           },
         },
@@ -173,7 +177,7 @@ module Controller
           first_name,
           last_name,
           date_of_birth,
-        )
+          )
 
       json_api_response(code: 200, data: result)
     end
@@ -194,7 +198,7 @@ module Controller
         UseCase::FindAssessorsByPostcode.new.execute(
           postcode,
           qualifications.split(","),
-        )
+          )
 
       result[:data] = assessor_list_results_filter(result)
 
@@ -217,7 +221,7 @@ module Controller
             :contact_details,
             :qualifications,
             :distance_from_postcode_in_miles,
-          )
+            )
         end
       end
     end
@@ -231,7 +235,7 @@ module Controller
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-        )
+          )
       end
 
       result = UseCase::FetchAssessorList.new.execute(scheme_id)
@@ -251,32 +255,32 @@ module Controller
            current_status_check &&
              !env[:auth_token].scope?("scheme:assessor:fetch")
          ) ||
-          (
-            !current_status_check &&
-              !env[:auth_token].scope?("assessor:search")
-          )
+         (
+           !current_status_check &&
+             !env[:auth_token].scope?("assessor:search")
+         )
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-        )
+          )
       end
 
       if current_status_check
         if !params.key?(:firstName) || !params.key?(:lastName) ||
-            !params.key?(:dateOfBirth) ||
-            !Date.valid_date?(
-              *Array
+           !params.key?(:dateOfBirth) ||
+           !Date.valid_date?(
+             *Array
                 .new(3)
                 .zip(params[:dateOfBirth]&.split("-") || [])
                 .map(&:last)
                 .map(&:to_i),
-            )
+             )
           return (
             error_response(
               400,
               "INVALID_QUERY",
               "Must specify first name, last name and a valid date of birth when searching",
-            )
+              )
           )
         end
 
@@ -296,7 +300,7 @@ module Controller
           400,
           "INVALID_QUERY",
           "Must specify either name or postcode & qualification when searching",
-        )
+          )
       end
     rescue StandardError => e
       case e
@@ -307,13 +311,13 @@ module Controller
           400,
           "INVALID_REQUEST",
           "The requested postcode is not valid",
-        )
+          )
       when UseCase::FindAssessorsByName::OnlyFirstNameGiven
         error_response(
           400,
           "INVALID_REQUEST",
           "Both a first name and last name must be provided",
-        )
+          )
       when ArgumentError
         error_response(400, "INVALID_QUERY", e.message)
       else
@@ -331,7 +335,7 @@ module Controller
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-        )
+          )
       end
 
       result = UseCase::FetchAssessor.new.execute(scheme_id, scheme_assessor_id)
@@ -356,7 +360,7 @@ module Controller
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-        )
+          )
       end
 
       assessor_details = request_body(PUT_SCHEMA)
@@ -368,9 +372,9 @@ module Controller
             body: assessor_details,
             scheme_assessor_id:,
             registered_by_id: scheme_id,
-          ),
+            ),
           env[:auth_token].sub,
-        )
+          )
       assessor_record = create_assessor_response[:assessor]
 
       if create_assessor_response[:assessor_was_newly_created]
@@ -389,7 +393,7 @@ module Controller
           409,
           "ASSESSOR_ID_ON_ANOTHER_SCHEME",
           "The assessor ID you are trying to update is registered by a different scheme",
-        )
+          )
       when UseCase::AddAssessor::InvalidAssessorIdException
         error_response(422, "INVALID REQUEST", e.message)
       when Boundary::Json::ParseError
