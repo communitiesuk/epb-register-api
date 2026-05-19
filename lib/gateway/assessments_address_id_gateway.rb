@@ -136,7 +136,6 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(update_sql, "SQL")
     end
 
-
   private
 
     def update_address_id(

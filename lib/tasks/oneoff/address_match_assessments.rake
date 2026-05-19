@@ -11,9 +11,9 @@ namespace :oneoff do
     puts "[#{Time.now}] Starting address matching backfill (#{skip_existing ? 'skipping assessments with an existing match' : 'processing all assessments'})"
 
     addressing_gateway = Gateway::AddressingApiGateway.new
-    assessments_address_id_gateway  = Gateway::AssessmentsAddressIdGateway.new
+    assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
 
-    unmatched_assessments = Helper::AddressMatchAssessment.find_unmatched_assessments(is_scottish:, date_to:, date_from:,skip_existing: )
+    unmatched_assessments = Helper::AddressMatchAssessment.find_unmatched_assessments(is_scottish:, date_to:, date_from:, skip_existing:)
     puts "[#{Time.now}] Found #{unmatched_assessments.length} assessments to process"
     data_warehouse_queues_gateway = Gateway::DataWarehouseQueuesGateway.new
     unmatched_assessments.each_slice(batch_size) do |batch|
