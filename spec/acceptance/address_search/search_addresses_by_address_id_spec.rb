@@ -78,6 +78,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -173,6 +174,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference", :set_with_timecop do
             line4: nil,
             town: "Whitbury",
             postcode: "SW1A 2AA",
+            country: ["E"],
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {
@@ -221,7 +223,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference", :set_with_timecop do
 
     before do
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'SW1A 2AA', 'Whitbury')",
+        "INSERT INTO address_base (uprn, address_line1, postcode, country_code, town) VALUES ('1', '1 Some Street', 'SW1A 2AA', 'E', 'Whitbury')",
       )
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
     end
@@ -238,6 +240,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "GAZETTEER",
               existingAssessments: [],
             },
@@ -265,6 +268,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "GAZETTEER",
               existingAssessments: [
                 {

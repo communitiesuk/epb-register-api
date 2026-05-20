@@ -4,7 +4,7 @@ module Gateway
 
     ADDRESS_TYPES = {
       DOMESTIC: %w[SAP RdSAP],
-      COMMERCIAL: %w[DEC DEC-RR CEPC CEPC-RR AC-REPORT AC-CERT],
+      COMMERCIAL: %w[DEC DEC-RR CEPC CEPC-RR AC-REPORT AC-CERT CS63 DEC-AR],
     }.freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
@@ -68,7 +68,8 @@ module Gateway
                address_line3,
                address_line4,
                town,
-               postcode
+               postcode,
+               country_code
                #{ranking_sql if building_name_number}
         FROM address_base
         WHERE postcode = $1
@@ -165,7 +166,8 @@ module Gateway
                address_line3,
                address_line4,
                town,
-               postcode
+               postcode,
+               country_code
         FROM address_base
         WHERE uprn = $1
         AND LOWER(country_code) IS DISTINCT FROM LOWER('S')
@@ -271,7 +273,8 @@ module Gateway
                address_line3,
                address_line4,
                town,
-               postcode
+               postcode,
+               country_code
                 #{ranking_sql}
         FROM address_base
         WHERE (
@@ -413,6 +416,7 @@ module Gateway
             address_line4: results[entries.first]["address_line4"],
             town: results[entries.first]["town"],
             postcode: results[entries.first]["postcode"],
+            country_code: results[entries.first]["country_code"],
             existing_assessments: existing_assessments.compact,
             matched_rank: results[entries.first]["matched_rank"],
             matched_difference: results[entries.first]["matched_difference"],
@@ -446,6 +450,11 @@ module Gateway
                           line4: address_lines[3],
                           town: row["town"],
                           postcode: row["postcode"],
+                          country: if row["address_id"].include?("UPRN-") && check_uprn_exists?(row["address_id"][5..].to_i.to_s)
+                                     [row["country_code"]]
+                                   else
+                                     UseCase::GetCountryForPostcode.new.execute(postcode: row["postcode"]).country_codes.map(&:to_s)
+                                   end,
                           source:
                             if row["address_id"].include?("UPRN-") && check_uprn_exists?(row["address_id"][5..].to_i.to_s)
                               "GAZETTEER"

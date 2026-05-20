@@ -12,6 +12,7 @@ module Domain
       line4:,
       town:,
       postcode:,
+      country:,
       source:,
       existing_assessments:
     )
@@ -22,12 +23,13 @@ module Domain
       @line4 = line4
       @town = town
       @postcode = postcode
+      @country = country
       @source = source
       @existing_assessments = existing_assessments
     end
 
     def to_hash
-      {
+      hash =       {
         address_id: @address_id,
         line1: @line1,
         line2: @line2,
@@ -38,6 +40,12 @@ module Domain
         source: @source,
         existing_assessments: @existing_assessments,
       }
+
+      if Helper::Toggles.enabled?("register-api-add-country-in-address")
+        hash[:country] = @country
+      end
+
+      hash
     end
   end
 end

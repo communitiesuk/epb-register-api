@@ -183,6 +183,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -327,6 +328,47 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
           end
         end
       end
+
+      context "when in the register-api-add-country-in-address toggle is off" do
+        let(:response) do
+          JSON.parse(
+            assertive_get_in_search_scope(
+              "/api/search/addresses?postcode=SW1A%202AA",
+              ).body,
+            symbolize_names: true,
+            )
+        end
+
+        before do
+          Helper::Toggles.set_feature("register-api-add-country-in-address", false)
+        end
+
+        after do
+          Helper::Toggles.set_feature("register-api-add-country-in-address", true)
+        end
+
+        it "returns the expected address entry without the country code" do
+          expect(response[:data][:addresses][0]).to eq(
+                                                      {
+                                                        addressId: "RRN-0000-0000-0000-0000-0000",
+                                                        line1: "1 Some Street",
+                                                        line2: nil,
+                                                        line3: nil,
+                                                        line4: nil,
+                                                        town: "Whitbury",
+                                                        postcode: "SW1A 2AA",
+                                                        source: "PREVIOUS_ASSESSMENT",
+                                                        existingAssessments: [
+                                                          {
+                                                            assessmentId: "0000-0000-0000-0000-0000",
+                                                            assessmentStatus: "ENTERED",
+                                                            assessmentType: "RdSAP",
+                                                          },
+                                                        ],
+                                                      },
+                                                      )
+        end
+      end
     end
 
     context "when there is no space in the postcode" do
@@ -394,6 +436,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
             line4: nil,
             town: "Whitbury",
             postcode: "SW1A 2AA",
+            country: ["E"],
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {

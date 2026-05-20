@@ -196,6 +196,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -233,6 +234,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -338,6 +340,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -374,6 +377,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
                 line4: nil,
                 town: "Whitbury",
                 postcode: "SW1A 2AA",
+                country: ["E"],
                 source: "PREVIOUS_ASSESSMENT",
                 existingAssessments: [
                   {
@@ -412,6 +416,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -492,6 +497,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -529,6 +535,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
+              country: ["E"],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {

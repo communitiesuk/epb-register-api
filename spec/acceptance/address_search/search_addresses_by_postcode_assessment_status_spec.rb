@@ -141,6 +141,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line4: nil,
             postcode: "SW1A 2AA",
             town: "London",
+            country: ["E"],
             addressId: "UPRN-000073546792",
             source: "GAZETTEER",
             existingAssessments: [],
@@ -158,6 +159,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line4: nil,
             town: "Whitbury",
             postcode: "SW1A 2AA",
+            country: ["E"],
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {
@@ -208,6 +210,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line4: nil,
             postcode: "SW1A 2AA",
             town: "London",
+            country: ["E"],
             addressId: "UPRN-000073546792",
             source: "GAZETTEER",
             existingAssessments: [],
@@ -225,6 +228,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status", :set_with_timecop do
             line4: nil,
             town: "Whitbury",
             postcode: "SW1A 2AA",
+            country: ["E"],
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {

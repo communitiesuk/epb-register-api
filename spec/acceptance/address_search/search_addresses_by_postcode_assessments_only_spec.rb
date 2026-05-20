@@ -61,6 +61,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource", :set_with_ti
             line4: nil,
             postcode: "SW1A 2AA",
             town: "Whitbury",
+            country: ["E"],
             addressId: "RRN-0000-0000-0000-0000-0000",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
@@ -112,6 +113,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource", :set_with_ti
             line4: "Some County",
             postcode: "SW1A 2AA",
             town: "Whitbury",
+            country: ["E"],
             addressId: "RRN-0000-0000-0000-0000-0000",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [

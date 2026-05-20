@@ -9,6 +9,7 @@ module Gateway
             address_line4,
             town,
             postcode,
+            country_code,
             uprn
           FROM address_base
           WHERE
@@ -104,6 +105,7 @@ module Gateway
                           line4: row["address_line4"].presence,
                           town: row["town"],
                           postcode: row["postcode"],
+                          country: row["country_code"],
                           source: "GAZETTEER",
                           existing_assessments: row["existing_assessments"]
     end
