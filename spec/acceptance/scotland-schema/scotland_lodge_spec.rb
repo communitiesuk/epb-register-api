@@ -509,7 +509,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           expect(lodge_scottish_assessment(
             assessment_body: valid_rdsap_xml,
             accepted_responses: [403],
-            scopes: %w[migrate:scotland assessment:lodge],
+            scopes: %w[migrate:scotland],
             auth_data: {
               scheme_ids: [scheme_id],
             },

@@ -57,7 +57,7 @@ describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
         }.freeze
       end
 
-      it "returns an error if the inspection date is in the future" do
+      it "returns an error if the inspection date is after the completion date" do
         assert_errors([["Inspection-Date", Date.today.to_s], ["Completion-Date", Date.yesterday.to_s]], [error], include_errors: true)
       end
     end
@@ -71,9 +71,51 @@ describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
         }.freeze
       end
 
-      it "returns an error if the inspection date is more than four years ago" do
+      it "returns an error if the inspection date is more than 3 months ago" do
         three_months_and_a_day = (Date.today << 3) - 1
         assert_errors([["Inspection-Date", three_months_and_a_day.to_s], ["Completion-Date", Date.today.to_s]], [error])
+      end
+    end
+
+    context "when the address is not in Scotland" do
+      let(:error) do
+        {
+          "code": "INVALID_COUNTRY",
+          "title":
+            "Property address must be in Scotland",
+        }.freeze
+      end
+
+      it "returns no error if the postcode is in Scotland" do
+        assert_errors([["Postcode", "TD14 5TY"]], [], country_code: [:S])
+      end
+
+      it "returns no error if the postcode crosses the English/Scottish border" do
+        assert_errors([["Postcode", "TD15 1UZ"]], [], country_code: %i[E S])
+      end
+
+      it "returns an INVALID_COUNTRY error if the address is in England" do
+        assert_errors([["Postcode", "SW1A 2AA"]], [error], country_code: [:E])
+      end
+
+      it "returns an INVALID_COUNTRY error if the address is in Northern Ireland" do
+        assert_errors([["Postcode", "BT3 9EP"]], [error], country_code: [:N])
+      end
+
+      it "returns an INVALID_COUNTRY error if the address is in Wales" do
+        assert_errors([["Postcode", "LL65 1DQ"]], [error], country_code: [:W])
+      end
+
+      it "returns an INVALID_COUNTRY error if the address is JE" do
+        assert_errors([["Postcode", "JE3 6HW"]], [error], country_code: [:L])
+      end
+
+      it "returns an INVALID_COUNTRY error if the address is GY" do
+        assert_errors([["Postcode", "GY7 9QS"]], [error], country_code: [:L])
+      end
+
+      it "returns an INVALID_COUNTRY error if the address is IM" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error], country_code: [:L])
       end
     end
   end
