@@ -412,23 +412,5 @@ describe "Acceptance::ScottishSearchForAssessor" do
     end
   end
 
-  describe "security scenarios" do
-    it "returns a 401 when not authenticated" do
-      expect(scotland_assessors_search(
-        postcode: "EH8 8FT",
-        qualification: "scotlandRdsap",
-        accepted_responses: [401],
-        should_authenticate: false,
-      ).status).to eq 401
-    end
-
-    it "returns a 403 when the right scopes are not present" do
-      expect(scotland_assessors_search(
-        postcode: "EH8 8FT",
-        qualification: "scotlandRdsap",
-        accepted_responses: [403],
-        scopes: %w[wrong:scope],
-      ).status).to eq 403
-    end
-  end
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/assessors?postcode=some_postcode&qualification=some_qualification", scopes: %w[scotland_assessor:search]
 end

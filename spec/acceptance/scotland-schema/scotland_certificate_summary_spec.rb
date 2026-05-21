@@ -13,15 +13,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
     expect(fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0000%23", accepted_responses: [400]).status).to eq(400)
   end
 
-  describe "security scenarios" do
-    it "rejects a request that is not authenticated" do
-      expect(fetch_scottish_certificate_summary(id: "123", accepted_responses: [401], should_authenticate: false).status).to eq(401)
-    end
-
-    it "rejects a request with the wrong scopes" do
-      expect(fetch_scottish_certificate_summary(id: "124", accepted_responses: [403], scopes: %w[wrong:scope]).status).to eq(403)
-    end
-  end
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/assessments/some_id/certificate-summary", scopes: %w[scotland_assessment:fetch]
 
   context "when requesting Scottish assessments" do
     let(:scheme_id) { add_scheme_and_get_id }

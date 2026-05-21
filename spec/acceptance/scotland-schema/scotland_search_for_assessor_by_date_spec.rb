@@ -95,25 +95,7 @@ describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
     ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = '#{start_date}'")
   end
 
-  describe "security scenarios" do
-    it "rejects a request without authentication" do
-      expect(scottish_get_assessors_by_date(
-        start_date: events_date - 1.day,
-        end_date: events_date + 1.day,
-        accepted_responses: [401],
-        should_authenticate: false,
-      ).status).to eq(401)
-    end
-
-    it "rejects a request without the right scope" do
-      expect(scottish_get_assessors_by_date(
-        start_date: events_date - 1.day,
-        end_date: events_date + 1.day,
-        accepted_responses: [403],
-        scopes: %w[wrong:scope],
-      ).status).to eq(403)
-    end
-  end
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/v1/updates/new-assessors?startDate=some_date&endDate=some_date", scopes: %w[scotland_data:fetch]
 
   context "when requesting a list of assessors between two dates" do
     it "returns the data and details about pagination" do

@@ -37,19 +37,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
     scheme_id
   end
 
-  describe "security scenarios" do
-    it "rejects a request without authentication" do
-      expect(scottish_domestic_assessments_search_by_assessment_id("123", accepted_responses: [401], should_authenticate: false).status).to eq(401)
-    end
-
-    it "rejects a request without the right scope" do
-      expect(scottish_domestic_assessments_search_by_assessment_id(
-        "123",
-        accepted_responses: [403],
-        scopes: %w[wrong:scope],
-      ).status).to eq(403)
-    end
-  end
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/assessments/search?assessmentId=some_id", scopes: %w[scotland_assessment:search]
 
   context "when searching by postcode" do
     it "can handle a lowercase postcode" do

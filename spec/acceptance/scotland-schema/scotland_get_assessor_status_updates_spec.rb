@@ -94,25 +94,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
                           prev: nil } }.to_json)
   end
 
-  describe "security scenarios" do
-    it "rejects a request without authentication" do
-      expect(scottish_get_assessors_status_updates(
-        start_date: events_date - 1.day,
-        end_date: events_date + 1.day,
-        accepted_responses: [401],
-        should_authenticate: false,
-      ).status).to eq(401)
-    end
-
-    it "rejects a request without the right scope" do
-      expect(scottish_get_assessors_status_updates(
-        start_date: events_date - 1.day,
-        end_date: events_date + 1.day,
-        accepted_responses: [403],
-        scopes: %w[wrong:scope],
-      ).status).to eq(403)
-    end
-  end
+  it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/v1/updates/assessors/status?startDate=some_date&endDate=some_date", scopes: %w[scotland_data:fetch]
 
   context "when requesting a list of assessor status updates between two dates" do
     it "returns the data and details about pagination" do
@@ -162,7 +144,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
         start_date: events_date,
         end_date: events_date,
         page: 1,
-        )
+      )
 
       response_json = JSON.parse(response.body)
       expect(response_json["data"]).to eq(expected_response["data"])
