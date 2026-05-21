@@ -3,77 +3,56 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
 
   context "when fetching an assessor" do
     let(:use_case) { instance_double(UseCase::FetchScottishAssessorById) }
-    let(:data) do
-      {
-        first_name: "Joe",
-        middle_names: "T",
-        last_name: "Bloggs",
-        email: "j.t.bloggs@example.com",
-        address: {
-          address_line1: "22 Acacia Avenue",
-          address_line2: "",
-          address_line3: "",
-          town: "Fulchester",
-          postcode: "FL23 4JA",
-        },
-        scheme_assessor_id: "TEST000001",
-        registered_by: "Stroma Certification Ltd",
-        qualifications: {
-          domestic_rd_sap: "ACTIVE",
-          domestic_sap: "ACTIVE",
-          non_domestic_dec: "ACTIVE",
-          non_domestic_nos3: "ACTIVE",
-          non_domestic_nos4: "ACTIVE",
-          non_domestic_nos5: "ACTIVE",
-          non_domestic_sp3: "ACTIVE",
-          non_domestic_cc4: "ACTIVE",
-          gda: "ACTIVE",
-          scotland_rdsap: "ACTIVE",
-          scotland_sap_existing_building: "ACTIVE",
-          scotland_sap_new_building: "ACTIVE",
-          scotland_dec_and_ar: "ACTIVE",
-          scotland_nondomestic_existing_building: "ACTIVE",
-          scotland_nondomestic_new_building: "ACTIVE",
-          scotland_section63: "ACTIVE",
-        },
-      }
-    end
+
     let(:expected_response) do
-      JSON.parse({ "data" =>
-         { "firstName" => "Joe",
-           "middleNames" => "T",
-           "lastName" => "Bloggs",
-           "email" => "j.t.bloggs@example.com",
-           "address" => { "addressLine1" => "22 Acacia Avenue", "addressLine2" => "", "addressLine3" => "", "town" => "Fulchester", "postcode" => "FL23 4JA" },
-           "schemeAssessorId" => "TEST000001",
-           "registeredBy" => "Stroma Certification Ltd",
-           "qualifications" =>
-            { "domesticRdSap" => "ACTIVE",
-              "domesticSap" => "ACTIVE",
-              "nonDomesticDec" => "ACTIVE",
-              "nonDomesticNos3" => "ACTIVE",
-              "nonDomesticNos4" => "ACTIVE",
-              "nonDomesticNos5" => "ACTIVE",
-              "nonDomesticSp3" => "ACTIVE",
-              "nonDomesticCc4" => "ACTIVE",
-              "gda" => "ACTIVE",
-              "scotlandRdsap" => "ACTIVE",
-              "scotlandSapExistingBuilding" => "ACTIVE",
-              "scotlandSapNewBuilding" => "ACTIVE",
-              "scotlandDecAndAr" => "ACTIVE",
-              "scotlandNondomesticExistingBuilding" => "ACTIVE",
-              "scotlandNondomesticNewBuilding" => "ACTIVE",
-              "scotlandSection63" => "ACTIVE" } },
-                   "meta" => {
-                     "dataSentAt" => Time.now,
+      JSON.parse({ data: {
+                     firstName: "Someone",
+                     middleNames: "Muddle",
+                     lastName: "Person",
+                     email: "person@person.com",
+                     address: {
+                       addressLine1: nil,
+                       addressLine2: nil,
+                       addressLine3: nil,
+                       town: nil,
+                       postcode: nil,
+                     },
+                     schemeAssessorId: "ACME123456",
+                     registeredBy: "Scottish Scheme",
+                     qualifications: {
+                       domesticRdSap: "INACTIVE",
+                       domesticSap: "INACTIVE",
+                       nonDomesticDec: "INACTIVE",
+                       nonDomesticNos3: "INACTIVE",
+                       nonDomesticNos4: "INACTIVE",
+                       nonDomesticNos5: "INACTIVE",
+                       nonDomesticSp3: "INACTIVE",
+                       nonDomesticCc4: "INACTIVE",
+                       gda: "INACTIVE",
+                       scotlandRdsap: "ACTIVE",
+                       scotlandSapExistingBuilding: "INACTIVE",
+                       scotlandSapNewBuilding: "INACTIVE",
+                       scotlandDecAndAr: "INACTIVE",
+                       scotlandNondomesticExistingBuilding: "INACTIVE",
+                       scotlandNondomesticNewBuilding: "INACTIVE",
+                       scotlandSection63: "INACTIVE",
+                     },
+                   },
+                   meta: {
+                     dataSentAt: Time.now,
                    } }.to_json)
     end
 
     before do
       Timecop.freeze(2026, 2, 22, 14, 32, 0)
-      allow(ApiFactory).to receive(:fetch_scottish_assessor_by_id).and_return(use_case)
-      allow(use_case).to receive(:execute).with(scheme_assessor_id: "TEST000001").and_return(data)
-      allow(use_case).to receive(:execute).with(scheme_assessor_id: "invalid-id").and_raise(Boundary::AssessorNotFoundException)
+      scheme_id = 999
+      Gateway::SchemesGateway::Scheme.create(scheme_id:, name: "Scottish Scheme")
+
+      add_assessor(
+        scheme_id:,
+        assessor_id: "ACME123456",
+        body: AssessorStub.new.fetch_request_body(scotland_rdsap: "ACTIVE"),
+      )
     end
 
     after(:all) do
@@ -81,7 +60,7 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
     end
 
     it "returns an assessor" do
-      response = scottish_get_assessor_by_id(scheme_assessor_id: "TEST000001")
+      response = scottish_get_assessor_by_id(scheme_assessor_id: "ACME123456")
       response_json = JSON.parse(response.body)
       expect(response_json).to eq expected_response
     end
