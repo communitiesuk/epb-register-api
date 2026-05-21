@@ -3656,7 +3656,7 @@ components:
           - "S"
           - "W"
           - "N"
-        example: ["E"]
+        example: "E"
 
     AddressSource:
       type: string
