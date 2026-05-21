@@ -1,6 +1,5 @@
 module Controller
   class AssessorController < Controller::BaseController
-
     NULLABLE_STRING = %w[string null].freeze
     ASSESSOR_STATUSES = %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED].freeze
 
@@ -177,7 +176,7 @@ module Controller
           first_name,
           last_name,
           date_of_birth,
-          )
+        )
 
       json_api_response(code: 200, data: result)
     end
@@ -198,7 +197,7 @@ module Controller
         UseCase::FindAssessorsByPostcode.new.execute(
           postcode,
           qualifications.split(","),
-          )
+        )
 
       result[:data] = assessor_list_results_filter(result)
 
@@ -221,7 +220,7 @@ module Controller
             :contact_details,
             :qualifications,
             :distance_from_postcode_in_miles,
-            )
+          )
         end
       end
     end
@@ -235,7 +234,7 @@ module Controller
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-          )
+        )
       end
 
       result = UseCase::FetchAssessorList.new.execute(scheme_id)
@@ -255,32 +254,32 @@ module Controller
            current_status_check &&
              !env[:auth_token].scope?("scheme:assessor:fetch")
          ) ||
-         (
-           !current_status_check &&
-             !env[:auth_token].scope?("assessor:search")
-         )
+          (
+            !current_status_check &&
+              !env[:auth_token].scope?("assessor:search")
+          )
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-          )
+        )
       end
 
       if current_status_check
         if !params.key?(:firstName) || !params.key?(:lastName) ||
-           !params.key?(:dateOfBirth) ||
-           !Date.valid_date?(
-             *Array
-                .new(3)
-                .zip(params[:dateOfBirth]&.split("-") || [])
-                .map(&:last)
-                .map(&:to_i),
-             )
+            !params.key?(:dateOfBirth) ||
+            !Date.valid_date?(
+              *Array
+                 .new(3)
+                 .zip(params[:dateOfBirth]&.split("-") || [])
+                 .map(&:last)
+                 .map(&:to_i),
+            )
           return (
             error_response(
               400,
               "INVALID_QUERY",
               "Must specify first name, last name and a valid date of birth when searching",
-              )
+            )
           )
         end
 
@@ -300,7 +299,7 @@ module Controller
           400,
           "INVALID_QUERY",
           "Must specify either name or postcode & qualification when searching",
-          )
+        )
       end
     rescue StandardError => e
       case e
@@ -311,13 +310,13 @@ module Controller
           400,
           "INVALID_REQUEST",
           "The requested postcode is not valid",
-          )
+        )
       when UseCase::FindAssessorsByName::OnlyFirstNameGiven
         error_response(
           400,
           "INVALID_REQUEST",
           "Both a first name and last name must be provided",
-          )
+        )
       when ArgumentError
         error_response(400, "INVALID_QUERY", e.message)
       else
@@ -335,7 +334,7 @@ module Controller
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-          )
+        )
       end
 
       result = UseCase::FetchAssessor.new.execute(scheme_id, scheme_assessor_id)
@@ -344,7 +343,7 @@ module Controller
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
         not_found_error("The requested scheme was not found")
-      when UseCase::FetchAssessor::AssessorNotFoundException
+      when Boundary::AssessorNotFoundException
         not_found_error("The requested assessor was not found")
       else
         server_error(e)
@@ -360,7 +359,7 @@ module Controller
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
-          )
+        )
       end
 
       assessor_details = request_body(PUT_SCHEMA)
@@ -372,9 +371,9 @@ module Controller
             body: assessor_details,
             scheme_assessor_id:,
             registered_by_id: scheme_id,
-            ),
+          ),
           env[:auth_token].sub,
-          )
+        )
       assessor_record = create_assessor_response[:assessor]
 
       if create_assessor_response[:assessor_was_newly_created]
@@ -393,7 +392,7 @@ module Controller
           409,
           "ASSESSOR_ID_ON_ANOTHER_SCHEME",
           "The assessor ID you are trying to update is registered by a different scheme",
-          )
+        )
       when UseCase::AddAssessor::InvalidAssessorIdException
         error_response(422, "INVALID REQUEST", e.message)
       when Boundary::Json::ParseError

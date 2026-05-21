@@ -180,7 +180,7 @@ module Controller
         error_response(400, "INVALID_REQUEST", "SAP Compliance Reports are not supported.")
       when UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
         error_response(400, "INVALID_REQUEST", "Schema is not supported.")
-      when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
+      when Boundary::AssessorNotFoundException
         error_response(400, "INVALID_REQUEST", "Assessor is not registered.")
       when UseCase::ValidateAndLodgeAssessment::SchemaNotDefined
         error_response(

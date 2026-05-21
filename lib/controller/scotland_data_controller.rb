@@ -126,7 +126,7 @@ module Controller
     rescue StandardError => e
       case e
       when Boundary::AssessorNotFoundException
-        error_response 400, "NOT_FOUND", "The thing you are looking for is not here"
+        not_found_error("The requested assessor was not found")
       else
         server_error(e)
       end

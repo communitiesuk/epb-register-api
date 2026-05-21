@@ -92,14 +92,14 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
           "errors" => [
             {
               "code" => "NOT_FOUND",
-              "title" => "The thing you are looking for is not here",
+              "title" => "The requested assessor was not found",
             },
           ],
         }
       end
 
       it "returns a 400 error" do
-        response = scottish_get_assessor_by_id(scheme_assessor_id: "invalid-id", accepted_responses: [400])
+        response = scottish_get_assessor_by_id(scheme_assessor_id: "invalid-id", accepted_responses: [404])
         response_json = JSON.parse(response.body)
         expect(response_json).to eq expected_response
       end
