@@ -3532,6 +3532,29 @@ components:
         postcode:
           $ref: '#/components/schemas/AddressPostcode'
 
+    AddressWithCountry:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/AddressSource'
+        line1:
+          $ref: '#/components/schemas/AddressLine1'
+        line2:
+          type: string
+          example: ''
+        line3:
+          type: string
+          example: ''
+        line4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        country:
+          $ref: '#/components/schemas/AddressCountry'
+
     AddressStyle2:
       type: object
       properties:
@@ -3555,7 +3578,7 @@ components:
 
     AddressDetail:
       allOf:
-        - $ref: '#/components/schemas/Address'
+        - $ref: '#/components/schemas/AddressWithCountry'
         - type: object
           properties:
             addressId:
@@ -3623,6 +3646,12 @@ components:
     AddressPostcode:
       type: string
       example: 'FL23 4JA'
+
+    AddressCountry:
+      type: array
+      items:
+        type: string
+        example: "E"
 
     AddressSource:
       type: string
