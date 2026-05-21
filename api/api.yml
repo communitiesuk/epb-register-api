@@ -3651,7 +3651,12 @@ components:
       type: array
       items:
         type: string
-        example: "E"
+        enum:
+          - "E"
+          - "S"
+          - "W"
+          - "N"
+        example: ["E"]
 
     AddressSource:
       type: string
