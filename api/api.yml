@@ -3796,7 +3796,7 @@ components:
         schemeAssessorId:
           $ref: '#/components/schemas/AssessorSchemeId'
         qualifications:
-          $ref: '#/components/schemas/AssessorQualifications'
+          $ref: '#/components/schemas/ScottishAssessorQualifications'
 
     ScottishAssessorFull:
       type: object
@@ -3822,7 +3822,7 @@ components:
           type: string
           example: 'Stroma Certification Ltd'
         qualifications:
-          $ref: '#/components/schemas/AssessorQualifications'
+          $ref: '#/components/schemas/ScottishAssessorQualifications'
 
     AssessorBody:
       allOf:
@@ -3955,6 +3955,24 @@ components:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         gda:
           $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandRdsap:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandSapExistingBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandSapNewBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandDecAndAr:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandNondomesticExistingBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandNondomesticNewBuilding:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        scotlandSection63:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+
+    ScottishAssessorQualifications:
+      type: object
+      properties:
         scotlandRdsap:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         scotlandSapExistingBuilding:
