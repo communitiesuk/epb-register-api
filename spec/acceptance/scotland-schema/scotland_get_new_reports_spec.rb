@@ -30,8 +30,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
                  },
                  links: { prev: nil,
                           self: "http://example.org/api/scotland/v1/updates/new-reports?startDate=2021-06-01&endDate=2021-06-03&page=1",
-                          next: nil },
-                 meta: {} }.to_json)
+                          next: nil } }.to_json)
   end
 
   it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/v1/updates/new-reports?startDate=some_date&endDate=some_date", scopes: %w[scotland_data:fetch]

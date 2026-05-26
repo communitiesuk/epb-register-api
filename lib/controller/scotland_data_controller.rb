@@ -37,7 +37,7 @@ module Controller
       data = ApiFactory.fetch_new_reports_use_case.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page)
       pagination = ApiFactory.get_pagination_for_new_reports.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url)
 
-      json_api_response(code: 200, links: pagination, data: data)
+      json_api_response(code: 200, links: pagination, data: data, meta: false)
     rescue StandardError => e
       rescue_errors(e)
     end
@@ -114,7 +114,7 @@ module Controller
       data = ApiFactory.fetch_scottish_assessor_by_date.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page)
       pagination = ApiFactory.get_pagination_for_scottish_assessors_by_date.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url, count_method: :count_search_by_date)
 
-      json_api_response(code: 200, links: pagination, data: data)
+      json_api_response(code: 200, links: pagination, data: data, meta: false)
     rescue StandardError => e
       rescue_errors(e)
     end

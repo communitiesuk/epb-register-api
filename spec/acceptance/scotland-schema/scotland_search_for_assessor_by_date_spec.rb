@@ -42,8 +42,7 @@ describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
                  },
                  links: { next: nil,
                           self: "#{url}?startDate=#{start_date}&endDate=#{end_date}&page=1",
-                          prev: nil },
-                 meta: {} }.to_json)
+                          prev: nil } }.to_json)
   end
   let(:events_date) { Date.parse(events_time.to_s) }
   let(:start_date) { events_date - 2.days }
