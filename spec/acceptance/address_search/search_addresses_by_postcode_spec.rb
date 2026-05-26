@@ -183,7 +183,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
               line4: nil,
               town: "Whitbury",
               postcode: "SW1A 2AA",
-              country: ["E"],
+              country: %w[E],
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
@@ -334,9 +334,9 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
           JSON.parse(
             assertive_get_in_search_scope(
               "/api/search/addresses?postcode=SW1A%202AA",
-              ).body,
+            ).body,
             symbolize_names: true,
-            )
+          )
         end
 
         before do
@@ -349,24 +349,24 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
 
         it "returns the expected address entry without the country code" do
           expect(response[:data][:addresses][0]).to eq(
-                                                      {
-                                                        addressId: "RRN-0000-0000-0000-0000-0000",
-                                                        line1: "1 Some Street",
-                                                        line2: nil,
-                                                        line3: nil,
-                                                        line4: nil,
-                                                        town: "Whitbury",
-                                                        postcode: "SW1A 2AA",
-                                                        source: "PREVIOUS_ASSESSMENT",
-                                                        existingAssessments: [
-                                                          {
-                                                            assessmentId: "0000-0000-0000-0000-0000",
-                                                            assessmentStatus: "ENTERED",
-                                                            assessmentType: "RdSAP",
-                                                          },
-                                                        ],
-                                                      },
-                                                      )
+            {
+              addressId: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Whitbury",
+              postcode: "SW1A 2AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
         end
       end
     end
@@ -436,7 +436,7 @@ describe "Acceptance::AddressSearch::ByPostcode", :set_with_timecop do
             line4: nil,
             town: "Whitbury",
             postcode: "SW1A 2AA",
-            country: ["E"],
+            country: %w[E],
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {

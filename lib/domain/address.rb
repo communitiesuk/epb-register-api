@@ -29,7 +29,7 @@ module Domain
     end
 
     def to_hash
-      hash =       {
+      hash = {
         address_id: @address_id,
         line1: @line1,
         line2: @line2,
