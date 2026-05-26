@@ -199,7 +199,7 @@ module Domain
         first_name: @first_name,
         last_name: @last_name,
         scheme_assessor_id: @scheme_assessor_id,
-        qualifications: qualifications,
+        qualifications: scottish_qualifications,
       }
     end
 
@@ -212,7 +212,7 @@ module Domain
         address: address,
         scheme_assessor_id: @scheme_assessor_id,
         registered_by: @registered_by_name,
-        qualifications: qualifications,
+        qualifications: scottish_qualifications,
       }
     end
 
@@ -243,6 +243,18 @@ module Domain
         non_domestic_nos5:
           filter_qualification(@non_domestic_nos5_qualification),
         gda: filter_qualification(@gda_qualification),
+        scotland_rdsap: filter_qualification(@scotland_rdsap_qualification),
+        scotland_sap_existing_building: filter_qualification(@scotland_sap_existing_building_qualification),
+        scotland_sap_new_building: filter_qualification(@scotland_sap_new_building_qualification),
+        scotland_dec_and_ar: filter_qualification(@scotland_dec_and_ar_qualification),
+        scotland_nondomestic_existing_building: filter_qualification(@scotland_nondomestic_existing_building_qualification),
+        scotland_nondomestic_new_building: filter_qualification(@scotland_nondomestic_new_building_qualification),
+        scotland_section63: filter_qualification(@scotland_section63_qualification),
+      }
+    end
+
+    def scottish_qualifications
+      {
         scotland_rdsap: filter_qualification(@scotland_rdsap_qualification),
         scotland_sap_existing_building: filter_qualification(@scotland_sap_existing_building_qualification),
         scotland_sap_new_building: filter_qualification(@scotland_sap_new_building_qualification),
