@@ -7,7 +7,7 @@ namespace :oneoff do
     end_date = utc_now
 
     event_types =
-      [{ type: "lodgement", queue: :assessments },
+      [{ type: "lodgement", queue: :assessments_backfill },
        { type: "address_id_updated", queue: :assessments_address_update },
        { type: "cancelled", queue: :cancelled },
        { type: "opt_out", queue: :opt_outs }]

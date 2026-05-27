@@ -42,7 +42,7 @@ describe "reload queues rake" do
 
   let(:rake) { get_task("oneoff:reload_queues") }
   let(:event_types) do
-    [{ type: "lodgement", queue: :assessments },
+    [{ type: "lodgement", queue: :assessments_backfill },
      { type: "address_id_updated", queue: :assessments_address_update },
      { type: "cancelled", queue: :cancelled },
      { type: "opt_out", queue: :opt_outs }]
@@ -68,6 +68,20 @@ describe "reload queues rake" do
     it "the address match rake receives the correct date range" do
       expect(Helper::AddressMatchAssessment).to have_received(:find_unmatched_assessments).with(date_from: start_date, date_to: Time.now.to_s, is_scottish: false, skip_existing: nil)
     end
+
+    it "passes queue name validation when pushing to redis" do
+      redis = instance_double(Redis)
+      allow(redis).to receive(:lpush)
+      real_gateway = Gateway::DataWarehouseQueuesGateway.new(redis_client: redis)
+      allow(ApiFactory).to receive_messages(data_warehouse_queues_gateway: real_gateway)
+
+      Rake::Task["oneoff:reload_queues"].reenable
+      rake.invoke
+
+      event_types.each do |i|
+        expect(redis).to have_received(:lpush).with(i[:queue].to_s, assessment_ids.join(" ")).once
+      end
+    end
   end
 
   context "when no RRNs are found for an event type" do
@@ -78,7 +92,7 @@ describe "reload queues rake" do
 
     it "does not push onto the queue for that event" do
       expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).exactly(3).times
-      expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue).with(:opt_out, nil)
+      expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue).with(:opt_out, anything)
     end
   end
 end
