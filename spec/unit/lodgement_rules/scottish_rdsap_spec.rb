@@ -55,7 +55,7 @@ describe LodgementRules::ScottishRdsap do
         rdsap_xml.to_xml,
         "RdSAP-Schema-S-21.0",
         false,
-        )
+      )
     adapter = wrapper.get_view_model
 
     errors = described_class.new.validate(adapter, country_lookup)

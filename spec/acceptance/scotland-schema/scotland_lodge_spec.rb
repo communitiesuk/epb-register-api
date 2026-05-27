@@ -257,7 +257,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                                  schema_name: "RdSAP-Schema-S-21.0",
                                                  migrated: "true"
 
-            rdsap_data =  ActiveRecord::Base.connection.exec_query(
+            rdsap_data = ActiveRecord::Base.connection.exec_query(
               "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
             ).entries.first
 
@@ -838,9 +838,9 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
                                                schema_name: "RdSAP-Schema-S-21.0",
                                                migrated: false
 
-          rdsap_data =  ActiveRecord::Base.connection.exec_query(
+          rdsap_data = ActiveRecord::Base.connection.exec_query(
             "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-            ).entries.first
+          ).entries.first
 
           expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
           expect(rdsap_data).to eq expected_rdsap_assessment_data
