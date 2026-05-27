@@ -3651,6 +3651,7 @@ components:
       type: array
       items:
         type: string
+        description: Country codes as used in [OS address base](https://docs.os.uk/os-downloads/products/addresses-and-names-portfolio/addressbase-fundamentals/code-lists-and-enumerations/countrycode)
         enum:
           - "E"
           - "S"
