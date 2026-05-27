@@ -263,7 +263,7 @@ GEM
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     tilt (2.6.1)
-    timecop (0.9.10)
+    timecop (0.9.11)
     timeout (0.6.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -318,7 +318,7 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   slack-ruby-client
-  timecop (~> 0.9.10)
+  timecop (~> 0.9.11)
   unleash (~> 5.1.1)
   webmock (~> 3.23)
   wisper (~> 3.0.0)
