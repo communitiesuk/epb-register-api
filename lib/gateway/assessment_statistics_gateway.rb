@@ -65,7 +65,7 @@ module Gateway
       SQL
 
       min_date = ActiveRecord::Base.connection.exec_query(sql).first["day_date"]
-      return (Time.now.to_date - 1) if min_date.nil?
+      return Time.now.to_date - 1 if min_date.nil?
 
       min_date
     end

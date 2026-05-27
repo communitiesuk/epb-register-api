@@ -79,8 +79,8 @@ describe "add hashed assessment_id rake" do
       end
 
       let(:assessment_data) do
-        (ActiveRecord::Base
-                               .connection.execute "SELECT assessment_id, hashed_assessment_id, date_registered FROM assessments WHERE hashed_assessment_id IS NOT NULL")
+        ActiveRecord::Base
+                               .connection.execute "SELECT assessment_id, hashed_assessment_id, date_registered FROM assessments WHERE hashed_assessment_id IS NOT NULL"
       end
       let(:rdsap_hashed_assessment_id) { assessment_data.to_a.find { |h| break h["hashed_assessment_id"] if h["assessment_id"] == "0000-0000-0000-0000-0000" } }
       let(:rdsap_ni_hashed_assessment_id) { assessment_data.to_a.find { |h| break h["hashed_assessment_id"] if h["assessment_id"] == "1234-5678-1234-2278-1234" } }
