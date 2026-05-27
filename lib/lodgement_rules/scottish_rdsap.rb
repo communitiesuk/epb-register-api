@@ -238,21 +238,6 @@ module LodgementRules
           end,
       },
       {
-        name: "SCOTLAND_INSULATION_IN_ROOM_IN_ROOF_IS_1_VAL051",
-        title:
-          "The insulation for room in roof cannot be 1",
-        test:
-          lambda do |adapter, _country_lookup = nil|
-            rooms_in_roof_insulation = method_or_nil(adapter, :rooms_in_roof_insulation)
-
-            room_insulation_1 = rooms_in_roof_insulation&.any? do |room_in_roof_insulation|
-              %w[1].include?(room_in_roof_insulation)
-            end
-
-            !room_insulation_1
-          end,
-      },
-      {
         name: "SCOTLAND_FLOOR_INSULATION_THICKNESS_AND_FLOOR_U_VALUE_CANNOT_BOTH_BE_PRESENT_VAL052",
         title:
           "Either floor insulation thickness or floor u value can be present but not both. It is possible for neither to be present",
@@ -305,28 +290,6 @@ module LodgementRules
             end
 
             !both_wall_measurements_present
-          end,
-      },
-      {
-        name: "SCOTLAND_ONLY_ONE_ROOM_IN_ROOF_INSULATION_VALUE_PERMITTED_VAL055",
-        title:
-          "One one of the following should be present: Roof-Insulation-Thickness, Room-In-Roof-Details",
-        test:
-          lambda do |adapter, _country_lookup = nil|
-            rooms_in_roof = method_or_nil(adapter, :rooms_in_roof).reject { |element| element.nil? || element.empty? }
-
-            rooms_in_roof_roof_insulation = method_or_nil(adapter, :rooms_in_roof_roof_insulation)
-
-            both_roof_measurements_present = false
-
-            unless rooms_in_roof.empty?
-              both_roof_measurements_present = rooms_in_roof_roof_insulation&.any? do |roof_insulation|
-                roof_insulation[:room_in_roof_details].present? ==
-                  roof_insulation[:roof_insulation_thickness].present?
-              end
-            end
-
-            !both_roof_measurements_present
           end,
       },
       {

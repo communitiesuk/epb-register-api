@@ -15,6 +15,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
   let(:scheme_id) { add_scheme_and_get_id }
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-S-19.0" }
+  let(:valid_rdsap_210_xml) { Samples.xml "RdSAP-Schema-S-21.0" }
   let(:valid_rdsap_not_scottish_xml) { Samples.xml "RdSAP-Schema-19.0" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-S-7.1", "cepc" }
@@ -219,6 +220,49 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
             expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
             expect(sap_data).to eq expected_sap_assessment_data
+          end
+        end
+
+        context "when migrating a valid Scottish RdSAP-Schema-S-21.0 assessment" do
+          expected_sap_assessment_data = {
+            "assessment_id" => "0000-0000-0000-0000-0000",
+            "date_of_assessment" => "2023-06-27",
+            "date_registered" => "2023-06-27",
+            "type_of_assessment" => "RdSAP",
+            "current_energy_efficiency_rating" => 80,
+            "postcode" => "FK1 1XE",
+            "date_of_expiry" => "2033-06-26",
+            "address_line1" => "1 Some Street",
+            "address_line2" => "",
+            "address_line3" => "",
+            "address_line4" => "",
+            "town" => "Newkirk",
+            "scheme_assessor_id" => "SPEC000000",
+            "opt_out" => false,
+            "address_id" => "LPRN-0000000000",
+            "migrated" => true,
+            "cancelled_at" => nil,
+            "not_for_issue_at" => nil,
+            "created_at" => "2023-06-27",
+            "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+          }
+
+          it "successfully migrates the assessment" do
+            response = lodge_scottish_assessment assessment_body: valid_rdsap_210_xml,
+                                                 accepted_responses: [201],
+                                                 scopes: %w[migrate:scotland],
+                                                 auth_data: {
+                                                   scheme_ids: [scheme_id],
+                                                 },
+                                                 schema_name: "RdSAP-Schema-S-21.0",
+                                                 migrated: "true"
+
+            rdsap_data =  ActiveRecord::Base.connection.exec_query(
+              "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+            ).entries.first
+
+            expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+            expect(rdsap_data).to eq expected_sap_assessment_data
           end
         end
 
@@ -757,6 +801,49 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
             expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
             expect(lodged_scotland_sap_qualification_data).to eq expected_sap_data
           end
+        end
+      end
+
+      context "when lodging a valid Scottish RdSAP-Schema-S-21.0 assessment" do
+        expected_rdsap_assessment_data = {
+          "assessment_id" => "0000-0000-0000-0000-0000",
+          "date_of_assessment" => "2023-06-27",
+          "date_registered" => "2023-06-27",
+          "type_of_assessment" => "RdSAP",
+          "current_energy_efficiency_rating" => 80,
+          "postcode" => "FK1 1XE",
+          "date_of_expiry" => "2033-06-26",
+          "address_line1" => "1 Some Street",
+          "address_line2" => "",
+          "address_line3" => "",
+          "address_line4" => "",
+          "town" => "Newkirk",
+          "scheme_assessor_id" => "SPEC000000",
+          "opt_out" => false,
+          "address_id" => "LPRN-0000000000",
+          "migrated" => false,
+          "cancelled_at" => nil,
+          "not_for_issue_at" => nil,
+          "created_at" => "2023-06-27",
+          "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        }
+
+        it "successfully lodges the assessment" do
+          response = lodge_scottish_assessment assessment_body: valid_rdsap_210_xml,
+                                               accepted_responses: [201],
+                                               scopes: %w[scotland_assessment:lodge],
+                                               auth_data: {
+                                                 scheme_ids: [scheme_id],
+                                               },
+                                               schema_name: "RdSAP-Schema-S-21.0",
+                                               migrated: false
+
+          rdsap_data =  ActiveRecord::Base.connection.exec_query(
+            "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+            ).entries.first
+
+          expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+          expect(rdsap_data).to eq expected_rdsap_assessment_data
         end
       end
 

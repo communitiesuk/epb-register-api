@@ -44,6 +44,24 @@ describe LodgementRules::ScottishRdsap do
     expect(errors).to eq([])
   end
 
+  it "returns an empty list for a valid RdSAP-Schema-S-21.0 file" do
+    rdsap_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-S-21.0"))
+    rdsap_xml.at("Registration-Date").children = Date.today.to_s
+    rdsap_xml.at("Inspection-Date").children = Date.today.to_s
+    rdsap_xml.at("Completion-Date").children = Date.today.to_s
+    country_lookup = Domain::CountryLookup.new(country_codes: [:S])
+    wrapper =
+      ViewModel::Factory.new.create(
+        rdsap_xml.to_xml,
+        "RdSAP-Schema-S-21.0",
+        false,
+        )
+    adapter = wrapper.get_view_model
+
+    errors = described_class.new.validate(adapter, country_lookup)
+    expect(errors).to eq([])
+  end
+
   context "when the inspection date is later than the completion date VAL009" do
     let(:error) do
       {
@@ -736,43 +754,6 @@ describe LodgementRules::ScottishRdsap do
     end
   end
 
-  context "when the insulation is not give for a room in roof VAL051" do
-    let(:error) do
-      {
-        "code": "SCOTLAND_INSULATION_IN_ROOM_IN_ROOF_IS_1_VAL051",
-        "title":
-          "The insulation for room in roof cannot be 1",
-      }.freeze
-    end
-
-    it "allows lodgement when the insulation is not 1" do
-      assert_rdsap_errors(expected_errors: [],
-                          values: { "SAP-Room-In-Roof Insulation": "2",
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-
-    it "allows lodgement when the insulation code is a string" do
-      assert_rdsap_errors(expected_errors: [],
-                          values: { "SAP-Room-In-Roof Insulation": "ND",
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-
-    it "raises an error when the insulation is 1" do
-      assert_rdsap_errors(expected_errors: [error],
-                          values: { "SAP-Room-In-Roof Insulation": "1",
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-  end
-
   context "when any either floor insulation thickness or floor u value is present VAL052" do
     let(:error) do
       {
@@ -941,56 +922,6 @@ describe LodgementRules::ScottishRdsap do
       assert_rdsap_errors(expected_errors: [error],
                           values: { "Wall-Insulation-Thickness": :delete,
                                     "Wall-U-Value": :delete,
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-  end
-
-  context "when more than one value for room in roof insulation is present VAL055" do
-    let(:error) do
-      {
-        "code": "SCOTLAND_ONLY_ONE_ROOM_IN_ROOF_INSULATION_VALUE_PERMITTED_VAL055",
-        "title":
-          "One one of the following should be present: Roof-Insulation-Thickness, Room-In-Roof-Details",
-      }.freeze
-    end
-
-    it "allows lodgement when only of the values is present" do
-      assert_rdsap_errors(expected_errors: [],
-                          values: { "SAP-Room-In-Roof Roof-Insulation-Thickness": "120mm",
-                                    "SAP-Room-In-Roof Room-In-Roof-Details": :delete,
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-
-    it "allows lodgement when a different single value is present" do
-      assert_rdsap_errors(expected_errors: [],
-                          values: { "SAP-Room-In-Roof Roof-Insulation-Thickness": :delete,
-                                    "SAP-Room-In-Roof Room-In-Roof-Details": "{}",
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-
-    it "raises an error when more than one value is present" do
-      assert_rdsap_errors(expected_errors: [error],
-                          values: { "SAP-Room-In-Roof Roof-Insulation-Thickness": "120mm",
-                                    "SAP-Room-In-Roof Room-In-Roof-Details": "{stuff_in_a_roof: 'things}",
-                                    "Completion-Date": Date.today.to_s,
-                                    "Inspection-Date": Date.yesterday.to_s },
-                          country_code: [:S],
-                          file_name: "house_epc")
-    end
-
-    it "raises an error when neither value is present" do
-      assert_rdsap_errors(expected_errors: [error],
-                          values: { "SAP-Room-In-Roof Roof-Insulation-Thickness": :delete,
-                                    "SAP-Room-In-Roof Room-In-Roof-Details": :delete,
                                     "Completion-Date": Date.today.to_s,
                                     "Inspection-Date": Date.yesterday.to_s },
                           country_code: [:S],
