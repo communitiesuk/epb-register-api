@@ -3,6 +3,10 @@ describe "backfill assessments with country ids" do
   let(:use_case) { instance_double(UseCase::BackfillCountryId) }
 
   context "when invoking a rake without arguments" do
+    before do
+      EnvironmentStub.remove(%w[DATE_FROM DATE_TO ASSESSMENT_TYPES])
+    end
+
     it "raises an missing argument error" do
       expect { rake.invoke }.to raise_error(Boundary::ArgumentMissing)
     end
