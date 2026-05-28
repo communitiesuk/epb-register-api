@@ -17,8 +17,8 @@ namespace :oneoff do
       ApiFactory.data_warehouse_queues_gateway.push_to_queue(i[:queue], assessment_ids.join(" ")) unless assessment_ids.nil? || assessment_ids.empty?
     end
 
-    ENV["DATE_FROM"] = start_date.to_s
-    ENV["DATE_TO"] = end_date.to_s
+    ENV["DATE_FROM"] = start_date.to_date.to_s
+    ENV["DATE_TO"] = end_date.to_date.to_s
     Rake::Task["oneoff:address_match_assessments"].invoke
   end
 end

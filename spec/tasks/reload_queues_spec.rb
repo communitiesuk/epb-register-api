@@ -17,6 +17,10 @@ describe "reload queues rake" do
     end
   end
 
+  after do
+    allow(Helper::AddressMatchAssessment).to receive(:find_unmatched_assessments).and_call_original
+  end
+
   after(:all) do
     Timecop.return
     EnvironmentStub.remove(%w[NUMBER_HOURS_BEFORE])
@@ -66,7 +70,7 @@ describe "reload queues rake" do
     end
 
     it "the address match rake receives the correct date range" do
-      expect(Helper::AddressMatchAssessment).to have_received(:find_unmatched_assessments).with(date_from: start_date, date_to: Time.now.to_s, is_scottish: false, skip_existing: nil)
+      expect(Helper::AddressMatchAssessment).to have_received(:find_unmatched_assessments).with(date_from: start_date.to_date.to_s, date_to: Time.now.to_date.to_s, is_scottish: false, skip_existing: nil)
     end
 
     it "passes queue name validation when pushing to redis" do
