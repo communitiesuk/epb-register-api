@@ -61,7 +61,9 @@ describe "reload queues rake" do
 
     it "calls gateway to put that data into the correct queue" do
       event_types.each do |i|
-        expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(i[:queue], assessment_ids.join(" ")).once
+        assessment_ids.each do |assessment_id|
+          expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).with(i[:queue], assessment_id).once
+        end
       end
     end
 
@@ -83,7 +85,9 @@ describe "reload queues rake" do
       rake.invoke
 
       event_types.each do |i|
-        expect(redis).to have_received(:lpush).with(i[:queue].to_s, assessment_ids.join(" ")).once
+        assessment_ids.each do |assessment_id|
+          expect(redis).to have_received(:lpush).with(i[:queue].to_s, assessment_id).once
+        end
       end
     end
   end
@@ -95,7 +99,7 @@ describe "reload queues rake" do
     end
 
     it "does not push onto the queue for that event" do
-      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).exactly(3).times
+      expect(data_warehouse_queues_gateway).to have_received(:push_to_queue).exactly(9).times
       expect(data_warehouse_queues_gateway).not_to have_received(:push_to_queue).with(:opt_out, anything)
     end
   end

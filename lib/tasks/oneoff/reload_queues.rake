@@ -14,7 +14,11 @@ namespace :oneoff do
 
     event_types.each do |i|
       assessment_ids = Helper::ReloadQueues.fetch_assessment_ids(event_type: i[:type], start_date:)
-      ApiFactory.data_warehouse_queues_gateway.push_to_queue(i[:queue], assessment_ids.join(" ")) unless assessment_ids.nil? || assessment_ids.empty?
+      next if assessment_ids.nil? || assessment_ids.empty?
+
+      assessment_ids.each do |assessment_id|
+        ApiFactory.data_warehouse_queues_gateway.push_to_queue(i[:queue], assessment_id)
+      end
     end
 
     ENV["DATE_FROM"] = start_date.to_date.to_s
