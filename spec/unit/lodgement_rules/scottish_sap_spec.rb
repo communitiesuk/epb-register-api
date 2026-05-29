@@ -1,6 +1,6 @@
 require_relative "../../shared_context/shared_lodgement"
 
-describe LodgementRules::ScottishSap do
+describe LodgementRules::ScottishSap, :set_with_timecop do
   include_context "when lodging XML"
 
   let(:docs_under_test) { %w[SAP-Schema-S-19.0.0] }

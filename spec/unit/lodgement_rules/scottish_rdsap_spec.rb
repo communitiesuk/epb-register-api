@@ -23,7 +23,7 @@ def assert_rdsap_errors(expected_errors:, values: nil, new_nodes: [], country_co
   expect(errors).to match_array(expected_errors)
 end
 
-describe LodgementRules::ScottishRdsap do
+describe LodgementRules::ScottishRdsap, :set_with_timecop do
   include_context "when lodging XML"
 
   it "returns an empty list for a valid file" do
