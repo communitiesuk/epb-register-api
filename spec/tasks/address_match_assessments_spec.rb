@@ -67,6 +67,7 @@ describe "BackfillMatchedAddress" do
   end
 
   before do
+    EnvironmentStub.remove(%W[DATE_TO DATE_FROM])
     allow($stdout).to receive(:puts)
     Events::Broadcaster.accept_only! :matched_address
     allow(Gateway::AddressingApiGateway).to receive(:new).and_return(addressing_gateway)
@@ -81,6 +82,7 @@ describe "BackfillMatchedAddress" do
       "TRUNCATE TABLE assessments CASCADE",
     )
     Events::Broadcaster.accept_any!
+    EnvironmentStub.remove(%W[DATE_TO DATE_FROM])
   end
 
   context "when the task runs with a single match for a scottish address" do
@@ -355,7 +357,7 @@ describe "BackfillMatchedAddress" do
     end
 
     after(:all) do
-      EnvironmentStub.remove(%w[SKIP_EXISTING DATE_FROM DATE_END])
+      EnvironmentStub.remove(%w[SKIP_EXISTING DATE_FROM DATE_TO])
     end
 
     it "does not process any assessments outside of the range" do
