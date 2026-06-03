@@ -72,7 +72,7 @@ describe "reload queues rake" do
     end
 
     it "the address match rake receives the correct date range" do
-      expect(Helper::AddressMatchAssessment).to have_received(:find_unmatched_assessments).with(date_from: start_date.to_date.to_s, date_to: Time.now.to_date.to_s, is_scottish: false, skip_existing: nil)
+      expect(Helper::AddressMatchAssessment).to have_received(:find_unmatched_assessments).with(date_from: start_date.to_date.to_s, date_to: Time.now.to_date.to_s, is_scottish: false, skip_existing: false)
     end
 
     it "passes queue name validation when pushing to redis" do

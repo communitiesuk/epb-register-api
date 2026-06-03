@@ -10,8 +10,10 @@ module Helper::AddressMatchAssessment
       JOIN #{db_schema}.assessments_address_id aai ON a.assessment_id = aai.assessment_id
     SQL
 
-    if skip_existing
+    if skip_existing == true
       sql.concat("WHERE aai.matched_uprn IS NULL")
+    else
+      skip_existing = false
     end
 
     if date_from && date_to

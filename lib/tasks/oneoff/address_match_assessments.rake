@@ -3,10 +3,21 @@ require "nokogiri"
 namespace :oneoff do
   desc "Backfills matched_uprn from assessments_address_id"
   task :address_match_assessments do
-    skip_existing = ENV["SKIP_EXISTING"]
+    skip_existing = ENV["SKIP_EXISTING"] == "true"
     batch_size = ENV["BATCH_SIZE"].nil? ? 1000 : ENV["BATCH_SIZE"].to_i
     date_from = ENV["DATE_FROM"]
     date_to   = ENV["DATE_TO"]
+
+    raise Boundary::ArgumentMissing, date_from.nil? ? "DATE_FROM" : "DATE_TO" if (date_from.nil? && !date_to.nil?) || (!date_from.nil? && date_to.nil?)
+
+    unless date_from.nil?
+      begin
+        raise ArgumentError if Date.parse(date_to) < Date.parse(date_from)
+      rescue Date::Error
+        raise ArgumentError
+      end
+    end
+
     is_scottish = ENV["IS_SCOTTISH"] || false
     puts "[#{Time.now}] Starting address matching backfill (#{skip_existing ? 'skipping assessments with an existing match' : 'processing all assessments'})"
 
