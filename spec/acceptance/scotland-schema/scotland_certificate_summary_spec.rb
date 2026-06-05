@@ -18,10 +18,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
   context "when requesting Scottish assessments" do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:assessor) do
-      AssessorStub.new.fetch_request_body(
-        domestic_rd_sap: "ACTIVE",
-        domestic_sap: "ACTIVE",
-      )
+      AssessorStub.new.fetch_request_body
     end
 
     before do
