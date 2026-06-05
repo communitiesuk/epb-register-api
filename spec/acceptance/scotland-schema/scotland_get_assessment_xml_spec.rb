@@ -21,7 +21,7 @@ describe "Acceptance::ScotlandGetAssessmentXml", :set_with_timecop do
     valid_scottish_rdsap_xml
   end
 
-  context "when requesting xml for an assessment" do
+  context "when requesting xml for a Scottish assessment" do
     it "returns the xml" do
       response = scottish_get_assessment_xml(
         assessment_id: "0000-0000-0000-0000-0000",

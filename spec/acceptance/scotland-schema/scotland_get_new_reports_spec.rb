@@ -35,7 +35,7 @@ describe "Acceptance::ScotlandGetNewReports", :set_with_timecop do
 
   it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/v1/updates/new-reports?startDate=some_date&endDate=some_date", scopes: %w[scotland_data:fetch]
 
-  context "when requesting a list of reports between two dates" do
+  context "when requesting a list of Scottish reports between two dates" do
     before do
       setup_scheme_and_lodge
       Timecop.freeze(Time.utc(2021, 7, 1))

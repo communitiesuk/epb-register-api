@@ -1,7 +1,7 @@
 describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
-  context "when fetching an assessor" do
+  context "when fetching an assessor that exists by ID" do
     let(:use_case) { instance_double(UseCase::FetchScottishAssessorById) }
 
     let(:expected_response) do
@@ -50,13 +50,13 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
       Timecop.return
     end
 
-    it "returns an assessor" do
+    it "returns the assessor details and Scottish qualifications" do
       response = scottish_get_assessor_by_id(scheme_assessor_id: "ACME123456")
       response_json = JSON.parse(response.body)
       expect(response_json).to eq expected_response
     end
 
-    context "when no assessor is found" do
+    context "when no assessor with the requested ID is found" do
       let(:expected_response) do
         {
           "errors" => [
@@ -68,7 +68,7 @@ describe "Acceptance::ScotlandAssessmentStatus", :set_with_timecop do
         }
       end
 
-      it "returns a 400 error" do
+      it "returns a 404 error" do
         response = scottish_get_assessor_by_id(scheme_assessor_id: "invalid-id", accepted_responses: [404])
         response_json = JSON.parse(response.body)
         expect(response_json).to eq expected_response

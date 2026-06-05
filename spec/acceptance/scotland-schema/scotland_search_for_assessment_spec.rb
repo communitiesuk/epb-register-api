@@ -328,7 +328,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
     end
   end
 
-  context "when searching by town and street name" do
+  context "when searching by Scottish town and street name" do
     expected_response =
       JSON.parse(
         {

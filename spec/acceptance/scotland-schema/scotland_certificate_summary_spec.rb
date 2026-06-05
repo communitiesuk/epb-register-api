@@ -43,7 +43,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a RdSAP assessment" do
+    context "when requesting a Scottish RdSAP assessment" do
       let(:related_assessment) { [] }
       let(:green_deal_plan) { [] }
       let(:superseded_by) { nil }
@@ -270,7 +270,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       # end
     end
 
-    context "when requesting a RdSAP-Schema-21.0 assessment" do
+    context "when requesting an RdSAP-Schema-S-21.0 assessment" do
       let(:related_assessment) { [] }
       let(:green_deal_plan) { [] }
       let(:superseded_by) { nil }
@@ -385,7 +385,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a SAP assessment" do
+    context "when requesting a Scottish SAP assessment" do
       let(:expected_response) do
         { data:
            { typeOfAssessment: "SAP",
@@ -478,7 +478,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a CEPC assessment" do
+    context "when requesting a Scottish CEPC assessment" do
       before do
         cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
         cepc_xml
@@ -575,7 +575,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting an Action Plan assessment" do
+    context "when requesting a Scottish Action Plan assessment" do
       before do
         action_plan_xml = Nokogiri.XML Samples.xml("CS63-S-7.0", "cs63")
         action_plan_xml
@@ -653,7 +653,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a DEC assessment" do
+    context "when requesting a Scottish DEC assessment" do
       before do
         dec_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec")
         dec_xml
@@ -728,7 +728,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a DEC-AR assessment" do
+    context "when requesting a Scottish DEC-AR assessment" do
       before do
         dec_ar_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec-ar")
         dec_ar_xml
@@ -855,7 +855,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a DEC or DEC-AR assessment from a dual lodgement" do
+    context "when requesting a Scottish DEC or DEC-AR assessment from a dual lodgement" do
       before do
         dual_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec+ar")
 

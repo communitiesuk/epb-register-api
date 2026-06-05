@@ -34,7 +34,7 @@ describe "Acceptance::ScotlandGetAssessmentMetaData", :set_with_timecop do
 
   it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/v1/assessments/some_id/meta-data", scopes: %w[scotland_data:fetch]
 
-  context "when requesting meta data for an assessment" do
+  context "when requesting meta data for a Scottish assessment" do
     it "returns the data and timestamp" do
       response = scottish_get_assessment_meta_data(
         assessment_id: "0000-0000-0000-0000-0000",

@@ -96,7 +96,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
 
   it_behaves_like "when checking an endpoint requires bearer token access", end_point: "scotland/v1/updates/assessors/status?startDate=some_date&endDate=some_date", scopes: %w[scotland_data:fetch]
 
-  context "when requesting a list of assessor status updates between two dates" do
+  context "when requesting a list of Scottish assessor status updates between two dates" do
     it "returns the data and details about pagination" do
       response = scottish_get_assessors_status_updates(
         start_date: events_date - 1.day,
@@ -138,7 +138,7 @@ describe "Acceptance::ScotlandGetAssessorStatusUpdates", :set_with_timecop do
     end
   end
 
-  context "when requesting a list of assessor status updates for one day" do
+  context "when requesting a list of Scottish assessor status updates for one day" do
     it "returns the data for events the day" do
       response = scottish_get_assessors_status_updates(
         start_date: events_date,
