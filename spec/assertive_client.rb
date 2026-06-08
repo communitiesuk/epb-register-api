@@ -599,6 +599,18 @@ def fetch_dec_summary(
   )
 end
 
+def fetch_scottish_dec_summary(
+  assessment_id:,
+  scopes: %w[scotland_dec_summary:fetch],
+  **assertive_kwargs
+)
+  assertive_get(
+    "api/scotland/dec_summary/#{assessment_id}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def assessments_search_by_postcode(
   postcode,
   scopes: %w[assessment:search],

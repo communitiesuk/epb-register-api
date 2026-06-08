@@ -406,6 +406,33 @@ module Controller
       end
     end
 
+    get "/api/scotland/dec_summary/:assessment_id",
+        auth_token_has_all: %w[scotland_dec_summary:fetch] do
+      json_api_response(
+        code: 200,
+        data: UseCase::FetchDecSummary.new.execute(params[:assessment_id], is_scottish: true),
+      )
+    rescue StandardError => e
+      case e
+      when UseCase::FetchDecSummary::AssessmentNotFound
+        not_found_error("Assessment not found")
+      when UseCase::FetchDecSummary::AssessmentGone
+        gone_error("Assessment not for issue")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The requested assessment id is not valid",
+        )
+      when UseCase::FetchDecSummary::AssessmentNotDec
+        error_response(403, "NOT_A_DEC", "Assessment is not a DEC")
+      when ViewModel::DecSummaryWrapper::AssessmentNotSupported
+        error_response(400, "INVALID_REQUEST", "Unsupported schema type")
+      else
+        server_error(e)
+      end
+    end
+
     def assessor_list_results_filter(unfiltered_results)
       if unfiltered_results[:data]
         unfiltered_results[:data].map do |r|

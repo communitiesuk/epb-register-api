@@ -14,11 +14,11 @@ module UseCase
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(assessment_id)
+    def execute(assessment_id, is_scottish: false)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
       result =
-        @assessment_gateway.search_by_assessment_id(assessment_id, restrictive: false).first
+        @assessment_gateway.search_by_assessment_id(assessment_id, restrictive: false, is_scottish:).first
 
       raise AssessmentNotFound unless result
 
@@ -28,7 +28,9 @@ module UseCase
 
       raise AssessmentNotDec if result.to_hash[:type_of_assessment] != "DEC"
 
-      assessments_xml = @assessments_xml_gateway.fetch(assessment_id)
+      assessments_xml = @assessments_xml_gateway.fetch(assessment_id, is_scottish:)
+
+      raise AssessmentNotFound if assessments_xml.nil?
 
       dec_summary =
         ViewModel::DecSummaryWrapper.new(

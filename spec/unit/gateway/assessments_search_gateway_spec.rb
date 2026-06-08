@@ -92,6 +92,7 @@ describe Gateway::AssessmentsSearchGateway do
 
         expect(result.count).to eq(1)
         expect(result.first).to be_a(Domain::AssessmentSearchResult)
+        expect(result.first.to_hash[:town]).to eq "Whitbury"
       end
     end
 
@@ -101,6 +102,7 @@ describe Gateway::AssessmentsSearchGateway do
 
         expect(result.count).to eq(1)
         expect(result.first).to be_a(Domain::AssessmentSearchResult)
+        expect(result.first.to_hash[:town]).to eq "Newkirk"
       end
     end
   end
