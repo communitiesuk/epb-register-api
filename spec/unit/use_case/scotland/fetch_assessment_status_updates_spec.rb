@@ -1,4 +1,4 @@
-describe UseCase::FetchScottishAssessmentStatusUpdates do
+describe UseCase::Scotland::FetchAssessmentStatusUpdates do
   context "when fetching a list of events" do
     subject(:use_case) { described_class.new(audit_logs_gateway) }
 

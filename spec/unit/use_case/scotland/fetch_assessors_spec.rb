@@ -1,4 +1,4 @@
-describe UseCase::FetchScottishAssessors do
+describe UseCase::Scotland::FetchAssessors do
   context "when fetching assessors by date" do
     subject(:use_case) { described_class.new(gateway) }
 

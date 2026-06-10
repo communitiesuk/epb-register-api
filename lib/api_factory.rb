@@ -95,15 +95,15 @@ class ApiFactory
   end
 
   def self.fetch_scottish_assessment_status_updates
-    @fetch_scottish_assessment_status_updates ||= UseCase::FetchScottishAssessmentStatusUpdates.new(audit_logs_gateway)
+    @fetch_scottish_assessment_status_updates ||= UseCase::Scotland::FetchAssessmentStatusUpdates.new(audit_logs_gateway)
   end
 
   def self.fetch_scottish_assessor_status_updates
-    @fetch_scottish_assessor_status_updates ||= UseCase::FetchScottishAssessorStatusUpdates.new(assessors_status_events_gateway)
+    @fetch_scottish_assessor_status_updates ||= UseCase::Scotland::FetchAssessorStatusUpdates.new(assessors_status_events_gateway)
   end
 
   def self.fetch_scottish_assessor_by_id
-    @fetch_scottish_assessor_by_id ||= UseCase::FetchScottishAssessorById.new(assessors_gateway)
+    @fetch_scottish_assessor_by_id ||= UseCase::Scotland::FetchAssessorById.new(assessors_gateway)
   end
 
   def self.assessments_export_use_case
@@ -426,7 +426,7 @@ class ApiFactory
   end
 
   def self.fetch_scottish_assessor_by_date
-    @fetch_scottish_assessor_by_date ||= UseCase::FetchScottishAssessors.new(
+    @fetch_scottish_assessor_by_date ||= UseCase::Scotland::FetchAssessors.new(
       assessors_gateway,
     )
   end
