@@ -11,7 +11,12 @@ describe "Integration::EndpointSecurity" do
 
   controllers_to_test =
     controllers_to_test.reject do |constant|
-      controllers_to_ignore.include? constant.to_s
+      controllers_to_ignore.include? constant
+    end
+
+  scottish_controllers_to_test =
+    Controller::Scotland.constants.select do |constant|
+      Controller::Scotland.const_get(constant).is_a? Class
     end
 
   routes_to_test = []
@@ -25,6 +30,17 @@ describe "Integration::EndpointSecurity" do
       }.map(&:first)
 
     routes_to_test |= route_definitions
+  end
+
+  scottish_controllers_to_test.each do |controller|
+    scottish_route_definitions =
+      Controller::Scotland.const_get(controller).routes.map { |method, routes|
+        routes.map { |route| route.first.to_s }.map do |route|
+          { verb: method.downcase, path: route }
+        end
+      }.map(&:first)
+
+    routes_to_test |= scottish_route_definitions
   end
 
   total_route_definitions = 50
