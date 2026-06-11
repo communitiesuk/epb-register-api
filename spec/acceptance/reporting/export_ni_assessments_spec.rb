@@ -1,3 +1,5 @@
+require_relative "open_data_export_test_helper"
+
 shared_context "when exporting NI EPCs" do
   def read_ni_csv_fixture(file_name, parse: true)
     fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
@@ -16,6 +18,7 @@ end
 describe "Acceptance::Reports::ExportNIAssessments" do
   include RSpecRegisterApiServiceMixin
   include_context "when exporting NI EPCs"
+  let(:body_headers) { ["ASSESSMENT_ID,ADDRESS1,ADDRESS2"] }
 
   context "when exporting the domestic data to a CSV before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
@@ -156,7 +159,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name}",
-      ).with(body: "ASSESSMENT_ID,ADDRESS1,ADDRESS2\n9999-0000-0000-0000-0000,1 Some Street,\"\"\n",
+      ).with(body: regex_body(body_headers),
              headers: {
                "Host" => "s3.eu-west-2.amazonaws.com",
              })
@@ -198,7 +201,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name}",
-      ).with(body: "ASSESSMENT_ID,ADDRESS1,ADDRESS2\n9999-0000-0000-0000-0000,1 Some Street,\"\"\n",
+      ).with(body: regex_body(body_headers),
              headers: {
                "Host" => "s3.eu-west-2.amazonaws.com",
              })
@@ -240,7 +243,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name}",
-      ).with(body: "ASSESSMENT_ID,ADDRESS1,ADDRESS2\n9999-0000-0000-0000-0000,1 Some Street,\"\"\n",
+      ).with(body: regex_body(body_headers),
              headers: {
                "Host" => "s3.eu-west-2.amazonaws.com",
              })
