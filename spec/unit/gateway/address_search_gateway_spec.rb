@@ -48,7 +48,7 @@ shared_examples "when searching by postcode" do
         assessment_body: cepc_xml.to_xml,
         accepted_responses: [201],
         auth_data: {
-          scheme_ids: [scheme_id],
+          scheme_ids: [get_scheme_id],
         },
         schema_name: "CEPC-8.0.0",
         migrated: true,
@@ -89,7 +89,7 @@ shared_examples "when searching by postcode" do
         assessment_body: sap_xml.to_xml,
         accepted_responses: [201],
         auth_data: {
-          scheme_ids: [scheme_id],
+          scheme_ids: [get_scheme_id],
         },
         schema_name: sap_schema,
         migrated: true,
@@ -140,7 +140,7 @@ shared_examples "when searching by street and town" do
       assessment_body: mispelled_rrn_as_uprn_sap_xml.to_xml,
       accepted_responses: [201],
       auth_data: {
-        scheme_ids: [scheme_id],
+        scheme_ids: [get_scheme_id],
       },
       schema_name: "SAP-Schema-18.0.0",
       migrated: true,
@@ -186,7 +186,7 @@ shared_examples "when searching by street and town" do
         assessment_body: cepc_xml.to_xml,
         accepted_responses: [201],
         auth_data: {
-          scheme_ids: [scheme_id],
+          scheme_ids: [get_scheme_id],
         },
         schema_name: "CEPC-8.0.0",
         migrated: true,
@@ -219,16 +219,23 @@ shared_examples "when searching by street and town" do
   end
 end
 
+shared_context "when adding a scheme and assessor" do
+  def get_scheme_id
+    Gateway::SchemesGateway.new.all.first[:scheme_id]
+  end
+end
+
 describe Gateway::AddressSearchGateway do
   subject(:gateway) { described_class.new }
 
   include RSpecRegisterApiServiceMixin
 
   context "when searching for addresses from address_base and assessments" do
-    let(:scheme_id) { add_scheme_and_get_id }
 
-    before do
+    include_context "when adding a scheme and assessor"
+    before(:all) do
       # scottish address
+      scheme_id = add_scheme_and_get_id
       insert_into_address_base(
         "1234123417777777",
         "EH1 2NG",
@@ -358,7 +365,7 @@ describe Gateway::AddressSearchGateway do
 
       context "when the toggle is on" do
         before do
-          Helper::Toggles.set_feature("allow-scottish-address-search", true)
+          Helper::Toggles.set_feature("api-allow-scottish-address-search", true)
           cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
           cepc_xml
             .xpath("//*[local-name() = 'RRN']")
@@ -369,7 +376,7 @@ describe Gateway::AddressSearchGateway do
             assessment_body: cepc_xml.to_xml,
             accepted_responses: [201],
             auth_data: {
-              scheme_ids: [scheme_id],
+              scheme_ids: [get_scheme_id],
             },
             schema_name: "CEPC-S-7.1",
             migrated: true,
@@ -377,7 +384,7 @@ describe Gateway::AddressSearchGateway do
         end
 
         after do
-          Helper::Toggles.set_feature("allow-scottish-address-search", false)
+          Helper::Toggles.set_feature("api-allow-scottish-address-search", false)
         end
 
         it_behaves_like "when searching by postcode"
@@ -427,7 +434,7 @@ describe Gateway::AddressSearchGateway do
 
       context "when the toggle is on" do
         before do
-          Helper::Toggles.set_feature("allow-scottish-address-search", true)
+          Helper::Toggles.set_feature("api-allow-scottish-address-search", true)
 
           # lodge scottish assessment with the same rrn as an english one
           scottish_rrn_uprn_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
@@ -437,7 +444,7 @@ describe Gateway::AddressSearchGateway do
             assessment_body: scottish_rrn_uprn_xml.to_xml,
             accepted_responses: [201],
             auth_data: {
-              scheme_ids: [scheme_id],
+              scheme_ids: [get_scheme_id],
             },
             schema_name: "RdSAP-Schema-S-19.0",
             migrated: true,
@@ -450,7 +457,7 @@ describe Gateway::AddressSearchGateway do
             assessment_body: scottish_rrn_uprn_xml_dup.to_xml,
             accepted_responses: [201],
             auth_data: {
-              scheme_ids: [scheme_id],
+              scheme_ids: [get_scheme_id],
             },
             schema_name: "RdSAP-Schema-S-19.0",
             migrated: true,
@@ -464,7 +471,7 @@ describe Gateway::AddressSearchGateway do
             assessment_body: rrn_as_uprn_dup_sap_xml.to_xml,
             accepted_responses: [201],
             auth_data: {
-              scheme_ids: [scheme_id],
+              scheme_ids: [get_scheme_id],
             },
             schema_name: "SAP-Schema-18.0.0",
             migrated: true,
@@ -474,7 +481,7 @@ describe Gateway::AddressSearchGateway do
         end
 
         after do
-          Helper::Toggles.set_feature("allow-scottish-address-search", false)
+          Helper::Toggles.set_feature("api-allow-scottish-address-search", false)
         end
 
         it_behaves_like "when searching by address_id"
@@ -525,7 +532,7 @@ describe Gateway::AddressSearchGateway do
 
       context "when the toggle is on" do
         before do
-          Helper::Toggles.set_feature("allow-scottish-address-search", true)
+          Helper::Toggles.set_feature("api-allow-scottish-address-search", true)
           cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
           cepc_xml
             .xpath("//*[local-name() = 'RRN']")
@@ -536,7 +543,7 @@ describe Gateway::AddressSearchGateway do
             assessment_body: cepc_xml.to_xml,
             accepted_responses: [201],
             auth_data: {
-              scheme_ids: [scheme_id],
+              scheme_ids: [get_scheme_id],
             },
             schema_name: "CEPC-S-7.1",
             migrated: true,
@@ -544,7 +551,7 @@ describe Gateway::AddressSearchGateway do
         end
 
         after do
-          Helper::Toggles.set_feature("allow-scottish-address-search", false)
+          Helper::Toggles.set_feature("api-allow-scottish-address-search", false)
         end
 
         it_behaves_like "when searching by street and town"

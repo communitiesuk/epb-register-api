@@ -1,6 +1,9 @@
 module Gateway
   class AddressSearchGateway
     include ReadOnlyDatabaseAccess
+    def initialize
+      @allow_scottish = Helper::Toggles.enabled?("api-allow-scottish-address-search")
+    end
 
     ADDRESS_TYPES = {
       DOMESTIC: %w[SAP RdSAP],
@@ -9,23 +12,22 @@ module Gateway
 
     def search_by_postcode(postcode, building_name_number, address_type)
       postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
-      allow_scottish = Helper::Toggles.enabled?("allow-scottish-address-search")
 
       ranking_sql = build_ranking_sql(building_name_number)
       type_filter = build_type_filter(address_type)
 
       sql_assessments = build_assessments_sql(ranking_sql, type_filter)
-      scottish_sql_assessments = build_assessments_sql(ranking_sql, type_filter, schema: "scotland") if allow_scottish
+      scottish_sql_assessments = build_assessments_sql(ranking_sql, type_filter, schema: "scotland") if @allow_scottish
       binds = build_binds(postcode, building_name_number)
 
-      sql_address_base = build_address_base_sql(ranking_sql, allow_scottish)
+      sql_address_base = build_address_base_sql(ranking_sql)
 
       queries = [
         [:address_base, sql_address_base],
         [:assessments, sql_assessments],
       ]
 
-      queries << [:scotland, scottish_sql_assessments] if allow_scottish
+      queries << [:scotland, scottish_sql_assessments] if @allow_scottish
 
       read_only do
         parse_results(
@@ -46,12 +48,10 @@ module Gateway
           address_id[5..].to_i.to_s
         end
 
-      allow_scottish = Helper::Toggles.enabled?("allow-scottish-address-search")
-
       sql_assessments = build_address_id_assessments_sql
       scottish_sql_assessments = build_address_id_assessments_sql(schema: "scotland")
 
-      sql_address_base = build_address_base_sql_for_address_id(allow_scottish)
+      sql_address_base = build_address_base_sql_for_address_id
 
       address_base_binds = [
         query_attribute("stripped_address_id", stripped_id),
@@ -74,7 +74,7 @@ module Gateway
         ],
       ]
 
-      if allow_scottish
+      if @allow_scottish
         queries << [
           :scottish_assessments,
           scottish_sql_assessments,
@@ -94,7 +94,7 @@ module Gateway
             end
           end
 
-        if allow_scottish
+        if @allow_scottish
           parse_address_id_results(results)
         else
           parse_results(results)
@@ -103,7 +103,6 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
-      allow_scottish = Helper::Toggles.enabled?("allow-scottish-address-search")
       ranking_sql = build_ranking_sql(town)
       type_filter = build_type_filter(address_type)
       binds = build_street_and_town_binds(street, town)
@@ -111,14 +110,14 @@ module Gateway
       sql_assessments = build_street_and_town_assessments_sql(ranking_sql, type_filter)
       scottish_sql_assessments = build_street_and_town_assessments_sql(ranking_sql, type_filter, schema: "scotland")
 
-      sql_address_base = build_street_and_town_address_base_sql(ranking_sql, allow_scottish)
+      sql_address_base = build_street_and_town_address_base_sql(ranking_sql)
 
       queries = [
         [:address_base, sql_address_base],
         [:assessments, sql_assessments],
       ]
 
-      queries << [:scotland, scottish_sql_assessments] if allow_scottish
+      queries << [:scotland, scottish_sql_assessments] if @allow_scottish
 
       read_only do
         parse_results(
@@ -204,8 +203,8 @@ module Gateway
       SQL
     end
 
-    def build_address_base_sql(ranking_sql, allow_scottish)
-      exclude = allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
+    def build_address_base_sql(ranking_sql)
+      exclude = @allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
 
       <<~SQL
         SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
@@ -236,8 +235,8 @@ module Gateway
     end
 
     # ---------------------------------------------
-    def build_address_base_sql_for_address_id(allow_scottish)
-      exclude = allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
+    def build_address_base_sql_for_address_id
+      exclude = @allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
 
       <<~SQL
         SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
@@ -309,8 +308,8 @@ module Gateway
       ]
     end
 
-    def build_street_and_town_address_base_sql(ranking_sql, allow_scottish)
-      exclude_scotland = allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
+    def build_street_and_town_address_base_sql(ranking_sql)
+      exclude_scotland = @allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
 
       <<~SQL_ADDRESS_BASE
           SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
