@@ -1,8 +1,6 @@
 require "rspec"
 
 describe "BackfillMatchedAddress" do
-  include RSpecRegisterApiServiceMixin
-
   let(:addressing_gateway) do
     instance_double(Gateway::AddressingApiGateway)
   end
