@@ -66,14 +66,15 @@ describe "Acceptance::Assessor" do
   end
 
   let!(:scheme_id) { add_scheme_and_get_id }
+  let(:non_existent_scheme_id) { scheme_id.to_i + 10 }
 
   context "when a scheme doesn't exist" do
     it "returns status 404 for a get" do
-      expect(fetch_assessor(scheme_id: 666, assessor_id: "SCHE423344", accepted_responses: [404]).status).to eq(404)
+      expect(fetch_assessor(scheme_id: non_existent_scheme_id, assessor_id: "SCHE423344", accepted_responses: [404]).status).to eq(404)
     end
 
     it "returns status 404 for a PUT" do
-      expect(add_assessor(scheme_id: 666, assessor_id: "SCHE453222", body: valid_assessor_request,
+      expect(add_assessor(scheme_id: non_existent_scheme_id, assessor_id: "SCHE453222", body: valid_assessor_request,
                           accepted_responses: [404]).status).to eq(404)
     end
   end
