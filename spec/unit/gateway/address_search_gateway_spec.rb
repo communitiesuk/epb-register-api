@@ -29,11 +29,28 @@ shared_examples "when searching by postcode" do
     end
   end
 
+  context "when the address already contains an apostrophe" do
+    it "returns only one address for the relevant property" do
+      result = gateway.search_by_postcode("S1 0AA", "Barry's Street", nil)
+      expect(result.length).to eq(1)
+    end
+  end
+
   context "when searching with a building number" do
     it "returns the most relevant address at the top of the result" do
       addresses = gateway.search_by_postcode("SW1A 2AA", "2", nil)
       expect(addresses.length).to eq 3
       expect(addresses.first.line1).to eq "2 Some Street"
+      expect(addresses.first.town).to eq("LONDON")
+      expect(addresses.first.postcode).to eq("SW1A 2AA")
+      expect(addresses.first.address_id).to eq("UPRN-000000000002")
+      expect(addresses.first.source).to eq("GAZETTEER")
+    end
+
+    context "when searching with a buildingNameNumber containing just a single quote" do
+      it "does not error" do
+        expect { gateway.search_by_postcode("SW1A 2AA", "'", nil) }.not_to raise_error
+      end
     end
   end
 
@@ -231,67 +248,20 @@ describe Gateway::AddressSearchGateway do
   include RSpecRegisterApiServiceMixin
 
   context "when searching for addresses from address_base and assessments" do
-
     include_context "when adding a scheme and assessor"
     before(:all) do
       # scottish address
       scheme_id = add_scheme_and_get_id
-      insert_into_address_base(
-        "1234123417777777",
-        "EH1 2NG",
-        "2 MCDONALD ROAD",
-        "SHELDSTOWN",
-        "BOARDERS",
-        "S",
-      )
-
+      insert_into_address_base("1234123417777777", "EH1 2NG", "2 MCDONALD ROAD", "SHELDSTOWN", "BOARDERS", "S")
       # english address
-      insert_into_address_base(
-        "1234123412323232",
-        "SE1 7EF",
-        "1 MCDONALD ROAD",
-        "SHELDSTOWN",
-        "LONDON",
-        "E",
-      )
-
-      insert_into_address_base(
-        "000000000000",
-        "SW1A 2AA",
-        "1 Some Street",
-        "WHITBURY",
-        "LONDON",
-        "E",
-      )
-
-      insert_into_address_base(
-        "000000000002",
-        "SW1A 2AA",
-        "2 Some Street",
-        "WHITBURY",
-        "LONDON",
-        "E",
-      )
-
+      insert_into_address_base("1234123412323232", "SE1 7EF", "1 MCDONALD ROAD", "SHELDSTOWN", "LONDON", "E")
+      insert_into_address_base("000000000000", "SW1A 2AA", "1 Some Street", "WHITBURY", "LONDON", "E")
+      insert_into_address_base("000000000002", "SW1A 2AA", "2 Some Street", "WHITBURY", "LONDON", "E")
       # address on the border (England)
-      insert_into_address_base(
-        "1122334455",
-        "TD9 0TU",
-        "ENGLISH HOUSE",
-        "BORDER ROAD",
-        "BORDER",
-        "E",
-      )
-
+      insert_into_address_base("1122334455", "TD9 0TU", "ENGLISH HOUSE", "BORDER ROAD", "BORDER", "E")
       # address on the border (Scotland)
-      insert_into_address_base(
-        "5544332211",
-        "TD9 0TU",
-        "SCOTTISH HOUSE",
-        "BORDER ROAD",
-        "BORDER",
-        "S",
-      )
+      insert_into_address_base("5544332211", "TD9 0TU", "SCOTTISH HOUSE", "BORDER ROAD", "BORDER", "S")
+      insert_into_address_base("0019012001", "S1 0AA", "31 Barry's Street", "", "London", "E")
 
       add_super_assessor(scheme_id:)
       # UPRN-000000000000
