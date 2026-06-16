@@ -3,9 +3,12 @@ module Gateway
     class DuplicateSchemeException < StandardError
     end
 
+    class SchemeNotPresentException < StandardError
+    end
+
     class Scheme < ActiveRecord::Base
       def to_hash
-        { scheme_id: id, name: self[:name], active: self[:active] }
+        { scheme_id: id, name: self[:name], active: self[:active], active_scotland: self[:active_scotland], active_eng_wls_nir: self[:active_eng_wls_nir] }
       end
     end
 
@@ -18,19 +21,18 @@ module Gateway
     end
 
     def add(scheme_body)
-      Scheme.create(name: scheme_body[:name], active: scheme_body[:active])
-    rescue StandardError => e
-      case e
-      when PG::UniqueViolation, ActiveRecord::RecordNotUnique
-        raise DuplicateSchemeException
-      else
-        raise
-      end
+      Scheme.create(name: scheme_body[:name], active: scheme_body[:active], active_scotland: scheme_body[:active_scotland], active_eng_wls_nir: scheme_body[:active_eng_wls_nir])
+    rescue PG::UniqueViolation, ActiveRecord::RecordNotUnique
+      raise DuplicateSchemeException
     end
 
     def update(id, scheme_body)
       scheme = Scheme.find_by(scheme_id: id)
-      scheme.update(name: scheme_body[:name], active: scheme_body[:active])
+      if scheme.nil?
+        raise SchemeNotPresentException
+      end
+
+      scheme.update(name: scheme_body[:name], active: scheme_body[:active], active_scotland: scheme_body[:active_scotland], active_eng_wls_nir: scheme_body[:active_eng_wls_nir])
     end
 
     def fetch_active

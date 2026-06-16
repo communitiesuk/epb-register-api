@@ -14,6 +14,9 @@ module UseCase
     class AssessorRegisteredOnAnotherScheme < StandardError
     end
 
+    class SchemeCannotLodgeInRegion < StandardError
+    end
+
     def initialize(schemes_gateway:, assessors_gateway:, assessors_status_events_gateway:, event_broadcaster:)
       @schemes_gateway = schemes_gateway
       @assessors_gateway = assessors_gateway
@@ -33,6 +36,10 @@ module UseCase
         end
 
       raise SchemeNotFoundException unless scheme
+
+      unless can_manage_assessor?(scheme, add_assessor_request)
+        raise SchemeCannotLodgeInRegion
+      end
 
       existing_assessor =
         @assessors_gateway.fetch(add_assessor_request.scheme_assessor_id)
@@ -126,6 +133,30 @@ module UseCase
       end
 
       { assessor_was_newly_created: existing_assessor.nil?, assessor: }
+    end
+
+    def can_manage_assessor?(scheme, assessor_request)
+      active_qualification_names = assessor_request.instance_variables.filter_map do |var|
+        name = var.to_s.delete("@")
+
+        next unless name.end_with?("_qualification")
+        next unless assessor_request.instance_variable_get(var) == "ACTIVE"
+
+        name
+      end
+
+      has_scottish_qualifications = active_qualification_names.any? do |name|
+        name.start_with?("scotland_")
+      end
+
+      has_eng_wls_nir_qualifications = active_qualification_names.any? do |name|
+        !name.start_with?("scotland_")
+      end
+
+      return false if has_scottish_qualifications && !scheme[:active_scotland]
+      return false if has_eng_wls_nir_qualifications && !scheme[:active_eng_wls_nir]
+
+      true
     end
   end
 end

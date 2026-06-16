@@ -4,12 +4,18 @@ module Controller
   class SchemesController < Controller::BaseController
     SCHEMA = {
       type: "object",
-      required: %w[name active],
+      required: %w[name active active_scotland active_eng_wls_nir],
       properties: {
         name: {
           type: "string",
         },
         active: {
+          type: "boolean",
+        },
+        active_scotland: {
+          type: "boolean",
+        },
+        active_eng_wls_nir: {
           type: "boolean",
         },
       },

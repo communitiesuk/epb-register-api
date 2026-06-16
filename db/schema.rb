@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_11_120732) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_09_151447) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -253,6 +253,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_120732) do
 
   create_table "public.schemes", primary_key: "scheme_id", force: :cascade do |t|
     t.boolean "active", default: true
+    t.boolean "active_eng_wls_nir", default: false
+    t.boolean "active_scotland", default: false
     t.string "name"
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end

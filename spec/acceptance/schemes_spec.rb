@@ -53,7 +53,7 @@ describe "Acceptance::Schemes" do
       end
 
       it "is visible in the list of schemes" do
-        add_scheme(name: "XYMZALERO")
+        add_scheme(name: "XYMZALERO", active: true, active_scotland: true, active_eng_wls_nir: true)
         response = schemes_list
         get_response = JSON.parse(response.body)
         expect(get_response["data"]["schemes"][0]["name"]).to eq("XYMZALERO")
@@ -64,6 +64,8 @@ describe "Acceptance::Schemes" do
         response = schemes_list
         get_response = JSON.parse(response.body)
         expect(get_response["data"]["schemes"][0]["active"]).to be_truthy
+        expect(get_response["data"]["schemes"][0]["activeScotland"]).to be_truthy
+        expect(get_response["data"]["schemes"][0]["activeEngWlsNir"]).to be_truthy
       end
 
       it "cannot have the same name twice" do
@@ -85,7 +87,7 @@ describe "Acceptance::Schemes" do
     end
 
     it "returns 404 for a scheme that doesnt exist" do
-      expect(update_scheme(scheme_id: 123, body: { name: "name", active: true }, accepted_responses: [404]).status).to eq 404
+      expect(update_scheme(scheme_id: 123, body: { name: "name", active: true, active_scotland: true, active_eng_wls_nir: true }, accepted_responses: [404]).status).to eq 404
     end
 
     it "rejects a message without the required keys" do
@@ -95,12 +97,14 @@ describe "Acceptance::Schemes" do
 
     it "changes all of the details of an existing scheme" do
       scheme_id = add_scheme_and_get_id(name: "My old scheme name")
-      update_scheme(scheme_id:, body: { name: "My new scheme name", active: false })
+      update_scheme(scheme_id:, body: { name: "My new scheme name", active: false, active_scotland: false, active_eng_wls_nir: false })
       schemes = JSON.parse(schemes_list.body)
       expect(schemes["data"]["schemes"][0]).to eq(
         {
           "name" => "My new scheme name",
           "active" => false,
+          "activeScotland" => false,
+          "activeEngWlsNir" => false,
           "schemeId" => scheme_id,
         },
       )

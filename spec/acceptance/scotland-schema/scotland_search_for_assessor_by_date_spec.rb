@@ -51,7 +51,7 @@ describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
 
   before do
     scheme_id = 999
-    Gateway::SchemesGateway::Scheme.create(scheme_id:, name: "Scottish Scheme")
+    Gateway::SchemesGateway::Scheme.create(scheme_id:, name: "Scottish Scheme", active: true, active_scotland: true, active_eng_wls_nir: true)
 
     add_assessor(
       scheme_id:,

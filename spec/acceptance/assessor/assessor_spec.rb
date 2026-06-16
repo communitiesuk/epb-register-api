@@ -369,6 +369,39 @@ describe "Acceptance::Assessor" do
           scopes: %w[scheme:assessor:update],
         ).status).to eq(403)
       end
+
+      it "rejects a request that is from the a scheme which is not active in a Scotland where the assessor is qualified" do
+        update_scheme(scheme_id: scheme_id, body: { name: "test scheme", active: true, active_scotland: false, active_eng_wls_nir: true })
+        expect(add_assessor(
+          scheme_id:,
+          assessor_id: "SCHE554433",
+          body: valid_assessor_request,
+          accepted_responses: [403],
+          scopes: %w[scheme:assessor:update],
+        ).status).to eq(403)
+      end
+
+      it "rejects a request that is from the a scheme which is not active in a Eng Wls Nir where the assessor is qualified" do
+        update_scheme(scheme_id: scheme_id, body: { name: "test scheme", active: true, active_scotland: true, active_eng_wls_nir: false })
+        expect(add_assessor(
+          scheme_id:,
+          assessor_id: "SCHE554433",
+          body: valid_assessor_request,
+          accepted_responses: [403],
+          scopes: %w[scheme:assessor:update],
+        ).status).to eq(403)
+      end
+
+      it "rejects a request that is from the a scheme which is not active in either region where the assessor is qualified" do
+        update_scheme(scheme_id: scheme_id, body: { name: "test scheme", active: true, active_scotland: false, active_eng_wls_nir: false })
+        expect(add_assessor(
+          scheme_id:,
+          assessor_id: "SCHE554433",
+          body: valid_assessor_request,
+          accepted_responses: [403],
+          scopes: %w[scheme:assessor:update],
+        ).status).to eq(403)
+      end
     end
 
     context "with all fields valid" do

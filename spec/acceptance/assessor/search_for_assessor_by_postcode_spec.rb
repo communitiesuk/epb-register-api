@@ -477,7 +477,7 @@ describe "Acceptance::SearchForAssessor" do
 
   context "when assessors are on an inactive scheme" do
     it "does not return them" do
-      update_scheme(scheme_id:, body: { name: "Old scheme", active: false })
+      update_scheme(scheme_id:, body: { name: "Old scheme", active: false, active_scotland: false, active_eng_wls_nir: false })
       response = assessors_search(postcode: "SW1A 2AA", qualification: "domesticRdSap")
       response_json = JSON.parse(response.body)
       expect(response_json["data"]["assessors"]).to eq []

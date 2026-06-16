@@ -404,7 +404,7 @@ describe "Acceptance::ScottishSearchForAssessor" do
 
   context "when assessors are on an inactive scheme" do
     it "does not return them" do
-      update_scheme(scheme_id:, body: { name: "Old scheme", active: false })
+      update_scheme(scheme_id:, body: { name: "Old scheme", active: false, active_scotland: false, active_eng_wls_nir: false })
       response = scotland_assessors_search(postcode: "EH8 8FT", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 

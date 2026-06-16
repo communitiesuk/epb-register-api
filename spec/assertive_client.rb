@@ -193,11 +193,14 @@ def add_scheme(
   name: "test scheme",
   accepted_responses: [201],
   scopes: %w[scheme:create],
+  active: true,
+  active_scotland: true,
+  active_eng_wls_nir: true,
   **assertive_kwargs
 )
   assertive_post(
     "/api/schemes",
-    body: { name:, active: true },
+    body: { name:, active:, active_scotland:, active_eng_wls_nir: },
     accepted_responses:,
     scopes:,
     **assertive_kwargs,

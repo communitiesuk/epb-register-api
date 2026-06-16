@@ -395,6 +395,8 @@ module Controller
         )
       when UseCase::AddAssessor::InvalidAssessorIdException
         error_response(422, "INVALID REQUEST", e.message)
+      when UseCase::AddAssessor::SchemeCannotLodgeInRegion
+        error_response(403, "INVALID_REQUEST", "This scheme is not active in the region in which this assessor has qualifications")
       when Boundary::Json::ParseError
         error_response(400, "INVALID_REQUEST", e.message)
       when Boundary::Json::ValidationError
