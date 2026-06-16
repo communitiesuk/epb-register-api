@@ -634,6 +634,26 @@ describe "Acceptance::Assessor" do
       end
     end
 
+    context "when an old scheme is needs to add an assessor for a migration" do
+      before do
+        Helper::Toggles.set_feature("register-api-add-check-on-schemes-active-regions", false)
+      end
+
+      after do
+        Helper::Toggles.set_feature("register-api-add-check-on-schemes-active-regions", true)
+      end
+
+      it "doesn't stop the old schemes from adding an assessor when the toggle is off" do
+        old_scheme_id = add_scheme_and_get_id(name: "OLD scheme",
+                                              active_scotland: false,
+                                              active_eng_wls_nir: false)
+        assessor_response =
+          add_assessor(scheme_id: old_scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
+
+        expect(assessor_response.status).to eq(201)
+      end
+    end
+
     context "with optional fields missing (but otherwise valid)" do
       it "returns 201 created" do
         assessor_response =

@@ -458,12 +458,16 @@ end
 def add_scheme_and_get_id(
   name: "test scheme",
   accepted_responses: [201],
-  should_authenticate: true
+  should_authenticate: true,
+  active_scotland: true,
+  active_eng_wls_nir: true
 )
   JSON.parse(add_scheme(
     name:,
     accepted_responses:,
     should_authenticate:,
+    active_scotland:,
+    active_eng_wls_nir:,
   ).body)["data"]["schemeId"]
 end
 

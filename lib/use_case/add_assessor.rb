@@ -37,7 +37,7 @@ module UseCase
 
       raise SchemeNotFoundException unless scheme
 
-      unless can_manage_assessor?(scheme, add_assessor_request)
+      if Helper::Toggles.enabled?("register-api-add-check-on-schemes-active-regions") && !can_manage_assessor?(scheme, add_assessor_request)
         raise SchemeCannotLodgeInRegion
       end
 

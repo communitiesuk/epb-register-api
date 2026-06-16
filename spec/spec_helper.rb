@@ -341,6 +341,7 @@ RSpec.configure do |config|
     # to avoid mocking the match address api for test that are unrelated to address matching
     Helper::Toggles.set_feature("block-address-matching-during-lodgement", true)
     Helper::Toggles.set_feature("register-api-add-country-in-address", true)
+    Helper::Toggles.set_feature("register-api-add-check-on-schemes-active-regions", true)
   end
 
   Dir[File.join(__dir__, "shared_examples/**/*.rb")].sort.each { |f| require f }
