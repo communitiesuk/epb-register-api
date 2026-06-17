@@ -3492,7 +3492,7 @@ paths:
         '200':
           description: Energy Performance Assessment
           content:
-            application/json:
+            application/xml:
               schema:
                 $ref: '#/components/schemas/Empty'
         '404':
