@@ -335,7 +335,7 @@ describe Gateway::AddressSearchGateway do
 
       context "when the toggle is on" do
         before do
-          Helper::Toggles.set_feature("api-allow-scottish-address-search", true)
+          Helper::Toggles.set_feature("register-api-allow-scottish-address-search", true)
           cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
           cepc_xml
             .xpath("//*[local-name() = 'RRN']")
@@ -354,7 +354,7 @@ describe Gateway::AddressSearchGateway do
         end
 
         after do
-          Helper::Toggles.set_feature("api-allow-scottish-address-search", false)
+          Helper::Toggles.set_feature("register-api-allow-scottish-address-search", false)
         end
 
         it_behaves_like "when searching by postcode"
@@ -404,7 +404,7 @@ describe Gateway::AddressSearchGateway do
 
       context "when the toggle is on" do
         before do
-          Helper::Toggles.set_feature("api-allow-scottish-address-search", true)
+          Helper::Toggles.set_feature("register-api-allow-scottish-address-search", true)
 
           # lodge scottish assessment with the same rrn as an english one
           scottish_rrn_uprn_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
@@ -451,7 +451,7 @@ describe Gateway::AddressSearchGateway do
         end
 
         after do
-          Helper::Toggles.set_feature("api-allow-scottish-address-search", false)
+          Helper::Toggles.set_feature("register-api-allow-scottish-address-search", false)
         end
 
         it_behaves_like "when searching by address_id"
@@ -502,7 +502,7 @@ describe Gateway::AddressSearchGateway do
 
       context "when the toggle is on" do
         before do
-          Helper::Toggles.set_feature("api-allow-scottish-address-search", true)
+          Helper::Toggles.set_feature("register-api-allow-scottish-address-search", true)
           cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
           cepc_xml
             .xpath("//*[local-name() = 'RRN']")
@@ -521,7 +521,7 @@ describe Gateway::AddressSearchGateway do
         end
 
         after do
-          Helper::Toggles.set_feature("api-allow-scottish-address-search", false)
+          Helper::Toggles.set_feature("register-api-allow-scottish-address-search", false)
         end
 
         it_behaves_like "when searching by street and town"

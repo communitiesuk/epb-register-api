@@ -2,7 +2,7 @@ module Gateway
   class AddressSearchGateway
     include ReadOnlyDatabaseAccess
     def initialize
-      @allow_scottish = Helper::Toggles.enabled?("api-allow-scottish-address-search")
+      @allow_scottish = Helper::Toggles.enabled?("register-api-allow-scottish-address-search")
     end
 
     ADDRESS_TYPES = {
