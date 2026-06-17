@@ -81,6 +81,7 @@ GEM
       multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
+    ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-arm64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
     ffi-compiler (1.4.2)
@@ -138,6 +139,8 @@ GEM
     net-http (0.9.1)
       uri (>= 0.11.1)
     nio4r (2.7.5)
+    nokogiri (1.19.3-aarch64-linux-gnu)
+      racc (~> 1.4)
     nokogiri (1.19.3-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.3-x86_64-linux-gnu)
@@ -161,6 +164,7 @@ GEM
     parser (3.3.10.0)
       ast (~> 2.4.1)
       racc
+    pg (1.6.3-aarch64-linux)
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-linux)
     prism (1.9.0)
@@ -304,6 +308,8 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     wisper (3.0.0)
     wisper-rspec (1.1.0)
+    yggdrasil-engine (1.2.2-aarch64-linux)
+      ffi (~> 1.17.2)
     yggdrasil-engine (1.2.2-arm64-darwin)
       ffi (~> 1.17.2)
     yggdrasil-engine (1.2.2-x86_64-linux)
@@ -311,6 +317,7 @@ GEM
     zeitwerk (2.7.5)
 
 PLATFORMS
+  aarch64-linux
   arm64-darwin-25
   x86_64-linux
 
