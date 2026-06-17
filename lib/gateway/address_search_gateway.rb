@@ -258,25 +258,6 @@ module Gateway
       SQL
     end
 
-    # def build_address_base_sql(ranking_sql)
-    #   exclude = @allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
-    #
-    #   <<~SQL
-    #     SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
-    #            address_line1,
-    #            address_line2,
-    #            address_line3,
-    #            address_line4,
-    #            town,
-    #            postcode,
-    #            country_code
-    #            #{ranking_sql}
-    #     FROM address_base
-    #     WHERE postcode = $1
-    #     #{exclude}
-    #   SQL
-    # end
-
     def build_binds(postcode, building_name_number)
       binds = [
         query_attribute("postcode", postcode.upcase),
@@ -288,25 +269,6 @@ module Gateway
 
       binds
     end
-
-    # ---------------------------------------------
-    # def build_address_base_sql_for_address_id
-    #   exclude = @allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
-    #
-    #   <<~SQL
-    #     SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
-    #            address_line1,
-    #            address_line2,
-    #            address_line3,
-    #            address_line4,
-    #            town,
-    #            postcode,
-    #            country_code
-    #     FROM address_base
-    #     WHERE uprn = $1
-    #     #{exclude}
-    #   SQL
-    # end
 
     def build_address_id_assessments_sql(schema: nil)
       prefix = schema ? "#{schema}." : ""
@@ -362,34 +324,6 @@ module Gateway
         query_attribute("town", town.downcase),
       ]
     end
-
-    # def build_street_and_town_address_base_sql(ranking_sql)
-    #   exclude_scotland = @allow_scottish ? "" : "AND LOWER(country_code) IS DISTINCT FROM LOWER('S')"
-    #
-    #   <<~SQL_ADDRESS_BASE
-    #       SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
-    #              address_line1,
-    #              address_line2,
-    #              address_line3,
-    #              address_line4,
-    #              town,
-    #              postcode,
-    #              country_code
-    #               #{ranking_sql}
-    #       FROM address_base
-    #       WHERE (
-    #             LOWER(town) LIKE $2
-    #             OR
-    #             LOWER(address_line2) LIKE $2
-    #       )
-    #       AND (
-    #             LOWER(address_line1) LIKE $1
-    #             OR
-    #             LOWER(address_line2) LIKE $1
-    #       )
-    #     #{exclude_scotland}
-    #   SQL_ADDRESS_BASE
-    # end
 
     def build_street_and_town_assessments_sql(ranking_sql, type_filter, schema: nil)
       prefix = schema ? "#{schema}." : ""
