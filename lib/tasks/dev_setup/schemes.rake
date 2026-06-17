@@ -34,7 +34,7 @@ namespace :dev_data do
         active_eng_wls_nir: true,
       }.merge(overrides.fetch(name, {}))
 
-      Scheme.create!(attrs)
+      Gateway::SchemesGateway::Scheme.create!(attrs)
     end
   end
 end
