@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.epcregister.com/xsd/rdsap" targetNamespace="http://www.epcregister.com/xsd/rdsap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-17.00">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="../Templates/EPC-CollectedData.xsd"/>
+	<xs:include schemaLocation="../Templates/EPC-Certificate.xsd"/>
+	<xs:include schemaLocation="../Templates/AssessorManagement.xsd"/>
+	<xs:element name="RdSAP-Report" type="Energy-Performance-Certificate"/>
+	<xs:complexType name="Energy-Performance-Certificate">
+		<xs:all>
+			<xs:element name="Calculation-Software-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the software used to perform the SAP calculation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Calculation-Software-Version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Version of the software used to perform the SAP calculation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="User-Interface-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the user interface used for data entry. This can be the same as Calculation-Software-Name, or different.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="User-Interface-Version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version of the user interface used for data entry. This can be the same as Calculation-Software-Version, or different.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Schema-Version-Original" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The schema version that the data conformed to when it was lodged.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Schema-Version-Current" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The schema version to which the data conforms. This node is inserted by the register when a retrieval is requested. It must not be present in a lodgement being sent to the register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Version" type="SAP-VersionCode">
+				<xs:annotation>
+					<xs:documentation>Version of RdSAP that was used for the assessment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PCDF-Revision-Number" type="xs:string"/>
+			<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
+			<xs:element name="SAP-Data" type="SAP-Data" minOccurs="0"/>
+			<xs:element name="Report-Header" type="Report-Header"/>
+			<xs:element name="Insurance-Details" type="Insurance-Details"/>
+			<xs:element name="ExternalDefinitions-Revision-Number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A number indicating the version of related ExternalDefinitions.xsd</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Insurance-Details" type="Insurance-Details"/>
+	<xs:complexType name="Insurance-Details">
+		<xs:annotation>
+			<xs:documentation>Details of the Professional Indemnity Insurance policy used to provide cover against a compensation claim against any particular Home Condition Report.
+
+A particular Home Condition Report may be covered by an Professional Indemnity Insurance policy in one of three different ways:
+*	The Home Inspector has personal Professional Indemnity Insurance and the Home Condition Report is covered by this.
+*	The Home Condition Report is covered by an umbrella Professional Indemnity Insurance policy held by the Home Condition Report Supplier that assigned the inspection to the Home Inspector.
+*	An individual insurance policy is taken out to cover the individual report such as the case where the property is unusual and falls outside the Home Inspectors normal Professional Indemnity Insurance policy.
+
+A Home Inspector may use any or all of these methods to providing Professional Indemnity Insurance for a Report on a case-by-case basis.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Insurer" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the insurance company that underwrites / issued the insurance policy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Policy-No" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The policy number of the insurance policy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Effective-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the insurance policy becomes effective (commences cover)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Expiry-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the insurance policy is supposed to expire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PI-Limit" type="Money">
+				<xs:annotation>
+					<xs:documentation>The upper limit of the Professional Indemnity cover provided by the insurance policy.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Report-Header" type="Report-Header"/>
+	<xs:complexType name="Report-Header">
+		<xs:annotation>
+			<xs:documentation>Report Header contains all the identification and searchable details for the Report.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="RRN" type="RRNType">
+				<xs:annotation>
+					<xs:documentation>Report Reference Number is the unique report Identifier shown on the EPC.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspection-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date of site visit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Report-Type" type="ReportTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of assessment that was carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Completion-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date of completion of report. Equal to or later than Inspection-Date and before or equal to Registration-Date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registration-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Date when report submitted to register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="ReportStatusCode"/>
+			<xs:element name="Language-Code" type="LanguageCode">
+				<xs:annotation>
+					<xs:documentation>The language that the report is written in. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Type" type="PropertyTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of property that is being assessed. This should be the same as the Property-Type recorded in the Property-Details section.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Region-Code" type="UKRegionCode">
+				<xs:annotation>
+					<xs:documentation>Region within the UK.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country-Code" type="UKCountryCode">
+				<xs:annotation>
+					<xs:documentation>Country within the UK.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transaction-Type" type="TransactionType"/>
+			<xs:element name="Tenure" type="TenureCode"/>
+			<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
+			<xs:element name="Property" type="Property"/>
+			<xs:element name="Related-Party-Disclosure">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Related-Party-Disclosure-Number" type="DisclosureCode">
+							<xs:annotation>
+								<xs:documentation>Code indicating any potential conflicts of interest or commercial relationships with other parties.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Related-Party-Disclosure-Text" type="Sentence">
+							<xs:annotation>
+								<xs:documentation>For backward compatibility only</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>
