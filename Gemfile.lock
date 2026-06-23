@@ -314,7 +314,7 @@ GEM
       ffi (~> 1.17.2)
     yggdrasil-engine (1.2.2-x86_64-linux)
       ffi (~> 1.17.2)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.2)
 
 PLATFORMS
   aarch64-linux
@@ -359,7 +359,7 @@ DEPENDENCIES
   webmock (~> 3.26)
   wisper (~> 3.0.0)
   wisper-rspec (~> 1.0, >= 1.0.1)
-  zeitwerk (~> 2.7.5)
+  zeitwerk (~> 2.8.2)
 
 RUBY VERSION
    ruby 3.4.7p58
