@@ -21,6 +21,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   let(:valid_rdsap_not_scottish_xml) { Samples.xml "RdSAP-Schema-19.0" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-S-7.1", "cepc" }
+  let(:valid_cepc_70_xml) { Samples.xml "CEPC-S-7.0", "cepc" }
   let(:valid_action_plan_xml) { Samples.xml "CS63-S-7.0", "cs63" }
   let(:valid_dec_xml) { Samples.xml "DECAR-S-7.0", "dec" }
   let(:valid_dec_ar_xml) { Samples.xml "DECAR-S-7.0", "dec-ar" }
@@ -369,46 +370,92 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
       end
 
       context "when migrating a valid Scottish CEPC assessment" do
-        expected_cepc_assessment_data = {
-          "assessment_id" => "0000-0000-0000-0000-0000",
-          "date_of_assessment" => "2023-06-27",
-          "date_registered" => "2023-06-27",
-          "type_of_assessment" => "CEPC",
-          "current_energy_efficiency_rating" => 120,
-          "postcode" => "FK1 1XE",
-          "date_of_expiry" => "2033-06-26",
-          "address_line1" => "Non-dom Property",
-          "address_line2" => "Some Street",
-          "address_line3" => "Bigger Line",
-          "address_line4" => nil,
-          "town" => "Town",
-          "scheme_assessor_id" => "SPEC000000",
-          "opt_out" => false,
-          "address_id" => "LPRN-0000000001",
-          "migrated" => true,
-          "cancelled_at" => nil,
-          "not_for_issue_at" => nil,
-          "created_at" => "2023-06-27",
-          "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-        }
+        context "when migrating a CEPC-S-7.1" do
+          expected_cepc_assessment_data = {
+            "assessment_id" => "0000-0000-0000-0000-0000",
+            "date_of_assessment" => "2023-06-27",
+            "date_registered" => "2023-06-27",
+            "type_of_assessment" => "CEPC",
+            "current_energy_efficiency_rating" => 120,
+            "postcode" => "FK1 1XE",
+            "date_of_expiry" => "2033-06-26",
+            "address_line1" => "Non-dom Property",
+            "address_line2" => "Some Street",
+            "address_line3" => "Bigger Line",
+            "address_line4" => nil,
+            "town" => "Town",
+            "scheme_assessor_id" => "SPEC000000",
+            "opt_out" => false,
+            "address_id" => "LPRN-0000000001",
+            "migrated" => true,
+            "cancelled_at" => nil,
+            "not_for_issue_at" => nil,
+            "created_at" => "2023-06-27",
+            "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+          }
 
-        it "successfully migrates the assessment" do
-          response = lodge_scottish_assessment assessment_body: valid_cepc_xml,
-                                               accepted_responses: [201],
-                                               scopes: %w[migrate:scotland],
-                                               auth_data: {
-                                                 scheme_ids: [scheme_id],
-                                               },
-                                               schema_name: "CEPC-S-7.1",
-                                               migrated: "true"
+          it "successfully migrates the assessment" do
+            response = lodge_scottish_assessment assessment_body: valid_cepc_xml,
+                                                 accepted_responses: [201],
+                                                 scopes: %w[migrate:scotland],
+                                                 auth_data: {
+                                                   scheme_ids: [scheme_id],
+                                                 },
+                                                 schema_name: "CEPC-S-7.1",
+                                                 migrated: "true"
 
-          cepc_data = ActiveRecord::Base.connection.exec_query(
-            "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          ).entries.first
+            cepc_data = ActiveRecord::Base.connection.exec_query(
+              "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+              ).entries.first
 
-          expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
-          expect(cepc_data).to eq expected_cepc_assessment_data
+            expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+            expect(cepc_data).to eq expected_cepc_assessment_data
+          end
         end
+
+        context "when migrating a CEPC-S-7.0" do
+          expected_cepc_assessment_data = {
+            "assessment_id" => "0000-0000-0000-0000-0000",
+            "date_of_assessment" => "2015-02-02",
+            "date_registered" => "2015-02-05",
+            "type_of_assessment" => "CEPC",
+            "current_energy_efficiency_rating" => 119,
+            "postcode" => "FK1 1XE",
+            "date_of_expiry" => "2025-02-04",
+            "address_line1" => "Non-dom Property",
+            "address_line2" => "Some Street",
+            "address_line3" => "Bigger Line",
+            "address_line4" => nil,
+            "town" => "Town",
+            "scheme_assessor_id" => "SPEC000000",
+            "opt_out" => false,
+            "address_id" => "LPRN-0000000001",
+            "migrated" => true,
+            "cancelled_at" => nil,
+            "not_for_issue_at" => nil,
+            "created_at" => "2023-06-27",
+            "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+          }
+
+          it "successfully migrates the assessment" do
+            response = lodge_scottish_assessment assessment_body: valid_cepc_70_xml,
+                                                 accepted_responses: [201],
+                                                 scopes: %w[migrate:scotland],
+                                                 auth_data: {
+                                                   scheme_ids: [scheme_id],
+                                                 },
+                                                 schema_name: "CEPC-S-7.0",
+                                                 migrated: "true"
+
+            cepc_data = ActiveRecord::Base.connection.exec_query(
+              "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+              ).entries.first
+
+            expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+            expect(cepc_data).to eq expected_cepc_assessment_data
+          end
+        end
+
       end
 
       context "when migrating a valid Scottish Action Plan assessment" do

@@ -830,7 +830,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a Scottish CEPC assessment" do
+    context "when requesting a Scottish CEPC-S-7.1 assessment" do
       before do
         cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
         cepc_xml
@@ -922,6 +922,80 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               supersededBy: nil,
                               schemaType: "CEPC-S-7.1",
                               countryName: "Scotland" }
+
+        expect(response[:data]).to eq(expected_response)
+      end
+    end
+
+    context "when requesting a Scottish CEPC-S-7.0 assessment" do
+      before do
+        cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.0", "cepc")
+        cepc_xml
+          .xpath("//*[local-name() = 'RRN']")
+          .each do |node|
+          node.content = "0000-0000-0000-0003-0000"
+        end
+        lodge_scottish_assessment(
+          assessment_body: cepc_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-S-7.0",
+          migrated: true,
+          )
+      end
+
+      it "returns the expected CEPC hash" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0003-0000").body,
+            symbolize_names: true,
+            )
+
+        expected_response = {typeOfAssessment: "CEPC",
+                             assessmentId: "0000-0000-0000-0003-0000",
+                             dateOfExpiry: "2025-02-04",
+                             reportType: "3",
+                             dateOfAssessment: "2015-02-02",
+                             dateOfRegistration: "2015-02-05",
+                             address:
+                               {addressLine1: "Non-dom Property",
+                                addressLine2: "Some Street",
+                                addressLine3: "Bigger Line",
+                                addressLine4: nil,
+                                town: "Town",
+                                postcode: "FK1 1XE"},
+                             assessor:
+                               {schemeAssessorId: "SPEC000000",
+                                contactDetails: {email: "sessor@email.co.uk", telephoneNumber: "00000000073"},
+                                firstName: "Someone",
+                                lastName: "Person",
+                                registeredBy: {name: "test scheme", schemeId: scheme_id},},
+                             technicalInformation:
+                               {mainHeatingFuel: "Natural Gas",
+                                buildingEnvironment: "Heating and Natural Ventilation",
+                                floorArea: 202,
+                                buildingLevel: nil},
+                             buildingEmissionRate: nil,
+                             primaryEnergyUse: nil,
+                             relatedRrn: nil,
+                             newBuildRating: 59,
+                             newBuildBand: "c",
+                             existingBuildRating: nil,
+                             existingBuildBand: nil,
+                             currentEnergyEfficiencyRating: 119,
+                             energyEfficiencyRating: 119,
+                             relatedPartyDisclosure: nil,
+                             currentEnergyEfficiencyBand: "e",
+                             propertyType: "A3/A4/A5 Restaurant and Cafes/Drinking Establishments and Hot Food takeaways",
+                             buildingComplexity: nil,
+                             addressId: "RRN-0000-0000-0000-0003-0000",
+                             optOut: false,
+                             relatedAssessments: [],
+                             supersededBy: nil,
+                             countryName: "Scotland",
+                             schemaType: "CEPC-S-7.0"}
 
         expect(response[:data]).to eq(expected_response)
       end
