@@ -341,7 +341,7 @@ describe "Acceptance::Assessor" do
     describe "security scenarios" do
       it "rejects a request which is not authenticated" do
         expect(add_assessor(
-          scheme_id: 20,
+          scheme_id: scheme_id,
           assessor_id: "SCHEME4532",
           body: valid_assessor_request,
           accepted_responses: [401],
@@ -351,7 +351,7 @@ describe "Acceptance::Assessor" do
 
       it "rejects a request that doesnt have the right scopes" do
         expect(add_assessor(
-          scheme_id: 20,
+          scheme_id: scheme_id,
           assessor_id: "SCHEME4532",
           body: valid_assessor_request,
           accepted_responses: [403],
@@ -635,7 +635,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "when an old scheme is needs to add an assessor for a migration" do
+    context "when toggle is off" do
       before do
         Helper::Toggles.set_feature("register-api-add-check-on-schemes-active-regions", false)
       end
@@ -644,14 +644,16 @@ describe "Acceptance::Assessor" do
         Helper::Toggles.set_feature("register-api-add-check-on-schemes-active-regions", true)
       end
 
-      it "doesn't stop the old schemes from adding an assessor when the toggle is off" do
-        old_scheme_id = add_scheme_and_get_id(name: "OLD scheme",
-                                              active_scotland: false,
-                                              active_eng_wls_nir: false)
-        assessor_response =
-          add_assessor(scheme_id: old_scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
+      context "when a scheme does not have the active regions set to true" do
+        it "doesn't stop schemes from adding an assessor" do
+          old_scheme_id = add_scheme_and_get_id(name: "OLD scheme",
+                                                active_scotland: false,
+                                                active_eng_wls_nir: false)
+          assessor_response =
+            add_assessor(scheme_id: old_scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
 
-        expect(assessor_response.status).to eq(201)
+          expect(assessor_response.status).to eq(201)
+        end
       end
     end
 

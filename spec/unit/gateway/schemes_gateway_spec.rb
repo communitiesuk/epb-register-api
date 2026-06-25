@@ -17,15 +17,15 @@ describe Gateway::SchemesGateway do
   end
 
   describe "#add" do
-    context "when the schema does not already exist" do
-      it "is added to the schema table" do
+    context "when the scheme does not already exist" do
+      it "is added to the scheme table" do
         gateway.add({ name: "test_scheme", active: true, active_scotland: true, active_eng_wls_nir: true })
         scheme = ActiveRecord::Base.connection.exec_query("SELECT * FROM schemes WHERE name = 'test_scheme'")
         expect(scheme.result.first).to include({ "name" => "test_scheme", "active" => true, "active_scotland" => true, "active_eng_wls_nir" => true })
       end
     end
 
-    context "when the schema does already exist" do
+    context "when the scheme does already exist" do
       it "is raises an error" do
         scheme_body = { name: "test_scheme", active: true, active_scotland: true, active_eng_wls_nir: true }
         gateway.add(scheme_body)
@@ -47,7 +47,7 @@ describe Gateway::SchemesGateway do
       end
     end
 
-    context "when the schema does not already exist" do
+    context "when the scheme does not already exist" do
       it "is raises an error" do
         expect { gateway.update("1", { name: "test_scheme", active: false, active_scotland: false, active_eng_wls_nir: false }) }.to raise_error Gateway::SchemesGateway::SchemeNotPresentException
       end

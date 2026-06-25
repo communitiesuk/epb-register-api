@@ -136,20 +136,20 @@ module UseCase
     end
 
     def can_manage_assessor?(scheme, assessor_request)
-      active_qualification_names = assessor_request.instance_variables.filter_map do |var|
+      updated_qualifications = assessor_request.instance_variables.filter_map do |var|
         name = var.to_s.delete("@")
 
         next unless name.end_with?("_qualification")
-        next unless assessor_request.instance_variable_get(var) == "ACTIVE"
+        next if assessor_request.instance_variable_get(var).nil?
 
         name
       end
 
-      has_scottish_qualifications = active_qualification_names.any? do |name|
+      has_scottish_qualifications = updated_qualifications.any? do |name|
         name.start_with?("scotland_")
       end
 
-      has_eng_wls_nir_qualifications = active_qualification_names.any? do |name|
+      has_eng_wls_nir_qualifications = updated_qualifications.any? do |name|
         !name.start_with?("scotland_")
       end
 
