@@ -2,7 +2,9 @@ describe Helper::AddressMatchAssessment do
   let(:helper) { described_class }
 
   include RSpecRegisterApiServiceMixin
+
   before(:all) do
+    Timecop.freeze(2023, 6, 28, 0, 0, 0)
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id:)
 
@@ -44,6 +46,7 @@ describe Helper::AddressMatchAssessment do
     ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE scotland.assessments CASCADE",
     )
+    Timecop.return
   end
 
   describe "#find_unmatched_assessments" do
