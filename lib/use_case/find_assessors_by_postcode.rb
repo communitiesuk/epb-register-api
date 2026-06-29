@@ -12,14 +12,10 @@ module UseCase
     end
 
     def execute(postcode, qualifications, is_scottish: false)
-      postcode&.strip!
-      postcode&.upcase!
+      raise PostcodeNotValid if postcode.blank?
+      raise PostcodeNotValid unless Helper::ValidatePostcodeHelper.valid_postcode?(postcode)
 
-      unless Regexp
-               .new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-               .match(postcode)
-        raise PostcodeNotValid
-      end
+      postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
       postcodes_geolocation = @postcodes_gateway.fetch(postcode, is_scottish: is_scottish)
 

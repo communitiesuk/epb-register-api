@@ -83,9 +83,6 @@ module Controller
             "Must specify postcode & qualification when searching",
           )
         else
-          postcode.upcase
-          postcode.insert(-4, " ") if postcode[-4] != " "
-
           result =
             UseCase::FindAssessorsByPostcode.new.execute(
               postcode,

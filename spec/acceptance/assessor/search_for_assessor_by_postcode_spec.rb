@@ -42,8 +42,16 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   context "when searching without the right params" do
-    it "returns status 404 when the postcode is in an incorrect format" do
-      expect(assessors_search(postcode: "73334", qualification: "domesticRdSap", accepted_responses: [404]).status).to eq(404)
+    it "returns status 400 when the postcode is in an incorrect format" do
+      expect(assessors_search(postcode: "'", qualification: "domesticRdSap", accepted_responses: [400]).status).to eq(400)
+    end
+
+    it "returns status 400 when the postcode is incomplete" do
+      expect(assessors_search(postcode: "n8", qualification: "domesticRdSap", accepted_responses: [400]).status).to eq(400)
+    end
+
+    it "returns status 404 when the postcode is not found" do
+      expect(assessors_search(postcode: "XX1 1XX", qualification: "domesticRdSap", accepted_responses: [404]).status).to eq(404)
     end
 
     it "returns a 400 for postcode search without qualification" do
@@ -107,7 +115,7 @@ describe "Acceptance::SearchForAssessor" do
     end
 
     it "allows searching using a postcode with excessive spaces" do
-      response = assessors_search(postcode: "  SW1A 2AA   ", qualification: "domesticRdSap")
+      response = assessors_search(postcode: "  SW1A  2AA   ", qualification: "domesticRdSap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1

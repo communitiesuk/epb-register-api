@@ -58,8 +58,16 @@ describe "Acceptance::ScottishSearchForAssessor" do
       ).status).to eq 400
     end
 
-    it "returns status 404 when the postcode is in an incorrect format" do
-      expect(scotland_assessors_search(postcode: "73334", qualification: "scotlandRdsap", accepted_responses: [404]).status).to eq(404)
+    it "returns status 400 when the postcode is in the wrong format" do
+      expect(scotland_assessors_search(postcode: "'", qualification: "scotlandRdsap", accepted_responses: [400]).status).to eq(400)
+    end
+
+    it "returns status 400 when the postcode is incomplete" do
+      expect(scotland_assessors_search(postcode: "G1", qualification: "scotlandRdsap", accepted_responses: [400]).status).to eq(400)
+    end
+
+    it "returns status 404 when the postcode is not found" do
+      expect(scotland_assessors_search(postcode: "XX1 1XX", qualification: "scotlandRdsap", accepted_responses: [404]).status).to eq(404)
     end
 
     it "rejects a request which searches for a non-existent qualification" do
@@ -101,7 +109,7 @@ describe "Acceptance::ScottishSearchForAssessor" do
     end
 
     it "allows searching using a postcode with excessive spaces" do
-      response = scotland_assessors_search(postcode: "  EH8 8FT   ", qualification: "scotlandRdsap")
+      response = scotland_assessors_search(postcode: "  EH8  8FT   ", qualification: "scotlandRdsap")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessors"].length).to eq 1
