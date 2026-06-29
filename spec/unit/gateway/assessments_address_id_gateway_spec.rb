@@ -14,6 +14,11 @@ describe Gateway::AssessmentsAddressIdGateway do
       { assessment_id: "0000-0000-0000-0000-0002", address_id: "RRN-0000-0000-0000-0000-0001", source: "lodgement" },
       { assessment_id: "0000-0000-0000-0000-0003", address_id: "RRN-0000-0000-0000-0000-0002", source: "lodgement" },
     ])
+    Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.insert_all([
+      { assessment_id: "0000-0000-0000-0000-0001", address_id: "RRN-0000-0000-0000-0000-0001", source: "lodgement" },
+      { assessment_id: "0000-0000-0000-0000-0002", address_id: "RRN-0000-0000-0000-0000-0001", source: "lodgement" },
+      { assessment_id: "0000-0000-0000-0000-0003", address_id: "RRN-0000-0000-0000-0000-0002", source: "lodgement" },
+    ])
     Timecop.freeze(2024, 12, 22, 0, 0, 0)
   end
 
@@ -43,6 +48,19 @@ describe Gateway::AssessmentsAddressIdGateway do
         expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressId.where(assessment_id: "0000-0000-0000-0000-0002").pluck(:source)).to eq %w[epb_bulk_linking]
       end
     end
+
+    context "when updating address ids for scottish assessments" do
+      it "updates assessments to a new address_id", :aggregate_failures do
+        assessment_ids = %w[0000-0000-0000-0000-0001 0000-0000-0000-0000-0002]
+        gateway.update_assessments_address_id_mapping(assessment_ids, "UPRN-000000000001", is_scottish: true)
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:address_id)).to eq %w[UPRN-000000000001]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0003").pluck(:address_id)).to eq %w[RRN-0000-0000-0000-0000-0002]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:source)).to eq %w[epb_team_update]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0003").pluck(:source)).to eq %w[lodgement]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0001").pluck(:address_updated_at)).to eq [Time.parse("2024-12-22 00:00:00.000000000 +0000")]
+        expect(Gateway::AssessmentsAddressIdGateway::AssessmentsAddressIdScotland.where(assessment_id: "0000-0000-0000-0000-0003").pluck(:address_updated_at)).to eq [nil]
+      end
+    end
   end
 
   describe "#fetch" do
@@ -63,12 +81,8 @@ describe Gateway::AssessmentsAddressIdGateway do
       end
 
       it "returns the expected response for a Scottish assessment" do
-        ActiveRecord::Base.connection.exec_query(
-          "INSERT INTO scotland.assessments_address_id(assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0002', 'RRN-0000-0000-0000-0000-0002', 'lodgement', null)",
-        )
-
         expected_response = {
-          address_id: "RRN-0000-0000-0000-0000-0002",
+          address_id: "RRN-0000-0000-0000-0000-0001",
           address_updated_at: nil,
           assessment_id: "0000-0000-0000-0000-0002",
           source: "lodgement",
@@ -150,12 +164,6 @@ describe Gateway::AssessmentsAddressIdGateway do
     end
 
     context "when updating matched address ids for scottish addresses" do
-      before do
-        ActiveRecord::Base.connection.exec_query(
-          "INSERT INTO scotland.assessments_address_id(assessment_id, address_id, source, address_updated_at) VALUES('0000-0000-0000-0000-0002', 'RRN-0000-0000-0000-0000-0002', 'lodgement', null)",
-        )
-      end
-
       it "updates assessments with a new address_id source" do
         assessment_id = "0000-0000-0000-0000-0002"
         gateway.update_matched_uprn(assessment_id, "000000000031", 99.2, true)

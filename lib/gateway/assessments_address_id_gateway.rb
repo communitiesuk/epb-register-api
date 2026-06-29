@@ -35,11 +35,12 @@ module Gateway
       assessment_ids,
       new_address_id,
       new_source = "epb_team_update",
-      address_updated_at = Time.now
+      address_updated_at = Time.now,
+      is_scottish: false
     )
       ActiveRecord::Base.transaction do
         assessment_ids.each do |assessment_id|
-          update_address_id(assessment_id, new_address_id, new_source, address_updated_at)
+          update_address_id(assessment_id, new_address_id, new_source, address_updated_at, is_scottish: is_scottish)
         end
       end
     end
@@ -142,10 +143,13 @@ module Gateway
       assessment_id,
       new_address_id,
       new_source = "epb_team_update",
-      address_updated_at = Time.now
+      address_updated_at = Time.now,
+      is_scottish: false
     )
+      assessment_address_id = is_scottish ? AssessmentsAddressIdScotland : AssessmentsAddressId
+
       assessment_address_id_row =
-        AssessmentsAddressId.find_by(assessment_id:)
+        assessment_address_id.find_by(assessment_id:)
       assessment_address_id_row.update(
         { "address_id" => new_address_id, "source" => new_source, "address_updated_at" => address_updated_at },
       )
