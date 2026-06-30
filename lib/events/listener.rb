@@ -62,7 +62,7 @@ module Events
         if notify_data_warehouse_enabled?
           NotifyFactory.assessment_address_id_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id], address_id: data[:new_address_id])
         end
-        NotifyFactory.address_id_updated_to_audit_log(entity_id: data[:assessment_id])
+        NotifyFactory.address_id_updated_to_audit_log(entity_id: data[:assessment_id], is_scottish: data[:is_scottish])
       end
     end
 

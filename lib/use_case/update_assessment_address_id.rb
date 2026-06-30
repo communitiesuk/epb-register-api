@@ -24,41 +24,44 @@ module UseCase
       @event_broadcaster = event_broadcaster
     end
 
-    def execute(assessment_id, new_address_id)
+    def execute(assessment_id, new_address_id, is_scottish: false)
       validate_address_id_format(new_address_id)
 
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
       assessments_ids = [assessment_id]
       linked_assessment_id =
-        @assessments_gateway.get_linked_assessment_id(assessment_id)
+        @assessments_gateway.get_linked_assessment_id(assessment_id, is_scottish:)
       assessments_ids << linked_assessment_id unless linked_assessment_id.nil?
 
       assessments_ids.each do |current_assessment_id|
-        check_assessment_exists(current_assessment_id)
+        check_assessment_exists(current_assessment_id, is_scottish:)
       end
 
-      validate_new_address_id(assessments_ids, new_address_id)
+      validate_new_address_id(assessments_ids, new_address_id, is_scottish:)
 
       @assessments_address_id_gateway.update_assessments_address_id_mapping(
         assessments_ids,
         new_address_id,
+        is_scottish:,
       )
 
       assessments_ids.each do |id|
         @event_broadcaster.broadcast :assessment_address_id_updated,
                                      assessment_id: id,
-                                     new_address_id:
+                                     new_address_id:,
+                                     is_scottish:
       end
     end
 
   private
 
-    def check_assessment_exists(assessment_id)
+    def check_assessment_exists(assessment_id, is_scottish: false)
       assessment =
         @assessments_search_gateway.search_by_assessment_id(
           assessment_id,
           restrictive: false,
+          is_scottish:,
         ).first
 
       raise AssessmentNotFound unless assessment
@@ -72,7 +75,7 @@ module UseCase
       raise InvalidAddressIdFormat, "UPRN is not in the correct format" if new_address_id.start_with?("UPRN-") && (new_address_id.delete("UPRN-").length > 12)
     end
 
-    def validate_new_address_id(assessment_ids, new_address_id)
+    def validate_new_address_id(assessment_ids, new_address_id, is_scottish: false)
       if new_address_id.start_with? "UPRN-"
         linking_to_uprn = new_address_id[5..]
         unless @address_base_gateway.check_uprn_exists(linking_to_uprn)
@@ -80,13 +83,13 @@ module UseCase
         end
       elsif new_address_id.start_with? "RRN-"
         linking_to_rrn = new_address_id[4..]
-        if @assessments_search_gateway.search_by_assessment_id(linking_to_rrn, restrictive: false)
+        if @assessments_search_gateway.search_by_assessment_id(linking_to_rrn, restrictive: false, is_scottish:)
                                       .empty?
           raise AddressIdNotFound
         end
 
         rrn_assessment_address_id =
-          @assessments_address_id_gateway.fetch(linking_to_rrn)[:address_id]
+          @assessments_address_id_gateway.fetch(linking_to_rrn, is_scottish:)[:address_id]
 
         # This a new address ID and the new assessment address ID points to itself
         if new_address_id != rrn_assessment_address_id &&

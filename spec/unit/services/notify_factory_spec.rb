@@ -12,6 +12,8 @@ describe NotifyFactory do
                  { entity_id: "0000-0000", is_opt_out: true, is_scottish: true }
                when :cancelled_to_audit_log
                  { entity_id: "0000-0000", is_scottish: true }
+               when :address_id_updated_to_audit_log
+                 { entity_id: "0000-0000", is_scottish: true }
                when :lodgement_to_audit_log
                  { entity_id: "0000-0000", is_scottish: true }
                when :green_deal_plan_added_to_audit_log

@@ -37,10 +37,12 @@ class NotifyFactory
                                       ))
   end
 
-  def self.address_id_updated_to_audit_log(entity_id:)
+  def self.address_id_updated_to_audit_log(entity_id:, is_scottish:)
+    entity_type = is_scottish ? :scottish_assessment : :assessment
+    event_type = is_scottish ? :scottish_address_id_updated : :address_id_updated
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: :assessment,
-                                        event_type: :address_id_updated,
+                                        entity_type: entity_type,
+                                        event_type: event_type,
                                         entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))

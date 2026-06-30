@@ -35,7 +35,15 @@ describe UseCase::UpdateAssessmentAddressId do
     it "calls AssessmentsAddressIdGateway to update the assessment data in the assessments_address_id table" do
       use_case.execute("2000-0000-0000-0000-0001", "UPRN-00000000001")
 
-      expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).with(%w[2000-0000-0000-0000-0001], "UPRN-00000000001")
+      expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).with(%w[2000-0000-0000-0000-0001], "UPRN-00000000001", is_scottish: false)
+    end
+
+    context "when the address_id is Scottish" do
+      it "calls AssessmentsAddressIdGateway to update the assessment data in the scotland.assessments_address_id table" do
+        use_case.execute("2000-0000-0000-0000-0001", "UPRN-00000000001", is_scottish: true)
+
+        expect(assessments_address_id_gateway).to have_received(:update_assessments_address_id_mapping).with(%w[2000-0000-0000-0000-0001], "UPRN-00000000001", is_scottish: true)
+      end
     end
 
     describe "event examples" do
@@ -50,6 +58,16 @@ describe UseCase::UpdateAssessmentAddressId do
           :assessment_address_id_updated,
           assessment_id: "2000-0000-0000-0000-0001",
           new_address_id: "UPRN-00000000002",
+          is_scottish: false,
+        )
+      end
+
+      it "broadcasts a scottish assessment_address_id_updated event" do
+        expect { use_case.execute("2000-0000-0000-0000-0001", "UPRN-00000000002", is_scottish: true) }.to broadcast(
+          :assessment_address_id_updated,
+          assessment_id: "2000-0000-0000-0000-0001",
+          new_address_id: "UPRN-00000000002",
+          is_scottish: true,
         )
       end
     end
