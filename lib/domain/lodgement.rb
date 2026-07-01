@@ -63,13 +63,5 @@ module Domain
         @assessment_data << report
       end
     end
-
-    def get_country_id(country_domain)
-      xml_country_code = @xml.xpath("//Country-Code").inner_text
-
-      return country_domain.uk_country_code(xml_country_code) if (is_new_rdsap? || is_new_sap?) && country_domain.on_border?
-
-      country_domain.country_id
-    end
   end
 end
