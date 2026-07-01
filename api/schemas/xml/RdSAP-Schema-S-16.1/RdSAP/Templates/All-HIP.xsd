@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+        xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-HIP"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:pfdt="http://www.est.org.uk/epc/estcrV1/DCLG-HIP/BaseDataTypes"
+        targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-HIP"
+        elementFormDefault="qualified">
+
+  <xs:import
+          namespace="http://www.est.org.uk/epc/estcrV1/DCLG-HIP/BaseDataTypes"
+          schemaLocation="../UDT/BaseDataTypes.xsd"/>
+
+  <xs:include schemaLocation="../UDT/TypeDefinitions.xsd"/>
+  <xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
+  <xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+  <xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
+  <xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+
+  <xs:include schemaLocation="../Templates/Property.xsd"/>
+  <xs:include schemaLocation="../Templates/UserManagement.xsd"/>
+  <xs:include schemaLocation="../Templates/EPC-CollectedData.xsd"/>
+  <xs:include schemaLocation="../Templates/EPC-Certificate.xsd"/>
+
+</xs:schema>

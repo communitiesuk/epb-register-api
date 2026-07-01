@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 U (http://www.altova.com) by Graeme McLean (Bridgeall Ltd.) -->
+<xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-SAP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pfdt="http://www.est.org.uk/epc/estcrV1/DCLG-HIP/BaseDataTypes" xmlns:HIP="http://www.est.org.uk/epc/estcrV1/DCLG-HIP" targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-SAP" elementFormDefault="qualified" version="LIG-16.1">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.est.org.uk/epc/estcrV1/DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:import namespace="http://www.est.org.uk/epc/estcrV1/DCLG-HIP" schemaLocation="../Templates/Property.xsd"/>
+	<xs:element name="Home-Inspector" type="Home-Inspector"/>
+	<xs:complexType name="Home-Inspector">
+		<xs:annotation>
+			<xs:documentation>Assessor Details</xs:documentation>
+		</xs:annotation>
+		<xs:all/>
+	</xs:complexType>
+</xs:schema>

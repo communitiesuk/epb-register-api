@@ -737,6 +737,150 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
+    context "when requesting an RdSAP-Schema-S-16.1 assessment" do
+      let(:expected_response) do
+        { typeOfAssessment: "RdSAP",
+          assessmentId: "0000-0000-0000-0000-0000",
+          dateOfExpiry: "2023-08-14",
+          dateOfAssessment: "2013-08-14",
+          dateOfRegistration: "2013-08-15",
+          address:
+           { addressLine1: "1 Some Street",
+             addressLine2: "",
+             addressLine3: "",
+             addressLine4: "",
+             town: "Newkirk",
+             postcode: "FK1 1XE" },
+          assessor:
+           { schemeAssessorId: "SPEC000000",
+             companyName: "Test EPCs 4U",
+             contactDetails: { email: "a@b.c", address: "12 Epc Street, Newkirk, FK1 1XE", telephoneNumber: "0555 497 2848" },
+             firstName: "Someone",
+             lastName: "Person",
+             registeredBy: { name: "test scheme", schemeId: scheme_id } },
+          currentCarbonEmission: 3.9,
+          carbonEmissionsCurrentPerFloorArea: 63.0,
+          currentEnergyEfficiencyBand: "e",
+          currentEnergyEfficiencyRating: 49,
+          dwellingType: "Ground-floor flat",
+          estimatedEnergyCost: "1018.00",
+          heatDemand: { currentSpaceHeatingDemand: 5347, currentWaterHeatingDemand: 1738 },
+          heatingCostCurrent: "727",
+          heatingCostPotential: "268",
+          hotWaterCostCurrent: "236",
+          hotWaterCostPotential: "117",
+          lightingCostCurrent: "55",
+          lightingCostPotential: "60",
+          potentialCarbonEmission: 3.1,
+          potentialEnergyEfficiencyBand: "c",
+          potentialEnergyEfficiencyRating: 78,
+          potentialEnergySaving: "573.00",
+          propertySummary:
+           [{ energyEfficiencyRating: 4,
+              environmentalEfficiencyRating: 4,
+              name: "wall",
+              description: "Cavity wall, as built, insulated (assumed)" },
+            { energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "roof", description: "(another dwelling above)" },
+            { energyEfficiencyRating: 0,
+              environmentalEfficiencyRating: 0,
+              name: "floor",
+              description: "Suspended, no insulation (assumed)" },
+            { energyEfficiencyRating: 3, environmentalEfficiencyRating: 3, name: "window", description: "Fully double glazed" },
+            { energyEfficiencyRating: 1,
+              environmentalEfficiencyRating: 1,
+              name: "main_heating",
+              description: "No system present: electric heaters assumed" },
+            { energyEfficiencyRating: 1, environmentalEfficiencyRating: 1, name: "main_heating_controls", description: "None" },
+            { energyEfficiencyRating: 1,
+              environmentalEfficiencyRating: 1,
+              name: "hot_water",
+              description: "Electric immersion, standard tariff" },
+            { energyEfficiencyRating: 4,
+              environmentalEfficiencyRating: 4,
+              name: "lighting",
+              description: "Low energy lighting in 67% of fixed outlets" },
+            { energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "secondary_heating", description: "None" }],
+          recommendedImprovements:
+           [{ energyPerformanceRatingImprovement: 57,
+              environmentalImpactRatingImprovement: 61,
+              greenDealCategoryCode: "3",
+              improvementCategory: "5",
+              improvementCode: "47",
+              improvementDescription: nil,
+              improvementTitle: "",
+              improvementType: "W",
+              indicativeCost: "£800 - £1,200",
+              sequence: 1,
+              typicalSaving: "168",
+              energyPerformanceBandImprovement: "d" },
+            { energyPerformanceRatingImprovement: 76,
+              environmentalImpactRatingImprovement: 60,
+              greenDealCategoryCode: "3",
+              improvementCategory: "5",
+              improvementCode: "30",
+              improvementDescription: nil,
+              improvementTitle: "",
+              improvementType: "L",
+              indicativeCost: "£900 - £1,200",
+              sequence: 2,
+              typicalSaving: "383",
+              energyPerformanceBandImprovement: "c" },
+            { energyPerformanceRatingImprovement: 78,
+              environmentalImpactRatingImprovement: 62,
+              greenDealCategoryCode: "2",
+              improvementCategory: "5",
+              improvementCode: "48",
+              improvementDescription: nil,
+              improvementTitle: "",
+              improvementType: "X",
+              indicativeCost: "£1,000",
+              sequence: 3,
+              typicalSaving: "22",
+              energyPerformanceBandImprovement: "c" }],
+          lzcEnergySources: nil,
+          relatedPartyDisclosureNumber: 1,
+          relatedPartyDisclosureText: nil,
+          totalFloorArea: 61,
+          status: "ENTERED",
+          environmentalImpactCurrent: 53,
+          environmentalImpactPotential: 62,
+          primaryEnergyUse: 358.0,
+          addendum: nil,
+          gasSmartMeterPresent: nil,
+          electricitySmartMeterPresent: nil,
+          addressId: "RRN-0000-0000-0000-0000-0000",
+          optOut: false,
+          relatedAssessments: [],
+          supersededBy: nil,
+          countryName: "Scotland",
+          schemaType: "RdSAP-Schema-S-16.1",
+          greenDealPlan: [] }
+      end
+
+      before do
+        domestic_rdsap_161_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-16.1")
+        lodge_scottish_assessment(
+          assessment_body: domestic_rdsap_161_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-S-16.1",
+          migrated: true,
+        )
+      end
+
+      it "returns the expected response" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0000").body,
+            symbolize_names: true,
+          )
+
+        expect(response[:data]).to eq(expected_response)
+      end
+    end
+
     context "when requesting a Scottish SAP assessment" do
       let(:expected_response) do
         { data:
