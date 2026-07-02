@@ -1150,6 +1150,22 @@ def update_assessment_address_id(
   )
 end
 
+def update_scottish_assessment_address_id(
+  assessment_id:,
+  new_address_id:,
+  accepted_responses: [200],
+  scopes: %w[scotland_admin:update-address-id],
+  **assertive_kwargs
+)
+  assertive_put(
+    "/api/scotland/assessments/#{assessment_id}/address-id",
+    body: { "addressId": new_address_id },
+    accepted_responses:,
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def fetch_assessment_meta_data(
   assessment_id:,
   scopes:, accepted_responses: [200],
