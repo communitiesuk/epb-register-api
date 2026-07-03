@@ -1154,7 +1154,7 @@ def update_scottish_assessment_address_id(
   assessment_id:,
   new_address_id:,
   accepted_responses: [200],
-  scopes: %w[scotland_admin:update-address-id],
+  scopes: %w[scotland_admin:update_address_id],
   **assertive_kwargs
 )
   assertive_put(

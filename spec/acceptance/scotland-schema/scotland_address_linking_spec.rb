@@ -164,7 +164,7 @@ describe "Acceptance::ScotlandAddressLinking", :set_with_timecop do
         "/api/scotland/assessments/0000-0000-0000-0000-0000/address-id",
         body: { "prettyPleaseUpdateAddressIdTo": "bla-bla" },
         accepted_responses: [400],
-        scopes: %w[scotland_admin:update-address-id],
+        scopes: %w[scotland_admin:update_address_id],
       ).body
 
       error = JSON.parse(response_body, symbolize_names: true)[:errors].first
@@ -179,7 +179,7 @@ describe "Acceptance::ScotlandAddressLinking", :set_with_timecop do
         accepted_responses: [400],
         should_authenticate: true,
         auth_data: {},
-        scopes: %w[scotland_admin:update-address-id],
+        scopes: %w[scotland_admin:update_address_id],
       ) { put("/api/scotland/assessments/0000-0000-0000-0000-0000/address-id", request_body) }
 
       error = JSON.parse(response.body, symbolize_names: true)[:errors].first

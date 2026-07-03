@@ -307,7 +307,7 @@ module Controller
       }.freeze
 
       put "/api/scotland/assessments/:assessment_id/address-id",
-          auth_token_has_all: %w[scotland_admin:update-address-id] do
+          auth_token_has_all: %w[scotland_admin:update_address_id] do
         assessment_id = params[:assessment_id]
         new_address_id = request_body(UPDATE_ADDRESS_ID_PUT_SCHEMA)[:address_id]
 

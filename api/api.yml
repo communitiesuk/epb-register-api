@@ -3033,7 +3033,7 @@ paths:
       operationId: update-canonical-scottish-address-id
       security:
         - oauth:
-            - 'scotland_admin:update-address-id'
+            - 'scotland_admin:update_address_id'
       parameters:
         - in: path
           name: assessmentId
