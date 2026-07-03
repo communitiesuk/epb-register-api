@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 module UseCase
   module Scotland
     class FetchAssessors
-      # frozen_string_literal: true
-
       def initialize(gateway)
         @gateway = gateway
       end
