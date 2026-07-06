@@ -86,17 +86,6 @@ module Gateway
       addresses
     end
 
-    def levenshtein(property, bind, permissiveness = nil)
-      levenshtein =
-        "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
-          bind
-        }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
-
-      levenshtein << " < #{permissiveness}" if permissiveness
-
-      levenshtein
-    end
-
     def record_to_address_domain(row)
       Domain::Address.new address_id: "UPRN-#{row['uprn'].rjust(12, '0')}",
                           line1: row["address_line1"],
