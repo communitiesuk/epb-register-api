@@ -97,9 +97,5 @@ module Domain
     def get(key)
       instance_variable_get "@#{key}"
     end
-
-    def set(key, value)
-      instance_variable_set "@#{key}", value
-    end
   end
 end
