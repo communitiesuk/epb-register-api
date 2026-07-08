@@ -5157,6 +5157,14 @@ components:
                 enum:
                   - Prescriptive
                   - Alternative
+        totalEmissionSavings:
+          type: number
+          example: 1.23
+          description: Total savings of emissions achieved by the alternative scenario of measures in kg of CO2 per m2 per year.
+        totalEnergySavings:
+          type: number
+          example: 2.34
+          description: Total savings of energy consumption achieved by the alternative scenario of measures in kWh per m2 per year.
         alternativeImprovements:
           type: array
           items:
