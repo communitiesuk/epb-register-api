@@ -10,10 +10,10 @@
   <User-Interface-Version>1.0.1-alpha</User-Interface-Version>
   <Report-Header>
     <RRN>0000-0000-0000-0000-0000</RRN>
-    <Inspection-Date>2022-05-09</Inspection-Date>
+    <Inspection-Date>2026-05-09</Inspection-Date>
     <Report-Type>3</Report-Type>
-    <Completion-Date>2022-05-09</Completion-Date>
-    <Registration-Date>2022-05-09</Registration-Date>
+    <Completion-Date>2026-05-09</Completion-Date>
+    <Registration-Date>2026-05-09</Registration-Date>
     <Status>entered</Status>
     <Language-Code>1</Language-Code>
     <Tenure>1</Tenure>
@@ -57,7 +57,7 @@
     </Related-Party-Disclosure>
   </Report-Header>
   <Energy-Assessment>
-    <Assessment-Date>2022-05-09</Assessment-Date>
+    <Assessment-Date>2026-05-09</Assessment-Date>
     <Property-Summary>
       <Walls>
         <Description>Average thermal transmittance 0.18 W/m²K</Description>

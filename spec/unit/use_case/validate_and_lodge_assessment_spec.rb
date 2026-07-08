@@ -129,7 +129,7 @@ describe UseCase::ValidateAndLodgeAssessment do
 
     it "validates SAP Schema version 19.2.0" do
       valid_xml = Samples.xml "SAP-Schema-19.2.0"
-      Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
+      Timecop.freeze(2026, 0o5, 13, 0, 0, 0)
       expect {
         use_case.execute assessment_xml: valid_xml,
                          schema_name: "SAP-Schema-19.2.0",
@@ -342,6 +342,76 @@ describe UseCase::ValidateAndLodgeAssessment do
                          migrated: true,
                          overridden: false
       }.not_to raise_error
+    end
+  end
+
+  context "when lodging a SAP-Schema-19.2.0 (SAP 10.3 Data Version) assessment" do
+    let(:wales_sap) do
+      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")
+      xml.at("Country-Code").content = "WLS"
+      xml.to_s
+    end
+
+    context "when it is not in England" do
+      before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
+      end
+
+      it "raises a lodgement error" do
+        expect {
+          use_case.execute assessment_xml: wales_sap,
+                           schema_name: "SAP-Schema-19.2.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overridden: false
+        }.to raise_error UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+      end
+    end
+
+    context "when it is on the border of England and Wales" do
+      context "when the assessor lodges the country as EAW" do
+        let(:border_sap) do
+          xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")
+          xml.at("Country-Code").content = "EAW"
+          xml.to_s
+        end
+
+        before do
+          allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: %i[E W])
+        end
+
+        it "does not raise a lodgement error" do
+          expect {
+            use_case.execute assessment_xml: border_sap,
+                             schema_name: "SAP-Schema-19.2.0",
+                             scheme_ids: "1",
+                             migrated: true,
+                             overridden: false
+          }.not_to raise_error
+        end
+      end
+
+      context "when the assessor lodges the country as WLS" do
+        let(:border_sap) do
+          xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")
+          xml.at("Country-Code").content = "WLS"
+          xml.to_s
+        end
+
+        before do
+          allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: %i[E W])
+        end
+
+        it "does raise a lodgement error" do
+          expect {
+            use_case.execute assessment_xml: border_sap,
+                             schema_name: "SAP-Schema-19.2.0",
+                             scheme_ids: "1",
+                             migrated: true,
+                             overridden: false
+          }.to raise_error UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+        end
+      end
     end
   end
 

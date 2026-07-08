@@ -232,7 +232,7 @@ module Controller
         error_response(
           400,
           "INVALID_REQUEST",
-          e.message,
+          "Schema only supported for assessments in England",
         )
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
         json_response(

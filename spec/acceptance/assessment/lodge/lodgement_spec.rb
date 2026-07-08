@@ -80,6 +80,7 @@ describe "Acceptance::Assessment::Lodge" do
     )
   end
 
+  let(:valid_sap_xml) { Samples.xml "SAP-Schema-19.2.0" }
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
   let(:valid_rdsap_ni_xml) { Samples.xml "RdSAP-Schema-NI-20.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
@@ -90,6 +91,12 @@ describe "Acceptance::Assessment::Lodge" do
   end
   let(:sap_compliance_report_xml) { Samples.xml "SAP-Schema-19.0.0", "compliance-report" }
   let(:scheme_id) { add_scheme_and_get_id }
+  let(:wales_sap_19_2) do
+    xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")
+    xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "CF10 1EP" }
+    xml.xpath("//*[local-name() = 'Country-Code']").each { |node| node.content = "WLS" }
+    xml.to_s
+  end
 
   context "when rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
@@ -377,6 +384,18 @@ describe "Acceptance::Assessment::Lodge" do
 
       expect(response["errors"]).to eq("Assessment with a Northern Ireland postcode must be lodged with a NI Schema")
     end
+
+    it "rejects a non-English SAP-Schema-19.2.0 assessment" do
+      Timecop.freeze(Time.utc(2026, 6, 21))
+      response = lodge_assessment(
+        assessment_body: wales_sap_19_2,
+        accepted_responses: [400],
+        schema_name: "SAP-Schema-19.2.0",
+      )
+      expect(response.status).to eq(400)
+      error_message = JSON.parse(response.body)["errors"][0]["title"]
+      expect(error_message).to eq "Schema only supported for assessments in England"
+    end
   end
 
   context "when lodging and overriding the rules" do
@@ -440,6 +459,44 @@ describe "Acceptance::Assessment::Lodge" do
   context "when lodging a valid assessment" do
     before do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+    end
+
+    context "when it is the latest schema" do
+      before do
+        Timecop.freeze(Time.utc(2026, 6, 21))
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "returns the correct response" do
+        response =
+          JSON.parse(
+            lodge_assessment(
+              assessment_body: valid_sap_xml,
+              accepted_responses: [201],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: "SAP-Schema-19.2.0",
+            ).body,
+            symbolize_names: true,
+          )
+
+        expect(response).to eq(
+          {
+            data: {
+              assessments: %w[0000-0000-0000-0000-0000],
+            },
+            meta: {
+              links: {
+                assessments: %w[/api/assessments/0000-0000-0000-0000-0000],
+              },
+            },
+          },
+        )
+      end
     end
 
     it "returns the correct response for RdSAP" do
@@ -1094,16 +1151,20 @@ describe "Acceptance::Assessment::Lodge" do
         add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
       end
 
-      it "rejects the assessment with a 400" do
+      it "rejects the assessment due to an incorrect data version" do
         register_assessor
-        expect(lodge_assessment(
+        response = lodge_assessment(
           assessment_body: bad_sap_1920_data_version_xml,
           accepted_responses: [400],
           auth_data: {
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-19.2.0",
-        ).status).to eq 400
+        )
+
+        expect(response.status).to eq 400
+        error_message = JSON.parse(response.body)["errors"][0]["title"]
+        expect(error_message).to include("The version number 10.2 for the node SAP-Data-Version is invalid for the SAP-Schema-19.2.0 schema")
       end
     end
   end
