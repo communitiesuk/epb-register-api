@@ -6,7 +6,6 @@ version: 0.2
 phases:
   build:
     commands:
-      - set -euo pipefail
       - mkdir swagger-ui
       - cd swagger-ui
       - echo "Fetching latest Swagger-UI release from GitHub"
