@@ -4,7 +4,7 @@ module Helper
   class RrnHelper
     class RrnNotValid < StandardError
     end
-    VALID_RRN = "^(\\d{4}-){4}\\d{4}$".freeze
+    VALID_RRN = "\\A(\\d{4}-){4}\\d{4}\\z".freeze
 
     def self.normalise_rrn_format(rrn)
       # Strip surrounding whitespace
