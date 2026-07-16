@@ -1,5 +1,5 @@
 describe UseCase::FindAssessmentsByPostcode do
-  subject(:use_case) { described_class.new }
+  subject(:use_case) { described_class.new(assessments_search_gateway:) }
 
   let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
   let(:first_assessment) do
@@ -56,6 +56,7 @@ describe UseCase::FindAssessmentsByPostcode do
       address_line4: "",
       town: "Newkirk",
       date_of_assessment: Time.new(2020, 5, 4).to_date,
+      has_green_deal: false,
       created_at: Time.utc(2030, 5, 4, 9, 0, 0),
     )
   end
@@ -75,6 +76,7 @@ describe UseCase::FindAssessmentsByPostcode do
       address_line4: "",
       town: "Newkirk",
       date_of_assessment: Time.new(2020, 5, 4).to_date,
+      has_green_deal: true,
       created_at: Time.utc(2030, 5, 4, 10, 0, 0),
     )
   end
@@ -137,6 +139,7 @@ describe UseCase::FindAssessmentsByPostcode do
           town: "Newkirk",
           postcode: "FK1 1XE",
           status: "ENTERED",
+          has_green_deal: false,
           created_at: "2030-05-04T09:00:00Z" },
         { date_of_assessment: "2020-05-04",
           date_of_expiry: "2030-05-03",
@@ -154,12 +157,9 @@ describe UseCase::FindAssessmentsByPostcode do
           town: "Newkirk",
           postcode: "FK1 1XE",
           status: "ENTERED",
+          has_green_deal: true,
           created_at: "2030-05-04T10:00:00Z" }],
       searchQuery: "FK1 1XE" }
-  end
-
-  before do
-    allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_search_gateway)
   end
 
   describe ".execute" do

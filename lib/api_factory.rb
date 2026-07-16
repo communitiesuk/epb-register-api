@@ -362,7 +362,7 @@ class ApiFactory
 
   def self.find_assessments_by_street_name_and_town
     @find_assessments_by_street_name_and_town ||=
-      UseCase::FindAssessmentsByStreetNameAndTown.new(assessments_search_gateway)
+      UseCase::FindAssessmentsByStreetNameAndTown.new(assessments_search_gateway:)
   end
 
   def self.fetch_assessment_for_bus_use_case

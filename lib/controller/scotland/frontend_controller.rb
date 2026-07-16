@@ -44,7 +44,7 @@ module Controller
               is_scottish: true,
             )
           else
-            ApiFactory.find_assessments_by_street_name_and_town.execute(
+            UseCase::FindAssessmentsByStreetNameAndTown.new.execute(
               street,
               params[:town],
               assessment_types,

@@ -10,19 +10,6 @@ module Gateway
     class InvalidAssessmentType < StandardError
     end
 
-    def assessment_search_index_select(schema)
-      <<-SQL
-        SELECT
-            a.assessment_id, a.date_of_assessment, a.type_of_assessment,
-            a.current_energy_efficiency_rating, a.opt_out, a.postcode, a.date_of_expiry, a.date_registered,
-            a.address_line1, a.address_line2, a.address_line3, a.address_line4, a.town, a.created_at,
-            a.cancelled_at, a.not_for_issue_at, b.address_id, a.scheme_assessor_id, la.linked_assessment_id
-        FROM #{schema}assessments a
-        INNER JOIN #{schema}assessments_address_id b USING(assessment_id)
-        LEFT JOIN #{schema}linked_assessments la USING(assessment_id)
-      SQL
-    end
-
     VALID_ASSESSMENT_TYPES = %w[
       RdSAP
       SAP
@@ -39,7 +26,7 @@ module Gateway
     def search_by_postcode(postcode, assessment_types = [], is_scottish: false)
       schema = Helper::ScotlandHelper.select_schema(is_scottish)
 
-      sql = assessment_search_index_select(schema) + <<-SQL
+      sql = assessment_search_index_select(schema, is_scottish:) + <<-SQL
         WHERE a.postcode = $1
         AND a.cancelled_at IS NULL
         AND a.not_for_issue_at IS NULL
@@ -85,7 +72,7 @@ module Gateway
     )
       schema = Helper::ScotlandHelper.select_schema(is_scottish)
 
-      sql_cte = <<-SQL
+      sql_cte = <<~SQL.squish
         WITH cte AS (
           SELECT a.assessment_id,
           a.date_of_assessment,
@@ -104,6 +91,7 @@ module Gateway
           a.cancelled_at,
           a.not_for_issue_at,
           a.scheme_assessor_id
+          #{select_green_deal(schema) if is_scottish}
         FROM #{schema}assessments a
         JOIN #{schema}assessment_search_address sa ON a.assessment_id = sa.assessment_id
         WHERE sa.address LIKE $1
@@ -168,7 +156,7 @@ module Gateway
     )
       schema = Helper::ScotlandHelper.select_schema(is_scottish)
 
-      sql = assessment_search_index_select(schema) + <<-SQL
+      sql = assessment_search_index_select(schema, is_scottish:) + <<-SQL
         WHERE a.assessment_id = #{
         ActiveRecord::Base.connection.quote(assessment_id)
       }
@@ -182,6 +170,46 @@ module Gateway
       result = Assessment.connection.exec_query(sql)
 
       result.map { |row| row_to_domain(row) }
+    end
+
+  private
+
+    def assessment_search_index_select(schema, is_scottish:)
+      <<~SQL.squish
+        SELECT
+          a.assessment_id,
+          a.date_of_assessment,
+          a.type_of_assessment,
+          a.current_energy_efficiency_rating,
+          a.opt_out,
+          a.postcode,
+          a.date_of_expiry,
+          a.date_registered,
+          a.address_line1,
+          a.address_line2,
+          a.address_line3,
+          a.address_line4,
+          a.town,
+          a.created_at,
+          a.cancelled_at,
+          a.not_for_issue_at,
+          b.address_id,
+          a.scheme_assessor_id,
+          la.linked_assessment_id
+          #{select_green_deal(schema) if is_scottish}
+        FROM #{schema}assessments a
+        INNER JOIN #{schema}assessments_address_id b USING(assessment_id)
+        LEFT JOIN #{schema}linked_assessments la USING(assessment_id)
+      SQL
+    end
+
+    def select_green_deal(schema)
+      <<~SQL.squish
+        ,EXISTS (
+          SELECT * FROM #{schema}green_deal_assessments g
+          WHERE g.assessment_id = a.assessment_id
+        ) has_green_deal
+      SQL
     end
 
     def row_to_domain(row)

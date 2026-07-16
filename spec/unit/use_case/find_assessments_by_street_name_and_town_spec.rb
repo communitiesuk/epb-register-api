@@ -1,26 +1,48 @@
 describe UseCase::FindAssessmentsByStreetNameAndTown do
-  subject(:use_case) { described_class.new(gateway) }
+  subject(:use_case) { described_class.new(assessments_search_gateway:) }
 
-  let(:gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
+  let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
 
   describe "#execute" do
     context "when an English address is given" do
       let(:results) do
-        [Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0001", address_line1: "1 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76),
-         Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0002", address_line1: "2 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76)]
+        [
+          Domain::AssessmentSearchResult.new(
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-0001",
+            address_line1: "1 Some Street",
+            town: "Town",
+            date_of_assessment: "20-12-01",
+            date_of_expiry: "30-12-01",
+            date_registered: "20-12-01",
+            current_energy_efficiency_rating: 76,
+          ),
+          Domain::AssessmentSearchResult.new(
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-0002",
+            address_line1: "2 Some Street",
+            town: "Town",
+            date_of_assessment: "20-12-01",
+            date_of_expiry: "30-12-01",
+            date_registered: "20-12-01",
+            current_energy_efficiency_rating: 76,
+          ),
+        ]
       end
 
       before do
-        allow(gateway).to receive(:search_by_street_name_and_town).with("Some Street",
-                                                                        "Town",
-                                                                        %w[RdSAP],
-                                                                        limit: 201,
-                                                                        is_scottish: false).and_return(results)
+        allow(assessments_search_gateway).to receive(:search_by_street_name_and_town).with(
+          "Some Street",
+          "Town",
+          %w[RdSAP],
+          limit: 201,
+          is_scottish: false,
+        ).and_return(results)
       end
 
       it "executes the method" do
         use_case.execute("Some Street", "Town", %w[RdSAP])
-        expect(gateway).to have_received(:search_by_street_name_and_town)
+        expect(assessments_search_gateway).to have_received(:search_by_street_name_and_town)
       end
 
       it "gets the results" do
@@ -30,41 +52,79 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
 
     context "when a Scottish address is given" do
       let(:results) do
-        [Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0001", address_line1: "1 Some Street", town: "Falkurk", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76),
-         Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0002", address_line1: "2 Some Street", town: "Falkurk", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76)]
+        [
+          Domain::AssessmentSearchResult.new(
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-0001",
+            address_line1: "1 Some Street",
+            town: "Falkurk",
+            date_of_assessment: "20-12-01",
+            date_of_expiry: "30-12-01",
+            date_registered: "20-12-01",
+            current_energy_efficiency_rating: 76,
+          ),
+          Domain::AssessmentSearchResult.new(
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-0002",
+            address_line1: "2 Some Street",
+            town: "Falkurk",
+            date_of_assessment: "20-12-01",
+            date_of_expiry: "30-12-01",
+            date_registered: "20-12-01",
+            has_green_deal: true,
+            current_energy_efficiency_rating: 76,
+          ),
+        ]
       end
 
       before do
-        allow(gateway).to receive(:search_by_street_name_and_town).with("Some Street",
-                                                                        "Town",
-                                                                        %w[RdSAP],
-                                                                        limit: 201,
-                                                                        is_scottish: true).and_return(results)
+        allow(assessments_search_gateway).to receive(:search_by_street_name_and_town).with(
+          "Some Street",
+          "Town",
+          %w[RdSAP],
+          limit: 201,
+          is_scottish: true,
+        ).and_return(results)
       end
 
       it "executes the method" do
         use_case.execute("Some Street", "Town", %w[RdSAP], is_scottish: true)
-        expect(gateway).to have_received(:search_by_street_name_and_town)
+        expect(assessments_search_gateway).to have_received(:search_by_street_name_and_town)
       end
 
       it "gets the results" do
         expect(use_case.execute("Some Street", "Town", %w[RdSAP], is_scottish: true)[:data].length).to eq(2)
       end
+
+      it "returns has_green_deal" do
+        expect(use_case.execute("Some Street", "Town", %w[RdSAP], is_scottish: true)[:data].pluck(:has_green_deal)).to eq [false, true]
+      end
     end
 
     context "when the search has more than 200 results" do
       let(:too_many_results) do
-        array = []
-        (1..201).each { |_i| array << Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-0001", address_line1: "1 Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76) }
-        array
+        (1..201).map do
+          Domain::AssessmentSearchResult.new(
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-0001",
+            address_line1: "1 Some Street",
+            town: "Town",
+            date_of_assessment: "20-12-01",
+            date_of_expiry: "30-12-01",
+            date_registered: "20-12-01",
+            current_energy_efficiency_rating: 76,
+          )
+        end
       end
 
       before do
-        allow(gateway).to receive(:search_by_street_name_and_town).with("1",
-                                                                        "Town",
-                                                                        %w[RdSAP],
-                                                                        limit: 201,
-                                                                        is_scottish: false).and_return(too_many_results)
+        allow(assessments_search_gateway).to receive(:search_by_street_name_and_town).with(
+          "1",
+          "Town",
+          %w[RdSAP],
+          limit: 201,
+          is_scottish: false,
+        ).and_return(too_many_results)
       end
 
       it "raises an error" do
@@ -74,22 +134,28 @@ describe UseCase::FindAssessmentsByStreetNameAndTown do
 
     context "when the search has 200 results" do
       let(:two_hundred_results) do
-        array = []
-        id = 1000
-
-        (1..200).each do |i|
-          id += 1
-          array << Domain::AssessmentSearchResult.new(type_of_assessment: "RdSAP", assessment_id: "0000-0000-0000-#{id}", address_line1: "#{i} Some Street", town: "Town", date_of_assessment: "20-12-01", date_of_expiry: "30-12-01", date_registered: "20-12-01", current_energy_efficiency_rating: 76)
+        (1001..1200).map do |id|
+          Domain::AssessmentSearchResult.new(
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-#{id.to_s.ljust(4, '0')}",
+            address_line1: "#{id} Some Street",
+            town: "Town",
+            date_of_assessment: "20-12-01",
+            date_of_expiry: "30-12-01",
+            date_registered: "20-12-01",
+            current_energy_efficiency_rating: 76,
+          )
         end
-        array
       end
 
       before do
-        allow(gateway).to receive(:search_by_street_name_and_town).with("1",
-                                                                        "Town",
-                                                                        %w[RdSAP],
-                                                                        limit: 201,
-                                                                        is_scottish: false).and_return(two_hundred_results)
+        allow(assessments_search_gateway).to receive(:search_by_street_name_and_town).with(
+          "1",
+          "Town",
+          %w[RdSAP],
+          limit: 201,
+          is_scottish: false,
+        ).and_return(two_hundred_results)
       end
 
       it "does not raise an error" do

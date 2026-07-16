@@ -81,6 +81,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
             town: "Newkirk",
             postcode: "FK1 1XE",
             status: "ENTERED",
+            hasGreenDeal: false,
             createdAt: "2021-06-21T00:00:00Z",
           }.to_json,
         )
@@ -320,6 +321,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
             addressLine3: "",
             addressLine4: "",
             status: "ENTERED",
+            hasGreenDeal: false,
             createdAt: "2021-06-21T00:00:00Z",
           }.to_json,
         )
@@ -348,6 +350,7 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
           addressLine3: "",
           addressLine4: "",
           status: "ENTERED",
+          hasGreenDeal: false,
           createdAt: "2021-06-21T00:00:00Z",
         }.to_json,
       )
@@ -486,16 +489,12 @@ describe "Acceptance::Assessment::ScotlandSearchForAssessments", :set_with_timec
     end
 
     context "when the number results are greater than 200" do
-      let(:find_use_case) { instance_double(UseCase::FindAssessmentsByStreetNameAndTown) }
-      let(:gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
-
       before do
-        allow(ApiFactory).to receive(:find_assessments_by_street_name_and_town).and_return(
-          find_use_case,
+        gateway = instance_double(
+          Gateway::AssessmentsSearchGateway,
+          search_by_street_name_and_town: [instance_double(Domain::AssessmentSearchResult)] * 201,
         )
         allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(gateway)
-        allow(gateway).to receive(:search_by_street_name_and_town).and_return({ data: [] })
-        allow(find_use_case).to receive(:execute).and_raise Boundary::TooManyResults
       end
 
       it "raises the error" do

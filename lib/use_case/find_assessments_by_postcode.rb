@@ -6,8 +6,8 @@ module UseCase
 
     class AssessmentTypeNotValid < StandardError; end
 
-    def initialize
-      @assessments_gateway = Gateway::AssessmentsSearchGateway.new
+    def initialize(assessments_search_gateway: Gateway::AssessmentsSearchGateway.new)
+      @assessments_gateway = assessments_search_gateway
     end
 
     def execute(postcode, assessment_types = [], is_scottish: false)
@@ -25,7 +25,7 @@ module UseCase
 
       Helper::NaturalSort.sort!(result)
 
-      { data: result.map(&:to_hash), searchQuery: postcode }
+      { data: result.map { it.to_hash(is_scottish:) }, searchQuery: postcode }
     rescue Gateway::AssessmentsSearchGateway::InvalidAssessmentType
       raise AssessmentTypeNotValid
     end

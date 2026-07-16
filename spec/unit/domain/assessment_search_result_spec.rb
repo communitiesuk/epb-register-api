@@ -15,6 +15,7 @@ describe Domain::AssessmentSearchResult do
       address_line4: "",
       town: "Whitbury",
       date_of_assessment: Time.new(2020, 5, 4).to_date,
+      has_green_deal: true,
       created_at: Time.utc(2030, 5, 4, 9, 0, 0),
     }
   end
@@ -41,8 +42,8 @@ describe Domain::AssessmentSearchResult do
     }
   end
 
-  describe ".to_hash" do
-    let(:domain) { described_class.new(**arguments) }
+  describe "#to_hash" do
+    subject(:domain) { described_class.new(**arguments) }
 
     it "returns the expected data" do
       expect(domain.to_hash).to eq(expected_data)
@@ -66,6 +67,18 @@ describe Domain::AssessmentSearchResult do
       domain = described_class.new(**args_without_created_at)
 
       expect(domain.to_hash[:created_at]).to be_nil
+    end
+
+    context "with is_scottish false" do
+      it "returns the has_green_deal flag" do
+        expect(domain.to_hash(is_scottish: false)).not_to include :has_green_deal
+      end
+    end
+
+    context "with is_scottish true" do
+      it "returns the has_green_deal flag" do
+        expect(domain.to_hash(is_scottish: true)).to eq(expected_data.merge(has_green_deal: true))
+      end
     end
   end
 end

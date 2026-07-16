@@ -20,6 +20,7 @@ module Domain
       date_of_assessment: nil,
       scheme_assessor_id: nil,
       linked_assessment_id: nil,
+      has_green_deal: false,
       created_at: nil
     )
       @migrated = migrated
@@ -61,9 +62,10 @@ module Domain
           Date.strptime(not_for_issue_at.to_s, "%Y-%m-%d")
         end
       @related_rrn = linked_assessment_id
+      @has_green_deal = has_green_deal
     end
 
-    def to_hash
+    def to_hash(is_scottish: false)
       expiry_helper =
         Gateway::AssessmentExpiryHelper.new(
           @cancelled_at,
@@ -91,7 +93,9 @@ module Domain
         postcode: @postcode,
         status: expiry_helper.assessment_status,
         created_at: @created_at&.iso8601,
-      }
+      }.tap do |hash|
+        hash[:has_green_deal] = @has_green_deal if is_scottish
+      end
     end
 
     def get(key)

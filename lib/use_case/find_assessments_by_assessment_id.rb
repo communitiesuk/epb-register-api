@@ -1,7 +1,7 @@
 module UseCase
   class FindAssessmentsByAssessmentId
-    def initialize
-      @assessment_gateway = Gateway::AssessmentsSearchGateway.new
+    def initialize(assessments_search_gateway: Gateway::AssessmentsSearchGateway.new)
+      @assessment_gateway = assessments_search_gateway
     end
 
     def execute(assessment_id, is_scottish: false)
@@ -11,7 +11,7 @@ module UseCase
 
       new = []
 
-      result.each { |row| new.push(row.to_hash) }
+      result.each { |row| new.push(row.to_hash(is_scottish:)) }
 
       { data: new, search_query: assessment_id }
     end

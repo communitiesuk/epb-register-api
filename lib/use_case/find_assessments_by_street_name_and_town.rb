@@ -1,12 +1,11 @@
 module UseCase
   class FindAssessmentsByStreetNameAndTown
-    class ParameterMissing < StandardError
-    end
+    class ParameterMissing < StandardError; end
 
     MAX_RESULTS_THRESHOLD = 200
 
-    def initialize(gateway = nil)
-      @assessment_gateway = gateway || Gateway::AssessmentsSearchGateway.new
+    def initialize(assessments_search_gateway: Gateway::AssessmentsSearchGateway.new)
+      @assessment_gateway = assessments_search_gateway
     end
 
     def execute(street_name, town, assessment_type, is_scottish: false)
@@ -24,7 +23,7 @@ module UseCase
 
       Helper::NaturalSort.sort!(result)
 
-      { data: result.map(&:to_hash), search_query: [street_name, town] }
+      { data: result.map { it.to_hash(is_scottish:) }, search_query: [street_name, town] }
     end
   end
 end
