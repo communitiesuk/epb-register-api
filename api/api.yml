@@ -4348,12 +4348,16 @@ components:
       type: object
       description: 'A reference to the most recent domestic EPC for the address also referenced in the result'
       properties:
-        epcRrn:
+        assessmentId:
           $ref: '#/components/schemas/AssessmentId'
         dateOfAssessment:
           type: string
           format: date
           description: The date that the assessor carried out the assessment of the property
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
         dateOfRegistration:
           type: string
           format: date
@@ -4365,23 +4369,35 @@ components:
           minimum: 1
           example: 62
           description: The current energy rating to be submitted to the Register
-        optOut:
-          type: boolean
-          example: false
         currentEnergyEfficiencyBand:
           type: string
           example: 'c'
           description: The band, from a to g, the current Energy Rating falls within
-        dateOfExpiry:
-          type: string
-          format: date
-          description: The date that the certificate expires
+        optOut:
+          type: boolean
+          example: false
         addressId:
           $ref: '#/components/schemas/AddressId'
-        address:
-          $ref: '#/components/schemas/AddressStyle2'
+        addressLine1:
+          $ref: '#/components/schemas/AddressLine1'
+        addressLine2:
+          type: string
+          example: ''
+        addressLine3:
+          type: string
+          example: ''
+        addressLine4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
         status:
           $ref: '#/components/schemas/AssessmentStatus'
+        hasGreenDeal:
+          type: boolean
+          example: false
         createdAt:
           type: string
           format: date-time
