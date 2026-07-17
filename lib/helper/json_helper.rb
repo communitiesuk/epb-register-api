@@ -1,5 +1,9 @@
 require "json-schema"
 
+# https://github.com/voxpupuli/json-schema/pull/566
+# Sinatra requires multi_json causing json-schema to issue a deprecation warning
+JSON::Validator.use_multi_json = false
+
 module Helper
   class JsonHelper
     DATE_FORMAT_PROC =
