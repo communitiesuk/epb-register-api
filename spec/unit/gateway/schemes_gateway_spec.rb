@@ -53,4 +53,22 @@ describe Gateway::SchemesGateway do
       end
     end
   end
+
+  describe "#exists?" do
+    before do
+      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (scheme_id, active, active_scotland, active_eng_wls_nir) VALUES ('1',false, true, true)")
+    end
+
+    it "returns false for an scheme_id that does not exists" do
+      expect(gateway.exists?("0")).to be false
+    end
+
+    it "returns true for an scheme_id that exists" do
+      expect(gateway.exists?("1")).to be true
+    end
+
+    it "returns false for non-integers" do
+      expect(gateway.exists?("words")).to be false
+    end
+  end
 end

@@ -17,7 +17,11 @@ module Gateway
     end
 
     def exists?(scheme_id)
-      Scheme.exists?(scheme_id)
+      id = Integer(scheme_id)
+
+      Scheme.exists?(id)
+    rescue ArgumentError, TypeError
+      false
     end
 
     def add(scheme_body)
