@@ -110,9 +110,11 @@ describe Gateway::AssessorsGateway do
       )
     end
 
-    ActiveRecord::Base.connection.execute(
-      "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('AB1 0AA', '57.101459','-2.242858'), ('AA1 0AA', '56.101459','-1.241858')",
-    )
+    ActiveRecord::Base.connection.execute(<<~SQL.squish)
+      INSERT INTO postcode_geolocation (postcode, latitude, longitude, region)
+      VALUES ('AB1 0AA', '57.101459','-2.242858', 'Scotland'),
+             ('AA1 0AA', '56.101459','-1.241858', 'South West')
+    SQL
   end
 
   describe "#search_by" do

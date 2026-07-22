@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_151447) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_083729) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -237,18 +237,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_151447) do
     t.jsonb "rule_triggers", default: []
   end
 
-  create_table "public.postcode_geolocation", force: :cascade do |t|
-    t.decimal "latitude"
-    t.decimal "longitude"
-    t.string "postcode"
-    t.string "region"
+  create_table "public.postcode_geolocation", primary_key: "postcode", id: :string, force: :cascade do |t|
+    t.decimal "latitude", null: false
+    t.decimal "longitude", null: false
+    t.string "region", null: false
   end
 
-  create_table "public.postcode_outcode_geolocations", force: :cascade do |t|
-    t.decimal "latitude"
-    t.decimal "longitude"
-    t.string "outcode"
-    t.string "region"
+  create_table "public.postcode_outcode_geolocations", primary_key: "outcode", id: :string, force: :cascade do |t|
+    t.decimal "latitude", null: false
+    t.decimal "longitude", null: false
+    t.string "region", null: false
   end
 
   create_table "public.schemes", primary_key: "scheme_id", force: :cascade do |t|

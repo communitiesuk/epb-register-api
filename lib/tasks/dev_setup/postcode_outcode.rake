@@ -1,30 +1,21 @@
-require "csv"
-require "open-uri"
-
 namespace :dev_data do
-  # This has been superceded for use in production by postcode.rake, but remains a
-  # handy way to hack postcode outcode data into local dev environment
   desc "Import postcode_outcode geolocation data to local dev environment"
-
   task :import_postcode_outcode do
     Tasks::TaskHelpers.quit_if_production
-    db = ActiveRecord::Base.connection
-
-    db.execute("TRUNCATE TABLE postcode_outcode_geolocations RESTART IDENTITY")
 
     ActiveRecord::Base.logger = nil
+    connection = ActiveRecord::Base.connection
 
-    outcode_data = URI("https://data.freemaptools.com/download/uk-outcode-postcodes/postcode-outcodes.csv").open
+    table = "postcode_outcode_geolocations"
+    file_path = "db/seed_data/#{table}.csv"
+    connection.execute("TRUNCATE TABLE #{table}")
 
-    CSV.foreach(outcode_data, headers: false) do |row|
-      hash = {
-        outcode: row[1],
-        latitude: row[2],
-        longitude: row[3],
-      }
-      PostcodeOutcodeGeolocation.create!(hash)
+    raw_connection = connection.raw_connection
+    File.open(file_path) do |file|
+      headers = file.readline
+      raw_connection.copy_data("COPY #{table} (#{headers}) FROM STDIN (FORMAT csv, NULL '\N')") do
+        file.each { raw_connection.put_copy_data it }
+      end
     end
   end
 end
-
-class PostcodeOutcodeGeolocation < ActiveRecord::Base; end

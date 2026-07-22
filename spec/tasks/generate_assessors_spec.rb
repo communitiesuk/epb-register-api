@@ -6,8 +6,15 @@ describe "generate_assessors rake" do
       allow($stdout).to receive(:puts)
       allow($stdout).to receive(:write)
       ENV["STAGE"] = "production"
-      ActiveRecord::Base.connection.exec_query("INSERT INTO schemes (name) VALUES('CIBSE Certification Limited'),('ECMK'),('Elmhurst Energy Systems Ltd');")
-      ActiveRecord::Base.connection.exec_query("INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('B34 2AA', '52', '-1'),('G65 1LG', '51', '-2'),('NH8 0LD', '53', '1');")
+      ActiveRecord::Base.connection.exec_query <<~SQL
+        INSERT INTO schemes (name) VALUES('CIBSE Certification Limited'),('ECMK'),('Elmhurst Energy Systems Ltd');
+      SQL
+      ActiveRecord::Base.connection.exec_query <<~SQL
+        INSERT INTO postcode_geolocation (postcode, latitude, longitude, region)
+          VALUES ('B34 2AA', '52', '-1', 'East Midlands'),
+                 ('G65 1LG', '51', '-2', 'Scotland'),
+                 ('NH8 0LD', '53', '1', 'London')
+      SQL
     end
 
     after do

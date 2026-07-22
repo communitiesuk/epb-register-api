@@ -70,7 +70,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "returns a region if there is not region for the postcode" do
-      add_postcodes("SW1A 2AA", 51.5045, 0.0865)
+      add_postcodes("SW1A 2AA", 51.5045, 0.0865, "London")
       add_outcodes("SW1A", 51.5045, 0.4865, "London")
 
       expect(response).to eq(
