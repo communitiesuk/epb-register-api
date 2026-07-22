@@ -729,14 +729,14 @@ describe "Acceptance::Assessor" do
         ).status).to eq(422)
       end
 
-      # it "rejects requests with invalid assessor ID" do
-      #   expect(add_assessor(
-      #     scheme_id:,
-      #     assessor_id: "i_am_a_bad_assessor_id",
-      #     body: valid_assessor_request.dup,
-      #     accepted_responses: [422],
-      #   ).status).to eq(422)
-      # end
+      it "rejects requests with invalid assessor ID" do
+        expect(add_assessor(
+          scheme_id:,
+          assessor_id: "i_am_a_bad_assessor_id",
+          body: valid_assessor_request.dup,
+          accepted_responses: [422],
+        ).status).to eq(422)
+      end
 
       it "rejects requests without firstname" do
         expect(add_assessor(
