@@ -205,7 +205,7 @@ Although covered by a different regulatory regime a Certification Scheme is syno
 In the case of a individual the name may not be unique (e.g. there may be many thousands of people called "Mr John Smith") so this is information about the Authorised User rather than an identifier.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Fax" type="xs:string" minOccurs="0"/>
+			<xs:element name="Fax" type="PhoneNumberType"/>
 			<xs:element name="Telephone" type="PhoneNumberType"/>
 		</xs:all>
 	</xs:complexType>
