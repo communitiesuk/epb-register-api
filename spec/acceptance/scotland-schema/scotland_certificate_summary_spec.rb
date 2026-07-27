@@ -1234,6 +1234,8 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                 { measureDescriptionShort: "Boiler replacement", measureDescriptionLong: nil, measureValid: "N", measureType: nil },
                                 { measureDescriptionShort: "Roof insulation", measureDescriptionLong: nil, measureValid: "N", measureType: nil }],
                               alternativeImprovements: [],
+                              totalEmissionSavings: nil,
+                              totalEnergySavings: nil,
                               addressId: "RRN-0000-0000-0000-0003-0000",
                               optOut: false,
                               relatedAssessments: [],
