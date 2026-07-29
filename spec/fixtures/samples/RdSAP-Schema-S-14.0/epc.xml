@@ -1,0 +1,325 @@
+<ConditionReportCreateRequest_1 xmlns="http://www.est.org.uk/epc/lodgement">
+  <Identification>
+    <ServiceName xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures">Northgate Information Solutions</ServiceName>
+    <Operation xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures">Create</Operation>
+    <TransactionDetails xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures">
+      <OriginatingID>NorthgateISPortal</OriginatingID>
+      <RecipientID>LandmarkHCR</RecipientID>
+      <Timestamp>2010-09-22T18:12:01.822375+01:00</Timestamp>
+      <TransactionID>string</TransactionID>
+    </TransactionDetails>
+  </Identification>
+  <Configuration>
+    <StopOnFirstError xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures">5</StopOnFirstError>
+    <ReasonForChange xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures">Create EPC</ReasonForChange>
+  </Configuration>
+  <Content>
+    <EPC-Data>
+      <Calculation-Software-Name xmlns="">Northgate RDSAP</Calculation-Software-Name>
+      <Calculation-Software-Version xmlns="">1.5.0.22</Calculation-Software-Version>
+      <SAP-Version xmlns="">9.83</SAP-Version>
+      <BEDF-Revision-Number xmlns="">0</BEDF-Revision-Number>
+      <Energy-Assessment xmlns="">
+        <Property-Summary>
+          <Wall>
+            <Description>Cavity wall, as built, no insulation (assumed)</Description>
+            <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
+          </Wall>
+          <Roof>
+            <Description>Pitched, 150 mm loft insulation</Description>
+            <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+          </Roof>
+          <Floor>
+            <Description>Suspended, no insulation (assumed)</Description>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Floor>
+          <Window>
+            <Description>Fully double glazed</Description>
+            <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+          </Window>
+          <Main-Heating>
+            <Description>Boiler and radiators, mains gas</Description>
+            <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+          </Main-Heating>
+          <Main-Heating-Controls>
+            <Description>Programmer, TRVs and bypass</Description>
+            <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+          </Main-Heating-Controls>
+          <Hot-Water>
+            <Description>From main system</Description>
+            <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+          </Hot-Water>
+          <Lighting>
+            <Description>No low energy lighting</Description>
+            <Energy-Efficiency-Rating>1</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
+          </Lighting>
+          <Secondary-Heating>
+            <Description>None</Description>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Secondary-Heating>
+          <Has-Hot-Water-Cylinder>true</Has-Hot-Water-Cylinder>
+          <Dwelling-Type>Mid-terrace House</Dwelling-Type>
+          <Total-Floor-Area>128</Total-Floor-Area>
+        </Property-Summary>
+        <Energy-Use>
+          <Energy-Rating-Current>59</Energy-Rating-Current>
+          <Energy-Rating-Potential>72</Energy-Rating-Potential>
+          <Environmental-Impact-Current>67</Environmental-Impact-Current>
+          <Environmental-Impact-Potential>67</Environmental-Impact-Potential>
+          <Energy-Consumption-Current>330</Energy-Consumption-Current>
+          <Energy-Consumption-Potential>229</Energy-Consumption-Potential>
+          <CO2-Emissions-Current>4.6</CO2-Emissions-Current>
+          <CO2-Emissions-Current-Per-Floor-Area>55</CO2-Emissions-Current-Per-Floor-Area>
+          <CO2-Emissions-Potential>3.2</CO2-Emissions-Potential>
+          <Lighting-Cost-Current currency="GBP">86</Lighting-Cost-Current>
+          <Lighting-Cost-Potential currency="GBP">43</Lighting-Cost-Potential>
+          <Heating-Cost-Current currency="GBP">623</Heating-Cost-Current>
+          <Heating-Cost-Potential currency="GBP">438</Heating-Cost-Potential>
+          <Hot-Water-Cost-Current currency="GBP">169</Hot-Water-Cost-Current>
+          <Hot-Water-Cost-Potential currency="GBP">156</Hot-Water-Cost-Potential>
+        </Energy-Use>
+        <Suggested-Improvements>
+          <Improvement>
+            <Sequence>1</Sequence>
+            <Improvement-Category>1</Improvement-Category>
+            <Improvement-Type>A</Improvement-Type>
+            <Typical-Saving>164</Typical-Saving>
+            <Energy-Performance-Rating>67</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>63</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>6</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+          <Improvement>
+            <Sequence>2</Sequence>
+            <Improvement-Category>1</Improvement-Category>
+            <Typical-Saving>32</Typical-Saving>
+            <Energy-Performance-Rating>69</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>35</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+          <Improvement>
+            <Sequence>3</Sequence>
+            <Improvement-Category>1</Improvement-Category>
+            <Typical-Saving>44</Typical-Saving>
+            <Energy-Performance-Rating>72</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>67</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>14</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+          <Improvement>
+            <Sequence>4</Sequence>
+            <Improvement-Category>2</Improvement-Category>
+            <Typical-Saving>127</Typical-Saving>
+            <Energy-Performance-Rating>78</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>75</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>20</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+          <Improvement>
+            <Sequence>5</Sequence>
+            <Improvement-Category>3</Improvement-Category>
+            <Typical-Saving>24</Typical-Saving>
+            <Energy-Performance-Rating>79</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>77</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>19</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+          <Improvement>
+            <Sequence>6</Sequence>
+            <Improvement-Category>3</Improvement-Category>
+            <Typical-Saving>172</Typical-Saving>
+            <Energy-Performance-Rating>90</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>87</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>34</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+        </Suggested-Improvements>
+        <Addendum>
+          <Addendum-Number>1</Addendum-Number>
+        </Addendum>
+        <LZC-Energy-Sources>
+          <LZC-Energy-Source>11</LZC-Energy-Source>
+        </LZC-Energy-Sources>
+      </Energy-Assessment>
+      <SAP-Data xmlns="">
+        <Schema-Version>LIG-14.0</Schema-Version>
+        <SAP-Property-Details>
+          <Built-Form>4</Built-Form>
+          <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
+          <Multiple-Glazing-Type>2</Multiple-Glazing-Type>
+          <Extensions-Count>0</Extensions-Count>
+          <Glazed-Area>1</Glazed-Area>
+          <Habitable-Room-Count>4</Habitable-Room-Count>
+          <Heated-Room-Count>4</Heated-Room-Count>
+          <Low-Energy-Lighting>0</Low-Energy-Lighting>
+          <Measurement-Type>1</Measurement-Type>
+          <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+          <Photovoltaic-Supply>0</Photovoltaic-Supply>
+          <Property-Type>0</Property-Type>
+          <Solar-Water-Heating>Y</Solar-Water-Heating>
+          <Mechanical-Ventilation>0</Mechanical-Ventilation>
+          <Conservatory-Type>1</Conservatory-Type>
+          <SAP-Heating>
+            <Main-Heating-Category>2</Main-Heating-Category>
+            <Main-Fuel-Type>1</Main-Fuel-Type>
+            <Water-Heating-Fuel>0</Water-Heating-Fuel>
+            <Main-Heating-Control>2107</Main-Heating-Control>
+            <Secondary-Heating-Type />
+            <Water-Heating-Code>904</Water-Heating-Code>
+            <Cylinder-Size>2</Cylinder-Size>
+            <Cylinder-Insulation-Type>1</Cylinder-Insulation-Type>
+            <Cylinder-Insulation-Thickness>38</Cylinder-Insulation-Thickness>
+            <Cylinder-Thermostat>Y</Cylinder-Thermostat>
+            <Boiler-Index-Number />
+            <Main-Heating-Data-Source>2</Main-Heating-Data-Source>
+            <SAP-Main-Heating-Code>109</SAP-Main-Heating-Code>
+            <Boiler-Flue-Type>2</Boiler-Flue-Type>
+            <Fan-Flue-Present>N</Fan-Flue-Present>
+            <Heat-Emitter-Type>1</Heat-Emitter-Type>
+          </SAP-Heating>
+          <SAP-Energy-Source>
+            <Meter-Type>2</Meter-Type>
+            <Main-Gas>Y</Main-Gas>
+            <Wind-Turbines-Count>0</Wind-Turbines-Count>
+            <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
+          </SAP-Energy-Source>
+          <SAP-Building-Parts>
+            <SAP-Building-Part>
+              <Building-Part-Number>1</Building-Part-Number>
+              <Identifier>Main</Identifier>
+              <Construction-Age-Band>D</Construction-Age-Band>
+              <Wall-Insulation-Type>1</Wall-Insulation-Type>
+              <Roof-Construction>4</Roof-Construction>
+              <Wall-Construction>1</Wall-Construction>
+              <Roof-Insulation-Location>2</Roof-Insulation-Location>
+              <Roof-Insulation-Thickness>150mm</Roof-Insulation-Thickness>
+              <SAP-Floor-Dimensions>
+                <SAP-Floor-Dimension>
+                  <Heat-Loss-Perimeter>14.8</Heat-Loss-Perimeter>
+                  <Room-Height>2.4</Room-Height>
+                  <Total-Floor-Area>41.4</Total-Floor-Area>
+                  <Floor>0</Floor>
+                  <Floor-Construction>2</Floor-Construction>
+                  <Floor-Insulation>1</Floor-Insulation>
+                </SAP-Floor-Dimension>
+                <SAP-Floor-Dimension>
+                  <Heat-Loss-Perimeter>14.8</Heat-Loss-Perimeter>
+                  <Room-Height>2.4</Room-Height>
+                  <Total-Floor-Area>41.4</Total-Floor-Area>
+                  <Floor>0</Floor>
+                </SAP-Floor-Dimension>
+              </SAP-Floor-Dimensions>
+            </SAP-Building-Part>
+          </SAP-Building-Parts>
+          <SAP-Windows />
+        </SAP-Property-Details>
+      </SAP-Data>
+      <Report-Header xmlns="">
+        <RRN>0000-0000-0000-0000-0000</RRN>
+        <Inspection-Date>2010-09-21</Inspection-Date>
+        <Report-Type>2</Report-Type>
+        <Completion-Date>2010-09-23</Completion-Date>
+        <Registration-Date>2010-09-23</Registration-Date>
+        <Status>entered</Status>
+        <Language-Code>2</Language-Code>
+        <Restricted-Access>0</Restricted-Access>
+        <Seller-Commission-Report>Y</Seller-Commission-Report>
+        <Property-Type>0</Property-Type>
+        <Country-Code>SCT</Country-Code>
+        <Transaction-Type>1</Transaction-Type>
+        <Home-Inspector>
+          <Name xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">
+            <Prefix />
+            <First-Name>Testa</First-Name>
+            <Surname>Sessor</Surname>
+            <Suffix />
+          </Name>
+          <Certification-Date xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">2008-08-20</Certification-Date>
+          <Status xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">Registered</Status>
+          <Notify-Lodgement xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">Y</Notify-Lodgement>
+          <Contact-Address xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">
+            <Address-Line-1>12 EPC Street</Address-Line-1>
+            <Address-Line-2/>
+            <Address-Line-3/>
+            <Post-Town>Newkirk</Post-Town>
+            <Postcode>FK1 1XE</Postcode>
+          </Contact-Address>
+          <Web-Site xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">httos://b.com/a</Web-Site>
+          <E-Mail xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">a@b.com</E-Mail>
+          <Fax xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">0131 496 0001</Fax>
+          <Telephone xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">0131 496 0000</Telephone>
+          <Qualifications xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" />
+          <Specialisms xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" />
+          <Company-Name xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">Test EPCs 4U</Company-Name>
+          <Postcode-Coverage xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">FK</Postcode-Coverage>
+          <Certification-Scheme xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">
+            <Scheme-Name>Testing Energy Scheme</Scheme-Name>
+            <Complaints-Address>
+              <Address-Line-1>EPC Centre</Address-Line-1>
+              <Address-Line-2/>
+              <Address-Line-3/>
+              <Post-Town>Newkirk</Post-Town>
+              <Postcode>FK1 1XE</Postcode>
+            </Complaints-Address>
+            <Contact-Address>
+              <Address-Line-1>Testing Energy Scheme</Address-Line-1>
+              <Address-Line-2/>
+              <Address-Line-3/>
+              <Post-Town>Newkirk</Post-Town>
+              <Postcode>FK1 1XE</Postcode>
+            </Contact-Address>
+            <Web-Site>http://b.com/a</Web-Site>
+            <E-Mail>a@b.com</E-Mail>
+            <Registered-Name>Alan Waugh</Registered-Name>
+            <Fax>0131 496 0001</Fax>
+            <Telephone>0131 496 0000</Telephone>
+          </Certification-Scheme>
+          <Inspector-Report-Types xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">
+            <Report-Type>3</Report-Type>
+          </Inspector-Report-Types>
+          <Identification-Number xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">
+            <Membership-Number>SPEC000000</Membership-Number>
+          </Identification-Number>
+        </Home-Inspector>
+        <Property>
+          <Address xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">
+            <Address-Line-1>1 Some Street</Address-Line-1>
+            <Address-Line-2 />
+            <Address-Line-3 />
+            <Post-Town>Newkirk</Post-Town>
+            <Postcode>FK1 1XE</Postcode>
+          </Address>
+          <UPRN xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP">0000000000</UPRN>
+        </Property>
+        <Related-Party-Disclosure>
+          <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
+        </Related-Party-Disclosure>
+      </Report-Header>
+      <Insurance-Details xmlns="">
+        <Insurer>EPC Protect Inc.</Insurer>
+        <Policy-No>09090909090909</Policy-No>
+        <Effective-Date>2008-05-25</Effective-Date>
+        <Expiry-Date>2009-05-24</Expiry-Date>
+        <PI-Limit currency="GBP">25000000</PI-Limit>
+      </Insurance-Details>
+      <ExternalDefinitions-Revision-Number xmlns="">2.1a</ExternalDefinitions-Revision-Number>
+    </EPC-Data>
+    <PDF/>
+  </Content>
+</ConditionReportCreateRequest_1>
