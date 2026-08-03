@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bdt="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05/BaseDataTypes" xmlns:SAP05="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" elementFormDefault="qualified" version="LIG-14.0">
-	<xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+<xs:schema targetNamespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pfdt="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/BaseDataTypes" xmlns:HIP="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" attributeFormDefault="qualified" version="LIG-12.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
 	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
-	<xs:include schemaLocation="../UDT/SAP05-Domains.xsd"/>
-	<xs:include schemaLocation="../Templates/UserManagement.xsd"/>
-	<xs:include schemaLocation="../Templates/Property.xsd"/>
-	<xs:include schemaLocation="../Templates/SAP05-CollectedData.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:include schemaLocation="../Templates/EPC-CollectedData.xsd"/>
+	<xs:include schemaLocation="../Templates/HCR-FeaturesInternal.xsd"/>
+	<xs:include schemaLocation="../Templates/HCR-FeaturesGrounds.xsd"/>
+	<xs:include schemaLocation="../Templates/HCR-FeaturesExternal.xsd"/>
+	<xs:include schemaLocation="../Templates/HCR-FeaturesServices.xsd"/>
+	<xs:include schemaLocation="../Templates/HCR-PropertyDetails.xsd"/>
+	<xs:include schemaLocation="../Templates/HCR-RiskAssessment.xsd"/>
 	<xs:include schemaLocation="../Templates/EPC-Certificate.xsd"/>
+	<xs:include schemaLocation="../Templates/Property.xsd"/>
+	<xs:include schemaLocation="../Templates/UserManagement.xsd"/>
+	<xs:element name="Home-Condition-Report" type="Home-Condition-Report"/>
+	<xs:complexType name="Home-Condition-Report">
+		<xs:annotation>
+			<xs:documentation>The Home Condition Report summarises the results of an inspection of a Property carried out by a Home Inspector. 
+
+A Home Condition Report is initially Commissioned by a Seller (or their Agent) through a Home Inspection Organisation who then assigned it to a Home Inspector. Once the Home Inspector has completed the Commissioned Report, they finalise it with the Seller and the completed report is then Lodged in the HCR-Register via a HCR Registration Organisation.
+
+Once the Home Condition Report has been lodged it is available for access by all interested parties.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Weather-Conditions" type="WeatherConditionCode" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Property-Details" type="Property-Details" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Risk-Assessment" type="Risk-Assessment" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Further-Investigations" type="Further-Investigations" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Utility-Services" type="Utility-Services" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="External-Features" type="External-Features" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Grounds" type="Grounds" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Internal-Features" type="Internal-Features" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Report-Header" type="Report-Header" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Structural-Concerns" type="Structural-Concerns" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
 	<xs:element name="Energy-Performance-Certificate" type="Energy-Performance-Certificate"/>
 	<xs:complexType name="Energy-Performance-Certificate">
-		<xs:sequence>
-			<xs:element name="SAP-Version" type="SAP-VersionCode" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>SAP version that was used for the assessment.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="BEDF-Revision-Number" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>BEDF Revision Number from SEDBUK database if boiler details retrieved from database (as on the $001 line in bedf2005.dat); if boiler or other data (mechanical vent system, PFGHRD) from database.  This must be included if any item is from database. At the moment it can be
-- boilers
-- mech vent system
-but others things will be added in future revisions.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+		<xs:all>
 			<xs:element name="Calculation-Software-Name" type="xs:string" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of the software used to perform the SAP calculation.</xs:documentation>
@@ -33,25 +53,24 @@ but others things will be added in future revisions.</xs:documentation>
 					<xs:documentation>Version of the software used to perform the SAP calculation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Report-Header" type="Report-Header" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Energy-Assessment" type="Energy-Assessment" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="SAP05-Data" type="SAP05-Data" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="PDF" type="xs:base64Binary" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="ExternalDefinitions-Revision-Number" type="xs:string" minOccurs="1" maxOccurs="1">
+			<xs:element name="SAP-Version" type="SAP-VersionCode" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>A number indicating the version of related ExternalDefinitions.xsd</xs:documentation>
+					<xs:documentation>SAP version that was used for the assessment.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-		</xs:sequence>
+			<xs:element name="Energy-Assessment" type="Energy-Assessment" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SAP-Data" type="SAP-Data" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Report-Header" type="Report-Header" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
 	</xs:complexType>
 	<xs:element name="ReportKeyFields" type="ReportKeyFields"/>
 	<xs:complexType name="ReportKeyFields">
 		<xs:annotation>
-			<xs:documentation>Primary Key Fields definition for a Report - used when a message requires a reference tio a report to be passed.</xs:documentation>
+			<xs:documentation>Primary Key Fields definition for Home Condition Report - used when a message requires a reference tio a report to be passed.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="RRN" type="bdt:RRNType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="RRN" type="pfdt:RRNType" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="Insurance-Details" type="Insurance-Details"/>
@@ -64,7 +83,7 @@ A particular Home Condition Report may be covered by an Professional Indemnity I
 *	The Home Condition Report is covered by an umbrella Professional Indemnity Insurance policy held by the Home Condition Report Supplier that assigned the inspection to the Home Inspector.
 *	An individual insurance policy is taken out to cover the individual report such as the case where the property is unusual and falls outside the Home Inspectors normal Professional Indemnity Insurance policy.
 
-A Home Inspector may use any or all of these methods to providing Professional Indemnity Insurance for a Home Condition Report on a case-by-case basis.
+A Home Inspector may use any or all of these methods to providing Professional Indemnity Insurance for a Report on a case-by-case basis.
 </xs:documentation>
 		</xs:annotation>
 		<xs:all>
@@ -88,7 +107,7 @@ A Home Inspector may use any or all of these methods to providing Professional I
 					<xs:documentation>The date that the insurance policy is supposed to expire.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PI-Limit" type="bdt:Money" minOccurs="1" maxOccurs="1">
+			<xs:element name="PI-Limit" type="pfdt:Money" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The upper limit of the Professional Indemnity cover provided by the insurance policy.</xs:documentation>
 				</xs:annotation>
@@ -100,8 +119,8 @@ A Home Inspector may use any or all of these methods to providing Professional I
 		<xs:annotation>
 			<xs:documentation>Report Header contains all the identification and searchable details for the Report.</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="RRN" type="bdt:RRNType" minOccurs="1" maxOccurs="1">
+		<xs:all>
+			<xs:element name="RRN" type="pfdt:RRNType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Report Reference Number is the unique report Identifier that the report will be publicly known by.
 
@@ -137,7 +156,7 @@ Initially the only allowed type will be a Home Condition Report inspection but t
 A Home Condition Report can have a number of distinct states depending on whereabouts in its overall lifecycle the HCR is - see Home Condition Report Statechart for more details.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Language-Code" type="bdt:LanguageCode" minOccurs="1" maxOccurs="1">
+			<xs:element name="Language-Code" type="pfdt:LanguageCode" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The language that the report is written in. </xs:documentation>
 				</xs:annotation>
@@ -151,8 +170,12 @@ Some members of the public have a moral / religious objection to money lending a
 However anyone with access to the Report Reference Number (RRN) can retrieve the PDF version of the Home Condition Report via the public access mechanism which cannot be restricted in this way.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Transaction-Type" type="TransactionType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Seller-Commission-Report" type="bdt:Flag" minOccurs="1" maxOccurs="1">
+			<xs:element name="Related-Party-Disclosure" type="pfdt:Sentence" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Any statement that the Home Inspector might want to make about potential conflicts of interest or commercial relationships with other parties.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Seller-Commission-Report" type="pfdt:Flag" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Indicates that the HCR was commissioned by the Seller of the Property or their Agent. This is required in order to differentiate these reports from Buyer commisioned reports  which are not eligible for inclusion in a Home Information Pack</xs:documentation>
 				</xs:annotation>
@@ -162,8 +185,6 @@ However anyone with access to the Report Reference Number (RRN) can retrieve the
 					<xs:documentation>Describes the type of Property that is being inspected. This should be the same as the Property-Type recorded in the Property-Details section.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Home-Inspector" type="Home-Inspector" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Property" type="Property" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="Region-Code" type="UKRegionCode" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Region within the UK.  This field is optional.</xs:documentation>
@@ -174,22 +195,9 @@ However anyone with access to the Report Reference Number (RRN) can retrieve the
 					<xs:documentation>Country within the UK.  This field is optional.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Related-Party-Disclosure">
-				<xs:complexType>
-					<xs:choice>
-						<xs:element name="Related-Party-Disclosure-Text" type="bdt:Sentence" minOccurs="1" maxOccurs="1">
-							<xs:annotation>
-								<xs:documentation>For backward compatibility only.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="Related-Party-Disclosure-Number" type="DisclosureCode" minOccurs="1" maxOccurs="1">
-							<xs:annotation>
-								<xs:documentation>Code indicating any potential conflicts of interest or commercial relationships with other parties.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:choice>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
+			<xs:element name="Transaction-Type" type="TransactionType" minOccurs="1" maxOccurs="1" default="1"/>
+			<xs:element name="Home-Inspector" type="Home-Inspector" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Property" type="Property" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
 	</xs:complexType>
 </xs:schema>

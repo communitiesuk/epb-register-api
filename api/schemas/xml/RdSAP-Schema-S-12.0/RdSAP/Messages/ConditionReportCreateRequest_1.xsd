@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures" xmlns:ERR="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/Exceptions" xmlns:pfdt="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/BaseDataTypes" xmlns:HIP="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" targetNamespace="http://www.est.org.uk/epc/lodgement" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-14.0">
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:CS="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/CommonStructures"
+  xmlns:ERR="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/Exceptions"
+  xmlns:pfdt="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/BaseDataTypes"
+  xmlns:SAP05="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05"
+  xmlns:HIP="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP"
+  targetNamespace="http://www.est.org.uk/epc/lodgement"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  version="LIG-12.0"
+>
 	<!--
 	© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
 
@@ -13,37 +25,26 @@
 	<xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
 	<!-- Include templates for all Business Entities used by the message -->
 	<xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" schemaLocation="../Templates/HIP-Reports.xsd"/>
+	<!-- Add the New build SAP-EPC data model -->
+ <!--<xs:import namespace="http://www.est.org.uk/epc/lodgement/DCLG-SAP05" schemaLocation="../SAP-EPC/Templates/SAP05-Report.xsd"/>-->
 	<!--***************************************************************************
-	Request Message Definition
+	Message Definition
 	*************************************************************************** -->
-	<xs:element name="ConditionReportRetrieveRequest_1">
+	<xs:element name="ConditionReportCreateRequest_1">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Identification">
+				<xs:element name="Identification" type="CS:DefaultIdBlock"/>
+				<xs:element name="Configuration" type="CS:CreateRequestConfigBlock"/>
+				<xs:element name="Content">
 					<xs:complexType>
-						<xs:complexContent>
-							<xs:extension base="CS:DefaultIdBlock">
-								<xs:sequence>
-									<xs:element name="Identifier" type="HIP:ReportKeyFields"/>
-								</xs:sequence>
-							</xs:extension>
-						</xs:complexContent>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="Configuration">
-					<xs:complexType>
-						<xs:complexContent>
-							<xs:extension base="CS:RetrieveRequestConfigBlock">
-								<xs:sequence>
-									<xs:element name="RetrieveLatest" type="pfdt:Flag"/>
-									<xs:element name="Assessor-Id" type="xs:string" minOccurs="0">
-										<xs:annotation>
-											<xs:documentation>If the message is requesting SAP-EPC Input Data, then this element must be populated, so that the register may verify that the Assessor request the data is allowed to view such data.</xs:documentation>
-										</xs:annotation>
-									</xs:element>
-								</xs:sequence>
-							</xs:extension>
-						</xs:complexContent>
+						<xs:sequence>
+							<xs:choice>
+                <!--<xs:element name="SAP-EPC-Data" type="SAP05:Energy-Performance-Certificate"/>-->
+								<xs:element name="EPC-Data" type="HIP:Energy-Performance-Certificate"/>
+								<xs:element name="HCR-Data" type="HIP:Home-Condition-Report"/>
+							</xs:choice>
+							<xs:element name="PDF" type="xs:base64Binary"/>
+						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>

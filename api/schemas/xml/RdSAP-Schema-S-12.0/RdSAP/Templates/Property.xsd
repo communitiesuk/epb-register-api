@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" xmlns:SAP05="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="LIG-14.0">
+<xs:schema targetNamespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" xmlns="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" xmlns:HIP="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="LIG-12.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. </xs:documentation>
+	</xs:annotation>
 	<xs:element name="Property" type="Property"/>
 	<xs:complexType name="Property">
 		<xs:annotation>
@@ -11,11 +14,7 @@ As such the broad description of a Property can be regarded as a framework, cont
 </xs:documentation>
 		</xs:annotation>
 		<xs:all>
-			<xs:element name="Address" type="AddressType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Address for the property.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element name="Address" type="AddressType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="UPRN" type="UPRNType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Unique Property Reference Number</xs:documentation>
@@ -32,10 +31,16 @@ As such the broad description of a Property can be regarded as a framework, cont
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The District part of the Address.
+
+A District is an optional sub-part of the Post Town e.g. "Kings Heath" in "Birmingham" or "Ellington" in London.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Address-Line-3" type="xs:string" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="Post-Town" type="xs:string" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="Postcode" type="PostcodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="Post-Town" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Postcode" type="PostcodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The Postcode for the Address
 </xs:documentation>

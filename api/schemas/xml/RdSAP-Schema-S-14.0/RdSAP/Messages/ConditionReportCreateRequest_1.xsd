@@ -14,7 +14,7 @@
 	<!-- Include templates for all Business Entities used by the message -->
 	<xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-HIP" schemaLocation="../Templates/HIP-Reports.xsd"/>
 	<!-- Add the New build SAP-EPC data model -->
-	<xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" schemaLocation="../SAP-EPC/Templates/SAP05-Report.xsd"/>
+	<!-- <xs:import namespace="http://www.est.org.uk/epc/lodgement/estV20/DCLG-SAP05" schemaLocation="../SAP-EPC/Templates/SAP05-Report.xsd"/>-->
 	<!--***************************************************************************
 	Message Definition
 	*************************************************************************** -->
@@ -27,7 +27,7 @@
 					<xs:complexType>
 						<xs:sequence>
 							<xs:choice>
-								<xs:element name="SAP-EPC-Data" type="SAP05:Energy-Performance-Certificate"/>
+								<!-- <xs:element name="SAP-EPC-Data" type="SAP05:Energy-Performance-Certificate"/> -->
 								<xs:element name="EPC-Data" type="HIP:Energy-Performance-Certificate"/>
 								<xs:element name="HCR-Data" type="HIP:Home-Condition-Report"/>
 							</xs:choice>

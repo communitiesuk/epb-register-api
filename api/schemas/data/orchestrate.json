@@ -219,6 +219,10 @@
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-S-14.0/RdSAP/Messages/ConditionReportCreateRequest_1.xsd"
   },
+  "RdSAP-Schema-S-12.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-S-12.0/RdSAP/Messages/ConditionReportCreateRequest_1.xsd"
+  },
   "CEPC-8.0.0": {
     "schema_path": "api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
   },
