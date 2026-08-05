@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="EPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="EPC" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			This schema is used to provide 
+				(a) the texts of recommendations on EPCs
+				(b) addenda that may appear on RdSAP EPCs
+				(c) the options for Related Party Disclosure
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ExternalDefinitions" type="ExternalDefinitions"/>
+	<xs:complexType name="ExternalDefinitions">
+		<xs:sequence>
+			<xs:element name="Revision-Number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version number of the latest revision to any of the texts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Revision-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date of the latest revision to any of the texts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="Country" maxOccurs="3"/>
+			<xs:element name="Addendum" type="Addendum" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Related-Party-Disclosure" type="Related-Party-Disclosure" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Country">
+		<xs:sequence>
+			<xs:element name="Country-Code" type="UKCountryCode"/>
+			<xs:element name="Recommendation" type="Recommendation" maxOccurs="unbounded"/>
+			<xs:element name="Footnote-Text" type="Sentence" minOccurs="0" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Recommendation">
+		<xs:sequence>
+			<xs:element name="Improvement-Number" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>Recommendations are selected by recommendation number according to the criteria in Appendix T of the SAP specification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Summary" type="Sentence" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>A short description of the improvement.  English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Heading" type="Sentence" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Text to precede the improvement description. English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Description" type="Sentence" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Detailed description of the improvement.  English only, or English and Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Footnote" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If true the Footnote-Text appears at the bottom of the page.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Addendum">
+		<xs:annotation>
+			<xs:documentation>Addendum-Number is unique for the text concerned. If an addendum is deleted the number will not be re-used.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Addendum-Number" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>The text of an addendum is picked up via the Addendum-Number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Circumstances" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The circumstances under which this addendum should be included.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Addendum-Text" type="Sentence" minOccurs="2" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Text to be included on the EPC (English and Welsh versions).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Related-Party-Disclosure">
+		<xs:annotation>
+			<xs:documentation>List of possible texts for Related Party Disclosure on EPCs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Disclosure-Code" type="xs:positiveInteger"/>
+			<xs:element name="Disclosure-Text" type="Sentence" minOccurs="2" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LanguageCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>English</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Welsh</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UKCountryCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the country within the UK, taken from BS 6879.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EAW">
+				<xs:annotation>
+					<xs:documentation>England and Wales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SCT">
+				<xs:annotation>
+					<xs:documentation>Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIR">
+				<xs:annotation>
+					<xs:documentation>Northern Ireland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Sentence" type="Sentence"/>
+	<xs:complexType name="Sentence">
+		<xs:annotation>
+			<xs:documentation>String value with a language code for natural-language text.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="language" type="LanguageCode" use="required">
+					<xs:annotation>
+						<xs:documentation>Identifies the language that the sentence is recorded in.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>
