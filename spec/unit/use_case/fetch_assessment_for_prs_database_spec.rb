@@ -45,58 +45,64 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   end
 
   let(:prs_gateway_response_uprn) do
-    [{ "address_line1" => "1 Some Street",
-       "address_line2" => "",
-       "address_line3" => "",
-       "address_line4" => "",
-       "town" => "Whitbury",
-       "postcode" => "SW1A 2AA",
-       "current_energy_efficiency_rating" => 50,
-       "epc_rrn" => "0123-4567-8901-2345-6789",
-       "expiry_date" => "2035-05-03",
-       "rn" => 1,
-       "cancelled_at" => nil,
-       "not_for_issue_at" => nil,
-       "type_of_assessment" => "RdSAP",
-       "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789" }]
-  end
-
-  context "when fetching details for an domestic RRN that exists" do
-    it "returns the expected domain object" do
-      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_response_rrn
-      result = use_case.execute({ rrn: "0123-4567-8901-2345-6789" })
-
-      expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
-    end
+    { "address_line1" => "1 Some Street",
+      "address_line2" => "",
+      "address_line3" => "",
+      "address_line4" => "",
+      "town" => "Whitbury",
+      "postcode" => "SW1A 2AA",
+      "current_energy_efficiency_rating" => 50,
+      "epc_rrn" => "0123-4567-8901-2345-6789",
+      "expiry_date" => "2035-05-03",
+      "rn" => 1,
+      "cancelled_at" => nil,
+      "not_for_issue_at" => nil,
+      "type_of_assessment" => "RdSAP",
+      "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789" }
   end
 
   context "when fetching details for a UPRN that exists" do
     it "returns the expected domain object" do
       allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return prs_gateway_response_uprn
-      result = use_case.execute({ uprn: "UPRN-000000000000" })
+      result = use_case.execute(uprn:)
 
       expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
     end
   end
 
-  context "when fetching details for an RRN that does not exist or is not applicable" do
-    let(:cepc_rrn) { "0000-0000-0000-0000-0001" }
-
-    it "raises an assessment gone error" do
-      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return(prs_gateway_response_rrn)
-      prs_gateway_response_rrn["cancelled_at"] = "2023-05-04"
-
-      expect { use_case.execute({ rrn: "0123-4567-8901-2345-6789" }) }.to raise_error described_class::AssessmentGone
+  context "when fetching details for a non-existance UPRN" do
+    it "raises a not found exception" do
+      allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return nil
+      expect { use_case.execute(uprn:) }.to raise_error described_class::NotFoundException
     end
+  end
 
-    it "raises an invalid assessment type error" do
-      allow(prs_database_gateway).to receive(:search_by_rrn).with(cepc_rrn).and_return(prs_gateway_response_rrn_non_dom)
+  context "when fetching details for an domestic RRN that exists" do
+    it "returns the expected domain object" do
+      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_response_rrn
+      result = use_case.execute(rrn:)
 
-      expect { use_case.execute({ rrn: "0000-0000-0000-0000-0001" }) }.to raise_error described_class::InvalidAssessmentTypeException
+      expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
     end
+  end
 
+  context "when fetching details for an invalid RRN number" do
     it "raises an invalid rrn error" do
-      expect { use_case.execute({ rrn: "0000-0000-00-0000-0001" }) }.to raise_error Helper::RrnHelper::RrnNotValid
+      expect { use_case.execute(rrn: "0000-0000-00-0000-0001") }.to raise_error Helper::RrnHelper::RrnNotValid
+    end
+  end
+
+  context "when fetching details for a non-existance rrn" do
+    it "raises a not found exception" do
+      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return nil
+      expect { use_case.execute(rrn:) }.to raise_error described_class::NotFoundException
+    end
+  end
+
+  context "when fetching details for a non-domestic certificate" do
+    it "raises a not found exception" do
+      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_response_rrn_non_dom
+      expect { use_case.execute(rrn:) }.to raise_error described_class::InvalidAssessmentTypeException
     end
   end
 end
