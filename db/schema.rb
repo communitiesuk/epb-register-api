@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_083729) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_142008) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -237,15 +237,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_083729) do
     t.jsonb "rule_triggers", default: []
   end
 
-  create_table "public.postcode_geolocation", primary_key: "postcode", id: :string, force: :cascade do |t|
+  create_table "public.postcode_geolocation", force: :cascade do |t|
     t.decimal "latitude", null: false
     t.decimal "longitude", null: false
+    t.string "postcode"
     t.string "region", null: false
   end
 
-  create_table "public.postcode_outcode_geolocations", primary_key: "outcode", id: :string, force: :cascade do |t|
+  create_table "public.postcode_outcode_geolocations", force: :cascade do |t|
     t.decimal "latitude", null: false
     t.decimal "longitude", null: false
+    t.string "outcode"
     t.string "region", null: false
   end
 
@@ -359,6 +361,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_083729) do
   add_foreign_key "scotland.assessments", "public.assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
   add_foreign_key "scotland.assessments_country_ids", "public.countries", primary_key: "country_id", name: "fks_assessments_country_ids_countries"
   add_foreign_key "scotland.assessments_xml", "scotland.assessments", primary_key: "assessment_id", name: "fk_scotland_assessment_xml_scotland_assessments"
+  add_foreign_key "scotland.green_deal_assessments", "public.green_deal_plans", primary_key: "green_deal_plan_id", name: "fk_public_green_deal_plans_scotland_assessments"
   add_foreign_key "scotland.green_deal_assessments", "scotland.assessments", primary_key: "assessment_id", name: "fk_scotland_green_deal_assessments_scotland_assessments"
-  add_foreign_key "scotland.green_deal_assessments", "scotland.green_deal_plans", primary_key: "green_deal_plan_id"
 end

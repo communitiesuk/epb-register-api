@@ -244,7 +244,7 @@ end
 def add_scotland_green_deal(assessment_id:)
   # There are no API endpoints for adding Scottish Green Deal assessments
   ActiveRecord::Base.connection.exec_query(<<~SQL.squish)
-    INSERT INTO scotland.green_deal_plans (green_deal_plan_id) VALUES ('EG0000000001') ON CONFLICT DO NOTHING;
+    INSERT INTO green_deal_plans (green_deal_plan_id) VALUES ('EG0000000001') ON CONFLICT DO NOTHING;
   SQL
   ActiveRecord::Base.connection.exec_query(
     "INSERT INTO scotland.green_deal_assessments (assessment_id, green_deal_plan_id) VALUES ($1, 'EG0000000001')",
