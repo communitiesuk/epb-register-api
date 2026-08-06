@@ -180,4 +180,49 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
       expect(response[:errors][0][:title]).to eq "The value provided for the uprn parameter in the search query was not valid"
     end
   end
+
+  context "when both the uprn and an rnn are invalid" do
+    it "returns an error" do
+      response = JSON.parse(
+        assertive_get(
+          "/api/prsdatabase/assessments/search?rrn=0&uprn=U",
+          scopes: %w[prsdatabase:assessment:search],
+          accepted_responses: [400],
+        ).body,
+        symbolize_names: true,
+      )
+
+      expect(response[:errors][0][:title]).to eq "The values provided for the following parameters were not valid: uprn, rrn"
+    end
+  end
+
+  context "when both a uprn and an rnn are provided" do
+    it "returns an error" do
+      response = JSON.parse(
+        assertive_get(
+          "/api/prsdatabase/assessments/search?rrn=0000-0000-0000-1517-0631&uprn=UPRN-000456789012",
+          scopes: %w[prsdatabase:assessment:search],
+          accepted_responses: [400],
+        ).body,
+        symbolize_names: true,
+      )
+
+      expect(response[:errors][0][:title]).to eq "The search query was invalid - please check the provided parameters"
+    end
+  end
+
+  context "when an unknown key is provided" do
+    it "the key is ignored" do
+      response = JSON.parse(
+        assertive_get(
+          "/api/prsdatabase/assessments/search?rrn=0000-0000-0000-0000-0001&foo=bar",
+          scopes: %w[prsdatabase:assessment:search],
+          accepted_responses: [200],
+        ).body,
+        symbolize_names: true,
+      )
+
+      expect(response[:data][:latestEpcRrnForAddress]).to eq "0000-0000-0000-0000-0002"
+    end
+  end
 end

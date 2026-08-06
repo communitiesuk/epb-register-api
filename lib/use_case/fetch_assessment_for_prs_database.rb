@@ -1,41 +1,25 @@
 module UseCase
   class FetchAssessmentForPrsDatabase
     class InvalidAssessmentTypeException < StandardError; end
-    class AssessmentUnavailable < StandardError; end
-    class NotFoundException < AssessmentUnavailable; end
-    class AssessmentGone < AssessmentUnavailable; end
+    class NotFoundException < StandardError; end
 
     def initialize(prs_database_gateway: nil)
       @prs_database_gateway = prs_database_gateway || Gateway::PrsDatabaseGateway.new
     end
 
-    def execute(identifier)
-      if identifier.key?(:rrn)
-        assessment_id = Helper::RrnHelper.normalise_rrn_format(identifier[:rrn])
-        gateway_response = @prs_database_gateway.search_by_rrn(assessment_id)
-        raise NotFoundException unless gateway_response
-        raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? gateway_response["type_of_assessment"]
-
-        if !gateway_response["not_for_issue_at"].nil? || !gateway_response["cancelled_at"].nil?
-          raise AssessmentGone
+    def execute(rrn: nil, uprn: nil)
+      gateway_response =
+        if rrn
+          assessment_id = Helper::RrnHelper.normalise_rrn_format(rrn)
+          @prs_database_gateway.search_by_rrn(assessment_id)
+        elsif uprn
+          @prs_database_gateway.search_by_uprn(uprn)
         end
 
-        response = Domain::AssessmentForPrsDatabaseDetails.new(
-          gateway_response: gateway_response,
-        )
-      end
+      raise NotFoundException unless gateway_response
+      raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? gateway_response["type_of_assessment"]
 
-      if identifier.key?(:uprn)
-        gateway_response = @prs_database_gateway.search_by_uprn(identifier[:uprn])&.first
-        raise NotFoundException unless gateway_response
-        raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? gateway_response["type_of_assessment"]
-
-        response = Domain::AssessmentForPrsDatabaseDetails.new(
-          gateway_response: gateway_response,
-        )
-      end
-
-      response
+      Domain::AssessmentForPrsDatabaseDetails.new(gateway_response:)
     end
   end
 end
