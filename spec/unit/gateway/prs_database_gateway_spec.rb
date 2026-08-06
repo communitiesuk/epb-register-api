@@ -53,7 +53,6 @@ describe Gateway::PrsDatabaseGateway do
       "epc_rrn" => "0000-0000-0000-0000-0002",
       "expiry_date" => "2035-05-03",
       "latest_epc_rrn_for_address" => "0000-0000-0000-0000-0002",
-      "rn" => 1,
       "type_of_assessment" => "RdSAP",
     }
   end
