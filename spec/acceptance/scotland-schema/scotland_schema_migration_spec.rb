@@ -16,7 +16,6 @@ describe "create_function_for_new_schema and create_new_schema" do
     it "creates the required new scotland tables" do
       expected_tables = %w[assessment_search_address
                            assessments_address_id
-                           green_deal_plans
                            linked_assessments
                            overridden_lodgement_events
                            assessments_xml

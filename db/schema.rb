@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_142008) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_07_095448) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -33,18 +33,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_142008) do
     t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
     t.index ["town"], name: "index_address_base_on_town"
-  end
-
-  create_table "public.address_base_tmp", primary_key: "uprn", id: :string, force: :cascade do |t|
-    t.string "address_line1"
-    t.string "address_line2"
-    t.string "address_line3"
-    t.string "address_line4"
-    t.string "address_type", limit: 15
-    t.string "classification_code", limit: 6
-    t.string "country_code", limit: 1
-    t.string "postcode"
-    t.string "town"
   end
 
   create_table "public.address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
@@ -337,26 +325,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_142008) do
     t.string "assessment_id", null: false
     t.string "green_deal_plan_id", null: false
     t.index ["green_deal_plan_id", "assessment_id"], name: "green_deal_assessments_green_deal_plan_id_assessment_id_idx", unique: true
-  end
-
-  create_table "scotland.green_deal_plans", id: false, force: :cascade do |t|
-    t.boolean "cca_regulated"
-    t.decimal "charge_uplift_amount"
-    t.datetime "charge_uplift_date"
-    t.jsonb "charges", default: "[]", null: false
-    t.datetime "end_date"
-    t.boolean "fixed_interest_rate"
-    t.string "green_deal_plan_id"
-    t.decimal "interest_rate"
-    t.jsonb "measures", default: "[]", null: false
-    t.boolean "measures_removed"
-    t.string "provider_email"
-    t.string "provider_name"
-    t.string "provider_telephone"
-    t.jsonb "savings", default: "[]", null: false
-    t.datetime "start_date"
-    t.boolean "structure_changed"
-    t.index ["green_deal_plan_id"], name: "index_green_deal_plans_on_green_deal_plan_id", unique: true
   end
 
   create_table "scotland.linked_assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
