@@ -3,10 +3,6 @@ module Gateway
     class GreenDealPlan < ActiveRecord::Base
     end
 
-    class GreenDealPlanScotland < ActiveRecord::Base
-      self.table_name = "scotland.green_deal_plan"
-    end
-
     def exists?(green_deal_plan_id)
       sql = <<-SQL
         SELECT EXISTS (
@@ -89,15 +85,13 @@ module Gateway
         FROM
           #{schema}green_deal_assessments a
         INNER JOIN
-          #{schema}green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
+          green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
         WHERE
           assessment_id = $1
         ORDER BY b.green_deal_plan_id
       SQL
 
-      table = is_scottish ? GreenDealPlanScotland : GreenDealPlan
-
-      response = table.connection.exec_query(
+      response = GreenDealPlan.connection.exec_query(
         sql,
         "SQL",
         [

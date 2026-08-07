@@ -253,6 +253,15 @@ def add_scotland_green_deal(assessment_id:)
   )
 end
 
+def link_scottish_assessment_to_green_deal(assessment_id:, green_deal_plan_id:)
+  # There are no API endpoints for adding Scottish Green Deal assessments
+  ActiveRecord::Base.connection.exec_query(
+    "INSERT INTO scotland.green_deal_assessments (assessment_id, green_deal_plan_id) VALUES ($1, $2)",
+    "SQL",
+    [ActiveRecord::Relation::QueryAttribute.new("assessment_id", assessment_id, ActiveRecord::Type::String.new), ActiveRecord::Relation::QueryAttribute.new("green_deal_plan_id", green_deal_plan_id, ActiveRecord::Type::String.new)],
+  )
+end
+
 def update_green_deal_plan(
   plan_id:,
   body: {},

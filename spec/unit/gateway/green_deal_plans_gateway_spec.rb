@@ -30,6 +30,8 @@ describe Gateway::GreenDealPlansGateway do
 
   describe "#fetch" do
     let(:scheme_id) { add_scheme_and_get_id }
+    let(:domestic_rdsap_s_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0") }
+    let(:scottish_assessment_id) { domestic_rdsap_s_xml.at("RRN").content }
 
     before do
       add_super_assessor(scheme_id:)
@@ -46,6 +48,16 @@ describe Gateway::GreenDealPlansGateway do
         registration_date: "2024-10-10",
         green_deal_plan_id: "ABC654321RRR",
       )
+      lodge_scottish_assessment(
+        assessment_body: domestic_rdsap_s_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-S-19.0",
+        migrated: true,
+      )
+      link_scottish_assessment_to_green_deal(assessment_id: scottish_assessment_id, green_deal_plan_id: "ABC654321RRR")
     end
 
     it "returns each green deal plan for an assessment" do
@@ -54,6 +66,12 @@ describe Gateway::GreenDealPlansGateway do
       expect(result.second).to be_an_instance_of Domain::GreenDealPlan
       expect(result.first.green_deal_plan_id).to eq "ABC654321DEF"
       expect(result.second.green_deal_plan_id).to eq "ABC654321RRR"
+    end
+
+    it "returns each green deal plan for a Scottish assessment" do
+      result = gateway.fetch(scottish_assessment_id, is_scottish: true)
+      expect(result.first).to be_an_instance_of Domain::GreenDealPlan
+      expect(result.first.green_deal_plan_id).to eq "ABC654321RRR"
     end
   end
 
