@@ -22,6 +22,20 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
       schema_name: "CEPC-8.0.0",
     )
 
+    cepc_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+    cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0011"
+    cepc_xml.at("//CEPC:UPRN").children = "UPRN-000000000011"
+
+    lodge_assessment(
+      assessment_body: cepc_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: "CEPC-8.0.0",
+      migrated: true,
+    )
+
     updated_rdsap = Nokogiri::XML rdsap_xml.clone
     updated_rdsap.at("RRN").children = "0000-0000-0000-0000-0001"
     updated_rdsap.at("Registration-Date").children = "2020-05-04"
@@ -92,7 +106,7 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
         expect(response[:errors][0][:title]).to eq "No assessment details could be found for that query"
       end
 
-      it "returns an error when gen the rrn for a cepc" do
+      it "returns an error when requesting the rrn for a cepc" do
         response = JSON.parse(
           prs_database_details_by_rrn(
             "0000-0000-0000-0000-0000",
@@ -164,6 +178,18 @@ describe "fetching data for the PRS database from API", :set_with_timecop do
       )
 
       expect(response[:data]).to eq expected_response
+    end
+
+    it "returns an error when requesting the uprn for a cepc" do
+      response = JSON.parse(
+        prs_database_details_by_uprn(
+          "UPRN-000000000011",
+          accepted_responses: [404],
+        ).body,
+        symbolize_names: true,
+      )
+
+      expect(response[:errors][0][:title]).to eq "No assessment details could be found for that query"
     end
   end
 

@@ -32,7 +32,7 @@ module Controller
     rescue UseCase::FetchAssessmentForPrsDatabase::NotFoundException
       error_response 404, "NOT_FOUND", "No assessment details could be found for that query"
     rescue UseCase::FetchAssessmentForPrsDatabase::InvalidAssessmentTypeException
-      error_response 404, "INVALID_REQUEST", "The requested assessment type is not SAP or RdSAP"
+      error_response 404, "NOT_FOUND", "The requested assessment type is not SAP or RdSAP"
     rescue Boundary::Json::ValidationError => e
       message = case e.failed_properties.count
                 when 0
