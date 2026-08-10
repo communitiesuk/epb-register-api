@@ -1459,6 +1459,133 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
+    context "when requesting a Scottish SAP-Schema-S-17.0 assessment" do
+      let(:expected_response) do
+        { data:
+            { typeOfAssessment: "SAP",
+              assessmentId: "0000-0000-0000-0000-0067",
+              dateOfExpiry: "2028-03-01",
+              dateOfAssessment: "2018-03-02",
+              dateOfRegistration: "2018-03-02",
+              address:
+               { addressLine1: "1 LOVELY ROAD", addressLine2: "NICE ESTATE", addressLine3: "Scotlanshire", addressLine4: "", town: "TOWN", postcode: "EH1 2NG" },
+              assessor:
+               { schemeAssessorId: "SPEC000000",
+                 companyName: "Test Homes Limited",
+                 contactDetails: { email: "a@b.com", address: "Assessor House Energy Business Park, Town Road, Newkirk, FK1 1XE", telephoneNumber: "111222333" },
+                 firstName: "Someone",
+                 lastName: "Person",
+                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
+              currentCarbonEmission: 5.9,
+              carbonEmissionsCurrentPerFloorArea: "24",
+              currentEnergyEfficiencyBand: "b",
+              currentEnergyEfficiencyRating: 84,
+              dwellingType: "Detached house",
+              estimatedEnergyCost: "916.00",
+              heatDemand: { currentSpaceHeatingDemand: 16_718, currentWaterHeatingDemand: 2400 },
+              heatingCostCurrent: "712",
+              heatingCostPotential: "713",
+              hotWaterCostCurrent: "98",
+              hotWaterCostPotential: "59",
+              lightingCostCurrent: "106",
+              lightingCostPotential: "106",
+              potentialCarbonEmission: 2.9,
+              potentialEnergyEfficiencyBand: "a",
+              potentialEnergyEfficiencyRating: 99,
+              potentialEnergySaving: "38.00",
+              propertySummary:
+               [{ energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "walls", description: "Average thermal transmittance 0.21 W/m²K" },
+                { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "roof", description: "Average thermal transmittance 0.13 W/m²K" },
+                { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "floor", description: "Average thermal transmittance 0.14 W/m²K" },
+                { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "windows", description: "High performance glazing" },
+                { energyEfficiencyRating: 3, environmentalEfficiencyRating: 3, name: "main_heating", description: "Boiler and underfloor heating, oil" },
+                { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "main_heating_controls", description: "Time and temperature zone control" },
+                { energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "secondary_heating", description: "Room heaters, wood logs" },
+                { energyEfficiencyRating: 3, environmentalEfficiencyRating: 3, name: "hot_water", description: "From main system" },
+                { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "lighting", description: "Low energy lighting in all fixed outlets" },
+                { energyEfficiencyRating: 3, environmentalEfficiencyRating: 3, name: "air_tightness", description: "Air permeability 10.0 m³/h.m² (assumed)" }],
+              recommendedImprovements:
+               [{ energyPerformanceRatingImprovement: 86,
+                  environmentalImpactRatingImprovement: 84,
+                  greenDealCategoryCode: "NI",
+                  improvementCategory: "5",
+                  improvementCode: "19",
+                  improvementDescription: nil,
+                  improvementTitle: "",
+                  improvementType: "N",
+                  indicativeCost: "£4,000 - £6,000",
+                  sequence: 1,
+                  typicalSaving: "38",
+                  energyPerformanceBandImprovement: "b" },
+                { energyPerformanceRatingImprovement: 90,
+                  environmentalImpactRatingImprovement: 88,
+                  greenDealCategoryCode: "NI",
+                  improvementCategory: "5",
+                  improvementCode: "34",
+                  improvementDescription: nil,
+                  improvementTitle: "",
+                  improvementType: "U",
+                  indicativeCost: "£5,000 - £8,000",
+                  sequence: 2,
+                  typicalSaving: "239",
+                  energyPerformanceBandImprovement: "b" },
+                { energyPerformanceRatingImprovement: 99,
+                  environmentalImpactRatingImprovement: 97,
+                  greenDealCategoryCode: "NI",
+                  improvementCategory: "5",
+                  improvementCode: "44",
+                  improvementDescription: nil,
+                  improvementTitle: "",
+                  improvementType: "V2",
+                  indicativeCost: "£15,000 - £25,000",
+                  sequence: 3,
+                  typicalSaving: "576",
+                  energyPerformanceBandImprovement: "a" }],
+              lzcEnergySources: [4],
+              relatedPartyDisclosureNumber: 1,
+              relatedPartyDisclosureText: nil,
+              totalFloorArea: 250,
+              status: "ENTERED",
+              environmentalImpactCurrent: 82,
+              environmentalImpactPotential: 97,
+              primaryEnergyUse: "101",
+              addendum: { accessIssues: true },
+              gasSmartMeterPresent: nil,
+              electricitySmartMeterPresent: nil,
+              addressId: "RRN-0000-0000-0000-0000-0067",
+              optOut: false,
+              relatedAssessments: [],
+              supersededBy: nil,
+              countryName: "Scotland",
+              schemaType: "SAP-Schema-S-17.0" },
+          meta: {} }
+      end
+
+      before do
+        sap_schema = "SAP-Schema-S-17.0"
+        sap_xml = Nokogiri.XML(Samples.xml(sap_schema))
+        sap_xml.at("RRN").content = "0000-0000-0000-0000-0067"
+        lodge_scottish_assessment(
+          assessment_body: sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: sap_schema,
+          migrated: true,
+        )
+      end
+
+      it "returns Scottish SAP" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0067").body,
+            symbolize_names: true,
+          )
+        expect(response[:data]).to eq(expected_response[:data])
+      end
+    end
+
     context "when requesting a Scottish CEPC-S-7.1 assessment" do
       before do
         cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
