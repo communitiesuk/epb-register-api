@@ -6,7 +6,24 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   let(:rrn) { "0123-4567-8901-2345-6789" }
   let(:uprn) { "UPRN-000000000000" }
 
-  let(:prs_gateway_response_rrn) do
+  let(:prs_gateway_uprn_response) do
+    { "address_line1" => "1 Some Street",
+      "address_line2" => "",
+      "address_line3" => "",
+      "address_line4" => "",
+      "town" => "Whitbury",
+      "postcode" => "SW1A 2AA",
+      "current_energy_efficiency_rating" => 50,
+      "epc_rrn" => "0123-4567-8901-2345-6789",
+      "expiry_date" => "2035-05-03",
+      "rn" => 1,
+      "cancelled_at" => nil,
+      "not_for_issue_at" => nil,
+      "type_of_assessment" => "RdSAP",
+      "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789" }
+  end
+
+  let(:prs_gateway_rrn_response) do
     {
       "address_line1" => "1 Some Street",
       "address_line2" => "",
@@ -25,7 +42,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
     }
   end
 
-  let(:prs_gateway_response_rrn_non_dom) do
+  let(:prs_gateway_non_dom_rrn_response_rrn) do
     {
       "address_line1" => "Some Unit",
       "address_line2" => "2 Lonely Street",
@@ -44,26 +61,9 @@ describe UseCase::FetchAssessmentForPrsDatabase do
     }
   end
 
-  let(:prs_gateway_response_uprn) do
-    { "address_line1" => "1 Some Street",
-      "address_line2" => "",
-      "address_line3" => "",
-      "address_line4" => "",
-      "town" => "Whitbury",
-      "postcode" => "SW1A 2AA",
-      "current_energy_efficiency_rating" => 50,
-      "epc_rrn" => "0123-4567-8901-2345-6789",
-      "expiry_date" => "2035-05-03",
-      "rn" => 1,
-      "cancelled_at" => nil,
-      "not_for_issue_at" => nil,
-      "type_of_assessment" => "RdSAP",
-      "latest_epc_rrn_for_address" => "0123-4567-8901-2345-6789" }
-  end
-
   context "when fetching details for a UPRN that exists" do
     it "returns the expected domain object" do
-      allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return prs_gateway_response_uprn
+      allow(prs_database_gateway).to receive(:search_by_uprn).with(uprn).and_return prs_gateway_uprn_response
       result = use_case.execute(uprn:)
 
       expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
@@ -79,7 +79,7 @@ describe UseCase::FetchAssessmentForPrsDatabase do
 
   context "when fetching details for an domestic RRN that exists" do
     it "returns the expected domain object" do
-      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_response_rrn
+      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_rrn_response
       result = use_case.execute(rrn:)
 
       expect(result).to be_a Domain::AssessmentForPrsDatabaseDetails
@@ -100,8 +100,8 @@ describe UseCase::FetchAssessmentForPrsDatabase do
   end
 
   context "when fetching details for a non-domestic certificate" do
-    it "raises a not found exception" do
-      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_response_rrn_non_dom
+    it "raises an invalid type exception" do
+      allow(prs_database_gateway).to receive(:search_by_rrn).with(rrn).and_return prs_gateway_non_dom_rrn_response_rrn
       expect { use_case.execute(rrn:) }.to raise_error described_class::InvalidAssessmentTypeException
     end
   end
