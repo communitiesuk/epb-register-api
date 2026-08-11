@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-CEPC" version="LIG-CEPC-7.0"  elementFormDefault="qualified">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  elementFormDefault="qualified"
+  version="DECAR-S-8.0.0"
+>
 	<xs:element name="Summary-Of-Performance" type="Summary-Of-Performance"/>
 	<xs:complexType name="Summary-Of-Performance">
 		<xs:sequence>
@@ -10,8 +16,8 @@
 	<xs:complexType name="Building-Data">
 		<xs:annotation>
 			<xs:documentation>
-				For an EPC created using EPC-Gen Building-Data is fixed at four, which are:- Actual Building, Notional  Building, Reference Building and Typical Buidling
-                The type of Building Data is indicated by7 the Analysis-Type field.
+				For an EPC created using EPC-Gen Building-Data is fixed at four, which are:- Actual Building, Notional  Building, Reference Building and Typical Building
+                The type of Building Data is indicated by the Analysis-Type field.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:all>

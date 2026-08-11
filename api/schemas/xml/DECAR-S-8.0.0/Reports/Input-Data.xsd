@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-CEPC" version="LIG-CEPC-7.0" elementFormDefault="qualified">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  elementFormDefault="qualified"
+  version="DECAR-S-8.0.0"
+>
 	<xs:element name="Input-Data" type="Input-Data"/>
 	<xs:complexType name="Input-Data" abstract="true">
 		<xs:sequence/>

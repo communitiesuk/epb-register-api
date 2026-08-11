@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
-  elementFormDefault="qualified"
-  version="21.0.1"
+xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
+elementFormDefault="qualified"
+version="S-22.0.0"
 >
   <xs:include schemaLocation="Property.xsd"/>
   <xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
@@ -21,7 +21,7 @@
 			</xs:element>
 			<xs:element name="Notify-Lodgement" type="Flag" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Indicates whether the assessor wants to be notified that a the report has been lodged in the register</xs:documentation>
+					<xs:documentation>Indicates whether the assessor wants to be notified that the report has been lodged in the register</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Contact-Address" type="AddressType">
@@ -118,7 +118,7 @@ As part of this decision making the Mortgage Lender may use an Automated Valuati
 	<xs:element name="InspectorKeyFields" type="InspectorKeyFields"/>
 	<xs:complexType name="InspectorKeyFields">
 		<xs:annotation>
-			<xs:documentation>Key field definition for the Home Inspector class - used when a message requires a reference to a Home Inspexctor to be passed rather than the details.</xs:documentation>
+			<xs:documentation>Key field definition for the Home Inspector class - used when a message requires a reference to a Home Inspector to be passed rather than the details.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Certificate-Number" type="CertificateNumberType"/>

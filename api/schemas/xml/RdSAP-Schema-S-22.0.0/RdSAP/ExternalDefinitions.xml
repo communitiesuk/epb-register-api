@@ -66,8 +66,8 @@
       <Improvement-Summary language="2">Inswleiddio waliau mewnol</Improvement-Summary>
       <Improvement-Heading language="1">Internal wall insulation</Improvement-Heading>
       <Improvement-Heading language="2">Inswleiddio waliau mewnol</Improvement-Heading>
-      <Improvement-Description language="1">External wall insulation</Improvement-Description>
-      <Improvement-Description language="2">Inswleiddio waliau allanol</Improvement-Description>
+      <Improvement-Description language="1">Internal wall insulation</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau mewnol</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>65</Improvement-Number>
@@ -76,7 +76,7 @@
       <Improvement-Heading language="1">External wall insulation</Improvement-Heading>
       <Improvement-Heading language="2">Inswleiddio waliau allanol</Improvement-Heading>
       <Improvement-Description language="1">External wall insulation</Improvement-Description>
-      <Improvement-Description language="2">Inswleiddio waliau mewnol</Improvement-Description>
+      <Improvement-Description language="2">Inswleiddio waliau allanol</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>8</Improvement-Number>
@@ -503,7 +503,7 @@
     </Recommendation>
     <Recommendation>
       <Improvement-Number>59</Improvement-Number>
-      <Improvement-Summary language="1">High heat retention storage heaters and dual immersion cylinder and dual rate meter<</Improvement-Summary>
+      <Improvement-Summary language="1">High heat retention storage heaters and dual immersion cylinder and dual rate meter</Improvement-Summary>
       <Improvement-Summary language="2">Gwresogyddion storio sy’n cadw llawer o wres a silindr sydd â dau dwymwr tanddwr a mesurydd cyfradd ddeuol</Improvement-Summary>
       <Improvement-Heading language="1">High heat retention storage heaters</Improvement-Heading>
       <Improvement-Heading language="2">Gwresogyddion storio sy’n cadw llawer o wres</Improvement-Heading>
@@ -732,7 +732,7 @@
       <Improvement-Summary language="1">External wall insulation</Improvement-Summary>
       <Improvement-Summary-2 language="1">External wall insulation</Improvement-Summary-2>
       <Improvement-Heading language="1">External wall insulation</Improvement-Heading>
-      <Improvement-Description language="1">External wall insulation involves adding a layer of insulation to the inside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that a building warrant is required for the installation of external wall insulation. Planning permission may also be required and that building regulations apply to external insulation so it is best to check with your local authority on both issues.
+      <Improvement-Description language="1">External wall insulation involves adding a layer of insulation to the inside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that a building warrant is required for the installation of external wall insulation. Planning permission may also be required and that building regulations apply to external insulation so it is best to check with your local authority on both issues.</Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>8</Improvement-Number>
@@ -761,7 +761,7 @@
       <Improvement-Summary-2 language="1">Heating controls (programmer, thermostat, TRVs)</Improvement-Summary-2>
       <Improvement-Heading language="1">Heating controls (programmer, room thermostat and thermostatic radiator valves)</Improvement-Heading>
       <Improvement-Description language="1">The heating system would benefit from a programmer and room thermostat to allow you to set the temperature and programme when you want the heating and hot water to switch on and off; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Radiator valves should be fitted to every radiator except one – the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to check with your local authority building standards department and seek advice from a qualified heating engineer.
-</Improvement-Description>
+      </Improvement-Description>
     </Recommendation>
     <Recommendation>
       <Improvement-Number>12</Improvement-Number>
@@ -1746,19 +1746,19 @@
     <Addendum-Number>13</Addendum-Number>
     <Circumstances>13. Dwelling has a special energy saving feature </Circumstances>
     <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="2">Mae gan yr anheddiad nodwedd arbed ynni arbennig. Mae hyn wedi'i gynnwys yn yr asesiad, ond dim yn y mesurau gwella arbed ynni.</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>14</Addendum-Number>
     <Circumstances>14. Conservation area </Circumstances>
-    <Addendum-Text language="1">Conservation area.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="1">Conservation area</Addendum-Text>
+    <Addendum-Text language="2">Ardal gadwraeth</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>15</Addendum-Number>
     <Circumstances>15. PV recommended </Circumstances>
-    <Addendum-Text language="1">When considering the PV installation consider installing PV battery and PV diverter for water heating.</Addendum-Text>
-    <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
+    <Addendum-Text language="1">When considering the PV installation consider installing PV battery and a PV diverter for water heating.</Addendum-Text>
+    <Addendum-Text language="2">Argymhellir ffotofoltäig. Ystyriwch hefyd storio batri a dargyfeiriwr ffotofoltäig.</Addendum-Text>
   </Addendum>
   <Addendum>
     <Addendum-Number>16</Addendum-Number>

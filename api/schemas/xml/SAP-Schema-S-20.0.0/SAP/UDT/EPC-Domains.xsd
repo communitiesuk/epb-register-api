@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/sap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap-s"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="19.0.0"
+  version="S-20.0.0"
 >
 	<xs:simpleType name="RecommendationSummaryCode">
 		<xs:restriction base="xs:string">

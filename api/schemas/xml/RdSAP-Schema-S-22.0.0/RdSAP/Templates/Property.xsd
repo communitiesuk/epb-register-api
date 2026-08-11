@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   elementFormDefault="qualified"
-	version="21.0.1"
+  version="S-22.0.0"
 >
 	<xs:element name="Property" type="Property"/>
 	<xs:complexType name="Property">
@@ -53,10 +53,10 @@ A District is an optional sub-part of the Post Town e.g. "Kings Heath" in "Birmi
 	</xs:complexType>
 	<xs:simpleType name="UPRNType">
 		<xs:annotation>
-			<xs:documentation>Unique Property Reference Number - a 10-digit numeric string uniquely identifying each property that may have a HCR registered against it.</xs:documentation>
+			<xs:documentation>Unique Property Reference Number</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[0-9]{10}"/>
+			<xs:pattern value="UPRN-[0-9]{10,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PostcodeType">

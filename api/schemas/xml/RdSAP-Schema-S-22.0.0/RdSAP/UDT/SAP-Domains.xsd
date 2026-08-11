@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="S-22.0.0"
 >
   <xs:simpleType name="Percentage">
     <xs:restriction base="xs:integer">
@@ -661,7 +661,7 @@ Northern Ireland: 2023 onwards</xs:documentation>
             </xs:enumeration>
             <xs:enumeration value="3">
                 <xs:annotation>
-                    <xs:documentation>No access.. This is retained for backwards compatibility only and should not be used. No access is covered by enum 5 of RoofTypeCode</xs:documentation>
+                    <xs:documentation>No access. This is retained for backwards compatibility only and should not be used. No access is covered by enum 5 of RoofTypeCode</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="4">

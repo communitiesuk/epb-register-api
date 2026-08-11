@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC" xmlns:UDT="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-CEPC" version="LIG-CEPC-7.0" elementFormDefault="qualified">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  elementFormDefault="qualified"
+  version="DECAR-S-8.0.0"
+>
 	<xs:annotation>
 		<xs:documentation>
-			The purpose of Base Data Type declarations is to provide a point of declaration of all the primitive  datatypes that are in use within the domain and can be used to describe the contents of the Business Information Model. 
-			
-			A significant problem with the XML Schema Definition standard is that it is designed to solve a large number of software implementation problems and so provides an equally large number of datatypes with each datatype describing a variation on a theme. 
-			
-			For example as well as "number" we also have "short" (with a range of values corresponding to that which may be stored a 16 bit computer word), "long", "int", "integer", "decimal", "double", "byte" and quite a few other number variations. However many of these datatypes are highly-specialized computer-focused definitions that have little or no relevance to the Business stakeholders.
-			
+			The purpose of Base Data Type declarations is to provide a point of declaration of all the primitive  datatypes that are in use within the domain and can be used to describe the contents of the Business Information Model.
+
+			A significant problem with the XML Schema Definition standard is that it is designed to solve a large number of software implementation problems and so provides an equally large number of datatypes with each datatype describing a variation on a theme.
+
+			For example as well as "number" we also have "short" (with a range of values corresponding to that which may be stored a 16 bit computer word), "long", "int", "integer", "decimal", "double", "byte" and quite a few other number variations. However many of these datatypes are highly-specialised computer-focused definitions that have little or no relevance to the Business stakeholders.
+
 			Most likely the business stakeholders would only recognise a limited number of datatypes - such as String, Date, Time, Integer, Decimal - and some domain-specific ones - such as Money (amount + currency attribute) - and will prefer the model to be restricted to that small set.
-			
+
 			The advantages of defining a set of base data types and gathering them together in a single file are:
 			*	It allows documented controls to be placed on the primitive types that are used in any schema.
 			*	It will improve consistency of use of primitive types (e.g. consistent use of "integer" rather than "int", "long" etc.) that must be handled by applications
 			*	It will improve code reuse.
 			*	It allows standard attributes to be added to all elements whilst hiding the detail in a non business definition layer.
-			
-			The principle is something like the way datayping is implemented in Java (as well as other programming languages) where every primitive datatype, such as "string", is wrapped by an equivalent complex class such as "String".The Java developer could declare object attributes using the "string" primitive but this isn't regarded as good practice. By using the "pfdt:string" class instead they are protected from physical changes to the implementation of "string" and also gain an extension point where additional behaviour not supported by the primitive datatype can be defined.
-			
-			The declarations in this file underpin the User Defined Types, Message Infrastructure and Business Entity Template declarations. 
+
+			The principle is something like the way data-typing is implemented in Java (as well as other programming languages) where every primitive datatype, such as "string", is wrapped by an equivalent complex class such as "String".The Java developer could declare object attributes using the "string" primitive but this isn't regarded as good practice. By using the "pfdt:string" class instead they are protected from physical changes to the implementation of "string" and also gain an extension point where additional behaviour not supported by the primitive datatype can be defined.
+
+			The declarations in this file underpin the User Defined Types, Message Infrastructure and Business Entity Template declarations.
 		</xs:documentation>
 	</xs:annotation>
 	<xs:simpleType name="Percentage">
@@ -29,7 +35,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="NumericString">
 		<xs:annotation>
-			<xs:documentation>A Numeric String is a string based datatype for representing strings, such as telephone numbers and IP addresses, that are limited to the numeric character-set. 
+			<xs:documentation>A Numeric String is a string based datatype for representing strings, such as telephone numbers and IP addresses, that are limited to the numeric character-set.
 </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
@@ -91,10 +97,10 @@
 	</xs:simpleType>
 	<xs:simpleType name="RRNType">
 		<xs:annotation>
-			<xs:documentation>
-				The Report Reference Number is a 20-digit unique identifier assigned to each Report. 
-                It is formatted as five blocks of four digits i.e. 9999-9999-9999-9999-9999 and generated by an algorithm described in Appendix A "Report ID Generation" of Section 18 "Transformation Rules" of the Technical Standards.
-			</xs:documentation>
+      <xs:documentation>
+        The Report Reference Number is a 20-digit unique identifier assigned to each Report.
+        It is formatted as five blocks of four digits e.g. 9999-9999-9999-9999-9999.
+      </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>

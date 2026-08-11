@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="S-22.0.0"
 >
 	<xs:simpleType name="EnergyEfficiencySummaryCode">
 		<xs:restriction base="xs:string">
@@ -549,7 +549,10 @@
 	</xs:simpleType>
 	<xs:simpleType name="RRNType">
 		<xs:annotation>
-			<xs:documentation>The Report Reference Number is a 20-digit unique identifier assigned to each Home Condition Report. It is formatted as five blocks of four digits i.e. 9999-9999-9999-9999-9999 and generayted by an algorithm described in Appendix A "Report ID Generation" of Section 18 "Transformation Rules" of the Technical Standards.</xs:documentation>
+      <xs:documentation>
+        The Report Reference Number is a 20-digit unique identifier assigned to each Report.
+        It is formatted as five blocks of four digits e.g. 9999-9999-9999-9999-9999.
+      </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>

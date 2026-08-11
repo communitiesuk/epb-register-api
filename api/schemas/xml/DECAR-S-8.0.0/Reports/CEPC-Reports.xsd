@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by Niall Horgan (Bridgeall Technology) -->
-<xs:schema xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  elementFormDefault="qualified"
+  version="DECAR-S-8.0.0"
+>
 	<xs:include schemaLocation="./Reported-Data.xsd"/>
 	<xs:include schemaLocation="./Performance-Summary.xsd"/>
 	<xs:include schemaLocation="./Report-Header.xsd"/>

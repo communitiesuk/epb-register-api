@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="EPC"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="S-22.0.0"
 >
 	<xs:annotation>
 		<xs:documentation>
@@ -32,7 +32,7 @@
 			</xs:element>
 			<xs:element name="Country" type="Country" maxOccurs="3"/>
 			<xs:element name="Addendum" type="Addendum" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Tenure" type="Tenure" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element name="Tenure" type="Tenure" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Related-Party-Disclosure" type="Related-Party-Disclosure" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>List of possible texts for Related Party Disclosure on EPCs</xs:documentation>
@@ -125,8 +125,8 @@
 	</xs:complexType>
 	<xs:complexType name="Tenure">
 		<xs:sequence>
-			<xs:element name="Tenure-Code" type="TenureCode"></xs:element>
-			<xs:element name="Tenure-Text" type="xs:string"></xs:element>
+			<xs:element name="Tenure-Code" type="TenureCode"/>
+			<xs:element name="Tenure-Text" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="TenureCode">
@@ -181,7 +181,7 @@
 					<xs:documentation>Code to be used for Transaction-Type in the lodgement XML</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Transaction-Text" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+			<xs:element name="Transaction-Text" type="xs:string" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="In-RdSAP" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>If false, transaction type is to be omitted when RdSAP is being used</xs:documentation>
@@ -261,7 +261,7 @@
 					<xs:documentation>Code to be used for Previous-EPC-Reason-Code in the lodgement XML</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Reason-Text" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+			<xs:element name="Reason-Text" type="xs:string" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

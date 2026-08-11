@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="CEPC-8.0.0">
+  <xs:element name="Reports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Report">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Report-Header">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="ReportTypeCode" name="Report-Type"/>
+                    <xs:element name="Property-Details">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="UPRNType" name="UPRN"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Calculation-Details" type="Calculation-Details"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="OR-Operational-Rating" type="OR-Operational-Rating"/>
+              <xs:element name="Display-Certificate">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="DEC-Annual-Energy-Summary" type="DEC-Annual-Energy-Summary"/>
+                    <xs:element name="DEC-Status" type="DECStatusCode" minOccurs="0" />
+                    <xs:element name="This-Assessment">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:date" name="Nominated-Date" />
+                          <xs:element type="xs:int" name="Energy-Rating" />
+                          <xs:element type="xs:int" name="Electricity-CO2" />
+                          <xs:element type="xs:int" name="Heating-CO2" />
+                          <xs:element type="xs:int" name="Renewables-CO2" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Technical-Information">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="Main-Heating-Fuel"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="UPRNType">
+    <xs:annotation>
+      <xs:documentation>Unique Property Reference Number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="UPRN-[0-9]{10,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}|"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="OR-Energy-Consumption">
+    <xs:all>
+      <xs:element name="Anthracite" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Biogas" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Biomass" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Coal" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="DC" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="DH" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Electricity" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Gas" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="LPG" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Oil" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Other" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Other-Name" type="xs:string" minOccurs="0"/>
+      <xs:element name="Smokeless-Fuel" type="ConsumptionType" minOccurs="0"/>
+      <xs:element name="Thermal" type="ConsumptionDetailsType" minOccurs="0"/>
+      <xs:element name="Total-Special-Energy" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="DH-Conversion" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="DC-Conversion" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Other-Conversion" type="xs:decimal" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="ConsumptionType">
+    <xs:all>
+      <xs:element name="Consumption" type="xs:decimal"/>
+      <xs:element name="End-Date" type="xs:date"/>
+      <xs:element name="Estimate" type="xs:int"/>
+      <xs:element name="Start-Date" type="xs:date"/>
+      <xs:element name="Specials" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Special" type="ConsumptionDetailsType" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="ConsumptionDetailsType">
+    <xs:all>
+      <xs:element name="Consumption" type="xs:decimal"/>
+      <xs:element name="End-Date" type="xs:date"/>
+      <xs:element name="Estimate" type="xs:int"/>
+      <xs:element name="Start-Date" type="xs:date"/>
+      <xs:element name="Benchmark-ID" type="xs:integer" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:simpleType name="Percentage">
+    <xs:restriction base="xs:decimal">
+      <xs:maxInclusive value="100"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DECStatusCode">
+    <xs:restriction base="xs:int">
+      <xs:enumeration value="0">
+        <xs:annotation>
+          <xs:documentation>Standard DEC</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Default DEC</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Asset Rating Only DEC</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ReportTypeCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Display Energy Certificate</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="Calculation-Details">
+    <xs:all>
+      <xs:element name="Output-Engine" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Output engine and version used</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="OR-Operational-Rating">
+    <xs:all>
+      <xs:element name="OR-Assessment-Start-Date" type="xs:date"/>
+      <xs:element name="OR-Assessment-End-Date" type="xs:date"/>
+      <xs:element name="OR-Benchmark-Data" type="OR-Benchmark-Data"/>
+      <xs:element name="OR-Energy-Consumption" type="OR-Energy-Consumption"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:simpleType name="InspectionTypeCode">
+    <xs:annotation>
+      <xs:documentation>Indicates the type of inspection the Energy Assessor carrioed out to poroduce the report e.g. Physical inspection or Desk-Based (off-plan) inspection</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Physical">
+        <xs:annotation>
+          <xs:documentation>A Physical Inspection was carried out</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Desk">
+        <xs:annotation>
+          <xs:documentation>A desk-based (off-plan) inspection was carried out</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="OR-Building-Data">
+    <xs:all>
+      <xs:element name="HVAC-System" type="xs:string"/>
+      <xs:element name="Other-HVAC-System" type="xs:string" minOccurs="0"/>
+      <xs:element name="Internal-Environment" type="xs:string"/>
+      <xs:element name="Assessment-Period-Alignment" type="xs:string"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="OR-Usable-Floor-Area">
+    <xs:all>
+      <xs:element name="UFA-1" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-10" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-2" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-3" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-4" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-5" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-6" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-7" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-8" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="UFA-9" type="UsableFloorAreaDataType" minOccurs="0"/>
+      <xs:element name="Total-UFA" type="xs:decimal" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The total sum of the Floor-Area for all the recorded Usable Floor Areas</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="UsableFloorAreaDataType">
+    <xs:all>
+      <xs:element name="Name" type="xs:string" minOccurs="0"/>
+      <xs:element name="Floor-Area" type="xs:decimal" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="OR-Previous-Data">
+    <xs:all>
+      <xs:element name="Previous-Rating-1" type="PreviousRatingType" minOccurs="0"/>
+      <xs:element name="Previous-Rating-2" type="PreviousRatingType" minOccurs="0"/>
+      <xs:element name="Previous-Electricity-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Gas-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Biogas-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Coal-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Anthracite-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Biomass-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-LPG-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Natural-Gas-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Oil-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Smokeless-Fuel-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Other-1" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Other-Name-1" type="xs:string" minOccurs="0"/>
+      <xs:element name="Previous-Electricity-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Gas-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Biogas-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Coal-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Anthracite-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Biomass-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-LPG-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Natural-Gas-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Oil-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Smokeless-Fuel-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Other-2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="Previous-Other-Name-2" type="xs:string" minOccurs="0"/>
+      <xs:element name="Asset-Rating" type="xs:integer" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The Previous Asset-Rating (if there is one)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="PreviousRatingType">
+    <xs:all>
+      <xs:element name="CO2" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="LZC" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="OR" type="xs:int" minOccurs="0"/>
+      <xs:element name="ORMM" type="xs:int" minOccurs="0"/>
+      <xs:element name="ORYYYY" type="xs:int" minOccurs="0"/>
+      <xs:element name="OR-Grade" type="xs:string" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="OR-Benchmark-Data">
+    <xs:all>
+      <xs:element name="Benchmarks" type="Benchmarks"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="Benchmarks">
+    <xs:sequence>
+      <xs:element name="Benchmark" type="Benchmark-Info" maxOccurs="200"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Benchmark-Info">
+    <xs:all>
+      <xs:element name="Benchmark-ID" type="xs:integer"/>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element name="TUFA" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Total Usable Floor Area</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="Renewable-Energy-Source">
+    <xs:sequence>
+      <xs:element name="Energy-Source" type="EnergySourceType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EnergySourceType">
+    <xs:sequence>
+      <xs:element name="Start-Date" type="xs:date"/>
+      <xs:element name="End-Date" type="xs:date"/>
+      <xs:element name="Name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The name of the Renewable Energy Source.
+
+            This is a string rather than an enumerated list because the potential sources are unlimited</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Generation" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>The amount of energy generated from this renewable source</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Energy-Type" type="EnergyType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="EnergyType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0">
+        <xs:annotation>
+          <xs:documentation>Electric</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="1">
+        <xs:annotation>
+          <xs:documentation>Heating</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="2">
+        <xs:annotation>
+          <xs:documentation>Cooling</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation>
+          <xs:documentation>HeatingHP</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4">
+        <xs:annotation>
+          <xs:documentation>Not recorded</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ConsumptionReadingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Estimated"/>
+      <xs:enumeration value="Actual"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="DEC-Annual-Energy-Summary">
+    <xs:all>
+      <xs:element name="Annual-Energy-Use-Fuel-Thermal" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Annual Energy Use (kWh/m2 p.a)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Annual-Energy-Use-Electrical" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Annual Energy Use (kWh/m2 p.a)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Renewables-Fuel-Thermal" type="Percentage">
+        <xs:annotation>
+          <xs:documentation>Energy from on-site renewable sources</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Renewables-Electrical" type="Percentage">
+        <xs:annotation>
+          <xs:documentation>Energy from on-site renewable sources</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Typical-Thermal-Use" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Benchmark (kWh/m2 p.a)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Typical-Electrical-Use" type="xs:decimal">
+        <xs:annotation>
+          <xs:documentation>Benchmark (kWh/m2 p.a)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+</xs:schema>

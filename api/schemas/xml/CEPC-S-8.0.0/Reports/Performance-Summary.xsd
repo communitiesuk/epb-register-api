@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" version="LIG-CEPC-7.0"-->
-<xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:CEPC="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc-s"
+  elementFormDefault="qualified"
+  version="CEPC-S-8.0.0"
+>
 	<xs:element name="Summary-Of-Performance" type="Summary-Of-Performance"/>
 	<xs:complexType name="Summary-Of-Performance">
 		<xs:sequence>
@@ -11,9 +16,9 @@
 	<xs:complexType name="Building-Data">
 		<xs:annotation>
 			<xs:documentation>
-For an EPC created using EPC-Gen Building-Data is fixed at four, which are:- Actual Building, Notional  Building, Reference Building and Typical Buidling
+For an EPC created using EPC-Gen Building-Data is fixed at four, which are:- Actual Building, Notional  Building, Reference Building and Typical Building
 
-The type of Building Data is indicated by7 the Analysis-Type field.</xs:documentation>
+The type of Building Data is indicated by the Analysis-Type field.</xs:documentation>
 		</xs:annotation>
 		<xs:all>
 			<xs:element name="Analysis-Type" type="AnalysisTypeCode"/>
@@ -27,15 +32,20 @@ The type of Building Data is indicated by7 the Analysis-Type field.</xs:document
 			<xs:element name="HVAC-Systems" type="HVAC-Systems"/>
 			<xs:element name="Global-Performance" type="Global-Performance"/>
 			<xs:element name="Activities" type="Activities"/>
-			<xs:element name="Primary-Energry-Indicator">
+			<xs:element name="Primary-Energy-Indicator" type="xs:integer">
+				<!--
 				<xs:simpleType>
 					<xs:restriction base="xs:integer">
 						<xs:minInclusive value="1"/>
 					</xs:restriction>
 				</xs:simpleType>
+				-->
 			</xs:element>
-				<xs:element name="Approximate-Energry-Use">
+				<xs:element name="Approximate-Energy-Use">
 				<xs:simpleType>
+            <xs:annotation>
+              <xs:documentation>Total annual delivered energy consumption, in kWh/m2, including any energy consumed by a CHP, if applicable, and net of any energy displaced by it.</xs:documentation>
+            </xs:annotation>
 					<xs:restriction base="xs:integer">
 						<xs:minInclusive value="1"/>
 					</xs:restriction>

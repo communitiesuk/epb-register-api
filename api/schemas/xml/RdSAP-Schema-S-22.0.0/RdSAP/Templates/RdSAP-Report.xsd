@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="S-22.0.0"
 >
 	<xs:include schemaLocation="EPC-CollectedData.xsd"/>
 	<xs:include schemaLocation="EPC-Certificate.xsd"/>

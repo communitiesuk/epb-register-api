@@ -1,6 +1,11 @@
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified"
-    attributeFormDefault="unqualified" version="19.0.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/sap-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap-s"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  version="S-20.0.0"
+>
     <xs:element name="ExceptionList">
         <xs:complexType>
             <xs:sequence>

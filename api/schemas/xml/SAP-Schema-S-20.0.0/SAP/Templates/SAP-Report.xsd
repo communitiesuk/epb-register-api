@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" 
-xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" 
-elementFormDefault="qualified" 
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap-s"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap-s"
+elementFormDefault="qualified"
 attributeFormDefault="unqualified"
-version="19.0.0">
+version="S-20.0.0">
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<xs:include schemaLocation="AssessorManagement.xsd"/>
 	<xs:include schemaLocation="Property.xsd"/>
@@ -121,9 +121,10 @@ A Home Inspector may use any or all of these methods to providing Professional I
 		<xs:sequence>
 			<xs:element name="RRN" type="RRNType">
 				<xs:annotation>
-					<xs:documentation>Report Reference Number is the unique report Identifier that the report will be publicly known by.
-
-The RRN is allocated to the Report at the point that it is registered and will be algorithmically derived from the natural key characteristics of the Home Condition Report i.e. The Unique Property Reference Number (UPRN) and Inspection Date.</xs:documentation>
+          <xs:documentation>
+            Report Reference Number is the unique report Identifier that the report will be publicly known by.
+            The RRN is allocated to the Report at the point that it is registered.
+          </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Inspection-Date" type="xs:date">

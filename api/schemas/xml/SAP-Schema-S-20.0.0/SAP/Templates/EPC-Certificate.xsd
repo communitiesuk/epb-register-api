@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/sap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap-s"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="19.0.0"
+  version="S-20.0.0"
 >
 	<xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
@@ -30,7 +30,7 @@
 	<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
 	<xs:complexType name="Energy-Assessment">
 		<xs:annotation>
-			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property. 
+			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property.
 
 The report also identifies a number of potential improvements that may be made to the property in order to increase the energy efficiency.
 </xs:documentation>
@@ -134,37 +134,37 @@ The report also identifies a number of potential improvements that may be made t
 				<xs:annotation>
 					<xs:documentation>The DER of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="TER" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The TER of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>				
+			</xs:element>
 			<xs:element name="DPER" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The DPER of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="TPER" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The TPER of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>				
+			</xs:element>
 			<xs:element name="DFEE" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The DFEE of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="TFEE" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The TFEE of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>				
+			</xs:element>
 			<xs:element name="DDER" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The Dwelling Delivered Energy Rate of the Property</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="TDER" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The Target Delivered Energy Rate of the Property</xs:documentation>
@@ -342,7 +342,9 @@ The Improved Energy Ratings that result from carrying out a Suggested Improvemen
 			</xs:element>
 			<xs:element name="Energy-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
 				<xs:annotation>
-					<xs:documentation>Overall summary of the energy effiocuemcy of the property feature.</xs:documentation>
+          <xs:documentation>Overall summary of the energy efficiency of the
+            property feature.
+          </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Environmental-Efficiency-Rating" type="EnergyEfficiencySummaryCode">

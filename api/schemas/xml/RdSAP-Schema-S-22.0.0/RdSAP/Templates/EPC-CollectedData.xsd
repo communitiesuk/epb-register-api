@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap-s"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
-  version="21.0.1"
+  version="S-22.0.0"
 >
     <xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
     <xs:element name="SAP-Data" type="SAP-Data"/>
@@ -41,7 +41,7 @@ This is the number of Reception Rooms (including Living Rooms, Sitting Rooms, Di
             </xs:element>
             <xs:element name="Heated-Room-Count" type="Count">
                 <xs:annotation>
-                    <xs:documentation>The numbewr of heated rooms in the property if more than half of the abitable rooms are not heated.</xs:documentation>
+                    <xs:documentation>The number of heated rooms in the property if more than half of the habitable rooms are not heated.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Low-Energy-Fixed-Lighting-Bulbs-Count" type="Count" minOccurs="0">
@@ -309,7 +309,7 @@ This is actually the type differentiator for Property but only a limited number 
     <xs:element name="MainHeatingDetailsType" type="MainHeatingDetailsType"/>
     <xs:complexType name="MainHeatingDetailsType">
         <xs:annotation>
-            <xs:documentation>Structured type for recording the details of the main heating present in nthe property as used in the SAP calculation</xs:documentation>
+            <xs:documentation>Structured type for recording the details of the main heating present in the property as used in the SAP calculation</xs:documentation>
         </xs:annotation>
         <xs:all>
             <xs:element name="Heating-Brand-Name" type="xs:string" minOccurs="0"/>
@@ -344,7 +344,7 @@ For the purpose of calculating the overall Energy Assessment for the property de
             </xs:element>
             <xs:element name="Identifier" type="IDString" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>Identifier for the Building part - generally only required if there are more that one Building Parts of the same type e.g. "West Wing" and "East Wing" Extensions</xs:documentation>
+                    <xs:documentation>Identifier for the Building part - generally only required if there are more than one Building Parts of the same type e.g. "West Wing" and "East Wing" Extensions</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Construction-Age-Band" type="ConstructionDateCode">
@@ -365,7 +365,7 @@ For the purpose of calculating the overall Energy Assessment for the property de
             </xs:element>
             <xs:element name="Floor-Heat-Loss" type="HeatLossFloorCode">
                 <xs:annotation>
-                    <xs:documentation>Identifies the type of foor through which heat loss occurs.</xs:documentation>
+                    <xs:documentation>Identifies the type of floor through which heat loss occurs.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Roof-Construction" type="RoofTypeCode">
@@ -665,7 +665,7 @@ For the purpose of calculating the overall Energy Assessment for the property de
     <xs:element name="SAP-Integral-Conservatory" type="SAP-Integral-Conservatory"/>
     <xs:complexType name="SAP-Integral-Conservatory">
         <xs:annotation>
-            <xs:documentation>A conservatory intergrated into the property that is within the heat-loss perimeter and forms part of the habitable area.</xs:documentation>
+            <xs:documentation>A conservatory integrated into the property that is within the heat-loss perimeter and forms part of the habitable area.</xs:documentation>
         </xs:annotation>
         <xs:all>
             <xs:element name="Double-Glazed" type="Flag">
@@ -711,12 +711,12 @@ For the purpose of calculating the overall Energy Assessment for the property de
             </xs:element>
             <xs:element name="Heat-Loss-Corridor" type="HeatLossCorridorCode">
                 <xs:annotation>
-                    <xs:documentation>Indiocates that the flat contained a cossidor through which heat is lost.</xs:documentation>
+                    <xs:documentation>Indicates that the flat contained a corridor through which heat is lost.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="Unheated-Corridor-Length" type="Measurement" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>The tortal length of unheated corridor in the flat. Only popualted if Heat-Loss-Corridor = {Unheated Corridor}</xs:documentation>
+                    <xs:documentation>The total length of unheated corridor in the flat. Only populated if Heat-Loss-Corridor = {Unheated Corridor}</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:all>

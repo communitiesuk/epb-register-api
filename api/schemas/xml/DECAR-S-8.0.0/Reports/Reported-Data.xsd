@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by Niall Horgan (Bridgeall Technology) -->
-<xs:schema xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" targetNamespace="DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  elementFormDefault="qualified"
+  version="DECAR-S-8.0.0"
+>
 	<xs:include schemaLocation="../Reports/BaseDataTypes.xsd"/>
 	<xs:element name="Report-Data" type="Report-Data"/>
 	<xs:complexType name="Report-Data" abstract="true">
@@ -71,12 +76,12 @@
 	<xs:element name="DEC-Annual-Energy-Summary" type="DEC-Annual-Energy-Summary"/>
 	<xs:complexType name="DEC-Annual-Energy-Summary">
 		<xs:all>
-			<xs:element name="Annual-Energy-Use-Fuel-Thermal" type="xs:int">
+			<xs:element name="Annual-Energy-Use-Fuel-Thermal" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>Annual Energy Use (kWh/m2 p.a)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Annual-Energy-Use-Electrical" type="xs:int">
+			<xs:element name="Annual-Energy-Use-Electrical" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>Annual Energy Use (kWh/m2 p.a)</xs:documentation>
 				</xs:annotation>
@@ -91,12 +96,12 @@
 					<xs:documentation>Energy from on-site renewable sources</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Typical-Thermal-Use" type="xs:int">
+			<xs:element name="Typical-Thermal-Use" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>Benchmark (kWh/m2 p.a)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Typical-Electrical-Use" type="xs:int">
+			<xs:element name="Typical-Electrical-Use" type="xs:decimal">
 				<xs:annotation>
 					<xs:documentation>Benchmark (kWh/m2 p.a)</xs:documentation>
 				</xs:annotation>
@@ -114,7 +119,7 @@
 			</xs:element>
 			<xs:element name="CO2-Impact" type="CO2ImpactCode">
 				<xs:annotation>
-					<xs:documentation>Potential impact on CO2 emmissions if the change is carried out.</xs:documentation>
+					<xs:documentation>Potential impact on CO2 emissions if the change is carried out.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:all>

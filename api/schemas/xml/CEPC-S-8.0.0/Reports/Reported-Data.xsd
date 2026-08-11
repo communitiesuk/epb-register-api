@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:CEPC="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" version="LIG-CEPC-7.0"-->
-<xs:schema xmlns="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:CEPC="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc-s"
+  elementFormDefault="qualified"
+  version="CEPC-S-8.0.0"
+>
 	<xs:include schemaLocation="./Report-Header.xsd"/>
 	<xs:include schemaLocation="./BaseDataTypes.xsd"/>
 	<xs:element name="Report-Data" type="Report-Data"/>
@@ -12,7 +17,7 @@
 		<xs:all>
 			<xs:element name="Main-Heating-Fuel" type="HeatingFuelTypeCode" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Main Heating Fuel used in the building. This is onl;y required for a Display Energy Certificate or Energy Performance Certificate and doesn't appear on the Recommendations Report or Advisory Report.</xs:documentation>
+					<xs:documentation>Main Heating Fuel used in the building. This is only required for a Display Energy Certificate or Energy Performance Certificate and doesn't appear on the Recommendations Report or Advisory Report.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Other-Fuel-Description" type="xs:string" minOccurs="0">
@@ -144,14 +149,14 @@
 			<xs:element name="Renewable-Energy-Sources" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Renewable-Energy-Source" type="xs:string" maxOccurs="unbounded"></xs:element>
+						<xs:element name="Renewable-Energy-Source" type="xs:string" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="Electricity-Sources">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Electricity-Source" type="xs:string" maxOccurs="unbounded"></xs:element>
+						<xs:element name="Electricity-Source" type="xs:string" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -159,6 +164,16 @@
 			<xs:element name="Technical-Information" type="Technical-Information"/>
 			<xs:element name="EPC-Rating" type="EPC-Rating"/>
 			<xs:element name="Comparative-Rating" type="Comparative-Rating"/>
+      <xs:element name="TER-2002" type="EmissionRateType"  minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Target Emission Rate defined by Section 6 of the 2002 building regulations, in kg of CO2 per m2 per year.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+      <xs:element name="Compliant-2002" type="Flag" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+              <xs:documentation>Indicates whether the actual building complies with the Target Emission Rate defined by Section 6 of the 2002 building regulations.</xs:documentation>
+          </xs:annotation>
+      </xs:element>
 		</xs:all>
 	</xs:complexType>
 	<xs:complexType name="Comparative-Rating">
@@ -248,7 +263,7 @@
 		<xs:all>
 			<xs:element name="Recommendation-Code" type="xs:string">
 				<xs:annotation>
-					<xs:documentation>The Recommendation Code that identifis this particular recommendation</xs:documentation>
+					<xs:documentation>The Recommendation Code that identifies this particular recommendation</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Recommendation" type="xs:string">
@@ -381,6 +396,11 @@
 			<xs:enumeration value="7">
 				<xs:annotation>
 					<xs:documentation>Not recorded.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Mandatory issue (Display in public building).</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>

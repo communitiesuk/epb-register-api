@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" targetNamespace="DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  elementFormDefault="qualified"
+  version="DECAR-S-8.0.0"
+>
 	<xs:include schemaLocation="../Reports/BaseDataTypes.xsd"/>
 	<xs:element name="Property-Details" type="Property-Details"/>
 	<xs:complexType name="Property-Details">
 		<xs:all>
 			<xs:element name="Location-Description" type="xs:string" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>A list of floors and rooms that describes the Building-Part being assessed b y this report.</xs:documentation>
+					<xs:documentation>A list of floors and rooms that describes the Building-Part being assessed by this report.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="UPRN" type="UPRNType">
+			<xs:element name="UPRN" type="UPRNType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Unique Property Reference Number</xs:documentation>
 				</xs:annotation>
@@ -31,7 +37,7 @@
 			</xs:element>
 			<xs:element name="Is-Heritage-Site" type="Flag" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Indicates whether the Property is a Heritage Sitre ("Y") or not.</xs:documentation>
+					<xs:documentation>Indicates whether the Property is a Heritage Site ("Y") or not.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Owner" type="xs:string" minOccurs="0">
@@ -45,7 +51,7 @@
 	<xs:complexType name="Energy-Assessor">
 		<xs:annotation>
 			<xs:documentation>
-				A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate. 
+				A Energy-Assessor is a person certified by an Accreditation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -81,7 +87,7 @@
 			</xs:element>
 			<xs:element name="Company-Name" type="xs:string" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>The Name of the Company that the Energy Assessor is empolyed by.</xs:documentation>
+					<xs:documentation>The Name of the Company that the Energy Assessor is employed by.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Related-Party-Disclosure" type="Sentence" minOccurs="0">
@@ -92,7 +98,7 @@
 			<xs:element name="Qualifications" type="AssessorQualificationsCode" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Status" type="EAStatusCode" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>The Status of the Energy Assessor - at the time of producing and lodging a report this shoudl be "Registered" but any of the values can be present on the  EA Register itself.</xs:documentation>
+					<xs:documentation>The Status of the Energy Assessor - at the time of producing and lodging a report this should be "Registered" but any of the values can be present on the EA Register itself.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="E-Mail" type="xs:string" minOccurs="0">
@@ -176,7 +182,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="InspectionTypeCode">
 		<xs:annotation>
-			<xs:documentation>Indicates the type of inspection the Energy Assessor carrioed out to poroduce the report e.g. Physical inspection or Desk-Based (off-plan) inspection</xs:documentation>
+			<xs:documentation>Indicates the type of inspection the Energy Assessor carried out to produce the report e.g. Physical inspection or Desk-Based (off-plan) inspection</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Physical">
@@ -198,15 +204,15 @@
 	</xs:simpleType>
 	<xs:simpleType name="UPRNType">
 		<xs:annotation>
-			<xs:documentation>EST Unique Property Reference Number</xs:documentation>
+			<xs:documentation>Unique Property Reference Number</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[0-9]{10}"/>
+      <xs:pattern value="UPRN-[0-9]{10,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}|"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="AssessorQualificationsCode">
 		<xs:annotation>
-			<xs:documentation>The types of qualificatiosn the Energy assessor may have - these indicates the types and complexity of reports the EA may produce.</xs:documentation>
+			<xs:documentation>The types of qualification the Energy assessor may have - these indicate the types and complexity of reports the EA may produce.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="DEC">
@@ -331,7 +337,7 @@
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-1" type="xs:string"/>
 			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The District part of the Address.
@@ -358,10 +364,10 @@ A District is an optional sub-part of the Post Town e.g. "Kings Heath" in "Birmi
 		<xs:all>
 			<xs:element name="RRN" type="RRNType">
 				<xs:annotation>
-					<xs:documentation>
-						Report Reference Number is the unique report Identifier that the report will be publicly known by.
-                        The RRN is allocated to the Report at the point that it is registered and will be algorithmically derived from the natural key characteristics of the Energy Performance Certificate.
-					</xs:documentation>
+          <xs:documentation>
+            Report Reference Number is the unique report Identifier that the report will be publicly known by.
+            The RRN is allocated to the Report at the point that it is registered.
+          </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Issue-Date" type="xs:date">
@@ -429,9 +435,9 @@ A Report can have a number of distinct states depending on whereabouts in its ov
 			<xs:documentation>A Person Name is a complex structure to capture the separate components of the name for a Person, consisting of:
 *	A prefix e.g. "Mr", "Mrs", "Dr" etc.
 *	First Name e.g. "John"
-*	Middle Initial 
+*	Middle Initial
 *	Surname e.g. "Smith"
-*	Suffix e.g. "PhD", "FRICS" 
+*	Suffix e.g. "PhD", "FRICS"
 The First Name and Surname are the only mandatory elements of a name.
 
 The name elements can then be combined in a number of different ways to produce different formats appropriate to the output context.
