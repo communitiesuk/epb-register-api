@@ -311,7 +311,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
             sap_data =  ActiveRecord::Base.connection.exec_query(
               "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-              ).entries.first
+            ).entries.first
 
             expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
             expect(sap_data).to eq expected_sap_assessment_data
