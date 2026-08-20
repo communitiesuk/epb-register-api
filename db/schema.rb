@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_07_095448) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_20_071318) do
   create_schema "scotland"
 
   # These are extensions that must be enabled in order to support this database
@@ -33,6 +33,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_095448) do
     t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
     t.index ["town"], name: "index_address_base_on_town"
+  end
+
+  create_table "public.address_base_tmp", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
+    t.string "address_type", limit: 15
+    t.string "classification_code", limit: 6
+    t.string "country_code", limit: 1
+    t.string "postcode"
+    t.string "town"
   end
 
   create_table "public.address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
@@ -213,6 +225,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_095448) do
     t.string "provider_name"
     t.string "provider_telephone"
     t.jsonb "savings", default: "[]", null: false
+    t.jsonb "savings_scotland", default: "[]", null: false
     t.datetime "start_date", precision: nil
     t.boolean "structure_changed"
   end
