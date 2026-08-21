@@ -1,7 +1,11 @@
 require_relative "./export_invoices_helper"
 
 namespace :data_export do
-  desc "Export invoices on the 1st of the month every month"
+  desc <<~DESC
+    Export invoices on the 1st of the month every month"
+
+    SLACK_EPB_BOT_TOKEN: Slack api token used to upload files and message Slack
+  DESC
 
   task :export_invoices, [:start_date, :end_date, :report_type, :scheme_id] do |_, args|
     start_date = args[:start_date] || ENV["start_date"]
