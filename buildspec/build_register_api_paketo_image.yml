@@ -15,8 +15,8 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Paketo image...
-      # We use --default-process below to define which entrypoint we want the application to have from the Procfile on the codebase
-      - pack build ebpr-register-api-image --builder paketobuildpacks/builder-jammy-full --default-process web --verbose --clear-cache
+      # --default-process selects the Procfile process to start
+      - pack build ebpr-register-api-image --builder paketobuildpacks/ubuntu-noble-builder --default-process web
 
   post_build:
     commands:
