@@ -15,8 +15,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Paketo image...
-      # --default-process selects the Procfile process to start
-      - pack build ebpr-register-api-image --builder paketobuildpacks/ubuntu-noble-builder --default-process web
+      - pack build ebpr-register-api-image --builder paketobuildpacks/ubuntu-noble-builder
 
   post_build:
     commands:
