@@ -10,6 +10,8 @@ inherit_gem:
 AllCops:
   Exclude:
     - db/schema.rb
+    # Needed for github actions as gems are installed in vendor/bundle
+    - vendor/bundle/**/*
 
 Style/EmptyElse:
   EnforcedStyle: empty

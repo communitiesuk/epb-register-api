@@ -39,6 +39,10 @@ run:
 	$(if ${EPB_UNLEASH_URI},,$(error Must specify EPB_UNLEASH_URI))
 	@bundle exec rackup -p 9191
 
+.PHONY: lint
+lint:
+	@bundle exec rubocop
+
 .PHONY: format
 format:
 	@bundle exec rubocop --autocorrect || true
