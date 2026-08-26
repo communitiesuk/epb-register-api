@@ -35,18 +35,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_071318) do
     t.index ["town"], name: "index_address_base_on_town"
   end
 
-  create_table "public.address_base_tmp", primary_key: "uprn", id: :string, force: :cascade do |t|
-    t.string "address_line1"
-    t.string "address_line2"
-    t.string "address_line3"
-    t.string "address_line4"
-    t.string "address_type", limit: 15
-    t.string "classification_code", limit: 6
-    t.string "country_code", limit: 1
-    t.string "postcode"
-    t.string "town"
-  end
-
   create_table "public.address_base_versions", primary_key: "version_number", id: :integer, default: nil, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "version_name", null: false
@@ -250,17 +238,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_071318) do
     t.jsonb "rule_triggers", default: []
   end
 
-  create_table "public.postcode_geolocation", force: :cascade do |t|
+  create_table "public.postcode_geolocation", primary_key: "postcode", id: :string, force: :cascade do |t|
     t.decimal "latitude", null: false
     t.decimal "longitude", null: false
-    t.string "postcode"
     t.string "region", null: false
   end
 
-  create_table "public.postcode_outcode_geolocations", force: :cascade do |t|
+  create_table "public.postcode_outcode_geolocations", primary_key: "outcode", id: :string, force: :cascade do |t|
     t.decimal "latitude", null: false
     t.decimal "longitude", null: false
-    t.string "outcode"
     t.string "region", null: false
   end
 
