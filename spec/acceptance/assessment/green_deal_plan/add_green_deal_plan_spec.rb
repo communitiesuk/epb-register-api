@@ -111,6 +111,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan", :set_with_tim
               },
               { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
             ],
+            savingsScotland: [],
             estimatedSavings: 1566,
           },
         ]

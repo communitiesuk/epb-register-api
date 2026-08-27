@@ -1,6 +1,6 @@
 module Domain
   class GreenDealPlan
-    attr_reader :green_deal_plan_id, :savings
+    attr_reader :green_deal_plan_id, :savings, :savings_scotland
     attr_writer :estimated_savings
 
     def initialize(
@@ -20,6 +20,7 @@ module Domain
       measures: [],
       charges: [],
       savings: [],
+      savings_scotland: [],
       estimated_savings: nil
     )
       @green_deal_plan_id = green_deal_plan_id
@@ -39,6 +40,7 @@ module Domain
       @measures = measures
       @charges = charges
       @savings = savings
+      @savings_scotland = savings_scotland
       @estimated_savings = estimated_savings
     end
 
@@ -71,6 +73,7 @@ module Domain
         measures: @measures,
         charges: @charges,
         savings: @savings,
+        savings_scotland: @savings_scotland,
         estimated_savings: @estimated_savings,
       }
     end
@@ -93,6 +96,7 @@ module Domain
         measures: @measures,
         charges: @charges,
         savings: @savings,
+        savings_scotland: @savings_scotland,
       }
     end
   end

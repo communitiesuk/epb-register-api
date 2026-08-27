@@ -1230,17 +1230,32 @@ def add_assessment_with_green_deal(
   registration_date: "2020-05-04",
   green_deal_plan_id: "ABC123456DEF",
   address_id: "RRN-0000-0000-0000-0000-0000",
-  schema_version: "RdSAP-Schema-20.0.0"
+  schema_version: "RdSAP-Schema-20.0.0",
+  is_scottish: false
 )
   case type
   when "RdSAP"
-    assessor_qualifications = { domestic_rd_sap: "ACTIVE" }
-    xml = Samples.xml(schema_version)
-    xml_schema = schema_version
+    if is_scottish
+      assessor_qualifications = { scotland_rdsap: "ACTIVE" }
+      xml = schema_version.include?("-S-") ? Samples.xml(schema_version) : Samples.xml("RdSAP-Schema-S-21.0")
+      xml_schema = schema_version.include?("-S-") ? schema_version : "RdSAP-Schema-S-21.0"
+      address_id = "0000000000"
+    else
+      assessor_qualifications = { domestic_rd_sap: "ACTIVE" }
+      xml = Samples.xml(schema_version)
+      xml_schema = schema_version
+    end
   when "SAP"
-    assessor_qualifications = { domestic_sap: "ACTIVE" }
-    xml = Samples.xml("SAP-Schema-18.0.0")
-    xml_schema = "SAP-Schema-18.0.0"
+    if is_scottish
+      assessor_qualifications = { scotland_sap_new_building: "ACTIVE" }
+      xml = Samples.xml("SAP-Schema-S-19.0.0")
+      xml_schema = "SAP-Schema-S-19.0.0"
+      address_id = "0000000000"
+    else
+      assessor_qualifications = { domestic_sap: "ACTIVE" }
+      xml = Samples.xml("SAP-Schema-18.0.0")
+      xml_schema = "SAP-Schema-18.0.0"
+    end
   end
 
   xml = Nokogiri.XML xml
@@ -1254,19 +1269,31 @@ def add_assessment_with_green_deal(
   assessor = AssessorStub.new.fetch_request_body(**assessor_qualifications)
   add_assessor scheme_id:, assessor_id: "SPEC000000", body: assessor
 
-  lodge_assessment(
-    assessment_body: xml.to_xml,
-    auth_data: {
-      scheme_ids: [scheme_id],
-    },
-    schema_name: xml_schema,
-    migrated: true,
-  )
-
-  if type == "RdSAP"
-    add_green_deal_plan(
-      assessment_id:,
-      body: GreenDealPlanStub.new.request_body(green_deal_plan_id),
+  if is_scottish
+    lodge_scottish_assessment(
+      assessment_body: xml.to_xml,
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: xml_schema,
+      migrated: true,
+    )
+  else
+    lodge_assessment(
+      assessment_body: xml.to_xml,
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: xml_schema,
+      migrated: true,
     )
   end
+  if type == "RdSAP"
+    add_green_deal_plan_directly(green_deal_plan_id, assessment_id, is_scottish)
+  end
+end
+
+def add_green_deal_plan_directly(green_deal_plan_id, assessment_id, is_scottish)
+  green_deal_plan = GreenDealPlanStub.new.stubbed_domain(is_scottish, green_deal_plan_id)
+  Gateway::GreenDealPlansGateway.new.add(green_deal_plan, assessment_id, is_scottish: is_scottish)
 end

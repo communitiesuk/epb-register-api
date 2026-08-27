@@ -44,6 +44,7 @@ module UseCase
           measures: data[:measures],
           charges: data[:charges],
           savings: data[:savings],
+          savings_scotland: data[:savings_scotland],
         )
 
       green_deal_plan_record = @green_deal_plans_gateway.update(green_deal_plan, plan_id)

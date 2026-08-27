@@ -6340,7 +6340,11 @@ components:
         savings:
           type: array
           items:
-            $ref: '#/components/schemas/GreenDealSaving'
+            $ref: '#/components/schemas/GreenDealSavings'
+        savingsScotland:
+          type: array
+          items:
+            $ref: '#/components/schemas/GreenDealSavingsScotland'
 
     GreenDealCharges:
       type: object
@@ -6463,7 +6467,7 @@ components:
           maximum: 10000
           example: 0.34
 
-    GreenDealSaving:
+    GreenDealSavings:
       type: object
       properties:
         sequence:
@@ -6490,6 +6494,26 @@ components:
           minimum: -1
           maximum: 1
           example: -0.3
+
+    GreenDealSavingsScotland:
+      type: object
+      properties:
+        savingsElectricityYearly:
+          description: 'Money saved yearly on electricity'
+          type: number
+          example: 0.0382
+        savingsGasYearly:
+          description: 'Money saved yearly on gas'
+          type: number
+          example: 15.90
+        savingsOtherYearly:
+          description: 'Money saved yearly on other energy sources'
+          type: number
+          example: 0.0
+        savingsTotalYearly:
+          description: 'Money saved yearly over all energy sources'
+          type: number
+          example: 15.9382
 
     Addendum:
       type: object

@@ -33,6 +33,33 @@ describe Domain::GreenDealPlan do
       estimated_savings: 1566 }
   end
 
+  let(:scottish_arguments) do
+    { green_deal_plan_id: "ABC654321DEF",
+      start_date: Time.new(2020, 0o1, 30).utc.to_date,
+      end_date: Time.new(2030, 0o2, 28).utc.to_date,
+      provider_name: "The Bank",
+      provider_telephone: "0800 0000000",
+      provider_email: "lender@example.com",
+      interest_rate: 12.3,
+      fixed_interest_rate: true,
+      charge_uplift_amount: 1.25,
+      charge_uplift_date: Time.new(2025, 0o3, 29).utc.to_date,
+      cca_regulated: true,
+      structure_changed: false,
+      measures_removed: false,
+      charges: [{ end_date: "2030-03-29",
+                  sequence: 0,
+                  start_date: "2020-03-29",
+                  daily_charge: 0.34 }],
+      measures: [{ product: "WarmHome lagging stuff (TM)",
+                   sequence: 0,
+                   repaid_date: "2025-03-29",
+                   measure_type: "Loft insulation" }],
+      savings: [],
+      savings_scotland: [{ savings_electricity_yearly: 0.0382, savings_gas_yearly: 0.0338, savings_other_yearly: 0.0, savings_total_yearly: 0.072 }],
+      estimated_savings: 1566 }
+  end
+
   let(:expected_data) do
     { green_deal_plan_id: "ABC654321DEF",
       start_date: "2020-01-30",
@@ -64,10 +91,39 @@ describe Domain::GreenDealPlan do
                 { fuel_code: "41",
                   fuel_saving: -15_561,
                   standing_charge_fraction: 0 }],
+      savings_scotland: [],
+      estimated_savings: 1566 }
+  end
+
+  let(:scottish_expected_data) do
+    { green_deal_plan_id: "ABC654321DEF",
+      start_date: "2020-01-30",
+      end_date: "2030-02-28",
+      provider_details: { name: "The Bank",
+                          telephone: "0800 0000000",
+                          email: "lender@example.com" },
+      interest: { rate: 12.3,
+                  fixed: true },
+      charge_uplift: { amount: 1.25,
+                       date: "2025-03-29" },
+      cca_regulated: true,
+      structure_changed: false,
+      measures_removed: false,
+      measures: [{ product: "WarmHome lagging stuff (TM)",
+                   sequence: 0,
+                   repaid_date: "2025-03-29",
+                   measure_type: "Loft insulation" }],
+      charges: [{ end_date: "2030-03-29",
+                  sequence: 0,
+                  start_date: "2020-03-29",
+                  daily_charge: 0.34 }],
+      savings: [],
+      savings_scotland: [{ savings_electricity_yearly: 0.0382, savings_gas_yearly: 0.0338, savings_other_yearly: 0.0, savings_total_yearly: 0.072 }],
       estimated_savings: 1566 }
   end
 
   let(:domain) { described_class.new(**arguments) }
+  let(:scottish_domain) { described_class.new(**scottish_arguments) }
 
   it "returns a domain object" do
     expect(domain).to be_an_instance_of described_class
@@ -76,6 +132,10 @@ describe Domain::GreenDealPlan do
   describe "#to_hash" do
     it "returns the expected data" do
       expect(domain.to_hash).to eq(expected_data)
+    end
+
+    it "returns the expected scottish data" do
+      expect(scottish_domain.to_hash).to eq(scottish_expected_data)
     end
   end
 end

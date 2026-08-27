@@ -251,6 +251,7 @@ describe "Audit events", :set_with_timecop do
           { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
           { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
         ],
+        savingsScotland: [],
       }
     end
 

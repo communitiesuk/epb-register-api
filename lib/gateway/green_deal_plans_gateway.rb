@@ -28,9 +28,9 @@ module Gateway
       results.map { |result| result["exists"] }.first
     end
 
-    def add(green_deal_plan, assessment_id)
+    def add(green_deal_plan, assessment_id, is_scottish: false)
       GreenDealPlan.create green_deal_plan.to_record
-      link_green_deal_to_assessment green_deal_plan.green_deal_plan_id, assessment_id
+      link_green_deal_to_assessment green_deal_plan.green_deal_plan_id, assessment_id, is_scottish: is_scottish
     end
 
     def link_green_deal_to_assessment(green_deal_plan_id, assessment_id, is_scottish: false)
@@ -77,11 +77,23 @@ module Gateway
       schema = Helper::ScotlandHelper.select_schema(is_scottish)
       sql = <<-SQL
         SELECT
-          b.green_deal_plan_id, b.start_date, b.end_date,
-          b.provider_name, b.provider_telephone, b.provider_email,
-          b.interest_rate, b.fixed_interest_rate, b.charge_uplift_amount,
-          b.charge_uplift_date, b.cca_regulated, b.structure_changed,
-          b.measures_removed, b.charges, b.measures, b.savings
+          b.green_deal_plan_id,
+          b.start_date,
+          b.end_date,
+          b.provider_name,
+          b.provider_telephone,
+          b.provider_email,
+          b.interest_rate,
+          b.fixed_interest_rate,
+          b.charge_uplift_amount,
+          b.charge_uplift_date,
+          b.cca_regulated,
+          b.structure_changed,
+          b.measures_removed,
+          b.charges,
+          b.measures,
+          b.savings
+          #{select_savings_scotland if is_scottish}
         FROM
           #{schema}green_deal_assessments a
         INNER JOIN
@@ -110,6 +122,7 @@ module Gateway
         row[:measures] = JSON.parse(row[:measures], symbolize_names: true)
         row[:savings] = JSON.parse(row[:savings], symbolize_names: true)
         row[:estimated_savings] = calculate_estimated_savings row[:savings]
+        row[:savings_scotland] = is_scottish ? JSON.parse(row[:savings_scotland], symbolize_names: true) : []
 
         green_deal_hash = Domain::GreenDealPlan.new(**row)
 
@@ -117,6 +130,12 @@ module Gateway
       end
 
       result
+    end
+
+    def select_savings_scotland
+      <<~SQL.squish
+        , b.savings_scotland
+      SQL
     end
 
     def delete(plan_id)

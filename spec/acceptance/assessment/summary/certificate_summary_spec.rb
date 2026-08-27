@@ -381,6 +381,7 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
                        { fuelCode: "41",
                          fuelSaving: -15_561,
                          standingChargeFraction: 0 }],
+             savingsScotland: [],
              estimatedSavings: 1566 }]
         end
         let(:related_assessment) do
@@ -412,8 +413,6 @@ describe "Acceptance::CertificateSummary", :set_with_timecop do
               symbolize_names: true,
             )
 
-          # the interest rate and charge uplift amount are big decimal values which
-          # gets decoded to a string with the .to_json method
           expect(response[:data]).to eq(expected_response[:data])
         end
       end

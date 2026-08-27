@@ -47,21 +47,20 @@ describe Gateway::GreenDealPlansGateway do
         assessment_id: "0000-0000-0000-0000-1111",
         registration_date: "2024-10-10",
         green_deal_plan_id: "ABC654321RRR",
+        is_scottish: false,
       )
-      lodge_scottish_assessment(
-        assessment_body: domestic_rdsap_s_xml.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "RdSAP-Schema-S-19.0",
-        migrated: true,
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-2222",
+        registration_date: "2024-10-10",
+        green_deal_plan_id: "ABC654321SSS",
+        is_scottish: true,
       )
-      link_scottish_assessment_to_green_deal(assessment_id: scottish_assessment_id, green_deal_plan_id: "ABC654321RRR")
     end
 
-    it "returns each green deal plan for an assessment" do
+    it "returns each green deal plan for an assessment with more than one green deal" do
       result = gateway.fetch("0000-0000-0000-0000-1111")
+
       expect(result.first).to be_an_instance_of Domain::GreenDealPlan
       expect(result.second).to be_an_instance_of Domain::GreenDealPlan
       expect(result.first.green_deal_plan_id).to eq "ABC654321DEF"
@@ -69,9 +68,28 @@ describe Gateway::GreenDealPlansGateway do
     end
 
     it "returns each green deal plan for a Scottish assessment" do
-      result = gateway.fetch(scottish_assessment_id, is_scottish: true)
+      result = gateway.fetch("0000-0000-0000-0000-2222", is_scottish: true)
+
       expect(result.first).to be_an_instance_of Domain::GreenDealPlan
-      expect(result.first.green_deal_plan_id).to eq "ABC654321RRR"
+      expect(result.first.green_deal_plan_id).to eq "ABC654321SSS"
+      expect(result.first.savings_scotland).to eq [{ savings_electricity_yearly: 0.0382, savings_gas_yearly: 0.0338, savings_other_yearly: 0.0, savings_total_yearly: 0.072 }]
+    end
+
+    it "returns each green deal plan for a Scottish assessment with more than one green deal" do
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-2222",
+        registration_date: "2024-10-10",
+        green_deal_plan_id: "ABC654321GGG",
+        is_scottish: true,
+      )
+
+      result = gateway.fetch("0000-0000-0000-0000-2222", is_scottish: true)
+
+      expect(result.first).to be_an_instance_of Domain::GreenDealPlan
+      expect(result.second).to be_an_instance_of Domain::GreenDealPlan
+      expect(result.first.green_deal_plan_id).to eq "ABC654321GGG"
+      expect(result.second.green_deal_plan_id).to eq "ABC654321SSS"
     end
   end
 

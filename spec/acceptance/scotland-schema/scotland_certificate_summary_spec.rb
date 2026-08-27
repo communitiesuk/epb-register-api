@@ -198,76 +198,164 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
         end
       end
 
-      # context "when a green deal is attached" do
-      #   let(:assessment_id) { "0000-0000-0000-0000-1111" }
-      #   let(:green_deal_plan) do
-      #     [{ greenDealPlanId: "ABC654321DEF",
-      #        startDate: "2020-01-30",
-      #        endDate: "2030-02-28",
-      #        providerDetails: { name: "The Bank",
-      #                           telephone: "0800 0000000",
-      #                           email: "lender@example.com" },
-      #
-      #        interest: { rate: "12.3",
-      #                    fixed: true },
-      #        chargeUplift: { amount: "1.25",
-      #                        date: "2025-03-29" },
-      #        ccaRegulated: true,
-      #        structureChanged: false,
-      #        measuresRemoved: false,
-      #        measures: [{ product: "WarmHome lagging stuff (TM)",
-      #                     sequence: 0,
-      #                     repaidDate: "2025-03-29",
-      #                     measureType: "Loft insulation" }],
-      #        charges: [{ endDate: "2030-03-29",
-      #                    sequence: 0,
-      #                    startDate: "2020-03-29",
-      #                    dailyCharge: 0.34 }],
-      #        savings: [{ fuelCode: "39",
-      #                    fuelSaving: 23_253,
-      #                    standingChargeFraction: 0 },
-      #                  { fuelCode: "40",
-      #                    fuelSaving: -6331,
-      #                    standingChargeFraction: -0.9 },
-      #                  { fuelCode: "41",
-      #                    fuelSaving: -15_561,
-      #                    standingChargeFraction: 0 }],
-      #        estimatedSavings: 1566 }]
-      #   end
-      #   let(:related_assessment) do
-      #     [{
-      #       assessmentId: "0000-0000-0000-0000-0000",
-      #       assessmentStatus: "ENTERED",
-      #       assessmentType: "RdSAP",
-      #       assessmentExpiryDate: "2030-05-03",
-      #       optOut: false,
-      #     }]
-      #   end
-      #   let(:date_of_expiry) { "2034-10-09" }
-      #   let(:date_of_registration) { "2024-10-10" }
-      #
-      #   before do
-      #     load_green_deal_data
-      #     add_assessment_with_green_deal(
-      #       type: "RdSAP",
-      #       assessment_id: "0000-0000-0000-0000-1111",
-      #       registration_date: "2024-10-10",
-      #       green_deal_plan_id: "ABC654321DEF",
-      #     )
-      #   end
-      #
-      #   it "returns the green deal data" do
-      #     response =
-      #       JSON.parse(
-      #         fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-1111").body,
-      #         symbolize_names: true,
-      #       )
-      #
-      #     # the interest rate and charge uplift amount are big decimal values which
-      #     # gets decoded to a string with the .to_json method
-      #     expect(response).to eq(expected_response)
-      #   end
-      # end
+      context "when a green deal is attached" do
+        let(:expected_response) do
+          { data:
+                 { typeOfAssessment: "RdSAP",
+                   assessmentId: "0000-0000-0000-0000-1111",
+                   dateOfExpiry: "2034-10-09",
+                   dateOfAssessment: "2023-06-27",
+                   dateOfRegistration: "2024-10-10",
+                   address:
+                    { addressLine1: "1 Some Street",
+                      addressLine2: "",
+                      addressLine3: "",
+                      addressLine4: "",
+                      town: "Newkirk",
+                      postcode: "FK1 1XE" },
+                   assessor:
+                    { schemeAssessorId: "SPEC000000",
+                      companyName: "Test EPCs 4U",
+                      contactDetails: { email: "a@b.c", address: "12 Epc Street, Newkirk, FK1 1XE", telephoneNumber: "0555 497 2848" },
+                      firstName: "Someone",
+                      lastName: "Person",
+                      registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                   currentCarbonEmission: 3.7,
+                   carbonEmissionsCurrentPerFloorArea: 22.0,
+                   currentEnergyEfficiencyBand: "c",
+                   currentEnergyEfficiencyRating: 80,
+                   dwellingType: "Detached house",
+                   estimatedEnergyCost: "1492.00",
+                   heatDemand: { currentSpaceHeatingDemand: 13_063, currentWaterHeatingDemand: 2612 },
+                   heatingCostCurrent: "1113",
+                   heatingCostPotential: "1113",
+                   hotWaterCostCurrent: "294",
+                   hotWaterCostPotential: "294",
+                   lightingCostCurrent: "85",
+                   lightingCostPotential: "85",
+                   potentialCarbonEmission: 3.6,
+                   potentialEnergyEfficiencyBand: "b",
+                   potentialEnergyEfficiencyRating: 83,
+                   potentialEnergySaving: "0.00",
+                   propertySummary:
+                    [{ energyEfficiencyRating: 4,
+                       environmentalEfficiencyRating: 4,
+                       name: "wall",
+                       description: "Timber frame, as built, insulated (assumed)" },
+                     { energyEfficiencyRating: 5,
+                       environmentalEfficiencyRating: 5,
+                       name: "roof",
+                       description: "Pitched, 300 mm loft insulation" },
+                     { energyEfficiencyRating: 4, environmentalEfficiencyRating: 4, name: "roof", description: "Pitched, insulated" },
+                     { energyEfficiencyRating: 0,
+                       environmentalEfficiencyRating: 0,
+                       name: "floor",
+                       description: "Solid, insulated (assumed)" },
+                     { energyEfficiencyRating: 0,
+                       environmentalEfficiencyRating: 0,
+                       name: "floor",
+                       description: "To unheated space, insulated (assumed)" },
+                     { energyEfficiencyRating: 3,
+                       environmentalEfficiencyRating: 3,
+                       name: "window",
+                       description: "Fully double glazed" },
+                     { energyEfficiencyRating: 0,
+                       environmentalEfficiencyRating: 0,
+                       name: "air_tightness",
+                       description: "(not tested)" },
+                     { energyEfficiencyRating: 4,
+                       environmentalEfficiencyRating: 4,
+                       name: "main_heating",
+                       description: "Boiler and radiators, mains gas" },
+                     { energyEfficiencyRating: 3,
+                       environmentalEfficiencyRating: 3,
+                       name: "main_heating_controls",
+                       description: "Room thermostat and TRVs" },
+                     { energyEfficiencyRating: 4,
+                       environmentalEfficiencyRating: 4,
+                       name: "hot_water",
+                       description: "From main system" },
+                     { energyEfficiencyRating: 4,
+                       environmentalEfficiencyRating: 4,
+                       name: "lighting",
+                       description: "Good lighting efficiency" },
+                     { energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "secondary_heating", description: "None" }],
+                   recommendedImprovements:
+                    [{ energyPerformanceRatingImprovement: 83,
+                       environmentalImpactRatingImprovement: 81,
+                       greenDealCategoryCode: nil,
+                       improvementCategory: "5",
+                       improvementCode: "34",
+                       improvementDescription: nil,
+                       improvementTitle: "",
+                       improvementType: "U",
+                       indicativeCost: "£8,000 - £10,000",
+                       sequence: 1,
+                       typicalSaving: "236",
+                       energyPerformanceBandImprovement: "b" }],
+                   lzcEnergySources: nil,
+                   relatedPartyDisclosureNumber: 1,
+                   relatedPartyDisclosureText: nil,
+                   totalFloorArea: 173,
+                   status: "ENTERED",
+                   environmentalImpactCurrent: 80,
+                   environmentalImpactPotential: 81,
+                   primaryEnergyUse: 121.0,
+                   addendum: nil,
+                   gasSmartMeterPresent: false,
+                   electricitySmartMeterPresent: false,
+                   addressId: "RRN-0000-0000-0000-0000-1111",
+                   optOut: false,
+                   relatedAssessments: [],
+                   supersededBy: nil,
+                   countryName: "Scotland",
+                   schemaType: "RdSAP-Schema-S-21.0",
+                   greenDealPlan:
+                    [{ greenDealPlanId: "ABC654321DEF",
+                       startDate: "2020-01-30",
+                       endDate: "2030-02-28",
+                       providerDetails: { name: "The Bank", telephone: "0800 0000000", email: "lender@example.com" },
+                       interest: { rate: "12.3", fixed: true },
+                       chargeUplift: { amount: "1.25", date: "2025-03-29" },
+                       ccaRegulated: true,
+                       structureChanged: false,
+                       measuresRemoved: false,
+                       measures:
+                        [{ product: "WarmHome lagging stuff (TM)",
+                           sequence: 0,
+                           repaidDate: "2025-03-29",
+                           measureType: "Loft insulation" }],
+                       charges: [{ endDate: "2030-03-29", sequence: 0, startDate: "2020-03-29", dailyCharge: 0.34 }],
+                       savings: [],
+                       savingsScotland:
+                        [{ savingsGasYearly: 0.0338,
+                           savingsOtherYearly: 0.0,
+                           savingsTotalYearly: 0.072,
+                           savingsElectricityYearly: 0.0382 }],
+                       estimatedSavings: 0 }] },
+            meta: {} }
+        end
+
+        before do
+          load_green_deal_data
+          add_assessment_with_green_deal(
+            type: "RdSAP",
+            assessment_id: "0000-0000-0000-0000-1111",
+            registration_date: "2024-10-10",
+            green_deal_plan_id: "ABC654321DEF",
+            is_scottish: true,
+          )
+        end
+
+        it "returns the green deal data" do
+          response =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-1111").body,
+              symbolize_names: true,
+            )
+          expect(response).to eq(expected_response)
+        end
+      end
     end
 
     context "when requesting an RdSAP-Schema-S-21.0 assessment" do

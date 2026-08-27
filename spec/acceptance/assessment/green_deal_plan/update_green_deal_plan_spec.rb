@@ -49,6 +49,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan", :set_with_
         { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
         { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
       ],
+      savingsScotland: [],
     }
   end
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
@@ -95,6 +96,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan", :set_with_
         { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
         { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
       ],
+      savingsScotland: [],
     }
   end
 
@@ -201,6 +203,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan", :set_with_
               },
               { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
             ],
+            savingsScotland: [],
             estimatedSavings: 1566,
           },
         ]
