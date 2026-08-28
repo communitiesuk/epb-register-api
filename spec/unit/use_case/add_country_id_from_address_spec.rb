@@ -9,6 +9,10 @@ describe UseCase::AddCountryIdFromAddress do
     Domain::CountryLookup.new(country_codes: [:E])
   end
 
+  let(:welsh_domain) do
+    Domain::CountryLookup.new(country_codes: [:W])
+  end
+
   let(:scotland_domain) do
     Domain::CountryLookup.new(country_codes: [:S])
   end
@@ -113,6 +117,21 @@ describe UseCase::AddCountryIdFromAddress do
           it "uses XML country code (ENG) as the country code" do
             use_case.execute(country_domain: border_domain, lodgement_domain:)
             expect(lodgement_domain.fetch_data.first[:country_id]).to eq 1
+          end
+
+          context "when in Wales but the XML is incorrectly lodged as EAW" do
+            let(:xml) { Nokogiri.XML Samples.xml "SAP-Schema-19.1.0" }
+
+            before do
+              xml.at("Country-Code").content = "ENG"
+            end
+
+            it "uses the country domain" do
+              lodgement_domain = Domain::Lodgement.new(xml.to_s, "SAP-Schema-19.1.0")
+
+              use_case.execute(country_domain: welsh_domain, lodgement_domain:)
+              expect(lodgement_domain.fetch_data.first[:country_id]).to eq 2
+            end
           end
         end
 

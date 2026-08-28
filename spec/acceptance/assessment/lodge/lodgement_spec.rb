@@ -459,6 +459,7 @@ describe "Acceptance::Assessment::Lodge" do
   context "when lodging a valid assessment" do
     before do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_address_base uprn: "1", postcode: "A0 0AA", country_code: "E"
     end
 
     context "when it is the latest schema" do

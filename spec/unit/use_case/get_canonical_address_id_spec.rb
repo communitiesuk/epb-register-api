@@ -141,4 +141,21 @@ describe UseCase::GetCanonicalAddressId do
       expect(use_case.execute(**params)).to eq "UPRN-000000000003"
     end
   end
+
+  context "when the UPRN is provided but it does not exist" do
+    before do
+      allow(address_base_search_gateway).to receive(:check_uprn_exists).and_return(false)
+    end
+
+    let(:params) do
+      {
+        rrn: "0000-0000-0000-0009-9999",
+        address_id: "UPRN-013",
+      }
+    end
+
+    it "assigns the address ID based on the RRN given" do
+      expect(use_case.execute(**params)).to eq "RRN-0000-0000-0000-0009-9999"
+    end
+  end
 end

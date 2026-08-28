@@ -352,7 +352,35 @@ describe UseCase::ValidateAndLodgeAssessment do
       xml.to_s
     end
 
-    context "when it is not in England" do
+    context "when the property assessed is in England" do
+      before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:E])
+      end
+
+      it "does not raise a lodgement error" do
+        expect {
+          use_case.execute assessment_xml: Samples.xml("SAP-Schema-19.2.0"),
+                           schema_name: "SAP-Schema-19.2.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overridden: false
+        }.not_to raise_error
+      end
+
+      context "when the EPC is incorrectly lodged with WLS" do
+        it "raises a lodgement error" do
+          expect {
+            use_case.execute assessment_xml: wales_sap,
+                             schema_name: "SAP-Schema-19.2.0",
+                             scheme_ids: "1",
+                             migrated: true,
+                             overridden: false
+          }.to raise_error UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+        end
+      end
+    end
+
+    context "when the property assessed is not in England" do
       before do
         allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:W])
       end
@@ -366,9 +394,28 @@ describe UseCase::ValidateAndLodgeAssessment do
                            overridden: false
         }.to raise_error UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
       end
+
+      context "when assessed EPC is in Wales and is incorrectly with EAW" do
+        let(:eaw_sap) do
+          xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")
+          xml.at("Country-Code").content = "EAW"
+          xml.at("Postcode").content = "CF23 5DJ"
+          xml.to_s
+        end
+
+        it "raises a lodgement error" do
+          expect {
+            use_case.execute assessment_xml: eaw_sap,
+                             schema_name: "SAP-Schema-19.2.0",
+                             scheme_ids: "1",
+                             migrated: true,
+                             overridden: false
+          }.to raise_error UseCase::ValidateAndLodgeAssessment::LodgementFailsCountryConstraintError
+        end
+      end
     end
 
-    context "when it is on the border of England and Wales" do
+    context "when the property assessed is on the border of England and Wales" do
       context "when the assessor lodges the country as EAW" do
         let(:border_sap) do
           xml = Nokogiri.XML Samples.xml("SAP-Schema-19.2.0")

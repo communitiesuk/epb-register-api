@@ -194,9 +194,9 @@ module UseCase
         end
       end
 
-      ApiFactory.add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain:)
+      raise LodgementFailsCountryConstraintError if (schema_name == "SAP-Schema-19.2.0") && !(country_lookup.country_codes.include?(:E) && %w[EAW ENG].include?(lodgement_domain.country_code))
 
-      raise LodgementFailsCountryConstraintError if (schema_name == "SAP-Schema-19.2.0") && !%w[EAW ENG].include?(lodgement_domain.country_code)
+      ApiFactory.add_country_id_from_address.execute(country_domain: country_lookup, lodgement_domain:)
 
       responses = []
 
