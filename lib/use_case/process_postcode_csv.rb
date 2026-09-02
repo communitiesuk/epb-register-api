@@ -32,7 +32,7 @@ module UseCase
         lat = row["lat"]
         long = row["long"]
 
-        region = REGION_CODES[row["rgn25cd"].to_sym]
+        region = REGION_CODES[row["rgn26cd"].to_sym]
 
         # Only considers England, NI and Wales
         next if region.nil?
