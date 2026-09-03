@@ -159,4 +159,55 @@ describe Gateway::GreenDealPlansGateway do
       expect(result[:charges]).to eq(charges)
     end
   end
+
+  describe "#delete" do
+    let(:scheme_id) { add_scheme_and_get_id }
+    let(:domestic_rdsap_s_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0") }
+    let(:scottish_assessment_id) { domestic_rdsap_s_xml.at("RRN").content }
+
+    before do
+      add_super_assessor(scheme_id:)
+      load_green_deal_data
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-1111",
+        registration_date: "2024-10-10",
+        green_deal_plan_id: "ABC654321RRR",
+        is_scottish: false,
+      )
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-2222",
+        registration_date: "2024-10-10",
+        green_deal_plan_id: "ABC654321SSS",
+        is_scottish: true,
+      )
+    end
+
+    it "deletes the plan from both the green deal plans and the green deal assessments tables due to the on delete cascade" do
+      before_green_deal_assessments = ActiveRecord::Base.connection.exec_query("SELECT * FROM green_deal_assessments")
+      before_green_deal_plans = ActiveRecord::Base.connection.exec_query("SELECT * FROM green_deal_plans")
+
+      gateway.delete("ABC654321RRR")
+
+      after_green_deal_assessments = ActiveRecord::Base.connection.exec_query("SELECT * FROM green_deal_assessments")
+      after_green_deal_plans = ActiveRecord::Base.connection.exec_query("SELECT * FROM green_deal_plans")
+
+      expect(after_green_deal_assessments.rows.length).to eq(before_green_deal_assessments.rows.length - 1)
+      expect(after_green_deal_plans.rows.length).to eq(before_green_deal_plans.rows.length - 1)
+    end
+
+    it "deletes a plan attached to a Scottish assessment from both the green deal plans and the Scottish green deal assessments tables due to the on delete cascade" do
+      before_green_deal_assessments = ActiveRecord::Base.connection.exec_query("SELECT * FROM scotland.green_deal_assessments")
+      before_green_deal_plans = ActiveRecord::Base.connection.exec_query("SELECT * FROM green_deal_plans")
+
+      gateway.delete("ABC654321SSS")
+
+      after_green_deal_assessments = ActiveRecord::Base.connection.exec_query("SELECT * FROM scotland.green_deal_assessments")
+      after_green_deal_plans = ActiveRecord::Base.connection.exec_query("SELECT * FROM green_deal_plans")
+
+      expect(after_green_deal_assessments.rows.length).to eq(before_green_deal_assessments.rows.length - 1)
+      expect(after_green_deal_plans.rows.length).to eq(before_green_deal_plans.rows.length - 1)
+    end
+  end
 end
