@@ -9,15 +9,20 @@ module UseCase
     end
 
     def execute(plan_id)
-      raise NotFoundException unless @green_deal_plans_gateway.exists?(plan_id)
+      exists_in_scotland = @green_deal_plans_gateway.exists_in_scotland?(plan_id)
 
-      assessment_ids = @green_deal_plans_gateway.fetch_assessment_ids(plan_id:)
+      unless exists_in_scotland || @green_deal_plans_gateway.exists?(plan_id)
+        raise NotFoundException
+      end
+
+      assessment_ids = @green_deal_plans_gateway.fetch_assessment_ids(plan_id:, is_scottish: exists_in_scotland)
 
       @green_deal_plans_gateway.delete(plan_id)
 
       @event_broadcaster.broadcast(:green_deal_plan_deleted,
                                    green_deal_plan_id: plan_id,
-                                   assessment_ids:)
+                                   assessment_ids:,
+                                   is_scottish: exists_in_scotland)
       {}
     end
   end

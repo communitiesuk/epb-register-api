@@ -21,10 +21,26 @@ describe Gateway::GreenDealPlansGateway do
         "INSERT INTO green_deal_assessments (green_deal_plan_id, assessment_id)
         VALUES ('ABC123456DEF', '0000-0000-0000-0000-0000'), ('ABC123456DEF', '0000-0000-0000-0000-0001')",
       )
+      ActiveRecord::Base.connection.exec_query(
+        "INSERT INTO scotland.assessments (assessment_id, scheme_assessor_id, date_of_expiry)
+        VALUES ('0000-0000-0000-0000-0002', 'TEST123456', '2070-01-05'), ('0000-0000-0000-0000-0003', 'TEST123456', '2070-01-06')",
+      )
+      ActiveRecord::Base.connection.exec_query(
+        "INSERT INTO green_deal_plans (green_deal_plan_id)
+        VALUES ('ABC78910DEF')",
+      )
+      ActiveRecord::Base.connection.exec_query(
+        "INSERT INTO scotland.green_deal_assessments (green_deal_plan_id, assessment_id)
+        VALUES ('ABC78910DEF', '0000-0000-0000-0000-0002'), ('ABC78910DEF', '0000-0000-0000-0000-0003')",
+      )
     end
 
     it "returns all the assessment IDs for the green deal plan" do
       expect(gateway.fetch_assessment_ids(plan_id: "ABC123456DEF")).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
+    end
+
+    it "returns all the Scottish assessment IDs for the green deal plan" do
+      expect(gateway.fetch_assessment_ids(plan_id: "ABC78910DEF", is_scottish: true)).to eq(%w[0000-0000-0000-0000-0002 0000-0000-0000-0000-0003])
     end
   end
 
@@ -114,6 +130,32 @@ describe Gateway::GreenDealPlansGateway do
 
     it "returns true if it does exists" do
       result = gateway.exists?("ABC654321DEF")
+      expect(result).to be true
+    end
+  end
+
+  describe "#exists_in_scotland?" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    before do
+      add_super_assessor(scheme_id:)
+      load_green_deal_data
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-1112",
+        registration_date: "2024-10-10",
+        green_deal_plan_id: "ABC654321DEF",
+        is_scottish: true,
+      )
+    end
+
+    it "returns false if it does not exist" do
+      result = gateway.exists_in_scotland?("ABC654321DE1")
+      expect(result).to be false
+    end
+
+    it "returns true if it does exists" do
+      result = gateway.exists_in_scotland?("ABC654321DEF")
       expect(result).to be true
     end
   end

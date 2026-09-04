@@ -28,6 +28,31 @@ module Gateway
       results.map { |result| result["exists"] }.first
     end
 
+    def exists_in_scotland?(green_deal_plan_id)
+      sql = <<-SQL
+        SELECT EXISTS (
+          SELECT *
+          FROM scotland.green_deal_assessments
+          WHERE green_deal_plan_id = $1
+        )
+      SQL
+
+      results =
+        ActiveRecord::Base.connection.exec_query(
+          sql,
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "green_deal_plan_id",
+              green_deal_plan_id,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        )
+
+      results.map { |result| result["exists"] }.first
+    end
+
     def add(green_deal_plan, assessment_id, is_scottish: false)
       GreenDealPlan.create green_deal_plan.to_record
       link_green_deal_to_assessment green_deal_plan.green_deal_plan_id, assessment_id, is_scottish: is_scottish
@@ -155,9 +180,10 @@ module Gateway
       )
     end
 
-    def fetch_assessment_ids(plan_id:)
+    def fetch_assessment_ids(plan_id:, is_scottish: false)
+      schema = Helper::ScotlandHelper.select_schema(is_scottish)
       sql = <<-SQL
-        SELECT assessment_id FROM green_deal_assessments
+        SELECT assessment_id FROM #{schema}green_deal_assessments
           WHERE green_deal_plan_id = $1
       SQL
 

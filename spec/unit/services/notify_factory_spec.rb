@@ -18,8 +18,10 @@ describe NotifyFactory do
                  { entity_id: "0000-0000", is_scottish: true }
                when :green_deal_plan_added_to_audit_log
                  { entity_id: "AB234234535", assessment_id: %w[0000-0000] }
-               when :green_deal_plan_updated_to_audit_log, :green_deal_plan_deleted_to_audit_log
+               when :green_deal_plan_updated_to_audit_log
                  { entity_id: "AB234234535", assessment_ids: %w[0000-0000] }
+               when :green_deal_plan_deleted_to_audit_log
+                 { entity_id: "AB234234535", assessment_ids: %w[0000-0000], is_scottish: true }
                else
                  { entity_id: "0000-0000" }
                end
