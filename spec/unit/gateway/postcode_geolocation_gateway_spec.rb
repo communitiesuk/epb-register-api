@@ -13,6 +13,36 @@ describe Gateway::PostcodeGeolocationGateway do
     allow($stdout).to receive(:puts)
   end
 
+  it "the geolocation table has the correct primary key" do
+    # If this is failing please make sure the table definition hasn't
+    # been overwritten in schema.rb, and then drop and re-setup your database
+    primary_key = db.execute <<~SQL.squish
+      SELECT
+        a.attname column_name,
+        format_type(a.atttypid, a.atttypmod) data_type
+      FROM pg_index i
+      JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)#{' '}
+      WHERE i.indrelid = 'postcode_geolocation'::regclass AND i.indisprimary;
+    SQL
+
+    expect(primary_key.to_a).to eq([{ "column_name" => "postcode", "data_type" => "character varying" }])
+  end
+
+  it "the geolocation outcode table has the correct primary key" do
+    # If this is failing please make sure the table definition hasn't
+    # been overwritten in schema.rb, and then drop and re-setup your database
+    primary_key = db.execute <<~SQL.squish
+      SELECT
+        a.attname column_name,
+        format_type(a.atttypid, a.atttypmod) data_type
+      FROM pg_index i
+      JOIN pg_attribute a ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey)#{' '}
+      WHERE i.indrelid = 'postcode_outcode_geolocations'::regclass AND i.indisprimary;
+    SQL
+
+    expect(primary_key.to_a).to eq([{ "column_name" => "outcode", "data_type" => "character varying" }])
+  end
+
   describe "#create_postcode_table" do
     it "creates the required temp table" do
       expect { gateway.create_postcode_table }.not_to raise_error

@@ -238,17 +238,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_102639) do
     t.jsonb "rule_triggers", default: []
   end
 
-  create_table "public.postcode_geolocation", force: :cascade do |t|
+  create_table "public.postcode_geolocation", primary_key: "postcode", id: :string, force: :cascade do |t|
     t.decimal "latitude", null: false
     t.decimal "longitude", null: false
-    t.string "postcode"
     t.string "region", null: false
   end
 
-  create_table "public.postcode_outcode_geolocations", force: :cascade do |t|
+  create_table "public.postcode_outcode_geolocations", primary_key: "outcode", id: :string, force: :cascade do |t|
     t.decimal "latitude", null: false
     t.decimal "longitude", null: false
-    t.string "outcode"
     t.string "region", null: false
   end
 
