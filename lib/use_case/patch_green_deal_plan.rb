@@ -13,7 +13,10 @@ module UseCase
 
     def execute(json:)
       green_deal_plan_id = json[:green_deal_plan_id]
-      unless @green_deal_plans_gateway.exists?(green_deal_plan_id)
+
+      exists_in_scotland = @green_deal_plans_gateway.exists_in_scotland?(green_deal_plan_id)
+
+      unless exists_in_scotland || @green_deal_plans_gateway.exists?(green_deal_plan_id)
         raise NotFoundException
       end
 
@@ -23,13 +26,14 @@ module UseCase
 
       @event_broadcaster.broadcast(:green_deal_plan_updated,
                                    green_deal_plan_id: green_deal_plan_id,
-                                   assessment_ids: assessment_ids_for_gdp(green_deal_plan_id))
+                                   assessment_ids: assessment_ids_for_gdp(green_deal_plan_id, exists_in_scotland),
+                                   is_scottish: exists_in_scotland)
     end
 
   private
 
-    def assessment_ids_for_gdp(plan_id)
-      @green_deal_plans_gateway.fetch_assessment_ids(plan_id:)
+    def assessment_ids_for_gdp(plan_id, is_scottish)
+      @green_deal_plans_gateway.fetch_assessment_ids(plan_id:, is_scottish:)
     end
   end
 end

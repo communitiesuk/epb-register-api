@@ -57,10 +57,11 @@ class NotifyFactory
                                       ))
   end
 
-  def self.green_deal_plan_updated_to_audit_log(entity_id:, assessment_ids:)
+  def self.green_deal_plan_updated_to_audit_log(entity_id:, assessment_ids:, is_scottish:)
+    event_type = is_scottish ? :scottish_green_deal_plan_updated : :green_deal_plan_updated
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :green_deal_plan,
-                                        event_type: :green_deal_plan_updated,
+                                        event_type:,
                                         entity_id:,
                                         data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: }),
                                       ))

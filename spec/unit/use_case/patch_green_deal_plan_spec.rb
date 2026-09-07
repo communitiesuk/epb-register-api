@@ -15,7 +15,7 @@ describe UseCase::PatchGreenDealPlan do
       allow(gateway).to receive(:fetch_assessment_ids)
     end
 
-    context "when a green deal plan exists" do
+    context "when a green deal plan exists for an assessment in the England, Wales, and Northern Ireland register" do
       let(:existent_plan_id) { "ABC123456ABC" }
 
       let(:json) do
@@ -35,6 +35,7 @@ describe UseCase::PatchGreenDealPlan do
       end
 
       before do
+        allow(gateway).to receive(:exists_in_scotland?).with(existent_plan_id).and_return(false)
         allow(gateway).to receive(:exists?).with(existent_plan_id).and_return(true)
         use_case.execute(json:)
       end
@@ -48,10 +49,44 @@ describe UseCase::PatchGreenDealPlan do
       end
     end
 
-    context "when a green deal plan does not exist" do
+    context "when a green deal plan exists for an assessment in the Scottish register" do
+      let(:existent_plan_id) { "ABC123456ABC" }
+
+      let(:json) do
+        {
+          green_deal_plan_id: existent_plan_id,
+          end_date: "2025-01-01",
+          charges: [{ "end_date" => "2033-03-29", "sequence" => 0, "start_date" => "2020-03-29", "daily_charge" => 0.7 }],
+        }
+      end
+
+      let(:args) do
+        {
+          green_deal_plan_id: existent_plan_id,
+          end_date: "2025-01-01",
+          charges: [{ "end_date" => "2033-03-29", "sequence" => 0, "start_date" => "2020-03-29", "daily_charge" => 0.7 }],
+        }
+      end
+
+      before do
+        allow(gateway).to receive(:exists_in_scotland?).with(existent_plan_id).and_return(true)
+        use_case.execute(json:)
+      end
+
+      it "checks the green deal plan id provided exists" do
+        expect(gateway).to have_received(:exists_in_scotland?).with(existent_plan_id)
+      end
+
+      it "calls the gateway to update the charges with the correct arguments" do
+        expect(gateway).to have_received(:update_end_date_and_charges).with(**args)
+      end
+    end
+
+    context "when a green deal plan does not exist in either register" do
       let(:non_existent_plan_id) { "ABC123456ABQ" }
 
       before do
+        allow(gateway).to receive(:exists_in_scotland?).with(non_existent_plan_id).and_return(false)
         allow(gateway).to receive(:exists?).with(non_existent_plan_id).and_return(false)
       end
 
@@ -72,23 +107,50 @@ describe UseCase::PatchGreenDealPlan do
         Events::Broadcaster.disable!
       end
 
-      before do
-        allow(gateway).to receive(:exists?).with("ABC123456ABC").and_return(true)
-        allow(gateway).to receive(:fetch_assessment_ids).with({ plan_id: "ABC123456ABC" }).and_return(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
+      context "when the plan being updated is for an assessment in the England, Wales, and Northern Ireland register" do
+        before do
+          allow(gateway).to receive(:exists_in_scotland?).with("ABC123456ABC").and_return(false)
+          allow(gateway).to receive(:exists?).with("ABC123456ABC").and_return(true)
+          allow(gateway).to receive(:update_end_date_and_charges)
+          allow(gateway).to receive(:fetch_assessment_ids).with({ plan_id: "ABC123456ABC", is_scottish: false }).and_return(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
+        end
+
+        it "broadcasts green deal plan changed event with assessment id and green deal plan id" do
+          json = {
+            green_deal_plan_id: "ABC123456ABC",
+            end_date: "2025-01-01",
+            charges: [{ "end_date" => "2033-03-29", "sequence" => 0, "start_date" => "2020-03-29", "daily_charge" => 0.7 }],
+          }
+
+          expect { use_case.execute(json: json) }.to broadcast(
+            :green_deal_plan_updated,
+            green_deal_plan_id: "ABC123456ABC",
+            assessment_ids: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+            is_scottish: false,
+          )
+        end
       end
 
-      it "broadcasts green deal plan changed event with assessment id and green deal plan id" do
-        json = {
-          green_deal_plan_id: "ABC123456ABC",
-          end_date: "2025-01-01",
-          charges: [{ "end_date" => "2033-03-29", "sequence" => 0, "start_date" => "2020-03-29", "daily_charge" => 0.7 }],
-        }
+      context "when the plan being updated is for an assessment in the Scottish register" do
+        before do
+          allow(gateway).to receive(:exists_in_scotland?).with("ABC123456ABC").and_return(true)
+          allow(gateway).to receive(:fetch_assessment_ids).with({ plan_id: "ABC123456ABC", is_scottish: true }).and_return(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
+        end
 
-        expect { use_case.execute(json: json) }.to broadcast(
-          :green_deal_plan_updated,
-          green_deal_plan_id: "ABC123456ABC",
-          assessment_ids: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
-        )
+        it "broadcasts green deal plan changed event with assessment id and green deal plan id" do
+          json = {
+            green_deal_plan_id: "ABC123456ABC",
+            end_date: "2025-01-01",
+            charges: [{ "end_date" => "2033-03-29", "sequence" => 0, "start_date" => "2020-03-29", "daily_charge" => 0.7 }],
+          }
+
+          expect { use_case.execute(json: json) }.to broadcast(
+            :green_deal_plan_updated,
+            green_deal_plan_id: "ABC123456ABC",
+            assessment_ids: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+            is_scottish: true,
+          )
+        end
       end
     end
   end
