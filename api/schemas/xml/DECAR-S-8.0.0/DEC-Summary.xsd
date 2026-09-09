@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary-s"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+           targetNamespace="https://epbr.digital.communities.gov.uk/xsd/dec-summary-s"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="DECAR-S-8.0.0">
