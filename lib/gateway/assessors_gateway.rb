@@ -433,7 +433,7 @@ module Gateway
         FROM assessors a
         JOIN audit_logs al ON a.scheme_assessor_id = al.entity_id
        #{scottish_assessor_predicates}
-        ORDER BY timestamp
+        ORDER BY timestamp, al.id
         LIMIT $3
         OFFSET $4
       SQL
