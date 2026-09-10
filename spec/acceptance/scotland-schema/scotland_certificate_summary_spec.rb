@@ -1569,7 +1569,100 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a Scottish SAP assessment" do
+    context "when requesting a Scottish SAP-Schema-S-20.0.0 assessment" do
+      let(:expected_response) do
+        { data:
+            { typeOfAssessment: "SAP",
+              assessmentId: "0000-0000-0000-0000-0067",
+              dateOfExpiry: "2033-06-26",
+              dateOfAssessment: "2023-06-27",
+              dateOfRegistration: "2023-06-27",
+              address: { addressLine1: "1 LOVELY ROAD", addressLine2: "NICE ESTATE", addressLine3: "", addressLine4: "", town: "TOWN", postcode: "EH1 2NG" },
+              assessor:
+                { schemeAssessorId: "SPEC000000",
+                  companyName: "Test Homes Limited",
+                  contactDetails: { email: "a@b.com", telephoneNumber: "111222333", address: "Assessor House Energy Business Park, Town Road, Scotlandshire, Newkirk, FK1 1XE" },
+                  firstName: "Someone",
+                  lastName: "Person",
+                  registeredBy: { name: "test scheme", schemeId: scheme_id } },
+              currentCarbonEmission: 2.2,
+              carbonEmissionsCurrentPerFloorArea: 12.1,
+              currentEnergyEfficiencyBand: "b",
+              currentEnergyEfficiencyRating: 91,
+              dwellingType: "Detached house",
+              estimatedEnergyCost: "837.00",
+              heatDemand: { currentSpaceHeatingDemand: nil, currentWaterHeatingDemand: nil },
+              heatingCostCurrent: "603",
+              heatingCostPotential: "603",
+              hotWaterCostCurrent: "152",
+              hotWaterCostPotential: "152",
+              lightingCostCurrent: "82",
+              lightingCostPotential: "82",
+              potentialCarbonEmission: 2.2,
+              potentialEnergyEfficiencyBand: "b",
+              potentialEnergyEfficiencyRating: 91,
+              potentialEnergySaving: "0.00",
+              propertySummary:
+                [{ energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "walls", description: "Average thermal transmittance 0.21 W/m²K" },
+                 { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "roof", description: "Average thermal transmittance 0.14 W/m²K" },
+                 { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "floor", description: "Average thermal transmittance 0.16 W/m²K" },
+                 { energyEfficiencyRating: 4, environmentalEfficiencyRating: 4, name: "windows", description: "High performance glazing" },
+                 { energyEfficiencyRating: 5, environmentalEfficiencyRating: 4, name: "main_heating", description: "Boiler and radiators, mains gas" },
+                 { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "main_heating_controls", description: "Time and temperature zone control" },
+                 { energyEfficiencyRating: 0, environmentalEfficiencyRating: 0, name: "secondary_heating", description: "None" },
+                 { energyEfficiencyRating: 4, environmentalEfficiencyRating: 4, name: "hot_water", description: "From main system" },
+                 { energyEfficiencyRating: 5, environmentalEfficiencyRating: 5, name: "lighting", description: "Excelent lighting efficiency" },
+                 { energyEfficiencyRating: 4,
+                   environmentalEfficiencyRating: 4,
+                   name: "air_tightness",
+                   description: "Air permeability [AP50] = 4.0 m³/h.m² (as tested)" }],
+              recommendedImprovements: [],
+              lzcEnergySources: [11],
+              relatedPartyDisclosureNumber: 1,
+              relatedPartyDisclosureText: nil,
+              totalFloorArea: 184.0,
+              status: "ENTERED",
+              environmentalImpactCurrent: 88,
+              environmentalImpactPotential: 88,
+              primaryEnergyUse: 63,
+              addendum: nil,
+              gasSmartMeterPresent: true,
+              electricitySmartMeterPresent: true,
+              addressId: "UPRN-0000000001",
+              optOut: false,
+              relatedAssessments: [],
+              supersededBy: nil,
+              schemaType: "SAP-Schema-S-20.0.0",
+              countryName: "Scotland" },
+          meta: {} }
+      end
+
+      before do
+        sap_schema = "SAP-Schema-S-20.0.0"
+        sap_xml = Nokogiri.XML(Samples.xml(sap_schema))
+        sap_xml.at("RRN").content = "0000-0000-0000-0000-0067"
+        lodge_scottish_assessment(
+          assessment_body: sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: sap_schema,
+          migrated: true,
+        )
+      end
+
+      it "returns Scottish SAP" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0067").body,
+            symbolize_names: true,
+          )
+        expect(response[:data]).to eq(expected_response[:data])
+      end
+    end
+
+    context "when requesting a Scottish SAP-Schema-S-19.0.0 assessment" do
       let(:expected_response) do
         { data:
            { typeOfAssessment: "SAP",

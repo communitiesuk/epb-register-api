@@ -1,13 +1,9 @@
 describe "Acceptance::MatchAddress", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
 
-  let(:rdsap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-20.0.0.xml"
-  end
+  let(:rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
-  let(:scottish_sap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-S-19.0.0.xml"
-  end
+  let(:scottish_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
 
   let(:scheme_id) { add_scheme_and_get_id }
 
@@ -41,7 +37,7 @@ describe "Acceptance::MatchAddress", :set_with_timecop do
     before do
       add_assessor(
         scheme_id:,
-        assessor_id: "JASE000000",
+        assessor_id: "SPEC000000",
         body: AssessorStub.new.fetch_request_body(
           non_domestic_nos3: "ACTIVE",
           non_domestic_nos4: "ACTIVE",

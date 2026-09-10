@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../../api/schemas/xml/SAP-Schema-S-19.0.0/SAP/Templates/SAP-Report.xsd">
-  <Schema-Version-Original>SAP-Schema-19.0.0</Schema-Version-Original>
+<SAP-Report
+        xmlns="https://epbr.digital.communities.gov.uk/xsd/sap-s"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap-s ../../../../api/schemas/xml/SAP-Schema-S-20.0.0/SAP/Templates/SAP-Report.xsd">
+  <Schema-Version-Original>SAP-Schema-20.0.0</Schema-Version-Original>
   <SAP-Version>10.2</SAP-Version>
   <SAP-Data-Version>10.2</SAP-Data-Version>
   <PCDF-Revision-Number>554</PCDF-Revision-Number>
@@ -10,10 +13,10 @@
   <User-Interface-Version>2.20.3</User-Interface-Version>
   <Report-Header>
     <RRN>0000-0000-0000-0000-0000</RRN>
-    <Inspection-Date>2020-11-21</Inspection-Date>
+    <Inspection-Date>2023-06-27</Inspection-Date>
     <Report-Type>3</Report-Type>
-    <Completion-Date>2020-11-21</Completion-Date>
-    <Registration-Date>2020-11-21</Registration-Date>
+    <Completion-Date>2023-06-27</Completion-Date>
+    <Registration-Date>2023-06-27</Registration-Date>
     <Status>entered</Status>
     <Language-Code>1</Language-Code>
     <Tenure>ND</Tenure>
@@ -30,11 +33,11 @@
         <Post-Town>Newkirk</Post-Town>
         <Postcode>FK1 1XE</Postcode>
       </Contact-Address>
-      <E-Mail>a@b.c</E-Mail>
+      <E-Mail>a@b.com</E-Mail>
       <Telephone>111222333</Telephone>
       <Company-Name>Test Homes Limited</Company-Name>
-      <Scheme-Name>Scheme-Name0</Scheme-Name>
-      <Scheme-Web-Site>www.elmhurstenergy.co.uk</Scheme-Web-Site>
+      <Scheme-Name>Elmhurst Energy Systems Ltd</Scheme-Name>
+      <Scheme-Web-Site>www.energy.co.uk</Scheme-Web-Site>
       <Identification-Number>
         <Membership-Number>JASE000000</Membership-Number>
       </Identification-Number>
@@ -47,7 +50,7 @@
         <Post-Town>TOWN</Post-Town>
         <Postcode>EH1 2NG</Postcode>
       </Address>
-      <UPRN>0000000001</UPRN>
+      <UPRN>UPRN-0000000001</UPRN>
     </Property>
     <Region-Code>4</Region-Code>
     <Country-Code>SCT</Country-Code>

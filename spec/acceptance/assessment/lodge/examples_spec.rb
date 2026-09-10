@@ -55,7 +55,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-NI-18.0.0.xml"
   end
   let(:sap_s_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-S-19.0.0.xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-S-20.0.0.xml"
   end
   let(:rdsap_s_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-S-22.0.0.xml"
@@ -241,7 +241,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          schema_name: "SAP-Schema-S-19.0.0",
+          schema_name: "SAP-Schema-S-20.0.0",
           migrated: true,
         ).status).to eq 201
       end

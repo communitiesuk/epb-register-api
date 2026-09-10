@@ -95,6 +95,10 @@ module UseCase
         "SAP-Version" => %w[10.2],
         "SAP-Data-Version" => %w[10.2],
       },
+      "SAP-Schema-S-20.0.0" => {
+        "SAP-Version" => %w[10.2],
+        "SAP-Data-Version" => %w[10.2],
+      },
     }.freeze
 
     def initialize(

@@ -25,6 +25,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   let(:valid_rdsap_120_xml) { Samples.xml "RdSAP-Schema-S-12.0" }
   let(:valid_rdsap_not_scottish_xml) { Samples.xml "RdSAP-Schema-19.0" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-S-19.0.0" }
+  let(:valid_sap_2000_xml) { Samples.xml "SAP-Schema-S-20.0.0" }
   let(:valid_sap_170_xml) { Samples.xml "SAP-Schema-S-17.0" }
   let(:valid_sap_161_xml) { Samples.xml "SAP-Schema-S-16.1" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-S-7.1", "cepc" }
@@ -1243,6 +1244,49 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
           expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
           expect(rdsap_data).to eq expected_rdsap_assessment_data
+        end
+      end
+
+      context "when lodging a valid Scottish SAP-Schema-S-20.0.0 assessment" do
+        expected_sap_assessment_data = {
+          "assessment_id" => "0000-0000-0000-0000-0000",
+          "date_of_assessment" => "2023-06-27",
+          "date_registered" => "2023-06-27",
+          "type_of_assessment" => "SAP",
+          "current_energy_efficiency_rating" => 91,
+          "postcode" => "EH1 2NG",
+          "date_of_expiry" => "2033-06-26",
+          "address_line1" => "1 LOVELY ROAD",
+          "address_line2" => "NICE ESTATE",
+          "address_line3" => "",
+          "address_line4" => nil,
+          "town" => "TOWN",
+          "scheme_assessor_id" => "SPEC000000",
+          "opt_out" => false,
+          "address_id" => "UPRN-0000000001",
+          "migrated" => false,
+          "cancelled_at" => nil,
+          "not_for_issue_at" => nil,
+          "created_at" => "2023-06-27",
+          "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        }
+
+        it "successfully lodges the assessment" do
+          response = lodge_scottish_assessment assessment_body: valid_sap_2000_xml,
+                                               accepted_responses: [201],
+                                               scopes: %w[scotland_assessment:lodge],
+                                               auth_data: {
+                                                 scheme_ids: [scheme_id],
+                                               },
+                                               schema_name: "SAP-Schema-S-20.0.0",
+                                               migrated: false
+
+          rdsap_data = ActiveRecord::Base.connection.exec_query(
+            "SELECT * FROM scotland.assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          ).entries.first
+
+          expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments].first).to eq "0000-0000-0000-0000-0000"
+          expect(rdsap_data).to eq expected_sap_assessment_data
         end
       end
 
