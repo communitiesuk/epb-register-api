@@ -39,7 +39,7 @@ module Domain
           @assessment_id,
         )
 
-      @certificate_summary_data = if ["CEPC-S-7.1", "CEPC-S-7.0"].include?(@assessment["schema_type"])
+      @certificate_summary_data = if %w[CEPC-S-7.1 CEPC-S-7.0 CEPC-S-8.0.0].include?(@assessment["schema_type"])
                                     lodged_values.to_certificate_summary_scotland
                                   else
                                     lodged_values.to_certificate_summary

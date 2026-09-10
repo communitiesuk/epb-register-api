@@ -2117,6 +2117,102 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
+    context "when requesting a Scottish CEPC-S-8.0.0 assessment" do
+      before do
+        cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-8.0.0", "cepc")
+        cepc_xml
+          .xpath("//*[local-name() = 'RRN']")
+          .each do |node|
+          node.content = "0000-0000-0000-0003-0000"
+        end
+        lodge_scottish_assessment(
+          assessment_body: cepc_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-S-8.0.0",
+          migrated: true,
+        )
+      end
+
+      it "returns the expected CEPC hash" do
+        response =
+          JSON.parse(
+            fetch_scottish_certificate_summary(id: "0000-0000-0000-0003-0000").body,
+            symbolize_names: true,
+          )
+
+        expected_response = { typeOfAssessment: "CEPC",
+                              assessmentId: "0000-0000-0000-0003-0000",
+                              reportType: "3",
+                              dateOfAssessment: "2023-07-11",
+                              dateOfExpiry: "2033-08-03",
+                              dateOfRegistration: "2023-08-04",
+                              address:
+                                { addressLine1: "Non-dom Property",
+                                  addressLine2: "Some Street",
+                                  addressLine3: "Bigger Line",
+                                  addressLine4: "",
+                                  town: "Town",
+                                  postcode: "FK1 1XE" },
+                              assessor:
+                                { schemeAssessorId: "SPEC000000",
+                                  contactDetails:
+                                    { email: "sessor@email.co.uk", telephoneNumber: "00000000073", tradingAddress: "6 Unit Business Park Town" },
+                                  companyName: "EPC R Us Ltd",
+                                  insurer: "Insurance Company",
+                                  policyNo: "POL000000",
+                                  insurerEffectiveDate: "2022-10-22",
+                                  insurerExpiryDate: "2023-10-21",
+                                  insurerPiLimit: "5000000",
+                                  firstName: "Someone",
+                                  lastName: "Person",
+                                  registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                              technicalInformation:
+                                { buildingEnvironment: "Heating and Natural Ventilation", floorArea: 109, mainHeatingFuel: "LPG" },
+                              currentEnergyEfficiencyRating: 120,
+                              currentEnergyEfficiencyBand: "G",
+                              potentialEnergyEfficiencyRating: 17,
+                              potentialEnergyEfficiencyBand: "B+",
+                              newBuildBenchmarkRating: 56,
+                              newBuildBenchmarkBand: "D",
+                              comparativeAssetRating: 65,
+                              epcRatingBer: 120.47,
+                              approximateEnergyUse: 523,
+                              propertyType:
+                                { propertyTypeLongDescription: "Hotels", propertyTypeShortDescription: "Hotel" },
+                              compliant2002: "N",
+                              renewableEnergySources: %w[None Another],
+                              electricitySources: ["Grid supplied"],
+                              primaryEnergyIndicator: 616,
+                              calculationTool: "DesignBuilder Software Ltd, DesignBuilder SBEM, v7.2.0, SBEM, v6.1.e.0",
+                              ter2002: 118.01,
+                              ter: 55.93,
+                              shortPaybackRecommendations:
+                                [{ cO2Impact: "MEDIUM", code: "EPC-H7", text: "Add optimum start/stop to the heating system." },
+                                 { cO2Impact: "MEDIUM", code: "EPC-H8", text: "Add weather compensation controls to heating system." },
+                                 { cO2Impact: "MEDIUM", code: "EPC-H5", text: "Add local time control to heating system." },
+                                 { cO2Impact: "MEDIUM", code: "EPC-V1", text: "In some spaces, the solar gain limit defined in the NCM is exceeded, which might cause overheating. Consider solar control measures such as the application of reflective coating or shading devices to windows." },
+                                 { cO2Impact: "MEDIUM", code: "EPC-E3", text: "Some solid walls are poorly insulated - introduce or improve internal wall insulation." },
+                                 { cO2Impact: "HIGH", code: "EPC-F4", text: "Consider switching from oil or LPG to biomass." },
+                                 { cO2Impact: "MEDIUM", code: "EPC-E7", text: "Carry out a pressure test, identify and treat identified air leakage. Enter result in EPC calculation." },
+                                 { cO2Impact: "MEDIUM", code: "EPC-E8", text: "Some glazing is poorly insulated. Replace/improve glazing and/or frames. " }],
+                              mediumPaybackRecommendations:
+                                [{ code: "EPC-E2", text: "Roof is poorly insulated. Install or improve insulation of roof.", cO2Impact: "MEDIUM" }],
+                              longPaybackRecommendations: [],
+                              otherPaybackRecommendations: [],
+                              addressId: "UPRN-0000000001",
+                              optOut: false,
+                              relatedAssessments: [],
+                              supersededBy: nil,
+                              countryName: "Scotland",
+                              schemaType: "CEPC-S-8.0.0" }
+
+        expect(response[:data]).to eq(expected_response)
+      end
+    end
+
     context "when requesting a Scottish CEPC-S-7.0 assessment" do
       before do
         cepc_xml = Nokogiri.XML Samples.xml("CEPC-S-7.0", "cepc")

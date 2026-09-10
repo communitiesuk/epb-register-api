@@ -1,9 +1,8 @@
-<!-- EPCgen version: v6.1.e.0 End Version -->
-<!-- Date: Fri Aug 04 13:22:51 2023 -->
-<CEPC:LodgementReportRequest xmlns:CEPC="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC"
-                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                             xsi:schemaLocation="http://www.est.org.uk/epc/estcrV1/DCLG-CEPC ../../../../api/schemas/xml/CEPC-S-7.1/Reports/CEPC-Reports.xsd">
-  <!-- This XML message is for an EPC in Scotland. -->
+<?xml version="1.0" encoding="UTF-8"?>
+<CEPC:LodgementReportRequest
+        xmlns:CEPC="https://epbr.digital.communities.gov.uk/xsd/cepc-s"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-s  ../../../../api/schemas/xml/CEPC-S-8.0.0/Reports/CEPC-Reports.xsd">
   <CEPC:Report>
     <CEPC:Report-Header>
       <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
@@ -21,7 +20,7 @@
         <CEPC:Long-Description>Hotels</CEPC:Long-Description>
       </CEPC:Property-Type>
       <CEPC:Energy-Assessor>
-        <CEPC:Membership-Number>JASE000000</CEPC:Membership-Number>
+        <CEPC:Membership-Number>SPEC000000</CEPC:Membership-Number>
         <CEPC:Name>Testa Sessor</CEPC:Name>
         <CEPC:Approved-Organisation-Name>Accreditation schema</CEPC:Approved-Organisation-Name>
         <CEPC:Approved-Organisation-Web-Address />
@@ -39,7 +38,7 @@
           <CEPC:Post-Town>Town</CEPC:Post-Town>
           <CEPC:Postcode>FK1 1XE</CEPC:Postcode>
         </CEPC:Address>
-        <CEPC:UPRN>0000000001</CEPC:UPRN>
+        <CEPC:UPRN>UPRN-0000000001</CEPC:UPRN>
       </CEPC:Property>
       <CEPC:Calculation-Details>
         <CEPC:Methodology>SBEM</CEPC:Methodology>
@@ -261,6 +260,7 @@
       <CEPC:Transaction-Type>1</CEPC:Transaction-Type>
       <CEPC:Renewable-Energy-Sources>
         <CEPC:Renewable-Energy-Source>None</CEPC:Renewable-Energy-Source>
+        <CEPC:Renewable-Energy-Source>Another</CEPC:Renewable-Energy-Source>
       </CEPC:Renewable-Energy-Sources>
       <CEPC:Electricity-Sources>
         <CEPC:Electricity-Source>Grid supplied</CEPC:Electricity-Source>

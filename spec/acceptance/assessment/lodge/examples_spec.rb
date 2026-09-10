@@ -62,7 +62,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
   end
   let(:cepc_s_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-S-7.1(EPC-RR).xml"
+                        "api/schemas/xml/examples/CEPC-S-8.0.0.xml"
   end
   let(:cs63_s_xml) do
     File.read File.join Dir.pwd,
@@ -269,7 +269,7 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
           auth_data: {
             scheme_ids: [scheme_id],
           },
-          schema_name: "CEPC-S-7.1",
+          schema_name: "CEPC-S-8.0.0",
           migrated: true,
         ).status).to eq 201
       end
