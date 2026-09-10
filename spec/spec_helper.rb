@@ -322,7 +322,8 @@ RSpec.configure do |config|
   end
 
   config.before(:all, :set_with_timecop) { Timecop.freeze(Time.utc(2021, 6, 21)) }
-  config.after(:all, :set_with_timecop) { Timecop.return }
+  # Ensure timecop is always reset after an example group
+  config.after(:all) { Timecop.return }
 
   config.before do
     DatabaseCleaner.strategy = :transaction
