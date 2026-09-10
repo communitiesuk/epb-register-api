@@ -15,6 +15,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
   let(:scheme_id) { add_scheme_and_get_id }
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-S-19.0" }
+  let(:valid_rdsap_2200_xml) { Samples.xml "RdSAP-Schema-S-22.0.0" }
   let(:valid_rdsap_210_xml) { Samples.xml "RdSAP-Schema-S-21.0" }
   let(:valid_rdsap_180_xml) { Samples.xml "RdSAP-Schema-S-18.0" }
   let(:valid_rdsap_1700_xml) { Samples.xml "RdSAP-Schema-S-17.00" }
@@ -1202,7 +1203,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         end
       end
 
-      context "when lodging a valid Scottish RdSAP-Schema-S-21.0 assessment" do
+      context "when lodging a valid Scottish RdSAP-Schema-S-22.0.0 assessment" do
         expected_rdsap_assessment_data = {
           "assessment_id" => "0000-0000-0000-0000-0000",
           "date_of_assessment" => "2023-06-27",
@@ -1218,7 +1219,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "town" => "Newkirk",
           "scheme_assessor_id" => "SPEC000000",
           "opt_out" => false,
-          "address_id" => "LPRN-0000000000",
+          "address_id" => "UPRN-0000000000",
           "migrated" => false,
           "cancelled_at" => nil,
           "not_for_issue_at" => nil,
@@ -1227,13 +1228,13 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         }
 
         it "successfully lodges the assessment" do
-          response = lodge_scottish_assessment assessment_body: valid_rdsap_210_xml,
+          response = lodge_scottish_assessment assessment_body: valid_rdsap_2200_xml,
                                                accepted_responses: [201],
                                                scopes: %w[scotland_assessment:lodge],
                                                auth_data: {
                                                  scheme_ids: [scheme_id],
                                                },
-                                               schema_name: "RdSAP-Schema-S-21.0",
+                                               schema_name: "RdSAP-Schema-S-22.0.0",
                                                migrated: false
 
           rdsap_data = ActiveRecord::Base.connection.exec_query(

@@ -203,13 +203,17 @@
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-17.0/RdSAP/Templates/RdSAP-Report.xsd"
   },
-  "RdSAP-Schema-S-19.0": {
+  "RdSAP-Schema-S-22.0.0": {
     "schema_path":
-    "api/schemas/xml/RdSAP-Schema-S-19.0/RdSAP/Templates/RdSAP-Report.xsd"
+    "api/schemas/xml/RdSAP-Schema-S-22.0.0/RdSAP/Templates/RdSAP-Report.xsd"
   },
   "RdSAP-Schema-S-21.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-S-21.0/RdSAP/Templates/RdSAP-Report.xsd"
+  },
+  "RdSAP-Schema-S-19.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-S-19.0/RdSAP/Templates/RdSAP-Report.xsd"
   },
   "RdSAP-Schema-S-18.0": {
     "schema_path":
