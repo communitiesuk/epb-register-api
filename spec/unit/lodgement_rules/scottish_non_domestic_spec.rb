@@ -1,4 +1,4 @@
-shared_context "when testing non-domestic lodgements" do
+shared_context "when testing Scottish non-domestic lodgements" do
   def assert_errors(xml_updates, expected_errors, include_errors: false, country_code: nil)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
@@ -29,7 +29,7 @@ shared_context "when testing non-domestic lodgements" do
 end
 
 describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
-  include_context "when testing non-domestic lodgements"
+  include_context "when testing Scottish non-domestic lodgements"
 
   context "when CEPC are lodged for" do
     let!(:docs_under_test) do
@@ -116,6 +116,27 @@ describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
 
       it "returns an INVALID_COUNTRY error if the address is IM" do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error], country_code: [:L])
+      end
+    end
+
+    context "when postcode is overseas or non-geographic" do
+      let(:error) do
+        {
+          "code": "DISALLOWED_POSTCODE",
+          "title": "Non-geographic and overseas postcodes are not allowed",
+        }.freeze
+      end
+
+      [
+        "BF1 2AU",
+        "BX8 0HB",
+        "XM4 5HQ",
+        "XX40 4AA",
+        "GX11 1AA",
+      ].each do |postcode|
+        it "returns an error if the address is #{postcode}" do
+          assert_errors([["Postcode", postcode]], [error])
+        end
       end
     end
   end

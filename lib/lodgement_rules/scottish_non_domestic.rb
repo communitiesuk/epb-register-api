@@ -50,6 +50,14 @@ module LodgementRules
             end
           end,
       },
+      {
+        name: "DISALLOWED_POSTCODE",
+        title: "Non-geographic and overseas postcodes are not allowed",
+        test:
+          lambda do |adapter, *|
+            !adapter&.postcode&.match?(UseCase::PostcodeData::NON_GEOGRAPHIC_OR_OVERSEAS)
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor, country_lookup)

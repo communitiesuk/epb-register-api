@@ -1212,4 +1212,32 @@ describe LodgementRules::ScottishRdsap, :set_with_timecop do
                                                          "Registration-Date": Date.today.to_s }, country_code: %i[E S])
     end
   end
+
+  context "when postcode is overseas or non-geographic" do
+    let(:error) do
+      {
+        "code": "DISALLOWED_POSTCODE",
+        "title": "Non-geographic and overseas postcodes are not allowed",
+      }.freeze
+    end
+
+    [
+      "BF1 2AU",
+      "BX8 0HB",
+      "XM4 5HQ",
+      "XX40 4AA",
+      "GX11 1AA",
+    ].each do |postcode|
+      it "returns an error if the address is #{postcode}" do
+        assert_rdsap_errors(
+          expected_errors: [error],
+          values: { "Address/Postcode": postcode,
+                    "Inspection-Date": Date.yesterday.to_s,
+                    "Completion-Date": Date.today.to_s,
+                    "Registration-Date": Date.today.to_s },
+          country_code: [:S],
+        )
+      end
+    end
+  end
 end

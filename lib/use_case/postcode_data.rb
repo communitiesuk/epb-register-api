@@ -1,5 +1,7 @@
 module UseCase
   module PostcodeData
+    NON_GEOGRAPHIC_OR_OVERSEAS = /\A(?:BF|BX|XM|XX|GX)/
+
     def self.wales_only_prefixes
       %w[CF SA LL3 LL4 LL5 LL6 LL7]
     end

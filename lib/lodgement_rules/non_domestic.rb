@@ -192,6 +192,14 @@ module LodgementRules
             (dates[0] <= dates[1])
           end,
       },
+      {
+        name: "DISALLOWED_POSTCODE",
+        title: "Non-geographic and overseas postcodes are not allowed",
+        test:
+          lambda do |adapter, *|
+            !adapter&.postcode&.match?(UseCase::PostcodeData::NON_GEOGRAPHIC_OR_OVERSEAS)
+          end,
+      },
     ].freeze
 
     def self.wrong_sbem_version_for_ni?(lookup, calc_tool)

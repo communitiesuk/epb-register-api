@@ -1,4 +1,4 @@
-shared_context "when testing non-domestic Scottish lodgements" do
+shared_context "when testing non-domestic lodgements" do
   def assert_errors(xml_updates, expected_errors, include_errors: false, country_code: nil)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
@@ -35,7 +35,7 @@ shared_context "when testing non-domestic Scottish lodgements" do
 end
 
 describe LodgementRules::NonDomestic, :set_with_timecop do
-  include_context "when testing non-domestic Scottish lodgements"
+  include_context "when testing non-domestic lodgements"
 
   before do
     map_lookups_to_country_codes do |postcode:|
@@ -442,6 +442,42 @@ describe LodgementRules::NonDomestic, :set_with_timecop do
 
       it "returns an error if the nominated date is more than three months after the or-assessment-end-date" do
         assert_errors([%w[OR-Assessment-End-Date 2019-09-30]], [error])
+      end
+    end
+  end
+
+  describe "when postcode is overseas or non-geographic" do
+    let(:docs_under_test) do
+      [
+        {
+          xml_doc:
+            Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc")).remove_namespaces!,
+          schema_name: "CEPC-8.0.0",
+        },
+        {
+          xml_doc:
+            Nokogiri.XML(Samples.xml("CEPC-NI-8.0.0", "cepc")).remove_namespaces!,
+          schema_name: "CEPC-NI-8.0.0",
+        },
+      ]
+    end
+
+    let(:error) do
+      {
+        "code": "DISALLOWED_POSTCODE",
+        "title": "Non-geographic and overseas postcodes are not allowed",
+      }.freeze
+    end
+
+    [
+      "BF1 2AU",
+      "BX8 0HB",
+      "XM4 5HQ",
+      "XX40 4AA",
+      "GX11 1AA",
+    ].each do |postcode|
+      it "returns an error if the address is #{postcode}" do
+        assert_errors([["Postcode", postcode]], [error])
       end
     end
   end

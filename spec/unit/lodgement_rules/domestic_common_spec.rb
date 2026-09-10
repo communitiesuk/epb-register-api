@@ -597,4 +597,25 @@ describe LodgementRules::DomesticCommon, :set_with_timecop do
       assert_errors(expected_errors: [], values:  { "Country-Code": "NIR" }, country_code: [:N])
     end
   end
+
+  describe "DISALLOWED_POSTCODE rule" do
+    let(:error) do
+      {
+        "code": "DISALLOWED_POSTCODE",
+        "title": "Non-geographic and overseas postcodes are not allowed",
+      }.freeze
+    end
+
+    [
+      "BF1 2AU",
+      "BX8 0HB",
+      "XM4 5HQ",
+      "XX40 4AA",
+      "GX11 1AA",
+    ].each do |postcode|
+      it "returns an error if the address is #{postcode}" do
+        assert_errors(expected_errors: [error], values: { "Address/Postcode": postcode })
+      end
+    end
+  end
 end
