@@ -4,6 +4,8 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    allow:
+      - dependency-type: all   # includes direct and indirect dependencies
 
   - package-ecosystem: 'github-actions'
     directory: '/'
