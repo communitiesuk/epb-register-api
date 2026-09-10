@@ -64,6 +64,10 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-S-7.1(EPC-RR).xml"
   end
+  let(:cs63_s_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CS63-S-8.0.0.xml"
+  end
   let(:scheme_id) { add_scheme_and_get_id }
 
   describe "when trying to lodge an example XML" do
@@ -266,6 +270,18 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
             scheme_ids: [scheme_id],
           },
           schema_name: "CEPC-S-7.1",
+          migrated: true,
+        ).status).to eq 201
+      end
+
+      it "can lodge the example CS63" do
+        expect(lodge_scottish_assessment(
+          assessment_body: cs63_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CS63-S-8.0.0",
           migrated: true,
         ).status).to eq 201
       end

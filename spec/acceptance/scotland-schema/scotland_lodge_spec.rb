@@ -30,6 +30,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
   let(:valid_sap_161_xml) { Samples.xml "SAP-Schema-S-16.1" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-S-7.1", "cepc" }
   let(:valid_cepc_70_xml) { Samples.xml "CEPC-S-7.0", "cepc" }
+  let(:valid_action_plan_800_xml) { Samples.xml "CS63-S-8.0.0", "cs63" }
   let(:valid_action_plan_xml) { Samples.xml "CS63-S-7.0", "cs63" }
   let(:valid_dec_xml) { Samples.xml "DECAR-S-7.0", "dec" }
   let(:valid_dec_ar_xml) { Samples.xml "DECAR-S-7.0", "dec-ar" }
@@ -1333,15 +1334,15 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
         end
       end
 
-      context "when lodging a valid Scottish Action Plan assessment" do
+      context "when lodging a valid Scottish Action Plan 8.0.0 assessment" do
         expected_action_plan_assessment_data = {
           "assessment_id" => "0000-0000-0000-0000-0000",
-          "date_of_assessment" => "2023-06-27",
-          "date_registered" => "2023-06-27",
+          "date_of_assessment" => "2025-06-04",
+          "date_registered" => "2025-06-11",
           "type_of_assessment" => "CS63",
           "current_energy_efficiency_rating" => 0,
           "postcode" => "FK1 1XE",
-          "date_of_expiry" => "2026-12-27",
+          "date_of_expiry" => "2028-12-11",
           "address_line1" => "Non-dom Property",
           "address_line2" => "",
           "address_line3" => "",
@@ -1349,7 +1350,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "town" => "Town",
           "scheme_assessor_id" => "SPEC000000",
           "opt_out" => false,
-          "address_id" => "0000000001",
+          "address_id" => "UPRN-0000000001",
           "migrated" => false,
           "cancelled_at" => nil,
           "not_for_issue_at" => nil,
@@ -1357,14 +1358,14 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
           "hashed_assessment_id" => "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         }
 
-        it "successfully migrates the assessment" do
-          response = lodge_scottish_assessment assessment_body: valid_action_plan_xml,
+        it "successfully lodges the assessment" do
+          response = lodge_scottish_assessment assessment_body: valid_action_plan_800_xml,
                                                accepted_responses: [201],
                                                scopes: %w[scotland_assessment:lodge],
                                                auth_data: {
                                                  scheme_ids: [scheme_id],
                                                },
-                                               schema_name: "CS63-S-7.0",
+                                               schema_name: "CS63-S-8.0.0",
                                                migrated: false
 
           action_plan_data = ActiveRecord::Base.connection.exec_query(

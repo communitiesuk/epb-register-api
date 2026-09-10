@@ -279,6 +279,9 @@
   "CEPC-S-7.1": {
     "schema_path": "api/schemas/xml/CEPC-S-7.1/Reports/CEPC-Reports.xsd"
   },
+  "CS63-S-8.0.0": {
+    "schema_path": "api/schemas/xml/CS63-S-8.0.0/ActionPlan.xsd"
+  },
   "CS63-S-7.0": {
     "schema_path": "api/schemas/xml/CS63-S-7.0/ActionPlan.xsd"
   },
