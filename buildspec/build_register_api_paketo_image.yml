@@ -16,6 +16,8 @@ phases:
       - echo Build started on `date`
       - echo Building the Paketo image...
       - pack build ebpr-register-api-image --builder paketobuildpacks/ubuntu-noble-builder
+      # Ensure ruby is available on the entrypoint for running tasks
+      - docker run --rm --entrypoint launcher ebpr-register-api-image ruby --version
 
   post_build:
     commands:
