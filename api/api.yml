@@ -2807,6 +2807,21 @@ paths:
           application/xml+CS6-S-7.0:
             schema:
               $ref: '#/components/schemas/Empty'
+          application/xml+RdSAP-Schema-S-22.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+SAP-Schema-S-20.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+CEPC-S-8.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+DECAR-S-8.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/xml+CS6-S-8.0.0:
+            schema:
+              $ref: '#/components/schemas/Empty'
       responses:
         '201':
           description: New Scottish assessment(s) successfully lodged
@@ -3793,12 +3808,16 @@ components:
       description: 'An identifier for the versioned XML schema used for the lodged assessment XML'
       example: 'RdSAP-Schema-S-19.0'
       enum:
+        - DECAR-S-8.0.0
         - DECAR-S-7.0
+        - CEPC-S-8.0.0
         - CEPC-S-7.1
         - CEPC-S-7.0
+        - SAP-Schema-S-20.0.0
         - SAP-Schema-S-19.0.0
         - SAP-Schema-S-17.0
         - SAP-Schema-S-16.1
+        - RdSAP-Schema-S-22.0.0
         - RdSAP-Schema-S-21.0
         - RdSAP-Schema-S-19.0
         - RdSAP-Schema-S-18.0
@@ -3808,6 +3827,7 @@ components:
         - RdSAP-Schema-S-14.0
         - RdSAP-Schema-S-13.0
         - RdSAP-Schema-S-12.0
+        - CS63-S-8.0.0
         - CS63-S-7.0
 
     AddressSearchResults:
@@ -5357,7 +5377,7 @@ components:
           description: The RRN of the assessment that has superseded this one, if one exists
         schemaType:
           type: string
-          example: "DECAR-S-7.0"
+          example: "DECAR-S-8.0.0"
         countryName:
           type: string
           example: 'Scotland'
@@ -5541,7 +5561,7 @@ components:
           example: 'Scotland'
         schemaType:
           type: string
-          example: "DECAR-S-7.0"
+          example: "DECAR-S-8.0.0"
         energyBandFromRelatedCertificate:
           type: string
           example: "b"
