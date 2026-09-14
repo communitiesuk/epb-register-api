@@ -1,0 +1,140 @@
+<Reports
+        xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/decar-s  ../../../../api/schemas/xml/DECAR-S-8.0.0/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2025-04-10</Issue-Date>
+      <Valid-Until>2026-03-18</Valid-Until>
+      <Report-Type>1</Report-Type>
+      <Inspection-Date>2025-04-10</Inspection-Date>
+      <Registration-Date>2025-04-10</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Test Assessor</Name>
+        <Accreditation-Scheme-Name>Test Scheme</Accreditation-Scheme-Name>
+        <Trading-Address>6 Unit Business Park Town</Trading-Address>
+        <Company-Name>EPC R Us Ltd</Company-Name>
+        <Status>Registered</Status>
+        <E-Mail>assessor@co.uk</E-Mail>
+        <Telephone-Number>000002828282</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <Location-Description />
+        <UPRN>UPRN-0000000001</UPRN>
+        <Property-Address>
+          <Address-Line-1>Non-dom Property</Address-Line-1>
+          <Address-Line-2>Buisness Park</Address-Line-2>
+          <Address-Line-3 />
+          <Address-Line-4 />
+          <Post-Town>Town</Post-Town>
+          <Postcode>EH14 2SP</Postcode>
+        </Property-Address>
+        <Property-Type>Storage facility</Property-Type>
+        <Occupier>Industrial Estate</Occupier>
+      </Property-Details>
+      <Calculation-Details>
+        <Output-Engine>MWW-91.1.1</Output-Engine>
+        <Methodology>ORCalc</Methodology>
+        <Calculation-Tool>BSD, OR Scotland, v1.0.3</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>
+      <!--The DEC is inserted into the XML Document as a CDATA section encoded in MIME's base64.-->
+    </Formatted-Report>
+    <!--This is the variable part of the report XML message-->
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2024-01-01</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2024-12-31</OR-Assessment-End-Date>
+      <Building-Category>C28; </Building-Category>
+      <OR-Building-Data>
+        <Internal-Environment>Heating and Natural Ventilation</Internal-Environment>
+        <Assessment-Period-Alignment>Start Of Main Heating Fuel Period</Assessment-Period-Alignment>
+        <HVAC-System>Radiators</HVAC-System>
+        <Other-HVAC-System>Enter details of 'Other' here.</Other-HVAC-System>
+      </OR-Building-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark>Storage facility</Main-Benchmark>
+        <Benchmarks>
+          <Benchmark>
+            <Name>Storage depot</Name>
+            <Benchmark-ID>1</Benchmark-ID>
+            <Area-Metric>Gross floor area measured as RICS Gross Internal Area (GIA)</Area-Metric>
+            <Floor-Area>1194.47</Floor-Area>
+            <Special-Uses-Area />
+            <TUFA>1194.47</TUFA>
+            <Benchmark>Storage facility</Benchmark>
+            <Occupancy-Level>Standard Occupancy</Occupancy-Level>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Electricity>
+          <Consumption>26384</Consumption>
+          <Start-Date>2024-01-01</Start-Date>
+          <End-Date>2024-12-31</End-Date>
+          <Estimate>0</Estimate>
+        </Electricity>
+        <Gas>
+          <Consumption>2262</Consumption>
+          <Start-Date>2024-01-01</Start-Date>
+          <End-Date>2024-12-31</End-Date>
+          <Estimate>0</Estimate>
+        </Gas>
+      </OR-Energy-Consumption>
+      <OR-Usable-Floor-Area />
+      <OR-Previous-Data>
+        <Previous-Rating-1>
+          <OR>33</OR>
+          <ORMM>3</ORMM>
+          <ORYYYY>2024</ORYYYY>
+        </Previous-Rating-1>
+        <Asset-Rating>46</Asset-Rating>
+      </OR-Previous-Data>
+    </OR-Operational-Rating>
+    <Display-Certificate>
+      <DEC-Annual-Energy-Summary>
+        <Annual-Energy-Use-Electrical>22</Annual-Energy-Use-Electrical>
+        <Annual-Energy-Use-Fuel-Thermal>2</Annual-Energy-Use-Fuel-Thermal>
+        <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
+        <Renewables-Electrical>0</Renewables-Electrical>
+        <Typical-Thermal-Use>68</Typical-Thermal-Use>
+        <Typical-Electrical-Use>35</Typical-Electrical-Use>
+      </DEC-Annual-Energy-Summary>
+      <DEC-Status>0</DEC-Status>
+      <Reason-Type>3</Reason-Type>
+      <DEC-Related-Party-Disclosure>1</DEC-Related-Party-Disclosure>
+      <This-Assessment>
+        <Nominated-Date>2025-03-19</Nominated-Date>
+        <Energy-Rating>36</Energy-Rating>
+        <Electricity-CO2>14</Electricity-CO2>
+        <Heating-CO2>0</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </This-Assessment>
+      <Year1-Assessment>
+        <Nominated-Date>2024-03-01</Nominated-Date>
+        <Energy-Rating>33</Energy-Rating>
+        <Electricity-CO2>17</Electricity-CO2>
+        <Heating-CO2>5</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </Year1-Assessment>
+      <Year2-Assessment>
+        <Nominated-Date>2023-03-01</Nominated-Date>
+        <Energy-Rating>33</Energy-Rating>
+        <Electricity-CO2>17</Electricity-CO2>
+        <Heating-CO2>5</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </Year2-Assessment>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>1194.47</Floor-Area>
+        <Separately-Metered-Electric-Heating>0</Separately-Metered-Electric-Heating>
+      </Technical-Information>
+    </Display-Certificate>
+  </Report>
+</Reports>
+<!--HASH:19744181F7775830DCFE8367D1B288D5-->

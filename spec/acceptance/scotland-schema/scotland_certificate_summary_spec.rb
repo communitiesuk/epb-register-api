@@ -2469,316 +2469,688 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
       end
     end
 
-    context "when requesting a Scottish DEC assessment" do
-      before do
-        dec_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec")
-        dec_xml
-          .xpath("//*[local-name() = 'RRN']")
-          .each do |node|
-          node.content = "0000-0000-0000-0004-0000"
+    context "when requesting DECAR-S-8.0.0 documents" do
+      context "when requesting a Scottish DEC assessment" do
+        before do
+          dec_xml = Nokogiri.XML Samples.xml("DECAR-S-8.0.0", "dec")
+          dec_xml
+            .xpath("//*[local-name() = 'RRN']")
+            .each do |node|
+            node.content = "0000-0000-0000-0004-0000"
+          end
+          lodge_scottish_assessment(
+            assessment_body: dec_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "DECAR-S-8.0.0",
+            migrated: true,
+          )
         end
-        lodge_scottish_assessment(
-          assessment_body: dec_xml.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          schema_name: "DECAR-S-7.0",
-          migrated: true,
-        )
+
+        it "returns the expected DEC" do
+          response =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0004-0000").body,
+              symbolize_names: true,
+            )
+
+          expected_response = { assessmentId: "0000-0000-0000-0004-0000",
+                                dateOfAssessment: "2025-04-10",
+                                dateOfExpiry: "2026-03-18",
+                                dateOfRegistration: "2025-04-10",
+                                address:
+                                  { addressLine1: "Non-dom Property",
+                                    addressLine2: "Buisness Park",
+                                    addressLine3: "",
+                                    addressLine4: "",
+                                    town: "Town",
+                                    postcode: "EH14 2SP" },
+                                typeOfAssessment: "DEC",
+                                schemaVersion: "8.0.0",
+                                reportType: "1",
+                                currentAssessment: { date: "2025-03-19", energyEfficiencyRating: 36, energyEfficiencyBand: "b", heatingCo2: 0, electricityCo2: 14, renewablesCo2: 0 },
+                                year1Assessment: { date: "2024-03-01", energyEfficiencyRating: 33, energyEfficiencyBand: "b", heatingCo2: 5, electricityCo2: 17, renewablesCo2: 0 },
+                                year2Assessment: { date: "2023-03-01", energyEfficiencyRating: 33, energyEfficiencyBand: "b", heatingCo2: 5, electricityCo2: 17, renewablesCo2: 0 },
+                                technicalInformation:
+                                  { mainHeatingFuel: "Natural Gas",
+                                    buildingEnvironment: "Heating and Natural Ventilation",
+                                    floorArea: 1194.47,
+                                    occupier: "Industrial Estate",
+                                    assetRating: 46,
+                                    annualEnergyUseFuelThermal: 2,
+                                    annualEnergyUseElectrical: 22,
+                                    typicalThermalUse: 68,
+                                    typicalElectricalUse: 35,
+                                    renewablesFuelThermal: 0,
+                                    renewablesElectrical: 0 },
+                                assessor:
+                                  { schemeAssessorId: "SPEC000000",
+                                    companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                    contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                    firstName: "Someone",
+                                    lastName: "Person",
+                                    registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                administrativeInformation: { issueDate: "2025-04-10", calculationTool: "BSD, OR Scotland, v1.0.3", relatedPartyDisclosure: "1" },
+                                relatedRrn: nil,
+                                addressId: "UPRN-0000000001",
+                                optOut: false,
+                                relatedAssessments: [],
+                                supersededBy: nil,
+                                schemaType: "DECAR-S-8.0.0",
+                                countryName: "Scotland" }
+
+          expect(response[:data]).to eq(expected_response)
+        end
       end
 
-      it "returns the expected DEC" do
-        response =
-          JSON.parse(
-            fetch_scottish_certificate_summary(id: "0000-0000-0000-0004-0000").body,
-            symbolize_names: true,
+      context "when requesting a Scottish DEC-AR assessment" do
+        before do
+          dec_ar_xml = Nokogiri.XML Samples.xml("DECAR-S-8.0.0", "dec-ar")
+          dec_ar_xml
+            .xpath("//*[local-name() = 'RRN']")
+            .each do |node|
+            node.content = "0000-0000-0000-0005-0000"
+          end
+          lodge_scottish_assessment(
+            assessment_body: dec_ar_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "DECAR-S-8.0.0",
+            migrated: true,
           )
+        end
 
-        expected_response = { assessmentId: "0000-0000-0000-0004-0000",
-                              dateOfAssessment: "2023-06-27",
-                              dateOfExpiry: "2026-03-18",
-                              dateOfRegistration: "2023-06-27",
-                              address:
-                               { addressLine1: "Non-dom Property",
-                                 addressLine2: "Buisness Park",
-                                 addressLine3: "",
-                                 addressLine4: "",
-                                 town: "Town",
-                                 postcode: "EH14 2SP" },
-                              typeOfAssessment: "DEC",
-                              schemaVersion: "7.0",
-                              reportType: "1",
-                              currentAssessment: { date: "2025-03-19", energyEfficiencyRating: 36, energyEfficiencyBand: "b", heatingCo2: 0, electricityCo2: 14, renewablesCo2: 0 },
-                              year1Assessment: { date: "2024-03-01", energyEfficiencyRating: 33, energyEfficiencyBand: "b", heatingCo2: 5, electricityCo2: 17, renewablesCo2: 0 },
-                              year2Assessment: { date: "2023-03-01", energyEfficiencyRating: 33, energyEfficiencyBand: "b", heatingCo2: 5, electricityCo2: 17, renewablesCo2: 0 },
-                              technicalInformation:
-                               { mainHeatingFuel: "Natural Gas",
-                                 buildingEnvironment: "Heating and Natural Ventilation",
-                                 floorArea: 1194.47,
-                                 occupier: "Industrial Estate",
-                                 assetRating: 46,
-                                 annualEnergyUseFuelThermal: 2,
-                                 annualEnergyUseElectrical: 22,
-                                 typicalThermalUse: 68,
-                                 typicalElectricalUse: 35,
-                                 renewablesFuelThermal: 0,
-                                 renewablesElectrical: 0 },
-                              assessor:
-                               { schemeAssessorId: "SPEC000000",
-                                 companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
-                                 contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
-                                 firstName: "Someone",
-                                 lastName: "Person",
-                                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
-                              administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.3", relatedPartyDisclosure: "1" },
-                              relatedRrn: nil,
-                              addressId: "RRN-0000-0000-0000-0004-0000",
-                              optOut: false,
-                              relatedAssessments: [],
-                              supersededBy: nil,
-                              schemaType: "DECAR-S-7.0",
-                              countryName: "Scotland" }
+        it "returns the expected DEC-AR" do
+          response =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0005-0000").body,
+              symbolize_names: true,
+            )
 
-        expect(response[:data]).to eq(expected_response)
+          expected_response = { typeOfAssessment: "DEC-AR",
+                                assessmentId: "0000-0000-0000-0005-0000",
+                                reportType: "2",
+                                dateOfAssessment: "2019-10-21",
+                                dateOfRegistration: "2019-11-22",
+                                dateOfExpiry: "2029-11-21",
+                                address:
+                                  { addressLine1: "Non-dom Property",
+                                    addressLine2: "Buisness Park",
+                                    addressLine3: "",
+                                    addressLine4: "",
+                                    town: "Town",
+                                    postcode: "EH14 2SP" },
+                                assessor:
+                                  { schemeAssessorId: "SPEC000000",
+                                    companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                    contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                    firstName: "Someone",
+                                    lastName: "Person",
+                                    registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                shortPaybackRecommendations:
+                                  [{ code: "X24", text: "Boiler plant should be regularly tested and adjusted by experts for optimum operating efficiency.", cO2Impact: "MEDIUM" },
+                                   { code: "X15",
+                                     text: "Consider engaging with building users to economise equipment energy consumption with targets, guidance on their achievement and incentives.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "X25",
+                                     text:
+                                       "Consider introducing a system of regular checks of Heating, Ventilation and Air Conditioning (HVAC) time and temperature settings and provisions to prevent unauthorised adjustment.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "SP24", text: "Enable power save settings and power down management on computers and associated equipment.", cO2Impact: "MEDIUM" },
+                                   { code: "SP3",
+                                     text:
+                                       "Consider installing automated controls and monitoring systems to electrical equipment and portable appliances to minimise electricity waste.",
+                                     cO2Impact: "LOW" },
+                                   { code: "X9",
+                                     text:
+                                       "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X10",
+                                     text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "CON10", text: "Seek to minimise simultaneous operation of heating and cooling systems.", cO2Impact: "HIGH" },
+                                   { code: "AC12",
+                                     text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "SP14",
+                                     text:
+                                       "Consider with experts implementation of an energy efficient equipment procurement regime that will upgrade existing equipment and renew in a planned cost-effective programme.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "OM15",
+                                     text:
+                                       "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
+                                     cO2Impact: "HIGH" }],
+                                mediumPaybackRecommendations:
+                                  [{ code: "AC9",
+                                     text:
+                                       "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "HW19", text: "Engage experts to propose specific measures to reduce hot water wastage and plan to carry this out. ", cO2Impact: "LOW" },
+                                   { code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM" },
+                                   { code: "X3",
+                                     text:
+                                       "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
+                                     cO2Impact: "MEDIUM" }],
+                                longPaybackRecommendations:
+                                  [{ code: "X1",
+                                     text:
+                                       "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
+                                     cO2Impact: "LOW" }],
+                                otherPaybackRecommendations:
+                                  [{ code: "None",
+                                     text:
+                                       "There is no seperate electricity metering within the building and thus pro-rata sharing of metered usage may not represent actual usage. Monitoring and bench marking of usage is not possible and therefore improvements in energy efficiency are difficult to quantify.",
+                                     cO2Impact: "LOW" }],
+                                technicalInformation:
+                                  { buildingEnvironment: "Mixed-mode with Natural Ventilation",
+                                    floorArea: 178.3,
+                                    occupier: "Business name",
+                                    propertyType: "General office",
+                                    renewableSources: nil,
+                                    discountedEnergy: nil,
+                                    inspectionType: "Physical" },
+                                administrativeInformation: {
+                                  issueDate: "2019-11-22",
+                                  calculationTool: "BSD, OR Scotland, v1.0.1",
+                                },
+                                siteServiceOne: { description: "Electricity", quantity: 26_914 },
+                                siteServiceTwo: { description: "Natural Gas", quantity: 1204 },
+                                siteServiceThree: { description: "Not used", quantity: 0 },
+                                relatedRrn: nil,
+                                addressId: "UPRN-0000000001",
+                                optOut: false,
+                                relatedAssessments: [],
+                                supersededBy: nil,
+                                schemaType: "DECAR-S-8.0.0",
+                                countryName: "Scotland" }
+
+          expect(response[:data]).to eq(expected_response)
+        end
+      end
+
+      context "when requesting a Scottish DEC or DEC-AR assessment from a dual lodgement" do
+        before do
+          dual_xml = Nokogiri.XML Samples.xml("DECAR-S-8.0.0", "dec+ar")
+
+          lodge_scottish_assessment(
+            assessment_body: dual_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "DECAR-S-8.0.0",
+            migrated: true,
+          )
+        end
+
+        it "returns the expected DEC-AR" do
+          response_dec_ar =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0050").body,
+              symbolize_names: true,
+            )
+
+          expected_response_ar = { typeOfAssessment: "DEC-AR",
+                                   assessmentId: "0000-0000-0000-0000-0050",
+                                   reportType: "2",
+                                   dateOfAssessment: "2023-06-27",
+                                   dateOfExpiry: "2033-06-26",
+                                   dateOfRegistration: "2023-06-27",
+                                   address: { addressLine1: "Non-dom Property", addressLine2: "Buisness Park", addressLine3: "", addressLine4: "", town: "Town", postcode: "EH14 2SP" },
+                                   assessor:
+                                  { schemeAssessorId: "SPEC000000",
+                                    contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                    companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                    firstName: "Someone",
+                                    lastName: "Person",
+                                    registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                   shortPaybackRecommendations:
+                                  [{ code: "X12",
+                                     text: "Clean windows and roof lights to maximise daylight entering building and reduce the need for artificial lighting.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X11",
+                                     text: "Consider implementing a programme of planned lighting systems maintenance to maintain effectiveness and energy efficiency.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X9",
+                                     text:
+                                       "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
+                                     cO2Impact: "HIGH" },
+                                   { code: "X10",
+                                     text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "OM15",
+                                     text:
+                                       "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "BF6",
+                                     text:
+                                       "Consider how building fabric air tightness could be improved, for example sealing, draught stripping and closing off unused ventilation openings, chimneys.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "AC12",
+                                     text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
+                                     cO2Impact: "HIGH" }],
+                                   mediumPaybackRecommendations:
+                                  [{ code: "X3",
+                                     text:
+                                       "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM" },
+                                   { code: "AC9",
+                                     text:
+                                       "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "BF22",
+                                     text:
+                                       "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
+                                     cO2Impact: "MEDIUM" }],
+                                   longPaybackRecommendations:
+                                  [{ code: "X13",
+                                     text:
+                                       "Engage experts to review the building lighting strategies and propose alterations and/or upgrades to daylighting provisions, luminaires and their control systems and an implementation plan.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X1",
+                                     text:
+                                       "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "BF3", text: "Consider replacing or improving glazing.", cO2Impact: "MEDIUM" }],
+                                   otherPaybackRecommendations: [],
+                                   technicalInformation:
+                                  { buildingEnvironment: "Heating and Natural Ventilation",
+                                    floorArea: 973.6,
+                                    occupier: "Business Name",
+                                    propertyType: "General office",
+                                    renewableSources: nil,
+                                    discountedEnergy: nil,
+                                    inspectionType: "Physical" },
+                                   administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.0" },
+                                   siteServiceOne: { description: "Natural Gas", quantity: 76_639 },
+                                   siteServiceTwo: { description: "Electricity", quantity: 36_419 },
+                                   siteServiceThree: { description: "Not used", quantity: 0 },
+                                   relatedRrn: "0000-0000-0000-0000-0040",
+                                   addressId: "UPRN-0000000001",
+                                   optOut: false,
+                                   relatedAssessments: [],
+                                   supersededBy: nil,
+                                   schemaType: "DECAR-S-8.0.0",
+                                   countryName: "Scotland",
+                                   energyBandFromRelatedCertificate: "b" }
+
+          expect(response_dec_ar[:data]).to eq(expected_response_ar)
+        end
+
+        it "returns the expected DEC" do
+          response_dec =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0040").body,
+              symbolize_names: true,
+            )
+
+          expected_response_dec = { assessmentId: "0000-0000-0000-0000-0040",
+                                    dateOfAssessment: "2023-06-27",
+                                    dateOfExpiry: "2035-03-31",
+                                    dateOfRegistration: "2023-06-27",
+                                    address:
+                                      { addressLine1: "Non-dom Property",
+                                        addressLine2: "Buisness Park",
+                                        addressLine3: "",
+                                        addressLine4: "",
+                                        town: "Town",
+                                        postcode: "EH14 2SP" },
+                                    typeOfAssessment: "DEC",
+                                    schemaVersion: "8.0.0",
+                                    reportType: "1",
+                                    currentAssessment: { date: "2025-04-01", energyEfficiencyRating: 47, energyEfficiencyBand: "b", heatingCo2: 17, electricityCo2: 19, renewablesCo2: 0 },
+                                    year1Assessment: { date: nil, electricityCo2: nil, energyEfficiencyBand: nil, energyEfficiencyRating: nil, heatingCo2: nil, renewablesCo2: nil },
+                                    year2Assessment: { date: nil, electricityCo2: nil, energyEfficiencyBand: nil, energyEfficiencyRating: nil, heatingCo2: nil, renewablesCo2: nil },
+                                    technicalInformation:
+                                      { mainHeatingFuel: "Natural Gas",
+                                        buildingEnvironment: "Heating and Natural Ventilation",
+                                        floorArea: 973.6,
+                                        occupier: "Business name",
+                                        assetRating: 21,
+                                        annualEnergyUseFuelThermal: 79,
+                                        annualEnergyUseElectrical: 37,
+                                        typicalThermalUse: 127,
+                                        typicalElectricalUse: 95,
+                                        renewablesFuelThermal: 0,
+                                        renewablesElectrical: 0 },
+                                    assessor:
+                                      { schemeAssessorId: "SPEC000000",
+                                        companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                        contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                        firstName: "Someone",
+                                        lastName: "Person",
+                                        registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                    administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.0", relatedPartyDisclosure: "4" },
+                                    relatedRrn: "0000-0000-0000-0000-0050",
+                                    addressId: "UPRN-0000000001",
+                                    optOut: false,
+                                    relatedAssessments: [],
+                                    supersededBy: nil,
+                                    schemaType: "DECAR-S-8.0.0",
+                                    countryName: "Scotland" }
+
+          expect(response_dec[:data]).to eq(expected_response_dec)
+        end
       end
     end
 
-    context "when requesting a Scottish DEC-AR assessment" do
-      before do
-        dec_ar_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec-ar")
-        dec_ar_xml
-          .xpath("//*[local-name() = 'RRN']")
-          .each do |node|
-          node.content = "0000-0000-0000-0005-0000"
+    context "when requesting DECAR-S-7.0 documents" do
+      context "when requesting a Scottish DEC assessment" do
+        before do
+          dec_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec")
+          dec_xml
+            .xpath("//*[local-name() = 'RRN']")
+            .each do |node|
+            node.content = "0000-0000-0000-0004-0000"
+          end
+          lodge_scottish_assessment(
+            assessment_body: dec_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "DECAR-S-7.0",
+            migrated: true,
+          )
         end
-        lodge_scottish_assessment(
-          assessment_body: dec_ar_xml.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          schema_name: "DECAR-S-7.0",
-          migrated: true,
-        )
+
+        it "returns the expected DEC" do
+          response =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0004-0000").body,
+              symbolize_names: true,
+            )
+
+          expected_response = { assessmentId: "0000-0000-0000-0004-0000",
+                                dateOfAssessment: "2023-06-27",
+                                dateOfExpiry: "2026-03-18",
+                                dateOfRegistration: "2023-06-27",
+                                address:
+                                  { addressLine1: "Non-dom Property",
+                                    addressLine2: "Buisness Park",
+                                    addressLine3: "",
+                                    addressLine4: "",
+                                    town: "Town",
+                                    postcode: "EH14 2SP" },
+                                typeOfAssessment: "DEC",
+                                schemaVersion: "7.0",
+                                reportType: "1",
+                                currentAssessment: { date: "2025-03-19", energyEfficiencyRating: 36, energyEfficiencyBand: "b", heatingCo2: 0, electricityCo2: 14, renewablesCo2: 0 },
+                                year1Assessment: { date: "2024-03-01", energyEfficiencyRating: 33, energyEfficiencyBand: "b", heatingCo2: 5, electricityCo2: 17, renewablesCo2: 0 },
+                                year2Assessment: { date: "2023-03-01", energyEfficiencyRating: 33, energyEfficiencyBand: "b", heatingCo2: 5, electricityCo2: 17, renewablesCo2: 0 },
+                                technicalInformation:
+                                  { mainHeatingFuel: "Natural Gas",
+                                    buildingEnvironment: "Heating and Natural Ventilation",
+                                    floorArea: 1194.47,
+                                    occupier: "Industrial Estate",
+                                    assetRating: 46,
+                                    annualEnergyUseFuelThermal: 2,
+                                    annualEnergyUseElectrical: 22,
+                                    typicalThermalUse: 68,
+                                    typicalElectricalUse: 35,
+                                    renewablesFuelThermal: 0,
+                                    renewablesElectrical: 0 },
+                                assessor:
+                                  { schemeAssessorId: "SPEC000000",
+                                    companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                    contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                    firstName: "Someone",
+                                    lastName: "Person",
+                                    registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.3", relatedPartyDisclosure: "1" },
+                                relatedRrn: nil,
+                                addressId: "RRN-0000-0000-0000-0004-0000",
+                                optOut: false,
+                                relatedAssessments: [],
+                                supersededBy: nil,
+                                schemaType: "DECAR-S-7.0",
+                                countryName: "Scotland" }
+
+          expect(response[:data]).to eq(expected_response)
+        end
       end
 
-      it "returns the expected DEC-AR" do
-        response =
-          JSON.parse(
-            fetch_scottish_certificate_summary(id: "0000-0000-0000-0005-0000").body,
-            symbolize_names: true,
+      context "when requesting a Scottish DEC-AR assessment" do
+        before do
+          dec_ar_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec-ar")
+          dec_ar_xml
+            .xpath("//*[local-name() = 'RRN']")
+            .each do |node|
+            node.content = "0000-0000-0000-0005-0000"
+          end
+          lodge_scottish_assessment(
+            assessment_body: dec_ar_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "DECAR-S-7.0",
+            migrated: true,
           )
+        end
 
-        expected_response = { typeOfAssessment: "DEC-AR",
-                              assessmentId: "0000-0000-0000-0005-0000",
-                              reportType: "2",
-                              dateOfAssessment: "2023-06-27",
-                              dateOfRegistration: "2023-06-27",
-                              dateOfExpiry: "2033-06-26",
-                              address:
-                               { addressLine1: "Non-dom Property",
-                                 addressLine2: "Buisness Park",
-                                 addressLine3: "",
-                                 addressLine4: "",
-                                 town: "Town",
-                                 postcode: "EH14 2SP" },
-                              assessor:
-                               { schemeAssessorId: "SPEC000000",
-                                 companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
-                                 contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
-                                 firstName: "Someone",
-                                 lastName: "Person",
-                                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
-                              shortPaybackRecommendations:
-                               [{ code: "X24", text: "Boiler plant should be regularly tested and adjusted by experts for optimum operating efficiency.", cO2Impact: "MEDIUM" },
-                                { code: "X15",
-                                  text: "Consider engaging with building users to economise equipment energy consumption with targets, guidance on their achievement and incentives.",
-                                  cO2Impact: "HIGH" },
-                                { code: "X25",
-                                  text:
-                                   "Consider introducing a system of regular checks of Heating, Ventilation and Air Conditioning (HVAC) time and temperature settings and provisions to prevent unauthorised adjustment.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "SP24", text: "Enable power save settings and power down management on computers and associated equipment.", cO2Impact: "MEDIUM" },
-                                { code: "SP3",
-                                  text:
-                                   "Consider installing automated controls and monitoring systems to electrical equipment and portable appliances to minimise electricity waste.",
-                                  cO2Impact: "LOW" },
-                                { code: "X9",
-                                  text:
-                                   "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "X10",
-                                  text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "CON10", text: "Seek to minimise simultaneous operation of heating and cooling systems.", cO2Impact: "HIGH" },
-                                { code: "AC12",
-                                  text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "SP14",
-                                  text:
-                                   "Consider with experts implementation of an energy efficient equipment procurement regime that will upgrade existing equipment and renew in a planned cost-effective programme.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "OM15",
-                                  text:
-                                   "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
-                                  cO2Impact: "HIGH" }],
-                              mediumPaybackRecommendations:
-                               [{ code: "AC9",
-                                  text:
-                                   "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "HW19", text: "Engage experts to propose specific measures to reduce hot water wastage and plan to carry this out. ", cO2Impact: "LOW" },
-                                { code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM" },
-                                { code: "X3",
-                                  text:
-                                   "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
-                                  cO2Impact: "MEDIUM" }],
-                              longPaybackRecommendations:
-                               [{ code: "X1",
-                                  text:
-                                   "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
-                                  cO2Impact: "LOW" }],
-                              otherPaybackRecommendations:
-                               [{ code: "None",
-                                  text:
-                                   "There is no seperate electricity metering within the building and thus pro-rata sharing of metered usage may not represent actual usage. Monitoring and bench marking of usage is not possible and therefore improvements in energy efficiency are difficult to quantify.",
-                                  cO2Impact: "LOW" }],
-                              technicalInformation:
-                               { buildingEnvironment: "Mixed-mode with Natural Ventilation",
-                                 floorArea: 178.3,
-                                 occupier: "Business name",
-                                 propertyType: "General office",
-                                 renewableSources: nil,
-                                 discountedEnergy: nil,
-                                 inspectionType: "Physical" },
-                              administrativeInformation: {
-                                issueDate: "2023-06-27",
-                                calculationTool: "BSD, OR Scotland, v1.0.1",
-                              },
-                              siteServiceOne: { description: "Electricity", quantity: 26_914 },
-                              siteServiceTwo: { description: "Natural Gas", quantity: 1204 },
-                              siteServiceThree: { description: "Not used", quantity: 0 },
-                              relatedRrn: nil,
-                              addressId: "RRN-0000-0000-0000-0005-0000",
-                              optOut: false,
-                              relatedAssessments: [],
-                              supersededBy: nil,
-                              schemaType: "DECAR-S-7.0",
-                              countryName: "Scotland" }
+        it "returns the expected DEC-AR" do
+          response =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0005-0000").body,
+              symbolize_names: true,
+            )
 
-        expect(response[:data]).to eq(expected_response)
-      end
-    end
+          expected_response = { typeOfAssessment: "DEC-AR",
+                                assessmentId: "0000-0000-0000-0005-0000",
+                                reportType: "2",
+                                dateOfAssessment: "2023-06-27",
+                                dateOfRegistration: "2023-06-27",
+                                dateOfExpiry: "2033-06-26",
+                                address:
+                                  { addressLine1: "Non-dom Property",
+                                    addressLine2: "Buisness Park",
+                                    addressLine3: "",
+                                    addressLine4: "",
+                                    town: "Town",
+                                    postcode: "EH14 2SP" },
+                                assessor:
+                                  { schemeAssessorId: "SPEC000000",
+                                    companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                    contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                    firstName: "Someone",
+                                    lastName: "Person",
+                                    registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                shortPaybackRecommendations:
+                                  [{ code: "X24", text: "Boiler plant should be regularly tested and adjusted by experts for optimum operating efficiency.", cO2Impact: "MEDIUM" },
+                                   { code: "X15",
+                                     text: "Consider engaging with building users to economise equipment energy consumption with targets, guidance on their achievement and incentives.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "X25",
+                                     text:
+                                       "Consider introducing a system of regular checks of Heating, Ventilation and Air Conditioning (HVAC) time and temperature settings and provisions to prevent unauthorised adjustment.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "SP24", text: "Enable power save settings and power down management on computers and associated equipment.", cO2Impact: "MEDIUM" },
+                                   { code: "SP3",
+                                     text:
+                                       "Consider installing automated controls and monitoring systems to electrical equipment and portable appliances to minimise electricity waste.",
+                                     cO2Impact: "LOW" },
+                                   { code: "X9",
+                                     text:
+                                       "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X10",
+                                     text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "CON10", text: "Seek to minimise simultaneous operation of heating and cooling systems.", cO2Impact: "HIGH" },
+                                   { code: "AC12",
+                                     text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "SP14",
+                                     text:
+                                       "Consider with experts implementation of an energy efficient equipment procurement regime that will upgrade existing equipment and renew in a planned cost-effective programme.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "OM15",
+                                     text:
+                                       "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
+                                     cO2Impact: "HIGH" }],
+                                mediumPaybackRecommendations:
+                                  [{ code: "AC9",
+                                     text:
+                                       "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "HW19", text: "Engage experts to propose specific measures to reduce hot water wastage and plan to carry this out. ", cO2Impact: "LOW" },
+                                   { code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM" },
+                                   { code: "X3",
+                                     text:
+                                       "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
+                                     cO2Impact: "MEDIUM" }],
+                                longPaybackRecommendations:
+                                  [{ code: "X1",
+                                     text:
+                                       "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
+                                     cO2Impact: "LOW" }],
+                                otherPaybackRecommendations:
+                                  [{ code: "None",
+                                     text:
+                                       "There is no seperate electricity metering within the building and thus pro-rata sharing of metered usage may not represent actual usage. Monitoring and bench marking of usage is not possible and therefore improvements in energy efficiency are difficult to quantify.",
+                                     cO2Impact: "LOW" }],
+                                technicalInformation:
+                                  { buildingEnvironment: "Mixed-mode with Natural Ventilation",
+                                    floorArea: 178.3,
+                                    occupier: "Business name",
+                                    propertyType: "General office",
+                                    renewableSources: nil,
+                                    discountedEnergy: nil,
+                                    inspectionType: "Physical" },
+                                administrativeInformation: {
+                                  issueDate: "2023-06-27",
+                                  calculationTool: "BSD, OR Scotland, v1.0.1",
+                                },
+                                siteServiceOne: { description: "Electricity", quantity: 26_914 },
+                                siteServiceTwo: { description: "Natural Gas", quantity: 1204 },
+                                siteServiceThree: { description: "Not used", quantity: 0 },
+                                relatedRrn: nil,
+                                addressId: "RRN-0000-0000-0000-0005-0000",
+                                optOut: false,
+                                relatedAssessments: [],
+                                supersededBy: nil,
+                                schemaType: "DECAR-S-7.0",
+                                countryName: "Scotland" }
 
-    context "when requesting a Scottish DEC or DEC-AR assessment from a dual lodgement" do
-      before do
-        dual_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec+ar")
-
-        lodge_scottish_assessment(
-          assessment_body: dual_xml.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          schema_name: "DECAR-S-7.0",
-          migrated: true,
-        )
+          expect(response[:data]).to eq(expected_response)
+        end
       end
 
-      it "returns the expected DEC-AR" do
-        response =
-          JSON.parse(
-            fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0050").body,
-            symbolize_names: true,
+      context "when requesting a Scottish DEC or DEC-AR assessment from a dual lodgement" do
+        before do
+          dual_xml = Nokogiri.XML Samples.xml("DECAR-S-7.0", "dec+ar")
+
+          lodge_scottish_assessment(
+            assessment_body: dual_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "DECAR-S-7.0",
+            migrated: true,
           )
+        end
 
-        expected_response = { typeOfAssessment: "DEC-AR",
-                              assessmentId: "0000-0000-0000-0000-0050",
-                              reportType: "2",
-                              dateOfAssessment: "2023-06-27",
-                              dateOfExpiry: "2033-06-26",
-                              dateOfRegistration: "2023-06-27",
-                              address: { addressLine1: "Non-dom Property", addressLine2: "Buisness Park", addressLine3: "", addressLine4: "", town: "Town", postcode: "EH14 2SP" },
-                              assessor:
-                               { schemeAssessorId: "SPEC000000",
-                                 contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
-                                 companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
-                                 firstName: "Someone",
-                                 lastName: "Person",
-                                 registeredBy: { name: "test scheme", schemeId: scheme_id } },
-                              shortPaybackRecommendations:
-                               [{ code: "X12",
-                                  text: "Clean windows and roof lights to maximise daylight entering building and reduce the need for artificial lighting.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "X11",
-                                  text: "Consider implementing a programme of planned lighting systems maintenance to maintain effectiveness and energy efficiency.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "X9",
-                                  text:
-                                   "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
-                                  cO2Impact: "HIGH" },
-                                { code: "X10",
-                                  text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
-                                  cO2Impact: "HIGH" },
-                                { code: "OM15",
-                                  text:
-                                   "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "BF6",
-                                  text:
-                                   "Consider how building fabric air tightness could be improved, for example sealing, draught stripping and closing off unused ventilation openings, chimneys.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "AC12",
-                                  text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
-                                  cO2Impact: "HIGH" }],
-                              mediumPaybackRecommendations:
-                               [{ code: "X3",
-                                  text:
-                                   "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM" },
-                                { code: "AC9",
-                                  text:
-                                   "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
-                                  cO2Impact: "HIGH" },
-                                { code: "BF22",
-                                  text:
-                                   "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
-                                  cO2Impact: "MEDIUM" }],
-                              longPaybackRecommendations:
-                               [{ code: "X13",
-                                  text:
-                                   "Engage experts to review the building lighting strategies and propose alterations and/or upgrades to daylighting provisions, luminaires and their control systems and an implementation plan.",
-                                  cO2Impact: "MEDIUM" },
-                                { code: "X1",
-                                  text:
-                                   "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
-                                  cO2Impact: "HIGH" },
-                                { code: "BF3", text: "Consider replacing or improving glazing.", cO2Impact: "MEDIUM" }],
-                              otherPaybackRecommendations: [],
-                              technicalInformation:
-                               { buildingEnvironment: "Heating and Natural Ventilation",
-                                 floorArea: 973.6,
-                                 occupier: "Business Name",
-                                 propertyType: "General office",
-                                 renewableSources: nil,
-                                 discountedEnergy: nil,
-                                 inspectionType: "Physical" },
-                              administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.0" },
-                              siteServiceOne: { description: "Natural Gas", quantity: 76_639 },
-                              siteServiceTwo: { description: "Electricity", quantity: 36_419 },
-                              siteServiceThree: { description: "Not used", quantity: 0 },
-                              relatedRrn: "0000-0000-0000-0000-0040",
-                              addressId: "RRN-0000-0000-0000-0000-0050",
-                              optOut: false,
-                              relatedAssessments: [],
-                              supersededBy: nil,
-                              schemaType: "DECAR-S-7.0",
-                              countryName: "Scotland",
-                              energyBandFromRelatedCertificate: "b" }
+        it "returns the expected DEC-AR" do
+          response =
+            JSON.parse(
+              fetch_scottish_certificate_summary(id: "0000-0000-0000-0000-0050").body,
+              symbolize_names: true,
+            )
 
-        expect(response[:data]).to eq(expected_response)
+          expected_response = { typeOfAssessment: "DEC-AR",
+                                assessmentId: "0000-0000-0000-0000-0050",
+                                reportType: "2",
+                                dateOfAssessment: "2023-06-27",
+                                dateOfExpiry: "2033-06-26",
+                                dateOfRegistration: "2023-06-27",
+                                address: { addressLine1: "Non-dom Property", addressLine2: "Buisness Park", addressLine3: "", addressLine4: "", town: "Town", postcode: "EH14 2SP" },
+                                assessor:
+                                  { schemeAssessorId: "SPEC000000",
+                                    contactDetails: { email: "assessor@co.uk", telephoneNumber: "000002828282" },
+                                    companyDetails: { name: "EPC R Us Ltd", address: "6 Unit Business Park Town" },
+                                    firstName: "Someone",
+                                    lastName: "Person",
+                                    registeredBy: { name: "test scheme", schemeId: scheme_id } },
+                                shortPaybackRecommendations:
+                                  [{ code: "X12",
+                                     text: "Clean windows and roof lights to maximise daylight entering building and reduce the need for artificial lighting.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X11",
+                                     text: "Consider implementing a programme of planned lighting systems maintenance to maintain effectiveness and energy efficiency.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X9",
+                                     text:
+                                       "Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).",
+                                     cO2Impact: "HIGH" },
+                                   { code: "X10",
+                                     text: "Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "OM15",
+                                     text:
+                                       "It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "BF6",
+                                     text:
+                                       "Consider how building fabric air tightness could be improved, for example sealing, draught stripping and closing off unused ventilation openings, chimneys.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "AC12",
+                                     text: "Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.",
+                                     cO2Impact: "HIGH" }],
+                                mediumPaybackRecommendations:
+                                  [{ code: "X3",
+                                     text:
+                                       "Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "BF9", text: "Consider introducing or improving cavity wall insulation.", cO2Impact: "MEDIUM" },
+                                   { code: "AC9",
+                                     text:
+                                       "Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "BF22",
+                                     text:
+                                       "Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.",
+                                     cO2Impact: "MEDIUM" }],
+                                longPaybackRecommendations:
+                                  [{ code: "X13",
+                                     text:
+                                       "Engage experts to review the building lighting strategies and propose alterations and/or upgrades to daylighting provisions, luminaires and their control systems and an implementation plan.",
+                                     cO2Impact: "MEDIUM" },
+                                   { code: "X1",
+                                     text:
+                                       "The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.",
+                                     cO2Impact: "HIGH" },
+                                   { code: "BF3", text: "Consider replacing or improving glazing.", cO2Impact: "MEDIUM" }],
+                                otherPaybackRecommendations: [],
+                                technicalInformation:
+                                  { buildingEnvironment: "Heating and Natural Ventilation",
+                                    floorArea: 973.6,
+                                    occupier: "Business Name",
+                                    propertyType: "General office",
+                                    renewableSources: nil,
+                                    discountedEnergy: nil,
+                                    inspectionType: "Physical" },
+                                administrativeInformation: { issueDate: "2023-06-27", calculationTool: "BSD, OR Scotland, v1.0.0" },
+                                siteServiceOne: { description: "Natural Gas", quantity: 76_639 },
+                                siteServiceTwo: { description: "Electricity", quantity: 36_419 },
+                                siteServiceThree: { description: "Not used", quantity: 0 },
+                                relatedRrn: "0000-0000-0000-0000-0040",
+                                addressId: "RRN-0000-0000-0000-0000-0050",
+                                optOut: false,
+                                relatedAssessments: [],
+                                supersededBy: nil,
+                                schemaType: "DECAR-S-7.0",
+                                countryName: "Scotland",
+                                energyBandFromRelatedCertificate: "b" }
+
+          expect(response[:data]).to eq(expected_response)
+        end
       end
     end
   end

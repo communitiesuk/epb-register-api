@@ -15,15 +15,45 @@ describe "Acceptance::ScotlandDECSummary", :set_with_timecop do
     scheme_id
   end
 
-  let(:valid_dec_xml) { Samples.xml "DECAR-S-7.0", "dec" }
+  let(:valid_dec_800_xml) { Samples.xml "DECAR-S-8.0.0", "dec" }
+  let(:valid_dec_70_xml) { Samples.xml "DECAR-S-7.0", "dec" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-S-7.1", "cepc" }
 
-  context "when getting a DEC" do
+  context "when getting a DEC 8.0.0" do
     context "when the DEC is present" do
       before do
-        xml = Nokogiri.XML valid_dec_xml.dup
+        xml = Nokogiri.XML valid_dec_800_xml.dup
 
-        xml.css("UPRN").map(&:remove)
+        lodge_scottish_assessment(
+          assessment_body: xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "DECAR-S-8.0.0",
+          migrated: true,
+        )
+      end
+
+      it "returns the expected XML summary" do
+        response =
+          JSON.parse(
+            fetch_scottish_dec_summary(assessment_id: "0000-0000-0000-0000-0000").body,
+            symbolize_names: true,
+          )
+
+        expected = Samples.xml "DECAR-S-8.0.0", "dec_summary"
+
+        expect(response[:data]).to eq expected
+      end
+    end
+  end
+
+  context "when getting a DEC 7.0" do
+    context "when the DEC is present" do
+      before do
+        xml = Nokogiri.XML valid_dec_70_xml.dup
+
         lodge_scottish_assessment(
           assessment_body: xml.to_xml,
           accepted_responses: [201],
@@ -42,10 +72,9 @@ describe "Acceptance::ScotlandDECSummary", :set_with_timecop do
             symbolize_names: true,
           )
 
-        expected_without_uprn = Samples.xml "DECAR-S-7.0", "dec_summary"
-        expected_without_uprn.sub! "UPRN-000000000001", ""
+        expected = Samples.xml "DECAR-S-7.0", "dec_summary"
 
-        expect(response[:data]).to eq expected_without_uprn
+        expect(response[:data]).to eq expected
       end
     end
   end
@@ -101,7 +130,7 @@ describe "Acceptance::ScotlandDECSummary", :set_with_timecop do
   context "when assessment has been cancelled" do
     it "returns error 410, assessment not for issue" do
       lodge_scottish_assessment(
-        assessment_body: valid_dec_xml,
+        assessment_body: valid_dec_70_xml,
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],

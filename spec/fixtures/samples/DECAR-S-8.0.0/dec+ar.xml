@@ -1,0 +1,515 @@
+<Reports
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/decar-s"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/decar-s  ../../../../api/schemas/xml/DECAR-S-8.0.0/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0040</RRN>
+      <Issue-Date>2023-06-27</Issue-Date>
+      <Valid-Until>2023-06-27</Valid-Until>
+      <Report-Type>1</Report-Type>
+      <Inspection-Date>2023-06-27</Inspection-Date>
+      <Registration-Date>2023-06-27</Registration-Date>
+      <Status>entered</Status>
+      <Related-RRN>0000-0000-0000-0000-0050</Related-RRN>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Test Assessor</Name>
+        <Accreditation-Scheme-Name>Test Scheme</Accreditation-Scheme-Name>
+        <Trading-Address>6 Unit Business Park Town</Trading-Address>
+        <Company-Name>EPC R Us Ltd</Company-Name>
+        <Status>Registered</Status>
+        <E-Mail>assessor@co.uk</E-Mail>
+        <Telephone-Number>000002828282</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <Location-Description>Landlord owned building built 1980. central landlord heating with mmixture of lighting, electric pou and a single split AC unit in the comms room. </Location-Description>
+        <UPRN>UPRN-0000000001</UPRN>
+        <Property-Address>
+          <Address-Line-1>Non-dom Property</Address-Line-1>
+          <Address-Line-2>Buisness Park</Address-Line-2>
+          <Address-Line-3 />
+          <Address-Line-4 />
+          <Post-Town>Town</Post-Town>
+          <Postcode>EH14 2SP</Postcode>
+        </Property-Address>
+        <Property-Type>General office</Property-Type>
+        <Occupier>Business name</Occupier>
+      </Property-Details>
+      <Calculation-Details>
+        <Methodology>ORCalc</Methodology>
+        <Calculation-Tool>BSD, OR Scotland, v1.0.0</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>
+      <!--The DEC is inserted into the XML Document as a CDATA section encoded in MIME's base64.-->
+    </Formatted-Report>
+    <!--This is the variable part of the report XML message-->
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2022-06-27</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2023-06-27</OR-Assessment-End-Date>
+      <Building-Category>C1; </Building-Category>
+      <OR-Building-Data>
+        <Internal-Environment>Heating and Natural Ventilation</Internal-Environment>
+        <Assessment-Period-Alignment>End Of Main Heating Fuel Period</Assessment-Period-Alignment>
+        <HVAC-System>Other</HVAC-System>
+        <Other-HVAC-System>Landlords perimeter radiator heating</Other-HVAC-System>
+      </OR-Building-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark>General office</Main-Benchmark>
+        <Benchmarks>
+          <Benchmark>
+            <Name>Public sector offices</Name>
+            <Benchmark-ID>1</Benchmark-ID>
+            <Area-Metric>Gross floor area measured as RICS Gross Internal Area (GIA)</Area-Metric>
+            <Floor-Area>973.6</Floor-Area>
+            <Special-Uses-Area />
+            <TUFA>973.6</TUFA>
+            <Benchmark>General office</Benchmark>
+            <Occupancy-Level>Standard Occupancy</Occupancy-Level>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Electricity>
+          <Consumption>36519</Consumption>
+          <Start-Date>2024-01-01</Start-Date>
+          <End-Date>2025-01-01</End-Date>
+          <Estimate>0</Estimate>
+        </Electricity>
+        <Gas>
+          <Consumption>76956</Consumption>
+          <Start-Date>2024-01-01</Start-Date>
+          <End-Date>2025-01-01</End-Date>
+          <Estimate>1</Estimate>
+        </Gas>
+      </OR-Energy-Consumption>
+      <OR-Usable-Floor-Area />
+      <OR-Previous-Data>
+        <Asset-Rating>21</Asset-Rating>
+      </OR-Previous-Data>
+    </OR-Operational-Rating>
+    <Display-Certificate>
+      <DEC-Annual-Energy-Summary>
+        <Annual-Energy-Use-Electrical>37</Annual-Energy-Use-Electrical>
+        <Annual-Energy-Use-Fuel-Thermal>79</Annual-Energy-Use-Fuel-Thermal>
+        <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
+        <Renewables-Electrical>0</Renewables-Electrical>
+        <Typical-Thermal-Use>127</Typical-Thermal-Use>
+        <Typical-Electrical-Use>95</Typical-Electrical-Use>
+      </DEC-Annual-Energy-Summary>
+      <DEC-Status>0</DEC-Status>
+      <Reason-Type>1</Reason-Type>
+      <DEC-Related-Party-Disclosure>4</DEC-Related-Party-Disclosure>
+      <This-Assessment>
+        <Nominated-Date>2025-04-01</Nominated-Date>
+        <Energy-Rating>47</Energy-Rating>
+        <Electricity-CO2>19</Electricity-CO2>
+        <Heating-CO2>17</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </This-Assessment>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>973.6</Floor-Area>
+        <Separately-Metered-Electric-Heating>0</Separately-Metered-Electric-Heating>
+      </Technical-Information>
+    </Display-Certificate>
+  </Report>
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0050</RRN>
+      <Issue-Date>2023-06-27</Issue-Date>
+      <Valid-Until>2023-06-27</Valid-Until>
+      <Report-Type>2</Report-Type>
+      <Inspection-Date>2023-06-27</Inspection-Date>
+      <Registration-Date>2023-06-27</Registration-Date>
+      <Status>entered</Status>
+      <Related-RRN>0000-0000-0000-0000-0040</Related-RRN>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Test Assessor</Name>
+        <Accreditation-Scheme-Name>Test Scheme</Accreditation-Scheme-Name>
+        <Trading-Address>6 Unit Business Park Town</Trading-Address>
+        <Company-Name>EPC R Us Ltd</Company-Name>
+        <Status>Registered</Status>
+        <E-Mail>assessor@co.uk</E-Mail>
+        <Telephone-Number>000002828282</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <Location-Description>Landlord owned building built 1980. central landlord heating with mmixture of lighting, electric pou and a single split AC unit in the comms room. </Location-Description>
+        <UPRN>UPRN-0000000001</UPRN>
+        <Property-Address>
+          <Address-Line-1>Non-dom Property</Address-Line-1>
+          <Address-Line-2>Buisness Park</Address-Line-2>
+          <Address-Line-3 />
+          <Address-Line-4 />
+          <Post-Town>Town</Post-Town>
+          <Postcode>EH14 2SP</Postcode>
+        </Property-Address>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+        <Property-Type>General office</Property-Type>
+        <Occupier>Business Name</Occupier>
+      </Property-Details>
+      <Calculation-Details>
+        <Methodology>ORCalc</Methodology>
+        <Calculation-Tool>BSD, OR Scotland, v1.0.0</Calculation-Tool>
+        <Inspection-Type>Physical</Inspection-Type>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>
+      <!--The DEC is inserted into the XML Document as a CDATA section encoded in MIME's base64.-->
+    </Formatted-Report>
+    <!--This is the variable part of the report XML message-->
+    <AR-Questions>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0001-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0001-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0002-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0002-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0003-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0003-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0004-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0004-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0006-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0006-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0007-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0007-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0008-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0008-003</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0009-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0009-017</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0009-018</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0009-008</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0009-013</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0032-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0032-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0033-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0033-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0034-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0034-003</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0035-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0035-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0036-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0036-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0037-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0037-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0038-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0038-003</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0039-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0039-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0040-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0040-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0041-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0041-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0042-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0042-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0043-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0043-001</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+      <AR-Question-Answer>
+        <Question-Code>
+          <Question-Code-Number>0052-000</Question-Code-Number>
+        </Question-Code>
+        <Answer>
+          <Answer>None</Answer>
+          <Answer-Code>
+            <Answer-Code-Number>0052-002</Answer-Code-Number>
+          </Answer-Code>
+        </Answer>
+      </AR-Question-Answer>
+    </AR-Questions>
+    <Advisory-Report>
+      <AR-Recommendations>
+        <!--CEPC:Short Paybacks-->
+        <Short-Payback>
+          <Recommendation-Code>X12</Recommendation-Code>
+          <Recommendation>Clean windows and roof lights to maximise daylight entering building and reduce the need for artificial lighting.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>X11</Recommendation-Code>
+          <Recommendation>Consider implementing a programme of planned lighting systems maintenance to maintain effectiveness and energy efficiency.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>X9</Recommendation-Code>
+          <Recommendation>Engage experts to assess the air conditioning systems in accordance with CIBSE TM 44.  (This could be an appropriate opportunity to engage an accredited energy Assessor to undertake an inspection in compliance with the Energy Performance of Buildings Regulations).</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>X10</Recommendation-Code>
+          <Recommendation>Engage experts to propose and set up an air conditioning servicing and maintenance regime and implement it.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>OM15</Recommendation-Code>
+          <Recommendation>It is recommended that energy management techniques are introduced.  These could include efforts to gain building users commitment to save energy, allocating responsibility for energy to a specific person (champion), setting targets and monitoring.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>BF6</Recommendation-Code>
+          <Recommendation>Consider how building fabric air tightness could be improved, for example sealing, draught stripping and closing off unused ventilation openings, chimneys.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>AC12</Recommendation-Code>
+          <Recommendation>Engage experts to survey the air conditioning systems and propose remedial works to improve condition and operating efficiency.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <!--CEPC:Medium Paybacks-->
+        <Medium-Payback>
+          <Recommendation-Code>X3</Recommendation-Code>
+          <Recommendation>Consider implementing regular inspections of the building fabric to check on the condition of insulation and sealing measures and removal of accidental ventilation paths.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>BF9</Recommendation-Code>
+          <Recommendation>Consider introducing or improving cavity wall insulation.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>AC9</Recommendation-Code>
+          <Recommendation>Engage experts to assess condensers location and cleansing regime and propose recommendations to improve effectiveness and energy efficiency.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>BF22</Recommendation-Code>
+          <Recommendation>Consider engaging experts to review the condition of the building fabric and propose measures to improve energy performance.  This might include building pressure tests for air tightness and thermography tests for insulation continuity.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <!--CEPC:Long Paybacks-->
+        <Long-Payback>
+          <Recommendation-Code>X13</Recommendation-Code>
+          <Recommendation>Engage experts to review the building lighting strategies and propose alterations and/or upgrades to daylighting provisions, luminaires and their control systems and an implementation plan.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Long-Payback>
+        <Long-Payback>
+          <Recommendation-Code>X1</Recommendation-Code>
+          <Recommendation>The current metering provisions do not enable production of a specific and reasonably accurate Operational Rating for this building.  It is recommended that meters be installed and a regime of recording data be put in place.  CIBSE TM 39 gives guidance on this.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Long-Payback>
+        <Long-Payback>
+          <Recommendation-Code>BF3</Recommendation-Code>
+          <Recommendation>Consider replacing or improving glazing.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Long-Payback>
+      </AR-Recommendations>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>973.6</Floor-Area>
+      </Technical-Information>
+      <Site-Services>
+        <Service-1>
+          <Description>Natural Gas</Description>
+          <Quantity>76639</Quantity>
+        </Service-1>
+        <Service-2>
+          <Description>Electricity</Description>
+          <Quantity>36419</Quantity>
+        </Service-2>
+        <Service-3>
+          <Description>Not used</Description>
+          <Quantity>0</Quantity>
+        </Service-3>
+      </Site-Services>
+    </Advisory-Report>
+  </Report>
+</Reports>
+<!--HASH:84C91B9A6961C630319337CBBB53A2D7-->

@@ -68,6 +68,17 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CS63-S-8.0.0.xml"
   end
+  let(:dec_s_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/DECAR-S-8.0.0(DEC).xml"
+  end
+  let(:ar_s_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/DECAR-S-8.0.0(AR).xml"
+  end
+  let(:dec_ar_s_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/DECAR-S-8.0.0(DEC+AR).xml"
+  end
   let(:scheme_id) { add_scheme_and_get_id }
 
   describe "when trying to lodge an example XML" do
@@ -84,6 +95,13 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
           non_domestic_cc4: "ACTIVE",
           domestic_sap: "ACTIVE",
           domestic_rd_sap: "ACTIVE",
+          scotland_dec_and_ar: "ACTIVE",
+          scotland_nondomestic_existing_building: "ACTIVE",
+          scotland_nondomestic_new_building: "ACTIVE",
+          scotland_rdsap: "ACTIVE",
+          scotland_sap_existing_building: "ACTIVE",
+          scotland_sap_new_building: "ACTIVE",
+          scotland_section63: "ACTIVE",
         ),
       )
     end
@@ -246,7 +264,6 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-S-20.0.0",
-          migrated: true,
         ).status).to eq 201
       end
 
@@ -282,7 +299,39 @@ describe "Acceptance::LodgeExamples", :set_with_timecop do
             scheme_ids: [scheme_id],
           },
           schema_name: "CS63-S-8.0.0",
-          migrated: true,
+        ).status).to eq 201
+      end
+
+      it "can lodge the example DEC" do
+        expect(lodge_scottish_assessment(
+          assessment_body: dec_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "DECAR-S-8.0.0",
+        ).status).to eq 201
+      end
+
+      it "can lodge the example DEC Advisory Report" do
+        expect(lodge_scottish_assessment(
+          assessment_body: ar_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "DECAR-S-8.0.0",
+        ).status).to eq 201
+      end
+
+      it "can lodge the example DEC+AR" do
+        expect(lodge_scottish_assessment(
+          assessment_body: dec_ar_s_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "DECAR-S-8.0.0",
         ).status).to eq 201
       end
     end
