@@ -117,12 +117,9 @@ module UseCase
 
     def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:)
       raise SchemaNotDefined unless schema_name
+      raise SchemaNotSupportedException unless Helper::SchemaListHelper.new(schema_name).schema_exists?
 
-      unless Helper::SchemaListHelper.new(schema_name).schema_exists?
-        raise SchemaNotSupportedException
-      end
-
-      ensure_lodgement_xml_valid assessment_xml, schema_name
+      raise ValidationErrorException unless lodgement_xml_is_valid? assessment_xml, schema_name
 
       lodgement_domain = Domain::Lodgement.new(assessment_xml, schema_name)
       lodgement_data = lodgement_domain.fetch_data
@@ -133,6 +130,7 @@ module UseCase
         assessment_xml_doc: xml_doc,
         schema_name:,
       )
+
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
@@ -146,56 +144,59 @@ module UseCase
       end
 
       wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
+      raise SchemaNotSupportedException if wrapper.nil?
+
       schema_valid = UseCase::CheckSchemaVersion.new.execute(schema_name)
+      raise SchemaNotSupportedException unless migrated || schema_valid
 
       country_lookup = @country_use_case.execute rrn: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :assessment_id),
                                                  postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
                                                  address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
 
+      begin
+        LodgementRules::LocationCommon.new.validate(schema_name:, xml_adaptor: wrapper.get_view_model, country_lookup:, migrated:)
+      rescue Boundary::InvalidLocation => e
+        raise NotOverridableLodgementRuleError, e
+      end
+
       unless migrated || SCOTTISH_DEC_DECAR_CS63.include?(schema_name)
-
-        if schema_valid && !wrapper.nil?
-
-          rules =
-            if schema_name.include?("-S-")
-              if LATEST_COMMERCIAL.include? schema_name
-                LodgementRules::ScottishNonDomestic.new
-              elsif schema_name.include?("RdSAP")
-                LodgementRules::ScottishRdsap.new
-              else
-                LodgementRules::ScottishSap.new
-              end
-            elsif LATEST_COMMERCIAL.include? schema_name
-              LodgementRules::NonDomestic.new
+        rules =
+          if schema_name.include?("-S-")
+            if LATEST_COMMERCIAL.include? schema_name
+              LodgementRules::ScottishNonDomestic.new
+            elsif schema_name.include?("RdSAP")
+              LodgementRules::ScottishRdsap.new
             else
-              LodgementRules::DomesticCommon.new
+              LodgementRules::ScottishSap.new
             end
-
-          validation_result = rules.validate(wrapper.get_view_model, country_lookup)
-
-          unless validation_result.empty?
-            if overridden
-              validation_result_codes = validation_result.map { |result| result[:code] }
-
-              unless (validation_result_codes & NOT_OVERRIDABLE_LODGEMENT_RULES).empty?
-                error_message = validation_result.select { |error| NOT_OVERRIDABLE_LODGEMENT_RULES.include?(error[:code]) }
-                                                 .map { |non_overridable_error| non_overridable_error[:title] }.join(",")
-                raise NotOverridableLodgementRuleError, error_message
-              end
-
-              lodgement_data.each do |lodgement|
-                Gateway::OverriddenLodgmentEventsGateway.new.add(
-                  lodgement[:assessment_id],
-                  validation_result,
-                )
-              end
-
-            else
-              raise LodgementRulesException, validation_result
-            end
+          elsif LATEST_COMMERCIAL.include? schema_name
+            LodgementRules::NonDomestic.new
+          else
+            LodgementRules::DomesticCommon.new
           end
-        else
-          raise SchemaNotSupportedException
+
+        validation_result = rules.validate(wrapper.get_view_model, country_lookup)
+
+        unless validation_result.empty?
+          if overridden
+            validation_result_codes = validation_result.map { |result| result[:code] }
+
+            unless (validation_result_codes & NOT_OVERRIDABLE_LODGEMENT_RULES).empty?
+              error_message = validation_result.select { |error| NOT_OVERRIDABLE_LODGEMENT_RULES.include?(error[:code]) }
+                                               .map { |non_overridable_error| non_overridable_error[:title] }.join(",")
+              raise NotOverridableLodgementRuleError, error_message
+            end
+
+            lodgement_data.each do |lodgement|
+              Gateway::OverriddenLodgmentEventsGateway.new.add(
+                lodgement[:assessment_id],
+                validation_result,
+              )
+            end
+
+          else
+            raise LodgementRulesException, validation_result
+          end
         end
       end
 
@@ -274,13 +275,11 @@ module UseCase
                                                 schema_name:
     end
 
-    def ensure_lodgement_xml_valid(xml, schema_name)
-      unless @validate_assessment_use_case.execute(
+    def lodgement_xml_is_valid?(xml, schema_name)
+      @validate_assessment_use_case.execute(
         xml,
         Helper::SchemaListHelper.new(schema_name).schema_path,
       )
-        raise ValidationErrorException
-      end
     end
 
     def ensure_sap_data_version_valid(assessment_xml_doc:, schema_name:)

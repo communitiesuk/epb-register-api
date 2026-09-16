@@ -323,47 +323,6 @@ describe LodgementRules::NonDomestic, :set_with_timecop do
       end
     end
 
-    context "when the address is not in England, Wales or NI" do
-      let(:error) do
-        {
-          "code": "INVALID_COUNTRY",
-          "title": "Property address must be in England, Wales, or Northern Ireland",
-        }.freeze
-      end
-
-      it "returns an INVALID_COUNTRY error if the address is JE" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "JE3 6HW"]], [error], country_code: [:L])
-      end
-
-      it "returns an INVALID_COUNTRY error if the address is GY" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "GY7 9QS"]], [error], country_code: [:L])
-      end
-
-      it "returns an INVALID_COUNTRY error if the address is IM" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "IM7 3BZ"]], [error], country_code: [:L])
-      end
-
-      it "returns an INVALID_COUNTRY error if the address is in Scotland" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v5.6.b.0"], ["Postcode", "TD14 5TY"]], [error], country_code: [:S])
-      end
-
-      it "returns no error if the address is in England" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "SW1A 2AA"]], [], country_code: [:E])
-      end
-
-      it "returns no error if the address is in Northern Ireland" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v4.1"], ["Postcode", "BT3 9EP"]], [], country_code: [:N])
-      end
-
-      it "returns no error if the address is in Wales" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.e, SBEM, v6.1.e"], ["Postcode", "LL65 1DQ"]], [], country_code: [:W])
-      end
-
-      it "returns no error if the postcode crosses the English/Scottish border" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1"], ["Postcode", "TD15 1UZ"]], [], country_code: %i[E S])
-      end
-    end
-
     context "when inspection date is greater than or equal to the registration date" do
       let(:inspection_date_error) do
         {
@@ -442,42 +401,6 @@ describe LodgementRules::NonDomestic, :set_with_timecop do
 
       it "returns an error if the nominated date is more than three months after the or-assessment-end-date" do
         assert_errors([%w[OR-Assessment-End-Date 2019-09-30]], [error])
-      end
-    end
-  end
-
-  describe "when postcode is overseas or non-geographic" do
-    let(:docs_under_test) do
-      [
-        {
-          xml_doc:
-            Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc")).remove_namespaces!,
-          schema_name: "CEPC-8.0.0",
-        },
-        {
-          xml_doc:
-            Nokogiri.XML(Samples.xml("CEPC-NI-8.0.0", "cepc")).remove_namespaces!,
-          schema_name: "CEPC-NI-8.0.0",
-        },
-      ]
-    end
-
-    let(:error) do
-      {
-        "code": "DISALLOWED_POSTCODE",
-        "title": "Non-geographic and overseas postcodes are not allowed",
-      }.freeze
-    end
-
-    [
-      "BF1 2AU",
-      "BX8 0HB",
-      "XM4 5HQ",
-      "XX40 4AA",
-      "GX11 1AA",
-    ].each do |postcode|
-      it "returns an error if the address is #{postcode}" do
-        assert_errors([["Postcode", postcode]], [error])
       end
     end
   end

@@ -499,36 +499,42 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.to raise_error UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /Assessment with a Northern Ireland schema must have a property postcode starting with BT/
     end
 
-    it "does not accept Scottish rdsap assessment" do
-      Timecop.freeze("2023-06-27") do
-        assessment_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
-        assessment_xml.at("Property/Address/Postcode").content = "BF1 2AU"
-
-        expect {
-          use_case.execute assessment_xml: assessment_xml.to_s, schema_name: "RdSAP-Schema-S-19.0", scheme_ids: "1", migrated: false, overridden: true
-        }.to raise_error UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError, /Non-geographic and overseas postcodes are not allowed/
+    context "when the country is Scotland" do
+      before do
+        allow(country_use_case).to receive(:execute).and_return Domain::CountryLookup.new(country_codes: [:S])
       end
-    end
 
-    it "does not accept Scottish sap assessment" do
-      Timecop.freeze("2023-06-27") do
-        assessment_xml = Nokogiri.XML Samples.xml("SAP-Schema-S-19.0.0")
-        assessment_xml.at("Property/Address/Postcode").content = "BF1 2AU"
+      it "does not accept Scottish rdsap assessment" do
+        Timecop.freeze("2023-06-27") do
+          assessment_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-S-19.0")
+          assessment_xml.at("Property/Address/Postcode").content = "BF1 2AU"
 
-        expect {
-          use_case.execute assessment_xml: assessment_xml.to_s, schema_name: "RdSAP-Schema-S-19.0", scheme_ids: "1", migrated: false, overridden: true
-        }.to raise_error UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError, /Non-geographic and overseas postcodes are not allowed/
+          expect {
+            use_case.execute assessment_xml: assessment_xml.to_s, schema_name: "RdSAP-Schema-S-19.0", scheme_ids: "1", migrated: false, overridden: true
+          }.to raise_error UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError, /Non-geographic and overseas postcodes are not allowed/
+        end
       end
-    end
 
-    it "does not accept Scottish non-domestic assessment" do
-      Timecop.freeze("2023-06-27") do
-        assessment_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
-        assessment_xml.at("//CEPC:Postcode").content = "BF1 2AU"
+      it "does not accept Scottish sap assessment" do
+        Timecop.freeze("2023-06-27") do
+          assessment_xml = Nokogiri.XML Samples.xml("SAP-Schema-S-19.0.0")
+          assessment_xml.at("Property/Address/Postcode").content = "BF1 2AU"
 
-        expect {
-          use_case.execute assessment_xml: assessment_xml.to_s, schema_name: "CEPC-S-7.1", scheme_ids: "1", migrated: false, overridden: true
-        }.to raise_error UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError, /Non-geographic and overseas postcodes are not allowed/
+          expect {
+            use_case.execute assessment_xml: assessment_xml.to_s, schema_name: "RdSAP-Schema-S-19.0", scheme_ids: "1", migrated: false, overridden: true
+          }.to raise_error UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError, /Non-geographic and overseas postcodes are not allowed/
+        end
+      end
+
+      it "does not accept Scottish non-domestic assessment" do
+        Timecop.freeze("2023-06-27") do
+          assessment_xml = Nokogiri.XML Samples.xml("CEPC-S-7.1", "cepc")
+          assessment_xml.at("//CEPC:Postcode").content = "BF1 2AU"
+
+          expect {
+            use_case.execute assessment_xml: assessment_xml.to_s, schema_name: "CEPC-S-7.1", scheme_ids: "1", migrated: false, overridden: true
+          }.to raise_error UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError, /Non-geographic and overseas postcodes are not allowed/
+        end
       end
     end
   end

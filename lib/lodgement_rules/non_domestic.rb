@@ -129,21 +129,6 @@ module LodgementRules
           end,
       },
       {
-        name: "INVALID_COUNTRY",
-        title:
-          "Property address must be in England, Wales, or Northern Ireland",
-        test:
-          # Unlike domestic lodgments non-domestic XML does not contain a country code
-          lambda do |adapter, country_lookup = nil|
-            country_code = method_or_nil(adapter, :country_code)
-            if country_lookup.in_channel_islands? || country_lookup.in_isle_of_man? || (country_lookup.in_scotland? && !country_lookup.in_england?) || country_code == "SCT"
-              false
-            else
-              true
-            end
-          end,
-      },
-      {
         name: "WRONG_SBEM_VERSION_FOR_REGION",
         title:
           "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 6.1.e, England - SBEM 6.1",
@@ -190,14 +175,6 @@ module LodgementRules
             ]
 
             (dates[0] <= dates[1])
-          end,
-      },
-      {
-        name: "DISALLOWED_POSTCODE",
-        title: "Non-geographic and overseas postcodes are not allowed",
-        test:
-          lambda do |adapter, *|
-            !adapter&.postcode&.match?(UseCase::PostcodeData::NON_GEOGRAPHIC_OR_OVERSEAS)
           end,
       },
     ].freeze

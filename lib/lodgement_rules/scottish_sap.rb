@@ -83,28 +83,6 @@ module LodgementRules
             !construction_years&.any?(&:nil?)
           end,
       },
-      {
-        name: "INVALID_COUNTRY",
-        title:
-          "Property address must be in Scotland",
-        test:
-          lambda do |adapter, country_lookup = nil|
-            country_code = method_or_nil(adapter, :country_code)
-            if country_lookup.in_channel_islands? || country_lookup.in_isle_of_man? || (!country_lookup.in_scotland? && country_lookup.in_england?) || country_lookup.in_wales? || country_lookup.in_northern_ireland? || country_code == "EAW" || country_code == "ENG" || country_code == "WLS" || country_code == "NI"
-              false
-            else
-              true
-            end
-          end,
-      },
-      {
-        name: "DISALLOWED_POSTCODE",
-        title: "Non-geographic and overseas postcodes are not allowed",
-        test:
-          lambda do |adapter, *|
-            !adapter&.postcode&.match?(UseCase::PostcodeData::NON_GEOGRAPHIC_OR_OVERSEAS)
-          end,
-      },
     ].freeze
 
     def validate(xml_adaptor, country_lookup)
