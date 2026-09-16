@@ -10,7 +10,7 @@
         <UPRN>UPRN-0000000001</UPRN>
       </Property-Details>
       <Calculation-Details>
-        <Output-Engine>MWW-91.1.1</Output-Engine>
+        <Output-Engine>EPCgen, v5.6.b.0</Output-Engine>
       </Calculation-Details>
     </Report-Header>
     <OR-Operational-Rating>

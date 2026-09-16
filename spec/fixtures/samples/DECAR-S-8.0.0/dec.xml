@@ -37,9 +37,9 @@
         <Occupier>Industrial Estate</Occupier>
       </Property-Details>
       <Calculation-Details>
-        <Output-Engine>MWW-91.1.1</Output-Engine>
-        <Methodology>ORCalc</Methodology>
-        <Calculation-Tool>BSD, OR Scotland, v1.0.3</Calculation-Tool>
+        <Output-Engine>EPCgen, v5.6.b.0</Output-Engine>
+        <Methodology>SBEM</Methodology>
+        <Calculation-Tool>IES Ltd, Virtual Environment, v7.0.26, SBEM, v6.1.e.1</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Formatted-Report>

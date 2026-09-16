@@ -38,8 +38,8 @@
         <Occupier>Business name</Occupier>
       </Property-Details>
       <Calculation-Details>
-        <Methodology>ORCalc</Methodology>
-        <Calculation-Tool>BSD, OR Scotland, v1.0.0</Calculation-Tool>
+        <Methodology>SBEM</Methodology>
+        <Calculation-Tool>IES Ltd, Virtual Environment, v7.0.26, SBEM, v6.1.e.1</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Formatted-Report>
@@ -154,8 +154,8 @@
         <Occupier>Business Name</Occupier>
       </Property-Details>
       <Calculation-Details>
-        <Methodology>ORCalc</Methodology>
-        <Calculation-Tool>BSD, OR Scotland, v1.0.0</Calculation-Tool>
+        <Methodology>SBEM</Methodology>
+        <Calculation-Tool>IES Ltd, Virtual Environment, v7.0.26, SBEM, v6.1.e.1</Calculation-Tool>
         <Inspection-Type>Physical</Inspection-Type>
       </Calculation-Details>
     </Report-Header>
