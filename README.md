@@ -12,17 +12,25 @@
 
 ## Creating a local database
 
-By default and application assumes that PostgreSQL 17 is installed locally, with a role name "postgres" that has the `CREATEDB` and `SUPERUSER` privileges, and is configured to use trust authentication.
+By default and application assumes that PostgreSQL 18 is installed locally,
+with a role name "postgres" that has the `CREATEDB` and `SUPERUSER` privileges,
+and is configured to use trust authentication.
 
-If you are hosting postgres with a different setup, for example you need to set a password, then set a `DATABASE_URL` environmental variable:
+If you are hosting postgres with a different setup, for example you need to set a password, then set a `DATABASE_URL` environmental variable.
 
+```bash
+# If your database is not on localhost with trust authentication then export a connection string
+# DATABASE_URL="postgresql://postgres:my_password@localhost:5432/epb_development"
+
+# Create database, or update the database if there is a pending migration
+make setup-db
+
+# Seed the database
+make seed-local-db
+
+# Delete the database
+bundle exec rake db:drop
 ```
-DATABASE_URL="postgresql://postgres:my_password@localhost:5432/epb_development"
-```
-
-Once you have set this up, run the command to set up and seed your local database
-
-`make seed-local-db`
 
 ### You will need to set the following environment variables
 
