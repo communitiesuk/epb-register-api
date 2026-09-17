@@ -32,7 +32,7 @@ describe LodgementRules::LocationCommon do
 
   describe "#validate" do
     context "when schema is not Scottish" do
-      let!(:domestic_under_test) do
+      let(:domestic_under_test) do
         [{
           xml_doc:
              Nokogiri.XML(Samples.xml("RdSAP-Schema-21.0.0", "epc")).remove_namespaces!,
@@ -54,7 +54,7 @@ describe LodgementRules::LocationCommon do
            schema_name: "SAP-Schema-NI-18.0.0",
          }]
       end
-      let!(:non_domestic_under_test) do
+      let(:non_domestic_under_test) do
         [
           {
             xml_doc:
@@ -78,7 +78,7 @@ describe LodgementRules::LocationCommon do
           },
         ]
       end
-      let!(:docs_under_test) do
+      let(:docs_under_test) do
         domestic_under_test + non_domestic_under_test
       end
 
@@ -185,7 +185,7 @@ describe LodgementRules::LocationCommon do
     end
 
     context "when schema is Scottish" do
-      let!(:domestic_under_test) do
+      let(:domestic_under_test) do
         [{
           xml_doc:
             Nokogiri.XML(Samples.xml("RdSAP-Schema-S-22.0.0", "epc")).remove_namespaces!,
@@ -197,7 +197,7 @@ describe LodgementRules::LocationCommon do
            schema_name: "SAP-Schema-S-20.0.0",
          }]
       end
-      let!(:non_domestic_under_test) do
+      let(:non_domestic_under_test) do
         [
           {
             xml_doc:
@@ -216,7 +216,7 @@ describe LodgementRules::LocationCommon do
           },
         ]
       end
-      let!(:docs_under_test) do
+      let(:docs_under_test) do
         domestic_under_test + non_domestic_under_test
       end
 

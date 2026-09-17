@@ -32,7 +32,7 @@ describe LodgementRules::ScottishNonDomestic, :set_with_timecop do
   include_context "when testing Scottish non-domestic lodgements"
 
   context "when CEPC are lodged for" do
-    let!(:docs_under_test) do
+    let(:docs_under_test) do
       [
         {
           xml_doc:

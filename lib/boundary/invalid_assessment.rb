@@ -1,9 +1,7 @@
 module Boundary
   class InvalidAssessment < Boundary::TerminableError
     def initialize(argument)
-      super(<<~MSG.strip)
-        Assessment type is not valid: #{argument}
-      MSG
+      super "Assessment type is not valid: #{argument}"
     end
   end
 end

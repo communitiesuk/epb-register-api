@@ -53,7 +53,7 @@ describe LodgementRules::NonDomestic, :set_with_timecop do
   end
 
   context "when CEPC and CEPC-NI are lodged for" do
-    let!(:docs_under_test) do
+    let(:docs_under_test) do
       [
         {
           xml_doc:
@@ -343,7 +343,7 @@ describe LodgementRules::NonDomestic, :set_with_timecop do
   end
 
   context "when DEC is lodged" do
-    let!(:docs_under_test) do
+    let(:docs_under_test) do
       [
         {
           xml_doc:

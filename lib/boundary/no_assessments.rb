@@ -1,9 +1,7 @@
 module Boundary
   class NoAssessments < Boundary::TerminableError
     def initialize(argument)
-      super(<<~MSG.strip)
-        no assessments found for: #{argument}
-      MSG
+      super "no assessments found for: #{argument}"
     end
   end
 end
