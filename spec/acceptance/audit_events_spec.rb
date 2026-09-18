@@ -21,7 +21,7 @@ describe "Audit events", :set_with_timecop do
   let(:scheme_id) { add_scheme_and_get_id }
 
   let(:saved_data) do
-    ActiveRecord::Base.connection.exec_query("SELECT * FROM audit_logs ORDER BY timestamp DESC")
+    ActiveRecord::Base.connection.exec_query("SELECT * FROM audit_logs ORDER BY timestamp DESC, id ASC")
   end
 
   context "when adding a new assessor" do
