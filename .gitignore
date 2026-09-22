@@ -9,3 +9,6 @@ manifest.yml
 db_data
 node_modules/
 dump.rdb
+
+# Prevent accidently recommitting schema.rb after the structure.sql change
+db/schema.rb
