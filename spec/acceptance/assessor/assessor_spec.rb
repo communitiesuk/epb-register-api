@@ -65,49 +65,6 @@ describe "Acceptance::Assessor" do
     }
   end
 
-  let(:valid_scottish_assessor_response) do
-    {
-      firstName: "Some",
-      middleNames: "Middle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      contactDetails: {
-        telephoneNumber: "010199991010101",
-        email: "person@person.com",
-      },
-      searchResultsComparisonPostcode: "SE1 7EZ",
-      alsoKnownAs: "Bob",
-      address: {
-        addressLine1: "Flat 33",
-        addressLine2: "18 Palmtree Road",
-        addressLine3: "",
-        town: "Brighton",
-        postcode: "SE1 7EZ",
-      },
-      companyDetails: {
-        companyRegNo: "",
-        companyAddressLine1: "1 Company Building",
-        companyAddressLine2: "Company Street",
-        companyAddressLine3: "Oraganisation district",
-        companyTown: "Monoploy",
-        companyPostcode: "NE53 2WS",
-        companyWebsite: "companny@test.uk",
-        companyTelephoneNumber: "00000002000",
-        companyEmail: "emailme@company.org",
-        companyName: "My Company",
-      },
-      qualifications: {
-        scotlandRdsap: "ACTIVE",
-        scotlandSapExistingBuilding: "ACTIVE",
-        scotlandSapNewBuilding: "ACTIVE",
-        scotlandDecAndAr: "ACTIVE",
-        scotlandNondomesticExistingBuilding: "ACTIVE",
-        scotlandNondomesticNewBuilding: "ACTIVE",
-        scotlandSection63: "ACTIVE",
-      },
-    }
-  end
-
   let!(:scheme_id) { add_scheme_and_get_id }
   let(:non_existent_scheme_id) { scheme_id.to_i + 10 }
 
