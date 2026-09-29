@@ -3874,7 +3874,9 @@ components:
               format: email
               example: 'j.t.bloggs@example.com'
         qualifications:
-          $ref: '#/components/schemas/AssessorQualifications'
+          anyOf:
+            - $ref: '#/components/schemas/AssessorQualifications'
+            - $ref: '#/components/schemas/ScottishAssessorQualifications'
         alsoKnownAs:
           type: string
           example: 'Joey'
@@ -3911,7 +3913,7 @@ components:
               format: email
               example: 'j.t.bloggs@example.com'
         qualifications:
-          $ref: '#/components/schemas/AssessorQualifications'
+          $ref: '#/components/schemas/ScottishAssessorQualifications'
         registeredBy:
           type: object
           properties:
@@ -4092,20 +4094,6 @@ components:
         nonDomesticCc4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         gda:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandRdsap:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandSapExistingBuilding:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandSapNewBuilding:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandDecAndAr:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandNondomesticExistingBuilding:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandNondomesticNewBuilding:
-          $ref: '#/components/schemas/AssessorQualificationStatus'
-        scotlandSection63:
           $ref: '#/components/schemas/AssessorQualificationStatus'
 
     ScottishAssessorQualifications:
