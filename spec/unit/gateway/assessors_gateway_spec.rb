@@ -130,14 +130,14 @@ describe Gateway::AssessorsGateway do
       it "returns only assessors with English qualification details" do
         expect(gateway.search("56.101459", "-1.241858", %w[domesticRdSap]).length).to eq(6)
         expect(gateway.search("56.101459", "-1.241858", %w[domesticRdSap]).first[:qualifications][:domestic_rd_sap]).to eq("ACTIVE")
-        expect(gateway.search("56.101459", "-1.241858", %w[domesticRdSap]).first[:qualifications][:scotland_rdsap]).to eq("INACTIVE")
+        expect(gateway.search("56.101459", "-1.241858", %w[domesticRdSap]).first[:qualifications]).not_to include(:scotland_rdsap)
       end
     end
 
     context "when searching for a Scottish assessor by postcode" do
       it "returns only assessors with Scottish qualification details" do
         expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).length).to eq(6)
-        expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications][:domestic_rd_sap]).to eq("INACTIVE")
+        expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications]).not_to include(:domestic_rd_sap)
         expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications][:scotland_rdsap]).to eq("ACTIVE")
       end
     end

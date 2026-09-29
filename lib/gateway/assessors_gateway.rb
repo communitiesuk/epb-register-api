@@ -73,7 +73,7 @@ module Gateway
       scotlandSection63
     ].freeze
 
-    def row_to_assessor_domain(row)
+    def row_to_assessor_domain(row, use_regional_qualifications_list: false, is_scottish: false)
       scheme_name = row["scheme_name"]
       unless scheme_name
         scheme = Scheme.find_by(scheme_id: row[REGISTERED_BY_COLUMN.to_s])
@@ -123,6 +123,8 @@ module Gateway
         scotland_nondomestic_existing_building_qualification: row[SCOTLAND_NONDOMESTIC_EXISTING_BUILDING_COLUMN.to_s],
         scotland_nondomestic_new_building_qualification: row[SCOTLAND_NONDOMESTIC_NEW_BUILDING_COLUMN.to_s],
         scotland_section63_qualification: row[SCOTLAND_SECTION63_COLUMN.to_s],
+        use_regional_qualifications_list: use_regional_qualifications_list,
+        is_scottish: is_scottish,
       )
     end
 
@@ -269,7 +271,7 @@ module Gateway
         )
       result = []
       response.each do |row|
-        assessor_hash = row_to_assessor_domain(row).to_hash
+        assessor_hash = row_to_assessor_domain(row, use_regional_qualifications_list: true, is_scottish:).to_hash
         assessor_hash[:distance_from_postcode_in_miles] = row["distance"]
 
         result.push(assessor_hash)
@@ -362,7 +364,7 @@ module Gateway
       response = Assessor.connection.exec_query sql, "SQL", binds
 
       result = []
-      response.each { |row| result.push(row_to_assessor_domain(row).to_hash) }
+      response.each { |row| result.push(row_to_assessor_domain(row, use_regional_qualifications_list: true).to_hash) }
       result
     end
 

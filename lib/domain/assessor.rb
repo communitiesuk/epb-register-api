@@ -63,7 +63,9 @@ module Domain
       scotland_dec_and_ar_qualification: nil,
       scotland_nondomestic_existing_building_qualification: nil,
       scotland_nondomestic_new_building_qualification: nil,
-      scotland_section63_qualification: nil
+      scotland_section63_qualification: nil,
+      use_regional_qualifications_list: false,
+      is_scottish: false
     )
       @scheme_assessor_id = scheme_assessor_id
       @first_name = first_name
@@ -107,6 +109,8 @@ module Domain
       @scotland_nondomestic_existing_building_qualification = scotland_nondomestic_existing_building_qualification
       @scotland_nondomestic_new_building_qualification = scotland_nondomestic_new_building_qualification
       @scotland_section63_qualification = scotland_section63_qualification
+      @use_regional_qualifications_list = use_regional_qualifications_list
+      @is_scottish = is_scottish
     end
 
     def to_hash
@@ -138,7 +142,11 @@ module Domain
             company_email: @company_email,
             company_name: @company_name,
           }.reject { |_k, v| v.nil? },
-        qualifications: qualifications,
+        qualifications: if @use_regional_qualifications_list
+                          @is_scottish ? scottish_qualifications : qualifications
+                        else
+                          qualifications.merge(scottish_qualifications)
+                        end,
       }
 
       hash[:middle_names] = @middle_names if @middle_names
@@ -243,13 +251,6 @@ module Domain
         non_domestic_nos5:
           filter_qualification(@non_domestic_nos5_qualification),
         gda: filter_qualification(@gda_qualification),
-        scotland_rdsap: filter_qualification(@scotland_rdsap_qualification),
-        scotland_sap_existing_building: filter_qualification(@scotland_sap_existing_building_qualification),
-        scotland_sap_new_building: filter_qualification(@scotland_sap_new_building_qualification),
-        scotland_dec_and_ar: filter_qualification(@scotland_dec_and_ar_qualification),
-        scotland_nondomestic_existing_building: filter_qualification(@scotland_nondomestic_existing_building_qualification),
-        scotland_nondomestic_new_building: filter_qualification(@scotland_nondomestic_new_building_qualification),
-        scotland_section63: filter_qualification(@scotland_section63_qualification),
       }
     end
 
