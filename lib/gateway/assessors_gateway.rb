@@ -46,9 +46,6 @@ module Gateway
       domestic: %w[
         domestic_sap_qualification
         domestic_rd_sap_qualification
-        scotland_rdsap_qualification
-        scotland_sap_existing_building_qualification
-        scotland_sap_new_building_qualification
       ],
       non_domestic: %w[
         non_domestic_sp3_qualification
@@ -57,10 +54,6 @@ module Gateway
         non_domestic_nos3_qualification
         non_domestic_nos4_qualification
         non_domestic_nos5_qualification
-        scotland_dec_and_ar_qualification
-        scotland_nondomestic_existing_building_qualification
-        scotland_nondomestic_new_building_qualification
-        scotland_section63_qualification
       ],
     }.freeze
     SCOTTISH_QUALIFICATIONS = %w[

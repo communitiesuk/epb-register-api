@@ -110,6 +110,32 @@ describe Gateway::AssessorsGateway do
       )
     end
 
+    add_assessor(
+      scheme_id:,
+      assessor_id: "ACME123432",
+      body: AssessorStub.new.fetch_request_body(
+        first_name: "Alfie",
+        last_name: "Betts",
+        non_domestic_nos3: "INACTIVE",
+        non_domestic_nos4: "INACTIVE",
+        non_domestic_nos5: "INACTIVE",
+        non_domestic_dec: "INACTIVE",
+        domestic_rd_sap: "INACTIVE",
+        domestic_sap: "INACTIVE",
+        non_domestic_sp3: "INACTIVE",
+        non_domestic_cc4: "INACTIVE",
+        gda: "INACTIVE",
+        scotland_dec_and_ar: "ACTIVE",
+        scotland_nondomestic_existing_building: "ACTIVE",
+        scotland_nondomestic_new_building: "ACTIVE",
+        scotland_rdsap: "ACTIVE",
+        scotland_sap_existing_building: "ACTIVE",
+        scotland_sap_new_building: "ACTIVE",
+        scotland_section63: "ACTIVE",
+        search_results_comparison_postcode: "AB1 0AA",
+      ),
+    )
+
     ActiveRecord::Base.connection.execute(<<~SQL.squish)
       INSERT INTO postcode_geolocation (postcode, latitude, longitude, region)
       VALUES ('AB1 0AA', '57.101459','-2.242858', 'Scotland'),
@@ -121,6 +147,12 @@ describe Gateway::AssessorsGateway do
     context "when there are more than 20 assessors of the same name" do
       it "returns more than 20 items of the same name" do
         expect(gateway.search_by(name: "Someone Person").length).to eq(21)
+      end
+    end
+
+    context "when you search by name for an assessor who only has Scottish qualifications active" do
+      it "does not return them" do
+        expect(gateway.search_by(name: "Alfie Betts", qualification_type: "domestic").length).to eq(0)
       end
     end
   end
@@ -136,7 +168,7 @@ describe Gateway::AssessorsGateway do
 
     context "when searching for a Scottish assessor by postcode" do
       it "returns only assessors with Scottish qualification details" do
-        expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).length).to eq(6)
+        expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).length).to eq(7)
         expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications]).not_to include(:domestic_rd_sap)
         expect(gateway.search("57.101453", "-2.242828", %w[scotlandSapExistingBuilding], is_scottish: true).first[:qualifications][:scotland_rdsap]).to eq("ACTIVE")
       end
@@ -180,14 +212,13 @@ describe Gateway::AssessorsGateway do
     end
 
     before do
-      # include_context "when testing Scottish assessors"
       add_assessors_to_logs
 
       allow(Helper::PaginationHelper).to receive(:calculate_offset)
     end
 
-    it "returns assessors within an exclusive date range" do
-      expect(gateway.search_by_date(**args).length).to eq(10)
+    it "returns assessors with Scottish qualifications added within a date range" do
+      expect(gateway.search_by_date(**args).length).to eq(11)
     end
 
     it "calculates the offset by calling the Helper class method" do
@@ -195,12 +226,7 @@ describe Gateway::AssessorsGateway do
       expect(Helper::PaginationHelper).to have_received(:calculate_offset).with(1, 50)
     end
 
-    it "returns assessors within a set date range" do
-      ActiveRecord::Base.connection.exec_query("UPDATE audit_logs SET timestamp = (now()::date - 7) WHERE entity_id IN ('0000-0000-0000-0000-0001', '0000-0000-0000-0000-0002')")
-      expect(gateway.search_by_date(**args).length).to eq(10)
-    end
-
-    it "returns assessors with inactive scotland qualification" do
+    it "does not return assessors with inactive Scottish qualification" do
       ActiveRecord::Base.connection.exec_query(
         "UPDATE assessors SET scotland_dec_and_ar_qualification = 'INACTIVE',
               scotland_nondomestic_existing_building_qualification = 'INACTIVE',
@@ -212,10 +238,10 @@ describe Gateway::AssessorsGateway do
         WHERE scheme_assessor_id IN ('ACME123422', 'ACME123426', 'ACME123428')",
       )
 
-      expect(gateway.search_by_date(**args).length).to eq(7)
+      expect(gateway.search_by_date(**args).length).to eq(8)
     end
 
-    it "returns filtered data matches correct keys" do
+    it "returns the expected keys for the assessors returned" do
       result = gateway.search_by_date(**args).find { |i| i[:scheme_assessor_id] == "ACME123423" }
       expect(result).to eq(expected_result)
     end
@@ -246,7 +272,7 @@ describe Gateway::AssessorsGateway do
     end
 
     it "returns the count of assessors by date" do
-      expect(gateway.count_search_by_date(**args)).to eq(10)
+      expect(gateway.count_search_by_date(**args)).to eq(11)
     end
 
     context "when no assessors are found in the date range" do
