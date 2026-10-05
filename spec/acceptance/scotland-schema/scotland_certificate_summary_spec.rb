@@ -2066,7 +2066,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                  firstName: "Someone",
                                  lastName: "Person",
                                  registeredBy: { name: "test scheme", schemeId: scheme_id } },
-                              technicalInformation: { mainHeatingFuel: "LPG", buildingEnvironment: "Heating and Natural Ventilation", floorArea: 109 },
+                              technicalInformation: { mainHeatingFuel: "LPG", buildingEnvironment: "Heating and Natural Ventilation", floorArea: 109.0 },
                               currentEnergyEfficiencyRating: 120,
                               currentEnergyEfficiencyBand: "G",
                               potentialEnergyEfficiencyRating: 17,
@@ -2074,6 +2074,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               newBuildBenchmarkRating: 56,
                               newBuildBenchmarkBand: "D",
                               comparativeAssetRating: 65,
+                              comparativeAssetBand: "C",
                               epcRatingBer: 120.47,
                               approximateEnergyUse: 523,
                               propertyType: { propertyTypeLongDescription: "Hotels", propertyTypeShortDescription: "Hotel" },
@@ -2170,7 +2171,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                   lastName: "Person",
                                   registeredBy: { name: "test scheme", schemeId: scheme_id } },
                               technicalInformation:
-                                { buildingEnvironment: "Heating and Natural Ventilation", floorArea: 109, mainHeatingFuel: "LPG" },
+                                { buildingEnvironment: "Heating and Natural Ventilation", floorArea: 109.0, mainHeatingFuel: "LPG" },
                               currentEnergyEfficiencyRating: 120,
                               currentEnergyEfficiencyBand: "G",
                               potentialEnergyEfficiencyRating: 17,
@@ -2178,6 +2179,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               newBuildBenchmarkRating: 56,
                               newBuildBenchmarkBand: "D",
                               comparativeAssetRating: 65,
+                              comparativeAssetBand: "C",
                               epcRatingBer: 120.47,
                               approximateEnergyUse: 523,
                               propertyType:
@@ -2266,7 +2268,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                                     lastName: "Person",
                                     registeredBy: { name: "test scheme", schemeId: scheme_id } },
                               technicalInformation:
-                                  { mainHeatingFuel: "Natural Gas", buildingEnvironment: "Heating and Natural Ventilation", floorArea: 202 },
+                                  { mainHeatingFuel: "Natural Gas", buildingEnvironment: "Heating and Natural Ventilation", floorArea: 202.0 },
                               currentEnergyEfficiencyRating: 119,
                               currentEnergyEfficiencyBand: "G",
                               potentialEnergyEfficiencyRating: 106,
@@ -2274,6 +2276,7 @@ describe "Acceptance::ScotlandCertificateSummary", :set_with_timecop do
                               newBuildBenchmarkRating: 59,
                               newBuildBenchmarkBand: "D",
                               comparativeAssetRating: 57,
+                              comparativeAssetBand: "C",
                               epcRatingBer: 119.37,
                               approximateEnergyUse: 419,
                               propertyType:
