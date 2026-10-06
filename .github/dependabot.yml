@@ -6,6 +6,11 @@ updates:
       interval: "daily"
     allow:
       - dependency-type: all   # includes direct and indirect dependencies
+    groups:
+      # Update rails dependencies together
+      rails:
+        patterns:
+          - 'active*'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
