@@ -785,7 +785,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                        migrated: false,
                        overridden: false
 
-      expect(country_use_case).to have_received(:execute).with(rrn: "0000-0000-0000-0000-0000", address_id: "UPRN-0000000001", postcode: "CF10 1EP").exactly(1).times
+      expect(country_use_case).to have_received(:execute).with(rrn: "0000-0000-0000-0000-0000", address_id: "UPRN-0000000001", postcode: "CF10 1EP", is_scottish: false).exactly(1).times
     end
   end
 end

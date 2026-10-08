@@ -115,7 +115,7 @@ module UseCase
       @country_use_case = country_use_case
     end
 
-    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:)
+    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:, is_scottish: false)
       raise SchemaNotDefined unless schema_name
       raise SchemaNotSupportedException unless Helper::SchemaListHelper.new(schema_name).schema_exists?
 
@@ -151,7 +151,8 @@ module UseCase
 
       country_lookup = @country_use_case.execute rrn: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :assessment_id),
                                                  postcode: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :postcode),
-                                                 address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id)
+                                                 address_id: Helper::ClassHelper.method_or_nil(wrapper.get_view_model, :address_id),
+                                                 is_scottish: is_scottish
 
       begin
         LodgementRules::LocationCommon.new.validate(schema_name:, xml_adaptor: wrapper.get_view_model, country_lookup:, migrated:)

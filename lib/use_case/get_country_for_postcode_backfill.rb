@@ -11,7 +11,7 @@ module UseCase
       @address_base_country_gateway = address_base_country_gateway || Gateway::AddressBaseCountryGateway.new
     end
 
-    def execute(postcode:)
+    def execute(postcode:, is_scottish: false)
       case postcode
       when /^BT/
         lookup_for [:N]

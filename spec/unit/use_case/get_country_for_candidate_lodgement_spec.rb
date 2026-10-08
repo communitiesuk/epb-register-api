@@ -12,18 +12,20 @@ describe UseCase::GetCountryForCandidateLodgement do
   context "when the canonical address ID is not a UPRN that exists" do
     let(:nonexistent_uprn) { "UPRN-000000000002" }
     let(:postcode) { "SL4 1QN" }
+    let(:is_scottish) { false }
 
     let(:params) do
       {
         rrn: "1234-5678-1234-1234-5678",
         address_id: nonexistent_uprn,
         postcode:,
+        is_scottish: false,
       }
     end
 
     before do
       allow(get_canonical_address_id_use_case).to receive(:execute).with(include(address_id: nonexistent_uprn)).and_return "RRN-1234-5678-1234-1234-5678"
-      allow(get_country_for_postcode_use_case).to receive(:execute).with(postcode:).and_return(Domain::CountryLookup.new(country_codes: %i[N W]))
+      allow(get_country_for_postcode_use_case).to receive(:execute).with(postcode:, is_scottish:).and_return(Domain::CountryLookup.new(country_codes: %i[N W]))
     end
 
     it "gets the lookup from the postcode use case" do
@@ -42,6 +44,7 @@ describe UseCase::GetCountryForCandidateLodgement do
         rrn: "3456-3456-3445-4556-5567",
         address_id: existent_uprn,
         postcode:,
+        is_scottish: false,
       }
     end
 

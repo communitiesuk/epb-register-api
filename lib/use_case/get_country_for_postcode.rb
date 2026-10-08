@@ -9,7 +9,7 @@ module UseCase
       @address_base_country_gateway = address_base_country_gateway || Gateway::AddressBaseCountryGateway.new
     end
 
-    def execute(postcode:)
+    def execute(postcode:, is_scottish: false)
       case postcode
       when /^BT/
         lookup_for [:N]
@@ -30,7 +30,7 @@ module UseCase
         lookup = address_base_country_gateway.lookup_from_postcode postcode
         lookup.match? ? lookup : lookup_for(%i[E S])
       else
-        lookup_for [:E]
+        check_if_scottish(is_scottish)
       end
     end
 
@@ -40,6 +40,14 @@ module UseCase
 
     def lookup_for(country_codes)
       Domain::CountryLookup.new country_codes:
+    end
+
+    def check_if_scottish(is_scottish)
+      if is_scottish
+        lookup_for [:S]
+      else
+        lookup_for [:E]
+      end
     end
   end
 end

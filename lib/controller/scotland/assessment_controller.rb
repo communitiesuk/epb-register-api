@@ -68,6 +68,7 @@ module Controller
             scheme_ids:,
             migrated:,
             overridden:,
+            is_scottish: true,
           )
 
         results.each do |result|
