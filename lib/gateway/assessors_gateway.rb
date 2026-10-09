@@ -57,13 +57,13 @@ module Gateway
       ],
     }.freeze
     SCOTTISH_QUALIFICATIONS = %w[
-      scotlandRdsap
-      scotlandSapExistingBuilding
-      scotlandSapNewBuilding
-      scotlandDecAndAr
-      scotlandNondomesticExistingBuilding
-      scotlandNondomesticNewBuilding
-      scotlandSection63
+      scotland_rdsap_qualification
+      scotland_sap_existing_building_qualification
+      scotland_sap_new_building_qualification
+      scotland_dec_and_ar_qualification
+      scotland_nondomestic_existing_building_qualification
+      scotland_nondomestic_new_building_qualification
+      scotland_section63_qualification
     ].freeze
 
     def row_to_assessor_domain(row, use_regional_qualifications_list: false, is_scottish: false)
@@ -489,7 +489,7 @@ module Gateway
 
     def scottish_assessor_predicates
       qualifications = SCOTTISH_QUALIFICATIONS
-      qualification_selector = qualification_columns_to_sql(qualifications.map { |q| scottish_qualification_to_column(q) })
+      qualification_selector = qualification_columns_to_sql(qualifications.map { |q| q })
 
       <<-SQL
       WHERE
