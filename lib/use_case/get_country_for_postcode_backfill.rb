@@ -34,6 +34,9 @@ module UseCase
       when IN_ENGLAND_ONLY_REGEX
         lookup_for [:E]
       else
+        if is_scottish
+          lookup_for [:S]
+        end
         lookup = address_base_country_gateway.lookup_from_postcode postcode
         lookup.match? ? lookup : lookup_for([])
       end
