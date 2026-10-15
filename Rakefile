@@ -49,3 +49,9 @@ begin
 rescue LoadError
   # just pass through
 end
+
+ActiveRecord.schema_format = :sql
+# Without the following it will create an invalid schema dump with no postgres extensions
+ActiveRecord.dump_schemas = :all
+# Do not dump the schema in production or CI servers as it needs pgdump in the path
+ActiveRecord.dump_schema_after_migration = false if ENV.fetch("APP_ENV", nil) == "production" || ENV.fetch("CI", nil) == "true"
