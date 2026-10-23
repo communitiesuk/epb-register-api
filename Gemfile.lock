@@ -43,8 +43,8 @@ GEM
     aws-sdk-kms (1.135.0)
       aws-sdk-core (~> 3, >= 3.260.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.233.2)
-      aws-sdk-core (~> 3, >= 3.256.0)
+    aws-sdk-s3 (1.235.0)
+      aws-sdk-core (~> 3, >= 3.258.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
@@ -321,7 +321,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 8.1.4)
   archive-zip
-  aws-sdk-s3 (= 1.233.2)
+  aws-sdk-s3 (= 1.235.0)
   csv (~> 3.3)
   database_cleaner
   epb-auth-tools (~> 1.2.1)
