@@ -21,6 +21,7 @@ module Controller
       register Sinatra::Reloader
       also_reload "lib/**/*.rb"
       set :host_authorization, { permitted_hosts: %w[] }
+      set :show_exceptions, false
     end
 
     configure do
@@ -79,6 +80,17 @@ module Controller
         halt 401, { errors: [{ code: e }] }.to_json
       end
     end
+
+    error Sinatra::NotFound do
+      content_type :text
+      error_response(404, "NOT_FOUND", "Not found")
+    end
+
+    error do |exception|
+      server_error(exception)
+    end
+
+  private
 
     def xml_request_body(schema)
       @xml_helper.convert_to_hash(request.body.read.to_s, schema:)
@@ -142,23 +154,26 @@ module Controller
       json_response({ errors: [{ code: error_code, title: }] }, response_code)
     end
 
+    def error_details(exception)
+      {
+        type: exception.class.name,
+        message: exception.message,
+        backtrace: exception.backtrace,
+        cause: exception.cause && error_details(exception.cause),
+      }
+    end
+
     def server_error(exception)
       Sentry.capture_exception(exception) if defined?(Sentry)
-
-      message =
-        exception.methods.include?(:message) ? exception.message : exception
-
-      error = { type: exception.class.name, message: }
-
-      if exception.methods.include? :backtrace
-        error[:backtrace] = exception.backtrace
-      end
-
+      error = error_details(exception)
       @logger.error JSON.generate(error)
-
       ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
 
-      error_response(500, "SERVER_ERROR", message)
+      if settings.environment == :development
+        json_response(error, 500)
+      else
+        error_response(500, "SERVER_ERROR", "Server Error")
+      end
     end
 
     def not_found_error(message)
@@ -175,11 +190,6 @@ module Controller
 
     def boolean_parameter_true?(key)
       params[key].blank? || params[key] == "true" if params.key?(key)
-    end
-
-    error Sinatra::NotFound do
-      content_type :text
-      error_response(404, "NOT_FOUND", "Not found")
     end
 
     class ScheduledDowntimeError < RuntimeError; end

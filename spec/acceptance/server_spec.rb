@@ -94,4 +94,54 @@ describe "Acceptance::Responses" do
       expect(response.headers["Access-Control-Allow-Credentials"]).to eq "true"
     end
   end
+
+  context "when an uncaught error is raised" do
+    let(:logger) { instance_double(Logger) }
+    let(:app) do
+      test_logger = logger
+      Class.new(RegisterApiService) do
+        define_method(:initialize) do |*args|
+          super(*args)
+          @logger = test_logger
+        end
+
+        get "/test-error" do
+          raise "boom"
+        end
+      end
+    end
+
+    before do
+      app.set :raise_errors, false
+      app.set :show_exceptions, false
+      app.set :environment, :production
+
+      allow(Sentry).to receive(:capture_exception)
+      allow(logger).to receive(:error)
+      get "/test-error"
+    end
+
+    it "responds with a 500 status" do
+      expect(last_response.status).to eq 500
+    end
+
+    it "does not display a verbose error message" do
+      expect(JSON.parse(last_response.body)).to eq(
+        "errors" => [{ "code" => "SERVER_ERROR", "title" => "Server Error" }],
+      )
+    end
+
+    it "logs the error to the log file" do
+      expect(logger).to have_received(:error).with(include('"type":"RuntimeError","message":"boom","backtrace":['))
+    end
+
+    it "logs the error to sentry" do
+      expect(Sentry).to have_received(:capture_exception).with(
+        have_attributes(
+          class: RuntimeError,
+          message: "boom",
+        ),
+      )
+    end
+  end
 end
