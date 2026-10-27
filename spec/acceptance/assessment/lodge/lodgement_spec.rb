@@ -180,6 +180,45 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
+    it "rejects an assessment with a bad content-type" do
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_cepc_rr_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: nil,
+            headers: {
+              "Content-Type": "foo",
+            },
+          ).body,
+        )
+
+      expect(response["errors"][0]["title"]).to eq(
+        'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
+      )
+    end
+
+    it "rejects an assessment with an empty schema name" do
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_cepc_rr_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "",
+          ).body,
+        )
+
+      expect(response["errors"][0]["title"]).to eq(
+        'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
+      )
+    end
+
     it "rejects an assessment where the ID already exists" do
       register_assessor
       expect(lodge_assessment(
@@ -282,7 +321,7 @@ describe "Acceptance::Assessment::Lodge" do
       ).to include "This element is not expected."
     end
 
-    it "rejects an assessment with XML that doesnt parse" do
+    it "rejects an assessment with XML that does not parse" do
       xml = valid_rdsap_xml
       xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
 
@@ -294,7 +333,7 @@ describe "Acceptance::Assessment::Lodge" do
       expect(response_body["errors"][0]["code"]).to eq "INVALID_REQUEST"
     end
 
-    it "rejects a dual lodgement when related RRNs dont match" do
+    it "rejects a dual lodgement when related RRNs do not match" do
       register_assessor
       xml = Nokogiri.XML valid_cepc_rr_xml
       xml.at("//CEPC:Related-RRN").content = "0000-0000-0000-0000-0002"
@@ -395,6 +434,31 @@ describe "Acceptance::Assessment::Lodge" do
       expect(response.status).to eq(400)
       error_message = JSON.parse(response.body)["errors"][0]["title"]
       expect(error_message).to eq "Schema only supported for assessments in England"
+    end
+
+    it "rejects lodgements with non-approved software" do
+      register_assessor
+      xml = Nokogiri.XML valid_rdsap_xml
+      xml.at("Calculation-Software-Name").content = "foo"
+
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with("DOMESTIC_APPROVED_SOFTWARE").and_return(JSON.generate(software: { bar: %w[1] }))
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: xml.to_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "RdSAP-Schema-20.0.0",
+          ).body,
+          migrated: false,
+          override: false,
+        )
+
+      expect(response["errors"][0]["title"]).to eq "The calculation software used to create the assessment is not on the approved list."
     end
   end
 
@@ -1054,7 +1118,7 @@ describe "Acceptance::Assessment::Lodge" do
     end
 
     it "rejects a migration from a client without migration role" do
-      expect(lodge_assessment(
+      response = lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
         scopes: %w[assessment:lodge],
@@ -1062,7 +1126,11 @@ describe "Acceptance::Assessment::Lodge" do
           scheme_ids: [scheme_id],
         },
         migrated: true,
-      ).status).to eq(403)
+      )
+
+      expect(JSON.parse(response.body)).to eq(
+        "errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authorised to perform this migration request" }],
+      )
     end
   end
 
@@ -1070,14 +1138,18 @@ describe "Acceptance::Assessment::Lodge" do
     it "rejects the assessment with a 400" do
       superseded_version = "RdSAP-Schema-19.0"
 
-      expect(lodge_assessment(
+      response = lodge_assessment(
         assessment_body: Samples.xml(superseded_version),
         accepted_responses: [400],
         auth_data: {
           scheme_ids: [scheme_id],
         },
         schema_name: superseded_version,
-      ).status).to eq(400)
+      )
+
+      expect(JSON.parse(response.body)).to eq(
+        "errors" => [{ "code" => "INVALID_REQUEST", "title" => "Schema is not supported." }],
+      )
     end
   end
 
@@ -1104,14 +1176,18 @@ describe "Acceptance::Assessment::Lodge" do
 
       it "rejects the assessment with a 400" do
         register_assessor
-        expect(lodge_assessment(
+        response = lodge_assessment(
           assessment_body: bad_sap_1900_data_version_xml,
           accepted_responses: [400],
           auth_data: {
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-19.0.0",
-        ).status).to eq(400)
+        )
+
+        expect(JSON.parse(response.body)).to eq(
+          "errors" => [{ "code" => "INVALID_REQUEST", "title" => "The version number 9.90 for the node SAP-Data-Version is invalid for the SAP-Schema-19.0.0 schema" }],
+        )
       end
     end
 
@@ -1129,14 +1205,15 @@ describe "Acceptance::Assessment::Lodge" do
 
       it "rejects the assessment with a 400" do
         register_assessor
-        expect(lodge_assessment(
+        response = lodge_assessment(
           assessment_body: bad_sap_1910_data_version_xml,
           accepted_responses: [400],
           auth_data: {
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-19.1.0",
-        ).status).to eq(400)
+        )
+        expect(JSON.parse(response.body)).to match("errors" => [{ "code" => "INVALID_REQUEST", "title" => match(/not an element of the set/) }])
       end
     end
 
@@ -1172,22 +1249,24 @@ describe "Acceptance::Assessment::Lodge" do
 
   describe "security" do
     it "returns 401 with no authentication" do
-      expect(lodge_assessment(
+      response = lodge_assessment(
         assessment_body: "body",
         accepted_responses: [401],
         authenticate: false,
-      ).status).to eq 401
+      )
+      expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "Auth::Errors::TokenMissing" }])
     end
 
     it "returns 403 with incorrect scopes" do
-      expect(lodge_assessment(
+      response = lodge_assessment(
         assessment_body: "body",
         accepted_responses: [403],
         auth_data: {
           scheme_ids: {},
         },
         scopes: %w[wrong:scope],
-      ).status).to eq 403
+      )
+      expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "You are not authorised to perform this request" }])
     end
 
     it "returns 403 if it is being lodged by the wrong scheme" do
@@ -1195,13 +1274,14 @@ describe "Acceptance::Assessment::Lodge" do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id(name: "BADSCHEME")
 
-      expect(lodge_assessment(
+      response = lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
         auth_data: {
           scheme_ids: [different_scheme_id],
         },
-      ).status).to eq 403
+      )
+      expect(JSON.parse(response.body)).to eq("errors" => [{ "code" => "UNAUTHORISED", "title" => "Not authorised to lodge reports as this scheme" }])
     end
   end
 end

@@ -227,6 +227,14 @@ describe "Acceptance::Assessment::GreenDealPlan::PatchGreenDealPlan", :set_with_
                                        accepted_responses: [400]).status).to eq(400)
         end
       end
+
+      context "when the json is invalid" do
+        it "returns a 400 status code" do
+          expect(patch_green_deal_plan(plan_id: "ABC654321DEF",
+                                       body: instance_double(String, to_json: "{ INVALID }"),
+                                       accepted_responses: [400]).status).to eq(400)
+        end
+      end
     end
   end
 end

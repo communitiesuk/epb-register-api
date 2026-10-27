@@ -10,14 +10,8 @@ module Controller
 
         RequestModule.relevant_request_headers = relevant_request_headers(request)
 
-        xml_schema_type =
-          if request.env["CONTENT_TYPE"]
-            request.env["CONTENT_TYPE"].split("+")[1]
-          else
-            ""
-          end
-
-        unless xml_schema_type.include?("-S-")
+        xml_schema_type = request.env["CONTENT_TYPE"].to_s.split("+")[1]
+        unless xml_schema_type&.include?("-S-")
           forbidden(
             "UNAUTHORISED",
             "Only Scottish schemas are supported",
@@ -140,8 +134,6 @@ module Controller
         case e
         when UseCase::ValidateAssessment::InvalidXmlException
           error_response(400, "INVALID_REQUEST", e.message)
-        when UseCase::ValidateAndLodgeAssessment::SupersededSchemaException
-          error_response(400, "INVALID_REQUEST", "This schema version has been superseded.")
         when UseCase::ValidateAndLodgeAssessment::SAPComplianceReportException
           error_response(400, "INVALID_REQUEST", "SAP Compliance Reports are not supported.")
         when UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException

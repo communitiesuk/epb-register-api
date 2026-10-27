@@ -152,7 +152,7 @@ The database password.  Only used in development and test when `DATABASE_URL` an
 
 A list of software approved for domestic calculations.
 
-Must be a JSON encoded object in the form `{ software: string[] }`
+Must be a JSON encoded object in the form `{ software: Record<string, string[]> }`
 
 If present, only non-domestic assessments using software in this list can be lodged.
 

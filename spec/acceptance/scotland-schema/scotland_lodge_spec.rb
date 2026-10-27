@@ -1738,7 +1738,7 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
 
       context "when lodging a non-Scottish domestic assessment" do
         it "rejects a lodgement" do
-          expect(lodge_scottish_assessment(
+          response = lodge_scottish_assessment(
             assessment_body: valid_rdsap_not_scottish_xml,
             accepted_responses: [403],
             scopes: %w[scotland_assessment:lodge],
@@ -1747,11 +1747,13 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
             },
             schema_name: "RdSAP-Schema-19.0",
             migrated: false,
-          ).status).to eq(403)
+          )
+
+          expect(JSON.parse(response.body)["errors"][0]).to eq("code" => "UNAUTHORISED", "title" => "Only Scottish schemas are supported")
         end
 
         it "rejects a lodgement when the schema name incorrectly indicates it is Scottish" do
-          expect(lodge_scottish_assessment(
+          response = lodge_scottish_assessment(
             assessment_body: valid_rdsap_not_scottish_xml,
             accepted_responses: [400],
             scopes: %w[scotland_assessment:lodge],
@@ -1760,7 +1762,290 @@ describe "Acceptance::Assessment::Lodge", :set_with_timecop do
             },
             schema_name: "RdSAP-Schema-S-19.0",
             migrated: false,
-          ).status).to eq(400)
+          )
+
+          expect(JSON.parse(response.body)["errors"][0]["code"]).to eq "INVALID_REQUEST"
+        end
+
+        it "rejects a lodgement when there is no scheme name" do
+          expect(lodge_scottish_assessment(
+            assessment_body: valid_rdsap_xml,
+            accepted_responses: [403],
+            scopes: %w[scotland_assessment:lodge],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: nil,
+            migrated: false,
+          ).body).to eq JSON.generate({ errors: [{ "code": "UNAUTHORISED", "title": "Only Scottish schemas are supported" }] })
+        end
+
+        it "rejects a lodgement when there is bad scheme name" do
+          expect(lodge_scottish_assessment(
+            assessment_body: valid_rdsap_xml,
+            accepted_responses: [403],
+            scopes: %w[scotland_assessment:lodge],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: nil,
+            headers: {
+              "Content-Type": "foo",
+            },
+            migrated: false,
+          ).body).to eq JSON.generate({ errors: [{ "code": "UNAUTHORISED", "title": "Only Scottish schemas are supported" }] })
+        end
+
+        it "rejects a lodgement when there is a blank schema name" do
+          expect(lodge_scottish_assessment(
+            assessment_body: valid_rdsap_xml,
+            accepted_responses: [403],
+            scopes: %w[scotland_assessment:lodge],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "",
+            migrated: false,
+          ).body).to eq JSON.generate({ errors: [{ "code": "UNAUTHORISED", "title": "Only Scottish schemas are supported" }] })
+        end
+      end
+
+      context "when requesting an xml response" do
+        it "return xml data" do
+          response = lodge_scottish_assessment(
+            assessment_body: valid_rdsap_xml,
+            accepted_responses: [201],
+            scopes: %w[scotland_assessment:lodge],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "RdSAP-Schema-S-19.0",
+            migrated: false,
+            headers: {
+              "Accept": "application/xml",
+            },
+          )
+          xml = Nokogiri.XML(response.body)
+          expect(xml.at_xpath("/response/data/assessments/assessment").text).to eq "0000-0000-0000-0000-0000"
+          expect(xml.at_xpath("/response/meta/links/assessments/assessment").text).to eq "/api/scotland/assessments/0000-0000-0000-0000-0000"
+        end
+      end
+
+      context "when lodging with an unsupported schema" do
+        it "returns a 400 error" do
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: valid_rdsap_xml,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: "Unsupported-S-19.0",
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
+        end
+      end
+
+      context "when lodging with an unknown accessor" do
+        let(:register_assessor) do
+          add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+        end
+
+        it "returns a 400 error" do
+          doc = Nokogiri.XML valid_rdsap_xml
+          doc.at("Membership-Number").children = "SPEC000001"
+
+          valid_rdsap_xml
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: doc.to_xml,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq("Assessor is not registered.")
+        end
+      end
+
+      context "with a missing content-type" do
+        it "returns a 400 error" do
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: valid_rdsap_xml,
+              accepted_responses: [403],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: nil,
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "Only Scottish schemas are supported"
+        end
+      end
+
+      context "with unsupported software" do
+        it "returns a 400 error" do
+          xml = Nokogiri.XML valid_rdsap_xml
+          xml.at("Calculation-Software-Name").content = "foo"
+
+          allow(ENV).to receive(:[]).and_call_original
+          allow(ENV).to receive(:[]).with("DOMESTIC_APPROVED_SOFTWARE").and_return(JSON.generate(software: { bar: %w[1] }))
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_xml,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "The calculation software used to create the assessment is not on the approved list."
+        end
+      end
+
+      context "with a schema_id not authorised for the client" do
+        it "returns a 403 error" do
+          different_scheme_id = add_scheme_and_get_id(name: "BADSCHEME")
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: valid_rdsap_xml,
+              accepted_responses: [403],
+              auth_data: {
+                scheme_ids: [different_scheme_id],
+              },
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "Not authorised to lodge reports as this scheme"
+        end
+      end
+
+      context "with a dual lodgement where releated RRNs do not match" do
+        it "returns a 400 error" do
+          xml = Nokogiri.XML valid_dec_and_ar_800_xml
+          xml.at("Related-RRN").content = "0000-0000-0000-0000-0002"
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_s,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: "DECAR-S-8.0.0",
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "Related RRNs must reference each other."
+        end
+      end
+
+      context "with a dual lodgement where the addresses do not match" do
+        it "returns a 400 error" do
+          xml = Nokogiri.XML valid_dec_and_ar_800_xml
+          xml.at("UPRN").content = "UPRN-111111111111"
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_s,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: "DECAR-S-8.0.0",
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "Both parts of a dual lodgement must share the same address id."
+        end
+      end
+
+      context "when a lodgement rule fails" do
+        it "returns a 400 error" do
+          xml = Nokogiri.XML valid_rdsap_xml
+          xml.at("Inspection-Date").content = "2022-06-27"
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_s,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "Date of dwelling survey (inspection date) should not be more than three months earlier than the completion date"
+        end
+      end
+
+      context "when overriding lodgement rule that is overrideable" do
+        it "the lodgement succeseds" do
+          xml = Nokogiri.XML valid_rdsap_xml
+          xml.at("Inspection-Date").content = "2022-06-27"
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_s,
+              accepted_responses: [201],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              override: true,
+            ).body,
+          )
+
+          expect(response["data"]["assessments"]).to eq %w[0000-0000-0000-0000-0000]
+        end
+      end
+
+      context "when attempting to override a non-overrideable lodgement rule" do
+        it "returns a 400 error" do
+          xml = Nokogiri.XML valid_rdsap_xml
+          xml.at("Inspection-Date").content = "2023-06-28"
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_s,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              override: true,
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "Lodgement rule cannot be overridden: Date of dwelling survey (inspection date) cannot be any later than date of lodgement of data to the register"
+        end
+      end
+
+      context "when lodging with an invalid SAP Data Version" do
+        it "returns a 400 error" do
+          xml = Nokogiri.XML valid_sap_xml
+          xml.at("SAP-Data-Version").content = "9.92"
+
+          response = JSON.parse(
+            lodge_scottish_assessment(
+              assessment_body: xml.to_s,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: "SAP-Schema-S-19.0.0",
+            ).body,
+          )
+
+          expect(response["errors"][0]["title"]).to eq "The version number 9.92 for the node SAP-Data-Version is invalid for the SAP-Schema-S-19.0.0 schema"
         end
       end
     end

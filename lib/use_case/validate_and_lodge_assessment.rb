@@ -10,8 +10,6 @@ module UseCase
 
     class SchemaNotSupportedException < StandardError; end
 
-    class SupersededSchemaException < SchemaNotSupportedException; end
-
     class SAPComplianceReportException < SchemaNotSupportedException; end
 
     class RelatedReportError < StandardError; end

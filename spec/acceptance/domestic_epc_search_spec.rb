@@ -115,6 +115,20 @@ describe "fetching domestic EPC search results from the API", :set_with_timecop 
       end
     end
 
+    context "when performing a search with one invalid query parameters" do
+      it "receives an appropriate error with a 400" do
+        response = JSON.parse(
+          find_domestic_epcs_with_params(
+            params: { postcode: "XXX" },
+            accepted_responses: [400],
+          ).body,
+          symbolize_names: true,
+        )
+
+        expect(response[:errors][0][:title]).to eq "The value provided for the postcode parameter in the search query was not valid"
+      end
+    end
+
     context "when performing a search that does not match any domestic EPCs" do
       it "returns a 404 with an appropriate response" do
         response = JSON.parse(

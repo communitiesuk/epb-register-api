@@ -160,7 +160,7 @@ def fetch_assessors_updated_status(
   scopes: %w[report:assessor:status],
   **assertive_kwargs
 )
-  auth_data ||= { 'scheme_ids': [scheme_id] }
+  auth_data ||= { scheme_ids: [scheme_id] }
   assertive_get(
     "/api/reports/#{scheme_id}/assessors/status?date=" + date,
     auth_data:,
@@ -373,7 +373,6 @@ def lodge_assessment(
 
   unless schema_name.nil?
     header "Content-type", "application/xml+#{schema_name}"
-    content_type_set = true
   end
 
   headers.each { |key, value| header key.to_s, value.to_s }
@@ -386,7 +385,7 @@ def lodge_assessment(
     auth_data:,
     scopes:,
     json:,
-    content_type_set:,
+    content_type_set: true,
   )
 end
 
@@ -417,7 +416,6 @@ def lodge_scottish_assessment(
 
   unless schema_name.nil?
     header "Content-type", "application/xml+#{schema_name}"
-    content_type_set = true
   end
 
   headers.each { |key, value| header key.to_s, value.to_s }
@@ -430,7 +428,7 @@ def lodge_scottish_assessment(
     auth_data:,
     scopes:,
     json:,
-    content_type_set:,
+    content_type_set: true,
   )
 end
 

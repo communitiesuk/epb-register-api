@@ -648,6 +648,21 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", :set_with_
       end
     end
 
+    context "when both a UPRN and rnn are provided in an invalid format" do
+      it "receives an appropriate error with a 400" do
+        response = JSON.parse(
+          assertive_get(
+            "/api/bus/assessments/latest/search?rrn=0&uprn=U",
+            scopes: %w[bus:assessment:search],
+            accepted_responses: [400],
+          ).body,
+          symbolize_names: true,
+        )
+
+        expect(response[:errors][0][:title]).to eq "The values provided for the following parameters were not valid: uprn, rrn"
+      end
+    end
+
     context "when an RRN based address ID is provided for the UPRN field" do
       it "receives an appropriate error with a 400" do
         response = JSON.parse(

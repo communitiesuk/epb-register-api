@@ -159,6 +159,18 @@ describe "Acceptance::ScotlandAddressLinking", :set_with_timecop do
       )
     end
 
+    it "returns 400 for an assessment id in the wrong format" do
+      response =
+        update_scottish_assessment_address_id(
+          assessment_id: "0000",
+          new_address_id: "RRN-0000-0000-0000-0000-0000",
+          accepted_responses: [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "INVALID_QUERY", title: "Assessment ID not valid" }],
+      )
+    end
+
     it "returns 400 for an invalid response body" do
       response_body = assertive_put(
         "/api/scotland/assessments/0000-0000-0000-0000-0000/address-id",

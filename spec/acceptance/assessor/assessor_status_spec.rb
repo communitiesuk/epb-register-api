@@ -38,6 +38,23 @@ describe "Acceptance::AssessorStatus" do
       )
     end
 
+    it "gives an unauthorised error if the user does not have permission for the scheme" do
+      response =
+        JSON.parse(
+          fetch_assessors_updated_status(
+            scheme_id: test_scheme_id,
+            auth_data: { schema_ids: [123] },
+            accepted_responses: [403],
+            date: Date.today.to_s,
+          ).body,
+          symbolize_names: true,
+        )
+
+      expect(response).to eq(
+        { errors: [{ code: "UNAUTHORISED", title: "You are not authorised to perform this request" }] },
+      )
+    end
+
     it "doesn't show any assessor status changes when none has happened" do
       expect(response[:data]).to eq({ assessorStatusEvents: [] })
     end

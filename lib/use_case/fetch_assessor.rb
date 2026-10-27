@@ -10,11 +10,11 @@ module UseCase
 
     def execute(scheme_id, scheme_assessor_id)
       assessor = @assessor_gateway.fetch(scheme_assessor_id)
+      raise SchemeNotFoundException unless @schemes_gateway.exists?(scheme_id)
+
       unless assessor && assessor.registered_by_id.to_s == scheme_id.to_s
         raise Boundary::AssessorNotFoundException
       end
-
-      raise SchemeNotFoundException unless @schemes_gateway.exists?(scheme_id)
 
       assessor
     end

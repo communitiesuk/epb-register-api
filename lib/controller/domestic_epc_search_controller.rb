@@ -14,8 +14,6 @@ module Controller
       },
     }.freeze
 
-    class NotImplementedError < StandardError; end
-
     get "/api/assessments/domestic-epcs/search", auth_token_has_all: ["assessment:domestic-epc:search"] do
       params_body SEARCH_SCHEMA
       use_case = ApiFactory.find_domestic_epcs_by_address
@@ -41,8 +39,6 @@ module Controller
                        else
                          "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
                        end
-      when NotImplementedError
-        error_response 501, "NOT_IMPLEMENTED", "This endpoint is not implemented"
       else
         server_error e
       end

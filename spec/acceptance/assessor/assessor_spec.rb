@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-shared_context "when adding an assessor" do
+describe "Acceptance::Assessor" do
+  include RSpecRegisterApiServiceMixin
+
   def assessor_without_key(missing, request_body = nil)
     request_body ||= valid_assessor_request
     assessor = request_body.dup
     assessor.delete(missing)
     assessor
   end
-end
-
-describe "Acceptance::Assessor" do
-  include_context "when adding an assessor"
-  include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request) do
     {
@@ -402,6 +399,16 @@ describe "Acceptance::Assessor" do
           accepted_responses: [403],
           scopes: %w[scheme:assessor:update],
         ).status).to eq(403)
+      end
+
+      it "rejects a request with invalid json" do
+        expect(add_assessor(
+          scheme_id:,
+          assessor_id: "SCHE554433",
+          body: instance_double(String, to_json: "{ INVALID }"),
+          accepted_responses: [400],
+          scopes: %w[scheme:assessor:update],
+        ).status).to eq(400)
       end
     end
 

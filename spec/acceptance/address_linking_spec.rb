@@ -175,6 +175,18 @@ describe "Acceptance::AddressLinking", :set_with_timecop do
       expect(error[:title]).to include("JSON did not parse. Error: expected ',' or '}'")
     end
 
+    it "returns 400 if the RNN is not valid" do
+      response =
+        update_assessment_address_id(
+          assessment_id: "1234",
+          new_address_id: "RRN-9999-9999-9999-9999-0000",
+          accepted_responses: [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "INVALID_QUERY", title: "Assessment ID not valid" }],
+      )
+    end
+
     it "changes the address id for to a valid addressId (UPRN- identifier)" do
       update_assessment_address_id(
         assessment_id: "0000-0000-0000-0000-0000",

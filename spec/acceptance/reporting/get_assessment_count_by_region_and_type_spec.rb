@@ -202,6 +202,20 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       CSV
     end
   end
+
+  context "with invalid inputs" do
+    it "returns a 400 response" do
+      response = get_assessment_report(
+        start_date: "xxx",
+        end_date: "2020-08-07",
+        accepted_responses: [422],
+      ).body
+
+      expect(JSON.parse(response)["errors"][0]["title"]).to eq(
+        "JSON failed schema validation. Error: The property '#/startDate' Must be date in format YYYY-MM-DD",
+      )
+    end
+  end
 end
 
 def lodge_assessment_with_rrn(xml, rrn, schema_name, scheme_id, created_at)
