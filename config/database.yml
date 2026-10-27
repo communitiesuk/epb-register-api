@@ -23,6 +23,7 @@ test:
     database: epb_test
     username: postgres
     password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+    url: <%= ENV['DATABASE_URL'] %>
     host: 127.0.0.1
     schema_search_path: "public,scotland"
   primary_replica:
@@ -30,6 +31,7 @@ test:
     database: epb_test
     username: postgres
     password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
+    url: <%= ENV['DATABASE_URL'] %>
     host: 127.0.0.1
     database_tasks: false
     replica: true
