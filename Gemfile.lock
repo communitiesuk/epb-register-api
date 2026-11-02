@@ -357,7 +357,7 @@ DEPENDENCIES
   zeitwerk (~> 2.8.3)
 
 RUBY VERSION
-  ruby 4.0.7p0
+  ruby 4.0.9
 
 BUNDLED WITH
   4.0.23
