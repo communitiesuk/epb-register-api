@@ -1,19 +1,12 @@
 version: 0.2
 
-runtime-versions:
-  ruby: 3.4
-
 env:
   parameter-store:
     DOCKER_POSTGRES_PASSWORD: "docker-postgres-password"
     AWS_ACCOUNT_ID: "account-id"
 
-
 phases:
   install:
-    runtime-versions:
-      ruby: 3.4
-      nodejs: 20
     commands:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
