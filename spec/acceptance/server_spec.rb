@@ -111,7 +111,7 @@ describe "Acceptance::Responses" do
       end
     end
 
-    context "in a production environment" do
+    context "when in a production environment" do
       before do
         app.set :raise_errors, false
         app.set :show_exceptions, false
@@ -128,8 +128,8 @@ describe "Acceptance::Responses" do
 
       it "does not display a verbose error message" do
         expect(JSON.parse(last_response.body)).to eq(
-                                                    "errors" => [{ "code" => "SERVER_ERROR", "title" => "Server Error" }],
-                                                    )
+          "errors" => [{ "code" => "SERVER_ERROR", "title" => "Server Error" }],
+        )
       end
 
       it "logs the error to the log file" do
@@ -141,11 +141,12 @@ describe "Acceptance::Responses" do
           have_attributes(
             class: RuntimeError,
             message: "boom",
-            ),
-          )
+          ),
+        )
       end
     end
-    context "in a development environment" do
+
+    context "when in a development environment" do
       before do
         app.set :raise_errors, false
         app.set :show_exceptions, false
@@ -163,8 +164,8 @@ describe "Acceptance::Responses" do
 
       it "does not display a verbose error message" do
         expect(JSON.parse(last_response.body).keys).to eq(
-                                                    ["type", "message", "backtrace", "cause"]
-                                                    )
+          %w[type message backtrace cause],
+        )
       end
 
       it "logs the error to the log file" do
@@ -176,8 +177,8 @@ describe "Acceptance::Responses" do
           have_attributes(
             class: RuntimeError,
             message: "boom",
-            ),
-          )
+          ),
+        )
       end
     end
   end
