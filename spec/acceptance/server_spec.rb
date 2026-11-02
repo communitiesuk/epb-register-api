@@ -111,37 +111,74 @@ describe "Acceptance::Responses" do
       end
     end
 
-    before do
-      app.set :raise_errors, false
-      app.set :show_exceptions, false
-      app.set :environment, :production
+    context "in a production environment" do
+      before do
+        app.set :raise_errors, false
+        app.set :show_exceptions, false
+        app.set :environment, :production
 
-      allow(Sentry).to receive(:capture_exception)
-      allow(logger).to receive(:error)
-      get "/test-error"
+        allow(Sentry).to receive(:capture_exception)
+        allow(logger).to receive(:error)
+        get "/test-error"
+      end
+
+      it "responds with a 500 status" do
+        expect(last_response.status).to eq 500
+      end
+
+      it "does not display a verbose error message" do
+        expect(JSON.parse(last_response.body)).to eq(
+                                                    "errors" => [{ "code" => "SERVER_ERROR", "title" => "Server Error" }],
+                                                    )
+      end
+
+      it "logs the error to the log file" do
+        expect(logger).to have_received(:error).with(include('"type":"RuntimeError","message":"boom","backtrace":['))
+      end
+
+      it "logs the error to sentry" do
+        expect(Sentry).to have_received(:capture_exception).with(
+          have_attributes(
+            class: RuntimeError,
+            message: "boom",
+            ),
+          )
+      end
     end
+    context "in a development environment" do
+      before do
+        app.set :raise_errors, false
+        app.set :show_exceptions, false
+        app.set :host_authorization, { permitted_hosts: %w[] }
+        app.set :environment, :development
 
-    it "responds with a 500 status" do
-      expect(last_response.status).to eq 500
-    end
+        allow(Sentry).to receive(:capture_exception)
+        allow(logger).to receive(:error)
+        get "/test-error"
+      end
 
-    it "does not display a verbose error message" do
-      expect(JSON.parse(last_response.body)).to eq(
-        "errors" => [{ "code" => "SERVER_ERROR", "title" => "Server Error" }],
-      )
-    end
+      it "responds with a 500 status" do
+        expect(last_response.status).to eq 500
+      end
 
-    it "logs the error to the log file" do
-      expect(logger).to have_received(:error).with(include('"type":"RuntimeError","message":"boom","backtrace":['))
-    end
+      it "does not display a verbose error message" do
+        expect(JSON.parse(last_response.body).keys).to eq(
+                                                    ["type", "message", "backtrace", "cause"]
+                                                    )
+      end
 
-    it "logs the error to sentry" do
-      expect(Sentry).to have_received(:capture_exception).with(
-        have_attributes(
-          class: RuntimeError,
-          message: "boom",
-        ),
-      )
+      it "logs the error to the log file" do
+        expect(logger).to have_received(:error).with(include('"type":"RuntimeError","message":"boom","backtrace":['))
+      end
+
+      it "logs the error to sentry" do
+        expect(Sentry).to have_received(:capture_exception).with(
+          have_attributes(
+            class: RuntimeError,
+            message: "boom",
+            ),
+          )
+      end
     end
   end
 end
