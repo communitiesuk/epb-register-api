@@ -1,3 +1,18 @@
+# frozen_string_literal: true
+
+if /^true$/i.match?(ENV.fetch("COVERAGE", nil))
+  require "simplecov"
+  SimpleCov.start do
+    enable_coverage :branch
+    cover "lib/**/*.{rb,rake}"
+    group "Controllers", "lib/controller"
+    group "Use cases", "lib/use_case"
+    group "Gateways", "lib/gateway"
+    group "Helpers", "lib/helper"
+    group "Tasks", "lib/tasks"
+  end
+end
+
 ENV["APP_ENV"] = "test"
 ENV["STAGE"] = "test"
 ENV["EPB_UNLEASH_URI"] = "https://test-toggle-server/api"

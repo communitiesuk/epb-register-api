@@ -16,7 +16,7 @@ unless defined?(TestLoader)
   loader.setup
 end
 
-Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
+Dir.glob("lib/tasks/**/*.rake").each { load File.expand_path(it) }
 
 namespace :tasks do
   desc "Run developer data bootstrap tasks in lib/tasks"

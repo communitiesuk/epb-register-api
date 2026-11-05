@@ -223,3 +223,7 @@ Secret for the JWT encoded auth token.
 #### `SILENT_EVENTS`
 
 If "true" logging lodgement and assessor events to STDOUT will be disabled.
+
+#### `COVERAGE`
+
+If "true", a coverage report will be generated when the rspec tests are run.

@@ -3,6 +3,7 @@
 ruby "4.0.9"
 
 source "https://rubygems.org"
+
 group :development do
   gem "sinatra-contrib"
 end
@@ -12,6 +13,7 @@ group :test do
   gem "mock_redis", "~> 0.55"
   gem "rack-test", "~> 2.2.0"
   gem "rspec", "~>3.13"
+  gem "simplecov", "~>1.3.2"
   gem "timecop", "~> 0.9.11"
   gem "webmock", "~> 3.31"
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
