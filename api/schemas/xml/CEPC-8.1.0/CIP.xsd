@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"
+  targetNamespace="https://epbr.digital.communities.gov.uk/nondomestic/cip"
+  xmlns:cip="https://epbr.digital.communities.gov.uk/nondomestic/cip"
+  version="1.1.0"
+>
+  <xs:element name="CIP">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cip:CurrentSoftwareVersion"/>
+        <xs:element ref="cip:AccreditingBodies"/>
+        <xs:element ref="cip:CarbonIntensities"/>
+        <xs:element ref="cip:PostCodeWeather"/>
+        <xs:element name="DegreeDayRegions">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="14" maxOccurs="14" ref="cip:DegreeDayRegion"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="cip:Benchmarks"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CurrentSoftwareVersion" type="xs:string"/>
+  <xs:element name="AccreditingBodies">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:AccreditingBody"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AccreditingBody">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="codes" type="xs:string" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CarbonIntensities">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:CarbonIntensity"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CarbonIntensity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cip:Fuel"/>
+        <xs:element ref="cip:Value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Fuel" type="xs:string"/>
+  <xs:element name="Value" type="xs:decimal"/>
+  <xs:element name="PostCodeWeather">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:PostCodeLocation"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PostCodeLocation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cip:WeatherLocation"/>
+        <xs:element ref="cip:PostCodeArea"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="weatherLocationType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="2"/>
+      <xs:pattern value="[A-Z]{1,2}"></xs:pattern>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="WeatherLocation" type="cip:weatherLocationType"/>
+  <xs:simpleType name="postCodeAreaType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="17"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PostCodeArea" type="cip:postCodeAreaType"/>
+  <xs:element name="DegreeDayRegion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cip:Heating"/>
+        <xs:element ref="cip:Cooling"/>
+      </xs:sequence>
+      <xs:attribute name="PostCodeArea" use="required" type="cip:postCodeAreaType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Heating">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:Year"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Cooling">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:Year"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Benchmarks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:Benchmark"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Benchmark">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cip:Category"/>
+        <xs:element ref="cip:Name"/>
+        <xs:element ref="cip:Options"/>
+        <xs:element ref="cip:TypicalElectricityEnergyDensity"/>
+        <xs:element ref="cip:TypicalFossilThermalEnergyDensity"/>
+        <xs:element ref="cip:TypicalElectricityCO2Density"/>
+        <xs:element ref="cip:TypicalFossilThermalCO2Density"/>
+        <xs:element ref="cip:TypicalTotalCO2Density"/>
+        <xs:element ref="cip:PrimaryMetric"/>
+        <xs:element ref="cip:ApprovedAlternateMetric"/>
+        <xs:element minOccurs="0" ref="cip:DefaultMultiplier"/>
+        <xs:element ref="cip:PercentOfElectricityBenchmarkProRatedToIndex"/>
+        <xs:element ref="cip:PercentOfFossilThermalBenchmarkProRatedToIndex"/>
+        <xs:element minOccurs="0" ref="cip:Special1"/>
+        <xs:element minOccurs="0" ref="cip:Special2"/>
+        <xs:element minOccurs="0" ref="cip:Special3"/>
+        <xs:element ref="cip:DefinitionOfHoursPerWeekInThisSector"/>
+        <xs:element ref="cip:BenchmarkHoursPerYear" minOccurs="0"/>
+        <xs:element ref="cip:MaximumAllowedHoursPerYear" minOccurs="0"/>
+        <xs:element ref="cip:PercentageIncreaseInElectricityBenchmarkAtMaximumAllowed"/>
+        <xs:element ref="cip:PercentageIncreaseInFossilThermalBenchmarkAtMaximumAllowed"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Category" type="xs:string"/>
+  <xs:element name="Name" type="xs:string"/>
+  <xs:element name="Options">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:Option"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Option" type="xs:string"/>
+  <xs:element name="TypicalElectricityEnergyDensity" type="xs:decimal"/>
+  <xs:element name="TypicalFossilThermalEnergyDensity" type="xs:decimal"/>
+  <xs:element name="TypicalElectricityCO2Density" type="xs:decimal"/>
+  <xs:element name="TypicalFossilThermalCO2Density" type="xs:decimal"/>
+  <xs:element name="TypicalTotalCO2Density" type="xs:decimal"/>
+  <xs:element name="PrimaryMetric" type="xs:string"/>
+  <xs:element name="ApprovedAlternateMetric" type="xs:string"/>
+  <xs:element name="DefaultMultiplier" type="xs:decimal"/>
+  <xs:element name="PercentOfElectricityBenchmarkProRatedToIndex" type="xs:decimal"/>
+  <xs:element name="PercentOfFossilThermalBenchmarkProRatedToIndex" type="xs:decimal"/>
+  <xs:element name="Special1" type="xs:string"/>
+  <xs:element name="Special2" type="xs:string"/>
+  <xs:element name="Special3" type="xs:string"/>
+  <xs:element name="DefinitionOfHoursPerWeekInThisSector" type="xs:string"/>
+  <xs:element name="BenchmarkHoursPerYear" type="xs:decimal"/>
+  <xs:element name="MaximumAllowedHoursPerYear" type="xs:decimal"/>
+  <xs:element name="PercentageIncreaseInElectricityBenchmarkAtMaximumAllowed" type="xs:decimal"/>
+  <xs:element name="PercentageIncreaseInFossilThermalBenchmarkAtMaximumAllowed" type="xs:decimal"/>
+  <xs:simpleType name="yearValueType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="2005"/>
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Year">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="cip:Month"/>
+      </xs:sequence>
+      <xs:attribute name="value" use="required" type="cip:yearValueType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="monthValueType">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Month">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:decimal">
+          <xs:attribute name="value" use="required" type="cip:monthValueType"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
