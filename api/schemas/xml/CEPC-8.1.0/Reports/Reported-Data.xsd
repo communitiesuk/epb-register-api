@@ -433,6 +433,7 @@
 	<xs:simpleType name="HeatingFuelTypeCode">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Natural Gas"/>
+      <xs:enumeration value="Mains Gas"/>
 			<xs:enumeration value="LPG">
 				<xs:annotation>
 					<xs:documentation>LPG</xs:documentation>
@@ -448,6 +449,8 @@
 					<xs:documentation>oil</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+      <xs:enumeration value="Fuel Oil"/>
+      <xs:enumeration value="Heating Oil"/>
 			<xs:enumeration value="Coal">
 				<xs:annotation>
 					<xs:documentation>house coal</xs:documentation>
@@ -463,6 +466,7 @@
 					<xs:documentation>Smokeless Fuel including Coke</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+      <xs:enumeration value="Manufactured Smokeless Fuel"/>
 			<xs:enumeration value="Dual Fuel Appliances (Mineral + Wood)">
 				<xs:annotation>
 					<xs:documentation>dual fuel - mineral + wood</xs:documentation>
@@ -482,6 +486,16 @@
 			<xs:enumeration value="Waste Heat"/>
 			<xs:enumeration value="District Cooling"/>
 			<xs:enumeration value="District Heating"/>
+      <xs:enumeration value="Bio-liquid HVO"/>
+      <xs:enumeration value="Bio-liquid FAME"/>
+      <xs:enumeration value="B30K">
+        <xs:annotation>
+          <xs:documentation>A blend of kerosene (70%) with FAME biofuel (30%)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Bioethanol"/>
+      <xs:enumeration value="Wood Logs"/>
+      <xs:enumeration value="Wood Chips"/>
 			<xs:enumeration value="Other"/>
 		</xs:restriction>
 	</xs:simpleType>
