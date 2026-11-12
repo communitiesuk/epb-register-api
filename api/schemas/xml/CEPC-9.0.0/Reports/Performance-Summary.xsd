@@ -18,7 +18,7 @@
 			<xs:documentation>
 For an EPC created using EPC-Gen Building-Data is fixed at four, which are:- Actual Building, Notional  Building, Reference Building and Typical Buidling
 
-The type of Building Data is indicated by7 the Analysis-Type field.</xs:documentation>
+The type of Building Data is indicated by the Analysis-Type field.</xs:documentation>
 		</xs:annotation>
 		<xs:all>
 			<xs:element name="Analysis-Type" type="AnalysisTypeCode"/>
