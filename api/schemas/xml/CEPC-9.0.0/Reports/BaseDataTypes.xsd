@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc"
   elementFormDefault="qualified"
-  version="CEPC-8.1.0"
+  version="CEPC-9.0.0"
 >
 	<xs:annotation>
 		<xs:documentation>The purpose of Base Data Type declarations is to provide a point of declaration of all the primitive  datatypes that are in use within the domain and can be used to describe the contents of the Business Information Model.

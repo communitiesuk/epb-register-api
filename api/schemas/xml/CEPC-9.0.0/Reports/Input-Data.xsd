@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc"
   elementFormDefault="qualified"
-  version="CEPC-8.1.0"
+  version="CEPC-9.0.0"
 >
 	<xs:element name="Input-Data" type="Input-Data"/>
 	<xs:complexType name="Input-Data" abstract="true">

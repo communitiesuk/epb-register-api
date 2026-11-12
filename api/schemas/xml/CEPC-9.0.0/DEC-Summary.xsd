@@ -4,7 +4,7 @@
            targetNamespace="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
-           version="CEPC-8.1.0">
+           version="CEPC-9.0.0">
   <xs:element name="Reports">
     <xs:complexType>
       <xs:sequence>

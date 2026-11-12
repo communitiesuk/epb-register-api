@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc"
   elementFormDefault="qualified"
-  version="CEPC-8.1.0"
+  version="CEPC-9.0.0"
 >
 	<xs:include schemaLocation="Report-Header.xsd"/>
 	<xs:include schemaLocation="BaseDataTypes.xsd"/>
@@ -432,7 +432,6 @@
 	</xs:complexType>
 	<xs:simpleType name="HeatingFuelTypeCode">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="Natural Gas"/>
       <xs:enumeration value="Mains Gas"/>
 			<xs:enumeration value="LPG">
 				<xs:annotation>
@@ -444,11 +443,6 @@
 					<xs:documentation>biogas - landfill</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Oil">
-				<xs:annotation>
-					<xs:documentation>oil</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
       <xs:enumeration value="Fuel Oil"/>
       <xs:enumeration value="Heating Oil"/>
 			<xs:enumeration value="Coal">
@@ -456,22 +450,7 @@
 					<xs:documentation>house coal</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Anthracite">
-				<xs:annotation>
-					<xs:documentation>anthracite</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Smokeless Fuel (inc Coke)">
-				<xs:annotation>
-					<xs:documentation>Smokeless Fuel including Coke</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
       <xs:enumeration value="Manufactured Smokeless Fuel"/>
-			<xs:enumeration value="Dual Fuel Appliances (Mineral + Wood)">
-				<xs:annotation>
-					<xs:documentation>dual fuel - mineral + wood</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
 			<xs:enumeration value="Biomass">
 				<xs:annotation>
 					<xs:documentation>biomass</xs:documentation>

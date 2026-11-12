@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc"
   elementFormDefault="qualified"
-  version="CEPC-8.1.0"
+  version="CEPC-9.0.0"
 >
 	<xs:include schemaLocation="BaseDataTypes.xsd"/>
 	<xs:element name="Property-Details" type="Property-Details"/>
