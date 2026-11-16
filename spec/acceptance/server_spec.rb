@@ -14,6 +14,9 @@ describe "Acceptance::Responses" do
 
     it "returns status 404" do
       expect(response.status).to eq(404)
+      expect(JSON.parse(last_response.body)).to eq(
+        "errors" => [{ "code" => "NOT_FOUND", "title" => "Not found" }],
+      )
     end
   end
 
@@ -97,26 +100,27 @@ describe "Acceptance::Responses" do
 
   context "when an uncaught error is raised" do
     let(:logger) { instance_double(Logger) }
+    let(:exception) { "boom" }
     let(:app) do
       test_logger = logger
+      test_exception = exception
       Class.new(RegisterApiService) do
+        set :raise_errors, false
+        set :show_exceptions, false
+
         define_method(:initialize) do |*args|
           super(*args)
           @logger = test_logger
         end
 
         get "/test-error" do
-          raise "boom"
+          raise test_exception
         end
       end
     end
 
-    context "when in a production environment" do
+    context "when an uncaught error is raised" do
       before do
-        app.set :raise_errors, false
-        app.set :show_exceptions, false
-        app.set :environment, :production
-
         allow(Sentry).to receive(:capture_exception)
         allow(logger).to receive(:error)
         get "/test-error"
@@ -133,7 +137,11 @@ describe "Acceptance::Responses" do
       end
 
       it "logs the error to the log file" do
-        expect(logger).to have_received(:error).with(include('"type":"RuntimeError","message":"boom","backtrace":['))
+        expect(logger).to have_received(:error).with(
+          satisfy do |error|
+            expect(JSON.parse(error)).to eq("type" => "RuntimeError", "message" => "boom", "backtrace" => [])
+          end,
+        )
       end
 
       it "logs the error to sentry" do
@@ -148,8 +156,6 @@ describe "Acceptance::Responses" do
 
     context "when in a development environment" do
       before do
-        app.set :raise_errors, false
-        app.set :show_exceptions, false
         app.set :host_authorization, { permitted_hosts: %w[] }
         app.set :environment, :development
 
@@ -162,22 +168,15 @@ describe "Acceptance::Responses" do
         expect(last_response.status).to eq 500
       end
 
-      it "does not display a verbose error message" do
-        expect(JSON.parse(last_response.body).keys).to eq(
-          %w[type message backtrace cause],
-        )
+      it "displays a verbose error message" do
+        expect(JSON.parse(last_response.body)).to eq("backtrace" => [], "message" => "boom", "type" => "RuntimeError")
       end
 
       it "logs the error to the log file" do
-        expect(logger).to have_received(:error).with(include('"type":"RuntimeError","message":"boom","backtrace":['))
-      end
-
-      it "logs the error to sentry" do
-        expect(Sentry).to have_received(:capture_exception).with(
-          have_attributes(
-            class: RuntimeError,
-            message: "boom",
-          ),
+        expect(logger).to have_received(:error).with(
+          satisfy do |error|
+            expect(JSON.parse(error)).to eq("type" => "RuntimeError", "message" => "boom", "backtrace" => [])
+          end,
         )
       end
     end

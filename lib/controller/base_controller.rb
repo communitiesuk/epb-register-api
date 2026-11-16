@@ -158,9 +158,9 @@ module Controller
       {
         type: exception.class.name,
         message: exception.message,
-        backtrace: exception.backtrace,
+        backtrace: exception&.backtrace&.select { it.start_with?(File.expand_path("..", __dir__)) },
         cause: exception.cause && error_details(exception.cause),
-      }
+      }.compact
     end
 
     def server_error(exception)
