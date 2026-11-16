@@ -1,5 +1,4 @@
 require_relative "../helper/toggles"
-require "sinatra/cross_origin"
 require "epb-auth-tools"
 require "epb_view_models"
 require "nokogiri"
@@ -25,7 +24,6 @@ module Controller
     end
 
     configure do
-      enable :cross_origin
       set :protection, except: %i[remote_token path_traversal]
     end
 
