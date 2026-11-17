@@ -1,4 +1,5 @@
-require_relative "../helper/toggles"
+# frozen_string_literal: true
+
 require "epb-auth-tools"
 require "epb_view_models"
 require "nokogiri"
@@ -7,6 +8,11 @@ require "csv"
 
 module Controller
   class BaseController < Sinatra::Base
+    set :protection, except: [
+      :remote_token, # not needed because we have no CSRF tokens
+      :path_traversal, # disabled because assessor id params can contain an url escaped "/"
+    ]
+
     def initialize(*args)
       super
       @xml_helper = Helper::XmlHelper.new
@@ -21,10 +27,6 @@ module Controller
       also_reload "lib/**/*.rb"
       set :host_authorization, { permitted_hosts: %w[] }
       set :show_exceptions, false
-    end
-
-    configure do
-      set :protection, except: %i[remote_token path_traversal]
     end
 
     before do
@@ -82,6 +84,18 @@ module Controller
     error Sinatra::NotFound do
       content_type :text
       error_response(404, "NOT_FOUND", "Not found")
+    end
+
+    class ScheduledDowntimeError < RuntimeError; end
+
+    class MaintenanceMode < ScheduledDowntimeError; end
+    error Controller::BaseController::MaintenanceMode do
+      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintenance")
+    end
+
+    class ReadOnlyMode < ScheduledDowntimeError; end
+    error Controller::BaseController::ReadOnlyMode do
+      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently only accepting GET requests")
     end
 
     error do |exception|
@@ -189,23 +203,5 @@ module Controller
     def boolean_parameter_true?(key)
       params[key].blank? || params[key] == "true" if params.key?(key)
     end
-
-    class ScheduledDowntimeError < RuntimeError; end
-
-    class MaintenanceMode < ScheduledDowntimeError; end
-    error Controller::BaseController::MaintenanceMode do
-      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintenance")
-    end
-
-    class ReadOnlyMode < ScheduledDowntimeError; end
-    error Controller::BaseController::ReadOnlyMode do
-      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently only accepting GET requests")
-    end
-  end
-end
-
-module RequestModule
-  class << self
-    attr_accessor :relevant_request_headers
   end
 end
