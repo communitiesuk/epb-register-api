@@ -13,23 +13,14 @@ module Controller
 
     get "/api/retrofit-funding/assessments", auth_token_has_all: ["retrofit-funding:assessment:fetch"] do
       params_body SCHEMA
-
       uprn = params[:uprn]
-
       details = ApiFactory.fetch_retrofit_funding_scheme_details_use_case.execute(uprn)
-      case details
-      when Domain::AssessmentRetrofitFundingDetails
-        json_api_response(
-          code: 200,
-          data: {
-            assessment: details.to_hash,
-          },
-        )
-      when nil
-        raise Sinatra::NotFound
+
+      if details
+        json_api_response(code: 200, data: { assessment: details.to_hash })
+      else
+        error_response 404, "NOT_FOUND", "No domestic EPCs found for this UPRN"
       end
-    rescue Sinatra::NotFound
-      error_response 404, "NOT_FOUND", "No domestic EPCs found for this UPRN"
     rescue Boundary::Json::ValidationError
       error_response 400, "BAD_REQUEST", "The UPRN parameter is badly formatted"
     end

@@ -38,6 +38,23 @@ describe "Acceptance::AssessorStatus" do
       )
     end
 
+    it "gives an error if date param is missing" do
+      response =
+        JSON.parse(
+          assertive_get(
+            "/api/reports/#{test_scheme_id}/assessors/status",
+            auth_data: { scheme_ids: [test_scheme_id] },
+            scopes: %w[report:assessor:status],
+            accepted_responses: [400],
+          ).body,
+          symbolize_names: true,
+        )
+
+      expect(response).to eq(
+        { errors: [{ code: "INVALID_REQUEST", title: "invalid date" }] },
+      )
+    end
+
     it "gives an unauthorised error if the user does not have permission for the scheme" do
       response =
         JSON.parse(

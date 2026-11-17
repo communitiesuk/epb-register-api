@@ -20,13 +20,13 @@ module Controller
       execute_params = { postcode: params[:postcode], building_identifier: params[:buildingNameOrNumber] }
 
       result = use_case.execute(**execute_params)
-      raise Sinatra::NotFound if result[:assessments].empty?
-
-      status = 200
-      data = result.to_hash
-      json_api_response(code: status, data:)
-    rescue Sinatra::NotFound
-      error_response 404, "NOT_FOUND", "No domestic assessments could be found for that query"
+      if result[:assessments].empty?
+        error_response 404, "NOT_FOUND", "No domestic assessments could be found for that query"
+      else
+        status = 200
+        data = result.to_hash
+        json_api_response(code: status, data:)
+      end
     rescue Boundary::Json::ValidationError => e
       error_response 400, "BAD_REQUEST",
                      case e.failed_properties.count

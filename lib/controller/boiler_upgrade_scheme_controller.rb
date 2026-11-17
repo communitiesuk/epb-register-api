@@ -58,11 +58,9 @@ module Controller
         json_api_response code: 300, data: { links: { assessments: result.references } }
       when Domain::AssessmentReference
         redirect "/api/bus/assessments/latest/search?rrn=#{result.rrn}", 303
-      when nil
-        raise Sinatra::NotFound
+      else
+        error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
       end
-    rescue Sinatra::NotFound
-      error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
     rescue UseCase::AssessmentSummary::Fetch::AssessmentGone
       error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
     rescue Boundary::Json::ValidationError => e

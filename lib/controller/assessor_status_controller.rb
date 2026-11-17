@@ -1,7 +1,6 @@
 module Controller
   class AssessorStatusController < Controller::BaseController
-    get "/api/reports/:scheme_id/assessors/status",
-        auth_token_has_all: %w[report:assessor:status] do
+    get "/api/reports/:scheme_id/assessors/status", auth_token_has_all: %w[report:assessor:status] do
       scheme_id = params["scheme_id"]
       sup = env[:auth_token].supplemental("scheme_ids")
       unless sup.include? scheme_id.to_i
@@ -13,7 +12,7 @@ module Controller
 
       events =
         UseCase::GetAssessorsStatusEventsByDate.new.execute(
-          Date.parse(params["date"].nil? ? "" : params["date"]),
+          Date.parse(params["date"] || ""),
           scheme_id,
         )
 
