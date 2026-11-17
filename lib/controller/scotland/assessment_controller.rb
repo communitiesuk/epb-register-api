@@ -205,7 +205,7 @@ module Controller
             400,
           )
         else
-          server_error(e)
+          raise
         end
       end
 
@@ -235,19 +235,14 @@ module Controller
         )
 
         json_api_response(code: 200, data: { "status": assessment_body[:status] })
-      rescue StandardError => e
-        case e
-        when UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme
-          error_response(403, "NOT_ALLOWED", e.message)
-        when UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled
-          gone_error(e.message)
-        when UseCase::UpdateAssessmentStatus::AssessmentNotFound
-          not_found_error("Assessment not found")
-        when Boundary::Json::Error
-          error_response(422, "INVALID_REQUEST", e.message)
-        else
-          server_error(e)
-        end
+      rescue UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme => e
+        error_response 403, "NOT_ALLOWED", e.message
+      rescue UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled => e
+        gone_error(e.message)
+      rescue UseCase::UpdateAssessmentStatus::AssessmentNotFound
+        not_found_error("Assessment not found")
+      rescue Boundary::Json::Error => e
+        error_response 422, "INVALID_REQUEST", e.message
       end
 
       UPDATE_OPT_OUT_PUT_SCHEMA = {
@@ -276,17 +271,12 @@ module Controller
                         end
 
         json_api_response(code: 200, data: response_text)
-      rescue StandardError => e
-        case e
-        when UseCase::OptOutAssessment::AssessmentNotFound
-          not_found_error("Assessment not found")
-        when Helper::RrnHelper::RrnNotValid
-          error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-        when Boundary::Json::Error
-          error_response(400, "INVALID_REQUEST", e.message)
-        else
-          server_error(e)
-        end
+      rescue UseCase::OptOutAssessment::AssessmentNotFound
+        not_found_error("Assessment not found")
+      rescue Helper::RrnHelper::RrnNotValid
+        error_response 400, "INVALID_QUERY", "Assessment ID not valid"
+      rescue Boundary::Json::Error => e
+        error_response 400, "INVALID_REQUEST", e.message
       end
 
       UPDATE_ADDRESS_ID_PUT_SCHEMA = {
@@ -312,23 +302,18 @@ module Controller
           is_scottish: true,
         )
         json_api_response(code: 200, data: "Address ID has been updated")
-      rescue StandardError => e
-        case e
-        when UseCase::UpdateAssessmentAddressId::AssessmentNotFound
-          not_found_error("Assessment not found")
-        when UseCase::UpdateAssessmentAddressId::InvalidAddressIdFormat
-          error_response(400, "BAD_REQUEST", e.message.to_s)
-        when UseCase::UpdateAssessmentAddressId::AddressIdNotFound
-          error_response(400, "BAD_REQUEST", "Address ID does not exist")
-        when UseCase::UpdateAssessmentAddressId::AddressIdMismatched
-          error_response(400, "BAD_REQUEST", "Address ID mismatched: #{e.message}")
-        when Helper::RrnHelper::RrnNotValid
-          error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-        when Boundary::Json::Error
-          error_response(400, "INVALID_REQUEST", e.message)
-        else
-          server_error(e)
-        end
+      rescue UseCase::UpdateAssessmentAddressId::AssessmentNotFound
+        not_found_error("Assessment not found")
+      rescue UseCase::UpdateAssessmentAddressId::InvalidAddressIdFormat => e
+        error_response 400, "BAD_REQUEST", e.message.to_s
+      rescue UseCase::UpdateAssessmentAddressId::AddressIdNotFound
+        error_response 400, "BAD_REQUEST", "Address ID does not exist"
+      rescue UseCase::UpdateAssessmentAddressId::AddressIdMismatched => e
+        error_response 400, "BAD_REQUEST", "Address ID mismatched: #{e.message}"
+      rescue Helper::RrnHelper::RrnNotValid
+        error_response 400, "INVALID_QUERY", "Assessment ID not valid"
+      rescue Boundary::Json::Error => e
+        error_response 400, "INVALID_REQUEST", e.message
       end
     end
   end

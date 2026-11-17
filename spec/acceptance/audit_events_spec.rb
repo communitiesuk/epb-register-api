@@ -85,13 +85,15 @@ describe "Audit events", :set_with_timecop do
       end
 
       it "does not write the assessment and returns a 500" do
-        lodge_assessment(
-          assessment_body: second_assessment.to_xml,
-          accepted_responses: [500],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-        )
+        expect {
+          lodge_assessment(
+            assessment_body: second_assessment.to_xml,
+            accepted_responses: [500],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+          )
+        }.to raise_error UseCase::ValidateAndLodgeAssessment::DatabaseWriteError
 
         ActiveRecord::Base.connection.reconnect!
         is_assessment_written = !ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments WHERE assessment_id = '#{failing_assessment_rrn}'").rows.empty?

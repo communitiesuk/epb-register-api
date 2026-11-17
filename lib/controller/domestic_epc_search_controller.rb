@@ -25,23 +25,18 @@ module Controller
       status = 200
       data = result.to_hash
       json_api_response(code: status, data:)
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No domestic assessments could be found for that query"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST",
-                       case e.failed_properties.count
-                       when 0
-                         "The search query was invalid - please check the provided parameters"
-                       when 1
-                         "The value provided for the #{e.failed_properties.first} parameter in the search query was not valid"
-                       else
-                         "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
-                       end
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No domestic assessments could be found for that query"
+    rescue Boundary::Json::ValidationError => e
+      error_response 400, "BAD_REQUEST",
+                     case e.failed_properties.count
+                     when 0
+                       "The search query was invalid - please check the provided parameters"
+                     when 1
+                       "The value provided for the #{e.failed_properties.first} parameter in the search query was not valid"
+                     else
+                       "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
+                     end
     end
   end
 end

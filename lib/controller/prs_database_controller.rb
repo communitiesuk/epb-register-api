@@ -43,8 +43,6 @@ module Controller
                   "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
                 end
       error_response 400, "BAD_REQUEST", message
-    rescue StandardError => e
-      server_error e
     end
   end
 end

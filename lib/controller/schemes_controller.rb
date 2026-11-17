@@ -30,19 +30,10 @@ module Controller
       new_scheme_details = request_body(SCHEMA)
       result = UseCase::AddScheme.new.execute(new_scheme_details)
       json_api_response(code: 201, data: result)
-    rescue StandardError => e
-      case e
-      when Boundary::Json::Error
-        error_response(400, "INVALID_REQUEST", e.message)
-      when Gateway::SchemesGateway::DuplicateSchemeException
-        error_response(
-          400,
-          "DUPLICATE_SCHEME",
-          "Scheme with this name already exists",
-        )
-      else
-        server_error(e)
-      end
+    rescue Boundary::Json::Error => e
+      error_response 400, "INVALID_REQUEST", e.message
+    rescue Gateway::SchemesGateway::DuplicateSchemeException
+      error_response 400, "DUPLICATE_SCHEME", "Scheme with this name already exists"
     end
 
     put "/api/schemes/:scheme_id", auth_token_has_all: %w[scheme:update] do
@@ -52,15 +43,10 @@ module Controller
         updated_scheme_details,
       )
       status 204
-    rescue StandardError => e
-      case e
-      when UseCase::UpdateScheme::SchemeNotFound
-        not_found_error("Scheme not found")
-      when Boundary::Json::Error
-        error_response(400, "INVALID_REQUEST", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::UpdateScheme::SchemeNotFound
+      not_found_error("Scheme not found")
+    rescue Boundary::Json::Error => e
+      error_response 400, "INVALID_REQUEST", e.message
     end
   end
 end

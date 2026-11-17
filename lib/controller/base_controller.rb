@@ -99,7 +99,15 @@ module Controller
     end
 
     error do |exception|
-      server_error(exception)
+      error = error_details(exception)
+      @logger.error JSON.generate(error)
+      ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
+
+      if settings.environment == :development
+        json_response(error, 500)
+      else
+        error_response(500, "SERVER_ERROR", "Server Error")
+      end
     end
 
   private
@@ -173,19 +181,6 @@ module Controller
         backtrace: exception&.backtrace&.select { it.start_with?(File.expand_path("..", __dir__)) },
         cause: exception.cause && error_details(exception.cause),
       }.compact
-    end
-
-    def server_error(exception)
-      Sentry.capture_exception(exception) if defined?(Sentry)
-      error = error_details(exception)
-      @logger.error JSON.generate(error)
-      ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
-
-      if settings.environment == :development
-        json_response(error, 500)
-      else
-        error_response(500, "SERVER_ERROR", "Server Error")
-      end
     end
 
     def not_found_error(message)

@@ -27,19 +27,14 @@ module Controller
       )
 
       json_api_response(code: 200, data: { "status": assessment_body[:status] })
-    rescue StandardError => e
-      case e
-      when UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme
-        error_response(403, "NOT_ALLOWED", e.message)
-      when UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled
-        gone_error(e.message)
-      when UseCase::UpdateAssessmentStatus::AssessmentNotFound
-        not_found_error("Assessment not found")
-      when Boundary::Json::Error
-        error_response(422, "INVALID_REQUEST", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme => e
+      error_response(403, "NOT_ALLOWED", e.message)
+    rescue UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled => e
+      gone_error(e.message)
+    rescue UseCase::UpdateAssessmentStatus::AssessmentNotFound
+      not_found_error("Assessment not found")
+    rescue Boundary::Json::Error => e
+      error_response(422, "INVALID_REQUEST", e.message)
     end
   end
 end

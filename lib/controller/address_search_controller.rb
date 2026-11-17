@@ -77,13 +77,8 @@ module Controller
                         meta: {
                           filters:,
                         }
-    rescue StandardError => e
-      case e
-      when Boundary::Json::Error
-        error_response 422, "INVALID_REQUEST", e.message
-      else
-        server_error e
-      end
+    rescue Boundary::Json::Error => e
+      error_response 422, "INVALID_REQUEST", e.message
     end
   end
 end

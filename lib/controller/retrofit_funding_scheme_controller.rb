@@ -28,15 +28,10 @@ module Controller
       when nil
         raise Sinatra::NotFound
       end
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No domestic EPCs found for this UPRN"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST", "The UPRN parameter is badly formatted"
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No domestic EPCs found for this UPRN"
+    rescue Boundary::Json::ValidationError
+      error_response 400, "BAD_REQUEST", "The UPRN parameter is badly formatted"
     end
   end
 end

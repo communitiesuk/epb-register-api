@@ -8,21 +8,16 @@ module Controller
       summary = UseCase::CertificateSummary::Fetch.new.execute(assessment_id)
 
       json_api_response(data: summary)
-    rescue StandardError => e
-      case e
-      when UseCase::CertificateSummary::Fetch::NotFoundException
-        not_found_error("No matching assessment found")
-      when ArgumentError
-        error_response(400, "INVALID_QUERY", e.message)
-      when UseCase::CertificateSummary::Fetch::AssessmentGone
-        gone_error("Assessment not for issue")
-      when Helper::RrnHelper::RrnNotValid
-        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-      when Boundary::InvalidAssessment
-        error_response(400, "INVALID_QUERY", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::CertificateSummary::Fetch::NotFoundException
+      not_found_error("No matching assessment found")
+    rescue ArgumentError => e
+      error_response(400, "INVALID_QUERY", e.message)
+    rescue UseCase::CertificateSummary::Fetch::AssessmentGone
+      gone_error("Assessment not for issue")
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+    rescue Boundary::InvalidAssessment => e
+      error_response(400, "INVALID_QUERY", e.message)
     end
   end
 end

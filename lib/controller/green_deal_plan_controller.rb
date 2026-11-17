@@ -205,21 +205,14 @@ module Controller
       ApiFactory.patch_green_deal_plan_use_case.execute(json: updates)
 
       json_api_response code: 204
-    rescue StandardError => e
-      case e
-      when UseCase::PatchGreenDealPlan::NotFoundException
-        not_found_error "Green Deal Plan not found"
-      when Boundary::Json::ValidationError
-        error_response 400, "INVALID_REQUEST", e.message
-      when Boundary::Json::Error
-        error_response 400, "INVALID_REQUEST", e.message
-      when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
-        error_response 409,
-                       "INVALID_REQUEST",
-                       "Green Deal Plan ID does not match"
-      else
-        server_error e
-      end
+    rescue UseCase::PatchGreenDealPlan::NotFoundException
+      not_found_error "Green Deal Plan not found"
+    rescue Boundary::Json::ValidationError => e
+      error_response 400, "INVALID_REQUEST", e.message
+    rescue Boundary::Json::Error => e
+      error_response 400, "INVALID_REQUEST", e.message
+    rescue UseCase::UpdateGreenDealPlan::PlanIdMismatchException
+      error_response 409, "INVALID_REQUEST", "Green Deal Plan ID does not match"
     end
 
     post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
@@ -232,27 +225,20 @@ module Controller
       results = ApiFactory.add_green_deal_plan_use_case.execute(assessment_id, plan)
 
       json_api_response code: 201, data: results.to_hash
-    rescue StandardError => e
-      case e
-      when UseCase::AddGreenDealPlan::NotFoundException
-        not_found_error "Assessment not found"
-      when UseCase::AddGreenDealPlan::AssessmentGoneException
-        gone_error "Assessment not for issue"
-      when UseCase::AddGreenDealPlan::AssessmentExpiredException
-        gone_error "Assessment has expired"
-      when UseCase::AddGreenDealPlan::InvalidTypeException
-        error_response 400, "INVALID_REQUEST", "Assessment type is not RdSAP"
-      when UseCase::AddGreenDealPlan::DuplicateException
-        error_response 409,
-                       "INVALID_REQUEST",
-                       "Green Deal Plan ID already exists"
-      when Boundary::Json::Error
-        error_response 400, "INVALID_REQUEST", e.message
-      when UseCase::AddGreenDealPlan::InvalidFuelCode
-        error_response 400, "INVALID_REQUEST", e.message
-      else
-        server_error e
-      end
+    rescue UseCase::AddGreenDealPlan::NotFoundException
+      not_found_error "Assessment not found"
+    rescue UseCase::AddGreenDealPlan::AssessmentGoneException
+      gone_error "Assessment not for issue"
+    rescue UseCase::AddGreenDealPlan::AssessmentExpiredException
+      gone_error "Assessment has expired"
+    rescue UseCase::AddGreenDealPlan::InvalidTypeException
+      error_response 400, "INVALID_REQUEST", "Assessment type is not RdSAP"
+    rescue UseCase::AddGreenDealPlan::DuplicateException
+      error_response 409, "INVALID_REQUEST", "Green Deal Plan ID already exists"
+    rescue Boundary::Json::Error => e
+      error_response 400, "INVALID_REQUEST", e.message
+    rescue UseCase::AddGreenDealPlan::InvalidFuelCode => e
+      error_response 400, "INVALID_REQUEST", e.message
     end
 
     put "/api/greendeal/disclosure/plans/:plan_id",
@@ -265,21 +251,14 @@ module Controller
       result = ApiFactory.update_green_deal_plan_use_case.execute(plan_id, green_deal_plan)
 
       json_api_response code: 200, data: result.to_hash
-    rescue StandardError => e
-      case e
-      when UseCase::UpdateGreenDealPlan::NotFoundException
-        not_found_error "Green Deal Plan not found"
-      when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
-        error_response 409,
-                       "INVALID_REQUEST",
-                       "Green Deal Plan ID does not match"
-      when Boundary::Json::Error
-        error_response 400, "INVALID_REQUEST", e.message
-      when UseCase::UpdateGreenDealPlan::InvalidFuelCode
-        error_response 400, "INVALID_REQUEST", e.message
-      else
-        server_error e
-      end
+    rescue UseCase::UpdateGreenDealPlan::NotFoundException
+      not_found_error "Green Deal Plan not found"
+    rescue UseCase::UpdateGreenDealPlan::PlanIdMismatchException
+      error_response 409, "INVALID_REQUEST", "Green Deal Plan ID does not match"
+    rescue Boundary::Json::Error => e
+      error_response 400, "INVALID_REQUEST", e.message
+    rescue UseCase::UpdateGreenDealPlan::InvalidFuelCode => e
+      error_response 400, "INVALID_REQUEST", e.message
     end
 
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
@@ -288,17 +267,12 @@ module Controller
       results = UseCase::FetchRenewableHeatIncentive.new.execute assessment_id
 
       json_api_response code: 200, data: { assessment: results.to_hash }
-    rescue StandardError => e
-      case e
-      when UseCase::FetchRenewableHeatIncentive::NotFoundException
-        not_found_error("Assessment not found")
-      when UseCase::FetchRenewableHeatIncentive::AssessmentGone
-        gone_error("Assessment not for issue")
-      when UseCase::AssessmentSummary::Fetch::AssessmentGone
-        gone_error("Assessment not for issue")
-      else
-        server_error(e)
-      end
+    rescue UseCase::FetchRenewableHeatIncentive::NotFoundException
+      not_found_error("Assessment not found")
+    rescue UseCase::FetchRenewableHeatIncentive::AssessmentGone
+      gone_error("Assessment not for issue")
+    rescue UseCase::AssessmentSummary::Fetch::AssessmentGone
+      gone_error("Assessment not for issue")
     end
 
     get "/api/greendeal/assessments/:assessment_id/xml",
@@ -307,23 +281,14 @@ module Controller
 
       content_type :xml
       body UseCase::FetchRedactedAssessment.new.execute(assessment_id)
-    rescue StandardError => e
-      case e
-      when UseCase::FetchRedactedAssessment::NotAnRdsap
-        forbidden("ASSESSMENT_NOT_RDSAP", "Assessment is not an RdSAP")
-      when UseCase::FetchRedactedAssessment::NotFoundException
-        not_found_error("Assessment not found")
-      when UseCase::FetchRedactedAssessment::AssessmentGone
-        gone_error("Assessment not for issue")
-      when Helper::RrnHelper::RrnNotValid
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The requested assessment id is not valid",
-        )
-      else
-        server_error(e)
-      end
+    rescue UseCase::FetchRedactedAssessment::NotAnRdsap
+      forbidden("ASSESSMENT_NOT_RDSAP", "Assessment is not an RdSAP")
+    rescue UseCase::FetchRedactedAssessment::NotFoundException
+      not_found_error("Assessment not found")
+    rescue UseCase::FetchRedactedAssessment::AssessmentGone
+      gone_error("Assessment not for issue")
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response 400, "INVALID_REQUEST", "The requested assessment id is not valid"
     end
 
     get "/api/greendeal/assessments/:assessment_id",
@@ -332,21 +297,14 @@ module Controller
       result = UseCase::FetchGreenDealAssessment.new.execute(assessment_id)
 
       json_api_response code: 200, data: { assessment: result }
-    rescue StandardError => e
-      case e
-      when UseCase::FetchGreenDealAssessment::NotFoundException
-        not_found_error("Assessment not found")
-      when Helper::RrnHelper::RrnNotValid
-        error_response 400,
-                       "INVALID_REQUEST",
-                       "The requested assessment ID is not valid"
-      when UseCase::FetchGreenDealAssessment::AssessmentGone
-        gone_error("Assessment not for issue")
-      when UseCase::FetchGreenDealAssessment::InvalidAssessmentTypeException
-        forbidden("UNAUTHORISED", "Assessment is not an RdSAP/SAP")
-      else
-        server_error(e)
-      end
+    rescue UseCase::FetchGreenDealAssessment::NotFoundException
+      not_found_error("Assessment not found")
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response 400, "INVALID_REQUEST", "The requested assessment ID is not valid"
+    rescue UseCase::FetchGreenDealAssessment::AssessmentGone
+      gone_error("Assessment not for issue")
+    rescue UseCase::FetchGreenDealAssessment::InvalidAssessmentTypeException
+      forbidden "UNAUTHORISED", "Assessment is not an RdSAP/SAP"
     end
 
     delete "/api/greendeal/disclosure/plans/:plan_id",
@@ -358,13 +316,8 @@ module Controller
       result = ApiFactory.delete_green_deal_plan_use_case.execute(plan_id)
 
       json_api_response code: 204, data: result.to_hash
-    rescue StandardError => e
-      case e
-      when UseCase::DeleteGreenDealPlan::NotFoundException
-        not_found_error("Green Deal plan ID can not be found")
-      else
-        server_error e
-      end
+    rescue UseCase::DeleteGreenDealPlan::NotFoundException
+      not_found_error("Green Deal plan ID can not be found")
     end
   end
 end

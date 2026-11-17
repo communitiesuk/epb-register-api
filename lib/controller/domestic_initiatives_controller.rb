@@ -24,15 +24,10 @@ module Controller
           assessment: details.to_hash,
         },
       )
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No assessment details relevant to the Home Energy Retrofit Advice scheme could be found for that query"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No assessment details relevant to the Home Energy Retrofit Advice scheme could be found for that query"
+    rescue Boundary::Json::ValidationError
+      error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
     end
 
     get "/api/heat-pump-check/assessments/:assessmentId",
@@ -48,15 +43,10 @@ module Controller
           assessment: details.to_hash,
         },
       )
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No assessment details relevant to the Heat Pump Check service could be found for that query"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No assessment details relevant to the Heat Pump Check service could be found for that query"
+    rescue Boundary::Json::ValidationError
+      error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
     end
 
     get "/api/warm-home-discount/assessments/:assessmentId",
@@ -77,15 +67,10 @@ module Controller
           assessment: details_hash,
         },
       )
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No assessment details relevant to the Warm Home Discount service could be found for that query"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No assessment details relevant to the Warm Home Discount service could be found for that query"
+    rescue Boundary::Json::ValidationError
+      error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
     end
 
     get "/api/ecoplus/assessments/:assessmentId",
@@ -101,15 +86,10 @@ module Controller
           assessment: details.to_hash,
         },
       )
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No assessment details relevant to the ECO plus scheme could be found for that RRN"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No assessment details relevant to the ECO plus scheme could be found for that RRN"
+    rescue Boundary::Json::ValidationError
+      error_response 400, "BAD_REQUEST", "The value provided for the assessment ID (RRN) in the endpoint URL was not valid"
     end
   end
 end

@@ -39,8 +39,14 @@ module Controller
         pagination = ApiFactory.get_pagination_for_new_reports.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url)
 
         json_api_response(code: 200, links: pagination, data: data, meta: false)
-      rescue StandardError => e
-        rescue_errors(e)
+      rescue Boundary::InvalidDates => e
+        error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
+      rescue Boundary::InvalidArgument => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Boundary::Json::ValidationError => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Errors::OutOfPaginationRangeError => e
+        error_response 400, "PAGINATION_ERROR", e.message
       end
 
       get "/api/scotland/v1/updates/assessments/status", auth_token_has_all: %w[scotland_data:fetch] do
@@ -52,8 +58,14 @@ module Controller
         pagination = ApiFactory.get_pagination_for_scottish_assessment_status_updates.execute(event_types:, start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url, count_method: :count_scottish_events)
 
         json_api_response(code: 200, links: pagination, data: data)
-      rescue StandardError => e
-        rescue_errors(e)
+      rescue Boundary::InvalidDates => e
+        error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
+      rescue Boundary::InvalidArgument => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Boundary::Json::ValidationError => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Errors::OutOfPaginationRangeError => e
+        error_response 400, "PAGINATION_ERROR", e.message
       end
 
       get "/api/scotland/v1/assessments/:assessmentId/meta-data",
@@ -63,15 +75,10 @@ module Controller
         summary = UseCase::AssessmentMeta.new(Gateway::AssessmentMetaGateway.new).execute(assessment_id, is_scottish: true)
 
         json_api_response(data: summary, meta: { data_sent_at: Time.now })
-      rescue StandardError => e
-        case e
-        when UseCase::AssessmentMeta::NoDataException
-          not_found_error("Assessment ID did not return any data")
-        when Boundary::Json::ValidationError
-          error_response 400, "BAD_REQUEST", "The requested assessment id is not valid"
-        else
-          server_error(e)
-        end
+      rescue UseCase::AssessmentMeta::NoDataException
+        not_found_error("Assessment ID did not return any data")
+      rescue Boundary::Json::ValidationError
+        error_response 400, "BAD_REQUEST", "The requested assessment id is not valid"
       end
 
       get "/api/scotland/v1/assessments/:assessment_id/xml-data",
@@ -83,19 +90,10 @@ module Controller
                                                    .execute(assessment_id)
 
         xml_response result, 200
-      rescue StandardError => e
-        case e
-        when UseCase::FetchAssessmentForScotlandPortal::NotFoundException
-          not_found_error("Assessment ID did not return any data")
-        when Helper::RrnHelper::RrnNotValid
-          error_response(
-            400,
-            "INVALID_REQUEST",
-            "The requested assessment id is not valid",
-          )
-        else
-          server_error(e)
-        end
+      rescue UseCase::FetchAssessmentForScotlandPortal::NotFoundException
+        not_found_error("Assessment ID did not return any data")
+      rescue Helper::RrnHelper::RrnNotValid
+        error_response 400, "INVALID_REQUEST", "The requested assessment id is not valid"
       end
 
       get "/api/scotland/v1/updates/assessors/status", auth_token_has_all: %w[scotland_data:fetch] do
@@ -105,8 +103,14 @@ module Controller
         pagination = ApiFactory.get_pagination_for_scottish_assessor_status_updates.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url, count_method: :count_scottish_assessor_events)
 
         json_api_response(code: 200, links: pagination, data: data, meta: false)
-      rescue StandardError => e
-        rescue_errors(e)
+      rescue Boundary::InvalidDates => e
+        error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
+      rescue Boundary::InvalidArgument => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Boundary::Json::ValidationError => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Errors::OutOfPaginationRangeError => e
+        error_response 400, "PAGINATION_ERROR", e.message
       end
 
       get "/api/scotland/v1/updates/new-assessors", auth_token_has_all: %w[scotland_data:fetch] do
@@ -116,39 +120,25 @@ module Controller
         pagination = ApiFactory.get_pagination_for_scottish_assessors_by_date.execute(start_date: @start_date, end_date: @end_date, current_page: @current_page, url: request.url, count_method: :count_search_by_date)
 
         json_api_response(code: 200, links: pagination, data: data, meta: false)
-      rescue StandardError => e
-        rescue_errors(e)
+      rescue Boundary::InvalidDates => e
+        error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{e.message}"
+      rescue Boundary::InvalidArgument => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Boundary::Json::ValidationError => e
+        error_response 400, "INVALID_REQUEST", e.message
+      rescue Errors::OutOfPaginationRangeError => e
+        error_response 400, "PAGINATION_ERROR", e.message
       end
 
       get "/api/scotland/v1/assessors/:scheme_assessor_id", auth_token_has_all: %w[scotland_data:fetch] do
         scheme_assessor_id = params[:scheme_assessor_id]
         data = ApiFactory.fetch_scottish_assessor_by_id.execute(scheme_assessor_id:)
         json_api_response(code: 200, data:, meta: { data_sent_at: Time.now })
-      rescue StandardError => e
-        case e
-        when Boundary::AssessorNotFoundException
-          not_found_error("The requested assessor was not found")
-        else
-          server_error(e)
-        end
+      rescue Boundary::AssessorNotFoundException
+        not_found_error("The requested assessor was not found")
       end
 
     private
-
-      def rescue_errors(error)
-        case error
-        when Boundary::InvalidDates
-          error_response 400, "INVALID_REQUEST", "A required argument is is invalid: #{error.message}"
-        when Boundary::InvalidArgument
-          error_response 400, "INVALID_REQUEST", error.message
-        when Boundary::Json::ValidationError
-          error_response 400, "INVALID_REQUEST", error.message
-        when Errors::OutOfPaginationRangeError
-          error_response 400, "PAGINATION_ERROR", error.message
-        else
-          server_error(error)
-        end
-      end
 
       def filter_date_params
         @params = params_body DATE_RANGE_SCHEMA

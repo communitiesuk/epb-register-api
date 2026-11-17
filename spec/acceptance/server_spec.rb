@@ -121,7 +121,6 @@ describe "Acceptance::Responses" do
 
     context "when an uncaught error is raised" do
       before do
-        allow(Sentry).to receive(:capture_exception)
         allow(logger).to receive(:error)
         get "/test-error"
       end
@@ -143,15 +142,6 @@ describe "Acceptance::Responses" do
           end,
         )
       end
-
-      it "logs the error to sentry" do
-        expect(Sentry).to have_received(:capture_exception).with(
-          have_attributes(
-            class: RuntimeError,
-            message: "boom",
-          ),
-        )
-      end
     end
 
     context "when in a development environment" do
@@ -159,7 +149,6 @@ describe "Acceptance::Responses" do
         app.set :host_authorization, { permitted_hosts: %w[] }
         app.set :environment, :development
 
-        allow(Sentry).to receive(:capture_exception)
         allow(logger).to receive(:error)
         get "/test-error"
       end

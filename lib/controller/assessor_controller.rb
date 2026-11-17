@@ -298,27 +298,14 @@ module Controller
           "Must specify either name or postcode & qualification when searching",
         )
       end
-    rescue StandardError => e
-      case e
-      when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
-        not_found_error("The requested postcode is not registered")
-      when UseCase::FindAssessorsByPostcode::PostcodeNotValid
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The requested postcode is not valid",
-        )
-      when UseCase::FindAssessorsByName::OnlyFirstNameGiven
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "Both a first name and last name must be provided",
-        )
-      when ArgumentError
-        error_response(400, "INVALID_QUERY", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
+      not_found_error("The requested postcode is not registered")
+    rescue UseCase::FindAssessorsByPostcode::PostcodeNotValid
+      error_response 400, "INVALID_REQUEST", "The requested postcode is not valid"
+    rescue UseCase::FindAssessorsByName::OnlyFirstNameGiven
+      error_response 400, "INVALID_REQUEST", "Both a first name and last name must be provided"
+    rescue ArgumentError => e
+      error_response 400, "INVALID_QUERY", e.message
     end
 
     get "/api/schemes/:scheme_id/assessors/:scheme_assessor_id",
@@ -336,15 +323,10 @@ module Controller
 
       result = UseCase::FetchAssessor.new.execute(scheme_id, scheme_assessor_id)
       json_api_response(code: 200, data: result.to_hash)
-    rescue StandardError => e
-      case e
-      when UseCase::FetchAssessor::SchemeNotFoundException
-        not_found_error("The requested scheme was not found")
-      when Boundary::AssessorNotFoundException
-        not_found_error("The requested assessor was not found")
-      else
-        server_error(e)
-      end
+    rescue UseCase::FetchAssessor::SchemeNotFoundException
+      not_found_error("The requested scheme was not found")
+    rescue Boundary::AssessorNotFoundException
+      not_found_error("The requested assessor was not found")
     end
 
     put "/api/schemes/:scheme_id/assessors/:scheme_assessor_id",
@@ -380,27 +362,22 @@ module Controller
         @events.event(:assessor_updated, scheme_assessor_id)
         json_api_response(code: 200, data: assessor_record.to_hash)
       end
-    rescue StandardError => e
-      case e
-      when UseCase::AddAssessor::SchemeNotFoundException
-        not_found_error("The requested scheme was not found")
-      when UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
-        error_response(
-          409,
-          "ASSESSOR_ID_ON_ANOTHER_SCHEME",
-          "The assessor ID you are trying to update is registered by a different scheme",
-        )
-      when UseCase::AddAssessor::InvalidAssessorIdException
-        error_response(422, "INVALID REQUEST", e.message)
-      when UseCase::AddAssessor::SchemeCannotLodgeInRegion
-        error_response(403, "INVALID_REQUEST", "This scheme is not active in the region in which this assessor has qualifications")
-      when Boundary::Json::ParseError
-        error_response(400, "INVALID_REQUEST", e.message)
-      when Boundary::Json::ValidationError
-        error_response(422, "INVALID_REQUEST", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::AddAssessor::SchemeNotFoundException
+      not_found_error("The requested scheme was not found")
+    rescue UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
+      error_response(
+        409,
+        "ASSESSOR_ID_ON_ANOTHER_SCHEME",
+        "The assessor ID you are trying to update is registered by a different scheme",
+      )
+    rescue UseCase::AddAssessor::InvalidAssessorIdException => e
+      error_response(422, "INVALID REQUEST", e.message)
+    rescue UseCase::AddAssessor::SchemeCannotLodgeInRegion
+      error_response(403, "INVALID_REQUEST", "This scheme is not active in the region in which this assessor has qualifications")
+    rescue Boundary::Json::ParseError => e
+      error_response(400, "INVALID_REQUEST", e.message)
+    rescue Boundary::Json::ValidationError => e
+      error_response(422, "INVALID_REQUEST", e.message)
     end
   end
 end

@@ -6,15 +6,10 @@ module Controller
       summary = UseCase::AssessmentMeta.new(Gateway::AssessmentMetaGateway.new).execute(assessment_id)
 
       json_api_response(data: summary)
-    rescue StandardError => e
-      case e
-      when UseCase::AssessmentMeta::NoDataException
-        error_response(404, "NOT_FOUND", "Assessment ID did not return any data")
-      when ArgumentError
-        error_response(400, "INVALID_QUERY", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::AssessmentMeta::NoDataException
+      error_response(404, "NOT_FOUND", "Assessment ID did not return any data")
+    rescue ArgumentError => e
+      error_response(400, "INVALID_QUERY", e.message)
     end
   end
 end

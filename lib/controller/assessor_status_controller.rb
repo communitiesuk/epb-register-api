@@ -18,13 +18,8 @@ module Controller
         )
 
       json_api_response(code: 200, data: { assessorStatusEvents: events })
-    rescue StandardError => e
-      case e
-      when ArgumentError
-        error_response(400, "INVALID_REQUEST", e.message)
-      else
-        server_error(e)
-      end
+    rescue ArgumentError => e
+      error_response(400, "INVALID_REQUEST", e.message)
     end
   end
 end

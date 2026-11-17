@@ -61,27 +61,22 @@ module Controller
       when nil
         raise Sinatra::NotFound
       end
-    rescue StandardError => e
-      case e
-      when Sinatra::NotFound
-        error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
-      when UseCase::AssessmentSummary::Fetch::AssessmentGone
-        error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
-      when Boundary::Json::ValidationError
-        error_response 400, "BAD_REQUEST",
-                       case e.failed_properties.count
-                       when 0
-                         "The search query was invalid - please check the provided parameters"
-                       when 1
-                         "The value provided for the #{e.failed_properties.first} parameter in the search query was not valid"
-                       else
-                         "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
-                       end
-      when UseCase::FetchAssessmentForBus::InvalidAssessmentTypeException
-        error_response 400, "INVALID_REQUEST", "The requested assessment type is not SAP, RdSAP, or CEPC"
-      else
-        server_error e
-      end
+    rescue Sinatra::NotFound
+      error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
+    rescue UseCase::AssessmentSummary::Fetch::AssessmentGone
+      error_response 404, "NOT_FOUND", "No assessment details relevant to the BUS could be found for that query"
+    rescue Boundary::Json::ValidationError => e
+      error_response 400, "BAD_REQUEST",
+                     case e.failed_properties.count
+                     when 0
+                       "The search query was invalid - please check the provided parameters"
+                     when 1
+                       "The value provided for the #{e.failed_properties.first} parameter in the search query was not valid"
+                     else
+                       "The values provided for the following parameters were not valid: #{e.failed_properties.join(', ')}"
+                     end
+    rescue UseCase::FetchAssessmentForBus::InvalidAssessmentTypeException
+      error_response 400, "INVALID_REQUEST", "The requested assessment type is not SAP, RdSAP, or CEPC"
     end
   end
 end

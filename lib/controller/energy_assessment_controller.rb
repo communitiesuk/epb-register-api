@@ -26,23 +26,18 @@ module Controller
         end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)
-    rescue StandardError => e
-      case e
-      when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
-        error_response 400, "INVALID_REQUEST", "Required query params missing"
-      when UseCase::FindAssessmentsByPostcode::ParameterMissing
-        error_response 400, "INVALID_REQUEST", "Required query params missing"
-      when UseCase::FindAssessmentsByPostcode::PostcodeNotValid
-        error_response(400, "INVALID_REQUEST", "The requested postcode is not valid")
-      when UseCase::FindAssessmentsByPostcode::AssessmentTypeNotValid
-        error_response(400, "INVALID_REQUEST", "The requested assessment type is not valid")
-      when Helper::RrnHelper::RrnNotValid
-        error_response(400, "INVALID_REQUEST", "The requested assessment id is not valid")
-      when Boundary::TooManyResults
-        error_response(413, "PAYLOAD_TOO_LARGE", "There are too many results")
-      else
-        server_error(e)
-      end
+    rescue UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
+      error_response 400, "INVALID_REQUEST", "Required query params missing"
+    rescue UseCase::FindAssessmentsByPostcode::ParameterMissing
+      error_response 400, "INVALID_REQUEST", "Required query params missing"
+    rescue UseCase::FindAssessmentsByPostcode::PostcodeNotValid
+      error_response 400, "INVALID_REQUEST", "The requested postcode is not valid"
+    rescue UseCase::FindAssessmentsByPostcode::AssessmentTypeNotValid
+      error_response 400, "INVALID_REQUEST", "The requested assessment type is not valid"
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response 400, "INVALID_REQUEST", "The requested assessment id is not valid"
+    rescue Boundary::TooManyResults
+      error_response 413, "PAYLOAD_TOO_LARGE", "There are too many results"
     end
 
     post "/api/assessments", auth_token_has_one_of: %w[assessment:lodge migrate:assessment] do
@@ -240,7 +235,7 @@ module Controller
           400,
         )
       else
-        server_error(e)
+        raise
       end
     end
 
@@ -254,26 +249,14 @@ module Controller
         UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids)
 
       return xml_response result, 200
-    rescue StandardError => e
-      case e
-      when UseCase::FetchAssessment::NotFoundException
-        not_found_error("Assessment not found")
-      when UseCase::FetchAssessment::AssessmentGone
-        gone_error("Assessment not for issue")
-      when UseCase::FetchAssessment::SchemeIdsDoNotMatch
-        forbidden(
-          "UNAUTHORISED",
-          "You are not authorised to view this scheme's lodged data",
-        )
-      when Helper::RrnHelper::RrnNotValid
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The requested assessment id is not valid",
-        )
-      else
-        server_error(e)
-      end
+    rescue UseCase::FetchAssessment::NotFoundException
+      not_found_error("Assessment not found")
+    rescue UseCase::FetchAssessment::AssessmentGone
+      gone_error("Assessment not for issue")
+    rescue UseCase::FetchAssessment::SchemeIdsDoNotMatch
+      forbidden "UNAUTHORISED", "You are not authorised to view this scheme's lodged data"
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response 400, "INVALID_REQUEST", "The requested assessment id is not valid"
     end
 
     UPDATE_OPT_OUT_PUT_SCHEMA = {
@@ -302,17 +285,12 @@ module Controller
                       end
 
       json_api_response(code: 200, data: response_text)
-    rescue StandardError => e
-      case e
-      when UseCase::OptOutAssessment::AssessmentNotFound
-        not_found_error("Assessment not found")
-      when Helper::RrnHelper::RrnNotValid
-        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-      when Boundary::Json::Error
-        error_response(400, "INVALID_REQUEST", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::OptOutAssessment::AssessmentNotFound
+      not_found_error("Assessment not found")
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+    rescue Boundary::Json::Error => e
+      error_response(400, "INVALID_REQUEST", e.message)
     end
 
     UPDATE_ADDRESS_ID_PUT_SCHEMA = {
@@ -337,23 +315,18 @@ module Controller
         new_address_id,
       )
       json_api_response(code: 200, data: "Address ID has been updated")
-    rescue StandardError => e
-      case e
-      when UseCase::UpdateAssessmentAddressId::AssessmentNotFound
-        not_found_error("Assessment not found")
-      when UseCase::UpdateAssessmentAddressId::InvalidAddressIdFormat
-        error_response(400, "BAD_REQUEST", e.message.to_s)
-      when UseCase::UpdateAssessmentAddressId::AddressIdNotFound
-        error_response(400, "BAD_REQUEST", "Address ID does not exist")
-      when UseCase::UpdateAssessmentAddressId::AddressIdMismatched
-        error_response(400, "BAD_REQUEST", "Address ID mismatched: #{e.message}")
-      when Helper::RrnHelper::RrnNotValid
-        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-      when Boundary::Json::Error
-        error_response(400, "INVALID_REQUEST", e.message)
-      else
-        server_error(e)
-      end
+    rescue UseCase::UpdateAssessmentAddressId::AssessmentNotFound
+      not_found_error("Assessment not found")
+    rescue UseCase::UpdateAssessmentAddressId::InvalidAddressIdFormat => e
+      error_response(400, "BAD_REQUEST", e.message.to_s)
+    rescue UseCase::UpdateAssessmentAddressId::AddressIdNotFound
+      error_response(400, "BAD_REQUEST", "Address ID does not exist")
+    rescue UseCase::UpdateAssessmentAddressId::AddressIdMismatched => e
+      error_response(400, "BAD_REQUEST", "Address ID mismatched: #{e.message}")
+    rescue Helper::RrnHelper::RrnNotValid
+      error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+    rescue Boundary::Json::Error => e
+      error_response(400, "INVALID_REQUEST", e.message)
     end
   end
 end
