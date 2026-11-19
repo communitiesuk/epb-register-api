@@ -30,9 +30,8 @@ module Controller
     end
 
     before do
-      raise MaintenanceMode if request.path != "/healthcheck" && Helper::Toggles.enabled?("register-api-maintenance-mode")
-
-      raise ReadOnlyMode if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
+      maintenance_mode_response if request.path != "/healthcheck" && Helper::Toggles.enabled?("register-api-maintenance-mode")
+      read_only_mode_response if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
 
       unless ENV["EPB_API_DOCS_URL"].nil?
         response.headers["Access-Control-Allow-Origin"] = ENV["EPB_API_DOCS_URL"]
@@ -84,18 +83,6 @@ module Controller
     error Sinatra::NotFound do
       content_type :text
       error_response(404, "NOT_FOUND", "Not found")
-    end
-
-    class ScheduledDowntimeError < RuntimeError; end
-
-    class MaintenanceMode < ScheduledDowntimeError; end
-    error Controller::BaseController::MaintenanceMode do
-      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintenance")
-    end
-
-    class ReadOnlyMode < ScheduledDowntimeError; end
-    error Controller::BaseController::ReadOnlyMode do
-      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently only accepting GET requests")
     end
 
     error do |exception|
@@ -197,6 +184,14 @@ module Controller
 
     def boolean_parameter_true?(key)
       params[key].blank? || params[key] == "true" if params.key?(key)
+    end
+
+    def maintenance_mode_response
+      halt error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintenance")
+    end
+
+    def read_only_mode_response
+      halt error_response(503, "SERVICE_UNAVAILABLE", "The service is currently only accepting GET requests")
     end
   end
 end
