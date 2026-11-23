@@ -42,10 +42,3 @@ Sentry.init do |config|
   config.environment = ENV["STAGE"]
   config.data_collection.stack_frame_variables = true
 end
-
-begin
-  require "rspec/core/rake_task"
-  RSpec::Core::RakeTask.new(:spec)
-rescue LoadError
-  # just pass through
-end

@@ -29,7 +29,7 @@ setup-db:
 
 .PHONY: test
 test:
-	@STAGE=test bundle exec rake spec
+	bundle exec rspec
 
 
 .PHONY: run
