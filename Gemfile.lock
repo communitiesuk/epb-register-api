@@ -350,6 +350,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 8.1.4)
+  activesupport (~> 8.1.4)
   archive-zip
   aws-sdk-s3 (= 1.237.0)
   csv (~> 3.3)

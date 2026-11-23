@@ -21,6 +21,7 @@ group :test do
 end
 
 gem "activerecord", "~> 8.1.4"
+gem "activesupport", "~> 8.1.4"
 gem "archive-zip"
 gem "aws-sdk-s3", "1.237.0"
 gem "csv", "~> 3.3"

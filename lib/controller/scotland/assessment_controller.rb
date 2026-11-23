@@ -8,8 +8,6 @@ module Controller
         migrated = boolean_parameter_true?("migrated")
         overridden = boolean_parameter_true?("override")
 
-        RequestModule.relevant_request_headers = relevant_request_headers(request)
-
         xml_schema_type = request.env["CONTENT_TYPE"].to_s.split("+")[1]
         unless xml_schema_type&.include?("-S-")
           forbidden(
@@ -245,8 +243,6 @@ module Controller
         assessment_id = params[:assessment_id]
         assessment_body = request_body(POST_ASSESSMENT_UPDATE_SCHEMA)
 
-        RequestModule.relevant_request_headers = relevant_request_headers(request)
-
         ApiFactory.update_assessment_status_use_case.execute(
           assessment_id,
           assessment_body[:status],
@@ -280,8 +276,6 @@ module Controller
         assessment_id = params[:assessment_id]
         new_opt_out_status = request_body(UPDATE_OPT_OUT_PUT_SCHEMA)[:opt_out]
 
-        RequestModule.relevant_request_headers = relevant_request_headers(request)
-
         ApiFactory.opt_out_assessment_use_case.execute(assessment_id, new_opt_out_status, is_scottish: true)
 
         response_text = if new_opt_out_status == true
@@ -313,8 +307,6 @@ module Controller
           auth_token_has_all: %w[scotland_admin:update_address_id] do
         assessment_id = params[:assessment_id]
         new_address_id = request_body(UPDATE_ADDRESS_ID_PUT_SCHEMA)[:address_id]
-
-        RequestModule.relevant_request_headers = relevant_request_headers(request)
 
         ApiFactory.update_assessment_address_id_use_case.execute(
           assessment_id,

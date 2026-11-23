@@ -200,8 +200,6 @@ module Controller
         raise UseCase::UpdateGreenDealPlan::PlanIdMismatchException
       end
 
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
-
       ApiFactory.patch_green_deal_plan_use_case.execute(json: updates)
 
       json_api_response code: 204
@@ -219,8 +217,6 @@ module Controller
          auth_token_has_all: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
       plan = request_body SCHEMA
-
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
 
       results = ApiFactory.add_green_deal_plan_use_case.execute(assessment_id, plan)
 
@@ -245,8 +241,6 @@ module Controller
         auth_token_has_all: %w[greendeal:plans] do
       plan_id = params[:plan_id]
       green_deal_plan = request_body SCHEMA
-
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
 
       result = ApiFactory.update_green_deal_plan_use_case.execute(plan_id, green_deal_plan)
 
@@ -310,8 +304,6 @@ module Controller
     delete "/api/greendeal/disclosure/plans/:plan_id",
            auth_token_has_all: %w[greendeal:plans] do
       plan_id = params[:plan_id]
-
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
 
       result = ApiFactory.delete_green_deal_plan_use_case.execute(plan_id)
 
