@@ -179,7 +179,7 @@ GEM
       logger (~> 1.5)
       oj (~> 3.17)
     parallel (1.28.0)
-    parser (3.3.13.0)
+    parser (3.3.14.0)
       ast (~> 2.4.1)
       racc
     pg (1.7.0)
