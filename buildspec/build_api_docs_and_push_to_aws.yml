@@ -22,7 +22,7 @@ phases:
           rm -rf ./sw*
       - |-
         sed -i \
-          's+https://petstore.swagger.io/v2/swagger.json+https://raw.githubusercontent.com/communitiesuk/epb-register-api/master/api/api.yml+g' \
+          's+https://petstore.swagger.io/v2/swagger.json+https://raw.githubusercontent.com/communitiesuk/epb-register-api/main/api/api.yml+g' \
           dist/swagger-initializer.js
       - |-
         cat release.json |
