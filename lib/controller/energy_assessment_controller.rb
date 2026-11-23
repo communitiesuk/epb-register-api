@@ -45,8 +45,6 @@ module Controller
       migrated = boolean_parameter_true?("migrated")
       overridden = boolean_parameter_true?("override")
 
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
-
       xml_schema_type = request.env["CONTENT_TYPE"].to_s.split("+")[1]
 
       if xml_schema_type&.include?("-S-")
@@ -274,8 +272,6 @@ module Controller
       assessment_id = params[:assessment_id]
       new_opt_out_status = request_body(UPDATE_OPT_OUT_PUT_SCHEMA)[:opt_out]
 
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
-
       ApiFactory.opt_out_assessment_use_case.execute(assessment_id, new_opt_out_status)
 
       response_text = if new_opt_out_status == true
@@ -307,8 +303,6 @@ module Controller
         auth_token_has_all: %w[admin:update-address-id] do
       assessment_id = params[:assessment_id]
       new_address_id = request_body(UPDATE_ADDRESS_ID_PUT_SCHEMA)[:address_id]
-
-      RequestModule.relevant_request_headers = relevant_request_headers(request)
 
       ApiFactory.update_assessment_address_id_use_case.execute(
         assessment_id,

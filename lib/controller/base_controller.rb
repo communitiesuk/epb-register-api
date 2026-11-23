@@ -53,6 +53,7 @@ module Controller
           )
         end
         env[:auth_token] = token
+        Helper::CurrentAuth.auth = token
       rescue Auth::Errors::Error => e
         content_type :json
         halt 401, { errors: [{ code: e }] }.to_json
@@ -74,6 +75,7 @@ module Controller
           )
         end
         env[:auth_token] = token
+        Helper::CurrentAuth.auth = token
       rescue Auth::Errors::Error => e
         content_type :json
         halt 401, { errors: [{ code: e }] }.to_json
@@ -109,11 +111,6 @@ module Controller
 
     def request_body(schema)
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
-    end
-
-    def relevant_request_headers(request)
-      relevant_keys = [:auth_token]
-      request.env.select { |key, _value| relevant_keys.include?(key) }.to_json
     end
 
     def json_response(object, code = 200)

@@ -31,6 +31,7 @@ class RegisterApiService < Controller::BaseController
     status 200
   end
 
+  use Controller::RequestHooksController
   use Controller::AssessorController
   use Controller::AddressSearchController
   use Controller::BoilerUpgradeSchemeController

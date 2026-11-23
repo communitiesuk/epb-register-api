@@ -1,8 +1,6 @@
 require_relative "./controller/base_controller"
 
 class NotifyFactory
-  include RequestModule
-
   def self.lodgement_to_audit_log(entity_id:, is_scottish:)
     entity_type = is_scottish ? :scottish_assessment : :assessment
     event_type = is_scottish ? :scottish_lodgement : :lodgement
@@ -10,7 +8,7 @@ class NotifyFactory
                                         entity_type: entity_type,
                                         event_type: event_type,
                                         entity_id:,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: Helper::CurrentAuth.to_json,
                                       ))
   end
 
@@ -22,7 +20,7 @@ class NotifyFactory
                                         entity_type: entity_type,
                                         event_type: event_type.to_sym,
                                         entity_id:,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: Helper::CurrentAuth.to_json,
                                       ))
   end
 
@@ -33,7 +31,7 @@ class NotifyFactory
                                         entity_type: entity_type,
                                         event_type: event_type,
                                         entity_id:,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: Helper::CurrentAuth.to_json,
                                       ))
   end
 
@@ -44,7 +42,7 @@ class NotifyFactory
                                         entity_type: entity_type,
                                         event_type: event_type,
                                         entity_id:,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: Helper::CurrentAuth.to_json,
                                       ))
   end
 
@@ -53,7 +51,7 @@ class NotifyFactory
                                         entity_type: :green_deal_plan,
                                         event_type: :green_deal_plan_added,
                                         entity_id:,
-                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_id: }),
+                                        data: merge_hash_to_json(json: Helper::CurrentAuth.to_json, hash: { assessment_id: }),
                                       ))
   end
 
@@ -63,7 +61,7 @@ class NotifyFactory
                                         entity_type: :green_deal_plan,
                                         event_type:,
                                         entity_id:,
-                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: }),
+                                        data: merge_hash_to_json(json: Helper::CurrentAuth.to_json, hash: { assessment_ids: }),
                                       ))
   end
 
@@ -73,7 +71,7 @@ class NotifyFactory
                                         entity_type: :green_deal_plan,
                                         event_type:,
                                         entity_id:,
-                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: }),
+                                        data: merge_hash_to_json(json: Helper::CurrentAuth.to_json, hash: { assessment_ids: }),
                                       ))
   end
 
@@ -82,7 +80,7 @@ class NotifyFactory
                                         entity_type: :assessor,
                                         event_type: :added,
                                         entity_id:,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: Helper::CurrentAuth.to_json,
                                       ))
   end
 

@@ -1,7 +1,7 @@
 describe NotifyFactory do
   describe "notify to audit log" do
     before do
-      allow(RequestModule).to receive(:relevant_request_headers).and_return("{}")
+      allow(Helper::CurrentAuth).to receive(:auth).and_return("{}")
     end
 
     notifiers = described_class.methods.select { |method| method.end_with?("to_audit_log") }
