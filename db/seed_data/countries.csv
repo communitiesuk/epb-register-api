@@ -1,0 +1,11 @@
+country_id,country_code,country_name,address_base_country_code
+1,ENG,England,"[""E""]"
+2,WLS,Wales,"[""W""]"
+3,NIR,Northern Ireland,"[""N""]"
+4,EAW,England and Wales,"[""E"", ""W""]"
+37,SCT,Scotland,"[""S""]"
+38,IOM,Isle of Man,"[""M""]"
+39,NR,Not Recorded,\N
+40,UKN,Unknown,\N
+73,,England and Scotland,"[""E"", ""S""]"
+74,,Channel Islands,"[""L""]"
