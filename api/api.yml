@@ -141,12 +141,12 @@ paths:
                       properties:
                         code:
                           type: string
-                          example: SCHEME_ALREADY_EXISTS
+                          examples:
+                            - SCHEME_ALREADY_EXISTS
                         title:
                           type: string
-                          example: >-
-                            A scheme with this name already exists in the
-                            register
+                          examples:
+                            - A scheme with this name already exists in the register
         '503':
           description: Service unavailable
           content:
@@ -484,25 +484,37 @@ paths:
           description: The building name or number being searched for
           schema:
             type: string
-          example: '47'
+          examples:
+            fortySeven:
+              value: '47'
+              summary: A sample building number
         - in: query
           name: street
           description: The street of the address being searched for
           schema:
             type: string
-          example: 'High Road'
+          examples:
+            highRoad:
+              value: 'High road'
+              summary: A sample street name
         - in: query
           name: town
           description: The city or town of the address being searched for
           schema:
             $ref: '#/components/schemas/AddressTown'
-          example: 'Woking'
+          examples:
+            woking:
+              value: 'Woking'
+              summary: A sample town
         - in: query
           name: addressId
           description: A known UPRN or RRN to fetch a single address
           schema:
             type: string
-          example: 'UPRN-716375734512'
+          examples:
+            uprnEg:
+              value: 'UPRN-716375734512'
+              summary: A sample UPRN
         - in: query
           name: addressType
           description: Domestic or commercial address
@@ -553,7 +565,10 @@ paths:
           description: The postcode of the address being searched for
           schema:
             $ref: '#/components/schemas/AddressPostcode'
-          example: 'FL23 4JA'
+          examples:
+            fl23:
+              value: 'FL23 4JA'
+              summary: A sample postcode
         - in: query
           name: assessmentTypes
           description: The types of assessment being searched for, separated by commas
@@ -562,25 +577,40 @@ paths:
             items:
               $ref: '#/components/schemas/AssessmentType'
           explode: false
-          example: ['RdSAP','SAP']
+          examples:
+            domestic:
+              value: ['RdSAP','SAP']
+              summary: Domestic EPCs
+            nonDomestic:
+              value: ['CEPC','AC-CERT','DEC']
+              summary: Non-domestic certificates
         - in: query
           name: street
           description: The street of the assessment being searched for
           schema:
             type: string
-          example: 'High Road'
+          examples:
+            highRoad:
+              value: 'High road'
+              summary: A sample street name
         - in: query
           name: town
           description: The city or town of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AddressTown'
-          example: 'Woking'
+          examples:
+            woking:
+              value: 'Woking'
+              summary: A sample town
         - in: query
           name: assessmentId
           description: The RRN of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AssessmentId'
-          example: '1234-2345-3456-4567-6789'
+          examples:
+            rrnEg:
+              value: '1234-2345-3456-4567-6789'
+              summary: A sample RRN
       responses:
         '200':
           description: Assessment search results
@@ -638,14 +668,20 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/AddressPostcode'
-          example: 'FL23 4JA'
+          examples:
+            fl23:
+              value: 'FL23 4JA'
+              summary: A sample postcode
         - in: query
           name: buildingNameOrNumber
           description: The name or number for the building (optional)
           required: false
           schema:
             $ref: '#/components/schemas/AddressBuildingNameOrNumber'
-          example: '22 Acacia Avenue'
+          examples:
+            fortySeven:
+              value: '47'
+              summary: A sample building number
       responses:
         '200':
           description: Domestic EPC search results
@@ -661,25 +697,25 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/DomesticEPCsSearchResult'
-                example:
-                  type: object
-                  properties:
-                    - epcRrn: "1111-1111-1111-1111-1111"
-                      address:
-                        addressLine1: "11 Acacia Avenue"
-                        addressLine2: "Upper Wellgood"
-                        addressLine3: ""
-                        addressLine4: ""
-                        town: "Fulchester"
-                        postcode: "FL23 4JA"
-                    - epcRrn: "2222-2222-2222-2222-2222"
-                      address:
-                        addressLine1: "22 Acacia Avenue"
-                        addressLine2: "Upper Wellgood"
-                        addressLine3: ""
-                        addressLine4: ""
-                        town: "Fulchester"
-                        postcode: "FL23 4JA"
+                examples:
+                  - type: object
+                    properties:
+                      - epcRrn: "1111-1111-1111-1111-1111"
+                        address:
+                          addressLine1: "11 Acacia Avenue"
+                          addressLine2: "Upper Wellgood"
+                          addressLine3: ""
+                          addressLine4: ""
+                          town: "Fulchester"
+                          postcode: "FL23 4JA"
+                      - epcRrn: "2222-2222-2222-2222-2222"
+                        address:
+                          addressLine1: "22 Acacia Avenue"
+                          addressLine2: "Upper Wellgood"
+                          addressLine3: ""
+                          addressLine4: ""
+                          town: "Fulchester"
+                          postcode: "FL23 4JA"
         '400':
           description: 'Bad request - most likely an invalid postcode'
           content:
@@ -704,6 +740,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -743,7 +781,10 @@ paths:
                         logged.'
           schema:
             type: boolean
-          example: true
+          examples:
+            yes:
+              value: true
+              summary: Value to add to override lodgement rules
         - in: query
           name: migrated
           description: 'For use by EPB register only. Set to true if migrating a
@@ -751,7 +792,10 @@ paths:
                         Requires migrate:assessment scope in client credentials.'
           schema:
             type: boolean
-          example: true
+          examples:
+            yes:
+              value: true
+              summary:  Value to add for migrated certificates
       requestBody:
         content:
           application/xml+RdSAP-Schema-21.0.1:
@@ -802,7 +846,8 @@ paths:
                           properties:
                             assessmentId:
                               $ref: '#/components/schemas/AssessmentId'
-                        example: ["9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765"]
+                        examples:
+                          - ["9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765"]
                   meta:
                     type: object
                     properties:
@@ -813,7 +858,8 @@ paths:
                             type: array
                             items:
                               type: string
-                            example: ["/api/assessments/9876-9876-9876-9876-9876", "/api/assessments/8765-8765-8765-8765-8765"]
+                            examples:
+                              - ["/api/assessments/9876-9876-9876-9876-9876", "/api/assessments/8765-8765-8765-8765-8765"]
         '400':
           description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
           content:
@@ -828,10 +874,12 @@ paths:
                       properties:
                         code:
                           type: string
-                          example: "FLOOR_AREA_LESS_THAN_ZERO"
+                          examples:
+                            - "FLOOR_AREA_LESS_THAN_ZERO"
                         title:
                           type: string
-                          example: "Floor-Area must be greater than zero"
+                          examples:
+                            - "Floor-Area must be greater than zero"
                   meta:
                     type: object
                     properties:
@@ -840,7 +888,8 @@ paths:
                         properties:
                           override:
                             type: string
-                            example: "/assessments?override=true"
+                            examples:
+                              - "/assessments?override=true"
         '403':
           description: Forbidden
           content:
@@ -853,6 +902,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -913,6 +964,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -969,6 +1022,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1025,6 +1080,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1072,6 +1129,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1104,7 +1163,8 @@ paths:
               properties:
                 optOut:
                   type: boolean
-                  example: true
+                  examples:
+                    - true
       responses:
         '200':
           description: Confirmation of opt-out status update
@@ -1115,7 +1175,8 @@ paths:
                 properties:
                   data:
                     type: string
-                    example: "Your opt out request was successful"
+                    examples:
+                      - "Your opt out request was successful"
                   meta:
                     type: object
         '400':
@@ -1172,7 +1233,8 @@ paths:
                 properties:
                   data:
                     type: string
-                    example: "Address ID for assessment 1234-1234-1234-1234-1234 has been updated successfully"
+                    examples:
+                      - "Address ID for assessment 1234-1234-1234-1234-1234 has been updated successfully"
                   meta:
                     type: object
         '400':
@@ -4396,30 +4458,36 @@ components:
 
     AssessorFullName:
       type: string
-      example: 'Joe Bloggs'
+      examples:
+        - 'Joe Bloggs'
 
     FirstName:
       type: string
-      example: 'Joe'
+      examples:
+        - 'Joe'
 
     LastName:
       type: string
-      example: 'Bloggs'
+      examples:
+        - 'Bloggs'
 
     DateOfBirth:
       type: string
       format: date
-      example: '1980-01-10'
+      examples:
+        - '1980-01-10'
 
     # Assessments
     AssessmentId:
       type: string
       pattern: '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
-      example: '0000-0000-0000-0000-0001'
+      examples:
+        - '0000-0000-0000-0000-0000'
 
     AssessmentStatus:
       type: string
-      example: ENTERED
+      examples:
+        - ENTERED
       enum:
         - ENTERED
         - EXPIRED
@@ -4428,7 +4496,8 @@ components:
 
     ScotlandAssessmentStatus:
       type: string
-      example:
+      examples:
+        - 'CANCELLED'
       enum:
         - ENTERED
         - EXPIRED
@@ -4436,7 +4505,9 @@ components:
 
     ScotlandAssessmentStatusChange:
       type: string
-      example:
+      examples:
+        - 'CANCELLED'
+        - 'OPTED OUT'
       enum:
         - EXPIRED
         - CANCELLED
@@ -4445,7 +4516,8 @@ components:
 
     AssessmentType:
       type: string
-      example: 'RdSAP'
+      examples:
+        - 'RdSAP'
       enum:
         - RdSAP
         - SAP
@@ -4458,7 +4530,6 @@ components:
 
     ScottishAssessmentType:
       type: string
-      example: 'RdSAP'
       enum:
         - RdSAP
         - SAP
@@ -4466,6 +4537,8 @@ components:
         - CS63
         - DEC
         - DEC-AR
+      examples:
+        - 'RdSAP'
 
     EnergyAssessmentSearchResult:
       type: object
@@ -4488,28 +4561,34 @@ components:
           $ref: '#/components/schemas/AssessmentId'
         currentEnergyEfficiencyRating:
           type: integer
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         currentEnergyEfficiencyBand:
           type: string
-          example: 'c'
+          examples:
+            - 'c'
           description: The band, from a to g, the current Energy Rating falls within
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         addressId:
           $ref: '#/components/schemas/AddressId'
         addressLine1:
           $ref: '#/components/schemas/AddressLine1'
         addressLine2:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine3:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine4:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
@@ -4517,11 +4596,11 @@ components:
         status:
           $ref: '#/components/schemas/AssessmentStatus'
         createdAt:
-          type: string
+          type: [ 'string', 'null' ]
           format: date-time
-          nullable: true
           description: Date and time of lodgement in UTC timezone for assessments post September 2020
-          example: '2020-09-19T09:00:00Z'
+          examples:
+            - '2020-09-19T09:00:00Z'
 
     DomesticEPCsSearchResult:
       type: object
@@ -4555,28 +4634,34 @@ components:
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         currentEnergyEfficiencyBand:
           type: string
-          example: 'c'
+          examples:
+            - 'c'
           description: The band, from a to g, the current Energy Rating falls within
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         addressId:
           $ref: '#/components/schemas/AddressId'
         addressLine1:
           $ref: '#/components/schemas/AddressLine1'
         addressLine2:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine3:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine4:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
@@ -4585,11 +4670,13 @@ components:
           $ref: '#/components/schemas/AssessmentStatus'
         hasGreenDeal:
           type: boolean
-          example: false
+          examples:
+            - false
         createdAt:
           type: string
           format: date-time
-          example: '2020-08-09T12:34:56.789Z'
+          examples:
+            - '2020-08-09T12:34:56.789Z'
 
     CommercialEnergyAssessmentSummary:
       $ref: '#/components/schemas/Empty'
@@ -4621,13 +4708,16 @@ components:
           $ref: '#/components/schemas/AddressLine1'
         addressLine2:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine3:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine4:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
@@ -4641,13 +4731,16 @@ components:
               $ref: '#/components/schemas/AddressLine1'
             addressLine2:
               type: string
-              example: ''
+              examples:
+                - ''
             addressLine3:
               type: string
-              example: ''
+              examples:
+                - ''
             addressLine4:
               type: string
-              example: ''
+              examples:
+                - ''
             town:
               $ref: '#/components/schemas/AddressTown'
             postcode:
@@ -4657,22 +4750,27 @@ components:
           properties:
             firstName:
               type: string
-              example: 'Joe'
+              examples:
+                - 'Joe'
             lastName:
               type: string
-              example: 'Bloggs'
+              examples:
+                - 'Bloggs'
             middleNames:
               type: string
-              example: 'T'
+              examples:
+                - 'T'
             registeredBy:
               type: object
               properties:
                 name:
                   type: string
-                  example: 'Stroma Certification Ltd'
+                  examples:
+                    - 'Stroma Certification Ltd'
                 schemeId:
                   type: integer
-                  example: 5
+                  examples:
+                    - 5
             schemeAssessorId:
               $ref: '#/components/schemas/AssessorSchemeId'
             contactDetails:
@@ -4681,11 +4779,13 @@ components:
                 email:
                   type: string
                   format: email
-                  example: 'j.t.bloggs@example.com'
+                  examples:
+                    - 'j.t.bloggs@example.com'
                 telephoneNumber:
                   type: string
                   maxLength: 256
-                  example: '01632 960375'
+                  examples:
+                    - '01632 960375'
             searchResultsComparisonPostcode:
               $ref: '#/components/schemas/AddressPostcode'
             address:
@@ -4697,56 +4797,70 @@ components:
             dateOfBirth:
               type: string
               format: date
-              example: '1974-12-28'
+              examples:
+                - '1974-12-28'
         currentCarbonEmission:
           type: number
           description: The current carbon emission of the property
-          example: 4.736
+          examples:
+            - 4.736
         currentEnergyEfficiencyBand:
           type: string
-          example: 'c'
+          examples:
+            - 'c'
           description: The band, from a to g, the current Energy Rating falls within
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         dwellingType:
           type: string
         estimatedEnergyCost:
           type: string
-          example: '1307.00'
+          examples:
+            - '1307.00'
         mainFuelType:
           type: string
-          example: '28'
+          examples:
+            - '28'
         heatDemand:
           type: object
           properties:
             currentSpaceHeatingDemand:
               type: number
-              example: 456.45
+              examples:
+                - 456.45
             currentWaterHeatingDemand:
               type: number
-              example: 325.33
+              examples:
+                - 325.33
             impactOfLoftInsulation:
               type: integer
-              example: -453
+              examples:
+                - -453
             impactOfCavityInsulation:
               type: integer
-              example: -84
+              examples:
+                - -84
             impactOfSolidWallInsulation:
               type: integer
-              example: -21
+              examples:
+                - -21
         totalFloorArea:
           type: number
-          example: 120.55
+          examples:
+            - 120.55
         potentialCarbonEmission:
           type: number
           description: The potential carbon emission of the propety
-          example: 2.839
+          examples:
+            - 2.839
         potentialEnergyEfficiencyBand:
           type: string
-          example: 'a'
+          examples:
+            - 'a'
           description: The band, from a to g, the potential Energy Rating falls within
         potentialEnergyEfficiencyRating:
           type: integer
@@ -4754,7 +4868,8 @@ components:
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         primaryEnergyUse:
           type: number
-          example: 598
+          examples:
+            - 598
         propertySummary:
           type: array
           items:
@@ -4767,25 +4882,26 @@ components:
               - $ref: '#/components/schemas/DomesticRecommendationWithoutCode'
               - $ref: '#/components/schemas/DomesticRecommendationWithCode'
         lzcEnergySources:
-          type: array
+          type: [ 'array', 'null' ]
           items:
             type: integer
-            example: 11
-          nullable: true
+            examples:
+              - 11
           description: Low and zero carbon energy sources for the property
-          example: [11]
+          examples:
+            - [11]
         addendum:
           anyOf:
             - $ref: '#/components/schemas/Addendum'
-          nullable: true
           description: Additional information about the property
         supersededBy:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
+          $ref: '#/components/schemas/AssessmentId'
           description: The RRN of the assessment that has superseded this one, if one exists
         schemaType:
           type: string
-          example: "RdSAP-Schema-19.0"
+          examples:
+            - "RdSAP-Schema-19.0"
 
     ScottishDomesticEnergyAssessmentSummary:
       type: object
@@ -4822,86 +4938,108 @@ components:
               properties:
                 name:
                   type: string
-                  example: 'Stroma Certification Ltd'
+                  examples:
+                    - 'Stroma Certification Ltd'
                 schemeId:
                   type: integer
-                  example: 5
+                  examples:
+                    - 5
             schemeAssessorId:
               $ref: '#/components/schemas/AssessorSchemeId'
             companyName:
               type: string
-              example: 'EPCs R Us'
+              examples:
+                - 'EPCs R Us'
             contactDetails:
               type: object
               properties:
                 email:
                   type: string
                   format: email
-                  example: 'j.t.bloggs@example.com'
+                  examples:
+                    - 'j.t.bloggs@example.com'
                 telephoneNumber:
                   type: string
                   maxLength: 256
-                  example: '01632 960375'
+                  examples:
+                    - '01632 960375'
                 address:
                   type: string
-                  example: '123, EPC street'
+                  examples:
+                    - '123, EPC street'
         currentCarbonEmission:
           type: number
           description: The current carbon emission of the property
-          example: 4.736
+          examples:
+            - 4.736
         carbonEmissionsCurrentPerFloorArea:
           type: number
           description: CO2 emissions per square metre floor area per year in kg/m².
-          example: 52.0
+          examples:
+            - 52.0
         currentEnergyEfficiencyBand:
           type: string
-          example: 'c'
+          examples:
+            - 'c'
           description: The band, from a to g, the current Energy Rating falls within
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         dwellingType:
           type: string
-          example: 'End-terrace house'
+          examples:
+            - 'End-terrace house'
         estimatedEnergyCost:
           type: string
-          example: '1307.00'
+          examples:
+            - '1307.00'
         heatDemand:
           type: object
           properties:
             currentSpaceHeatingDemand:
               type: number
-              example: 456.45
+              examples:
+                - 456.45
             currentWaterHeatingDemand:
               type: number
-              example: 325.33
+              examples:
+                - 325.33
         heatingCostCurrent:
           type: string
-          example: '123'
+          examples:
+            - '123'
         heatingCostPotential:
           type: string
-          example: '123'
+          examples:
+            - '123'
         hotWaterCostCurrent:
           type: string
-          example: '123'
+          examples:
+            - '123'
         hotWaterCostPotential:
           type: string
-          example: '123'
+          examples:
+            - '123'
         lightingCostCurrent:
           type: string
-          example: '123'
+          examples:
+            - '123'
         lightingCostPotential:
           type: string
-          example: '123'
+          examples:
+            - '123'
         potentialCarbonEmission:
           type: number
           description: The potential carbon emission of the propety
-          example: 2.83
+          examples:
+            - 2.83
         potentialEnergyEfficiencyBand:
           type: string
-          example: 'a'
+          examples:
+            - 'a'
           description: The band, from a to g, the potential Energy Rating falls within
         potentialEnergyEfficiencyRating:
           type: integer
@@ -4909,7 +5047,8 @@ components:
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         potentialEnergySaving:
           type: string
-          example: '123'
+          examples:
+            - '123'
         propertySummary:
           type: array
           items:
@@ -4922,23 +5061,26 @@ components:
               - $ref: '#/components/schemas/DomesticRecommendationWithoutCode'
               - $ref: '#/components/schemas/DomesticRecommendationWithCode'
         lzcEnergySources:
-          type: array
+          type: [ 'array', 'null' ]
           items:
             type: integer
-            example: 11
-          nullable: true
+            examples:
+              - 11
           description: Low and zero carbon energy sources for the property
-          example: [ 11 ]
+          examples:
+            - [ 11 ]
         relatedPartyDisclosureNumber:
           type: integer
-          example: 1
+          examples:
+            - 1
           description: Code indicating any potential conflicts of interest or commercial relationships with other parties.
         relatedPartyDisclosureText:
           type: string
           description: FOR BACKWARDS COMPATABILITY ONLY?
         totalFloorArea:
           type: integer
-          example: 120
+          examples:
+            - 120
         status:
           $ref: '#/components/schemas/AssessmentStatus'
         environmentalImpactCurrent:
@@ -4949,41 +5091,42 @@ components:
           description: The estimated potential Environmental Impact Rating of the property
         primaryEnergyUse:
           type: number
-          example: 598
+          examples:
+            - 598
           description: Estimated total energy consumption for the Property in a 12 month period. Value is Kilowatt Hours per Square Metre (kWh/m2)
         addendum:
           anyOf:
             - $ref: '#/components/schemas/Addendum'
-          nullable: true
           description: Additional information about the property
         gasSmartMeterPresent:
-          type: boolean
-          nullable: true
+          type: [ 'boolean', 'null' ]
         electricitySmartMeterPresent:
-          type: boolean
-          nullable: true
+          type: [ 'boolean', 'null' ]
         addressId:
           $ref: '#/components/schemas/AddressId'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         relatedAssessments:
-          type: array
+          type: [ 'array', 'null' ]
           items:
             $ref: '#/components/schemas/AddressId'
-          nullable: false
           description: Other certificates or reports related to this property
-          example: [ '0004-0005-0006-0007-0008' ]
+          examples:
+            - [ '0004-0005-0006-0007-0008' ]
         supersededBy:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
+          $ref: '#/components/schemas/AssessmentId'
           description: The RRN of the assessment that has superseded this one, if one exists
         schemaType:
           type: string
-          example: "RdSAP-Schema-S-19.0"
+          examples:
+            - "RdSAP-Schema-S-19.0"
         countryName:
           type: string
-          example: 'Scotland'
+          examples:
+            - 'Scotland'
         greenDealPlan:
           $ref: '#/components/schemas/GreenDealPlan'
           description: Only present for RdSAP assessments
@@ -5030,17 +5173,21 @@ components:
                 email:
                   type: string
                   format: email
-                  example: 'j.t.bloggs@example.com'
+                  examples:
+                    - 'j.t.bloggs@example.com'
                 tradingAddress:
                   type: string
-                  example: '123, EPC street'
+                  examples:
+                    - '123, EPC street'
                 telephoneNumber:
                   type: string
                   maxLength: 256
-                  example: '01632 960375'
+                  examples:
+                    - '01632 960375'
             companyName:
               type: string
-              example: 'EPCs R Us'
+              examples:
+                - 'EPCs R Us'
             insurer:
               type: string
             policyNo:
@@ -5064,10 +5211,12 @@ components:
               properties:
                 name:
                   type: string
-                  example: 'Stroma Certification Ltd'
+                  examples:
+                    - 'Stroma Certification Ltd'
                 schemeId:
                   type: integer
-                  example: 5
+                  examples:
+                    - 5
         technicalInformation:
           type: object
           properties:
@@ -5080,11 +5229,13 @@ components:
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         currentEnergyEfficiencyBand:
           type: string
-          example: 'C'
+          examples:
+            - 'C'
           description: The band, from A to G, the current Energy Rating falls within
         potentialEnergyEfficiencyRating:
           type: integer
@@ -5092,7 +5243,8 @@ components:
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         potentialEnergyEfficiencyBand:
           type: string
-          example: 'B'
+          examples:
+            - 'B'
           description: The band, from A to G, the potential Energy Rating falls within
         newBuildBenchmarkRating:
           type: integer
@@ -5100,18 +5252,21 @@ components:
           description: The Asset Rating if the Building was newly built.
         newBuildBenchmarkBand:
           type: string
-          example: 'C'
+          examples:
+            - 'C'
           description: The band, from A to G, the current Asset Rating falls within
         comparativeAssetRating:
           type: integer
-          example: 51
+          examples:
+            - 51
           description: Comparative Asset Rating if the building were assessed in England using Scottish weather data
         epcRatingBER:
           type: number
           description: Building emissions
         approximateEnergyUse:
           type: integer
-          example: 488
+          examples:
+            - 488
           description: Total annual delivered energy consumption, in kWh/m2, including any energy consumed by a CHP, if applicable, and net of any energy displaced by it.
         propertyType:
           type: object
@@ -5122,7 +5277,8 @@ components:
               type: string
         compliant2002:
           type: string
-          example: 'N'
+          examples:
+            - 'N'
           description: Indicates whether the actual building complies with the Target Emission Rate defined by Section 6 of the 2002 building regulations.
         renewableEnergySources:
           type: array
@@ -5137,7 +5293,8 @@ components:
           description:
         calculationTool:
           type: string
-          example: "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.a.1"
+          examples:
+            - "G-ISBEM Ltd, G-ISBEM, v24.0, SBEM, v5.6.a.1"
         ter2002:
           type: integer
           description: Target Emission Rate defined by Section 6 of the 2002 building regulations, in kg of CO2 per m2 per year.
@@ -5208,24 +5365,27 @@ components:
           $ref: '#/components/schemas/AddressId'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         relatedAssessments:
-          type: array
+          type: [ 'array', 'null' ]
           items:
             $ref: '#/components/schemas/AssessmentId'
-          nullable: false
           description: Other certificates or reports related to this property
-          example: [ '0004-0005-0006-0007-0008' ]
+          examples:
+            - [ '0004-0005-0006-0007-0008' ]
         supersededBy:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
+          $ref: '#/components/schemas/AssessmentId'
           description: The RRN of the assessment that has superseded this one, if one exists
         schemaType:
           type: string
-          example: "CEPC-S-7.1"
+          examples:
+            - "CEPC-S-7.1"
         countryName:
           type: string
-          example: 'Scotland'
+          examples:
+            - 'Scotland'
 
     ScottishCS63EnergyAssessmentSummary:
       type: object
@@ -5240,7 +5400,8 @@ components:
           description: assessmentId of EPC generated for the building for which the Section 63 Action Plan has been created.
         reportType:
           type: string
-          example: '9'
+          examples:
+            - '9'
           description: The report type generated. '9' is a Section 63 Action Plan
         saleLeaseDate:
           type: string
@@ -5257,7 +5418,8 @@ components:
           format: date
         delegatedProtocolSetUp:
           type: string
-          example: 'N'
+          examples:
+            - 'N'
         address:
           $ref: '#/components/schemas/AddressStyle2'
         assessor:
@@ -5271,20 +5433,25 @@ components:
                 email:
                   type: string
                   format: email
-                  example: 'j.t.bloggs@example.com'
+                  examples:
+                    - 'j.t.bloggs@example.com'
                 tradingAddress:
                   type: string
-                  example: '123, EPC street'
+                  examples:
+                    - '123, EPC street'
                 telephoneNumber:
                   type: string
                   maxLength: 256
-                  example: '01632 960375'
+                  examples:
+                    - '01632 960375'
             companyName:
               type: string
-              example: 'EPCs R Us'
+              examples:
+                - 'EPCs R Us'
             status:
               type: string
-              example: 'Registered'
+              examples:
+                - 'Registered'
             firstName:
               $ref: '#/components/schemas/FirstName'
             lastName:
@@ -5295,16 +5462,20 @@ components:
               properties:
                 name:
                   type: string
-                  example: 'Stroma Certification Ltd'
+                  examples:
+                    - 'Stroma Certification Ltd'
                 schemeId:
                   type: integer
-                  example: 5
+                  examples:
+                    - 5
         ownerCommissionReport:
           type: string
-          example: 'Y'
+          examples:
+            - 'Y'
         delegatedPersonCommissionReport:
           type: string
-          example: 'N'
+          examples:
+            - 'N'
         propertyType:
           type: object
           properties:
@@ -5314,31 +5485,36 @@ components:
               type: string
         buildingImprovements:
           type: string
-          example: 'Y'
+          examples:
+            - 'Y'
         operationalRatings:
           type: string
-          example: 'Y'
+          examples:
+            - 'Y'
         dec:
           type: string
-          example: 'Y'
+          examples:
+            - 'Y'
         plannedCompletionDate:
           type: string
           format: date
         actualCompletionDate:
-          type: string
+          type: [ 'string', 'null' ]
           format: date
-          nullable: true
         targetEmissionSavings:
           type: number
-          example: 1.23
+          examples:
+            - 1.23
           description: Target savings of emissions in kg of CO2 per m2 per year.
         targetEnergySavings:
           type: number
-          example: 2.34
+          examples:
+            - 2.34
           description: Target savings of energy consumption in kWh per m2 per year.
         acceptPrescriptiveImprovements:
           type: string
-          example: 'Y'
+          examples:
+            - 'Y'
           description: Whether the prescriptive measures have been accepted for implementation as a single package.
         prescriptiveImprovements:
           type: array
@@ -5348,26 +5524,27 @@ components:
               measureDescriptionShort:
                 type: string
               measureDescriptionLong:
-                type: string
-                nullable: true
+                type: [ 'string', 'null' ]
               measureValid:
                 type: string
-                example: 'Y'
+                examples:
+                  - 'Y'
                 description: Whether the measure is valid for this building
               measureType:
-                type: string
+                type: [ 'string', 'null' ]
                 description: Always null for prescriptiveImprovements
-                nullable: true
                 enum:
                   - Prescriptive
                   - Alternative
         totalEmissionSavings:
           type: number
-          example: 1.23
+          examples:
+            - 1.23
           description: Total savings of emissions achieved by the alternative scenario of measures in kg of CO2 per m2 per year.
         totalEnergySavings:
           type: number
-          example: 2.34
+          examples:
+            - 2.34
           description: Total savings of energy consumption achieved by the alternative scenario of measures in kWh per m2 per year.
         alternativeImprovements:
           type: array
@@ -5377,17 +5554,15 @@ components:
               measureDescriptionShort:
                 type: string
               measureDescriptionLong:
-                type: string
-                nullable: true
+                type: [ 'string', 'null' ]
               measureValid:
-                type: string
-                nullable: true
-                example: 'Y'
+                type: [ 'string', 'null' ]
+                examples:
+                  - 'Y'
                 description: Always null for alternativeImprovements
               measureType:
-                type: string
+                type: [ 'string', 'null' ]
                 description: type of measure for the alternative scenario
-                nullable: true
                 enum:
                   - Prescriptive
                   - Alternative
@@ -5395,24 +5570,27 @@ components:
           $ref: '#/components/schemas/AddressId'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         relatedAssessments:
           type: array
           items:
             $ref: '#/components/schemas/AssessmentId'
-          nullable: false
           description: Other certificates or reports related to this property
-          example: [ '0004-0005-0006-0007-0008' ]
+          examples:
+            - [ '0004-0005-0006-0007-0008' ]
         supersededBy:
+          type: [ 'string', 'null' ]
           $ref: '#/components/schemas/AssessmentId'
-          nullable: true
           description: The RRN of the assessment that has superseded this one, if one exists
         schemaType:
           type: string
-          example: "CS63-S-7.0"
+          examples:
+            - "CS63-S-7.0"
         countryName:
           type: string
-          example: 'Scotland'
+          examples:
+            - 'Scotland'
 
     ScottishDECEnergyAssessmentSummary:
       type: object
@@ -5422,7 +5600,8 @@ components:
           $ref: '#/components/schemas/AssessmentType'
         schemaVersion:
           type: string
-          example: '7.0'
+          examples:
+            - '7.0'
         reportType:
           type: string
           enum:
@@ -5476,11 +5655,13 @@ components:
                 email:
                   type: string
                   format: email
-                  example: 'j.t.bloggs@example.com'
+                  examples:
+                    - 'j.t.bloggs@example.com'
                 telephoneNumber:
                   type: string
                   maxLength: 256
-                  example: '01632 960375'
+                  examples:
+                    - '01632 960375'
         currentAssessment:
           $ref: '#/components/schemas/DECAssessmentObject'
         year1Assessment:
@@ -5520,10 +5701,12 @@ components:
               format: date
             calculationTool:
               type: string
-              example: "BSD, OR Scotland, v1.0.2"
+              examples:
+                - "BSD, OR Scotland, v1.0.2"
             relatedPartyDisclosure:
               type: string
-              example: '1'
+              examples:
+                - '1'
               description: Code indicating any potential conflicts of interest or commercial relationships with other parties.
         relatedRrn:
           $ref: '#/components/schemas/AssessmentId'
@@ -5531,24 +5714,27 @@ components:
           $ref: '#/components/schemas/AddressId'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         relatedAssessments:
           type: array
           items:
             $ref: '#/components/schemas/AssessmentId'
-          nullable: false
           description: Other certificates or reports related to this property
-          example: [ '0004-0005-0006-0007-0008' ]
+          examples:
+            - [ '0004-0005-0006-0007-0008' ]
         supersededBy:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
+          $ref: '#/components/schemas/AssessmentId'
           description: The RRN of the assessment that has superseded this one, if one exists
         schemaType:
           type: string
-          example: "DECAR-S-8.0.0"
+          examples:
+            - "DECAR-S-7.0"
         countryName:
           type: string
-          example: 'Scotland'
+          examples:
+            - 'Scotland'
 
     ScottishDECAREnergyAssessmentSummary:
       type: object
@@ -5609,11 +5795,13 @@ components:
                 email:
                   type: string
                   format: email
-                  example: 'j.t.bloggs@example.com'
+                  examples:
+                    - 'j.t.bloggs@example.com'
                 telephoneNumber:
                   type: string
                   maxLength: 256
-                  example: '01632 960375'
+                  examples:
+                    - '01632 960375'
         shortPaybackRecommendations:
           type: array
           items:
@@ -5699,7 +5887,8 @@ components:
               format: date
             calculationTool:
               type: string
-              example: "BSD, OR Scotland, v1.0.2"
+              examples:
+                - "BSD, OR Scotland, v1.0.2"
         relatedRrn:
           $ref: '#/components/schemas/AssessmentId'
         siteServiceOne:
@@ -5712,27 +5901,31 @@ components:
           $ref: '#/components/schemas/AddressId'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         relatedAssessments:
           type: array
           items:
             $ref: '#/components/schemas/AssessmentId'
-          nullable: false
           description: Other certificates or reports related to this property
-          example: [ '0004-0005-0006-0007-0008' ]
+          examples:
+            - [ '0004-0005-0006-0007-0008' ]
         supersededBy:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
+          $ref: '#/components/schemas/AssessmentId'
           description: The RRN of the assessment that has superseded this one, if one exists
         countryName:
           type: string
-          example: 'Scotland'
+          examples:
+            - 'Scotland'
         schemaType:
           type: string
-          example: "DECAR-S-8.0.0"
+          examples:
+            - "DECAR-S-7.0"
         energyBandFromRelatedCertificate:
           type: string
-          example: "b"
+          examples:
+            - "b"
 
     ScottishAssessmentsStatusChanges:
       type: object
@@ -5757,14 +5950,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AssessmentId'
-          example:
-            ['0000-0000-0000-0000-0001', '0000-0000-0000-0000-0002']
+          examples:
+            - ['0000-0000-0000-0000-0000', '0000-0000-0000-0000-0001']
 
     ScottishAssessorSearchByPostcodeResults:
       type: object
       properties:
         data:
-          type: objects
+          type: object
           properties:
             assessors:
               type: array
@@ -5772,36 +5965,31 @@ components:
                 allOf:
                   - $ref: '#/components/schemas/ScottishAssessorDetail'
         meta:
-          type: objects
+          type: object
           properties:
             searchPostcode:
               type: string
-              example: "EH12 6TS"
+              examples:
+                - "EH12 6TS"
 
     DECAssessmentObject:
       type: object
       properties:
         date:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
           format: date
         energyEfficiencyRating:
-          type: integer
-          nullable: true
+          type: [ 'integer', 'null' ]
         energyEfficiencyBand:
-          type: string
-          nullable: true
+          type: [ 'string', 'null' ]
         heatingCo2:
-          type: integer
-          nullable: true
+          type: [ 'integer', 'null' ]
           description: Total CO2 emissions from heating sources
         electricityCo2:
-          type: integer
-          nullable: true
+          type: [ 'integer', 'null' ]
           description: Total CO2 emissions from electricity
         renewablesCo2:
-          type: integer
-          nullable: true
+          type: [ 'integer', 'null' ]
           description: Total CO2 emissions from Renewable sources
 
     SiteService:
@@ -5819,26 +6007,27 @@ components:
           $ref: '#/components/schemas/AssessmentType'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         createdAt:
-          type: string
+          type: 'string'
           format: date-time
-          example: '2020-08-09T12:34:56.789Z'
-          nullable: true
+          examples:
+            - '2020-08-09T12:34:56.789Z'
         cancelledAt:
-          type: string
+          type: [ 'string', 'null' ]
           format: date-time
-          example: '2021-04-26T16:32:01.703Z'
-          nullable: true
+          examples:
+            - '2021-04-26T16:32:01.703Z'
         notForIssueAt:
-          type: string
+          type: [ 'string', 'null' ]
           format: date-time
-          example: '2020-11-21T05:34:21.623Z'
-          nullable: true
+          examples:
+            - '2020-11-21T05:34:21.623Z'
         hashedAssessmentId:
           type: string
-          example: '6ebf834b9a43884e1436ec234dd76cd04c6e55f90a3e94a42cc69c252b9ae7e2'
-          nullable: false
+          examples:
+            - '6ebf834b9a43884e1436ec234dd76cd04c6e55f90a3e94a42cc69c252b9ae7e2'
         schemaType:
           $ref: '#/components/schemas/SchemaName'
         assessmentAddressId:
@@ -5851,22 +6040,23 @@ components:
           $ref: '#/components/schemas/ScotlandAssessmentStatus'
         optOut:
           type: boolean
-          example: false
+          examples:
+            - false
         createdAt:
           type: string
           format: date-time
-          example: '2020-08-09T12:34:56.789Z'
-          nullable: true
+          examples:
+            - '2020-08-09T12:34:56.789Z'
         cancelledAt:
-          type: string
+          type: [ 'string', 'null' ]
           format: date-time
-          example: '2021-04-26T16:32:01.703Z'
-          nullable: true
+          examples:
+            - '2021-04-26T16:32:01.703Z'
         typeOfAssessment:
-          $ref: '#/components/schemas/ScottishAssessmentType'
+          $ref: '#/components/schemas/AssessmentType'
         schemaType:
-          $ref: '#/components/schemas/ScottishSchemaType'
-        propertyId:
+          $ref: '#/components/schemas/SchemaName'
+        assessmentAddressId:
           $ref: '#/components/schemas/AddressId'
 
     PropertySummary:
@@ -5874,31 +6064,38 @@ components:
       properties:
         name:
           type: string
-          example: "Walls"
+          examples:
+            - "Walls"
           description: "The name of the feature of the property"
         description:
           type: string
-          example: "Solid brick, as built, no insulation (assumed)"
+          examples:
+            - "Solid brick, as built, no insulation (assumed)"
         energyEfficiencyRating:
           type: number
-          example: 2
+          examples:
+            - 2
         environmentalEfficiencyRating:
           type: number
-          example: 0
+          examples:
+            - 0
 
     DomesticRecommendationWithoutCode:
       type: object
       properties:
         sequence:
           type: number
-          example: 0
+          examples:
+            - 0
           description: "The order in which this recommendation should be shown"
         indicativeCost:
           type: string
-          example: "£200 - £4,000"
+          examples:
+            - "£200 - £4,000"
         typicalSaving:
           type: number
-          example: 400.21
+          examples:
+            - 400.21
         improvementCategory:
           type: string
         improvementType:
@@ -5910,7 +6107,8 @@ components:
         energyPerformanceRating:
           type: string
           description: "The estimated energy performance rating once the improvement has been carried out"
-          example: "C"
+          examples:
+            - "C"
         environmentalImpactRating:
           type: string
           description: "The estimated environmental impact rating once the improvement has been carried out"
@@ -5922,17 +6120,21 @@ components:
       properties:
         sequence:
           type: number
-          example: 1
+          examples:
+            - 1
           description: "The order in which this recommendation should be shown"
         improvementCode:
           type: string
-          example: "1"
+          examples:
+            - "1"
         indicativeCost:
           type: string
-          example: "£200 - £4,000"
+          examples:
+            - "£200 - £4,000"
         typicalSaving:
           type: number
-          example: 400.21
+          examples:
+            - 400.21
         improvementCategory:
           type: string
         improvementType:
@@ -5940,7 +6142,8 @@ components:
         energyPerformanceRating:
           type: string
           description: "The estimated energy performance rating once the improvement has been carried out"
-          example: "C"
+          examples:
+            - "C"
         environmentalImpactRating:
           type: string
           description: "The estimated environmental impact rating once the improvement has been carried out"
@@ -5959,86 +6162,91 @@ components:
             - SAP
             - RdSAP
             - CEPC
-          example: 'RdSAP'
+          examples:
+            - 'RdSAP'
         lodgementDate:
           type: string
           format: date
-          example: '2018-12-21'
+          examples:
+            - '2018-12-21'
         expiryDate:
           type: string
           format: date
-          example: '2020-01-30'
+          examples:
+            - '2020-01-30'
         cavityWallInsulationRecommended:
-          type: boolean
-          example: false
-          nullable: true
+          type: [ 'boolean', 'null' ]
+          examples:
+            - false
           description: "Whether cavity wall insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available, for example for CEPCs) is semantically different to 'false' here."
         loftInsulationRecommended:
-          type: boolean
-          example: true
-          nullable: true
+          type: [ 'boolean', 'null' ]
+          examples:
+            - true
           description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available, for example for CEPCs) is semantically different to 'false' here."
         secondaryHeating:
-          type: string
-          example: 'Electric bar heater'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Electric bar heater'
         address:
           $ref: '#/components/schemas/AddressStyle2'
         dwellingType:
-          type: string
-          example: 'Top-floor flat'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Top-floor flat'
         uprn:
-          type: string
-          example: '001234567890'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - '001234567890'
         tenure:
-          type: string
-          example: 'Owner-occupied'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Owner-occupied'
         inspection_date:
-          type: string
+          type: [ 'string', 'null' ]
           format: date
-          example: '2018-12-21'
-          nullable: true
+          examples:
+            - '2018-12-21'
         mainFuelType:
-          type: string
-          example: 'Electricity: electricity, unspecified tariff'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Electricity: electricity, unspecified tariff'
         wallsDescription:
           type: array
           items:
             type: string
-          example: [ "Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)" ]
+          examples:
+            - [ "Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)" ]
           description: "A list of free text descriptions associated with wall property features as documented in the assessment."
         totalFloorArea:
-          type: integer
-          example: 165
-          nullable: true
+          type: [ 'integer', 'null' ]
+          examples:
+            - 165
         totalRoofArea:
-          type: integer
-          example: 65
-          nullable: true
+          type: [ 'integer', 'null' ]
+          examples:
+            - 65
         currentEnergyEfficiencyRating:
-          type: integer
-          example: 72
-          nullable: true
+          type: [ 'integer', 'null' ]
+          examples:
+            - 72
         hotWaterDescription:
-          type: string
-          example: "From main system, waste water heat recovery"
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - "From main system, waste water heat recovery"
         lzcEnergySources:
-          type: array
+          type: [ 'array', 'null' ]
           items:
             type: integer
-            example: 11
-          nullable: true
+            examples:
+              - 11
           description: Low and zero carbon energy sources for the property
-          example: [ 11 ]
+          examples:
+            - [ 11 ]
         mainHeatingDescription:
-          type: string
-          example: 'Boiler and radiators, mains gas'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Boiler and radiators, mains gas'
 
     MultipleBUSMatchesList:
       type: object
@@ -6050,7 +6258,8 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AssessmentId'
-              example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
+              examples:
+                - [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
 
     # Great British Insulation Scheme (previously Energy Company Obligation (ECO) Plus service)
     ECOAssessmentDetails:
@@ -6062,21 +6271,24 @@ components:
         address:
           $ref: '#/components/schemas/AddressStyle2'
         uprn:
-          type: string
-          nullable: true
-          example: '001234567890'
+          type: [ 'string', 'null' ]
+          examples:
+            - '001234567890'
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         currentEnergyEfficiencyBand:
           type: string
-          example: 'c'
+          examples:
+            - 'c'
           description: The band, from a to g, the current Energy Rating falls within
         potentialEnergyEfficiencyRating:
           type: integer
@@ -6084,42 +6296,46 @@ components:
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         potentialEnergyEfficiencyBand:
           type: string
-          example: 'a'
+          examples:
+            - 'a'
           description: The band, from a to g, the potential Energy Rating falls within
         propertyType:
           type: string
-          example: 'Mid-floor flat'
+          examples:
+            - 'Mid-floor flat'
         builtForm:
-          type: string
-          example: 'End-Terrace'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
-          nullable: true
         mainHeatingDescription:
-          type: string
-          example: "Boiler and radiators, mains gas"
+          type: [ 'string', 'null' ]
+          examples:
+            - "Boiler and radiators, mains gas"
           description: "A description of the main heating for the property as per the known descriptions for the SAP-MainHeatingCategoryCode node type in SAP/RdSAP schemas."
-          nullable: true
         wallsDescription:
           type: array
           items:
             type: string
-          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          examples:
+            - ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
           description: "A list of free text descriptions associated with wall property features as documented in the assessment."
         roofDescription:
           type: array
           items:
             type: string
-          example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+          examples:
+            - ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
           description: "A list of free text descriptions associated with roof property features as documented in the assessment."
         cavityWallInsulationRecommended:
-          type: boolean
-          example: false
-          nullable: true
+          type: [ 'boolean', 'null' ]
+          examples:
+            - false
           description: "Whether cavity wall insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available) is semantically different to 'false' here."
         loftInsulationRecommended:
-          type: boolean
-          example: true
-          nullable: true
+          type: [ 'boolean', 'null' ]
+          examples:
+            - true
           description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as 'null' (meaning information was not available) is semantically different to 'false' here."
 
 
@@ -6132,19 +6348,22 @@ components:
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: The current energy rating to be submitted to the Register
         epcRrn:
           $ref: '#/components/schemas/AssessmentId'
         expiryDate:
           type: string
           format: date
-          example: '2030-02-28'
+          examples:
+            - '2030-02-28'
         latestEpcRrnForAddress:
           $ref: '#/components/schemas/AssessmentId'
         currentEnergyEfficiencyBand:
           type: string
-          example: 'c'
+          examples:
+            - 'c'
           description: The band, from a to g, the current Energy Rating falls within
 
     # Find Ways to Save Energy previously known as Home Energy Retrofit Advice
@@ -6159,71 +6378,80 @@ components:
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         isLatestAssessmentForAddress:
           type: boolean
-          example: true
+          examples:
+            - true
         propertyType:
           type: string
-          example: 'Mid-floor flat'
+          examples:
+            - 'Mid-floor flat'
         builtForm:
-          type: string
-          example: 'End-Terrace'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
-          nullable: true
         propertyAgeBand:
-          type: string
-          example: '2007-2011'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - '2007-2011'
         wallsDescription:
           type: array
           items:
             type: string
-          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          examples:
+            - ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
           description: "A list of free text descriptions associated with wall property features as documented in the assessment."
         floorDescription:
           type: array
           items:
             type: string
-          example: ["Suspended, no insulation (assumed)", "Solid, no insulation (assumed)"]
+          examples:
+            - ["Suspended, no insulation (assumed)", "Solid, no insulation (assumed)"]
           description: "A list of free text descriptions associated with floor property features as documented in the assessment."
         roofDescription:
           type: array
           items:
             type: string
-          example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+          examples:
+            - ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
           description: "A list of free text descriptions associated with roof property features as documented in the assessment."
         windowsDescription:
           type: array
           items:
             type: string
-          example: ["Fully double glazed"]
+          examples:
+            - ["Fully double glazed"]
           description: "A list of free text descriptions associated with window property features as documented in the assessment."
         mainHeatingDescription:
-          type: string
-          example: "Boiler and radiators, mains gas"
+          type: [ 'string', 'null' ]
+          examples:
+            - "Boiler and radiators, mains gas"
           description: "A description of the main heating for the property as per the known descriptions for the SAP-MainHeatingCategoryCode node type in SAP/RdSAP schemas."
-          nullable: true
         mainFuelType:
-          type: string
-          example: 'Natural Gas'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Natural Gas'
           description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
-          nullable: true
         hasHotWaterCylinder:
           description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
-          example: true
+          examples:
+            - true
         photoSupply:
           description: Percentage of photovoltaic area as a percentage of total roof area. 0% indicates that a Photovoltaic Supply is not present in the property.
-          type: integer
-          nullable: true
-          example: 20
+          type: [ 'integer', 'null' ]
+          examples:
+            - 20
         mainHeatingControls:
           description: Type of main heating controls. Includes both main heating systems if there are two.
           type: array
           items:
             type: string
-          example: ["Programmer, room thermostat and TRVs", "Time and temperature zone control"]
+          examples:
+            - ["Programmer, room thermostat and TRVs", "Time and temperature zone control"]
 
     # Home Energy Retrofit Funding
     RetrofitFundingAssessmentDetails:
@@ -6232,29 +6460,32 @@ components:
         address:
           $ref: '#/components/schemas/AddressStyle2'
         uprn:
-          type: string
-          nullable: true
-          example: '001234567890'
+          type: [ 'string', 'null' ]
+          examples:
+            - '001234567890'
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         expiryDate:
           type: string
           format: date
-          example: '2030-02-28'
+          examples:
+            - '2030-02-28'
         currentBand:
           type: string
-          example: 'D'
+          examples:
+            - 'D'
         propertyType:
-          type: string
-          example: 'Mid-floor flat'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Mid-floor flat'
         builtForm:
-          type: string
-          example: 'End-Terrace'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
-          nullable: true
 
     # Heat Pump Check
     HeatPumpCheckAssessmentDetails:
@@ -6265,60 +6496,66 @@ components:
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         isLatestAssessmentForAddress:
           type: boolean
-          example: true
+          examples:
+            - true
         propertyType:
-          type: string
-          example: 'Mid-floor flat'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Mid-floor flat'
         builtForm:
-          type: string
-          example: 'End-Terrace'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
-          nullable: true
         propertyAgeBand:
-          type: string
-          example: '2007-2011'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - '2007-2011'
         totalFloorArea:
-          type: integer
-          example: 171
-          nullable: true
+          type: [ 'integer', 'null' ]
+          examples:
+            - 171
           description: 'The total floor area of the property in m².'
         wallsDescription:
           type: array
           items:
             type: string
-          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          examples:
+            - ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
           description: "A list of free text descriptions associated with wall property features as documented in the assessment."
         roofDescription:
           type: array
           items:
             type: string
-          example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+          examples:
+            - ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
           description: "A list of free text descriptions associated with roof property features as documented in the assessment."
         windowsDescription:
           type: array
           items:
             type: string
-          example: ["Fully double glazed"]
+          examples:
+            - ["Fully double glazed"]
           description: "A list of free text descriptions associated with window property features as documented in the assessment."
         mainFuelType:
-          type: string
-          example: 'Natural Gas'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'Natural Gas'
           description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
-          nullable: true
         hasMainsGas:
-          type: boolean
-          example: true
-          nullable: true
+          type: [ 'boolean', 'null' ]
+          examples:
+            - true
           description: "Whether mains gas is available in the property. NB. a 'null' value means that this data point is not available from this assessment."
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
-          example: 62
+          examples:
+            - 62
           description: "The current energy rating to be submitted to the Register"
 
     # Warm Home Discount
@@ -6330,33 +6567,36 @@ components:
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         isLatestAssessmentForAddress:
           type: boolean
-          example: true
+          examples:
+            - true
         propertyType:
           type: string
-          example: 'Mid-floor flat'
+          examples:
+            - 'Mid-floor flat'
         builtForm:
-          type: string
-          example: 'End-Terrace'
+          type: [ 'string', 'null' ]
+          examples:
+            - 'End-Terrace'
           description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
-          nullable: true
         propertyAgeBand:
-          type: string
-          example: '2007-2011'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - '2007-2011'
         totalFloorArea:
-          type: string
-          example: "171.0"
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - "171.0"
         typeOfProperty:
           type: string
           enum: [ House,Bungalow,Flat,Maisonette,Park home ]
         uprn:
-          type: string
-          example: '716375734512'
-          nullable: true
+          type: [ 'string', 'null' ]
+          examples:
+            - '716375734512'
 
     # Green Deal
     AssessmentGreenDealDetails:
@@ -6375,32 +6615,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AddressId'
-          example: ["UPRN-716375734512", "LPRN-1234567890", "RRN-1234-1234-1234-1234-1234"]
+          examples:
+            - ["UPRN-716375734512", "LPRN-1234567890", "RRN-1234-1234-1234-1234-1234"]
         countryCode:
           type: string
-          example: 'EAW'
+          examples:
+            - 'EAW'
         inspectionDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         isLatestAssessmentForAddress:
           type: boolean
-          example: true
+          examples:
+            - true
         status:
           $ref: '#/components/schemas/AssessmentStatus'
         mainFuelType:
           type: string
-          example: 'Natural Gas'
+          examples:
+            - 'Natural Gas'
         secondaryFuelType:
           type: string
-          example: 'Grid Supplied Electricity'
+          examples:
+            - 'Grid Supplied Electricity'
         waterHeatingFuel:
           type: string
-          example: 'Smokeless Fuel (inc Coke)'
+          examples:
+            - 'Smokeless Fuel (inc Coke)'
 
     AssessmentRHIDetails:
       type: object
@@ -6411,44 +6659,56 @@ components:
           $ref: '#/components/schemas/AssessorFullName'
         reportType:
           type: string
-          example: 'Energy Performance Certificate'
+          examples:
+            - 'Energy Performance Certificate'
         inspectionDate:
           type: string
           format: date
-          example: '2020-01-30'
+          examples:
+            - '2020-01-30'
         lodgementDate:
           type: string
           format: date
-          example: '2020-02-29'
+          examples:
+            - '2020-02-29'
         dwellingType:
           type: string
-          example: 'Top-floor flat'
+          examples:
+            - 'Top-floor flat'
         postcode:
           $ref: '#/components/schemas/AddressPostcode'
         propertyAgeBand:
           type: string
-          example: 'D'
+          examples:
+            - 'D'
         tenure:
           type: string
-          example: 'Owner-occupied'
+          examples:
+            - 'Owner-occupied'
         totalFloorArea:
           type: string
-          example: '123.5 square metres'
+          examples:
+            - '123.5 square metres'
         cavityWallInsulation:
           type: boolean
-          example: false
+          examples:
+            - false
         loftInsulation:
           type: boolean
-          example: true
+          examples:
+            - true
         spaceHeating:
           type: number
-          example: 9901.00
+          examples:
+            - 9901.00
         waterHeating:
           type: number
-          example: 2654.00
+          examples:
+            - 2654.00
         secondaryHeating:
           type: string
-          example: 'Electric bar heater'
+          examples:
+            - 'Electric bar heater'
         energyEfficiency:
           $ref: '#/components/schemas/RHIEnergyEfficiency'
 
@@ -6457,23 +6717,28 @@ components:
       properties:
         currentRating:
           type: number
-          example: 64
+          examples:
+            - 64
         currentBand:
           type: string
-          example: 'D'
+          examples:
+            - 'D'
         potentialRating:
           type: number
-          example: 75
+          examples:
+            - 75
         potentialBand:
           type: string
-          example: 'C'
+          examples:
+            - 'C'
 
     GreenDealPlanId:
       description: 'Green Deal plan ID - created by the Central Charge Database
                     (GDCC) when the plan is set up'
       type: string
       maxLength: 12
-      example: 'ABC123456789'
+      examples:
+        - 'ABC123456DEF'
 
     GreenDealPlan:
       type: object
@@ -6484,12 +6749,14 @@ components:
           description: The date the plan went live
           type: string
           format: date
-          example: '2020-01-30'
+          examples:
+            - '2020-01-30'
         endDate:
           description: The date the plan is expected to end
           type: string
           format: date
-          example: '2030-02-28'
+          examples:
+            - '2030-02-28'
         providerDetails:
           $ref: '#/components/schemas/GreenDealProvider'
         interest:
@@ -6500,7 +6767,8 @@ components:
           description: 'Whether the Green Deal plan is regulated under the
                         Consumer Credit Act'
           type: boolean
-          example: true
+          examples:
+            - true
         structureChanged:
           description: 'Whether the provider knows or has reasonable cause to
                         believe that an alteration has been made to the Green
@@ -6508,7 +6776,8 @@ components:
                         first year savings were calculated, would have affected
                         that calculation materially'
           type: boolean
-          example: false
+          examples:
+            - false
         measuresRemoved:
           description: 'Whether the provider knows or has reasonable cause to
                         believe that an improvement installed at the Green Deal
@@ -6516,7 +6785,8 @@ components:
                         the property before the end of the improvement-specific
                         payment period'
           type: boolean
-          example: false
+          examples:
+            - false
         measures:
           type: array
           items:
@@ -6543,7 +6813,8 @@ components:
           description: The date the plan is expected to end
           type: string
           format: date
-          example: '2030-02-28'
+          examples:
+            - '2030-02-28'
         charges:
           type: array
           items:
@@ -6558,19 +6829,22 @@ components:
                         Green Deal plan'
           type: string
           maxLength: 400
-          example: 'The Bank'
+          examples:
+            - 'The Bank'
         telephone:
           description: 'Phone number of the provider organisation responsible
                         for the Green Deal plan'
           type: string
           maxLength: 100
-          example: '0800 0000000'
+          examples:
+            - '0800 0000000'
         email:
           description: 'Email address of the provider organisation responsible
                         for the Green Deal plan'
           type: string
           maxLength: 100
-          example: 'lender@example.com'
+          examples:
+            - 'lender@example.com'
 
     GreenDealInterest:
       type: object
@@ -6581,12 +6855,14 @@ components:
           type: number
           minimum: 0
           maximum: 10000
-          example: 12.3
+          examples:
+            - 12.3
         fixed:
           description: 'Whether the interest rate on the Green Deal plan is
                         fixed over the lifetime of the plan'
           type: boolean
-          example: true
+          examples:
+            - true
 
     GreenDealChargeUplift:
       type: object
@@ -6597,74 +6873,86 @@ components:
           type: number
           minimum: 0
           maximum: 1000
-          example: 1.25
+          examples:
+            - 1.25
         date:
           description: 'The date when the Green Deal daily charge uplift takes
                         effect, where an annual interest uplift is included as a
                         term of the Green Deal plan'
           type: string
           format: date
-          example: '2025-03-29'
+          examples:
+            - '2025-03-29'
 
     GreenDealMeasure:
       type: object
       properties:
         sequence:
           type: integer
-          example: 0
+          examples:
+            - 0
         measureType:
           description: 'The measure type of the specific measure installed under
                         the Green Deal plan'
           type: string
-          example: 'Loft insulation'
+          examples:
+            - 'Loft insulation'
         product:
           description: 'The product name of the specific measure installed under
                         the Green Deal plan'
           type: string
-          example: 'WarmHome lagging stuff (TM)'
+          examples:
+            - 'WarmHome lagging stuff (TM)'
         repaidDate:
           description: 'Date the measure will be paid off under the Green Deal
                         plan payment schedule'
           type: string
           format: date
-          example: '2025-03-29'
+          examples:
+            - '2025-03-29'
 
     GreenDealCharge:
       type: object
       properties:
         sequence:
           type: integer
-          example: 0
+          examples:
+            - 0
         startDate:
           description: 'The start date at which the specified daily charge
                         starts taking effect'
           type: string
           format: date
-          example: '2020-03-29'
+          examples:
+            - '2020-03-29'
         endDate:
           description: 'The end date at which the specified daily charge stops
                         taking effect'
           type: string
           format: date
-          example: '2030-03-29'
+          examples:
+            - '2030-03-29'
         dailyCharge:
           description: 'The daily amount the customer will be paying through
                         their electricity bill'
           type: number
           minimum: 0
           maximum: 10000
-          example: 0.34
+          examples:
+            - 0.34
 
     GreenDealSavings:
       type: object
       properties:
         sequence:
           type: integer
-          example: 0
+          examples:
+            - 0
         fuelCode:
           description: 'Code which indicates the type of heating fuel'
           type: string
-          example: '3'
+          examples:
+            - '3'
           enum: ["3" ,"5" ,"6" ,"7" ,"8" ,"9" ,"15" ,"16" ,"17" ,"18" ,"19" ,"26" ,"27" ,"28" ,"33" ,"34" ,"35" ,"36" ,"37" ,"38" ,"39" ,"40" ,"41" ,"42" ,"43" ,"44" ,"45"]
         fuelSaving:
           description: 'Total kWh saving for the fuel (negative if increase),
@@ -6681,7 +6969,8 @@ components:
           type: number
           minimum: -1
           maximum: 1
-          example: -0.3
+          examples:
+            - -0.3
 
     GreenDealSavingsScotland:
       type: object
@@ -6689,63 +6978,77 @@ components:
         savingsElectricityYearly:
           description: 'Money saved yearly on electricity'
           type: number
-          example: 0.0382
+          examples:
+            - 0.0382
         savingsGasYearly:
           description: 'Money saved yearly on gas'
           type: number
-          example: 15.90
+          examples:
+            - 15.90
         savingsOtherYearly:
           description: 'Money saved yearly on other energy sources'
           type: number
-          example: 0.0
+          examples:
+            - 0.0
         savingsTotalYearly:
           description: 'Money saved yearly over all energy sources'
           type: number
-          example: 15.9382
+          examples:
+            - 15.9382
 
     Addendum:
-      type: object
+      type: [ 'object', 'null' ]
       properties:
         addendumNumber:
           type: array
           items:
-            type: integer
-            example: 8
-          nullable: true
-          example: [8]
+            type: [ 'integer', 'null' ]
+            examples:
+              - 8
+          examples:
+            - [8]
         cavityFillRecommended:
           type: boolean
-          example: true
+          examples:
+            - true
         stoneWalls:
           type: boolean
-          example: true
+          examples:
+            - true
         systemBuild:
           type: boolean
-          example: true
+          examples:
+            - true
         accessIssues:
           type: boolean
-          example: true
+          examples:
+            - true
         highExposure:
           type: boolean
-          example: true
+          examples:
+            - true
         narrowCavities:
           type: boolean
-          example: true
+          examples:
+            - true
 
     MonthAssessmentStatistic:
       type: object
       properties:
         numAssessments:
           type: integer
-          example: 64
+          examples:
+            - 64
         assessmentType:
           $ref: '#/components/schemas/AssessmentType'
         ratingAverage:
           type: number
-          example: 74
+          examples:
+            - 74
         month:
           type: string
-          example: '2021-07'
+          examples:
+            - '2021-07'
 
     # Schemes
     Scheme:
@@ -6755,17 +7058,20 @@ components:
           properties:
             schemeId:
               type: string
-              example: '432'
+              examples:
+                - '432'
 
     SchemeBody:
       type: object
       properties:
         name:
           type: string
-          example: 'EPCs 4 U'
+          examples:
+            - 'EPCs 4 U'
         active:
           type: boolean
-          example: true
+          examples:
+            - true
           description: 'Whether or not the scheme is currently active'
 
     # General
@@ -6782,28 +7088,31 @@ components:
             properties:
               code:
                 type: string
-                example: "NOT_FOUND"
+                examples:
+                  - "NOT_FOUND"
               title:
                 type: string
-                example: "The thing you are looking for is not here"
+                examples:
+                  - "The thing you are looking for is not here"
 
     Pagination:
       type: object
       properties:
         prev:
-          type: string
+          type: [ 'string', 'null' ]
           format: uri
-          nullable: true
-          example: null
+          examples:
+            - null
         self:
           type: string
           format: uri
-          example: "https://api.example.com/param1=foo&param2=bar&page=1"
+          examples:
+            - "https://api.example.com/param1=foo&param2=bar&page=1"
         next:
-          type: string
+          type: [ 'string', 'null' ]
           format: uri
-          nullable: true
-          example: "https://api.example.com/param1=foo&param2=bar&page=2"
+          examples:
+            - "https://api.example.com/param1=foo&param2=bar&page=2"
 
   links: {}
   callbacks: {}
