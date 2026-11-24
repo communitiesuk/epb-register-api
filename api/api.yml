@@ -1200,7 +1200,7 @@ paths:
         - Manage Assessments
       summary: Get the XML for a DEC
       description: Get XML from DEC that can be used by AECOM software
-      operationId: get-dec-xml
+      operationId: get-dec-summary-xml
       security:
         - oauth:
             - 'dec_summary:fetch'
@@ -1244,6 +1244,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1323,6 +1325,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1357,7 +1361,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-01-30'
+            examples:
+              - '2020-01-30'
       responses:
         '200':
           description: Report returned successfully
@@ -1415,25 +1420,37 @@ paths:
           description: The postcode of the address being searched for
           schema:
             $ref: '#/components/schemas/AddressPostcode'
-          example: 'FL23 4JA'
+          examples:
+            fl23:
+              value: 'FL23 4JA'
+              summary: A sample postcode
         - in: query
           name: buildingNameOrNumber
           description: The name or number for the building
           schema:
             $ref: '#/components/schemas/AddressBuildingNameOrNumber'
-          example: '22 Acacia Avenue'
+          examples:
+            fortySeven:
+              value: '47'
+              summary: A sample building number
         - in: query
           name: uprn
           description: The UPRN of the property being searched for
           schema:
             $ref: '#/components/schemas/AddressUprn'
-          example: 'UPRN-000456789012'
+          examples:
+            uprnEg:
+              value: 'UPRN-000456789012'
+              summary: A sample UPRN
         - in: query
           name: rrn
           description: The RRN of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AssessmentId'
-          example: '1234-2345-3456-4567-6789'
+          examples:
+            rrnEg:
+              value: '1234-2345-3456-4567-6789'
+              summary: A sample RRN
       responses:
         '200':
           description: BUS Energy Performance data
@@ -1489,6 +1506,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1544,6 +1563,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1600,6 +1621,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1655,6 +1678,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1711,6 +1736,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1742,7 +1769,8 @@ paths:
           description: 'Whether the response should include the additional typeOfProperty key'
           schema:
             type: boolean
-            example: true
+            examples:
+              - true
       responses:
         '200':
           description: Domestic EPC data for the Warm Home Discount service
@@ -1774,6 +1802,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1803,13 +1833,19 @@ paths:
           description: The UPRN of the property being searched for
           schema:
             $ref: '#/components/schemas/AddressUprn'
-          example: 'UPRN-000456789012'
+          examples:
+            uprnEg:
+              value: 'UPRN-000456789012'
+              summary: A sample UPRN
         - in: query
           name: rrn
           description: The RRN of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AssessmentId'
-          example: '1234-2345-3456-4567-6789'
+          examples:
+            rrnEg:
+              value: '1234-2345-3456-4567-6789'
+              summary: A sample RRN
       responses:
         '200':
           description: PRS database requested data
@@ -1853,6 +1889,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1915,6 +1953,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1998,6 +2038,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2061,6 +2103,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2133,6 +2177,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2198,6 +2244,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2260,6 +2308,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2297,6 +2347,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2322,7 +2374,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: endDate
           required: true
@@ -2330,7 +2383,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            examples:
+              - '2020-12-01'
       responses:
         '200':
           description: ONS postcodes
@@ -2342,6 +2396,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2369,7 +2425,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: endDate
           required: true
@@ -2377,7 +2434,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            examples:
+              - '2020-12-01'
       responses:
         '200':
           description: Report of lodgements by type and scheme
@@ -2402,6 +2460,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2428,7 +2488,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: end_date
           required: true
@@ -2436,14 +2497,16 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            examples:
+              - '2020-12-01'
         - in: query
           name: scheme_id
           required: false
           description: 'Filter by scheme id'
           schema:
             type: integer
-            example: 1
+            examples:
+              - 1
       responses:
         '200':
           description: Report of lodgements by type and scheme
@@ -2462,6 +2525,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2495,6 +2560,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2554,6 +2621,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -2582,7 +2651,10 @@ paths:
           description: The postcode of the address being searched for
           schema:
             $ref: '#/components/schemas/AddressPostcode'
-          example: 'FL23 4JA'
+          examples:
+            fl23:
+              value: 'FL23 4JA'
+              summary: A sample postcode
         - in: query
           name: assessmentTypes
           description: The types of assessment being searched for, separated by commas
@@ -2591,25 +2663,40 @@ paths:
             items:
               $ref: '#/components/schemas/AssessmentType'
           explode: false
-          example: [ 'RdSAP','SAP' ]
+          examples:
+            domestic:
+              value: ['RdSAP','SAP']
+              summary: Domestic EPCs
+            nonDomestic:
+              value: ['CEPC','AC-CERT','DEC']
+              summary: Non-domestic certificates
         - in: query
           name: street
           description: The street of the assessment being searched for
           schema:
             type: string
-          example: 'High Road'
+          examples:
+            highRoad:
+              value: 'High road'
+              summary: A sample street name
         - in: query
           name: town
           description: The city or town of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AddressTown'
-          example: 'Woking'
+          examples:
+            woking:
+              value: 'Woking'
+              summary: A sample town
         - in: query
           name: assessmentId
           description: The RRN of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AssessmentId'
-          example: '1234-2345-3456-4567-6789'
+          examples:
+            rrnEg:
+              value: '1234-2345-3456-4567-6789'
+              summary: A sample RRN
       responses:
         '200':
           description: Assessment search results
@@ -2714,7 +2801,7 @@ paths:
         * DEC and DEC-RR in a single XML payload with two <Report>
           elements
         * A single <Report> for Action Plan
-      operationId: lodge-assessment
+      operationId: lodge-scottish-assessment
       security:
         - oauth:
             - 'scotland_assessment:lodge'
@@ -2786,7 +2873,8 @@ paths:
                           properties:
                             assessmentId:
                               $ref: '#/components/schemas/AssessmentId'
-                        example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
+                        examples:
+                          - [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
                   meta:
                     type: object
                     properties:
@@ -2797,7 +2885,8 @@ paths:
                             type: array
                             items:
                               type: string
-                            example: [ "/api/scotland/assessments/9876-9876-9876-9876-9876", "/api/scotland/assessments/8765-8765-8765-8765-8765" ]
+                            examples:
+                              - [ "/api/scotland/assessments/9876-9876-9876-9876-9876", "/api/scotland/assessments/8765-8765-8765-8765-8765" ]
         '400':
           description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
           content:
@@ -2812,10 +2901,12 @@ paths:
                       properties:
                         code:
                           type: string
-                          example: "FLOOR_AREA_LESS_THAN_ZERO"
+                          examples:
+                            - "FLOOR_AREA_LESS_THAN_ZERO"
                         title:
                           type: string
-                          example: "Floor-Area must be greater than zero"
+                          examples:
+                            - "Floor-Area must be greater than zero"
                   meta:
                     type: object
                     properties:
@@ -2824,7 +2915,8 @@ paths:
                         properties:
                           override:
                             type: string
-                            example: "/scotland/assessments?override=true"
+                            examples:
+                              - "/scotland/assessments?override=true"
         '403':
           description: Forbidden
           content:
@@ -2974,6 +3066,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -3006,7 +3100,8 @@ paths:
               properties:
                 optOut:
                   type: boolean
-                  example: true
+                  examples:
+                    - true
       responses:
         '200':
           description: Confirmation of opt-out status update
@@ -3017,7 +3112,8 @@ paths:
                 properties:
                   data:
                     type: string
-                    example: "Your opt out request was successful"
+                    examples:
+                      - "Your opt out request was successful"
                   meta:
                     type: object
         '400':
@@ -3074,7 +3170,8 @@ paths:
                 properties:
                   data:
                     type: string
-                    example: "Address ID for assessment 1234-1234-1234-1234-1234 has been updated successfully"
+                    examples:
+                      - "Address ID for assessment 1234-1234-1234-1234-1234 has been updated successfully"
                   meta:
                     type: object
         '400':
@@ -3141,6 +3238,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -3184,7 +3283,8 @@ paths:
                           dataSentAt:
                             type: string
                             format: date-time
-                            example: '2026-02-26T16:32:01.703Z'
+                            examples:
+                              - '2026-02-26T16:32:01.703Z'
         '404':
           description: Assessment not found
           content:
@@ -3197,6 +3297,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -3222,7 +3324,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: endDate
           required: true
@@ -3230,7 +3333,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            examples:
+              - '2020-12-01'
         - in: query
           name: page
           required: false
@@ -3238,7 +3342,8 @@ paths:
           schema:
             type: string
             format: number
-            example: '1'
+            examples:
+              - '1'
       responses:
         '200':
           description: Scottish assessment status changes
@@ -3266,6 +3371,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -3291,7 +3398,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: endDate
           required: true
@@ -3299,7 +3407,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            examples:
+              - '2020-12-01'
         - in: query
           name: page
           required: false
@@ -3307,7 +3416,8 @@ paths:
           schema:
             type: string
             format: number
-            example: '1'
+            examples:
+              - '1'
       responses:
         '200':
           description: Energy Performance Assessment
@@ -3335,6 +3445,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -3360,7 +3472,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2025-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: endDate
           required: false
@@ -3368,7 +3481,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2026-05-01'
+            examples:
+              - '2020-12-01'
         - in: query
           name: page
           required: false
@@ -3376,7 +3490,8 @@ paths:
           schema:
             type: string
             format: number
-            example: '1'
+            examples:
+              - '1'
       responses:
         '200':
           description: Report returned successfully
@@ -3431,7 +3546,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-11-01'
+            examples:
+              - '2020-11-01'
         - in: query
           name: endDate
           required: true
@@ -3439,7 +3555,8 @@ paths:
           schema:
             type: string
             format: date
-            example: '2020-12-01'
+            examples:
+              - '2020-12-01'
         - in: query
           name: page
           required: false
@@ -3447,7 +3564,8 @@ paths:
           schema:
             type: string
             format: number
-            example: '1'
+            examples:
+              - '1'
       responses:
         '200':
           description: New assessors
@@ -3517,7 +3635,8 @@ paths:
                       dataSentAt:
                         type: string
                         format: date-time
-                        example: '2026-02-26T16:32:01.703Z'
+                        examples:
+                          - '2026-02-26T16:32:01.703Z'
         '404':
           description: Assessor not found
           content:
@@ -3531,13 +3650,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  scotland/dec_summary/{assessmentId}:
+  /scotland/dec_summary/{assessmentId}:
     get:
       tags:
         - Scotland Frontend
       summary: Get the XML for a Scottish DEC
       description: Get XML from a Scottish DEC that can be used by AECOM software
-      operationId: get-dec-xml
+      operationId: get-scottish-dec-summary-xml
       security:
         - oauth:
             - 'scotland_dec_summary:fetch'
@@ -3588,7 +3707,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-
 components:
   securitySchemes:
     oauth:
@@ -3638,13 +3756,16 @@ components:
           $ref: '#/components/schemas/AddressLine1'
         line2:
           type: string
-          example: ''
+          examples:
+            - ''
         line3:
           type: string
-          example: ''
+          examples:
+            - ''
         line4:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
@@ -3659,13 +3780,16 @@ components:
           $ref: '#/components/schemas/AddressLine1'
         line2:
           type: string
-          example: ''
+          examples:
+            - ''
         line3:
           type: string
-          example: ''
+          examples:
+            - ''
         line4:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
@@ -3678,25 +3802,30 @@ components:
       properties:
         addressLine1:
           type: string
-          example: '22 Acacia Avenue'
+          examples:
+            - '22 Acacia Avenue'
         addressLine2:
           type: string
-          example: 'Upper Wellgood'
+          examples:
+            - 'Upper Wellgood'
         addressLine3:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine4:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           type: string
-          example: 'Fulchester'
+          examples:
+            - 'Fulchester'
         postcode:
           $ref: '#/components/schemas/AddressPostcode'
 
     AddressDetail:
       allOf:
-        - $ref: '#/components/schemas/AddressWithCountry'
+        - $ref: '#/components/schemas/Address'
         - type: object
           properties:
             addressId:
@@ -3721,49 +3850,58 @@ components:
       description: 'An identifier for an address, which is one of:
                     * An OS gazetteer UPRN (prefixed UPRN-)
                     * The reference number of the report this address appears on (prefixed RRN-)'
-      example: 'UPRN-716375734512'
+      examples:
+        - 'UPRN-716375734512'
 
     LPaddedUprn:
       type: string
       pattern: '^\d{12}$'
       description: "An OS gazetteer UPRN (12-digits, left-padded with zeroes)"
-      example: '001234567890'
+      examples:
+        - '001234567890'
 
     AddressUprn:
       type: string
       pattern: '^UPRN-\d{12}$'
       description: "An OS gazetteer UPRN (prefixed UPRN-)"
-      example: 'UPRN-716375734512'
+      examples:
+        - 'UPRN-716375734512'
 
     RrnReferenceAddressId:
       type: string
       pattern: '^RRN-\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
       description: "The reference number of the report this address appears on (prefixed RRN-)"
-      example: 'RRN-0000-0000-1111-2222-3333'
+      examples:
+        - 'RRN-0000-0000-1111-2222-3333'
 
     AddressLprn:
       type: string
       pattern: '^LPRN-\d{10}$'
       description: "A property reference number as formerly used by Landmark"
-      example: 'LPRN-7876876234'
+      examples:
+        - 'LPRN-7876876234'
 
     AddressBuildingNameOrNumber:
       type: string
       minLength: 1
-      example: "Shell House"
+      examples:
+        - "Shell House"
       description: 'A street number ("42") or a building name ("Cromwell Building")'
 
     AddressLine1:
       type: string
-      example: '22 Acacia Avenue'
+      examples:
+        - '22 Acacia Avenue'
 
     AddressTown:
       type: string
-      example: 'Fulchester'
+      examples:
+        - 'Fulchester'
 
     AddressPostcode:
       type: string
-      example: 'FL23 4JA'
+      examples:
+        - 'FL23 4JA'
 
     AddressCountry:
       type: array
@@ -3775,24 +3913,28 @@ components:
           - "S"
           - "W"
           - "N"
-        example: "E"
+        examples:
+          - "E"
 
     AddressSource:
       type: string
       enum:
         - GAZETTEER
         - PREVIOUS_ASSESSMENT
-      example: 'GAZETTEER'
+      examples:
+        - 'GAZETTEER'
 
     SchemaName:
       type: string
       description: 'An identifier for the versioned XML schema used for the lodged assessment XML'
-      example: 'RdSAP-Schema-20.0.0'
+      examples:
+        - 'RdSAP-Schema-20.0.0'
 
     ScottishSchemaType:
       type: string
       description: 'An identifier for the versioned XML schema used for the lodged assessment XML'
-      example: 'RdSAP-Schema-S-19.0'
+      examples:
+        - 'RdSAP-Schema-S-19.0'
       enum:
         - DECAR-S-8.0.0
         - DECAR-S-7.0
@@ -3841,50 +3983,61 @@ components:
       properties:
         firstName:
           type: string
-          example: 'Joe'
+          examples:
+            - 'Joe'
         lastName:
           type: string
-          example: 'Bloggs'
+          examples:
+            - 'Bloggs'
         middleNames:
           type: string
-          example: 'T'
+          examples:
+            - 'T'
         contactDetails:
           type: object
           properties:
             telephoneNumber:
               type: string
               maxLength: 256
-              example: '01632 960375'
+              examples:
+                - '01632 960375'
             email:
               type: string
               format: email
-              example: 'j.t.bloggs@example.com'
+              examples:
+                - 'j.t.bloggs@example.com'
         qualifications:
           anyOf:
             - $ref: '#/components/schemas/AssessorQualifications'
             - $ref: '#/components/schemas/ScottishAssessorQualifications'
         alsoKnownAs:
           type: string
-          example: 'Joey'
+          examples:
+            - 'Joey'
 
     ScottishAssessor:
       type: object
       properties:
         firstName:
           type: string
-          example: 'Joe'
+          examples:
+            - 'Joe'
         lastName:
           type: string
-          example: 'Bloggs'
+          examples:
+            - 'Bloggs'
         middleNames:
           type: string
-          example: 'T'
+          examples:
+            - 'T'
         searchResultsComparisonPostcode:
           type: string
-          example: 'EH1 2NG'
+          examples:
+            - 'EH1 2NG'
         distanceFromPostcodeInMiles:
           type: number
-          example: 0.0
+          examples:
+            - 0.0
         schemeAssessorId:
           $ref: '#/components/schemas/AssessorSchemeId'
         contactDetails:
@@ -3893,32 +4046,38 @@ components:
             telephoneNumber:
               type: string
               maxLength: 256
-              example: '01632 960375'
+              examples:
+                - '01632 960375'
             email:
               type: string
               format: email
-              example: 'j.t.bloggs@example.com'
+              examples:
+                - 'j.t.bloggs@example.com'
         qualifications:
-          $ref: '#/components/schemas/ScottishAssessorQualifications'
+          $ref: '#/components/schemas/AssessorQualifications'
         registeredBy:
           type: object
           properties:
             name:
               type: string
-              example: 'Stroma Certification Ltd'
+              examples:
+                - 'Stroma Certification Ltd'
             schemeId:
               type: integer
-              example: 5
+              examples:
+                - 5
 
     ScottishNewAssessor:
       type: object
       properties:
         firstName:
           type: string
-          example: 'Joe'
+          examples:
+            - 'Joe'
         lastName:
           type: string
-          example: 'Bloggs'
+          examples:
+            - 'Bloggs'
         schemeAssessorId:
           $ref: '#/components/schemas/AssessorSchemeId'
         qualifications:
@@ -3929,24 +4088,29 @@ components:
       properties:
         firstName:
           type: string
-          example: 'Joe'
+          examples:
+            - 'Joe'
         middleNames:
           type: string
-          example: 'T'
+          examples:
+            - 'T'
         lastName:
           type: string
-          example: 'Bloggs'
+          examples:
+            - 'Bloggs'
         email:
           type: string
           format: email
-          example: 'j.t.bloggs@example.com'
+          examples:
+            - 'j.t.bloggs@example.com'
         address:
           $ref: '#/components/schemas/AssessorAddress'
         schemeAssessorId:
           $ref: '#/components/schemas/AssessorSchemeId'
         registeredBy:
           type: string
-          example: 'Stroma Certification Ltd'
+          examples:
+            - 'Stroma Certification Ltd'
         qualifications:
           $ref: '#/components/schemas/ScottishAssessorQualifications'
 
@@ -3958,7 +4122,8 @@ components:
             dateOfBirth:
               type: string
               format: date
-              example: '1980-01-10'
+              examples:
+                - '1980-01-10'
             searchResultsComparisonPostcode:
               $ref: '#/components/schemas/AddressPostcode'
             address:
@@ -4007,11 +4172,13 @@ components:
                     properties:
                       distanceFromPostcodeInMiles:
                         type: number
-                        example: 0.2
+                        examples:
+                          - 0.2
 
     AssessorSchemeId:
       type: string
-      example: 'TEST000001'
+      examples:
+        - 'TEST000001'
 
     AssessorAddress:
       type: object
@@ -4020,10 +4187,12 @@ components:
           $ref: '#/components/schemas/AddressLine1'
         addressLine2:
           type: string
-          example: ''
+          examples:
+            - ''
         addressLine3:
           type: string
-          example: ''
+          examples:
+            - ''
         town:
           $ref: '#/components/schemas/AddressTown'
         postcode:
@@ -4034,31 +4203,38 @@ components:
       properties:
         companyRegNo:
           type: string
-          example: ''
+          examples:
+            - ''
         companyAddressLine1:
           $ref: '#/components/schemas/AddressLine1'
         companyAddressLine2:
           type: string
-          example: ''
+          examples:
+            - ''
         companyAddressLine3:
           type: string
-          example: ''
+          examples:
+            - ''
         companyTown:
           $ref: '#/components/schemas/AddressTown'
         companyPostcode:
           $ref: '#/components/schemas/AddressPostcode'
         companyWebsite:
           type: string
-          example: ''
+          examples:
+            - ''
         companyTelephoneNumber:
           type: string
-          example: ''
+          examples:
+            - ''
         companyEmail:
           type: string
-          example: ''
+          examples:
+            - ''
         companyName:
           type: string
-          example: ''
+          examples:
+            - ''
 
     AssessorQualifications:
       type: object
@@ -4102,7 +4278,8 @@ components:
 
     AssessorQualificationSearchOptions:
       type: string
-      example: domesticSap,scotlandSapExistingBuilding
+      examples:
+        - domesticSap,scotlandSapExistingBuilding
       enum:
         - domesticRdSap
         - domesticSap
@@ -4123,7 +4300,8 @@ components:
 
     AssessorQualificationTypeSearchOptions:
       type: string
-      example: domestic
+      examples:
+        - domestic
       enum:
         - domestic
         - nonDomestic
@@ -4135,39 +4313,50 @@ components:
         - INACTIVE
         - STRUCKOFF
         - SUSPENDED
-      example: 'ACTIVE'
+      examples:
+        - 'ACTIVE'
+        - 'SUSPENDED'
 
     AssessorQualificationChangeEvent:
       type: object
       properties:
         firstName:
           type: string
-          example: "Joe"
+          examples:
+            - "Joe"
         middleNames:
           type: string
-          example: "T"
+          examples:
+            - "T"
         lastName:
           type: string
-          example: "Bloggs"
-        schemeAssessorId:
+          examples:
+            - "Bloggs"
+        assessorSchemeId:
           type: string
-          example: "TEST00001"
+          examples:
+            - "TEST00001"
         dateOfBirth:
           type: string
           format: date
-          example: "1974-12-28"
+          examples:
+            - "1974-12-28"
         qualificationChange:
           type: object
           properties:
             qualificationType:
               type: string
-              example: domesticEnergyPerformanceCertificates
+              examples:
+                - domesticEnergyPerformanceCertificates
             previousStatus:
               $ref: '#/components/schemas/AssessorQualificationStatus'
             newStatus:
               allOf:
                 - $ref: '#/components/schemas/AssessorQualificationStatus'
-                - example: 'STRUCKOFF'
+                - examples:
+                    - 'ACTIVE'
+                    - 'INACTIVE'
+                    - 'STRUCKOFF'
             timeOfChange:
               type: string
               format: date-time
@@ -4177,25 +4366,30 @@ components:
       properties:
         firstName:
           type: string
-          example: "Joe"
+          examples:
+            - "Joe"
         lastName:
           type: string
-          example: "Bloggs"
+          examples:
+            - "Bloggs"
         schemeAssessorId:
           type: string
-          example: "TEST00001"
+          examples:
+            - "TEST00001"
         qualificationChange:
           type: object
           properties:
             qualificationType:
               type: string
-              example: domesticEnergyPerformanceCertificates
+              examples:
+                - 'domesticEnergyPerformanceCertificates'
             previousStatus:
               $ref: '#/components/schemas/AssessorQualificationStatus'
             newStatus:
               allOf:
                 - $ref: '#/components/schemas/AssessorQualificationStatus'
-                - example: 'STRUCKOFF'
+                - examples:
+                    - 'STRUCKOFF'
             timeOfChange:
               type: string
               format: date-time
