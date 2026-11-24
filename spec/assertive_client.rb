@@ -577,6 +577,21 @@ def fetch_assessment(
   )
 end
 
+def fetch_scottish_assessment(
+  assessment_id:,
+  scopes: %w[scotland_assessment:fetch],
+  headers: {},
+  **assertive_kwargs
+)
+  headers.each { |key, value| header key.to_s, value.to_s }
+
+  assertive_get(
+    "api/scotland/assessments/#{assessment_id}",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def fetch_assessment_summary(
   id:,
   scopes: %w[assessment:fetch],
