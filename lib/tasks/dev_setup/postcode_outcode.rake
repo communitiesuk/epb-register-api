@@ -13,7 +13,7 @@ namespace :dev_data do
     raw_connection = connection.raw_connection
     File.open(file_path) do |file|
       headers = file.readline
-      raw_connection.copy_data("COPY #{table} (#{headers}) FROM STDIN (FORMAT csv, NULL '\N')") do
+      raw_connection.copy_data("COPY #{table} (#{headers}) FROM STDIN (FORMAT csv, NULL '\\N')") do
         file.each { raw_connection.put_copy_data it }
       end
     end
