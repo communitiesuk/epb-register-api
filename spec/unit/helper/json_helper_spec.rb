@@ -1,7 +1,9 @@
-describe Helper::JsonHelper do
-  let(:helper) { described_class.new }
+# frozen_string_literal: true
 
-  context "when converting json to ruby hashes" do
+describe Helper::JsonHelper do
+  let(:helper) { described_class }
+
+  describe ".convert_to_ruby_hash" do
     it "changes top level keys to symbols" do
       result = helper.convert_to_ruby_hash({ "foo" => "Bar" }.to_json)
       expect(result.keys).to include(:foo)
@@ -29,38 +31,61 @@ describe Helper::JsonHelper do
       expect { helper.convert_to_ruby_hash("4", schema:) }.to raise_error Boundary::Json::ValidationError
     end
 
-    it "throws an error exposing failed properties when a property constraint fails" do
-      schema = { type: "object", required: %w[enum], properties: { enum: { type: "string", enum: %w[THIS THAT] } } }
-      expect { helper.convert_to_ruby_hash('{"enum":"ANOTHER"}', schema:) }.to raise_error do |error|
-        expect(error.failed_properties).to eq %w[enum]
+    it "throws an error with invalid json" do
+      schema = { type: "object", required: "firstName" }
+      expect { helper.convert_to_ruby_hash("{ invalid:", schema:) }.to raise_error Boundary::Json::ParseError
+    end
+
+    context "with an iso date format" do
+      let(:schema) { { type: "object", properties: { value: { type: "string", format: "iso-date" } } } }
+
+      it "allows a valid date" do
+        expect(helper.convert_to_ruby_hash('{"value":"2018-01-01"}', schema:)).to eq(value: "2018-01-01")
+      end
+
+      it "disallows an invalid date" do
+        expect {
+          helper.convert_to_ruby_hash('{"value":"2018-13-01"}', schema:)
+        }.to raise_error Boundary::Json::ValidationError, "JSON failed schema validation. Error: The property '#/value' Must be date in format YYYY-MM-DD"
+      end
+
+      it "disallows a string that is not a date" do
+        expect {
+          helper.convert_to_ruby_hash('{"value":"foo"}', schema:)
+        }.to raise_error Boundary::Json::ValidationError, "JSON failed schema validation. Error: The property '#/value' Must be date in format YYYY-MM-DD"
       end
     end
-  end
 
-  context "when converting ruby hashes to json" do
-    it "changes top level keys to strings" do
-      result = helper.convert_to_json({ foo: "bar" })
-      expect(JSON.parse(result).keys).to include("foo")
+    context "with an email format" do
+      let(:schema) { { type: "object", properties: { value: { type: "string", format: "email" } } } }
+
+      it "allows a valid email" do
+        expect(helper.convert_to_ruby_hash('{"value":"foo@example.com"}', schema:)).to eq(value: "foo@example.com")
+      end
+
+      it "disallows an invalid email" do
+        expect {
+          helper.convert_to_ruby_hash('{"value":"foobar"}', schema:)
+        }.to raise_error Boundary::Json::ValidationError, "JSON failed schema validation. Error: The property '#/value' Must be a valid email"
+      end
     end
 
-    it "changes nested keys to strings" do
-      result = helper.convert_to_json({ foo: { bar: "baz" } })
-      expect(JSON.parse(result)["foo"].keys).to include("bar")
+    context "with a telephone format" do
+      let(:schema) { { type: "object", properties: { value: { type: "string", format: "telephone" } } } }
+
+      it "allows a telephone 256 characters long" do
+        value = "0" * 256
+        expect(helper.convert_to_ruby_hash(%({"value":"#{value}"}), schema:)).to eq(value:)
+      end
+
+      it "disallows a vale over 256 characters" do
+        value = "0" * 257
+        expect {
+          helper.convert_to_ruby_hash(%({"value":"#{value}"}), schema:)
+        }.to raise_error Boundary::Json::ValidationError, "JSON failed schema validation. Error: The property '#/value' Must be less than 257 chars"
+      end
     end
 
-    it "changes top level keys to camel case" do
-      result = helper.convert_to_json({ foo_bar: "baz" })
-      expect(JSON.parse(result).keys).to include("fooBar")
-    end
-
-    it "changes nested level keys to camel case" do
-      result = helper.convert_to_json({ foo_bar: { bar_baz: "boo" } })
-      expect(JSON.parse(result).keys).to include("fooBar")
-      expect(JSON.parse(result)["fooBar"].keys).to include("barBaz")
-    end
-  end
-
-  context "when extracting failed properties from a validation" do
     context "when there is a known property error in the schema" do
       let(:schema) do
         {
@@ -71,7 +96,7 @@ describe Helper::JsonHelper do
               properties: {
                 postcode: {
                   type: "string",
-                  pattern: "^[a-zA-Z0-9 ]{4,10}$".freeze,
+                  pattern: "^[a-zA-Z0-9 ]{4,10}$",
                 },
                 other: {
                   type: "string",
@@ -92,16 +117,44 @@ describe Helper::JsonHelper do
         }.freeze
       end
 
-      let(:json_just_postcode) { '{"postcode":"A0","other":"42"}' }
-      let(:json_both_fail) { '{"postcode":"A0","other":""}' }
-
       it "extracts the failed property when just the postcode fails" do
-        expect(helper.extract_failed_properties(schema:, json: json_just_postcode)).to eq %w[postcode]
+        expect {
+          helper.convert_to_ruby_hash('{"postcode":"A0","other":"42"}', schema:)
+        }.to raise_error(Boundary::Json::ValidationError) do |error|
+          expect(error.failed_properties).to eq %w[postcode]
+        end
       end
 
       it "extracts both properties when two fail" do
-        expect(helper.extract_failed_properties(schema:, json: json_both_fail).sort).to eq %w[other postcode]
+        expect {
+          helper.convert_to_ruby_hash('{"postcode":"A0","other":""}', schema:)
+        }.to raise_error(Boundary::Json::ValidationError) do |error|
+          expect(error.failed_properties).to eq %w[other postcode]
+        end
       end
+    end
+  end
+
+  describe ".convert_to_json" do
+    it "changes top level keys to strings" do
+      result = helper.convert_to_json({ foo: "bar" })
+      expect(JSON.parse(result).keys).to include("foo")
+    end
+
+    it "changes nested keys to strings" do
+      result = helper.convert_to_json({ foo: { bar: "baz" } })
+      expect(JSON.parse(result)["foo"].keys).to include("bar")
+    end
+
+    it "changes top level keys to camel case" do
+      result = helper.convert_to_json({ foo_bar: "baz" })
+      expect(JSON.parse(result).keys).to include("fooBar")
+    end
+
+    it "changes nested level keys to camel case" do
+      result = helper.convert_to_json({ foo_bar: { bar_baz: "boo" } })
+      expect(JSON.parse(result).keys).to include("fooBar")
+      expect(JSON.parse(result)["fooBar"].keys).to include("barBaz")
     end
   end
 end

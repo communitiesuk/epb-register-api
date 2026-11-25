@@ -16,7 +16,6 @@ module Controller
     def initialize(*args)
       super
       @xml_helper = Helper::XmlHelper.new
-      @json_helper = Helper::JsonHelper.new
       @logger = ApiFactory.logger
       @events = Helper::EventLogger.new
     end
@@ -104,11 +103,11 @@ module Controller
     end
 
     def params_body(schema)
-      @json_helper.convert_to_ruby_hash(params.to_json, schema:)
+      Helper::JsonHelper.convert_to_ruby_hash(params.to_json, schema:)
     end
 
     def request_body(schema)
-      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
+      Helper::JsonHelper.convert_to_ruby_hash(request.body.read.to_s, schema:)
     end
 
     def relevant_request_headers(request)
@@ -117,12 +116,11 @@ module Controller
     end
 
     def json_response(object, code = 200)
-      content_type :json
-      status code
-
       ActiveRecord::Base.connection_handler.clear_active_connections!(:all)
 
-      @json_helper.convert_to_json(object)
+      content_type :json
+      status code
+      Helper::JsonHelper.convert_to_json(object)
     end
 
     def json_api_response(

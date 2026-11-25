@@ -1,86 +1,65 @@
+# frozen_string_literal: true
+
 require "json-schema"
 
-# https://github.com/voxpupuli/json-schema/pull/566
-# Sinatra requires multi_json causing json-schema to issue a deprecation warning
 JSON::Validator.use_multi_json = false
+JSON::Validator.register_format_validator(
+  "email",
+  lambda do |value|
+    unless value.include?("@")
+      raise JSON::Schema::CustomFormatError, "Must be a valid email"
+    end
+  end,
+)
+JSON::Validator.register_format_validator(
+  "iso-date",
+  lambda do |value|
+    unless value.match?(/\d{4}-\d{2}-\d{2}/)
+      raise JSON::Schema::CustomFormatError, "Must be date in format YYYY-MM-DD"
+    end
+
+    Date.strptime(value, "%Y-%m-%d")
+  rescue Date::Error
+    raise JSON::Schema::CustomFormatError, "Must be date in format YYYY-MM-DD"
+  end,
+)
+JSON::Validator.register_format_validator(
+  "telephone",
+  lambda do |value|
+    if value.size > 256
+      raise JSON::Schema::CustomFormatError, "Must be less than 257 chars"
+    end
+  end,
+)
 
 module Helper
-  class JsonHelper
-    DATE_FORMAT_PROC =
-      lambda do |value|
-        if value.match(/\d{4}-\d{2}-\d{2}/).nil?
-          raise JSON::Schema::CustomFormatError,
-                "Must be date in format YYYY-MM-DD"
+  module JsonHelper
+    class << self
+      def convert_to_ruby_hash(json_string, schema: false)
+        begin
+          json = JSON.parse(json_string)
+        rescue JSON::ParserError => e
+          raise Boundary::Json::ParseError, e.message
         end
 
-        Date.strptime(value, "%Y-%m-%d")
-      rescue StandardError
-        raise JSON::Schema::CustomFormatError,
-              "Must be date in format YYYY-MM-DD"
-      end
-
-    EMAIL_FORMAT_PROC =
-      lambda do |value|
-        unless value.include?("@")
-          raise JSON::Schema::CustomFormatError, "Must be a valid email"
+        begin
+          JSON::Validator.validate!(schema, json) if schema
+        rescue JSON::Schema::ValidationError => e
+          raise Boundary::Json::ValidationError.new(e.message, failed_properties: extract_failed_properties(schema:, json:))
         end
+
+        json.deep_transform_keys { |k| k.to_s.underscore.to_sym }
       end
 
-    TELEPHONE_FORMAT_PROC =
-      lambda do |value|
-        if value.size > 256
-          raise JSON::Schema::CustomFormatError, "Must be less than 257 chars"
-        end
+      def convert_to_json(hash)
+        hash.as_json.deep_transform_keys { it.camelize(:lower) }.to_json
       end
 
-    POSITIVE_INT_FORMAT_PROC =
-      lambda do |value|
-        if value.negative?
-          raise JSON::Schema::CustomFormatError, "Must be a positive number"
-        end
+    private
+
+      def extract_failed_properties(schema:, json:)
+        JSON::Validator.fully_validate(schema, json).map { it.scan(/'#\/([a-zA-Z]+)'/) }.flatten
       end
-
-    def initialize
-      JSON::Validator.register_format_validator("email", EMAIL_FORMAT_PROC)
-      JSON::Validator.register_format_validator("iso-date", DATE_FORMAT_PROC)
-      JSON::Validator.register_format_validator(
-        "positive-int",
-        POSITIVE_INT_FORMAT_PROC,
-      )
-      JSON::Validator.register_format_validator(
-        "telephone",
-        TELEPHONE_FORMAT_PROC,
-      )
-    end
-
-    def convert_to_ruby_hash(json_string, schema: false)
-      begin
-        json = JSON.parse(json_string)
-      rescue JSON::ParserError => e
-        raise Boundary::Json::ParseError, e.message
-      end
-
-      begin
-        JSON::Validator.validate!(schema, json) if schema
-      rescue JSON::Schema::ValidationError => e
-        raise Boundary::Json::ValidationError.new(e.message, failed_properties: extract_failed_properties(schema:, json:))
-      end
-
-      json.deep_transform_keys { |k| k.to_s.underscore.to_sym }
-    end
-
-    def convert_to_json(hash)
-      JSON.parse(hash.to_json).deep_transform_keys { |k|
-        k.camelize(:lower)
-      }.to_json
-    end
-
-    def extract_failed_properties(schema:, json:)
-      JSON::Validator.fully_validate(schema, json).map { |message|
-        message.scan(/'#\/([a-zA-Z]+)'/)
-      }.flatten
-    rescue StandardError
-      []
     end
   end
 end
