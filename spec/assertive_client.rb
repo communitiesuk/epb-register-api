@@ -579,7 +579,7 @@ end
 
 def fetch_scottish_assessment(
   assessment_id:,
-  scopes: %w[scotland_assessment:fetch],
+  scopes: %w[scotland_assessment:fetch_xml],
   headers: {},
   **assertive_kwargs
 )

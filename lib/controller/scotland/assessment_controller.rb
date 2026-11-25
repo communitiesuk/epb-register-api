@@ -210,7 +210,7 @@ module Controller
       end
 
       get "/api/scotland/assessments/:assessment_id",
-          auth_token_has_all: %w[scotland_assessment:fetch] do
+          auth_token_has_all: %w[scotland_assessment:fetch_xml] do
         assessment_id = params[:assessment_id]
 
         auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")

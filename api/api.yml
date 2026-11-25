@@ -3007,7 +3007,7 @@ paths:
       operationId: get-scottish-assessment-xml
       security:
         - oauth:
-            - 'scottish_assessment:fetch'
+            - 'scotland_assessment:fetch_xml'
       parameters:
         - in: path
           name: assessmentId
