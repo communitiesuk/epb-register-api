@@ -15,7 +15,6 @@ module Controller
 
     def initialize(*args)
       super
-      @xml_helper = Helper::XmlHelper.new
       @json_helper = Helper::JsonHelper.new
       @logger = ApiFactory.logger
       @events = Helper::EventLogger.new
@@ -100,7 +99,7 @@ module Controller
   private
 
     def xml_request_body(schema)
-      @xml_helper.convert_to_hash(request.body.read.to_s, schema:)
+      Helper::XmlHelper.convert_to_hash(request.body.read.to_s, schema:)
     end
 
     def params_body(schema)

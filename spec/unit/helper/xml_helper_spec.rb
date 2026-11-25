@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 describe Helper::XmlHelper do
-  let(:helper) { described_class.new }
+  let(:helper) { described_class }
   let(:xml) { File.read File.join File.dirname(__FILE__), "xml/example.xml" }
   let(:schema) { File.join File.dirname(__FILE__), "xml/example.xsd" }
-  let(:invalid_xml) do
-    File.read File.join File.dirname(__FILE__), "xml/invalid.xml"
-  end
 
-  context "when validating valid XML" do
+  describe ".convert_to_hash" do
     it "loads a valid XML file" do
       response = helper.convert_to_hash(xml, schema:)
 
@@ -45,13 +42,26 @@ describe Helper::XmlHelper do
 
       expect(response).to eq expected_response
     end
-  end
 
-  context "when validating invalid XML" do
-    it "raises an error" do
+    it "raises an error for invalid xml" do
       expect {
-        helper.convert_to_hash(invalid_xml, schema:)
-      }.to raise_error instance_of Helper::InvalidXml
+        helper.convert_to_hash(<<~XML, schema:)
+          <xml>
+            <foo>
+          </xml>
+        XML
+      }.to raise_error Helper::InvalidXml, "3:7: FATAL: Opening and ending tag mismatch: foo line 2 and xml"
+    end
+
+    it "raises an error for valid xml that does not match the schema" do
+      expect {
+        helper.convert_to_hash(<<~XML, schema:)
+          <?xml version="1.0" encoding="utf-8"?>
+          <foo>
+            <bar />
+          </foo>
+        XML
+      }.to raise_error Helper::InvalidXml, "2:0: ERROR: Element 'foo': No matching global declaration available for the validation root."
     end
   end
 end
