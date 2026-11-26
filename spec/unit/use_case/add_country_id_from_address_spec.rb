@@ -27,8 +27,8 @@ describe UseCase::AddCountryIdFromAddress do
 
   let(:countries) do
     [{ country_id: 1, country_code: "ENG", address_base_country_code: "[\"E\"]", country_name: "England" },
-     { country_id: 2, country_code: "WLS", address_base_country_code:  "[\"W\"]", country_name: "Wales" },
-     { country_id: 3, country_code: "NIR", address_base_country_code:  "[\"N\"]", country_name: "Northern Ireland" },
+     { country_id: 2, country_code: "WLS", address_base_country_code: "[\"W\"]", country_name: "Wales" },
+     { country_id: 3, country_code: "NIR", address_base_country_code: "[\"N\"]", country_name: "Northern Ireland" },
      { country_id: 4, country_code: "EAW", address_base_country_code: "[\"E\", \"W\"]", country_name: "England and Wales" },
      { country_id: 5, country_code: "NR", address_base_country_code: "", country_name: "Not Recorded" },
      { country_id: 6, country_code: "UKN", address_base_country_code: "", country_name: "Unknown" },

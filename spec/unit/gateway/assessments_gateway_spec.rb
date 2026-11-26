@@ -24,9 +24,9 @@ describe Gateway::AssessmentsGateway do
       Gateway::SchemesGateway::Scheme.create(scheme_id:)
       Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: scheme_id)
 
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
 
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry:  "2070-01-02", current_energy_efficiency_rating: 50)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-01", date_registered: "2010-01-01", created_at: "2010-01-02", date_of_expiry: "2070-01-02", current_energy_efficiency_rating: 50)
     end
 
     it "returns the assessment data for a given day" do
@@ -75,9 +75,9 @@ describe Gateway::AssessmentsGateway do
       Gateway::SchemesGateway::Scheme.create(scheme_id:)
       Gateway::AssessorsGateway::Assessor.create(scheme_assessor_id:, first_name: "test_forename", last_name: "test_surname", date_of_birth: "1970-01-05", registered_by: scheme_id)
 
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-01-31", date_registered: "2024-01-31", created_at: "2024-01-31", date_of_expiry:  "2034-01-31", current_energy_efficiency_rating: 50)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-01-31", date_registered: "2024-01-31", created_at: "2024-01-31", date_of_expiry: "2034-01-31", current_energy_efficiency_rating: 50)
 
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-02-01", date_registered: "2024-02-01", created_at: "2024-02-01", date_of_expiry:  "2034-02-01", current_energy_efficiency_rating: 50)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0001", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-02-01", date_registered: "2024-02-01", created_at: "2024-02-01", date_of_expiry: "2034-02-01", current_energy_efficiency_rating: 50)
 
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2024-01-05", date_registered: "2024-01-05", created_at: "2024-01-05", date_of_expiry:  "2034-01-05", current_energy_efficiency_rating: 50)
 

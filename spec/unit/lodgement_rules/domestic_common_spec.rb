@@ -457,7 +457,7 @@ describe LodgementRules::DomesticCommon, :set_with_timecop do
     it "allows lodgement when the Inspection-Date and the Completion-Date are equal" do
       assert_errors(expected_errors: [], values: { "Inspection-Date": Date.today.to_s,
                                                    "Completion-Date": Date.today.to_s,
-                                                   "Registration-Date": Date.today.to_s  })
+                                                   "Registration-Date": Date.today.to_s })
     end
 
     it "throws an error when the Inspection-Date is later than the Completion-Date" do
@@ -478,7 +478,7 @@ describe LodgementRules::DomesticCommon, :set_with_timecop do
 
     it "allows lodgement when the Registration-Date is after the Completion-Date" do
       assert_errors(expected_errors: [], values: { "Completion-Date": Date.yesterday.to_s,
-                                                   "Registration-Date": Date.today.to_s  })
+                                                   "Registration-Date": Date.today.to_s })
     end
 
     it "allows lodgement when the Completion-Date and the Registration-Date are equal" do

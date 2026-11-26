@@ -54,9 +54,9 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
   describe "#fetch_monthly_stats" do
     before do
       england = "England"
-      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date:  Date.parse("04-07-2021"), transaction_type: 1, country: england)
-      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date:  Date.parse("04-09-2021"), transaction_type: 2, country: england)
-      gateway.save(assessment_type: "SAP", assessments_count: 56, rating_average: 29, day_date:  Date.parse("03-09-2021"), transaction_type: 2, country: england)
+      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date: Date.parse("04-07-2021"), transaction_type: 1, country: england)
+      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date: Date.parse("04-09-2021"), transaction_type: 2, country: england)
+      gateway.save(assessment_type: "SAP", assessments_count: 56, rating_average: 29, day_date: Date.parse("03-09-2021"), transaction_type: 2, country: england)
       gateway.save(assessment_type: "RdSAP", assessments_count: 2, rating_average: 60, day_date:  Date.parse("30-09-2021"), transaction_type: 1, country: england)
       gateway.save(assessment_type: "RdSAP", assessments_count: 79, rating_average: 61, day_date: Date.parse("01-09-2021"), transaction_type: 1, country: england)
       gateway.save(assessment_type: "RdSAP", assessments_count: 24, rating_average: 28, day_date: Date.parse("02-08-2021"), transaction_type: 4, country: england)
@@ -84,8 +84,8 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
 
   describe "#fetch_daily_stats_by_date" do
     before do
-      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 80, day_date:  Date.parse("04-07-2021"), transaction_type: 1, country: "England & Wales")
-      gateway.save(assessment_type: "SAP", assessments_count: 10, rating_average: 40, day_date:  Date.parse("04-07-2021"), transaction_type: 1, country: "Northern Ireland")
+      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 80, day_date: Date.parse("04-07-2021"), transaction_type: 1, country: "England & Wales")
+      gateway.save(assessment_type: "SAP", assessments_count: 10, rating_average: 40, day_date: Date.parse("04-07-2021"), transaction_type: 1, country: "Northern Ireland")
       gateway.save(assessment_type: "RdSAP", assessments_count: 24, rating_average: 28, day_date: Date.parse("04-07-2021"), transaction_type: 4, country: "England & Wales")
       gateway.save(assessment_type: "DEC", assessments_count: 5, rating_average: 0, day_date: Date.parse("04-07-2021"), transaction_type: nil, country: "England & Wales")
       gateway.save(assessment_type: "AC-CERT", assessments_count: 14, rating_average: 0, day_date: Date.parse("04-07-2021"), transaction_type: nil, country: "England & Wales")
@@ -132,9 +132,9 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
     context "when saving data using the country_id to determine the country" do
       before do
         add_assessor
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
+        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
 
-        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 20)
+        Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 20)
 
         Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 20)
 
@@ -218,28 +218,28 @@ describe Gateway::AssessmentStatisticsGateway, :set_with_timecop do
       Gateway::AssessmentStatisticsGateway::AssessmentStatistics.create(assessments_count: 8, assessment_type: "SAP", rating_average: 42.0, day_date: "2020-01-01", country: "Northern & Ireland")
 
       # this is out of date range
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0000", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2010-01-04", date_registered: "2010-01-05", created_at: "2010-01-05", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
 
       # this is a valid RdSAP in range in England
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2020-10-02", date_registered: "2020-10-02", created_at: "2020-10-02", date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 50)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0002", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: "2020-10-02", date_registered: "2020-10-02", created_at: "2020-10-02", date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 50)
 
       # this is a valid RdSAP in range in England
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0003", scheme_assessor_id:, type_of_assessment: "RdSAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is a valid SAP in range in Northern Ireland
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75, postcode: "BT4 3SR")
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0004", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75, postcode: "BT4 3SR")
 
       # this is a valid SAP in range in England
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0005", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is a valid SAP in range to be updated to Scotland 'Other'
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0006", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0006", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is a valid SAP in range to be updated to Unknown 'Other'
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0007", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is a valid SAP in range to be updated to England and Wales 'England'
-      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0008", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry:  "2070-01-05", current_energy_efficiency_rating: 75)
+      Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0008", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: yesterday, date_registered: yesterday, created_at: yesterday, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 75)
 
       # this is lodged today so should not be included
       Gateway::AssessmentsGateway::Assessment.create(assessment_id: "0000-0000-0000-0000-0009", scheme_assessor_id:, type_of_assessment: "SAP", date_of_assessment: today, date_registered: today, created_at: today, date_of_expiry: "2070-01-05", current_energy_efficiency_rating: 82)

@@ -236,7 +236,7 @@ describe Gateway::ExportNiGateway do
         end
 
         it "there are still a valid certificate to export when date does not include that lodged on 2021-08-01" do
-          expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from:  "1991-08-01", date_to: "2021-08-03").first["assessment_id"]).to eq("0000-0000-0000-0000-0000")
+          expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from: "1991-08-01", date_to: "2021-08-03").first["assessment_id"]).to eq("0000-0000-0000-0000-0000")
         end
       end
     end

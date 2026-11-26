@@ -395,8 +395,6 @@ describe "Acceptance::Assessment::Lodge" do
             },
             schema_name: "RdSAP-Schema-NI-20.0.0",
           ).body,
-          migrated: false,
-          override: false,
         )
 
       expect(response["errors"]).to eq("Assessment with a Northern Ireland schema must have a property postcode starting with BT")
@@ -417,8 +415,6 @@ describe "Acceptance::Assessment::Lodge" do
             },
             schema_name: "RdSAP-Schema-20.0.0",
           ).body,
-          migrated: false,
-          override: false,
         )
 
       expect(response["errors"]).to eq("Assessment with a Northern Ireland postcode must be lodged with a NI Schema")
@@ -454,8 +450,6 @@ describe "Acceptance::Assessment::Lodge" do
             },
             schema_name: "RdSAP-Schema-20.0.0",
           ).body,
-          migrated: false,
-          override: false,
         )
 
       expect(response["errors"][0]["title"]).to eq "The calculation software used to create the assessment is not on the approved list."
