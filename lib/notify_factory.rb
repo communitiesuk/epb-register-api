@@ -109,7 +109,7 @@ class NotifyFactory
   end
 
   def self.merge_hash_to_json(hash:, json:)
-    JSON.fast_generate(JSON.parse(json, symbolize_names: true).merge(hash))
+    JSON.generate(JSON.parse(json, symbolize_names: true).merge(hash))
   end
 
   private_class_method :save_audit_event_use_case, :merge_hash_to_json

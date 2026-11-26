@@ -77,7 +77,7 @@ describe Events::Listener do
           allow(ApiFactory).to receive(:match_assessment_address_use_case).and_return(match_assessment_address_use_case)
 
           allow(event_broadcaster).to receive(:on)
-          # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+          # rubocop:disable RSpec/Yield -- The `.and_yield` syntax does not work here.
           allow(event_broadcaster).to receive(:on).with(:match_address_request) do |&block|
             block.call(**valid_payload)
           end
@@ -106,7 +106,7 @@ describe Events::Listener do
           allow(ApiFactory).to receive(:match_assessment_address_use_case).and_return(match_assessment_address_use_case)
 
           allow(event_broadcaster).to receive(:on)
-          # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+          # rubocop:disable RSpec/Yield -- The `.and_yield` syntax does not work here.
           allow(event_broadcaster).to receive(:on).with(:match_address_request) do |&block|
             block.call(**valid_scottish_payload)
           end
@@ -136,7 +136,7 @@ describe Events::Listener do
 
         before do
           allow(event_broadcaster).to receive(:on)
-          # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+          # rubocop:disable RSpec/Yield -- The `.and_yield` syntax does not work here.
           allow(event_broadcaster).to receive(:on).with(:match_address_request) do |&block|
             block.call(**broken_payload)
           end
@@ -160,7 +160,7 @@ describe Events::Listener do
           allow(ApiFactory).to receive(:match_assessment_address_use_case).and_return(match_assessment_address_use_case)
 
           allow(event_broadcaster).to receive(:on)
-          # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+          # rubocop:disable RSpec/Yield -- The `.and_yield` syntax does not work here.
           allow(event_broadcaster).to receive(:on).with(:match_address_request) do |&block|
             block.call(**valid_payload)
           end
@@ -194,7 +194,7 @@ describe Events::Listener do
         allow(NotifyFactory).to receive(:matched_address_update_to_data_warehouse_use_case).and_return(matched_address_update_to_data_warehouse_use_case)
 
         allow(event_broadcaster).to receive(:on)
-        # rubocop:disable RSpec/Yield. The '.and_yeld' syntax does not work.
+        # rubocop:disable RSpec/Yield -- The `.and_yield` syntax does not work here.
         allow(event_broadcaster).to receive(:on).with(:matched_address) do |&block|
           block.call(**valid_payload)
         end

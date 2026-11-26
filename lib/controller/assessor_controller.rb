@@ -248,9 +248,9 @@ module Controller
         params.key?(:dateOfBirth)
 
       if (
-           current_status_check &&
-             !env[:auth_token].scope?("scheme:assessor:fetch")
-         ) ||
+        current_status_check &&
+          !env[:auth_token].scope?("scheme:assessor:fetch")
+      ) ||
           (
             !current_status_check &&
               !env[:auth_token].scope?("assessor:search")
