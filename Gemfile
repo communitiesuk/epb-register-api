@@ -12,7 +12,7 @@ group :test do
   gem "database_cleaner"
   gem "debug"
   gem "mock_redis", "~> 0.56"
-  gem "rack-test", "~> 2.2.0"
+  gem "rack-test", "~> 2.3.0"
   gem "rspec", "~>3.13"
   gem "simplecov", "~>1.3.2"
   gem "timecop", "~> 0.9.11"
