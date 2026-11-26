@@ -42,7 +42,7 @@ gem "rubocop", "~> 1.92.2"
 gem "rubocop-govuk", "~> 6.0"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 3.7"
-gem "sentry-ruby", "~> 7.2"
+gem "sentry-ruby", "~> 7.3"
 gem "sinatra", "~> 4.2"
 gem "sinatra-activerecord", "~> 2.0.27"
 gem "slack-ruby-client"
