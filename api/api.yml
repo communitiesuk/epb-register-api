@@ -458,6 +458,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /assessors/{schemeAssessorId}/brel-email:
+    get:
+      tags:
+        - Search
+        - Manage Assessors
+      summary: Return an assessors email address
+      description: |-
+        Return the email address of an assessor if they have the qualification
+        to generate a BREL or do a HEM FHS assessment.
+        Otherwise an empty response will be returned.
+      operationId: assessor-brel-email
+      security:
+        - oauth:
+            - 'assessor:brel-email'
+      parameters:
+        - in: path
+          name: schemeAssessorId
+          required: true
+          description: The Assessor ID assigned by the registering scheme
+          schema:
+            $ref: '#/components/schemas/AssessorSchemeId'
+      responses:
+        '200':
+          description: The email or an empty response if no qualifying assessor is found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /search/addresses:
     get:
       tags:
@@ -4201,7 +4246,6 @@ components:
             assessorSchemeId:
               $ref: '#/components/schemas/AssessorSchemeId'
             registeredBy:
-              $ref: '#/components/schemas/Scheme'
 
     ScottishAssessorDetail:
       allOf:
