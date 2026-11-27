@@ -20,7 +20,7 @@ namespace :dev_data do
       "RIAS",
       "Unknown Assessors",
       "Vulcan",
-      "Khamo Certification Ltd"
+      "Khamo Certification Ltd",
     ]
 
     overrides = {
