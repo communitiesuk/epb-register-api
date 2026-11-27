@@ -308,6 +308,11 @@ module Controller
       error_response 400, "INVALID_QUERY", e.message
     end
 
+    get "/api/assessors/:scheme_assessor_id/brel-email", auth_token_has_one_of: %w[assessor:brel-email] do
+      data = UseCase::FetchAssessorEmailForBrel.new.execute(params[:scheme_assessor_id])
+      json_response(data, 200)
+    end
+
     get "/api/schemes/:scheme_id/assessors/:scheme_assessor_id",
         auth_token_has_all: %w[scheme:assessor:fetch] do
       scheme_id = params[:scheme_id]

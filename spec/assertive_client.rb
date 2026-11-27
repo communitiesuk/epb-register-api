@@ -133,6 +133,18 @@ def fetch_assessor(
   )
 end
 
+def fetch_assessor_brel_email(
+  assessor_id:,
+  scopes: %w[assessor:brel-email],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/assessors/#{assessor_id}/brel-email",
+    scopes:,
+    **assertive_kwargs,
+  )
+end
+
 def fetch_assessor_current_status(
   first_name:,
   last_name:,
