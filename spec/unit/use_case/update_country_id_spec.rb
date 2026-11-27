@@ -1,5 +1,3 @@
-require_relative "../../shared_context/country_selection"
-
 describe UseCase::UpdateCountryId, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   subject(:use_case) do

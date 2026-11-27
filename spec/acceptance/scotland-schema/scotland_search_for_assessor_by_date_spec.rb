@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_scottish_assessors"
-
 describe "Acceptance::ScotlandGetAssessorByDate", :set_with_timecop do
   include RSpecRegisterApiServiceMixin
   include_context "when testing Scottish assessors"

@@ -1,6 +1,5 @@
 describe UseCase::ExportOpenDataDomesticByHashedId, :set_with_timecop do
   include RSpecRegisterApiServiceMixin
-  require_relative "../../shared_context/shared_lodgement"
   include_context "when lodging XML"
 
   context "when creating the open data reporting release" do

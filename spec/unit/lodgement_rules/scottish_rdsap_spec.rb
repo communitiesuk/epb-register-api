@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 def assert_rdsap_errors(expected_errors:, values: nil, new_nodes: [], country_code: [:E], schema: "RdSAP-Schema-S-19.0", file_name: "epc")
   country_lookup = Domain::CountryLookup.new(country_codes: country_code)
 

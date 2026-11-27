@@ -360,10 +360,10 @@ RSpec.configure do |config|
     Helper::Toggles.set_feature("register-api-add-check-on-schemes-active-regions", true)
   end
 
-  Dir[File.join(__dir__, "shared_examples/**/*.rb")].sort.each { |f| require f }
-
   config.after(:all) { DatabaseCleaner.clean }
 end
+
+Dir[File.join(__dir__, "shared_{examples,context}/**/*.rb")].each { require it }
 
 RSpec::Matchers.define(:json_contains_hash) do |kwargs|
   match do |response|

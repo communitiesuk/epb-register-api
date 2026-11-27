@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 describe LodgementRules::ScottishSap, :set_with_timecop do
   include_context "when lodging XML"
 

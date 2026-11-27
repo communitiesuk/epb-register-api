@@ -1,5 +1,3 @@
-require_relative "../../shared_context/shared_lodgement"
-
 describe LodgementRules::DomesticCommon, :set_with_timecop do
   include_context "when lodging XML"
   let(:docs_under_test) { %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0] }
