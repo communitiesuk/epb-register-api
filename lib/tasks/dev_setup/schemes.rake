@@ -19,10 +19,14 @@ namespace :dev_data do
       "CIH",
       "RIAS",
       "Unknown Assessors",
+      "Vulcan",
+      "Khamo Certification Ltd"
     ]
 
     overrides = {
       "Kaizen Certification Ltd" => { active_scotland: false },
+      "Vulcan" => { active_scotland: false },
+      "Khamo Certification Ltd" => { active_scotland: false },
       "Bacra EPC Scheme" => { active_eng_wls_nir: false },
     }
 
