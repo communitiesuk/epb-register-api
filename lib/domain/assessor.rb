@@ -19,7 +19,8 @@ module Domain
                 :scotland_dec_and_ar_qualification,
                 :scotland_nondomestic_existing_building_qualification,
                 :scotland_nondomestic_new_building_qualification,
-                :scotland_section63_qualification
+                :scotland_section63_qualification,
+                :email
 
     def initialize(
       scheme_assessor_id: nil,
